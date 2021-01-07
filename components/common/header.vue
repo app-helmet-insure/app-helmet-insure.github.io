@@ -1,12 +1,12 @@
 <template>
   <div class="header-container">
     <div>
-      <a class="logo" href="/" target="_self">
+      <a class="logo" href="https://www.helmet.insure" target="_self">
         <img src="~/assets/img/helmet/trade_logo.png" />
       </a>
       <div class="nav-list">
         <nuxt-link
-          to="/product"
+          to="/"
           :class="routeObj.name === 'product-id' ? 'active' : ''"
           >{{ $t("Header.Trade") }}</nuxt-link
         >

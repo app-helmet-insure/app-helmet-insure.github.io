@@ -18,22 +18,22 @@
 </template>
 
 <script>
-import MyInsurance from './my-insurance.vue';
-import MyGuarantee from './my-guarantee.vue';
-import MyClaim from './my-claim.vue';
+import MyInsurance from "./my-insurance.vue";
+import MyGuarantee from "./my-guarantee.vue";
+import MyClaim from "./my-claim.vue";
 
 export default {
   components: {
     MyInsurance,
     MyGuarantee,
-    MyClaim
+    MyClaim,
   },
   data() {
     return {
       type: 1,
     };
   },
-  mounted() { },
+  mounted() {},
   methods: {
     handleClickType(type) {
       this.type = type;
@@ -93,8 +93,8 @@ export default {
       outline: none;
       flex: 1;
       text-align: center;
-      line-height: 50px;
-      font-size: 16px;
+      line-height: 14px;
+      font-size: 12px;
       font-weight: bold;
       color: #121212;
       border-radius: 3px 3px 0px 0px;

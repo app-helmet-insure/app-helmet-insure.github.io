@@ -287,6 +287,7 @@ export default {
       // helmet
       for (let i = 0; i < list.length; i++) {
         let px = await uniswap("WBNB", list[i]);
+        console.log(px, list[i]);
         let key = list[i];
         callIndexPirce[key] = px;
       }

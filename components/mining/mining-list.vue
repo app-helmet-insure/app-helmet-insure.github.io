@@ -7,7 +7,10 @@
     >
       <h3>{{ item.title }}</h3>
       <p>
-        {{ $t("Table.SurplusTime") }}：<span>{{ item.downTime }}</span>
+        {{ $t("Table.SurplusTime") }}：<span>
+          <!-- {{ item.downTime }} -->
+          --
+        </span>
       </p>
       <div>
         <div class="left">

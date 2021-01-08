@@ -10,9 +10,7 @@
           :class="routeObj.name === 'product-id' ? 'active' : ''"
           >{{ $t("Header.Trade") }}</nuxt-link
         >
-        <nuxt-link to="/mining" style="color: #ccc; pointer-events: none">{{
-          $t("Header.Mining")
-        }}</nuxt-link>
+        <nuxt-link to="/mining">{{ $t("Header.Mining") }}</nuxt-link>
         <!-- <nuxt-link to="/plan">{{ $t("Header.Plan") }}</nuxt-link> -->
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")

@@ -13,10 +13,10 @@
 
 <script>
 export default {
-  props: ['currentCoin'],
+  props: ["currentCoin"],
   data() {
     return {
-      curCoin: 'HELMET',
+      curCoin: "HELMET",
     };
   },
   watch: {
@@ -31,8 +31,8 @@ export default {
   },
   methods: {
     handleClickCoin(coin) {
-      this.$emit('changeCoin', coin);
-      this.$bus.$emit('WATCH_COIN', coin)
+      this.$emit("changeCoin", coin);
+      this.$bus.$emit("WATCH_COIN", coin);
       this.curCoin = coin;
     },
   },

@@ -5,13 +5,13 @@
         @click="handleClickInsurance(1)"
         :class="insurance_type == 1 ? 'green' : ''"
       >
-        {{ $t('Content.DoubleInsurance') }}<span>100%</span><i></i>
+        {{ $t("Content.DoubleInsurance") }}<span>100%</span><i></i>
       </button>
       <button
         @click="handleClickInsurance(2)"
         :class="insurance_type == 2 ? 'orange' : ''"
       >
-        {{ $t('Content.HalfInsurance') }}<span>-50%</span><i></i>
+        {{ $t("Content.HalfInsurance") }}<span>-50%</span><i></i>
       </button>
     </div>
   </div>
@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     handleClickInsurance(type) {
-      this.$emit('changeType', type);
+      this.$emit("changeType", type);
       this.insurance_type = type;
     },
   },
@@ -72,14 +72,14 @@ export default {
           color: #00b900;
           background: rgba(0, 185, 0, 0.04);
           i {
-            background-image: url('../../assets/img/helmet/call@2x.png');
+            background-image: url("../../assets/img/helmet/call@2x.png");
           }
         }
         &:nth-of-type(2) {
           color: #ff6400;
           background: rgba(255, 100, 0, 0.06);
           i {
-            background-image: url('../../assets/img/helmet/put@2x.png');
+            background-image: url("../../assets/img/helmet/put@2x.png");
           }
         }
       }
@@ -118,14 +118,14 @@ export default {
           color: #00b900;
           background: rgba(0, 185, 0, 0.04);
           i {
-            background-image: url('../../assets/img/helmet/call@2x.png');
+            background-image: url("../../assets/img/helmet/call@2x.png");
           }
         }
         &:nth-of-type(2) {
           color: #ff6400;
           background: rgba(255, 100, 0, 0.04);
           i {
-            background-image: url('../../assets/img/helmet/put@2x.png');
+            background-image: url("../../assets/img/helmet/put@2x.png");
           }
         }
       }

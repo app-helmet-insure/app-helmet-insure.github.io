@@ -86,7 +86,6 @@ export default {
       let max = toRounding(arr[this.curCoin] * 2 * 1.5, 4);
       this.max = max;
       if (newVal) {
-        console.log(newVal);
         this.price = {
           IndexPrice: toRounding(Number(arr[newVal]), 4),
           Cover100: toRounding(arr[newVal] * 2, 4),

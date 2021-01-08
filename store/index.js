@@ -114,7 +114,8 @@ export const state = () => ({
         FOR_BNB: false,
         BNB_FOR: false,
     },
-    dueDate: '2021-01-31 00:00',
+    // dueDate: '2021-02-08 00:00',
+    dueDate: '--',
     allIndexPrice: [
         {
             HELMET: 0,

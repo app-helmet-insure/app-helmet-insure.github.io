@@ -46,7 +46,8 @@
     "PlanToLp": "立即质押L当前价格P token",
     "ChartUp": "翻倍险",
     "ChartOff": "腰斩险",
-    "ChartPrice": "当前价格"
+    "ChartPrice": "当前价格",
+    "SelectCoin":"选择保险"
   },
   "Table": {
     "ID": "ID",

@@ -46,7 +46,8 @@
     "PlanToLp": "立即质押LP token",
     "ChartUp": "Cover 100% Up",
     "ChartOff": "Cover 50% Off",
-    "ChartPrice": "Current Price"
+    "ChartPrice": "Current Price",
+    "SelectCoin": "Select a token"
   },
   "Table": {
     "ID": "ID",

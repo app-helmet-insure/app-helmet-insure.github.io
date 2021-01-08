@@ -302,21 +302,29 @@ export default {
       let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"];
       let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"];
       let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"];
+      let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"];
+      let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"];
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
         CTK: ctkHelmet,
         FORTUBE: forHelmet,
+        BTCB: btcHelmet,
+        ETH: ethHelmet,
       };
       let Helmetbnb = putIndexPirce["HELMET"];
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"];
       let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"];
       let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"];
+      let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"];
+      let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"];
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
         CTK: Helmetctk,
         FORTUBE: Helmetfor,
+        BTCB: Helmetbtc,
+        ETH: Helmeteth,
       };
       arr1.push(HelmetPirce);
       arr1.push(CoinPirce);
@@ -325,6 +333,7 @@ export default {
       arr.push(putIndexPirce);
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$bus.$emit("DRAW_ECHART");
+      console.log(arr1, arr);
     },
   },
 };

@@ -1,13 +1,30 @@
 <template>
   <div class="coin_type">
-    <button
-      v-for="coin in coinList"
-      :key="coin"
-      @click="handleClickCoin(coin)"
-      :class="curCoin == coin ? 'active' : ''"
-    >
-      {{ coin == "FORTUBE" ? "FOR" : coin }}
+    <button class="token_wrap" @click="SelectToken">
+      <span>{{ $t("Content.SelectCoin") }}</span>
+      <img
+        src="~/assets/img/helmet/select@2x.png"
+        alt=""
+        :class="showTokens ? 'retote' : 'retoteback'"
+      />
     </button>
+    <button class="active curCoin" v-if="!showTokens">
+      {{ curCoin }}
+    </button>
+    <div
+      class="token_item"
+      v-if="showTokens"
+      :class="showTokens ? 'show_liner' : ''"
+    >
+      <button
+        v-for="coin in coinList"
+        :key="coin"
+        @click="handleClickCoin(coin)"
+        :class="curCoin == coin ? 'active' : ''"
+      >
+        {{ coin == "FORTUBE" ? "FOR" : coin }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -17,6 +34,7 @@ export default {
   data() {
     return {
       curCoin: "HELMET",
+      showTokens: false,
     };
   },
   watch: {
@@ -34,15 +52,74 @@ export default {
       this.$emit("changeCoin", coin);
       this.$bus.$emit("WATCH_COIN", coin);
       this.curCoin = coin;
+      this.showTokens = false;
+    },
+    SelectToken() {
+      this.showTokens = !this.showTokens;
     },
   },
 };
 </script>
 
 <style lang='scss' scoped>
+.retote {
+  transform: rotate(180deg);
+  transition: 0.5s;
+}
+.retoteback {
+  transition: 0.5s;
+}
+.show_liner {
+  animation: showliner 0.5s 0s linear forwards;
+}
+
+@keyframes showliner {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    left: 155px;
+  }
+}
+
 @media screen and (min-width: 750px) {
   .coin_type {
     margin: 28px 0 29px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    .token_wrap {
+      justify-content: center;
+      min-width: 140px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      height: 40px;
+      background: #ff9600;
+      border-radius: 3px;
+      position: absolute;
+      z-index: 1;
+      span {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: #ffffff;
+      }
+      img {
+        margin-left: 3px;
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .curCoin {
+      margin-left: 155px;
+    }
+    .token_item {
+      position: absolute;
+      z-index: 0;
+    }
     button {
       min-width: 76px;
       height: 40px;

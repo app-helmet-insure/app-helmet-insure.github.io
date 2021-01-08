@@ -63,7 +63,7 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .trade_title {
-    height: 360px;
+    height: 400px;
     background: #ffffff;
     margin-bottom: 15px;
     padding: 0 28px;
@@ -84,6 +84,17 @@ export default {
       span {
         color: #919aa6;
         line-height: 20px;
+      }
+      a {
+        max-width: 110px;
+        margin-top: 12px;
+        display: flex;
+        padding: 0 16px;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        background: #121212;
+        color: #fff;
       }
     }
   }

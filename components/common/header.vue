@@ -10,7 +10,12 @@
           :class="routeObj.name === 'product-id' ? 'active' : ''"
           >{{ $t("Header.Trade") }}</nuxt-link
         >
-        <nuxt-link to="/mining">{{ $t("Header.Mining") }}</nuxt-link>
+        <nuxt-link
+          to="/mining"
+          style="color: #ccc !important; pointer-events: none"
+          >{{ $t("Header.Mining") }}
+          <p>coming soon ...</p></nuxt-link
+        >
         <!-- <nuxt-link to="/plan">{{ $t("Header.Plan") }}</nuxt-link> -->
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
@@ -148,6 +153,20 @@ export default {
         position: relative;
         color: #121212;
         font-weight: bold;
+        p {
+          position: absolute;
+          top: 6px;
+          width: 105px;
+          background: -webkit-linear-gradient(top, #ff9600, #ffce00);
+          height: 24px;
+          line-height: 24px;
+          border-radius: 20px 0 20px 0;
+          color: #fff;
+          right: 0;
+          transform: translateX(100%);
+          font-size: 12px;
+          font-weight: 600px;
+        }
         &::after {
           display: none;
           content: "";
@@ -193,7 +212,7 @@ export default {
     }
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 750px) {
   .header-container {
     > div {
       width: 1200px;
@@ -228,41 +247,41 @@ export default {
     margin: 0 20px 0 16px;
   }
 }
-@media screen and (min-width: 750px) and (max-width: 1280px) {
-  .header-container {
-    height: 60px;
-    > div {
-      width: 1200px;
-      .logo {
-        img {
-          height: 40px;
-        }
-      }
-      .nav-list {
-        flex: 1;
-        display: flex;
-        a {
-          display: inline-block;
-          margin-left: 40px;
-          height: 60px;
-          line-height: 60px;
-          position: relative;
-          color: #121212;
-          font-size: 16px;
-          font-weight: 500;
-        }
-      }
-      .wallet-address {
-        height: 40px;
-      }
-      .connect-wallet-btn {
-        height: 40px;
-        line-height: 40px;
-        font-size: 14px;
-      }
-    }
-  }
-}
+// @media screen and (min-width: 750px) and (max-width: 1280px) {
+//   .header-container {
+//     height: 60px;
+//     > div {
+//       width: 1200px;
+//       .logo {
+//         img {
+//           height: 40px;
+//         }
+//       }
+//       .nav-list {
+//         flex: 1;
+//         display: flex;
+//         a {
+//           display: inline-block;
+//           margin-left: 40px;
+//           height: 60px;
+//           line-height: 60px;
+//           position: relative;
+//           color: #121212;
+//           font-size: 16px;
+//           font-weight: 500;
+//         }
+//       }
+//       .wallet-address {
+//         height: 40px;
+//       }
+//       .connect-wallet-btn {
+//         height: 40px;
+//         line-height: 40px;
+//         font-size: 14px;
+//       }
+//     }
+//   }
+// }
 
 @media screen and (max-width: 750px) {
   .header-container {

@@ -48,7 +48,7 @@ export default {
         line-height: 20px;
       }
       a {
-        max-width: 110px;
+        max-width: 115px;
         margin-top: 12px;
         display: flex;
         padding: 0 16px;

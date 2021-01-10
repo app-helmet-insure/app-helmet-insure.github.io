@@ -110,13 +110,13 @@
       <div>
         <p @click="upPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronleft1"></use>
+            <use xlink:href="#icon-chevronleft"></use>
           </svg>
         </p>
         <i></i>
         <p @click="downPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronright1"></use>
+            <use xlink:href="#icon-chevronright"></use>
           </svg>
         </p>
       </div>

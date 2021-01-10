@@ -66,7 +66,6 @@ export default {
         btnText: "",
       },
       showStatusDialog: false,
-      coinList: ["HELMET", "CAKE", "CTK", "FORTUBE"],
     };
   },
   computed: {
@@ -266,9 +265,11 @@ export default {
     // 获取余额
     async getBalance() {
       let BalanceArray = {};
-      for (let i = 0; i < this.coinList.length; i++) {
-        let balance = await getBalance(this.coinList[i]);
-        let key = this.coinList[i];
+      let coinList = this.$store.state.coinList;
+      for (let i = 0; i < coinList.length; i++) {
+        let balance = await getBalance(coinList[i]);
+        let key = coinList[i];
+
         BalanceArray[key] = toRounding(balance, 4);
       }
       if (window.CURRENTADDRESS) {

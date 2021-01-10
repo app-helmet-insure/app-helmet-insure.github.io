@@ -103,7 +103,7 @@ export default {
   },
   watch: {
     dpr(newValue, val) {
-      this.dpr = fixInput(newValue, 1);
+      this.dpr = fixInput(newValue, 2);
       if (newValue > 10) {
         this.dpr = 10;
       }

@@ -152,7 +152,14 @@ export const state = () => ({
             ETH: 0,
         },
     ],
-    BalanceArray: {},
+    BalanceArray: {
+        HELMET: 0,
+        BNB: 0,
+        CAKE: 0,
+        FORTUBE: 0,
+        BTCB: 0,
+        ETH: 0,
+    },
 });
 
 export const mutations = {

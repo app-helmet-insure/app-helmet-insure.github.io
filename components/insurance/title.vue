@@ -84,10 +84,10 @@ export default {
           crossFade: true,
         },
         spaceBetween: 30,
-        // autoplay: {
-        //   // delay: 10000,
-        //   disableOnInteraction: false,
-        // },
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
         pagination: {
           el: ".swiper-pagination",
           clickable: true,

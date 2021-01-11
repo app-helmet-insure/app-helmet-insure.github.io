@@ -12,7 +12,9 @@
     "HelmetTransfer": "HELMET In Circulation",
     "Title": "HELMET Initial Farm Offering coming soon to PancakeSwap",
     "Text": "HELMET Trading will start after IFO",
-    "ReadMore": "Read more"
+    "ReadMore": "Read more>>",
+    "TradeStart": "HELMET Trading Start",
+    "TradeTime": " Before 6pm SGT on 15th Jan."
   },
   "Type": {
     "BuyInsurance": "Buy Policy",

@@ -2,14 +2,24 @@
   <div class="p-mask" v-if="showMask">
     <div class="p-mask-title">
       <a href="/">
-        <!-- <img src="~/assets/img/logo_1.png" alt="" /> -->
+        <img src="~/assets/img/helmet/home_logo.png" alt="" />
       </a>
       <span @click="closeMask"></span>
     </div>
     <ul class="navList">
       <li v-for="item in this.renderList" :key="item.url" @click="closeMask">
         <a v-if="item.link" :href="item.url">{{ item.text }}</a>
-        <span v-else @click="toPath(item)">{{ item.text }}</span>
+        <span
+          v-else
+          @click="toPath(item)"
+          :style="
+            item.url == '/mining'
+              ? 'color: #ccc !important;pointer-events: none;'
+              : ''
+          "
+          >{{ item.text }}
+          <i v-if="item.url == '/mining'"></i>
+        </span>
       </li>
     </ul>
     <ul class="navList">
@@ -45,11 +55,11 @@
 </template>
 
 <script>
-import WallectSelect from './wallet-select';
-import CurrentAccount from '~/components/account/current-account.vue';
-import ChangeAccount from '~/components/account/change-account.vue';
+import WallectSelect from "./wallet-select";
+import CurrentAccount from "~/components/account/current-account.vue";
+import ChangeAccount from "~/components/account/change-account.vue";
 export default {
-  name: 'p-mask',
+  name: "p-mask",
   components: {
     WallectSelect,
     CurrentAccount,
@@ -58,17 +68,17 @@ export default {
   data() {
     return {
       MaskFlag: false,
-      accountText: '',
+      accountText: "",
       showWallectSelect: false,
-      lang: '',
-      langName: '',
+      lang: "",
+      langName: "",
       showChangeWallet: false,
       showCurrentAccount: false, // 显示当前账户信息
     };
   },
   watch: {
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
     lang(newVol) {
@@ -78,12 +88,12 @@ export default {
       )[0].name;
     },
     locale: {
-      handler: 'watchLocale',
+      handler: "watchLocale",
       immediate: true,
     },
   },
   mounted() {
-    this.lang = window.localStorage.getItem('lang') || this.locale;
+    this.lang = window.localStorage.getItem("lang") || this.locale;
   },
   computed: {
     showMask() {
@@ -107,14 +117,14 @@ export default {
     renderList() {
       return [
         {
-          url: '/product',
+          url: "/",
           link: false,
-          text: this.$t('Header.Trade'),
+          text: this.$t("Header.Trade"),
         },
         {
-          url: '/mining',
+          url: "/mining",
           link: false,
-          text: this.$t('Header.Mining'),
+          text: this.$t("Header.Mining"),
         },
         // {
         //   url: '/plan',
@@ -157,10 +167,10 @@ export default {
     },
     switchLang(lang) {
       this.lang = lang;
-      window.localStorage.setItem('lang', this.lang);
-      this.$store.dispatch('setLanguage', this.lang);
+      window.localStorage.setItem("lang", this.lang);
+      this.$store.dispatch("setLanguage", this.lang);
       this.$i18n.locale = this.lang;
-      this.$store.dispatch('setMaskDialog', false);
+      this.$store.dispatch("setMaskDialog", false);
     },
     userInfoWatch(newValue) {
       if (newValue.data && newValue.data.account) {
@@ -168,11 +178,11 @@ export default {
         account = account.toUpperCase();
         this.accountText =
           account.substr(0, 1) +
-          ' ' +
+          " " +
           account.substr(1, 1) +
-          ' ' +
+          " " +
           account.substr(2, 4) +
-          '...' +
+          "..." +
           account.substr(-5);
       }
     },
@@ -180,18 +190,18 @@ export default {
       this.showWallectSelect = true;
     },
     closeMask() {
-      this.$store.dispatch('setMaskDialog', false);
+      this.$store.dispatch("setMaskDialog", false);
     },
     toPath(options) {
       if (options.url) {
-        this.$store.dispatch('setPayasoDialog', false);
-        this.$store.dispatch('setMaskDialog', false);
+        this.$store.dispatch("setPayasoDialog", false);
+        this.$store.dispatch("setMaskDialog", false);
         this.$router.push(options.url);
       } else {
         if (options.type) {
-          this.$store.dispatch('setPayasoDialog', true);
+          this.$store.dispatch("setPayasoDialog", true);
         } else {
-          this.$store.dispatch('setMaskDialog', false);
+          this.$store.dispatch("setMaskDialog", false);
         }
       }
     },
@@ -217,16 +227,18 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 80px;
     > a {
       img {
-        height: 50px;
+        width: 107px;
+        height: 21px;
       }
     }
     > span {
       display: block;
       width: 24px;
       height: 24px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-size: cover;
       cursor: pointer;
@@ -246,6 +258,20 @@ export default {
       letter-spacing: 1px;
       a {
         color: #ffffff;
+      }
+      span {
+        position: relative;
+      }
+      i {
+        display: block;
+        width: 72px;
+        height: 33px;
+        background-image: url("../../assets/img/helmet/comingsoon@2x.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: absolute;
+        left: 30px;
+        top: -25px;
       }
     }
   }

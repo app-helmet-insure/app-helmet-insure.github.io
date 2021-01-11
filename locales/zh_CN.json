@@ -12,7 +12,9 @@
     "HelmetTransfer": "Helmet流通量",
     "Title": "HELMET IFO 即将登录 PancakeSwap",
     "Text": "IFO结束后，HELMET即刻开启交易",
-    "ReadMore": "了解更多"
+    "ReadMore": "了解更多",
+    "TradeStart": "HELMET正式上线",
+    "TradeTime": "将在IFO结束48小时(1月15日18:00)之前"
   },
   "Type": {
     "BuyInsurance": "购买保险",
@@ -47,7 +49,7 @@
     "ChartUp": "翻倍险",
     "ChartOff": "腰斩险",
     "ChartPrice": "当前价格",
-    "SelectCoin":"选择保险"
+    "SelectCoin": "选择保险"
   },
   "Table": {
     "ID": "ID",

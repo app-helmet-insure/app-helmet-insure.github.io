@@ -12,10 +12,14 @@
         >
         <nuxt-link
           to="/mining"
-          style="color: #ccc !important; pointer-events: none"
+          style="
+            color: #ccc !important;
+            pointer-events: none;
+            margin-right: 50px;
+          "
           >{{ $t("Header.Mining") }}
-          <p>coming soon ...</p></nuxt-link
-        >
+          <p></p
+        ></nuxt-link>
         <!-- <nuxt-link to="/plan">{{ $t("Header.Plan") }}</nuxt-link> -->
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
@@ -156,16 +160,11 @@ export default {
         p {
           position: absolute;
           top: 6px;
-          width: 105px;
-          background: -webkit-linear-gradient(top, #ff9600, #ffce00);
-          height: 24px;
-          line-height: 24px;
-          border-radius: 20px 0 20px 0;
-          color: #fff;
-          right: 0;
-          transform: translateX(100%);
-          font-size: 12px;
-          font-weight: 600px;
+          width: 72px;
+          background: url("../../assets/img/helmet/comingsoon@2x.png") no-repeat;
+          height: 33px;
+          background-size: cover;
+          transform: translateX(40%);
         }
         &::after {
           display: none;

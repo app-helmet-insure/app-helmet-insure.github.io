@@ -155,6 +155,9 @@ export default {
       let list = this.$store.state.allIndexPrice;
       return list;
     },
+    rePriceMap() {
+      return this.$store.state.repriceMap;
+    },
   },
   methods: {
     // 卖单数据
@@ -177,7 +180,7 @@ export default {
       const buyResult = [];
       let spliceResult = [];
       let item, volume, price, id, seller;
-      let resultItem;
+      let resultItem, newArray;
       let now = new Date() * 1;
       for (let i = 0; i < sell.length; i++) {
         item = sell[i];
@@ -193,8 +196,9 @@ export default {
           item.seller.substr(2, 4) +
           "..." +
           item.seller.substr(-5).toUpperCase();
+        newArray = this.getNewPrice(item.askID);
+
         if (token == "WBNB") {
-          let res = await asks(item.askID, "sync", coToken);
           resultItem = {
             seller: item.seller,
             id: item.askID,
@@ -205,10 +209,20 @@ export default {
             _underlying: item.longInfo._underlying,
             _expiry: item.longInfo._expiry,
             _collateral: item.longInfo._collateral,
-            remain: res,
+            remain: 0,
             showID,
             buyNum: "",
           };
+          if (newArray) {
+            resultItem["volume"] = fromWei(newArray.volume, coToken);
+            resultItem["price"] = fromWei(
+              newArray.newPrice,
+              coToken == "CTK" ? 30 : coToken
+            );
+            resultItem["id"] = newArray.newAskID;
+          }
+          let res = await asks(resultItem["id"], "sync", coToken);
+          resultItem["remain"] = res;
           if (res != 0 && time > now) {
             buyResult.push(resultItem);
           }
@@ -220,7 +234,6 @@ export default {
           let volume =
             (fromWei(item.volume, Token) * this.indexArray[0][unToken]) / 2;
           let price = fromWei(item.price, Token);
-          let res = await asks(item.askID, "sync", Token);
           resultItem = {
             seller: item.seller,
             id: item.askID,
@@ -231,15 +244,26 @@ export default {
             _underlying: item.longInfo._underlying,
             _expiry: item.longInfo._expiry,
             _collateral: item.longInfo._collateral,
-            remain: res,
+            remain: 0,
             showID,
             buyNum: "",
           };
+          if (newArray) {
+            resultItem["volume"] = fromWei(newArray.volume, unToken);
+            resultItem["price"] = fromWei(
+              newArray.newPrice,
+              unToken == "CTK" ? 30 : unToken
+            );
+            resultItem["id"] = newArray.newAskID;
+          }
+          let res = await asks(resultItem["id"], "sync", Token);
+          resultItem["remain"] = res;
           if (res != 0 && time > now) {
             sellResult.push(resultItem);
           }
         }
       }
+
       this.isLoading = false;
       this.buyList = buyResult;
       this.sellList = sellResult;
@@ -263,6 +287,14 @@ export default {
         this.insuranceList = result;
         this.showList = result.slice(this.page * this.limit, this.limit);
       }
+    },
+    getNewPrice(id) {
+      let list = this.rePriceMap;
+      if (!list) {
+        return;
+      }
+      let array = list.filter((item) => item.askID === id)[0];
+      return array;
     },
     // 分页
     upPage() {

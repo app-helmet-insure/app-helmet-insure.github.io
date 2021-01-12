@@ -232,15 +232,15 @@ export default {
         //倒计时
         downTime = new Date(item.longInfo._expiry * 1000).toLocaleDateString();
         //已出售
-        beSold = fromWei(this.getBeSold(item.askID), Token);
-        unSold = precision.minus(amount, beSold);
+        // beSold = fromWei(this.getBeSold(item.askID), Token);
+        // unSold = precision.minus(amount, beSold);
 
         shortBalance = await getBalance(item.longInfo.short, item._collateral);
         resultItem = {
           id: item.askID,
           volume: amount,
-          beSold: beSold,
-          unSold: unSold,
+          beSold: 0,
+          unSold: 0,
           price: InsurancePrice,
           shortBalance: shortBalance,
           dueDate: downTime,
@@ -250,14 +250,16 @@ export default {
         };
         newArray = this.getNewPrice(item.askID);
         if (newArray) {
-          resultItem["volume"] = amount = fromWei(newArray.volume, Token);
-          resultItem["price"] = amount = fromWei(
+          resultItem["volume"] = fromWei(newArray.volume, Token);
+          resultItem["price"] = fromWei(
             newArray.newPrice,
             Token == "CTK" ? 30 : Token
           );
-          resultItem["id"] = amount = newArray.newAskID;
+          resultItem["id"] = newArray.newAskID;
         }
         askRes = await asks(resultItem.id, "sync", resultItem._collateral);
+        resultItem["unSold"] = askRes;
+        resultItem["beSold"] = precision.minus(amount, askRes);
         if (askRes == "0") {
           resultItem["status"] = "Beborrowed";
           resultItem["sort"] = 1;

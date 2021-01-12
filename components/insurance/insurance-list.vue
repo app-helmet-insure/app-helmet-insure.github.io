@@ -317,6 +317,7 @@ export default {
       }
 
       buyInsuranceBuy(datas, (status) => {});
+      this.$bus.$emit("CHANGE_TRADE_TYPE", 1);
     },
     // 计算数量
     setNum() {},

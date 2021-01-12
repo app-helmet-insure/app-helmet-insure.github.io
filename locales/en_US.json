@@ -14,7 +14,8 @@
     "Text": "HELMET Trading will start after IFO",
     "ReadMore": "Read more>>",
     "TradeStart": "HELMET Trading Start",
-    "TradeTime": " Before 6pm SGT on 15th Jan."
+    "TradeTime": " Before 6pm SGT on 15th Jan.",
+    "HELMETAdress": "HELMET Contact Adress : "
   },
   "Type": {
     "BuyInsurance": "Buy Policy",

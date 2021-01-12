@@ -24,6 +24,11 @@ export default {
       insurance_type: 1,
     };
   },
+  mounted() {
+    this.$bus.$on("CHANGE_TRADE_TYPE", (num) => {
+      this.handleClickInsurance(num);
+    });
+  },
   methods: {
     handleClickInsurance(type) {
       this.$emit("changeType", type);

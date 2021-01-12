@@ -156,6 +156,7 @@ export default {
           _yield: 0,
         };
         onIssueSellOnETH(data, (status) => {});
+        this.$bus.$emit("CHANGE_TRADE_TYPE", 1);
       } else {
         data = {
           private: false, //
@@ -170,6 +171,7 @@ export default {
           _yield: 0,
         };
         onIssueSell(data, (status) => {});
+        this.$bus.$emit("CHANGE_TRADE_TYPE", 1);
       }
     },
     watchRent(newValue) {

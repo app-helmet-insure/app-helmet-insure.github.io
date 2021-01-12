@@ -1,5 +1,15 @@
 <template>
   <div class="layout-container">
+    <p>
+      <span> {{ $t("Banner.HELMETAdress") }}</span>
+      <span>
+        0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
+        <i
+          id="copy"
+          data-clipboard-text="0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        ></i
+      ></span>
+    </p>
     <PHeader></PHeader>
     <div class="main-container">
       <nuxt />
@@ -42,7 +52,7 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import { getBalance } from "~/interface/order.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
-
+import ClipboardJS from "clipboard";
 export default {
   name: "default",
   components: {
@@ -154,6 +164,9 @@ export default {
     }, 1000);
   },
   methods: {
+    copy() {
+      let copy = new ClipboardJS("#copy");
+    },
     closeDialog() {
       this.$emit("close");
     },
@@ -337,7 +350,6 @@ export default {
       arr.push(putIndexPirce);
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$bus.$emit("DRAW_ECHART");
-      console.log(arr1, arr);
     },
   },
 };
@@ -348,17 +360,39 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  > p {
-    color: #ffc819;
-    text-align: center;
-    margin-top: 8px;
-  }
+  // > p {
+  //   color: #ffc819;
+  //   text-align: center;
+  //   margin-top: 8px;
+  // }
 }
 @media screen and (min-width: 750px) {
   .layout-container {
     > p {
-      text-align: center;
+      width: 100%;
+      height: 31px;
+      background: rgba(255, 150, 0, 0.2);
+      font-size: 12px;
+      color: #ff9600;
       line-height: 30px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        display: flex;
+        align-items: center;
+        i {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background-image: url("../assets/img/helmet/copy.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          cursor: pointer;
+          margin-left: 4px;
+        }
+      }
     }
     .main-container {
       width: 1200px;
@@ -369,6 +403,32 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .layout-container {
+    > p {
+      padding-left: 16px;
+      width: 100%;
+      height: 48px;
+      background: rgba(255, 150, 0, 0.2);
+      font-size: 12px;
+      color: #ff9600;
+      line-height: 20px;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      span {
+        display: flex;
+        align-items: center;
+        i {
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background-image: url("../assets/img/helmet/copy.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          cursor: pointer;
+          margin-left: 4px;
+        }
+      }
+    }
     .main-container {
       width: 100%;
       overflow: hidden;

@@ -14,7 +14,8 @@
     "Text": "IFO结束后，HELMET即刻开启交易",
     "ReadMore": "了解更多",
     "TradeStart": "HELMET正式上线",
-    "TradeTime": "将在IFO结束48小时(1月15日18:00)之前"
+    "TradeTime": "将在IFO结束48小时(1月15日18:00)之前",
+    "HELMETAdress": "HELMET合约地址 : "
   },
   "Type": {
     "BuyInsurance": "购买保险",

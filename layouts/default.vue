@@ -116,6 +116,7 @@ export default {
     // if (!window.localStorage.getItem('readRisk')) {
     //   this.showRiskWarning = true;
     // }
+    this.copy();
     window.WEB3 = await web3();
     window.chainID = await getID();
     this.showWallet();

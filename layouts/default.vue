@@ -154,6 +154,9 @@ export default {
     }, 1000);
   },
   methods: {
+    closeDialog() {
+      this.$emit("close");
+    },
     showWallet() {
       try {
         window.ethereum
@@ -299,12 +302,12 @@ export default {
       }
       let arr = [];
       let arr1 = [];
-      let bnbHelmet = callIndexPirce["HELMET"];
-      let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"];
-      let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"];
-      let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"];
-      let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"];
-      let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"];
+      let bnbHelmet = callIndexPirce["HELMET"] || 0;
+      let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"] || 0;
+      let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"] || 0;
+      let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"] || 0;
+      let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"] || 0;
+      let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"] || 0;
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -313,12 +316,12 @@ export default {
         BTCB: btcHelmet,
         ETH: ethHelmet,
       };
-      let Helmetbnb = putIndexPirce["HELMET"];
-      let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"];
-      let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"];
-      let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"];
-      let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"];
-      let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"];
+      let Helmetbnb = putIndexPirce["HELMET"] || 0;
+      let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
+      let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"] || 0;
+      let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"] || 0;
+      let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"] || 0;
+      let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,

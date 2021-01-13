@@ -853,12 +853,10 @@ export const RePrice = async (data) => {
     const charID = window.chainID;
     let askID = data.id;
     let price;
-    if (data._underlying == 'WBNB') {
-        let premiumFix = getStrikePriceFix(data._collateral, data._underlying);
-        let premiumUnit = getWeiWithFix(premiumFix);
-        price = window.WEB3.utils.toWei(String(data.price), premiumUnit);
-        data.price = price;
-    }
+    let premiumFix = getStrikePriceFix(data._collateral, data._underlying);
+    let premiumUnit = getWeiWithFix(premiumFix);
+    price = window.WEB3.utils.toWei(String(data.price), premiumUnit);
+    data.price = price;
     const order = await Order();
     if (!window.CURRENTADDRESS) {
         return;
@@ -868,9 +866,16 @@ export const RePrice = async (data) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {
             bus.$emit('CLONE_REPRICE');
+            bus.$emit('CHANGE_MY_TYPE', 1);
+            bus.$emit('CHANGE_TRADE_TYPE', 1);
             //onChangeHash(hash);
         })
-        .on('confirmation', (_, receipt) => {
+        .on('confirmation', (confirmationNumber, receipt) => {
+            if (confirmationNumber === 0) {
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                }, 1000);
+            }
             //onReceiptChange(receipt);
         })
         .on('error', (err, receipt) => {

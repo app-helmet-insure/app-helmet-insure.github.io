@@ -288,13 +288,17 @@ export default {
         this.showList = result.slice(this.page * this.limit, this.limit);
       }
     },
-    getNewPrice(id) {
+    getNewPrice(id, rtArray) {
       let list = this.rePriceMap;
       if (!list) {
         return;
       }
       let array = list.filter((item) => item.askID === id)[0];
-      return array;
+      if (array && array.askID) {
+        let arr = this.getNewPrice(array.newAskID, array);
+        return arr;
+      }
+      return rtArray;
     },
     // 分页
     upPage() {

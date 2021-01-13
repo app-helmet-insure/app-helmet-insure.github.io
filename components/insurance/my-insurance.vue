@@ -302,13 +302,17 @@ export default {
         return 0;
       }
     },
-    getNewPrice(id) {
+    getNewPrice(id, rtArray) {
       let list = this.rePriceMap;
       if (!list) {
         return;
       }
       let array = list.filter((item) => item.askID === id)[0];
-      return array;
+      if (array && array.askID) {
+        let arr = this.getNewPrice(array.newAskID, array);
+        return arr;
+      }
+      return rtArray;
     },
     // 撤销
     handleClickCancel(data) {

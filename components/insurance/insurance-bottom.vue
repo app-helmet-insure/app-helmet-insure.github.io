@@ -33,7 +33,11 @@ export default {
       type: 1,
     };
   },
-  mounted() {},
+   mounted() {
+    this.$bus.$on("CHANGE_MY_TYPE", (num) => {
+      this.handleClickType(num);
+    });
+  },
   methods: {
     handleClickType(type) {
       this.type = type;

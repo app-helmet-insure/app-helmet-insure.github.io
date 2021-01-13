@@ -476,37 +476,44 @@ export const actions = {
             // 过滤数量为0的数据
             // 过滤时间戳过长的脏数据 (例如1603123200000000000000000000000)
             // if (charID === 1 || (sellInfo.longInfo && parseInt(sellInfo.longInfo.count) >= 63 && sellInfo.longInfo._expiry.length === 10 && parseInt(sellInfo.longInfo._expiry) >= createTime && parseInt(item.vol) !== 0)) {
-            if (sellInfo.longInfo && sellInfo.longInfo._expiry.length === 10) {
-                // totalHelmetsBorrowedVolume
-                _col = newGetSymbol(
-                    sellInfo.longInfo._collateral,
-                    window.chainID
-                );
-                totalHelmetsBorrowedVolume += Number(fromWei(item.vol, _col));
-            }
-            if (
-                charID === 1 ||
-                (sellInfo.longInfo &&
-                    sellInfo.longInfo._expiry.length === 10 &&
-                    parseInt(sellInfo.longInfo._expiry) >= createTime &&
-                    parseInt(item.vol) !== 0)
-            ) {
-                aboutInfoBuy.push({
-                    ...item,
-                    sellInfo,
-                });
-
-                if (item.buyer.toLowerCase() === myAddress) {
-                    myAboutInfoBuy.push({
-                        ...item,
-                        sellInfo,
-                    });
+            if (sellInfo) {
+                if (
+                    sellInfo.longInfo &&
+                    sellInfo.longInfo._expiry.length === 10
+                ) {
+                    // totalHelmetsBorrowedVolume
+                    _col = newGetSymbol(
+                        sellInfo.longInfo._collateral,
+                        window.chainID
+                    );
+                    totalHelmetsBorrowedVolume += Number(
+                        fromWei(item.vol, _col)
+                    );
                 }
-                if (sellInfo.seller.toLowerCase() === myAddress) {
-                    aboutInfoBuySeller.push({
+                if (
+                    charID === 1 ||
+                    (sellInfo.longInfo &&
+                        sellInfo.longInfo._expiry.length === 10 &&
+                        parseInt(sellInfo.longInfo._expiry) >= createTime &&
+                        parseInt(item.vol) !== 0)
+                ) {
+                    aboutInfoBuy.push({
                         ...item,
                         sellInfo,
                     });
+
+                    if (item.buyer.toLowerCase() === myAddress) {
+                        myAboutInfoBuy.push({
+                            ...item,
+                            sellInfo,
+                        });
+                    }
+                    if (sellInfo.seller.toLowerCase() === myAddress) {
+                        aboutInfoBuySeller.push({
+                            ...item,
+                            sellInfo,
+                        });
+                    }
                 }
             }
         }

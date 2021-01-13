@@ -108,9 +108,9 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      this.day = day;
-      this.hour = hour;
-      this.minute = minute;
+      this.day = 0;
+      this.hour = 0;
+      this.minute = 0;
     },
   },
 };

@@ -6,6 +6,9 @@
           <td>{{ $t("Table.ID") }}</td>
           <td>{{ $t("Table.Rent") }}</td>
           <td>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</td>
+          <td style="position: absolute; right: 160px">
+            {{ $t("Table.Tips", { type: currentCoin }) }}
+          </td>
           <td class="option">{{ $t("Table.Options") }}</td>
         </tr>
       </thead>
@@ -23,7 +26,7 @@
               fix="8"
               maxValue="10000000"
               :right="$t('Table.Insure')"
-              :placeholder="$t('Table.Tips', { type: currentType })"
+              :placeholder="$t('Table.Cont')"
               @numChange="handleClickBuy(item)"
             ></PInput>
           </td>

@@ -53,7 +53,7 @@ export const onIssueSell = async (data_, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.category}</span></p>`,
+        conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.settleToken}</span></p>`,
     });
     try {
         const Contract = await expERC20(data.currency);
@@ -159,7 +159,7 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span>${data_.volume} ${data_.category}</span>, the execution price is <span>${data_.price} ${data_.currency}</span></p>`,
+        conText: `<p>Rent <span>${data_.volume} ${data_.category}</span>, the execution price is <span>${data_.price} ${data_.settleToken}</span></p>`,
     });
     try {
         const Contract = await expERC20(data.currency);
@@ -272,7 +272,7 @@ export const buyInsuranceBuy = async (_data, callBack) => {
         type: 'pending',
         conText: `<p>Rent <span>${_data.volume} ${_data._underlying}
     </span> policys, the Premium is <span>
-    ${fixD(_data.price * _data.volume, 8)} ${_data._collateral}
+    ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
     </span></p>`,
     });
     // return;

@@ -87,11 +87,22 @@ export default {
       }
     },
   },
-
+  watch: {
+    IndexPxArray: {
+      handler: "IndexWacth",
+      immediate: true,
+    },
+  },
   mounted() {
     if (window.chainID == 56) {
       this.getBannerData();
-      this.getPrice();
+    }
+    if (!this.helmetPrice) {
+      setInterval(() => {
+        setTimeout(() => {
+          this.getPrice();
+        });
+      }, 1000);
     }
   },
   methods: {
@@ -101,11 +112,18 @@ export default {
         this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
         this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
+        this.getPrice();
       }, 2000);
     },
     getPrice() {
-      let price = this.indexArray[1]["HELMET"];
-      this.helmetPrice = price;
+      this.helmetPrice = addCommom(this.indexArray[1]["HELMET"], 4);
+    },
+    IndexWacth(newValue, val) {
+      if (newValue) {
+        this.helmetPrice = addCommom(this.indexArray[1]["HELMET"], 4);
+      } else {
+        this.getPrice;
+      }
     },
   },
 };

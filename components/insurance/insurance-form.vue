@@ -153,7 +153,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      if (this.currentCoin == "HELMET") {
+      if (this.currentCoin != "ETH" && this.currentCoin != "BTCB") {
         return;
       }
       let data;

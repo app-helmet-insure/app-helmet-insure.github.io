@@ -6,7 +6,7 @@
         <p>
           1 {{ currentCoin == "FORTUBE" ? "FOR" : currentCoin }} :
           {{
-            currentCoin != "HELMET"
+            currentCoin == "ETH" || this.currentCoin == "BTCB"
               ? strikePriceArray[this.currentType - 1][this.currentCoin]
               : "--"
           }}
@@ -20,7 +20,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-time"></use>
           </svg>
-          {{ currentCoin != "HELMET" ? dueDate : "--" }}
+          {{
+            currentCoin != "ETH" && this.currentCoin != "BTCB" ? "--" : dueDate
+          }}
           <!-- {{ currentCoin == "HELMET" ? helmetDate : dueDate }} -->
           <!-- -- -->
         </p>

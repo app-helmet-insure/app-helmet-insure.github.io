@@ -237,7 +237,7 @@ export const getTokenName = (address) => {
             return 'FORTUBE';
         case '0xe9e7cea3dedca5984780bafc599bd69add087d56':
             return 'BUSD';
-        case '0x4e76dfea6fb3726e9a77628aaa23839e3298bc37':
+        case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8':
             return 'HELMET';
         case '0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929':
             return 'CTK';

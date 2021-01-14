@@ -20,8 +20,14 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-time"></use>
           </svg>
-          {{ currentCoin == "CAKE" ? "--" : dueDate }}
-          <!-- {{ currentCoin == "HELMET" ? helmetDate : dueDate }} -->
+          <!-- {{ currentCoin == "CAKE" ? "--" : dueDate }} -->
+          {{
+            currentCoin == "HELMET"
+              ? helmetDate
+              : currentCoin == "CAKE"
+              ? "--"
+              : dueDate
+          }}
           <!-- -- -->
         </p>
       </div>

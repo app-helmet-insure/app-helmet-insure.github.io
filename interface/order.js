@@ -55,7 +55,6 @@ export const onIssueSell = async (data_, callBack) => {
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
         conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.category}</span></p>`,
     });
-    console.log(data);
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权
@@ -272,8 +271,8 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         conText: `<p>Rent <span>${_data.volume} ${_data._underlying}
-    </span> hats, the Premium is <span>
-    ${_data.price * _data.volume} ${_data._collateral}
+    </span> policys, the Premium is <span>
+    ${fixD(_data.price * _data.volume, 8)} ${_data._collateral}
     </span></p>`,
     });
     // return;
@@ -302,12 +301,12 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                             type: 'success',
                             title: 'Successfully rented',
                             conTit:
-                                '<div>The hat is rented successfully, please check <a href="/buy" target="blank">the hat I rented</a></div>',
+                                '<div>The policy is rented successfully, please check <a href="/buy" target="blank">the policy I rented</a></div>',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                         });
                     } else {
                         Message({
-                            message: 'The hat is rented successfully',
+                            message: 'The policy is rented successfully',
                             type: 'success',
                             // duration: 0,
                         });
@@ -481,12 +480,12 @@ export const claim = async () => {
                         bus.$emit('OPEN_STATUS_DIALOG', {
                             type: 'success',
                             title: 'Successfully rented',
-                            conTit: '<div>Hat activated successfully</div>',
+                            conTit: '<div>Policy activated successfully</div>',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                         });
                     } else {
                         Message({
-                            message: 'Hat activated successfully',
+                            message: 'Policy activated successfully',
                             type: 'success',
                         });
                     }
@@ -643,17 +642,16 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack) => {
-    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // your will swap XXX wBNB to XXXX Helmet/
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>your will swap<span> ${toRounding(
-            data._underlying_vol,
-            4
-        )} ${data._underlying}</span> to <span> ${data.vol} ${
-            data._collateral
-        }</span></p>`,
+        // conText: `<p>your will swap<span> ${toRounding(
+        //     data._underlying_vol,
+        //     4
+        // )} ${data._underlying}</span> to <span> ${data.vol} ${
+        //     data._collateral
+        // }</span></p>`,
     });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
 
@@ -669,13 +667,11 @@ export const onExercise = async (data, callBack) => {
     await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            bus.$emit('ONEXERCISE_END', data.bidID);
         }
     });
     await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            bus.$emit('ONEXERCISE_END', data.bidID);
         }
     });
 
@@ -711,13 +707,12 @@ export const onExercise = async (data, callBack) => {
                 }
                 setTimeout(() => {
                     bus.$emit('REFRESH_ALL_DATA');
-                    bus.$emit('ONEXERCISE_END', data.bidID);
                 }, 1000);
             }
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            bus.$emit('ONEXERCISE_END', data.bidID);
+
             if (error && error.message) {
                 Message({
                     message: error && error.message,
@@ -866,9 +861,6 @@ export const RePrice = async (data) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {
             bus.$emit('CLONE_REPRICE');
-            bus.$emit('CHANGE_MY_TYPE', 1);
-            bus.$emit('CHANGE_TRADE_TYPE', 1);
-            //onChangeHash(hash);
         })
         .on('confirmation', (confirmationNumber, receipt) => {
             if (confirmationNumber === 0) {

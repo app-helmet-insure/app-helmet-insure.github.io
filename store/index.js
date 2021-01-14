@@ -48,7 +48,6 @@ export const state = () => ({
         },
     ],
     // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],
-    typeList: ['WETH', 'WBTC', 'OTHERS'],
     coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE'],
     // coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE', 'CTK', 'FORTUBE'],
     typeFixObj: {
@@ -101,7 +100,7 @@ export const state = () => ({
     ETH_DAI_LPT: 0,
     myUNI: 0,
     myPAYA: 0,
-
+    BNB_BUSD: 0,
     helmetVarieties: 0, // 已经成交的保险品种的种类
     totalHelmetsBorrowedVolume: 0, // 保险交易过的资金量  （保单数量累加， vol 用抵押物处理）
     longTokenCreatedVolume: 0, // 24小时Long token 铸造量
@@ -115,8 +114,9 @@ export const state = () => ({
         FOR_BNB: false,
         BNB_FOR: false,
     },
-    // dueDate: '2021-02-08 00:00',
-    dueDate: '--',
+    dueDate: '2021-02-15 00:00',
+    helmetDate: '2021-01-22 00:00',
+    // dueDate: '--',
     allIndexPrice: [
         {
             HELMET: 0,
@@ -276,6 +276,9 @@ export const mutations = {
     },
     SET_REPRICE_MAP(state, data) {
         state.repriceMap = data;
+    },
+    SET_BNB_BUSD(state, data) {
+        state.BNB_BUSD = data;
     },
 };
 

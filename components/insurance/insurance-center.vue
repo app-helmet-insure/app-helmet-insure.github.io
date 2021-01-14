@@ -21,6 +21,7 @@
     <Echart></Echart>
     <InsuranceType
       @changeType="handleClickTradeType"
+      :currentCoin="curCoin"
       :currentType="TradeType"
     ></InsuranceType>
     <Balance
@@ -63,7 +64,7 @@ export default {
   data() {
     return {
       type: "buy",
-      curCoin: "HELMET",
+      curCoin: "ETH",
       TradeType: 1,
       repriceflag: false,
       option: {},

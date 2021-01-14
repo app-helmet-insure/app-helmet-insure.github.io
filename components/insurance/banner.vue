@@ -37,10 +37,10 @@
   </div>
 </template>
 <script>
-import precision from '~/assets/js/precision.js';
-import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js';
+import precision from "~/assets/js/precision.js";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 export default {
-  name: 'insurance-banner',
+  name: "insurance-banner",
   data() {
     return {
       precision: precision,
@@ -74,6 +74,7 @@ export default {
       return this.$store.state.assets.validBorrowing;
     },
   },
+
   mounted() {
     if (window.chainID == 56) {
       this.getBannerData();
@@ -82,11 +83,11 @@ export default {
   methods: {
     async getBannerData() {
       setTimeout(() => {
-        this.$store.dispatch('getTotalHelmet'); //获取 Helmet 总量
-        this.$store.dispatch('getBalanceMine'); //获取 Helmet 矿山余额
-        this.$store.dispatch('getClaimAbleHelmet'); //获取 所有待结算 Helmet
-        this.$store.dispatch('getValidBorrowing'); //获取 有效成交
-      }, 1000);
+        this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
+        this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
+        this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
+        this.$store.dispatch("getValidBorrowing"); //获取 有效成交
+      }, 2000);
     },
   },
 };

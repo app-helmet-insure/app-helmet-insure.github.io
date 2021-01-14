@@ -58,7 +58,7 @@ export default {
       precision,
       Rent: 0,
       indexPx: 0.0033,
-      strikePrice: 0.0067,
+      strikePrice: 0.0049,
       unit: "BNB",
       currency: "WBNB",
       earnings: 0,
@@ -81,13 +81,19 @@ export default {
     _expiry() {
       return this.$store.state.dueDate;
     },
+    helmetTime() {
+      return this.$store.state.helmetDate;
+    },
     // 保费参数
     RentGrounp() {
       return {
         dpr: this.dpr,
         indexPx: this.indexPx,
         strikePrice: this.strikePrice,
-        _expiry: new Date(this._expiry) * 1,
+        _expiry:
+          this.currentCoin == "HELMET"
+            ? new Date(this.helmetTime) * 1
+            : new Date(this._expiry) * 1,
         num: this.volume,
       };
     },
@@ -99,6 +105,9 @@ export default {
     },
     BalanceArray() {
       return this.$store.state.BalanceArray;
+    },
+    BNB_BUSD() {
+      return this.$store.state.BNB_BUSD;
     },
   },
   watch: {
@@ -141,6 +150,9 @@ export default {
       // 到期日
       // 结算token
       // 单价
+      if (this.currentCoin != "ETH") {
+        return;
+      }
       let data;
       if (this.currentType == 2) {
         data = {
@@ -148,7 +160,7 @@ export default {
           annual: this.dpr,
           category: this.currentCoin, //
           currency: this.currency, //
-          expire: this._expiry, //
+          expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
           premium: this.Rent,
           price: this.strikePrice,
           volume: this.volume, //
@@ -156,14 +168,13 @@ export default {
           _yield: 0,
         };
         onIssueSellOnETH(data, (status) => {});
-        this.$bus.$emit("CHANGE_TRADE_TYPE", 1);
       } else {
         data = {
           private: false, //
           annual: this.dpr,
           category: this.currency, //
           currency: this.currentCoin, //
-          expire: this._expiry, //
+          expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
           premium: this.Rent,
           price: this.strikePrice,
           volume: this.volume, //
@@ -171,8 +182,8 @@ export default {
           _yield: 0,
         };
         onIssueSell(data, (status) => {});
-        this.$bus.$emit("CHANGE_TRADE_TYPE", 1);
       }
+      console.log(data);
     },
     watchRent(newValue) {
       if (!newValue.dpr || !newValue.num) {
@@ -243,10 +254,19 @@ export default {
         px = list[1][coin];
         exPx = list[1][coin] * 2;
         this.unit = coin;
+        if (this.currentCoin == "HELMET") {
+          this.strikePrice = addCommom(0.2 / this.BNB_BUSD, 4);
+        }
       } else {
         px = list[1][coin];
         exPx = list[1][coin] * 0.5;
         this.unit = "BNB";
+        if (this.currentCoin == "HELMET") {
+          this.strikePrice = addCommom(0.12 / this.BNB_BUSD, 4);
+        }
+      }
+      if (this.currentCoin == "HELMET") {
+        return;
       }
       this.indexPx = px;
       this.strikePrice = exPx;

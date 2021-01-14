@@ -54,7 +54,7 @@ export default {
       };
       RePrice(data);
 
-      this.$bus.$emit("CLOSE_REPRICE");
+      
     },
   },
 };

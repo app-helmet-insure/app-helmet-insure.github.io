@@ -35,7 +35,7 @@ export default {
   props: ["currentCoin"],
   data() {
     return {
-      curCoin: "HELMET",
+      curCoin: "ETH",
       showTokens: false,
     };
   },
@@ -184,7 +184,7 @@ export default {
     .token_item {
       position: absolute;
       z-index: 0;
-      width: 200px;
+      width: calc(100% - 171px);
       overflow: hidden;
       ::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);

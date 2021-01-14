@@ -152,9 +152,12 @@ export default {
       immediate: true,
     },
   },
+  mounted() {},
   methods: {
     myAboutInfoBuyWatch(newValue) {
       if (newValue) {
+        this.page = 0;
+        this.limit = 5;
         this.setSettlementList(newValue);
       }
     },
@@ -240,9 +243,9 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day} ${this.$t("Content.DayM")} ${hour} ${this.$t(
+      let template = `${day}${this.$t("Content.DayM")}${hour}${this.$t(
         "Content.HourM"
-      )} ${minute} ${this.$t("Content.MinM")} ${second} ${this.$t(
+      )}${minute}${this.$t("Content.MinM")}${second}${this.$t(
         "Content.SecondM"
       )}`;
       return template;

@@ -25,9 +25,7 @@
           $t("Header.GuideBook")
         }}</a>
       </div>
-      <!-- <Assets v-if="userInfo.data.isLogin"></Assets> -->
       <!-- 分割线 -->
-      <!-- <i class="cut-line" v-if="userInfo.data.isLogin"></i> -->
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -63,7 +61,6 @@
 import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
-import Assets from "~/components/common/assets.vue";
 import Langauage from "~/components/common/langauage.vue";
 export default {
   name: "p-header",
@@ -71,7 +68,6 @@ export default {
     WallectSelect,
     CurrentAccount,
     ChangeAccount,
-    Assets,
     Langauage,
   },
   data() {
@@ -164,7 +160,8 @@ export default {
           background: url("../../assets/img/helmet/comingsoon@2x.png") no-repeat;
           height: 33px;
           background-size: cover;
-          transform: translateX(40%);
+          right: 0;
+          transform: translateX(75%);
         }
         &::after {
           display: none;

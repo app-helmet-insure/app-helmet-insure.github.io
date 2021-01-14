@@ -3,14 +3,15 @@
     <div class="swiper-wrapper">
       <div class="text swiper-slide">
         <div>
-          <h3>{{ $t("Banner.Title") }}</h3>
+          <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
           <span
-            >{{ $t("Banner.Text") }}
-            <a href="https://pancakeswap.finance/ifo" target="_blank"
+            >919,199.5872 CAKE 12,859.9603 BNB
+
+            <!-- <a href="https://pancakeswap.finance/ifo" target="_blank"
               >{{ $t("Banner.ReadMore") }}
-            </a>
+            </a> -->
           </span>
-          <div>
+          <!-- <div>
             <p>
               <i>{{ day }}</i>
               <span>DAYS</span>
@@ -25,12 +26,15 @@
               <i>{{ minute }} </i>
               <span>MINUTES</span>
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="img swiper-slide">
-        <h3>{{ $t("Banner.TradeStart") }}</h3>
-        <p>{{ $t("Banner.TradeTime") }}</p>
+        <h3>
+          <!-- {{ $t("Banner.TradeStart") }} -->
+          Policy trading start
+        </h3>
+        <!-- <p>{{ $t("Banner.TradeTime") }}</p> -->
       </div>
     </div>
     <div class="swiper-pagination"></div>
@@ -51,12 +55,6 @@ export default {
 
   mounted() {
     this.init();
-    setInterval(() => {
-      setTimeout(() => {
-        this.getDownTime();
-      }, 0);
-      clearTimeout();
-    }, 1000);
   },
   watch: {
     day(newVal, val) {
@@ -93,24 +91,6 @@ export default {
           clickable: true,
         },
       });
-    },
-    getDownTime() {
-      let now = new Date() * 1;
-      let list = this.miningList;
-      let dueDate = "2021-01-13 17:02:45";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      this.day = 0;
-      this.hour = 0;
-      this.minute = 0;
     },
   },
 };
@@ -162,12 +142,15 @@ export default {
       justify-content: space-between;
       div {
         h3 {
-          width: 690px;
+          width: 404px;
           font-size: 24px;
           font-weight: 600;
           color: #121212;
           line-height: 33px;
-          margin: 50px 0 6px 0;
+          margin: 50px 0 16px 0;
+          i {
+            color: #ff9600;
+          }
         }
         span {
           color: #919aa6;
@@ -175,6 +158,7 @@ export default {
           font-size: 14px;
           font-weight: 600;
           line-height: 20px;
+
           a {
             color: #ff9600;
           }
@@ -268,6 +252,9 @@ export default {
           color: #121212;
           line-height: 33px;
           margin: 50px 0 6px 0;
+          i {
+            color: #ff9600;
+          }
         }
         span {
           color: #919aa6;

@@ -163,9 +163,12 @@ export default {
       immediate: true,
     },
   },
+
   methods: {
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
+        this.page = 0;
+        this.limit = 5;
         this.setSettlementList(newValue);
       }
     },

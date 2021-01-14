@@ -5,9 +5,8 @@
         <span>{{ $t("Content.InsurancePrice") }}</span>
         <p>
           1 {{ currentCoin == "FORTUBE" ? "FOR" : currentCoin }} :
-          <!-- {{ strikePrice }} BNB -->
-          {{ currentCoin == "HELMET" ? "--" : strikePrice }} BNB
-          <!-- {{ unit }} ≈ {{ HelmetPrice }}HELMET -->
+          {{ currentCoin == "ETH" ? strikePrice : "--" }} BNB
+          <!-- {{ currentCoin == "HELMET" ? "--" : strikePrice }} BNB -->
         </p>
       </div>
       <div>
@@ -16,8 +15,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-time"></use>
           </svg>
-          <!-- {{ dueDate }} -->
-          --
+          {{ currentCoin != "ETH" ? "--" : dueDate }}
+          <!-- {{ currentCoin == "HELMET" ? helmetDate : dueDate }} -->
+          <!-- -- -->
         </p>
       </div>
     </section>
@@ -78,9 +78,10 @@ export default {
       autoRounding,
       fixD,
       addCommom,
-      strikePrice: 0.0067,
+      strikePrice: 0.0049,
       // strikePrice: "--",
       dueDate: 0,
+      helmetDate: 0,
     };
   },
   computed: {
@@ -99,6 +100,10 @@ export default {
     BalanceArray() {
       let obj = this.$store.state.BalanceArray;
       return obj;
+    },
+    BNB_BUSD() {
+      let num = this.$store.state.BNB_BUSD;
+      return num;
     },
   },
   watch: {
@@ -131,7 +136,11 @@ export default {
     },
     IndexPxArray(newValue, value) {
       if (newValue) {
-        this.strikePrice = 0.0067;
+        this.strikePrice = addCommom(
+          this.IndexPxArray[1][this.currentCoin] * 2,
+          4
+        );
+        // this.strikePrice = addCommom(0.2 / this.BNB_BUSD, 4);
       }
     },
   },
@@ -139,9 +148,11 @@ export default {
     setInterval(() => {
       setTimeout(() => {
         this.getDownTime();
+        this.getHelmetTime();
       });
       clearTimeout();
-    }, 2000);
+    }, 1000);
+    console.log(this.IndexPxArray);
   },
   methods: {
     // 倒计时
@@ -157,14 +168,32 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day} ${this.$t("Content.Day")} ${hour} ${this.$t(
+      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
         "Content.Hour"
-      )} ${minute} ${this.$t("Content.Min")} ${second} ${this.$t(
+      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
         "Content.Second"
       )}`;
       this.dueDate = template;
     },
-
+    getHelmetTime(time) {
+      let now = new Date() * 1;
+      let dueDate = new Date(this.$store.state.helmetDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
+        "Content.Hour"
+      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
+        "Content.Second"
+      )}`;
+      this.helmetDate = template;
+    },
     undAndColWatch(newValue) {
       let list = this.IndexPxArray;
       let coin = newValue.underly;
@@ -179,10 +208,19 @@ export default {
         px = list[1][coin];
         exPx = list[1][coin] * 2;
         this.unit = "WBNB";
+        if (this.currentCoin == "HELMET") {
+          this.strikePrice = addCommom(0.2 / this.BNB_BUSD, 4);
+        }
       } else {
         px = list[1][coin];
         exPx = list[1][coin] * 0.5;
         this.unit = "WBNB";
+        if (this.currentCoin == "HELMET") {
+          this.strikePrice = addCommom(0.12 / this.BNB_BUSD, 4);
+        }
+      }
+      if (this.currentCoin == "HELMET") {
+        return;
       }
       this.indexPx = fixD(toRounding(px, 4), 4);
       this.strikePrice = fixD(toRounding(exPx, 4), 4);
@@ -199,11 +237,7 @@ export default {
     section {
       display: flex;
       > div {
-        &:nth-of-type(1) {
-          width: 250px;
-        }
-        width: 300px;
-
+        margin-right: 30px;
         span {
           font-size: 14px;
           color: #919aa6;

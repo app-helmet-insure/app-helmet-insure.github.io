@@ -61,7 +61,7 @@ export default {
     return {
       str: "0,150 500,150 1080,0",
       xAis: ["25%", "50%", "75%"],
-      curCoin: "HELMET",
+      curCoin: "ETH",
       price: {},
       linePrice: {},
       toRounding,

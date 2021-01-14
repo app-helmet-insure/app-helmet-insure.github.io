@@ -109,6 +109,9 @@ export default {
     BNB_BUSD() {
       return this.$store.state.BNB_BUSD;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
   watch: {
     dpr(newValue, val) {
@@ -150,7 +153,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      if (this.currentCoin != "ETH" && this.currentCoin != "BTCB") {
+      if (this.currentCoin == "HELMET") {
         return;
       }
       let data;
@@ -162,7 +165,7 @@ export default {
           currency: this.currency, //
           expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
           premium: this.Rent,
-          price: this.strikePrice,
+          price: this.strikePriceArray[1][this.currentCoin],
           volume: this.volume, //
           settleToken: "HELMET",
           _yield: 0,
@@ -176,12 +179,13 @@ export default {
           currency: this.currentCoin, //
           expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
           premium: this.Rent,
-          price: this.strikePrice,
+          price: this.strikePriceArray[0][this.currentCoin],
           volume: this.volume, //
           settleToken: "HELMET",
           _yield: 0,
         };
         onIssueSell(data, (status) => {});
+        console.log(data);
       }
     },
     watchRent(newValue) {

@@ -325,6 +325,7 @@ export default {
         const key = list[i];
         putIndexPirce[key] = px;
       }
+
       let arr = [];
       let arr1 = [];
       let bnbHelmet = callIndexPirce["HELMET"] || 0;
@@ -363,6 +364,7 @@ export default {
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$bus.$emit("DRAW_ECHART");
+      console.log(arr);
     },
   },
 };

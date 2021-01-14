@@ -40,6 +40,7 @@ import {
   getOptionCreatedLog,
   getSellLog,
   getBuyLog,
+  
 } from "~/interface/order.js";
 import { getID } from "~/assets/utils/address-pool.js";
 import { mateMaskInfo } from "~/assets/utils/matemask.js";
@@ -364,7 +365,6 @@ export default {
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$bus.$emit("DRAW_ECHART");
-      console.log(arr);
     },
   },
 };

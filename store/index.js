@@ -453,6 +453,7 @@ export const actions = {
                 longInfo,
             };
         }
+
         commit('SET_ABOUT_INFO_SELL', { aboutInfoSell, myAboutInfoSell });
         commit('SET_SELL_OBJ', sellObj);
         commit('SET_NOT_EXPRIED_ABOUT_INFO_SELL', notExpiredAboutInfoSell); // 设置未过期的数据
@@ -477,7 +478,9 @@ export const actions = {
         let _col;
         for (let key in buyMap) {
             item = buyMap[key];
+
             sellInfo = sellObj[item.askID];
+
             // 过滤垃圾数据
             // 过滤未创建settleable 之前的数据
             // 过滤数量为0的数据
@@ -522,7 +525,26 @@ export const actions = {
                         });
                     }
                 }
+            } else {
+                if (item.buyer.toLowerCase() === myAddress) {
+                    let newItem;
+                    let newSellInfo;
+                    for (let i = 0; i < state.repriceMap.length; i++) {
+                        newItem = state.repriceMap[i];
+                        if (newItem.newAskID == item.askID) {
+                            newSellInfo = newItem;
+                            let sellInfo = sellObj[newItem.askID].longInfo;
+                            myAboutInfoBuy.push({
+                                new: true,
+                                ...newItem,
+                                ...item,
+                                sellInfo: { longInfo: sellInfo },
+                            });
+                        }
+                    }
+                }
             }
+            console.log(myAboutInfoBuy);
         }
 
         commit('SET_ABOUT_INFO_BUY', {

@@ -173,18 +173,32 @@ export default {
       let bidIDArr;
       for (let i = 0; i < list.length; i++) {
         item = list[i];
-        let Token = getTokenName(item.sellInfo.longInfo._collateral);
-        // 数量
-        amount = fromWei(item.vol, Token);
-        // 保单价格
-        InsurancePrice = fromWei(
-          item.sellInfo.price,
-          Token == "CTK" ? 30 : Token
-        );
-        // 保费
-        Rent = precision.times(amount, InsurancePrice);
-        //倒计时
-        downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
+        if (item.new) {
+          console.log(item);
+          let Token = getTokenName(item.sellInfo.longInfo._collateral);
+          // 数量
+          amount = fromWei(item.vol, Token);
+          // 保单价格
+          InsurancePrice = fromWei(item.newPrice, Token == "CTK" ? 30 : Token);
+          // 保费
+          Rent = precision.times(amount, InsurancePrice);
+          //倒计时
+          downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
+        } else {
+          let Token = getTokenName(item.sellInfo.longInfo._collateral);
+          // 数量
+          amount = fromWei(item.vol, Token);
+          // 保单价格
+          InsurancePrice = fromWei(
+            item.sellInfo.price,
+            Token == "CTK" ? 30 : Token
+          );
+          // 保费
+          Rent = precision.times(amount, InsurancePrice);
+          //倒计时
+          downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
+        }
+
         resultItem = {
           id: item.bidID,
           bidID: item.bidID,
@@ -206,6 +220,7 @@ export default {
           short: item.sellInfo.longInfo.short,
           count: item.sellInfo.longInfo.count,
         };
+
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Dated";
           resultItem["sort"] = 0;

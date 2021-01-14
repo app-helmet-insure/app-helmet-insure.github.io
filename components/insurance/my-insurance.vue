@@ -238,6 +238,7 @@ export default {
         InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
         //倒计时
         downTime = new Date(item.longInfo._expiry * 1000).toLocaleDateString();
+
         //已出售
         // beSold = fromWei(this.getBeSold(item.askID), Token);
         // unSold = precision.minus(amount, beSold);
@@ -279,7 +280,7 @@ export default {
           resultItem["sort"] = 0;
         }
         resultItem["remain"] = askRes;
-        if (resultItem.remain != 0) {
+        if (resultItem.remain != 0 || resultItem.sort != 0) {
           result.push(resultItem);
         }
       }
@@ -317,8 +318,6 @@ export default {
       let array = list.filter((item) => item.askID === id)[0];
       if (array && array.askID) {
         let arr = this.getNewPrice(array.newAskID, array);
-        console.log(arr);
-
         return arr;
       }
       return rtArray;

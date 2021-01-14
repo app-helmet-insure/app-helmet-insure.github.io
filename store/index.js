@@ -154,8 +154,8 @@ export const state = () => ({
         },
     ],
     strikePriceArray: [
-        { BTCB: 1864, ETH: 56.7, HELMET: 0.05, CAKE: 0.03 },
-        { BTCB: 467, ETH: 14.15, HELMET: 0.03, CAKE: 0.0075 },
+        { BTCB: 1864, ETH: 56.7, HELMET: 0.005, CAKE: 0.03 },
+        { BTCB: 467, ETH: 14.15, HELMET: 0.003, CAKE: 0.0075 },
     ],
     BalanceArray: {
         HELMET: 0,

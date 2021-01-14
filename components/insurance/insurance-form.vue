@@ -150,7 +150,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      if (this.currentCoin != "ETH") {
+      if (this.currentCoin != "ETH" && this.currentCoin != "BTCB") {
         return;
       }
       let data;
@@ -183,7 +183,6 @@ export default {
         };
         onIssueSell(data, (status) => {});
       }
-      console.log(data);
     },
     watchRent(newValue) {
       if (!newValue.dpr || !newValue.num) {
@@ -219,7 +218,6 @@ export default {
             number,
             Math.min(precision.minus(strikePrice, indexPx), 0)
           );
-
           earnings = -(Math.max(indexPx - strikePrice, 0) - premium);
         } else {
           number = precision.times(

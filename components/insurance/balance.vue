@@ -5,7 +5,12 @@
         <span>{{ $t("Content.InsurancePrice") }}</span>
         <p>
           1 {{ currentCoin == "FORTUBE" ? "FOR" : currentCoin }} :
-          {{ currentCoin == "ETH" ? strikePrice : "--" }} BNB
+          {{
+            currentCoin == "ETH" || this.currentCoin == "BTCB"
+              ? strikePrice
+              : "--"
+          }}
+          BNB
           <!-- {{ currentCoin == "HELMET" ? "--" : strikePrice }} BNB -->
         </p>
       </div>
@@ -15,7 +20,9 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-time"></use>
           </svg>
-          {{ currentCoin != "ETH" ? "--" : dueDate }}
+          {{
+            currentCoin != "ETH" && this.currentCoin != "BTCB" ? "--" : dueDate
+          }}
           <!-- {{ currentCoin == "HELMET" ? helmetDate : dueDate }} -->
           <!-- -- -->
         </p>
@@ -152,7 +159,6 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    console.log(this.IndexPxArray);
   },
   methods: {
     // 倒计时

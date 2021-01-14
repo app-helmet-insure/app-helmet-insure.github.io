@@ -20,8 +20,9 @@
       <li>
         <!-- Helmet流通量 -->
         <p>
-          <label>{{ $t("Banner.HelmetTransfer") }}</label>
-          <span>{{
+          <label>{{ $t("Banner.HelmetPcice") }}</label>
+          <span>
+            <!-- {{
             addCommom(
               precision.plus(
                 precision.minus(totalHelmet, balanceMine),
@@ -29,7 +30,9 @@
               ),
               2
             )
-          }}</span>
+          }} -->
+            {{ helmetPrice }} BNB
+          </span>
         </p>
         <img src="~/assets/img/helmet/ba3@2x.png" alt="" />
       </li>
@@ -46,6 +49,7 @@ export default {
       precision: precision,
       fixD: fixD,
       addCommom: addCommom,
+      helmetPrice: 0,
     };
   },
   computed: {
@@ -73,11 +77,21 @@ export default {
     frequency() {
       return this.$store.state.assets.validBorrowing;
     },
+    indexArray() {
+      let list = this.$store.state.allIndexPrice;
+      return list;
+    },
+    helmetPrice(newVal, val) {
+      if (!newVal) {
+        this.getPrice();
+      }
+    },
   },
 
   mounted() {
     if (window.chainID == 56) {
       this.getBannerData();
+      this.getPrice();
     }
   },
   methods: {
@@ -88,6 +102,10 @@ export default {
         this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
       }, 2000);
+    },
+    getPrice() {
+      let price = this.indexArray[1]["HELMET"];
+      this.helmetPrice = price;
     },
   },
 };

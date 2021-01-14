@@ -53,7 +53,11 @@
             <td>{{ item.dueDate }}</td>
             <td class="option">
               <!-- <button class="o_button">{{ $t("Table.outSure") }}</button> -->
-              <button class="b_button" @click="toMining">
+              <button
+                class="b_button"
+                style="bakcground: #ccc"
+                @click="toMining"
+              >
                 {{ $t("Table.Stakeing") }}
               </button>
             </td>

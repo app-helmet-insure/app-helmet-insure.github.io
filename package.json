@@ -1,7 +1,7 @@
 {
   "name": "helmet",
   "version": "0.0.1",
-  "description": "trxage",
+  "description": "Crypto-assets insurance trading platform on BSC",
   "author": "sunny",
   "private": true,
   "devDependencies": {

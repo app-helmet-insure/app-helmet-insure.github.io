@@ -11,9 +11,11 @@
         @click="handleClickInsurance(2)"
         :class="insurance_type == 2 ? 'orange' : ''"
       >
-        {{ $t("Content.HalfInsurance") }}
-        <span v-if="currentCoin != 'HELMET'">-50%</span>
-        <i v-if="currentCoin != 'HELMET'"></i>
+        <p v-if="currentCoin != 'HELMET'">
+          {{ $t("Content.HalfInsurance") }}<span>-50%</span>
+          <i></i>
+        </p>
+
         <img src="~/assets/img/helmet/helmet_coin.png" alt="" v-else />
       </button>
     </div>
@@ -79,7 +81,7 @@ export default {
           margin: auto 0px auto 4px;
         }
         img {
-          width: 95px;
+          width: 162px;
           height: 32px;
           display: flex;
           align-self: center;
@@ -129,6 +131,12 @@ export default {
           background-repeat: no-repeat;
           background-size: cover;
           margin: auto 0px auto 4px;
+        }
+        img {
+          width: 152px;
+          height: 30px;
+          display: flex;
+          align-self: center;
         }
         &:nth-of-type(1) {
           color: #00b900;

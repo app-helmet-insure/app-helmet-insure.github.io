@@ -81,11 +81,6 @@ export default {
       let list = this.$store.state.allIndexPrice;
       return list;
     },
-    helmetPrice(newVal, val) {
-      if (!newVal) {
-        this.getPrice();
-      }
-    },
   },
   watch: {
     IndexPxArray: {

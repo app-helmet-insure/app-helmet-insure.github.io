@@ -39,9 +39,9 @@
           <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
           <div class="input">
             <input name="deposit" type="text" v-model="DepositeNum" />
-            <span @click="DepositeNum = balance.Deposite">{{
+            <!-- <span @click="DepositeNum = balance.Deposite">{{
               $t("Table.Max")
-            }}</span>
+            }}</span> -->
           </div>
         </div>
         <div class="button">
@@ -75,9 +75,9 @@
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
           <div class="input">
             <input name="withdraw" type="text" v-model="WithdrawNum" />
-            <span @click="WithdrawNum = balance.Withdraw">{{
+            <!-- <span @click="WithdrawNum = balance.Withdraw">{{
               $t("Table.Max")
-            }}</span>
+            }}</span> -->
           </div>
         </div>
         <div class="button">

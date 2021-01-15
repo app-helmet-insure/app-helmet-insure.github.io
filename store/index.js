@@ -531,14 +531,15 @@ export const actions = {
                         newItem = state.repriceMap[i];
                         if (newItem.newAskID == item.askID) {
                             let sellInfo = sellObj[newItem.askID];
-
-                            let list = JSON.parse(JSON.stringify(sellInfo));
-                            list['price'] = newItem.newPrice;
-                            list['askID'] = newItem.newAskID;
-                            myAboutInfoBuy.push({
-                                ...item,
-                                sellInfo: list,
-                            });
+                            if (sellInfo) {
+                                let list = JSON.parse(JSON.stringify(sellInfo));
+                                list['price'] = newItem.newPrice;
+                                list['askID'] = newItem.newAskID;
+                                myAboutInfoBuy.push({
+                                    ...item,
+                                    sellInfo: list,
+                                });
+                            }
                         }
                     }
                 }

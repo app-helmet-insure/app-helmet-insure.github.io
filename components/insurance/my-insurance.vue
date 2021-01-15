@@ -354,7 +354,7 @@ export default {
       this.showList = list;
     },
     toMining() {
-      // this.$router.push("/mining");
+      this.$router.push("/mining");
     },
   },
 };

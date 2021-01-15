@@ -174,7 +174,6 @@ export default {
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         if (item.new) {
-          console.log(item);
           let Token = getTokenName(item.sellInfo.longInfo._collateral);
           // 数量
           amount = fromWei(item.vol, Token);
@@ -268,6 +267,7 @@ export default {
     // 行权
     toActive(item) {
       console.log(item);
+
       let data = {
         token: getTokenName(item._underlying),
         _underlying_vol: item.volume * item._strikePrice,
@@ -277,7 +277,9 @@ export default {
         exPrice: autoRounding(precision.divide(1, item._strikePrice)),
         _underlying: getTokenName(item._underlying),
         _collateral: getTokenName(item._collateral),
-        settleToken: getTokenName(item.settleToken),
+        settleToken: item.settleToken
+          ? getTokenName(item.settleToken)
+          : getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
       };
       onExercise(data);
     },

@@ -9,17 +9,7 @@
     <ul class="navList">
       <li v-for="item in this.renderList" :key="item.url" @click="closeMask">
         <a v-if="item.link" :href="item.url">{{ item.text }}</a>
-        <span
-          v-else
-          @click="toPath(item)"
-          :style="
-            item.url == '/mining'
-              ? 'color: #ccc !important;pointer-events: none;'
-              : ''
-          "
-          >{{ item.text }}
-          <i v-if="item.url == '/mining'"></i>
-        </span>
+        <span v-else @click="toPath(item)">{{ item.text }} </span>
       </li>
     </ul>
     <ul class="navList">

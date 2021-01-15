@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="text swiper-slide">
+      <div class="text bg1 swiper-slide">
         <div>
           <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
           <span
@@ -29,12 +29,20 @@
           </div> -->
         </div>
       </div>
+
       <div class="img swiper-slide">
         <h3>
           <!-- {{ $t("Banner.TradeStart") }} -->
           Policy trading start
         </h3>
         <!-- <p>{{ $t("Banner.TradeTime") }}</p> -->
+      </div>
+      <div class="text bg2 swiper-slide">
+        <div>
+          <h3>Double Mining Rewards <i>HELMET & CAKE</i> 30 Days</h3>
+
+          <span>Start: Jan. 15th 18:00 SGT </span>
+        </div>
       </div>
     </div>
     <div class="swiper-pagination"></div>
@@ -130,19 +138,33 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .text {
-      width: 1200px;
-      height: 220px;
-      padding: 0 60px;
+    .bg1 {
       background-image: url("../../assets/img/helmet/banner_ill.png");
       background-size: 344px 200px;
       background-position: 90% center;
       background-repeat: no-repeat;
+      h3 {
+        width: 404px;
+      }
+    }
+    .bg2 {
+      background-image: url("../../assets/img/helmet/helmetPool.png");
+      background-size: 448px 220px;
+      background-position: 95% center;
+      background-repeat: no-repeat;
+      h3 {
+        width: 500px;
+      }
+    }
+    .text {
+      width: 1200px;
+      height: 220px;
+      padding: 0 60px;
+
       display: flex;
       justify-content: space-between;
       div {
         h3 {
-          width: 404px;
           font-size: 24px;
           font-weight: 600;
           color: #121212;
@@ -234,11 +256,28 @@ export default {
     .swiper-slide {
       display: flex;
     }
+    .bg1 {
+      background-image: url("../../assets/img/helmet/banner_ill.png");
+      background-size: 320px 196px;
+      background-position: center 100%;
+      background-repeat: no-repeat;
+      h3 {
+        width: 404px;
+      }
+    }
+    .bg2 {
+      background-image: url("../../assets/img/helmet/helmetPool.png");
+      background-size: 320px 196px;
+      background-position: center 100%;
+      background-repeat: no-repeat;
+      h3 {
+        width: 500px;
+      }
+    }
     .text {
       width: 100%;
       height: 475px;
       padding: 0 28px;
-      background-image: url("../../assets/img/helmet/banner_ill.png");
       background-size: 320px 196px;
       background-position: center 100%;
       background-repeat: no-repeat;

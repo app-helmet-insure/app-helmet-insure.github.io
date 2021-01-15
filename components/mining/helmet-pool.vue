@@ -48,7 +48,6 @@
           <button
             @click="toDeposite"
             :class="stakeLoading ? 'disable b_button' : 'b_button'"
-            style="background: #ccc !important; pointer-events: none"
           >
             <i :class="stakeLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmDeposit") }}
@@ -59,7 +58,7 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span> {{ balance.Deposite }} LPT/{{ balance.TotalLPT }} LPT</span>
+            <span> {{ balance.Withdraw }} LPT/{{ balance.TotalLPT }} LPT</span>
           </p>
           <p>
             <span>My Pool Share：</span>
@@ -85,7 +84,6 @@
           <button
             @click="toExit"
             :class="exitLoading ? 'disable b_button' : 'b_button'"
-            style="background: #ccc !important; pointer-events: none"
           >
             <i :class="exitLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmWithdraw") }} &
@@ -94,13 +92,18 @@
           <p>
             <span>{{ $t("Table.HELMETRewards") }}：</span>
             <span>
-              {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }} HELMET</span
-            >
+              <span
+                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} CAKE</span
+              >
+              <span>
+                {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
+                HELMET</span
+              >
+            </span>
           </p>
           <button
             @click="toClaim"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
-            style="background: #ccc !important; pointer-events: none"
           >
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
@@ -117,7 +120,8 @@ import {
   balanceOf,
   getLPTOKEN,
   CangetPAYA,
-  getPAYA,
+  CangetUNI,
+  getDoubleReward,
   exitStake,
   getLastTime,
   approveStatus,
@@ -140,12 +144,12 @@ export default {
           color: "#00B900",
           unit: "（weekly）",
         },
-        {
-          text: this.$t("Table.PoolAPY"),
-          num: 0,
-          color: "#00B900",
-          unit: "",
-        },
+        // {
+        //   text: this.$t("Table.PoolAPY"),
+        //   num: 0,
+        //   color: "#00B900",
+        //   unit: "",
+        // },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
         //   num: 0,
@@ -169,6 +173,7 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
+        Cake: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -181,7 +186,7 @@ export default {
   },
   mounted() {
     this.$bus.$on("DEPOSITE_LOADING", (data) => {
-      this.depositeLoading = data.status;
+      this.stakeLoading = false;
     });
     this.$bus.$on("CLAIM_LOADING", (data) => {
       this.claimLoading = false;
@@ -200,22 +205,28 @@ export default {
   computed: {},
   methods: {
     async getBalance() {
-      let lpttype = "HELMETBNB_LPT";
+      let helmetType = "HELMETBNB_LPT";
       let type = "HELMETBNB";
+      let cakeType = "CAKEHELMET_LPT";
       // 可抵押数量
-      let Deposite = await getBalance(lpttype);
+      let Deposite = await getBalance(helmetType);
       // 可赎回数量
       let Withdraw = await getLPTOKEN(type);
       // 总抵押
       let TotalLPT = await totalSupply(type);
-      // 可领取
+      // 可领取Helmet
       let Helmet = await CangetPAYA(type);
+      //  可领取Cake
+      let Cake = await CangetUNI(type);
+      // 总Helmet
+      let totalHelmet = await totalSupply(helmetType);
 
       this.balance.Deposite = addCommom(Deposite, 4);
       this.balance.Withdraw = addCommom(Withdraw, 4);
-      this.balance.Helmet = addCommom(Helmet, 4);
+      this.balance.Helmet = addCommom(Helmet, 8);
+      this.balance.Cake = addCommom(Cake, 8);
       this.balance.TotalLPT = addCommom(TotalLPT, 4);
-      this.balance.Share = toRounding(Deposite / TotalLPT, 1) * 100;
+      this.balance.Share = addCommom((Withdraw / TotalLPT) * 100, 1);
       this.textList[0].num = addCommom((totalHelmet / 30) * 7, 4);
       // this.textList[2].num = addCommom(TotalLPT, 4)
       // this.textList[3].num = addCommom(Deposite, 4)
@@ -240,7 +251,7 @@ export default {
       }
       this.claimLoading = true;
       let type = "HELMETBNB";
-      let res = await getPAYA(type);
+      let res = await getDoubleReward(type);
     },
     // 退出
     async toExit() {
@@ -319,7 +330,7 @@ export default {
     }
     .text {
       display: flex;
-      padding: 0 140px;
+      // padding: 0 140px;
       justify-content: flex-end;
       margin-top: 28px;
       p {
@@ -394,7 +405,7 @@ export default {
             span {
               font-size: 14px;
               color: #121212;
-              &:first-of-type {
+              > &:first-of-type {
                 font-size: 14px;
                 color: #919aa6;
               }
@@ -452,7 +463,7 @@ export default {
     }
     .text {
       display: flex;
-      padding: 0 140px;
+      // padding: 0 140px;
       justify-content: flex-end;
       margin-top: 28px;
       p {
@@ -530,6 +541,10 @@ export default {
               &:first-of-type {
                 font-size: 14px;
                 color: #919aa6;
+              }
+              span {
+                display: flex;
+                flex-direction: column;
               }
             }
           }

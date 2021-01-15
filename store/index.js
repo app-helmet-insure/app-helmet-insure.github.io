@@ -544,7 +544,6 @@ export const actions = {
                     }
                 }
             }
-            console.log(myAboutInfoBuy);
         }
 
         commit('SET_ABOUT_INFO_BUY', {

@@ -83,7 +83,7 @@ export default {
     },
   },
   watch: {
-    IndexPxArray: {
+    indexArray: {
       handler: "IndexWacth",
       immediate: true,
     },
@@ -91,13 +91,6 @@ export default {
   mounted() {
     if (window.chainID == 56) {
       this.getBannerData();
-    }
-    if (!this.helmetPrice) {
-      setInterval(() => {
-        setTimeout(() => {
-          this.getPrice();
-        });
-      }, 1000);
     }
   },
   methods: {
@@ -115,9 +108,7 @@ export default {
     },
     IndexWacth(newValue, val) {
       if (newValue) {
-        this.helmetPrice = addCommom(this.indexArray[1]["HELMET"], 4);
-      } else {
-        this.getPrice;
+        this.getPrice();
       }
     },
   },

@@ -185,7 +185,6 @@ export default {
           _yield: 0,
         };
         onIssueSell(data, (status) => {});
-        console.log(data);
       }
     },
     watchRent(newValue) {

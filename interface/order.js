@@ -642,16 +642,17 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack) => {
+    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // your will swap XXX wBNB to XXXX Helmet/
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        // conText: `<p>your will swap<span> ${toRounding(
-        //     data._underlying_vol,
-        //     4
-        // )} ${data._underlying}</span> to <span> ${data.vol} ${
-        //     data._collateral
-        // }</span></p>`,
+        conText: `<p>your will swap<span> ${toRounding(
+            data._underlying_vol,
+            8
+        )} ${data._underlying}</span> to <span> ${data.vol} ${
+            data._collateral
+        }</span></p>`,
     });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
 

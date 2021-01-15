@@ -268,7 +268,7 @@ export default {
       let data = {
         token: getTokenName(item._underlying),
         _underlying_vol: item.volume * item._strikePrice,
-        vol: toRounding(item.volume, 2),
+        vol: toRounding(item.volume, 8),
         bidID: item.bidID,
         long: item.long,
         exPrice: autoRounding(precision.divide(1, item._strikePrice)),
@@ -276,6 +276,8 @@ export default {
         _collateral: getTokenName(item._collateral),
         settleToken: getTokenName(item.settleToken),
       };
+      console.log(data);
+
       onExercise(data);
     },
     // 分页

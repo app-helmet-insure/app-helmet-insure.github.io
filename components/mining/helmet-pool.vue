@@ -129,7 +129,10 @@ import {
   toDeposite,
   getMined,
   WithdrawAvailable,
+  getAllHelmet,
+  Rewards,
 } from "~/interface/deposite";
+import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 export default {
   data() {
@@ -144,12 +147,12 @@ export default {
           color: "#00B900",
           unit: "（weekly）",
         },
-        // {
-        //   text: this.$t("Table.PoolAPY"),
-        //   num: 0,
-        //   color: "#00B900",
-        //   unit: "",
-        // },
+        {
+          text: this.$t("Table.PoolAPY"),
+          num: 0,
+          color: "#00B900",
+          unit: "",
+        },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
         //   num: 0,
@@ -182,6 +185,8 @@ export default {
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
+      helmetPrice: 0,
+      apy: 0,
     };
   },
   mounted() {
@@ -194,16 +199,52 @@ export default {
     this.$bus.$on("EXIT_LOADING", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
     setTimeout(() => {
       this.getBalance();
+      this.getPrice();
     }, 1000);
   },
-  watch: {},
-  computed: {},
+  watch: {
+    indexArray: {
+      handler: "WatchIndexArray",
+      immediate: true,
+    },
+  },
+  computed: {
+    indexArray() {
+      return this.$store.state.allIndexPrice;
+    },
+  },
   methods: {
+    WatchIndexArray(newValue, value) {
+      if (newValue) {
+        this.getPrice();
+      }
+    },
+    async getPrice() {
+      this.helmetPrice = this.indexArray[1]["HELMET"];
+      let totalHelmet = await totalSupply("HELMETBNB_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let totalReward = await Rewards("HELMETBNB", "HELMET");
+      // BNB总价值
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      let dayHelmet = totalHelmet;
+      let apy = precision.divide(
+        precision.divide(
+          precision.times(
+            precision.times(
+              this.helmetPrice,
+              precision.minus(HelmetAllowance, totalReward)
+            ),
+            365
+          ),
+          1000
+        ),
+        bnbValue
+      );
+      this.apy = toRounding(apy, 4) * 100;
+      this.textList[1].num = toRounding(apy, 4) * 100 + "%";
+    },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";
       let type = "HELMETBNB";
@@ -221,14 +262,13 @@ export default {
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
-      this.balance.Deposite = addCommom(Deposite, 4);
-      this.balance.Withdraw = addCommom(Withdraw, 4);
-      this.balance.Helmet = addCommom(Helmet, 8);
-      this.balance.Cake = addCommom(Cake, 8);
-      this.balance.TotalLPT = addCommom(TotalLPT, 4);
-      this.balance.Share = addCommom((Withdraw / TotalLPT) * 100, 1);
-      this.textList[0].num = addCommom((totalHelmet / 30) * 7, 4);
-      // this.textList[2].num = addCommom(TotalLPT, 4)
+      this.balance.Deposite = toRounding(Deposite, 4);
+      this.balance.Withdraw = toRounding(Withdraw, 4);
+      this.balance.Helmet = toRounding(Helmet, 8);
+      this.balance.Cake = toRounding(Cake, 8);
+      this.balance.TotalLPT = toRounding(TotalLPT, 4);
+      this.balance.Share = toRounding((Withdraw / TotalLPT) * 100, 1);
+      this.textList[0].num = toRounding((totalHelmet / 30) * 7, 4);
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

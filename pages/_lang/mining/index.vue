@@ -3,7 +3,7 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetPool></HelmetPool>
-    <MiningList></MiningList>
+    <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
     <Deposite
       :current="current"
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import Banner from '~/components/mining/banner.vue';
-import HelmetPool from '~/components/mining/helmet-pool.vue';
-import MiningList from '~/components/mining/mining-list.vue';
-import Protect from '~/components/mining/protect.vue';
-import Deposite from '~/components/mining/deposite-dialog.vue';
-import Withdraw from '~/components/mining/withdraw-dialog.vue';
+import Banner from "~/components/mining/banner.vue";
+import HelmetPool from "~/components/mining/helmet-pool.vue";
+import MiningList from "~/components/mining/mining-list.vue";
+import Protect from "~/components/mining/protect.vue";
+import Deposite from "~/components/mining/deposite-dialog.vue";
+import Withdraw from "~/components/mining/withdraw-dialog.vue";
 export default {
-  layout: 'default',
+  layout: "default",
   components: {
     Banner,
     HelmetPool,
@@ -35,17 +35,17 @@ export default {
     return {
       showDeposite: false,
       showWithdraw: false,
-      current: '',
-      TradeType: '',
+      current: "",
+      TradeType: "",
     };
   },
   mounted() {
-    this.$bus.$on('OPEN_DEPOSITE', (data) => {
+    this.$bus.$on("OPEN_DEPOSITE", (data) => {
       this.current = data.current;
       this.TradeType = data.TradeType;
       this.showDeposite = true;
     });
-    this.$bus.$on('CLOSE_DEPOSITE', (data) => {
+    this.$bus.$on("CLOSE_DEPOSITE", (data) => {
       this.showDeposite = false;
     });
   },

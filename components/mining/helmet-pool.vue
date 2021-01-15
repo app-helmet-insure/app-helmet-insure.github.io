@@ -147,12 +147,12 @@ export default {
           color: "#00B900",
           unit: "（weekly）",
         },
-        {
-          text: this.$t("Table.PoolAPY"),
-          num: 0,
-          color: "#00B900",
-          unit: "",
-        },
+        // {
+        //   text: this.$t("Table.PoolAPY"),
+        //   num: 0,
+        //   color: "#00B900",
+        //   unit: "",
+        // },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
         //   num: 0,
@@ -201,7 +201,7 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getPrice();
+      // this.getPrice();
     }, 1000);
   },
   watch: {
@@ -218,14 +218,14 @@ export default {
   methods: {
     WatchIndexArray(newValue, value) {
       if (newValue) {
-        this.getPrice();
+        // this.getPrice();
       }
     },
     async getPrice() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let totalHelmet = await totalSupply("HELMETBNB_LPT");
       let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let totalReward = await Rewards("HELMETBNB", "HELMET");
+      let helmetReward = await Rewards("HELMETBNB", "HELMET");
       // BNB总价值
       let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
       let dayHelmet = totalHelmet;
@@ -234,7 +234,7 @@ export default {
           precision.times(
             precision.times(
               this.helmetPrice,
-              precision.minus(HelmetAllowance, totalReward)
+              precision.minus(HelmetAllowance, helmetReward)
             ),
             365
           ),
@@ -242,8 +242,8 @@ export default {
         ),
         bnbValue
       );
-      this.apy = toRounding(apy, 4) * 100;
-      this.textList[1].num = toRounding(apy, 4) * 100 + "%";
+      this.apy = fixD(apy * 100, 2);
+      this.textList[1].num = fixD(apy * 100, 2) + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

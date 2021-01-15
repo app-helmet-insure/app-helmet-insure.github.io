@@ -35,6 +35,7 @@ export const getAddress = (symbol, char_id) => {
     const charID = char_id || window.chainID;
     const network = selectNetwork(charID);
     let address = addressList[`${network}_${symbol}`];
+
     if (address) {
         return address.toLowerCase();
     } else {

@@ -55,7 +55,7 @@
               <!-- <button class="o_button">{{ $t("Table.outSure") }}</button> -->
               <button
                 class="b_button"
-                style="bakcground: #ccc"
+                style="background: #ccc"
                 @click="toMining"
               >
                 {{ $t("Table.Stakeing") }}
@@ -354,7 +354,7 @@ export default {
       this.showList = list;
     },
     toMining() {
-      this.$router.push("/mining");
+      // this.$router.push("/mining");
     },
   },
 };

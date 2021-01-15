@@ -225,7 +225,7 @@ export default {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let totalHelmet = await totalSupply("HELMETBNB_LPT");
       let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "HELMET");
+      let helmetReward = await Rewards("HELMETBNB", "0");
       // BNB总价值
       let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
       let dayHelmet = totalHelmet;

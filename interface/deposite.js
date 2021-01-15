@@ -685,13 +685,18 @@ export const Rewards = async (contractAdress, adress1) => {
     if (contractAdress.indexOf('0x') === -1) {
         contractAdress = getContract(contractAdress, charID);
     }
+    if (adress1 == 0) {
+        adress1 = '0x0000000000000000000000000000000000000000';
+    }
     if (adress1.indexOf('0x') === -1) {
         adress1 = getContract(adress1, charID);
     }
 
     const Contract = await Deposite(contractAdress);
 
-    const result = await Contract.methods.rewards(adress1).call();
+    const result = await Contract.methods
+        .rewards('0x0000000000000000000000000000000000000000')
+        .call();
 
     return window.WEB3.utils.fromWei(result, getWei());
 };

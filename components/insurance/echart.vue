@@ -82,36 +82,41 @@ export default {
   },
   watch: {
     curCoin(newVal, Val) {
-      let arr = this.$store.state.allIndexPrice[1];
-      let max = toRounding(arr[this.curCoin] * 2 * 1.5, 4);
+      let arr = this.$store.state.strikePriceArray[0];
+      let arr1 = this.$store.state.strikePriceArray[1];
+      let arr2 = this.$store.state.allIndexPrice[1];
+      let max = toRounding(arr[this.curCoin] * 1.5, 4);
       this.max = max;
       if (newVal) {
         this.price = {
-          IndexPrice: toRounding(Number(arr[newVal]), 4),
-          Cover100: toRounding(arr[newVal] * 2, 4),
-          Cover50: toRounding(arr[newVal] / 2, 4),
+          IndexPrice: toRounding(Number(arr2[this.curCoin]), 4),
+          Cover100: toRounding(arr[this.curCoin], 4),
+          Cover50: toRounding(arr1[this.curCoin], 4),
         };
         this.line = [
           {
-            line: 100 - toRounding(((arr[this.curCoin] * 2) / max) * 100, 0),
-            cover: 1 - toRounding((arr[this.curCoin] * 2) / max, 2),
-            num: toRounding(arr[this.curCoin] * 2, 4),
+            line: 100 - toRounding((arr[this.curCoin] / max) * 100, 0),
+            cover: 1 - toRounding(arr[this.curCoin] / max, 2),
+            num: toRounding(arr[this.curCoin], 4),
             color: "#00B900",
             title: this.$t("Content.ChartUp"),
           },
           {
-            line: 100 - toRounding(Number(arr[this.curCoin] / max) * 100, 0),
-            cover: 1 - toRounding(Number(arr[this.curCoin] / max), 2),
-            num: toRounding(arr[this.curCoin], 4),
+            line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
+            cover: 1 - toRounding(Number(arr2[this.curCoin] / max), 2),
+            num: toRounding(arr2[this.curCoin], 4),
             color: "#919AA6",
             title: this.$t("Content.ChartPrice"),
           },
           {
-            line: 100 - toRounding((arr[this.curCoin] / 2 / max) * 100, 0),
-            cover: 1 - toRounding(arr[this.curCoin] / 2 / max, 2),
-            num: toRounding(arr[this.curCoin] / 2, 4),
+            line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
+            cover: 1 - toRounding(arr1[this.curCoin] / max, 2),
+            num: toRounding(arr1[this.curCoin], 4),
             color: "#FF9600",
-            title: this.$t("Content.ChartOff"),
+            title:
+              this.curCoin == "HELMET"
+                ? "Cover 0.12$"
+                : this.$t("Content.ChartOff"),
           },
         ];
         this.upCover = `M0 0 L1080 0 L1080 ${this.line[0].cover * 200} L0 ${
@@ -125,45 +130,46 @@ export default {
   },
   computed: {
     IndexPrice() {
-      return this.$store.state.allIndexPrice;
+      return this.$store.state.strikePriceArray;
     },
   },
   methods: {
     draw() {
       setTimeout(() => {
-        let arr = this.$store.state.allIndexPrice[1];
+        let arr = this.$store.state.strikePriceArray[0];
+        let arr1 = this.$store.state.strikePriceArray[1];
+        let arr2 = this.$store.state.allIndexPrice[1];
         if (arr.BNB != 0) {
-          let max = toRounding(arr[this.curCoin] * 2 * 1.5, 4);
+          let max = toRounding(arr[this.curCoin] * 1.5, 4);
           this.max = max;
           this.price = {
-            IndexPrice: toRounding(Number(arr[this.curCoin]), 4),
-            Cover100: toRounding(arr[this.curCoin] * 2, 4),
-            Cover50: toRounding(arr[this.curCoin] / 2, 4),
+            IndexPrice: toRounding(Number(arr2[this.curCoin]), 4),
+            Cover100: toRounding(arr[this.curCoin], 4),
+            Cover50: toRounding(arr1[this.curCoin], 4),
           };
           this.line = [
             {
-              line: 100 - toRounding(((arr[this.curCoin] * 2) / max) * 100, 0),
-              cover: 1 - toRounding((arr[this.curCoin] * 2) / max, 2),
-              num: toRounding(arr[this.curCoin] * 2, 4),
+              line: 100 - toRounding((arr[this.curCoin] / max) * 100, 0),
+              cover: 1 - toRounding(arr[this.curCoin] / max, 2),
+              num: toRounding(arr[this.curCoin], 4),
               color: "#00B900",
               title: this.$t("Content.ChartUp"),
             },
             {
-              line: 100 - toRounding(Number(arr[this.curCoin] / max) * 100, 0),
-              cover: 1 - toRounding(Number(arr[this.curCoin] / max), 2),
-              num: toRounding(arr[this.curCoin], 4),
+              line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
+              cover: 1 - toRounding(Number(arr2[this.curCoin] / max), 2),
+              num: toRounding(arr2[this.curCoin], 4),
               color: "#919AA6",
               title: this.$t("Content.ChartPrice"),
             },
             {
-              line: 100 - toRounding((arr[this.curCoin] / 2 / max) * 100, 0),
-              cover: 1 - toRounding(arr[this.curCoin] / 2 / max, 2),
-              num: toRounding(arr[this.curCoin] / 2, 4),
+              line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
+              cover: 1 - toRounding(arr1[this.curCoin] / max, 2),
+              num: toRounding(arr1[this.curCoin], 4),
               color: "#FF9600",
               title: this.$t("Content.ChartOff"),
             },
           ];
-
           this.upCover = `M0 0 L1080 0 L1080 ${this.line[0].cover * 200} L0 ${
             this.line[0].cover * 200
           } Z`;

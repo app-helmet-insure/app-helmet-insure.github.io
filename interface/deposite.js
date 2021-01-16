@@ -36,12 +36,19 @@ export const totalSupply = async (address) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const balanceOf = async (type, currcy) => {
+export const balanceOf = async (type, currcy, flag = false) => {
     const charID = window.chainID;
     let adress = type;
-    if (type.indexOf('0x') === -1) {
-        adress = getAddress(type, charID);
+    if (flag) {
+        if (type.indexOf('0x') === -1) {
+            adress = getContract(type, charID);
+        }
+    } else {
+        if (type.indexOf('0x') === -1) {
+            adress = getAddress(type, charID);
+        }
     }
+
     if (currcy.indexOf('0x') === -1) {
         currcy = getContract(currcy, charID);
     }

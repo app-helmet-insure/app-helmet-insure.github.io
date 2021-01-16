@@ -203,16 +203,25 @@ export default {
       this.getBalance();
       this.getPrice();
     }, 1000);
+    setInterval(() => {
+      setTimeout(() => {
+        this.getPrice();
+      });
+    }, 2000);
   },
   watch: {
     indexArray: {
       handler: "WatchIndexArray",
       immediate: true,
     },
+    apy(newValue, value) {
+      this.textList[1].num = newValue + "%";
+    },
   },
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
+      this.textList[1].num = this.apy + "%";
     },
   },
   methods: {
@@ -247,14 +256,6 @@ export default {
         ),
         bnbValue
       );
-      console.log(
-        this.helmetPrice,
-        bnbValue,
-        cakePrice,
-        HelmetAllowance,
-        helmetReward
-      );
-      console.log(helmetapy);
       let cakeapy = precision.divide(
         precision.times(cakePrice, 1480000),
         precision.times(
@@ -267,8 +268,7 @@ export default {
         fixD(helmetapy * 100, 2),
         fixD(cakeapy * 100, 2)
       );
-      this.textList[1].num =
-        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

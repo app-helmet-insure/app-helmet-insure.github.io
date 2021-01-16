@@ -224,13 +224,15 @@ export default {
     async getPrice() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let cakePrice = this.$store.state.CAKE_BUSD;
+      let bnbPrice = this.$store.state.BNB_BUSD;
+      // 总LPT
       let totalHelmet = await totalSupply("HELMETBNB_LPT");
       let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
       let helmetReward = await Rewards("HELMETBNB", "0");
       // BNB总价值
       let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      // BNB总价值不翻倍
       let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      console.log(cakeValue);
       let dayHelmet = totalHelmet;
       let helmetapy = precision.divide(
         precision.divide(
@@ -245,9 +247,21 @@ export default {
         ),
         bnbValue
       );
+      console.log(
+        this.helmetPrice,
+        bnbValue,
+        cakePrice,
+        HelmetAllowance,
+        helmetReward
+      );
+      console.log(helmetapy);
       let cakeapy = precision.divide(
-        precision.times(cakePrice, 450000),
-        cakeValue
+        precision.times(cakePrice, 1480000),
+        precision.times(
+          precision.divide(bnbValue, totalHelmet),
+          cakeValue,
+          bnbPrice
+        )
       );
       this.apy = precision.plus(
         fixD(helmetapy * 100, 2),

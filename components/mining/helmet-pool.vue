@@ -223,6 +223,7 @@ export default {
     },
     async getPrice() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
+      let cakePrice = this.$store.state.CAKE_BUSD;
       let totalHelmet = await totalSupply("HELMETBNB_LPT");
       let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
       let helmetReward = await Rewards("HELMETBNB", "0");
@@ -231,7 +232,7 @@ export default {
       let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
       console.log(cakeValue);
       let dayHelmet = totalHelmet;
-      let apy = precision.divide(
+      let helmetapy = precision.divide(
         precision.divide(
           precision.times(
             precision.times(
@@ -244,8 +245,16 @@ export default {
         ),
         bnbValue
       );
-      this.apy = fixD(apy * 100, 2);
-      this.textList[1].num = fixD(apy * 100, 2) + "%";
+      let cakeapy = precision.divide(
+        precision.times(cakePrice, 450000),
+        cakeValue
+      );
+      this.apy = precision.plus(
+        fixD(helmetapy * 100, 2),
+        fixD(cakeapy * 100, 2)
+      );
+      this.textList[1].num =
+        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

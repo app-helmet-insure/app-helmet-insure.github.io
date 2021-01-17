@@ -279,7 +279,7 @@ export default {
       this.balance.Helmet = toRounding(Helmet, 8);
       this.balance.TotalLPT = toRounding(TotalLPT, 4);
       this.balance.Share = toRounding((Withdraw / TotalLPT) * 100, 1);
-      this.textList[0].num = toRounding(159000 * 7);
+      this.textList[0].num = toRounding(158637.45 * 7);
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

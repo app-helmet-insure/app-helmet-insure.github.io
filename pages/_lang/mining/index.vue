@@ -3,6 +3,7 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetPool></HelmetPool>
+    <HelmetBnbPool></HelmetBnbPool>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
     <Deposite
@@ -16,7 +17,8 @@
 
 <script>
 import Banner from "~/components/mining/banner.vue";
-import HelmetPool from "~/components/mining/helmet-pool.vue";
+import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetPool from "~/components/mining/helmet_pool.vue";
 import MiningList from "~/components/mining/mining-list.vue";
 import Protect from "~/components/mining/protect.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
@@ -26,6 +28,7 @@ export default {
   components: {
     Banner,
     HelmetPool,
+    HelmetBnbPool,
     MiningList,
     Protect,
     Deposite,

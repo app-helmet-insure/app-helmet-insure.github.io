@@ -1,30 +1,31 @@
 <template>
   <div class="helmet_pool">
-    <h3>{{ list.name }}</h3>
-    <div class="coin">
-      <p>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-Helmet"></use>
-        </svg>
-        50%
-        <span> HELMET </span>
-      </p>
-      <p>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-BNB"></use>
-        </svg>
-        50%
-        <span> BNB </span>
-      </p>
-    </div>
     <div class="text">
-      <p v-for="(item, index) in textList" :key="index">
-        <span>{{ item.text }}</span>
-        <span :style="`color:${item.color}`"
-          >{{ item.num
-          }}<i v-if="item.unit" style="color: #919aa6">{{ item.unit }}</i>
-        </span>
-      </p>
+      <div class="coin">
+        <h3>{{ list.name }} <img src="~/assets/img/helmet/5x.png" alt="" /></h3>
+        <div>
+          <p>
+            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+            100%
+            <span> HELMET </span>
+          </p>
+          <!-- <p>
+            <img src="~/assets/img/helmet/bnbCoin.png" alt="" />
+
+            50%
+            <span> BNB </span>
+          </p> -->
+        </div>
+      </div>
+      <div class="index">
+        <p v-for="(item, index) in textList" :key="index">
+          <span>{{ item.text }}</span>
+          <span :style="`color:${item.color}`"
+            >{{ item.num
+            }}<i v-if="item.unit" style="color: #919aa6">{{ item.unit }}</i>
+          </span>
+        </p>
+      </div>
     </div>
     <div class="pool">
       <div class="deposit">
@@ -92,9 +93,6 @@
           <p>
             <span>{{ $t("Table.HELMETRewards") }}：</span>
             <span>
-              <span
-                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} CAKE</span
-              >
               <span>
                 {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
                 HELMET</span
@@ -176,7 +174,6 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
-        Cake: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -231,49 +228,41 @@ export default {
       }
     },
     async getPrice() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let dayHelmet = totalHelmet;
-      let helmetapy = precision.divide(
-        precision.divide(
-          precision.times(
-            precision.times(
-              this.helmetPrice,
-              precision.minus(HelmetAllowance, helmetReward)
-            ),
-            365
-          ),
-          1000
-        ),
-        bnbValue
-      );
-      let cakeapy = precision.divide(
-        precision.times(cakePrice, 1480000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
-      );
-      this.apy = precision.plus(
-        fixD(helmetapy * 100, 2),
-        fixD(cakeapy * 100, 2)
+      // this.helmetPrice = this.indexArray[1]["HELMET"];
+      // let cakePrice = this.$store.state.CAKE_BUSD;
+      // let bnbPrice = this.$store.state.BNB_BUSD;
+      // // 总LPT
+      // let totalHelmet = await totalSupply("HELMETBNB_LPT");
+      // let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      // let helmetReward = await Rewards("HELMETBNB", "0");
+      // // BNB总价值
+      // let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      // // BNB总价值不翻倍
+      // let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
+      // let dayHelmet = totalHelmet;
+      // let helmetapy = precision.divide(
+      //   precision.divide(
+      //     precision.times(
+      //       precision.times(
+      //         this.helmetPrice,
+      //         precision.minus(HelmetAllowance, helmetReward)
+      //       ),
+      //       365
+      //     ),
+      //     1000
+      //   ),
+      //   bnbValue
+      // );
+      let HelmetVolume = await totalSupply("HELMETPOOL");
+      this.apy = precision.times(
+        precision.divide(precision.times(159000, 365), HelmetVolume),
+        100
       );
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";
-      let type = "HELMETBNB";
-      let cakeType = "CAKEHELMET_LPT";
+      let type = "HELMETPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -282,18 +271,15 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
-      //  可领取Cake
-      let Cake = await CangetUNI(type);
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
       this.balance.Deposite = toRounding(Deposite, 4);
       this.balance.Withdraw = toRounding(Withdraw, 4);
       this.balance.Helmet = toRounding(Helmet, 8);
-      this.balance.Cake = toRounding(Cake, 8);
       this.balance.TotalLPT = toRounding(TotalLPT, 4);
       this.balance.Share = toRounding((Withdraw / TotalLPT) * 100, 1);
-      this.textList[0].num = toRounding((totalHelmet / 30) * 7, 4);
+      this.textList[0].num = toRounding(159000 * 7);
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
@@ -306,7 +292,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HELMETBNB";
+      let type = "HELMETPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -315,7 +301,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HELMETBNB";
+      let type = "HELMETPOOL";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -324,7 +310,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HELMETBNB";
+      let type = "HELMETPOOL";
       let res = await exitStake(type);
     },
   },
@@ -367,48 +353,67 @@ export default {
 }
 @media screen and (min-width: 750px) {
   .helmet_pool {
+    margin-bottom: 20px;
     height: 536px;
     background: #ffffff;
     padding: 40px;
     > h3 {
       text-align: center;
     }
-    .coin {
-      margin-top: 12px;
-      justify-content: center;
-      display: flex;
-      align-items: center;
-      p {
-        display: flex;
-        align-items: center;
-        color: #121212;
-        font-size: 14px;
-        margin: 0 10px;
-        .icon {
-          margin-right: 4px;
-        }
-        span {
-          margin-left: 4px;
-          color: #919aa6;
-        }
-      }
-    }
     .text {
       display: flex;
       // padding: 0 140px;
-      justify-content: flex-end;
+      justify-content: space-between;
       margin-top: 28px;
-      p {
+      .coin {
         display: flex;
         flex-direction: column;
-        margin-left: 100px;
-        span {
-          &:nth-of-type(1) {
-            font-size: 14px;
-            color: #919aa6;
+        h3 {
+          height: 32px;
+          display: flex;
+          margin-bottom: 8px;
+          font-size: 24px;
+          line-height: 32px;
+          img {
+            margin-left: 4px;
+            width: 32px;
+            height: 32px;
           }
-          &:nth-of-type(2) {
-            margin-top: 12px;
+        }
+        > div {
+          display: flex;
+          > p {
+            display: flex;
+            align-items: center;
+            color: #121212;
+            font-size: 14px;
+            margin-right: 14px;
+            img {
+              width: 32px;
+              height: 32px;
+              margin-right: 4px;
+            }
+            span {
+              margin-left: 4px;
+              color: #919aa6;
+            }
+          }
+        }
+      }
+      .index {
+        display: flex;
+        > p {
+          display: flex;
+          flex-direction: column;
+          margin-left: 100px;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              color: #919aa6;
+            }
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
           }
         }
       }

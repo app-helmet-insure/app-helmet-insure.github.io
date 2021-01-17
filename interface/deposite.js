@@ -351,7 +351,14 @@ export const getPAYA = async (type) => {
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
-                bus.$emit('CLAIM_LOADING');
+                switch (type) {
+                    case 'HELMETPOOL':
+                        bus.$emit('CLAIM_LOADING1');
+                    case 'HELMETBNB':
+                        bus.$emit('CLAIM_LOADING');
+                    default:
+                        break;
+                }
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
                         ``;
@@ -375,7 +382,14 @@ export const getPAYA = async (type) => {
                 }
             })
             .on('error', function(error, receipt) {
-                bus.$emit('CLAIM_LOADING');
+                switch (type) {
+                    case 'HELMETPOOL':
+                        bus.$emit('CLAIM_LOADING1');
+                    case 'HELMETBNB':
+                        bus.$emit('CLAIM_LOADING');
+                    default:
+                        break;
+                }
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 if (error && error.message) {
                     Message({
@@ -628,7 +642,14 @@ export const exitStake = async (type) => {
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
-                bus.$emit('EXIT_LOADING');
+                switch (type) {
+                    case 'HELMETPOOL':
+                        bus.$emit('EXIT_LOADING1');
+                    case 'HELMETBNB':
+                        bus.$emit('EXIT_LOADING');
+                    default:
+                        break;
+                }
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
                         ``;
@@ -653,7 +674,14 @@ export const exitStake = async (type) => {
                 }
             })
             .on('error', function(error, receipt) {
-                bus.$emit('EXIT_LOADING');
+                switch (type) {
+                    case 'HELMETPOOL':
+                        bus.$emit('EXIT_LOADING1');
+                    case 'HELMETBNB':
+                        bus.$emit('EXIT_LOADING');
+                    default:
+                        break;
+                }
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 if (error && error.message) {
                     Message({

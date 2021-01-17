@@ -122,7 +122,7 @@ import {
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
-  getDoubleReward,
+  getPAYA,
   exitStake,
   getLastTime,
   approveStatus,
@@ -193,10 +193,10 @@ export default {
     this.$bus.$on("DEPOSITE_LOADING1", (data) => {
       this.stakeLoading = data.status;
     });
-    this.$bus.$on("CLAIM_LOADING", (data) => {
+    this.$bus.$on("CLAIM_LOADING1", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING", (data) => {
+    this.$bus.$on("EXIT_LOADING1", (data) => {
       this.exitLoading = false;
     });
     setTimeout(() => {
@@ -231,36 +231,15 @@ export default {
       }
     },
     async getPrice() {
-      // this.helmetPrice = this.indexArray[1]["HELMET"];
-      // let cakePrice = this.$store.state.CAKE_BUSD;
-      // let bnbPrice = this.$store.state.BNB_BUSD;
-      // // 总LPT
-      // let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      // let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      // let helmetReward = await Rewards("HELMETBNB", "0");
-      // // BNB总价值
-      // let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // // BNB总价值不翻倍
-      // let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      // let dayHelmet = totalHelmet;
-      // let helmetapy = precision.divide(
-      //   precision.divide(
-      //     precision.times(
-      //       precision.times(
-      //         this.helmetPrice,
-      //         precision.minus(HelmetAllowance, helmetReward)
-      //       ),
-      //       365
-      //     ),
-      //     1000
-      //   ),
-      //   bnbValue
-      // );
       let HelmetVolume = await totalSupply("HELMETPOOL");
-      this.apy = precision.times(
-        precision.divide(precision.times(158637.45, 365), HelmetVolume),
-        100
+      let apy = fixD(
+        precision.times(
+          precision.divide(precision.times(158637.45, 365), HelmetVolume),
+          100
+        ),
+        2
       );
+      this.apy = apy;
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
@@ -277,12 +256,12 @@ export default {
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
-      this.balance.Deposite = toRounding(Deposite, 4);
-      this.balance.Withdraw = toRounding(Withdraw, 4);
-      this.balance.Helmet = toRounding(Helmet, 8);
-      this.balance.TotalLPT = toRounding(TotalLPT, 4);
-      this.balance.Share = toRounding((Withdraw / TotalLPT) * 100, 1);
-      this.textList[0].num = toRounding(158637.45 * 7);
+      this.balance.Deposite = fixD(Deposite, 4);
+      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.textList[0].num = fixD(158637.45 * 7, 2);
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
@@ -305,7 +284,7 @@ export default {
       }
       this.claimLoading = true;
       let type = "HELMETPOOL";
-      let res = await getDoubleReward(type);
+      let res = await getPAYA(type);
     },
     // 退出
     async toExit() {

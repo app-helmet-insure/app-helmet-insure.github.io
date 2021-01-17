@@ -288,13 +288,13 @@ export default {
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
-      this.balance.Deposite = toRounding(Deposite, 4);
-      this.balance.Withdraw = toRounding(Withdraw, 4);
-      this.balance.Helmet = toRounding(Helmet, 8);
-      this.balance.Cake = toRounding(Cake, 8);
-      this.balance.TotalLPT = toRounding(TotalLPT, 4);
-      this.balance.Share = toRounding((Withdraw / TotalLPT) * 100, 1);
-      this.textList[0].num = toRounding((totalHelmet / 30) * 7, 4);
+      this.balance.Deposite = fixD(Deposite, 4);
+      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.Cake = fixD(Cake, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.textList[0].num = fixD((totalHelmet / 30) * 7, 2);
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

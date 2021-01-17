@@ -78,7 +78,13 @@
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
           <div class="input">
-            <input name="withdraw" type="text" v-model="WithdrawNum" />
+            <input
+              name="withdraw"
+              type="text"
+              v-model="balance.Withdraw"
+              disabled
+            />
+            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
             <span @click="WithdrawNum = balance.Withdraw">{{
               $t("Table.Max")
             }}</span>

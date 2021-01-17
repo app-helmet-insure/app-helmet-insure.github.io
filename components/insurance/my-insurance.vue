@@ -286,6 +286,7 @@ export default {
       }
       this.isLoading = false;
       this.insuranceList = result;
+      console.log(result);
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     //获取已出售

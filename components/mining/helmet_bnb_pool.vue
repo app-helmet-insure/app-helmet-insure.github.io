@@ -187,7 +187,8 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      apy: 0,
+      helmetapy: 0,
+      cakeapy: 0,
     };
   },
   mounted() {
@@ -215,8 +216,21 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
-    apy(newValue, value) {
-      this.apy = newValue;
+    helmetapy(newValue, value) {
+      if (newValue) {
+        this.textList[1].num =
+          precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
+          "%";
+      }
+    },
+    cakeapy(newValue, value) {
+      if (newValue) {
+        this.textList[1].num =
+          precision.plus(
+            fixD(this.helmetapy * 100, 2),
+            fixD(newValue * 100, 2)
+          ) + "%";
+      }
     },
   },
   computed: {
@@ -265,11 +279,13 @@ export default {
           bnbPrice
         )
       );
-      this.apy = precision.plus(
+      this.helmetapy = helmetapy;
+      this.cakeapy = cakeapy;
+      this.textList[1].num = precision.plus(
         fixD(helmetapy * 100, 2),
         fixD(cakeapy * 100, 2)
       );
-      this.textList[1].num = this.apy + "%";
+      +"%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

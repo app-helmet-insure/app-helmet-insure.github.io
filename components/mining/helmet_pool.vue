@@ -240,7 +240,6 @@ export default {
         2
       );
       this.apy = apy;
-      console.log(apy);
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {

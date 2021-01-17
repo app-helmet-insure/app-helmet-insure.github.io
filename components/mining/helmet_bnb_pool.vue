@@ -216,7 +216,7 @@ export default {
       immediate: true,
     },
     apy(newValue, value) {
-      this.textList[1].num = newValue + "%";
+      this.apy = newValue;
     },
   },
   computed: {

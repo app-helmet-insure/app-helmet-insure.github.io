@@ -215,7 +215,7 @@ export default {
       immediate: true,
     },
     apy(newValue, value) {
-      this.textList[1].num = newValue + "%";
+      this.apy = newValue;
     },
   },
   computed: {
@@ -240,6 +240,7 @@ export default {
         2
       );
       this.apy = apy;
+      console.log(apy);
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {

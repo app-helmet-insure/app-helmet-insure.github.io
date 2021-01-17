@@ -290,11 +290,8 @@ export default {
       );
       this.helmetapy = helmetapy;
       this.cakeapy = cakeapy;
-      this.textList[1].num = precision.plus(
-        fixD(helmetapy * 100, 2),
-        fixD(cakeapy * 100, 2)
-      );
-      +"%";
+      this.textList[1].num =
+        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

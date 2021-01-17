@@ -201,6 +201,9 @@ export default {
     this.$bus.$on("EXIT_LOADING", (data) => {
       this.exitLoading = false;
     });
+    this.$bus.$on("RELOAD_DATA", () => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
       this.getPrice();

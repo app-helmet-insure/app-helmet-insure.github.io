@@ -126,8 +126,10 @@ export const toDeposite = async (type, data, flag, callBack) => {
                     switch (type) {
                         case 'HELMETPOOL':
                             bus.$emit('DEPOSITE_LOADING1', { status: false });
+                            bus.$emit('RELOAD_DATA1');
                         case 'HELMETBNB':
                             bus.$emit('DEPOSITE_LOADING', { status: false });
+                            bus.$emit('RELOAD_DATA');
                         default:
                             break;
                     }
@@ -351,17 +353,19 @@ export const getPAYA = async (type) => {
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
-                switch (type) {
-                    case 'HELMETPOOL':
-                        bus.$emit('CLAIM_LOADING1');
-                    case 'HELMETBNB':
-                        bus.$emit('CLAIM_LOADING');
-                    default:
-                        break;
-                }
                 if (confirmationNumber === 0) {
+                    switch (type) {
+                        case 'HELMETPOOL':
+                            bus.$emit('CLAIM_LOADING1');
+                            bus.$emit('RELOAD_DATA1');
+
+                        case 'HELMETBNB':
+                            bus.$emit('CLAIM_LOADING');
+                            bus.$emit('RELOAD_DATA');
+                        default:
+                            break;
+                    }
                     if (window.statusDialog) {
-                        ``;
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
                             type: 'success',
@@ -642,17 +646,18 @@ export const exitStake = async (type) => {
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
-                switch (type) {
-                    case 'HELMETPOOL':
-                        bus.$emit('EXIT_LOADING1');
-                    case 'HELMETBNB':
-                        bus.$emit('EXIT_LOADING');
-                    default:
-                        break;
-                }
                 if (confirmationNumber === 0) {
+                    switch (type) {
+                        case 'HELMETPOOL':
+                            bus.$emit('EXIT_LOADING1');
+                            bus.$emit('RELOAD_DATA1');
+                        case 'HELMETBNB':
+                            bus.$emit('EXIT_LOADING');
+                            bus.$emit('RELOAD_DATA');
+                        default:
+                            break;
+                    }
                     if (window.statusDialog) {
-                        ``;
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
                             type: 'success',

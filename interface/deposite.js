@@ -80,10 +80,14 @@ export const toDeposite = async (type, data, flag, callBack) => {
         return;
     }
     let result;
-    bus.$emit('DEPOSITE_LOADING', {
-        type: type,
-        status: true,
-    });
+    switch (type) {
+        case 'HELMETPOOL':
+            bus.$emit('DEPOSITE_LOADING1', { status: true });
+        case 'HELMETBNB':
+            bus.$emit('DEPOSITE_LOADING', { status: true });
+        default:
+            break;
+    }
     try {
         const Contract = await expERC20(adressLPT);
         if (flag) {
@@ -119,10 +123,14 @@ export const toDeposite = async (type, data, flag, callBack) => {
             })
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
-                    bus.$emit('DEPOSITE_LOADING', {
-                        type: type,
-                        status: false,
-                    });
+                    switch (type) {
+                        case 'HELMETPOOL':
+                            bus.$emit('DEPOSITE_LOADING1', { status: false });
+                        case 'HELMETBNB':
+                            bus.$emit('DEPOSITE_LOADING', { status: false });
+                        default:
+                            break;
+                    }
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -144,6 +152,14 @@ export const toDeposite = async (type, data, flag, callBack) => {
                 }
             })
             .on('error', function(error, receipt) {
+                switch (type) {
+                    case 'HELMETPOOL':
+                        bus.$emit('DEPOSITE_LOADING1', { status: false });
+                    case 'HELMETBNB':
+                        bus.$emit('DEPOSITE_LOADING', { status: false });
+                    default:
+                        break;
+                }
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('DEPOSITE_LOADING', {
                     type: type,

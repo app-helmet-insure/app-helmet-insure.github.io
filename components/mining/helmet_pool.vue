@@ -1,5 +1,6 @@
 <template>
   <div class="helmet_pool">
+    <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>{{ list.name }} <img src="~/assets/img/helmet/5x.png" alt="" /></h3>
@@ -32,7 +33,7 @@
         <div class="title">
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
-            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
+            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} HELMET
             {{ $t("Table.Available") }}
           </p>
         </div>
@@ -40,9 +41,9 @@
           <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
           <div class="input">
             <input name="deposit" type="text" v-model="DepositeNum" />
-            <!-- <span @click="DepositeNum = balance.Deposite">{{
+            <span @click="DepositeNum = balance.Deposite">{{
               $t("Table.Max")
-            }}</span> -->
+            }}</span>
           </div>
         </div>
         <div class="button">
@@ -59,7 +60,9 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span> {{ balance.Withdraw }} LPT/{{ balance.TotalLPT }} LPT</span>
+            <span>
+              {{ balance.Withdraw }} HELMET/{{ balance.TotalLPT }} HELMET</span
+            >
           </p>
           <p>
             <span>My Pool Share：</span>
@@ -70,15 +73,15 @@
       <div class="withdraw">
         <div class="title">
           <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} LPT {{ $t("Table.Available") }}</p>
+          <p>{{ balance.Withdraw }} HELMET {{ $t("Table.Available") }}</p>
         </div>
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
           <div class="input">
             <input name="withdraw" type="text" v-model="WithdrawNum" />
-            <!-- <span @click="WithdrawNum = balance.Withdraw">{{
+            <span @click="WithdrawNum = balance.Withdraw">{{
               $t("Table.Max")
-            }}</span> -->
+            }}</span>
           </div>
         </div>
         <div class="button">
@@ -136,7 +139,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-BNB",
+        name: "HELMET POOL",
       },
       textList: [
         {
@@ -187,8 +190,8 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING", (data) => {
-      this.stakeLoading = false;
+    this.$bus.$on("DEPOSITE_LOADING1", (data) => {
+      this.stakeLoading = data.status;
     });
     this.$bus.$on("CLAIM_LOADING", (data) => {
       this.claimLoading = false;
@@ -255,13 +258,13 @@ export default {
       // );
       let HelmetVolume = await totalSupply("HELMETPOOL");
       this.apy = precision.times(
-        precision.divide(precision.times(159000, 365), HelmetVolume),
+        precision.divide(precision.times(158637.45, 365), HelmetVolume),
         100
       );
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HELMETBNB_LPT";
+      let helmetType = "HELMETPOOL_LPT";
       let type = "HELMETPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
@@ -354,9 +357,17 @@ export default {
 @media screen and (min-width: 750px) {
   .helmet_pool {
     margin-bottom: 20px;
-    height: 536px;
+    height: 476px;
     background: #ffffff;
     padding: 40px;
+    position: relative;
+    > img {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      top: 0;
+      transform: translateY(-5px);
+    }
     > h3 {
       text-align: center;
     }
@@ -364,7 +375,6 @@ export default {
       display: flex;
       // padding: 0 140px;
       justify-content: space-between;
-      margin-top: 28px;
       .coin {
         display: flex;
         flex-direction: column;
@@ -511,42 +521,59 @@ export default {
     > h3 {
       text-align: center;
     }
-    .coin {
-      margin-top: 12px;
-      justify-content: center;
-      display: flex;
-      align-items: center;
-      p {
-        display: flex;
-        align-items: center;
-        color: #121212;
-        font-size: 14px;
-        margin: 0 10px;
-        .icon {
-          margin-right: 4px;
-        }
-        span {
-          margin-left: 4px;
-          color: #919aa6;
-        }
-      }
-    }
     .text {
       display: flex;
       // padding: 0 140px;
-      justify-content: flex-end;
-      margin-top: 28px;
-      p {
+      justify-content: space-between;
+      .coin {
         display: flex;
         flex-direction: column;
-        margin-left: 100px;
-        span {
-          &:nth-of-type(1) {
-            font-size: 14px;
-            color: #919aa6;
+        h3 {
+          height: 32px;
+          display: flex;
+          margin-bottom: 8px;
+          font-size: 24px;
+          line-height: 32px;
+          img {
+            margin-left: 4px;
+            width: 32px;
+            height: 32px;
           }
-          &:nth-of-type(2) {
-            margin-top: 12px;
+        }
+        > div {
+          display: flex;
+          > p {
+            display: flex;
+            align-items: center;
+            color: #121212;
+            font-size: 14px;
+            margin-right: 14px;
+            img {
+              width: 32px;
+              height: 32px;
+              margin-right: 4px;
+            }
+            span {
+              margin-left: 4px;
+              color: #919aa6;
+            }
+          }
+        }
+      }
+      .index {
+        display: flex;
+        > p {
+          display: flex;
+          flex-direction: column;
+          margin-left: 100px;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              color: #919aa6;
+            }
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
           }
         }
       }

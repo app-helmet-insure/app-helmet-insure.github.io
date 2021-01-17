@@ -261,7 +261,13 @@ export default {
 
       this.isLoading = false;
       this.buyList = buyResult;
+      buyResult.sort(function (a, b) {
+        return Number(a.price) - Number(b.price);
+      });
       this.sellList = sellResult;
+      sellResult.sort(function (a, b) {
+        return Number(a.price) - Number(b.price);
+      });
       let result;
       if (type == 1) {
         result = this.buyList.filter(

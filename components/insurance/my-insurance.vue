@@ -196,6 +196,9 @@ export default {
     rePriceMap() {
       return this.$store.state.repriceMap;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
   watch: {
     myAboutInfoSell: {
@@ -233,7 +236,14 @@ export default {
         item = list[i];
         // 数量
         let Token = getTokenName(item.longInfo._collateral);
-        amount = fromWei(item.volume, Token);
+        let TokenFlag = getTokenName(item.longInfo._underlying);
+        if (TokenFlag == "WBNB") {
+          amount = fromWei(item.volume, Token);
+        } else {
+          amount =
+            fromWei(item.volume, Token) * this.strikePriceArray[1][TokenFlag];
+          console.log(amount);
+        }
         // 保单价格
         InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
         //倒计时
@@ -244,6 +254,7 @@ export default {
         // unSold = precision.minus(amount, beSold);
 
         shortBalance = await getBalance(item.longInfo.short, item._collateral);
+
         resultItem = {
           id: item.askID,
           volume: amount,
@@ -256,6 +267,7 @@ export default {
           _collateral: item.longInfo._collateral,
           _underlying: item.longInfo._underlying,
         };
+
         newArray = this.getNewPrice(item.askID);
         if (newArray) {
           resultItem["volume"] = fromWei(newArray.volume, Token);
@@ -266,8 +278,14 @@ export default {
           resultItem["id"] = newArray.newAskID;
         }
         askRes = await asks(resultItem.id, "sync", resultItem._collateral);
-        resultItem["unSold"] = askRes;
-        resultItem["beSold"] = precision.minus(amount, askRes);
+        if (TokenFlag == "WBNB") {
+          resultItem["unSold"] = askRes;
+          resultItem["beSold"] = precision.minus(amount, askRes);
+        } else {
+          resultItem["unSold"] = askRes * this.strikePriceArray[1][TokenFlag];
+          resultItem["beSold"] = precision.minus(amount, askRes);
+        }
+
         if (askRes == "0") {
           resultItem["status"] = "Beborrowed";
           resultItem["sort"] = 1;
@@ -286,7 +304,7 @@ export default {
       }
       this.isLoading = false;
       this.insuranceList = result;
-      console.log(result);
+
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     //获取已出售

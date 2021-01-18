@@ -156,6 +156,9 @@ export default {
     rePriceMap() {
       return this.$store.state.repriceMap;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
 
   methods: {
@@ -252,7 +255,7 @@ export default {
             resultItem["id"] = newArray.newAskID;
           }
           let res = await asks(resultItem["id"], "sync", Token);
-          resultItem["remain"] = res;
+          resultItem["remain"] = res * this.strikePriceArray[1][unToken];
           if (res != 0 && time > now) {
             sellResult.push(resultItem);
           }
@@ -351,7 +354,9 @@ export default {
         // (fromWei(item.volume, Token) * this.indexArray[0][unToken]) / 2;
         datas = {
           askID: data.id,
-          volume: data.buyNum,
+          volume:
+            data.buyNum /
+            this.strikePriceArray[1][getTokenName(data._underlying)],
           // volume: fixD(data.buyNum * this.indexArray[0][Token], 8) / 2,
           price: data.price,
           settleToken: "HELMET",
@@ -363,7 +368,7 @@ export default {
         this.listType = 2;
         this.listCoin = data._underlying;
       }
-
+      console.log(datas);
       buyInsuranceBuy(datas, (status) => {});
     },
     // 计算数量

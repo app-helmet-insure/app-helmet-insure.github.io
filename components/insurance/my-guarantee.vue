@@ -145,6 +145,9 @@ export default {
     myAboutInfoBuy() {
       return this.$store.state.myAboutInfoBuy;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
   watch: {
     myAboutInfoBuy: {
@@ -172,52 +175,68 @@ export default {
       let bidIDArr;
       for (let i = 0; i < list.length; i++) {
         item = list[i];
+        let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
+        let Token = getTokenName(item.sellInfo.longInfo._collateral);
+        amount = fromWei(item.vol, Token);
         if (item.new) {
-          let Token = getTokenName(item.sellInfo.longInfo._collateral);
-          // 数量
-          amount = fromWei(item.vol, Token);
           // 保单价格
           InsurancePrice = fromWei(item.newPrice, Token == "CTK" ? 30 : Token);
-          // 保费
-          Rent = precision.times(amount, InsurancePrice);
-          //倒计时
-          downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
         } else {
-          let Token = getTokenName(item.sellInfo.longInfo._collateral);
-          // 数量
-          amount = fromWei(item.vol, Token);
           // 保单价格
           InsurancePrice = fromWei(
             item.sellInfo.price,
             Token == "CTK" ? 30 : Token
           );
-          // 保费
-          Rent = precision.times(amount, InsurancePrice);
-          //倒计时
-          downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
         }
-
-        resultItem = {
-          id: item.bidID,
-          bidID: item.bidID,
-          buyer: item.buyer,
-          amt: fromWei(item.amt),
-          price: InsurancePrice,
-          volume: amount,
-          Rent: Rent,
-          settleToken: item.sellInfo.settleToken,
-          dueDate: downTime,
-          _collateral: item.sellInfo.longInfo._collateral,
-          _strikePrice: fromWei(
-            item.sellInfo.longInfo._strikePrice,
-            item.sellInfo.longInfo._collateral
-          ),
-          _underlying: item.sellInfo.longInfo._underlying,
-          _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
-          long: item.sellInfo.long,
-          short: item.sellInfo.longInfo.short,
-          count: item.sellInfo.longInfo.count,
-        };
+        // 保费
+        Rent = precision.times(amount, InsurancePrice);
+        //倒计时
+        downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
+        if (TokenFlag == "WBNB") {
+          resultItem = {
+            id: item.bidID,
+            bidID: item.bidID,
+            buyer: item.buyer,
+            amt: fromWei(item.amt),
+            price: InsurancePrice,
+            volume: amount,
+            Rent: Rent,
+            settleToken: item.sellInfo.settleToken,
+            dueDate: downTime,
+            _collateral: item.sellInfo.longInfo._collateral,
+            _strikePrice: fromWei(
+              item.sellInfo.longInfo._strikePrice,
+              item.sellInfo.longInfo._collateral
+            ),
+            _underlying: item.sellInfo.longInfo._underlying,
+            _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
+            long: item.sellInfo.long,
+            short: item.sellInfo.longInfo.short,
+            count: item.sellInfo.longInfo.count,
+          };
+        } else {
+          resultItem = {
+            id: item.bidID,
+            bidID: item.bidID,
+            buyer: item.buyer,
+            amt: fromWei(item.amt),
+            price: InsurancePrice,
+            volume: amount * this.strikePriceArray[1][TokenFlag],
+            Rent: Rent,
+            settleToken: item.sellInfo.settleToken,
+            dueDate: downTime,
+            _collateral: item.sellInfo.longInfo._collateral,
+            _strikePrice: fromWei(
+              item.sellInfo.longInfo._strikePrice,
+              item.sellInfo.longInfo._collateral
+            ),
+            _underlying: item.sellInfo.longInfo._underlying,
+            _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
+            long: item.sellInfo.long,
+            short: item.sellInfo.longInfo.short,
+            count: item.sellInfo.longInfo.count,
+          };
+        }
 
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Dated";

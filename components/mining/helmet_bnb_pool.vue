@@ -68,7 +68,7 @@
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://pancakeswap.finance/farm/Helmet-BNB%20LP"
+              href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
               >Go to Pancake Pool</a
             >

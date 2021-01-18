@@ -61,10 +61,18 @@
             >
             <span> {{ balance.Withdraw }} LPT/{{ balance.TotalLPT }} LPT</span>
           </p>
-          <p>
-            <span>My Pool Share：</span>
-            <span> {{ balance.Share }} %</span>
-          </p>
+
+          <section>
+            <p>
+              <span>My Pool Share：</span>
+              <span> {{ balance.Share }} %</span>
+            </p>
+            <a
+              href="https://pancakeswap.finance/farm/Helmet-BNB%20LP"
+              target="_blank"
+              >Go to Pancake Pool</a
+            >
+          </section>
         </div>
       </div>
       <div class="withdraw">
@@ -316,7 +324,7 @@ export default {
       this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((totalHelmet / 30) * 7, 2);
+      this.textList[0].num = fixD((totalHelmet / 30) * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
@@ -498,6 +506,16 @@ export default {
           }
         }
         .button {
+          section {
+            a {
+              display: block;
+              margin-top: 4px;
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
           p {
             margin-top: 11px;
             display: flex;
@@ -511,6 +529,9 @@ export default {
                 color: #919aa6;
               }
             }
+          }
+          .column {
+            flex-direction: column;
           }
         }
       }
@@ -538,14 +559,16 @@ export default {
 @media screen and (max-width: 750px) {
   .helmet_pool {
     background: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 20px;
     padding: 40px 16px;
     > h3 {
       text-align: center;
     }
     .text {
       display: flex;
+      flex-direction: column;
       // padding: 0 140px;
-      justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
@@ -582,11 +605,12 @@ export default {
         }
       }
       .index {
+        margin-top: 10px;
         display: flex;
+        justify-content: space-between;
         > p {
           display: flex;
           flex-direction: column;
-          margin-left: 100px;
           span {
             &:nth-of-type(1) {
               font-size: 14px;
@@ -647,6 +671,54 @@ export default {
             }
           }
         }
+      }
+      .deposit {
+        border-top: 2px solid #00b900;
+        background: rgba(0, 185, 0, 0.04);
+        .title {
+          > span {
+            color: #00b900;
+          }
+        }
+        .button {
+          section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
+          p {
+            margin-top: 11px;
+            display: flex;
+            flex-direction: column;
+            span {
+              font-size: 14px;
+              color: #121212;
+              &:first-of-type {
+                font-size: 14px;
+                color: #919aa6;
+              }
+              span {
+                display: flex;
+                flex-direction: column;
+              }
+            }
+          }
+        }
+      }
+      .withdraw {
+        border-top: 2px solid #ff6400;
+        background: rgba(255, 100, 0, 0.04);
+        .title {
+          > span {
+            color: #ff6400;
+          }
+        }
         .button {
           p {
             margin-top: 11px;
@@ -665,24 +737,6 @@ export default {
                 flex-direction: column;
               }
             }
-          }
-        }
-      }
-      .deposit {
-        border-top: 2px solid #00b900;
-        background: rgba(0, 185, 0, 0.04);
-        .title {
-          > span {
-            color: #00b900;
-          }
-        }
-      }
-      .withdraw {
-        border-top: 2px solid #ff6400;
-        background: rgba(255, 100, 0, 0.04);
-        .title {
-          > span {
-            color: #ff6400;
           }
         }
       }

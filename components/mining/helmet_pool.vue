@@ -270,7 +270,7 @@ export default {
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(158637.45 * 7, 2);
+      this.textList[0].num = fixD(158637.45 * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
@@ -506,13 +506,23 @@ export default {
   .helmet_pool {
     background: #ffffff;
     padding: 40px 16px;
+    position: relative;
+    margin-top: 10px;
+    > img {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      top: 0;
+      transform: translateY(-5px);
+    }
     > h3 {
       text-align: center;
     }
     .text {
       display: flex;
+      flex-direction: column;
       // padding: 0 140px;
-      justify-content: space-between;
+      // justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
@@ -549,11 +559,12 @@ export default {
         }
       }
       .index {
+        margin-top: 10px;
         display: flex;
+        justify-content: space-between;
         > p {
           display: flex;
           flex-direction: column;
-          margin-left: 100px;
           span {
             &:nth-of-type(1) {
               font-size: 14px;
@@ -614,6 +625,43 @@ export default {
             }
           }
         }
+      }
+      .deposit {
+        border-top: 2px solid #00b900;
+        background: rgba(0, 185, 0, 0.04);
+        .title {
+          > span {
+            color: #00b900;
+          }
+        }
+        .button {
+          p {
+            margin-top: 11px;
+            display: flex;
+            flex-direction: column;
+            span {
+              font-size: 14px;
+              color: #121212;
+              &:first-of-type {
+                font-size: 14px;
+                color: #919aa6;
+              }
+              span {
+                display: flex;
+                flex-direction: column;
+              }
+            }
+          }
+        }
+      }
+      .withdraw {
+        border-top: 2px solid #ff6400;
+        background: rgba(255, 100, 0, 0.04);
+        .title {
+          > span {
+            color: #ff6400;
+          }
+        }
         .button {
           p {
             margin-top: 11px;
@@ -632,24 +680,6 @@ export default {
                 flex-direction: column;
               }
             }
-          }
-        }
-      }
-      .deposit {
-        border-top: 2px solid #00b900;
-        background: rgba(0, 185, 0, 0.04);
-        .title {
-          > span {
-            color: #00b900;
-          }
-        }
-      }
-      .withdraw {
-        border-top: 2px solid #ff6400;
-        background: rgba(255, 100, 0, 0.04);
-        .title {
-          > span {
-            color: #ff6400;
           }
         }
       }

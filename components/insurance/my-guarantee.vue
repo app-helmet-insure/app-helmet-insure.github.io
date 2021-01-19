@@ -30,9 +30,9 @@
                 : getTokenName(item._underlying)
             }}
           </td>
-          <td>{{ fixD(toRounding(item.price, 4), 4) }}</td>
-          <td>{{ fixD(toRounding(item.Rent, 4), 4) }}</td>
-          <td>{{ fixD(toRounding(item.volume, 4), 4) }}</td>
+          <td>{{ fixD(item.price, 4) }}</td>
+          <td>{{ fixD(item.Rent, 4) }}</td>
+          <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
             <button class="b_b_button" @click="toActive(item)">
@@ -65,17 +65,17 @@
           </p>
           <p>
             <span>{{ $t("Table.InsurancePrice") }}</span
-            ><span>{{ fixD(toRounding(item.price, 4), 4) }}</span>
+            ><span>{{ fixD(item.price, 4) }}</span>
           </p>
         </div>
         <div>
           <p>
             <span>{{ $t("Table.Rent") }}</span
-            ><span>{{ fixD(toRounding(item.Rent, 4), 4) }}</span>
+            ><span>{{ fixD(item.Rent, 4) }}</span>
           </p>
           <p>
             <span>{{ $t("Table.Position") }}</span
-            ><span>{{ fixD(toRounding(item.volume, 4), 4) }}</span>
+            ><span>{{ fixD(item.volume, 8) }}</span>
           </p>
         </div>
         <section>
@@ -121,7 +121,13 @@
 <script>
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import {
+  fixD,
+  addCommom,
+  autoRounding,
+  toRounding,
+  fixDEAdd,
+} from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise } from "~/interface/order.js";
@@ -221,7 +227,7 @@ export default {
             buyer: item.buyer,
             amt: fromWei(item.amt),
             price: InsurancePrice,
-            volume: precision.times(
+            volume: precision.divide(
               amount,
               this.strikePriceArray[1][TokenFlag]
             ),

@@ -801,8 +801,12 @@ export const onCancel = async (askID, callBack) => {
             callBack('approve');
             //onChangeHash(hash);
         })
-        .on('confirmation', (_, receipt) => {
-            callBack('success');
+        .on('confirmation', (confirmationNumber, receipt) => {
+            if (confirmationNumber === 0) {
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                }, 1000);
+            }
             //onReceiptChange(receipt);
         })
         .on('error', (err, receipt) => {

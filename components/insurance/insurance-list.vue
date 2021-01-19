@@ -95,7 +95,13 @@
 import PInput from "~/components/common/p-input.vue";
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import {
+  fixD,
+  addCommom,
+  autoRounding,
+  toRounding,
+  fixDEAdd,
+} from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { buyInsuranceBuy, asks } from "~/interface/order.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
@@ -201,7 +207,7 @@ export default {
             seller: item.seller,
             id: item.askID,
             volume: fromWei(item.volume, coToken),
-            price: price,
+            price: fixD(price, 4),
             settleToken: item.settleToken,
             _strikePrice: fromWei(item.longInfo._strikePrice, coToken),
             _underlying: item.longInfo._underlying,
@@ -236,7 +242,7 @@ export default {
             seller: item.seller,
             id: item.askID,
             volume: volume,
-            price: price,
+            price: fixD(price, 4),
             settleToken: item.settleToken,
             _strikePrice: fromWei(item.longInfo._strikePrice, unToken),
             _underlying: item.longInfo._underlying,
@@ -255,9 +261,10 @@ export default {
             resultItem["id"] = newArray.newAskID;
           }
           let res = await asks(resultItem["id"], "sync", Token);
-          resultItem["remain"] = precision.times(
-            res,
-            this.strikePriceArray[1][unToken]
+
+          resultItem["remain"] = fixD(
+            precision.divide(res, this.strikePriceArray[1][unToken]),
+            8
           );
           if (res != 0 && time > now) {
             sellResult.push(resultItem);

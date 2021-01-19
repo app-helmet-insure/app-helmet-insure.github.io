@@ -34,7 +34,7 @@
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
             {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} HELMET
-            {{ $t("Table.Available") }}
+            {{ $t("Table.DAvailable") }}
           </p>
         </div>
         <div class="content">
@@ -60,9 +60,7 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span>
-              {{ balance.Withdraw }} HELMET/{{ balance.TotalLPT }} HELMET</span
-            >
+            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} HELMET</span>
           </p>
           <p>
             <span>My Pool Share：</span>
@@ -73,7 +71,7 @@
       <div class="withdraw">
         <div class="title">
           <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} HELMET {{ $t("Table.Available") }}</p>
+          <p>{{ balance.Withdraw }} HELMET {{ $t("Table.WAvailable") }}</p>
         </div>
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
@@ -243,7 +241,7 @@ export default {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       let apy = fixD(
         precision.times(
-          precision.divide(precision.times(158637.45, 365), HelmetVolume),
+          precision.divide(precision.times(155433.005, 365), HelmetVolume),
           100
         ),
         2
@@ -270,7 +268,7 @@ export default {
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(158637.45 * 7, 2) + " HELMET";
+      this.textList[0].num = fixD(155433.005 * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

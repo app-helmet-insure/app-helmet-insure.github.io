@@ -33,7 +33,7 @@
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
             {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
-            {{ $t("Table.Available") }}
+            {{ $t("Table.DAvailable") }}
           </p>
         </div>
         <div class="content">
@@ -59,7 +59,7 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span> {{ balance.Withdraw }} LPT/{{ balance.TotalLPT }} LPT</span>
+            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
           </p>
 
           <section>
@@ -78,7 +78,7 @@
       <div class="withdraw">
         <div class="title">
           <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} LPT {{ $t("Table.Available") }}</p>
+          <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
         </div>
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
@@ -325,10 +325,9 @@ export default {
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       this.textList[0].num =
-        fixD((precision.minus(HelmetAllowance, helmetReward) / 365
-        ) * 7, 2) +
+        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
         " HELMET";
-      console.log(precision.minus(HelmetAllowance, helmetReward));
+
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

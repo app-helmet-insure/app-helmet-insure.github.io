@@ -240,9 +240,10 @@ export default {
         if (TokenFlag == "WBNB") {
           amount = fromWei(item.volume, Token);
         } else {
-          amount =
-            fromWei(item.volume, Token) * this.strikePriceArray[1][TokenFlag];
-          console.log(amount);
+          amount = precision.times(
+            fromWei(item.volume, Token),
+            this.strikePriceArray[1][TokenFlag]
+          );
         }
         // 保单价格
         InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
@@ -282,7 +283,10 @@ export default {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, askRes);
         } else {
-          resultItem["unSold"] = askRes * this.strikePriceArray[1][TokenFlag];
+          resultItem["unSold"] = precision.times(
+            askRes,
+            this.strikePriceArray[1][TokenFlag]
+          );
           resultItem["beSold"] = precision.minus(amount, askRes);
         }
 

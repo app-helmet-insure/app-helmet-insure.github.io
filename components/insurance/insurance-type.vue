@@ -5,7 +5,10 @@
         @click="handleClickInsurance(1)"
         :class="insurance_type == 1 ? 'green' : ''"
       >
-        {{ $t("Content.DoubleInsurance") }}<span>100%</span><i></i>
+        <p v-if="currentCoin != 'HELMET'">
+          {{ $t("Content.DoubleInsurance") }}<span>100%</span><i></i>
+        </p>
+        <img src="~/assets/img/helmet/helmet_coin.png" alt="" v-else />
       </button>
       <button
         @click="handleClickInsurance(2)"
@@ -16,7 +19,7 @@
           <i></i>
         </p>
 
-        <img src="~/assets/img/helmet/helmet_coin.png" alt="" v-else />
+        <img src="~/assets/img/helmet/helmet_coin1.png" alt="" v-else />
       </button>
     </div>
   </div>

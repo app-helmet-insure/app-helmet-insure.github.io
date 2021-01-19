@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       type: "buy",
-      curCoin: "ETH",
+      curCoin: "HELMET",
       TradeType: 1,
       repriceflag: false,
       option: {},

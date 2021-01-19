@@ -5,8 +5,8 @@
         <tr>
           <td>{{ $t("Table.ID") }}</td>
           <td>{{ $t("Table.Type") }}</td>
-          <td>{{ $t("Table.InsurancePrice") }}</td>
           <td>{{ $t("Table.Rent") }}</td>
+          <td>{{ $t("Table.InsurancePrice") }}</td>
           <td>{{ $t("Table.Position") }}</td>
           <td>{{ $t("Table.CountDonm") }}</td>
           <td></td>
@@ -227,9 +227,9 @@ export default {
             buyer: item.buyer,
             amt: fromWei(item.amt),
             price: InsurancePrice,
-            volume: precision.divide(
-              amount,
-              this.strikePriceArray[1][TokenFlag]
+            volume: fixD(
+              precision.divide(amount, this.strikePriceArray[1][TokenFlag]),
+              8
             ),
             Rent: Rent,
             settleToken: item.sellInfo.settleToken,

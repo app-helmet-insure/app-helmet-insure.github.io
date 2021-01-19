@@ -195,7 +195,6 @@ export default {
           settleToken: "HELMET",
           _yield: 0,
         };
-        console.log(data);
         onIssueSellOnETH(data, (status) => {});
       } else {
         data = {
@@ -210,6 +209,7 @@ export default {
           settleToken: "HELMET",
           _yield: 0,
         };
+        console.log(data);
         onIssueSell(data, (status) => {});
       }
     },
@@ -226,7 +226,7 @@ export default {
         newValue.strikePrice &&
         newValue._expiry
       ) {
-        let DPR = dpr / 100;
+        let DPR = precision.divide(dpr, 100);
         let time1 = new Date(_expiry).getTime();
         let time2 = new Date().getTime();
         let day = parseInt((time1 - time2) / (1000 * 60 * 60 * 24)) + 1;
@@ -251,9 +251,15 @@ export default {
         } else {
           number = precision.times(
             DPR,
-            this.IndexPxArray[0]["HELMET"] * num,
+            precision.times(this.IndexPxArray[0]["HELMET"], num),
             day
           );
+          console.log(
+            DPR,
+            precision.times(this.IndexPxArray[0]["HELMET"], num),
+            day
+          );
+
           premium = precision.minus(
             number,
             Math.min(precision.minus(indexPx, strikePrice), 0)
@@ -261,8 +267,8 @@ export default {
 
           earnings = -(Math.max(strikePrice - indexPx, 0) - premium);
         }
-        this.Rent = toRounding(premium, 8);
-        this.earnings = toRounding(earnings, 8);
+        this.Rent = fixD(premium, 8);
+        this.earnings = fixD(earnings, 8);
         return toRounding(premium, 8);
       } else {
         return 0;

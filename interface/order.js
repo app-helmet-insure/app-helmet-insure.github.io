@@ -38,7 +38,11 @@ export const onIssueSell = async (data_, callBack) => {
     let priceFix = getStrikePriceFix(data_.currency, data_.category);
     let priceUnit = getWeiWithFix(priceFix);
     let price = fixD(data.price, priceFix);
-    data.total = toWei(precision.times(data_.price, data_.volume), priceFix);
+
+    data.total = toWei(
+        fixD(precision.times(data_.price, data_.volume), 10),
+        priceFix
+    );
     price = window.WEB3.utils.toWei(String(price), priceUnit);
     data.price = price;
 
@@ -50,6 +54,7 @@ export const onIssueSell = async (data_, callBack) => {
     );
     premium = window.WEB3.utils.toWei(String(premium), premiumUnit);
     data.premium = premium;
+    console.log(data, '#########');
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
@@ -134,7 +139,7 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     data.expire = new Date(data.expire).getTime();
     data.expire = parseInt(precision.divide(data.expire, 1000));
     data.total = toWei(
-        precision.times(data.price, data.volume),
+        fixD(precision.times(data.price, data.volume), 10),
         data_.currency
     );
     // let premium = fixD(precision.divide(data.premium, data.price), 18);

@@ -111,5 +111,8 @@
     "text1": "If 【CAKE-BNB】 swap price is 【lower】/【higher】than 【200】 BNB by the expiration date, you will earn DPR 【3%】 earning without risk. 用low和high这两个词",
     "Cont": "cont",
     "Tips": "1 Policy for 1 {type}"
+  },
+  "Tip": {
+    "Dpr": "daily percentage of yield, DPR= daily yield / staking volume"
   }
 }

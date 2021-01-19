@@ -14,6 +14,13 @@
             <i v-if="item.warn"></i>
           </p>
         </div>
+        <div class="info">
+          <i></i>
+          <p>
+            {{ $t("Tip.Dpr") }}
+            <i></i>
+          </p>
+        </div>
         <span class="left">DPR</span>
         <span class="right">%</span>
       </div>
@@ -209,7 +216,6 @@ export default {
           settleToken: "HELMET",
           _yield: 0,
         };
-        console.log(data);
         onIssueSell(data, (status) => {});
       }
     },
@@ -254,12 +260,6 @@ export default {
             precision.times(this.IndexPxArray[0]["HELMET"], num),
             day
           );
-          console.log(
-            DPR,
-            precision.times(this.IndexPxArray[0]["HELMET"], num),
-            day
-          );
-
           premium = precision.minus(
             number,
             Math.min(precision.minus(indexPx, strikePrice), 0)
@@ -318,10 +318,52 @@ input:focus {
       display: flex;
       .dpr {
         width: 320px;
-        position: relative;
         display: flex;
         align-items: center;
         font-size: 14px;
+        position: relative;
+        .info {
+          position: absolute;
+          width: 500px;
+          display: flex;
+          align-items: center;
+          > i {
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-image: url("../../assets/img/helmet/info.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            left: 42px;
+            cursor: pointer;
+          }
+          > p {
+            display: none;
+            padding: 5px 8px;
+            background: #1d1d1d;
+            min-width: 340px;
+            position: absolute;
+            top: -45px;
+            font-size: 14px;
+            color: #f7f7fa;
+            border-radius: 3px;
+            left: 30px;
+            z-index: 9;
+            i {
+              border: 5px solid #1d1d1d;
+              border-bottom-color: transparent;
+              border-left-color: transparent;
+              border-right-color: transparent;
+              position: absolute;
+              left: 15px;
+              bottom: -10px;
+            }
+          }
+          > i:hover + p {
+            display: block;
+          }
+        }
         .option {
           position: absolute;
           width: 100%;

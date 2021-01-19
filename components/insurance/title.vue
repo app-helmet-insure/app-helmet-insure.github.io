@@ -1,47 +1,27 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="text bg1 swiper-slide">
+      <div class="text bg3 swiper-slide">
         <div>
-          <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
-          <span
-            >919,199.5872 CAKE 12,859.9603 BNB
-
-            <!-- <a href="https://pancakeswap.finance/ifo" target="_blank"
-              >{{ $t("Banner.ReadMore") }}
-            </a> -->
-          </span>
-          <!-- <div>
-            <p>
-              <i>{{ day }}</i>
-              <span>DAYS</span>
-            </p>
-            <span>:</span>
-            <p>
-              <i>{{ hour }}</i>
-              <span>HOURS</span>
-            </p>
-            <span>:</span>
-            <p>
-              <i>{{ minute }} </i>
-              <span>MINUTES</span>
-            </p>
-          </div> -->
+          <h3>staking Helmet for Helmet with high APY</h3>
+          <button class="o_button" style="min-width: 120px" @click="toMining">
+            START
+          </button>
         </div>
-      </div>
-
-      <div class="img swiper-slide">
-        <h3>
-          <!-- {{ $t("Banner.TradeStart") }} -->
-          Policy trading start
-        </h3>
-        <!-- <p>{{ $t("Banner.TradeTime") }}</p> -->
       </div>
       <div class="text bg2 swiper-slide">
         <div>
           <h3>Double Mining Rewards <i>HELMET & CAKE</i> 30 Days</h3>
-
           <span>Start: Jan. 15th 18:00 SGT </span>
+        </div>
+      </div>
+      <div class="img swiper-slide">
+        <h3>Policy trading start</h3>
+      </div>
+      <div class="text bg1 swiper-slide">
+        <div>
+          <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
+          <span>919,199.5872 CAKE 12,859.9603 BNB </span>
         </div>
       </div>
     </div>
@@ -82,6 +62,9 @@ export default {
     },
   },
   methods: {
+    toMining() {
+      this.$router.push("/mining");
+    },
     init() {
       var mySwiper = new Swiper(".swiper-container", {
         // loop: true,
@@ -150,6 +133,15 @@ export default {
     .bg2 {
       background-image: url("../../assets/img/helmet/helmetPool.png");
       background-size: 448px 220px;
+      background-position: 95% center;
+      background-repeat: no-repeat;
+      h3 {
+        width: 500px;
+      }
+    }
+    .bg3 {
+      background-image: url("../../assets/img/helmet/banner_illl.png");
+      background-size: 360px 220px;
       background-position: 95% center;
       background-repeat: no-repeat;
       h3 {
@@ -270,6 +262,16 @@ export default {
       background-size: 320px 196px;
       background-position: center 100%;
       background-repeat: no-repeat;
+      h3 {
+        width: 500px;
+      }
+    }
+    .bg3 {
+      background-image: url("../../assets/img/helmet/banner_illl.png");
+      background-size: 320px 196px;
+      background-position: center 100%;
+      background-repeat: no-repeat;
+
       h3 {
         width: 500px;
       }

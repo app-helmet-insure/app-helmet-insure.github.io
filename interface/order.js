@@ -374,7 +374,21 @@ export const getRePrice = async (callback) => {
         );
     });
 };
-
+export const getTransfer = async (callback) => {
+    let Contract = new expERC20();
+    Contract().then((contract) => {
+        contract.getPastEvents(
+            'Transfer',
+            {
+                fromBlock: 0,
+                toBlock: 'latest',
+            },
+            (error, events) => {
+                callback(error, events);
+            }
+        );
+    });
+};
 export const getOptionCreatedLog = async (callback) => {
     return Factory().then((contract) => {
         contract.getPastEvents(

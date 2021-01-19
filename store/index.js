@@ -6,6 +6,7 @@ import {
     getBuyLog,
     getMint,
     getRePrice,
+    getTransfer,
 } from '~/interface/order.js';
 import { getProgress } from '~/interface/price.js';
 import {
@@ -383,6 +384,18 @@ export const actions = {
             });
             commit('SET_REPRICE_MAP', reprice_map);
         });
+        // // 创建空头保单 映射对象
+        // getTransfer((err, data) => {
+        //     if (err) {
+        //         return;
+        //     }
+        //     console.log(data, '#########');
+        //     // let reprice_map = [];
+        //     // data.forEach((item, index) => {
+        //     //     reprice_map.push(item.returnValues);
+        //     // });
+        //     // commit('SET_REPRICE_MAP', reprice_map);
+        // });
         getMint((err, data) => {
             let longTokenCreatedVolume = 0;
             if (err) {

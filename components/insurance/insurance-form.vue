@@ -2,12 +2,24 @@
   <div class="insurance_form">
     <div>
       <div class="dpr">
-        <input type="text" v-model="dpr" />
+        <input type="text" v-model="dpr" @click="handleClickDpr()" readonly />
+        <div class="option" v-if="optionFlag">
+          <p
+            v-for="item in this.dprList"
+            :key="item.num"
+            @click="checkDpr(item)"
+            :class="dpr == item.num ? 'opfocus' : ''"
+          >
+            {{ item.num }}%
+            <i v-if="item.warn"></i>
+          </p>
+        </div>
         <span class="left">DPR</span>
         <span class="right">%</span>
       </div>
       <div class="num">
         <input type="text" v-model="volume" />
+
         <i>{{ unit == "FORTUBE" ? "FOR" : unit }}</i>
         <span class="right" @click="toAll">{{ $t("Table.ALL") }}</span>
       </div>
@@ -53,7 +65,7 @@ export default {
   props: ["currentCoin", "currentType"],
   data() {
     return {
-      dpr: 0.14, //DPR
+      dpr: 0.07, //DPR
       volume: "", //数量
       precision,
       Rent: 0,
@@ -66,6 +78,12 @@ export default {
       addCommom,
       autoRounding,
       toRounding,
+      optionFlag: false,
+      dprList: [
+        { num: 0.07, warn: false },
+        { num: 0.14, warn: false },
+        { num: 0.28, warn: true },
+      ],
     };
   },
   computed: {
@@ -141,6 +159,13 @@ export default {
     },
   },
   methods: {
+    handleClickDpr() {
+      this.optionFlag = !this.optionFlag;
+    },
+    checkDpr(item) {
+      this.dpr = item.num;
+      this.optionFlag = false;
+    },
     toAll() {
       if (this.BalanceArray) {
         this.volume = this.BalanceArray[this.currentCoin];
@@ -170,6 +195,7 @@ export default {
           settleToken: "HELMET",
           _yield: 0,
         };
+        console.log(data);
         onIssueSellOnETH(data, (status) => {});
       } else {
         data = {
@@ -290,7 +316,37 @@ input:focus {
         display: flex;
         align-items: center;
         font-size: 14px;
+        .option {
+          position: absolute;
+          width: 100%;
+          background: #ededf0;
+          top: calc(100% + 7px);
+          .opfocus {
+            background: #f7f7fa;
+          }
+          p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            cursor: pointer;
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/wran.png");
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              left: 60%;
+            }
+            &:hover {
+              background: #f7f7fa;
+            }
+          }
+        }
         input {
+          cursor: pointer;
           width: 100%;
           height: 40px;
           border: 1px solid #cfcfd2;
@@ -314,6 +370,7 @@ input:focus {
         align-items: center;
         font-size: 14px;
         margin: 0 20px 0 10px;
+
         input {
           width: 100%;
           height: 40px;
@@ -399,6 +456,7 @@ input:focus {
           padding: 0 60px 0 12px;
           color: #919aa6;
         }
+
         i {
           position: absolute;
           right: 50px;

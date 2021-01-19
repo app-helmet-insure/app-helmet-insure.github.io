@@ -15,7 +15,12 @@
       <tbody>
         <tr v-for="(item, index) in showList" :key="index">
           <td>
-            {{ item.id }}
+            {{ item.showID }}
+            <i
+              class="copy"
+              id="copy"
+              @click="copyAdress($event, item.seller)"
+            ></i>
           </td>
           <td>{{ item.price }}</td>
           <td>{{ item.remain }}</td>
@@ -105,6 +110,8 @@ import {
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { buyInsuranceBuy, asks } from "~/interface/order.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   props: ["currentCoin", "currentType"],
   components: {
@@ -150,6 +157,7 @@ export default {
       immediate: true,
     },
   },
+
   computed: {
     aboutInfoSell() {
       let list = this.$store.state.aboutInfoSell;
@@ -168,6 +176,24 @@ export default {
   },
 
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     // 卖单数据
     aboutInfoSellWatch(newValue) {
       if (newValue) {
@@ -396,6 +422,17 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
+#copy {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url("../../assets/img/icon/copy.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 130px;
+  cursor: pointer;
+}
 @media screen and (min-width: 750px) {
   .insurance_list {
     position: relative;
@@ -447,6 +484,8 @@ export default {
             font-size: 14px;
             font-weight: bold;
             color: #121212;
+            display: flex;
+            align-items: center;
           }
           .option {
             display: flex;

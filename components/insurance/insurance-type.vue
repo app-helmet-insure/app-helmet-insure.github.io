@@ -5,20 +5,27 @@
         @click="handleClickInsurance(1)"
         :class="insurance_type == 1 ? 'green' : ''"
       >
-        <p v-if="currentCoin != 'HELMET'">
-          {{ $t("Content.DoubleInsurance") }}<span>100%</span><i></i>
-        </p>
-        <img src="~/assets/img/helmet/helmet_coin.png" alt="" v-else />
+        <img
+          src="~/assets/img/helmet/helmet_coin.png"
+          alt=""
+          v-if="lang == 'en_US'"
+        />
+        <img src="~/assets/img/helmet/call.png" alt="" v-else />
       </button>
       <button
         @click="handleClickInsurance(2)"
         :class="insurance_type == 2 ? 'orange' : ''"
       >
-        <p v-if="currentCoin != 'HELMET'">
-          {{ $t("Content.HalfInsurance") }}<span>-50%</span>
-          <i></i>
-        </p>
-
+        <img
+          src="~/assets/img/helmet/cover50.png"
+          alt=""
+          v-if="lang == 'en_US' && currentCoin != 'HELMET'"
+        />
+        <img
+          src="~/assets/img/helmet/put.png"
+          alt=""
+          v-else-if="currentCoin != 'HELMET'"
+        />
         <img src="~/assets/img/helmet/helmet_coin1.png" alt="" v-else />
       </button>
     </div>
@@ -32,6 +39,11 @@ export default {
     return {
       insurance_type: 1,
     };
+  },
+  computed: {
+    lang() {
+      return this.$store.state.locale;
+    },
   },
   watch: {
     currentCoin(newVal, val) {

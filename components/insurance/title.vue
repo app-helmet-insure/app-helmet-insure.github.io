@@ -3,7 +3,7 @@
     <div class="swiper-wrapper">
       <div class="text bg3 swiper-slide">
         <div>
-          <h3>staking Helmet for Helmet with high APY</h3>
+          <h3>Staking Helmet for Helmet with high APY</h3>
           <button class="o_button" style="min-width: 120px" @click="toMining">
             START
           </button>

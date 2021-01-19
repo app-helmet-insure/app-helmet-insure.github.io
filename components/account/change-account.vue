@@ -30,15 +30,15 @@
   </div>
 </template>
 <script>
-import { mateMaskInfo } from '~/assets/utils/matemask.js';
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3 from 'web3';
+import { mateMaskInfo } from "~/assets/utils/matemask.js";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 
 export default {
-  name: 'change-account',
+  name: "change-account",
   data() {
     return {
-      accountText: '',
+      accountText: "",
     };
   },
   computed: {
@@ -48,25 +48,25 @@ export default {
   },
   watch: {
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
   methods: {
     userInfoWatch(newValue) {
       let account = newValue.data.account;
-      this.accountText = account.substr(0, 6) + '...' + account.substr(-5);
+      this.accountText = account.substr(0, 6) + "..." + account.substr(-5);
     },
     closeDialog() {
-      this.$emit('close');
+      this.$emit("close");
     },
     backDialog() {
-      this.$emit('back');
+      this.$emit("back");
       this.closeDialog();
     },
     changeWallet(item) {
-      this.$store.dispatch('setWalletType', item);
-      if (item === 'MetaMask') {
+      this.$store.dispatch("setWalletType", item);
+      if (item === "MetaMask") {
         this.connectMetaMask();
       } else {
         this.connectWallet();
@@ -75,41 +75,41 @@ export default {
     connectMetaMask() {
       try {
         window.ethereum
-          .request({ method: 'eth_requestAccounts' })
+          .request({ method: "eth_requestAccounts" })
           .then(async (account) => {
-            window.localStorage.setItem('currentType', 'MetaMask');
-            let userInfo = await mateMaskInfo(account[0], 'MetaMask');
-            this.$store.dispatch('setUserInfo', userInfo);
-            this.$bus.$emit('REFRESH_ALL_DATA');
-            this.$bus.$emit('REFRESH_MINING');
+            window.localStorage.setItem("currentType", "MetaMask");
+            let userInfo = await mateMaskInfo(account[0], "MetaMask");
+            this.$store.dispatch("setUserInfo", userInfo);
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
           });
       } catch (error) {
-        console.log('MateMask 扩展插件未安装或未启用##', error);
+        console.log("MateMask 扩展插件未安装或未启用##", error);
       }
     },
     async connectWallet() {
       console.log(window);
       try {
         window.ethereum
-          .request({ method: 'eth_requestAccounts' })
+          .request({ method: "eth_requestAccounts" })
           .then(async (account) => {
-            window.localStorage.setItem('currentType', 'Math');
-            let userInfo = await mateMaskInfo(account[0], 'Math');
-            this.$store.dispatch('setUserInfo', userInfo);
-            this.$bus.$emit('REFRESH_ALL_DATA');
-            this.$bus.$emit('REFRESH_MINING');
+            window.localStorage.setItem("currentType", "Math");
+            let userInfo = await mateMaskInfo(account[0], "Math");
+            this.$store.dispatch("setUserInfo", userInfo);
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
           });
       } catch (error) {
-        console.log('Math 扩展插件未安装或未启用##', error);
+        console.log("Math 扩展插件未安装或未启用##", error);
       }
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .change-account-block {
     width: 510px;
@@ -154,7 +154,7 @@ export default {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url('../../assets/img/icon/left2.png');
+      background-image: url("../../assets/img/icon/left2.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;
@@ -167,7 +167,7 @@ export default {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;

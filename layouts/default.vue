@@ -5,7 +5,7 @@
       <span>
         0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
         <i
-          id="copy"
+          id="copy_default"
           data-clipboard-text="0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
         ></i
       ></span>
@@ -52,6 +52,7 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import { getBalance } from "~/interface/order.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 export default {
   name: "default",
@@ -116,7 +117,6 @@ export default {
     // if (!window.localStorage.getItem('readRisk')) {
     //   this.showRiskWarning = true;
     // }
-
     this.copy();
     window.WEB3 = await web3();
     window.chainID = await getID();
@@ -169,7 +169,20 @@ export default {
   },
   methods: {
     copy() {
-      let copy = new ClipboardJS("#copy");
+      let copy = new ClipboardJS("#copy_default");
+      copy.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copy.destroy();
+      });
+      copy.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copy.destroy();
+      });
     },
     closeDialog() {
       this.$emit("close");

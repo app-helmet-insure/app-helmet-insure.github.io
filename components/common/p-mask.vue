@@ -126,11 +126,16 @@ export default {
         //   link: false,
         //   text: this.$t('Header.LPMining'),
         // },
-        // {
-        //   url: 'http://www.payaso.io/guides',
-        //   link: true,
-        //   text: this.$t('Header.GuideBook'),
-        // },
+        {
+          url: "https://helmet-insure.gitbook.io/helmet/",
+          link: true,
+          text: this.$t("Header.GuideBook"),
+        },
+        {
+          url: "https://helmetinsure.medium.com/",
+          link: true,
+          text: "Medium",
+        },
         // {
         //   type: 'PAYASO',
         //   link: false,

@@ -181,10 +181,10 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
-        "Content.Hour"
-      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
-        "Content.Second"
+      let template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+        "Content.HourM"
+      )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+        "Content.SecondM"
       )}`;
       this.dueDate = template;
     },
@@ -200,10 +200,10 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
-        "Content.Hour"
-      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
-        "Content.Second"
+      let template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+        "Content.HourM"
+      )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+        "Content.SecondM"
       )}`;
       this.helmetDate = template;
     },

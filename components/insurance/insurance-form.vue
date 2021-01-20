@@ -464,12 +464,85 @@ input:focus {
     > div {
       display: flex;
       flex-direction: column;
+
       .dpr {
         width: 100%;
         position: relative;
         display: flex;
         align-items: center;
         font-size: 14px;
+        .info {
+          position: absolute;
+          width: 500px;
+          display: flex;
+          align-items: center;
+          > i {
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-image: url("../../assets/img/helmet/info.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            left: 42px;
+            cursor: pointer;
+          }
+          > p {
+            display: none;
+            padding: 5px 8px;
+            background: #1d1d1d;
+            min-width: 340px;
+            position: absolute;
+            top: -45px;
+            font-size: 14px;
+            color: #f7f7fa;
+            border-radius: 3px;
+            left: 30px;
+            z-index: 9;
+            i {
+              border: 5px solid #1d1d1d;
+              border-bottom-color: transparent;
+              border-left-color: transparent;
+              border-right-color: transparent;
+              position: absolute;
+              left: 15px;
+              bottom: -10px;
+            }
+          }
+          > i:hover + p {
+            display: block;
+          }
+        }
+        .option {
+          position: absolute;
+          width: 100%;
+          background: #ededf0;
+          top: calc(100% + 7px);
+          z-index: 1;
+          .opfocus {
+            background: #f7f7fa;
+          }
+          p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            cursor: pointer;
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/wran.png");
+              background-repeat: no-repeat;
+              background-size: cover;
+              position: absolute;
+              left: 60%;
+            }
+            &:hover {
+              background: #f7f7fa;
+            }
+          }
+        }
         input {
           width: 100%;
           height: 40px;

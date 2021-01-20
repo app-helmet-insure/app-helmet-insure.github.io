@@ -473,7 +473,7 @@ input:focus {
         font-size: 14px;
         .info {
           position: absolute;
-          width: 500px;
+          width: 200px;
           display: flex;
           align-items: center;
           > i {
@@ -491,9 +491,9 @@ input:focus {
             display: none;
             padding: 5px 8px;
             background: #1d1d1d;
-            min-width: 340px;
+            min-width: 200px;
             position: absolute;
-            top: -45px;
+            top: -70px;
             font-size: 14px;
             color: #f7f7fa;
             border-radius: 3px;

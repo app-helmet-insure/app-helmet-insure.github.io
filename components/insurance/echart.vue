@@ -167,7 +167,10 @@ export default {
               cover: 1 - toRounding(arr1[this.curCoin] / max, 2),
               num: toRounding(arr1[this.curCoin], 4),
               color: "#FF9600",
-              title: this.$t("Content.ChartOff"),
+              title:
+                this.curCoin == "HELMET"
+                  ? "Cover 0.12$"
+                  : this.$t("Content.ChartOff"),
             },
           ];
           this.upCover = `M0 0 L1080 0 L1080 ${this.line[0].cover * 200} L0 ${

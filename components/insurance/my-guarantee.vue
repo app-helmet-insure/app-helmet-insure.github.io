@@ -47,7 +47,14 @@
     </table>
 
     <div>
-      <div class="item_box" v-for="(item, index) in showList" :key="index">
+      <div
+        class="item_box"
+        v-for="(item, index) in showList"
+        :key="index"
+        :class="
+          getTokenName(item._underlying) == 'WBNB' ? 'call_style' : 'put_style'
+        "
+      >
         <p>
           <span>{{ $t("Table.ID") }}</span
           ><span>{{ item.id }}</span>
@@ -339,42 +346,41 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
+.call_style {
+  background: rgba(0, 185, 0, 0.04);
+  &:hover {
+    td {
+      &:first-child:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0px;
+        border-left: 2px solid#00b900;
+      }
+    }
+  }
+}
+.put_style {
+  background: rgba(255, 100, 0, 0.04);
+  &:hover {
+    td {
+      &:first-child:before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0px;
+        border-left: 2px solid#ff9600;
+      }
+    }
+  }
+}
 @media screen and (min-width: 750px) {
-  .call_style {
-    background: rgba(0, 185, 0, 0.04);
-    &:hover {
-      td {
-        &:first-child:before {
-          content: "";
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 0px;
-          border-left: 2px solid#00b900;
-        }
-      }
-    }
-  }
-  .put_style {
-    background: rgba(255, 100, 0, 0.04);
-    &:hover {
-      td {
-        &:first-child:before {
-          content: "";
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          width: 0px;
-          border-left: 2px solid#ff9600;
-        }
-      }
-    }
-  }
-
   .my_guarantee {
     position: relative;
     > div {
@@ -464,7 +470,6 @@ export default {
         width: 100%;
         height: 208px;
         padding: 20px 10px;
-        background: #f7f7fa;
         box-sizing: border-box;
         p {
           display: flex;

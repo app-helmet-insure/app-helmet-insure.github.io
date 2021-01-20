@@ -15,7 +15,9 @@
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>
-        <a href="https://helmetinsure.medium.com/" target="_blank">Medium</a>
+        <a href="https://helmetinsure.medium.com/" target="_blank">{{
+          $t("Header.Medium")
+        }}</a>
       </div>
       <!-- 分割线 -->
       <a

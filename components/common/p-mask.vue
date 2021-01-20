@@ -134,7 +134,7 @@ export default {
         {
           url: "https://helmetinsure.medium.com/",
           link: true,
-          text: "Medium",
+          text: this.$t("Header.Medium"),
         },
         // {
         //   type: 'PAYASO',

@@ -15,9 +15,9 @@
           <span>Start: Jan. 15th 18:00 SGT </span>
         </div>
       </div>
-      <div class="img swiper-slide">
+      <!-- <div class="img swiper-slide">
         <h3>Policy trading start</h3>
-      </div>
+      </div> -->
       <div class="text bg1 swiper-slide">
         <div>
           <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>

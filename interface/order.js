@@ -1,5 +1,5 @@
 // import {web3} from '~/assets/utils/web3-obj.js';
-import { Factory, Order, expERC20, TokenExpERC20 } from './index';
+import { Factory, Order, TokenOrder, expERC20, TokenExpERC20 } from './index';
 import {
     getAddress,
     getContract,
@@ -683,17 +683,14 @@ export const onExercise = async (data, callBack, flag) => {
     let long;
     let order;
 
-    if (flag) {
+    if (data.flag) {
         Contract = await TokenExpERC20(
             '0x17934fef9fC93128858e9945261524ab0581612e'
         );
-        order = await TokenExpERC20(
-            '0x17934fef9fC93128858e9945261524ab0581612e'
-        );
+        order = await TokenOrder('0x17934fef9fC93128858e9945261524ab0581612e');
         long = await TokenExpERC20(
             '0x17934fef9fC93128858e9945261524ab0581612e'
         );
-        console.log(Contract, order, long);
     } else {
         Contract = await expERC20(adress);
         order = await Order();

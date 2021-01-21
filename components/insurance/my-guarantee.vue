@@ -350,7 +350,6 @@ export default {
       } else {
         setTimeout(() => {
           arr = this.setTransfer(this.transferMap);
-          console.log(arr);
           result.push(...arr);
         }, 2000);
       }

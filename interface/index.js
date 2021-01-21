@@ -80,3 +80,6 @@ export const TokenExpERC20 = async (address) => {
     // console.log('window.WEB3###', window.WEB3);
     return await new WEB3.eth.Contract(token_abi, address);
 };
+export const TokenOrder = async (address) => {
+    return await new window.WEB3.eth.Contract(order_abi.abi, address);
+};

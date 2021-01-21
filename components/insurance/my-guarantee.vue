@@ -30,12 +30,24 @@
                 : getTokenName(item._underlying)
             }}
           </td>
-          <td>{{ fixD(item.price, 4) }}</td>
-          <td>{{ fixD(item.Rent, 4) }}</td>
+          <td>
+            {{ fixD(item.price, 4) == "--" ? "Airdrop" : fixD(item.price, 4) }}
+          </td>
+          <td>
+            {{ fixD(item.Rent, 4) == "--" ? "Airdrop" : fixD(item.Rent, 4) }}
+          </td>
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button class="b_b_button" @click="toActive(item)">
+            <button
+              class="b_b_button"
+              @click="toActive(item)"
+              :style="
+                item.transfer
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : false
+              "
+            >
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -92,7 +104,15 @@
             </svg>
             {{ item.dueDate }}
           </span>
-          <button class="b_b_button" @click="toActive(item)">
+          <button
+            class="b_b_button"
+            @click="toActive(item)"
+            :style="
+              item.transfer
+                ? 'background: #ccc !important; pointer-events: none'
+                : false
+            "
+          >
             {{ $t("Table.outSure") }}
           </button>
         </section>
@@ -342,7 +362,7 @@ export default {
         _underlying: getTokenName(item._underlying),
         _collateral: getTokenName(item._collateral),
         settleToken: getTokenName(item.settleToken),
-        longAdress:item.longAdress,
+        longAdress: item.longAdress,
         flag: item.transfer ? true : false,
       };
 
@@ -366,6 +386,8 @@ export default {
             id: 1,
             bidID: 1,
             buyer: item.to,
+            price: "Airdrop",
+            Rent: "Airdrop",
             volume: fromWei(item.value, Token),
             settleToken: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
             dueDate: this.getDownTime(item._expiry),
@@ -374,7 +396,7 @@ export default {
             _underlying: item._underlying,
             _expiry: parseInt(item._expiry) * 1000,
             transfer: item.transfer,
-            longAdress:item.address
+            longAdress: item.address,
           };
           result.push(resultItem);
         }

@@ -683,26 +683,35 @@ export const onExercise = async (data, callBack, flag) => {
     let long;
     let order;
 
-    console.log(22222);
-    Contract = await expERC20(adress);
-    console.log(2222);
-    order = await Order();
-    console.log(222);
-    long = await expERC20(data.long);
+    if (flag) {
+        Contract = await TokenExpERC20(
+            '0x17934fef9fC93128858e9945261524ab0581612e'
+        );
+        order = await TokenExpERC20(
+            '0x17934fef9fC93128858e9945261524ab0581612e'
+        );
+        long = await TokenExpERC20(
+            '0x17934fef9fC93128858e9945261524ab0581612e'
+        );
+        console.log(Contract, order, long);
+    } else {
+        Contract = await expERC20(adress);
+        order = await Order();
+        long = await expERC20(data.long);
+        console.log(Contract, order, long);
+    }
     // 一键判断是否需要授权，给予无限授权
-    console.log(22);
     await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
-    console.log(2);
     await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
-    console.log(toWei(data.vol, data._underlying));
+
     order.methods
         .exercise(flag ? toWei(data.vol, data._underlying) : data.bidID)
         .send({ from: window.CURRENTADDRESS })

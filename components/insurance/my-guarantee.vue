@@ -157,7 +157,7 @@ import {
 } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
-import { onExercise, getExercise } from "~/interface/order.js";
+import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 export default {
   data() {
     return {
@@ -206,8 +206,31 @@ export default {
       }
     },
   },
-  mounted() {},
+  mounted() {
+    this.transferGet();
+  },
   methods: {
+    transferGet() {
+      getTransfer((err, data) => {
+        if (err) {
+          return;
+        }
+        let transfer_map = [];
+        data.forEach((item, index) => {
+          transfer_map.push({
+            transfer: true,
+            _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+            _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+            _strikePrice: 30000000000000000,
+            _expiry: 1613404800,
+            address: item.address,
+            ...item.returnValues,
+          });
+        });
+
+        this.$store.commit("SET_TRANSFER_MAP", transfer_map);
+      });
+    },
     myAboutInfoBuyWatch(newValue) {
       if (newValue) {
         this.page = 0;
@@ -320,9 +343,16 @@ export default {
         }
       }
 
-      let arr = this.setTransfer(this.transferMap);
+      let arr;
+      arr = this.setTransfer(this.transferMap);
       if (arr) {
         result.push(...arr);
+      } else {
+        setTimeout(() => {
+          arr = this.setTransfer(this.transferMap);
+          console.log(arr);
+          result.push(...arr);
+        }, 2000);
       }
       this.isLoading = false;
       this.guaranteeList = result;

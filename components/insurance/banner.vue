@@ -104,7 +104,7 @@ export default {
       }, 2000);
     },
     getPrice() {
-      this.helmetPrice = addCommom(this.indexArray[1]["HELMET"], 4);
+      this.helmetPrice = toRounding(this.indexArray[1]["HELMET"], 4);
     },
     IndexWacth(newValue, val) {
       if (newValue) {

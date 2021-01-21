@@ -27,6 +27,7 @@ import {
     MyPayaso,
     claimable,
 } from '~/interface/order.js';
+import { getUnderlying } from '~/interface/price.js';
 // import precision from '~/assets/js/precision.js';
 import { accDiv, add, mul } from '~/assets/utils/calculate.js';
 import { toRounding } from '~/assets/js/util.js';
@@ -167,6 +168,7 @@ export const state = () => ({
         BTCB: 0,
         ETH: 0,
     },
+    transferMap: [],
 });
 
 export const mutations = {
@@ -283,6 +285,9 @@ export const mutations = {
     SET_REPRICE_MAP(state, data) {
         state.repriceMap = data;
     },
+    SET_TRANSFER_MAP(state, data) {
+        state.transferMap = data;
+    },
     SET_BNB_BUSD(state, data) {
         state.BNB_BUSD = data;
     },
@@ -384,18 +389,26 @@ export const actions = {
             });
             commit('SET_REPRICE_MAP', reprice_map);
         });
-        // // 创建空头保单 映射对象
-        // getTransfer((err, data) => {
-        //     if (err) {
-        //         return;
-        //     }
-        //     console.log(data, '#########');
-        //     // let reprice_map = [];
-        //     // data.forEach((item, index) => {
-        //     //     reprice_map.push(item.returnValues);
-        //     // });
-        //     // commit('SET_REPRICE_MAP', reprice_map);
-        // });
+        // 创建空头保单 映射对象
+        getTransfer((err, data) => {
+            if (err) {
+                return;
+            }
+            let transfer_map = [];
+            data.forEach((item, index) => {
+                transfer_map.push({
+                    transfer: true,
+                    _collateral: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+                    _underlying: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+                    _strikePrice: 30000000000000000,
+                    _expiry: 1613404800,
+                    address: item.address,
+                    ...item.returnValues,
+                });
+            });
+
+            commit('SET_TRANSFER_MAP', transfer_map);
+        });
         getMint((err, data) => {
             let longTokenCreatedVolume = 0;
             if (err) {
@@ -488,11 +501,12 @@ export const actions = {
             state.userInfo.data &&
             state.userInfo.data.account &&
             state.userInfo.data.account.toLowerCase();
-        let item;
+        let item, tItem;
         let sellInfo;
         let totalHelmetsBorrowedVolume = 0; // 保险交易过的资金量  （保单数量累加， vol 用抵押物处理）
         const createTime = new Date('2020-10-16').getTime() / 1000;
         let _col;
+
         for (let key in buyMap) {
             item = buyMap[key];
 
@@ -642,7 +656,6 @@ export const actions = {
             commit('SET_TOTAL_INFO', data_obj);
         });
     },
-
     setUserInfo({ commit, state }, data) {
         commit('SET_USER_INFO', data);
     },

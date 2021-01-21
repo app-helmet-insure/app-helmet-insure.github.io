@@ -161,3 +161,83 @@ export const settle = async (short, data) => {
     // }
 };
 // };
+export const onExercise = async (data, callBack) => {
+    bus.$emit('OPEN_STATUS_DIALOG', {
+        type: 'pending',
+        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
+        conText: `<p>you will swap<span> ${toRounding(
+            data._underlying_vol,
+            8
+        )} ${data._underlying}</span> to <span> ${data.vol} ${
+            data._collateral
+        }</span></p>`,
+    });
+    bus.$emit('ONEXERCISE_PENDING', data.bidID);
+
+    // const WEB3 = await web3();
+    const charID = window.chainID;
+    let adress = getAddress(data.token, charID);
+
+    const Contract = await expERC20(adress);
+    const long = await expERC20(data.long);
+    const order = await Order();
+
+    // 一键判断是否需要授权，给予无限授权
+    await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
+        if (res === 'failed') {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+        }
+    });
+    await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
+        if (res === 'failed') {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+        }
+    });
+
+    order.methods
+        .exercise(data.bidID)
+        .send({ from: window.CURRENTADDRESS })
+        .on('transactionHash', function(hash) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                type: 'submit',
+                conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+            });
+        })
+        // .on('receipt', function(receipt){
+        //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
+        // })
+        .on('confirmation', function(confirmationNumber, receipt) {
+            if (confirmationNumber === 0) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        type: 'success',
+                        title: 'Successfully rented',
+                        conTit: '<div>Activated successfully</div>',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    });
+                } else {
+                    Message({
+                        message: 'Activated successfully',
+                        type: 'success',
+                        // duration: 0,
+                    });
+                }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                }, 1000);
+            }
+        })
+        .on('error', function(error, receipt) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+
+            if (error && error.message) {
+                Message({
+                    message: error && error.message,
+                    type: 'error',
+                    // duration: 0,
+                });
+            }
+        });
+};

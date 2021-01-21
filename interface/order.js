@@ -1,5 +1,5 @@
 // import {web3} from '~/assets/utils/web3-obj.js';
-import { Factory, Order, expERC20 } from './index';
+import { Factory, Order, expERC20, TokenExpERC20 } from './index';
 import {
     getAddress,
     getContract,
@@ -380,8 +380,7 @@ export const getRePrice = async (callback) => {
     });
 };
 export const getTransfer = async (callback) => {
-    let Contract = new expERC20();
-    Contract().then((contract) => {
+    expERC20('0x17934fef9fc93128858e9945261524ab0581612e').then((contract) => {
         contract.getPastEvents(
             'Transfer',
             {
@@ -664,8 +663,7 @@ export const MyPayaso = async (address1) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const onExercise = async (data, callBack) => {
-    console.log(data);
+export const onExercise = async (data, callBack, flag) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
@@ -681,25 +679,32 @@ export const onExercise = async (data, callBack) => {
     // const WEB3 = await web3();
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
+    let Contract;
+    let long;
+    let order;
 
-    const Contract = await expERC20(adress);
-    const long = await expERC20(data.long);
-    const order = await Order();
-
+    console.log(22222);
+    Contract = await expERC20(adress);
+    console.log(2222);
+    order = await Order();
+    console.log(222);
+    long = await expERC20(data.long);
     // 一键判断是否需要授权，给予无限授权
+    console.log(22);
     await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
+    console.log(2);
     await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
-
+    console.log(toWei(data.vol, data._underlying));
     order.methods
-        .exercise(data.bidID)
+        .exercise(flag ? toWei(data.vol, data._underlying) : data.bidID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', function(hash) {
             bus.$emit('CLOSE_STATUS_DIALOG');

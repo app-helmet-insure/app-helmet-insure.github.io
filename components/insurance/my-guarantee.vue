@@ -147,6 +147,7 @@ export default {
       toRounding: toRounding,
       showList: [],
       guaranteeList: [],
+      transferList: [],
       getTokenName,
       fixD,
       page: 0,
@@ -158,6 +159,9 @@ export default {
     myAboutInfoBuy() {
       return this.$store.state.myAboutInfoBuy;
     },
+    transferMap() {
+      return this.$store.state.transferMap;
+    },
     strikePriceArray() {
       return this.$store.state.strikePriceArray;
     },
@@ -166,6 +170,20 @@ export default {
     myAboutInfoBuy: {
       handler: "myAboutInfoBuyWatch",
       immediate: true,
+    },
+    transferMap: {
+      handler: "myTransferMapWatch",
+      immediate: true,
+    },
+    guaranteeList(newList) {
+      if (newList) {
+        this.showList = newList.slice(this.page * this.limit, this.limit);
+      }
+    },
+    transferList(newList, list) {
+      if (JSON.stringify(this.transferList) == JSON.stringify(newList)) {
+        this.guaranteeList.push(...newList);
+      }
     },
   },
   mounted() {},
@@ -177,6 +195,13 @@ export default {
         this.setSettlementList(newValue);
       }
     },
+    myTransferMapWatch(newValue) {
+      if (newValue) {
+        this.page = 0;
+        this.limit = 5;
+        this.setTransfer(newValue);
+      }
+    },
     // 格式化数据
     async setSettlementList(list) {
       this.isLoading = true;
@@ -186,6 +211,7 @@ export default {
       let currentTime = new Date().getTime();
       let exerciseRes;
       let bidIDArr;
+
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
@@ -273,6 +299,11 @@ export default {
           result.push(resultItem);
         }
       }
+
+      let arr = this.setTransfer(this.transferMap);
+      if (arr) {
+        result.push(...arr);
+      }
       this.isLoading = false;
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
@@ -300,6 +331,7 @@ export default {
     },
     // 行权
     toActive(item) {
+      console.log(item);
       let data = {
         token: getTokenName(item._underlying),
         _underlying_vol: item.volume * item._strikePrice,
@@ -310,10 +342,44 @@ export default {
         _underlying: getTokenName(item._underlying),
         _collateral: getTokenName(item._collateral),
         settleToken: getTokenName(item.settleToken),
+        longAdress:item.longAdress,
+        flag: item.transfer ? true : false,
       };
-      console.log(data);
 
-      onExercise(data);
+      onExercise(data, data.flag);
+    },
+    setTransfer(data) {
+      let list = data;
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let resultItem;
+      let result = [];
+      if (!list || JSON.stringify(this.transferList) == JSON.stringify(data)) {
+        return;
+      }
+      list.forEach((item) => {
+        let Token = getTokenName(item._collateral);
+        if (item.to.toLowerCase() === myAddress) {
+          resultItem = {
+            id: 1,
+            bidID: 1,
+            buyer: item.to,
+            volume: fromWei(item.value, Token),
+            settleToken: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+            dueDate: this.getDownTime(item._expiry),
+            _collateral: item._collateral,
+            _strikePrice: fromWei(item._strikePrice, Token),
+            _underlying: item._underlying,
+            _expiry: parseInt(item._expiry) * 1000,
+            transfer: item.transfer,
+            longAdress:item.address
+          };
+          result.push(resultItem);
+        }
+      });
+      return result;
     },
     // 分页
     upPage() {

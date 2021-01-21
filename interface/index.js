@@ -4,6 +4,7 @@ import payaso_abi from '~/abi/payaso_abi.json';
 import factory_abi from '~/abi/factory_abi.json';
 import order_abi from '~/abi/order_abi.json';
 import deposite_abi from '~/abi/deposite_abi.json';
+import token_abi from '~/abi/token_abi.json';
 import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 
 export const getCurrentAccount = async () => {
@@ -72,4 +73,10 @@ export const expERC20 = async (address) => {
     const WEB3 = await web3();
     // console.log('window.WEB3###', window.WEB3);
     return await new WEB3.eth.Contract(ERC20_abi.abi, address);
+};
+// 获取四要素
+export const TokenExpERC20 = async (address) => {
+    const WEB3 = await web3();
+    // console.log('window.WEB3###', window.WEB3);
+    return await new WEB3.eth.Contract(token_abi, address);
 };

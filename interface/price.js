@@ -1,4 +1,4 @@
-import { expERC20, Payaso } from './index';
+import { expERC20, Payaso, TokenExpERC20 } from './index';
 import bus from '~/assets/js/bus';
 import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import Message from '~/components/common/Message';
@@ -90,4 +90,13 @@ export const recruit = async (address, num) => {
                 }
             });
     } catch (error) {}
+};
+export const getUnderlying = async (address) => {
+    const contract = await TokenExpERC20(address);
+    return contract.methods
+        .underlying()
+        .call()
+        .then((res) => {
+            return res;
+        });
 };

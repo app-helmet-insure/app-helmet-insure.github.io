@@ -42,11 +42,7 @@
             <button
               class="b_b_button"
               @click="toActive(item)"
-              :style="
-                item.transfer
-                  ? 'background: #ccc !important; pointer-events: none'
-                  : false
-              "
+              
             >
               {{ $t("Table.outSure") }}
             </button>
@@ -107,11 +103,7 @@
           <button
             class="b_b_button"
             @click="toActive(item)"
-            :style="
-              item.transfer
-                ? 'background: #ccc !important; pointer-events: none'
-                : false
-            "
+           
           >
             {{ $t("Table.outSure") }}
           </button>

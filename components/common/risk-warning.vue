@@ -21,10 +21,10 @@
   </PDialog>
 </template>
 <script>
-import PDialog from '~/components/common/p-dialog.vue';
+import PDialog from "~/components/common/p-dialog.vue";
 
 export default {
-  name: 'risk-warning',
+  name: "risk-warning",
   components: {
     PDialog,
   },
@@ -35,11 +35,11 @@ export default {
   },
   methods: {
     closeDialog() {
-      this.$emit('close');
+      this.$emit("close");
     },
     confirmDialog() {
-      window.localStorage.setItem('readRisk', true);
-      this.$emit('confirm');
+      window.localStorage.setItem("readRisk", true);
+      this.$emit("confirm");
     },
     toggleAgree() {
       this.isAgree = !this.isAgree;

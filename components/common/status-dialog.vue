@@ -16,6 +16,7 @@
       <!-- 请在钱包中确认进行交易 -->
       <h3 class="con-tit" v-html="data.conTit"></h3>
       <div class="con-text" v-html="data.conText"></div>
+      <div class="activeWarn" v-if="data.activeTip">{{ $t("Tip.Active") }}</div>
       <div class="btn-box">
         <slot name="footer">
           <button
@@ -31,7 +32,7 @@
 </template>
 <script>
 export default {
-  name: 'status-dialog',
+  name: "status-dialog",
   props: {
     // type: {
     //     type: String,
@@ -57,18 +58,19 @@ export default {
       type: Object,
       default: () => {
         return {
-          type: '',
-          title: '',
-          conTit: '',
-          conText: '',
-          btnText: '',
+          type: "",
+          title: "",
+          conTit: "",
+          conText: "",
+          btnText: "",
+          activeTip: false,
         };
       },
     },
   },
   methods: {
     closeDialog() {
-      this.$emit('close');
+      this.$emit("close");
     },
   },
 };
@@ -88,6 +90,10 @@ export default {
     align-items: center;
     z-index: 100;
     /* background-color: rgba(0, 0, 0, 0.8); */
+    .activeWarn {
+      margin-top: 10px;
+      font-size: 14px;
+    }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);
       z-index: 101;
@@ -137,10 +143,10 @@ export default {
         font-weight: 500;
         margin-top: 16px;
         span {
-          color: $main-color;
+          color: #ff9600;
         }
         a {
-          color: $main-color;
+          color: #ff9600;
           text-decoration: underline;
         }
       }
@@ -148,11 +154,14 @@ export default {
         font-size: 14px;
         color: $bg-d;
         margin-top: 12px;
+        p {
+          color: #ff9600;
+        }
         span {
-          color: $main-color;
+          color: #ff9600;
         }
         a {
-          color: $main-color;
+          color: #ff9600;
           text-decoration: underline;
         }
       }
@@ -248,10 +257,10 @@ export default {
         font-weight: 500;
         margin-top: 16px;
         span {
-          color: $main-color;
+          color: #ff9600;
         }
         a {
-          color: $main-color;
+          color: #ff9600;
           text-decoration: underline;
         }
       }
@@ -260,10 +269,10 @@ export default {
         color: $bg-d;
         margin-top: 12px;
         span {
-          color: $main-color;
+          color: #ff9600;
         }
         a {
-          color: $main-color;
+          color: #ff9600;
           text-decoration: underline;
         }
       }

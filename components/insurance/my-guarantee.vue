@@ -39,11 +39,7 @@
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button
-              class="b_b_button"
-              @click="toActive(item)"
-              
-            >
+            <button class="b_b_button" @click="toActive(item)">
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -71,12 +67,12 @@
           <p>
             <span>{{ $t("Table.Type") }}</span
             ><span>
-              {{
+              <!-- {{
                 getTokenName(item._underlying) == "WBNB"
                   ? getTokenName(item._collateral)
                   : getTokenName(item._underlying)
-              }}</span
-            >
+              }} -->
+            </span>
           </p>
           <p>
             <span>{{ $t("Table.InsurancePrice") }}</span
@@ -100,11 +96,7 @@
             </svg>
             {{ item.dueDate }}
           </span>
-          <button
-            class="b_b_button"
-            @click="toActive(item)"
-           
-          >
+          <button class="b_b_button" @click="toActive(item)">
             {{ $t("Table.outSure") }}
           </button>
         </section>
@@ -150,6 +142,7 @@ import {
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
+import { balanceOf, getBalance } from "~/interface/deposite";
 export default {
   data() {
     return {
@@ -159,7 +152,6 @@ export default {
       toRounding: toRounding,
       showList: [],
       guaranteeList: [],
-      transferList: [],
       getTokenName,
       fixD,
       page: 0,
@@ -183,58 +175,18 @@ export default {
       handler: "myAboutInfoBuyWatch",
       immediate: true,
     },
-    transferMap: {
-      handler: "myTransferMapWatch",
-      immediate: true,
-    },
     guaranteeList(newList) {
       if (newList) {
         this.showList = newList.slice(this.page * this.limit, this.limit);
       }
     },
-    transferList(newList, list) {
-      if (JSON.stringify(this.transferList) == JSON.stringify(newList)) {
-        this.guaranteeList.push(...newList);
-      }
-    },
-  },
-  mounted() {
-    this.transferGet();
   },
   methods: {
-    transferGet() {
-      getTransfer((err, data) => {
-        if (err) {
-          return;
-        }
-        let transfer_map = [];
-        data.forEach((item, index) => {
-          transfer_map.push({
-            transfer: true,
-            _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-            _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-            _strikePrice: 30000000000000000,
-            _expiry: 1613404800,
-            address: item.address,
-            ...item.returnValues,
-          });
-        });
-
-        this.$store.commit("SET_TRANSFER_MAP", transfer_map);
-      });
-    },
     myAboutInfoBuyWatch(newValue) {
       if (newValue) {
         this.page = 0;
         this.limit = 5;
         this.setSettlementList(newValue);
-      }
-    },
-    myTransferMapWatch(newValue) {
-      if (newValue) {
-        this.page = 0;
-        this.limit = 5;
-        this.setTransfer(newValue);
       }
     },
     // 格式化数据
@@ -334,17 +286,8 @@ export default {
           result.push(resultItem);
         }
       }
-
-      let arr;
-      arr = this.setTransfer(this.transferMap);
-      if (arr) {
-        result.push(...arr);
-      } else {
-        setTimeout(() => {
-          arr = this.setTransfer(this.transferMap);
-          result.push(...arr);
-        }, 2000);
-      }
+      let transferItem = await this.setTransfer();
+      result.push(transferItem);
       this.isLoading = false;
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
@@ -372,7 +315,6 @@ export default {
     },
     // 行权
     toActive(item) {
-      console.log(item);
       let data = {
         token: getTokenName(item._underlying),
         _underlying_vol: item.volume * item._strikePrice,
@@ -386,43 +328,36 @@ export default {
         longAdress: item.longAdress,
         flag: item.transfer ? true : false,
       };
-
+  
       onExercise(data, data.flag);
     },
-    setTransfer(data) {
-      let list = data;
+    async setTransfer() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
         this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x17934fef9fc93128858e9945261524ab0581612e"
+      );
+      let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
       let resultItem;
-      let result = [];
-      if (!list || JSON.stringify(this.transferList) == JSON.stringify(data)) {
-        return;
-      }
-      list.forEach((item) => {
-        let Token = getTokenName(item._collateral);
-        if (item.to.toLowerCase() === myAddress) {
-          resultItem = {
-            id: 1,
-            bidID: 1,
-            buyer: item.to,
-            price: "Airdrop",
-            Rent: "Airdrop",
-            volume: fromWei(item.value, Token),
-            settleToken: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-            dueDate: this.getDownTime(item._expiry),
-            _collateral: item._collateral,
-            _strikePrice: fromWei(item._strikePrice, Token),
-            _underlying: item._underlying,
-            _expiry: parseInt(item._expiry) * 1000,
-            transfer: item.transfer,
-            longAdress: item.address,
-          };
-          result.push(resultItem);
-        }
-      });
-      return result;
+      resultItem = {
+        id: 1,
+        bidID: 1,
+        buyer: myAddress,
+        price: "Airdrop",
+        Rent: "Airdrop",
+        volume: volume,
+        settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+        dueDate: this.getDownTime(1613404800),
+        _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+        _strikePrice: fromWei(30000000000000000, Token),
+        _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        _expiry: 1613404800000,
+        transfer: true,
+        longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+      };
+      return resultItem;
     },
     // 分页
     upPage() {

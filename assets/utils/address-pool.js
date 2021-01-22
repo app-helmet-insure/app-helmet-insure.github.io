@@ -227,6 +227,9 @@ export const uniswap = async (token1, token2) => {
 };
 export const getTokenName = (address) => {
     let tokenAddress = address.toLowerCase();
+    if (!tokenAddress) {
+        return;
+    }
     switch (tokenAddress) {
         case '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c':
             return 'WBNB';

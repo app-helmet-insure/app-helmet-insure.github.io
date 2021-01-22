@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner swiper-slide"></div>
       <div class="text bg3 swiper-slide">
         <div>
           <h3>Staking Helmet for Helmet with high APY</h3>
@@ -148,6 +149,11 @@ export default {
         width: 500px;
       }
     }
+    .imgbanner {
+      background-image: url("../../assets/img/helmet/bannercake.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
     .text {
       width: 1200px;
       height: 220px;
@@ -247,6 +253,11 @@ export default {
     }
     .swiper-slide {
       display: flex;
+    }
+    .imgbanner {
+      background-image: url("../../assets/img/helmet/bannercake_h5.png");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
     }
     .bg1 {
       background-image: url("../../assets/img/helmet/banner_ill.png");

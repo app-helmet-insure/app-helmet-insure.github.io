@@ -135,6 +135,7 @@ export default {
         conTit: data.conTit || this.getConTit(data.type),
         conText: data.conText,
         btnText: data.btnText || this.getBtnTit(data.type),
+        activeTip: data.activeTip,
       };
       this.statusData = result;
       this.openStatusDialog();

@@ -664,6 +664,8 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
+    console.log(data, '###############');
+
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
@@ -673,6 +675,7 @@ export const onExercise = async (data, callBack, flag) => {
         )} ${data._underlying}</span> to <span> ${data.vol} ${
             data._collateral
         }</span></p>`,
+        activeTip: true,
     });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
 
@@ -682,7 +685,7 @@ export const onExercise = async (data, callBack, flag) => {
     let Contract;
     let long;
     let order;
-
+    let value;
     if (data.flag) {
         Contract = await TokenExpERC20(
             '0x17934fef9fC93128858e9945261524ab0581612e'
@@ -691,6 +694,7 @@ export const onExercise = async (data, callBack, flag) => {
         long = await TokenExpERC20(
             '0x17934fef9fC93128858e9945261524ab0581612e'
         );
+        value = toWei(data.vol, data.token);
     } else {
         Contract = await expERC20(adress);
         order = await Order();
@@ -708,9 +712,9 @@ export const onExercise = async (data, callBack, flag) => {
             bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
-
+    console.log(data.flag ? value : data.bidID);
     order.methods
-        .exercise(flag ? toWei(data.vol, data._underlying) : data.bidID)
+        .exercise(data.flag ? value : data.bidI)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', function(hash) {
             bus.$emit('CLOSE_STATUS_DIALOG');

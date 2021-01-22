@@ -39,7 +39,15 @@
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button class="b_b_button" @click="toActive(item)">
+            <button
+              class="b_b_button"
+              @click="toActive(item)"
+              :style="
+                item.transfer
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
+            >
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -96,7 +104,15 @@
             </svg>
             {{ item.dueDate }}
           </span>
-          <button class="b_b_button" @click="toActive(item)">
+          <button
+            class="b_b_button"
+            @click="toActive(item)"
+            :style="
+              item.transfer
+                ? 'background: #ccc !important; pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Table.outSure") }}
           </button>
         </section>
@@ -328,7 +344,7 @@ export default {
         longAdress: item.longAdress,
         flag: item.transfer ? true : false,
       };
-  
+
       onExercise(data, data.flag);
     },
     async setTransfer() {

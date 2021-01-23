@@ -306,7 +306,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' soped>
 .icon {
   width: 24px;
   height: 24px;

@@ -296,6 +296,7 @@ export default {
         if (askRes == "0") {
           resultItem["status"] = "Beborrowed";
           resultItem["sort"] = 1;
+          resultItem
         } else {
           resultItem["status"] = "Unborrowed";
           resultItem["sort"] = 2;
@@ -303,9 +304,14 @@ export default {
         if (parseInt(resultItem._expiry) < currentTime) {
           resultItem["status"] = "Dated";
           resultItem["sort"] = 0;
+          resultItem['dueDate']='Dated'
+        }
+        if (parseInt(resultItem._expiry + 5184000000) < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
         }
         resultItem["remain"] = askRes;
-        if (resultItem.remain != 0 || resultItem.sort != 0) {
+        if (resultItem.remain != 0 || resultItem.sort != 4) {
           result.push(resultItem);
         }
       }

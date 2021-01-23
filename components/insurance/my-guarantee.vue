@@ -286,9 +286,14 @@ export default {
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Dated";
           resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Dated";
         } else {
           resultItem["status"] = "Unactivated";
           resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
         }
         exerciseRes = await getExercise(resultItem.buyer);
         bidIDArr = exerciseRes.map((eItem) => {
@@ -298,7 +303,7 @@ export default {
           resultItem["status"] = "Activated";
           resultItem["sort"] = 1;
         }
-        if (resultItem["sort"] != 1 && resultItem["sort"] != 0) {
+        if (resultItem["sort"] != 1 || resultItem["sort"] != 4) {
           result.push(resultItem);
         }
       }

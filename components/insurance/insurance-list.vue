@@ -411,7 +411,6 @@ export default {
         this.listType = 2;
         this.listCoin = data._underlying;
       }
-      console.log(datas);
       buyInsuranceBuy(datas, (status) => {});
     },
     // 计算数量

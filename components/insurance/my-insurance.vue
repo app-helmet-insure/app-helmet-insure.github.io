@@ -282,7 +282,6 @@ export default {
           resultItem["id"] = newArray.newAskID;
         }
         askRes = await asks(resultItem.id, "sync", resultItem._collateral);
-        console.log(askRes);
         if (TokenFlag == "WBNB") {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);

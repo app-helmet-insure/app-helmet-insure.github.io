@@ -174,6 +174,7 @@ export default {
     },
     // 格式化数据
     async setSettlementList(list) {
+      console.log(list)
       this.isLoading = true;
       this.showList = [];
       const result = [];

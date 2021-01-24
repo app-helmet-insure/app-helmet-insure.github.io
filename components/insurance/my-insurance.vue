@@ -282,6 +282,7 @@ export default {
           resultItem["id"] = newArray.newAskID;
         }
         askRes = await asks(resultItem.id, "sync", resultItem._collateral);
+        console.log(askRes);
         if (TokenFlag == "WBNB") {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
@@ -296,7 +297,7 @@ export default {
         if (askRes == "0") {
           resultItem["status"] = "Beborrowed";
           resultItem["sort"] = 1;
-          resultItem
+          resultItem;
         } else {
           resultItem["status"] = "Unborrowed";
           resultItem["sort"] = 2;
@@ -304,7 +305,7 @@ export default {
         if (parseInt(resultItem._expiry) < currentTime) {
           resultItem["status"] = "Dated";
           resultItem["sort"] = 0;
-          resultItem['dueDate']='Dated'
+          resultItem["dueDate"] = "Dated";
         }
         if (parseInt(resultItem._expiry + 5184000000) < currentTime) {
           resultItem["status"] = "Hidden";

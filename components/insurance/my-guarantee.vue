@@ -263,6 +263,7 @@ export default {
             buyer: item.buyer,
             amt: fromWei(item.amt),
             price: InsurancePrice,
+            bnbAmount: amount,
             volume: fixD(
               precision.divide(amount, this.strikePriceArray[1][TokenFlag]),
               8
@@ -336,20 +337,36 @@ export default {
     },
     // 行权
     toActive(item) {
-      let data = {
-        token: getTokenName(item._underlying),
-        _underlying_vol: item.volume * item._strikePrice,
-        vol: toRounding(item.volume, 8),
-        bidID: item.bidID,
-        long: item.long,
-        exPrice: autoRounding(precision.divide(1, item._strikePrice)),
-        _underlying: getTokenName(item._underlying),
-        _collateral: getTokenName(item._collateral),
-        settleToken: getTokenName(item.settleToken),
-        longAdress: item.longAdress,
-        flag: item.transfer ? true : false,
-      };
-
+      let data;
+      if (getTokenName(item._underlying) == "WBNB") {
+        data = {
+          token: getTokenName(item._underlying),
+          _underlying_vol: item._strikePrice * item.volume,
+          vol: toRounding(item.volume, 8),
+          bidID: item.bidID,
+          long: item.long,
+          exPrice: autoRounding(precision.divide(1, item._strikePrice)),
+          _underlying: getTokenName(item._underlying),
+          _collateral: getTokenName(item._collateral),
+          settleToken: getTokenName(item.settleToken),
+          longAdress: item.longAdress,
+          flag: item.transfer ? true : false,
+        };
+      } else {
+        data = {
+          token: getTokenName(item._underlying),
+          _underlying_vol: toRounding(item.volume, 8),
+          vol: item.bnbAmount,
+          bidID: item.bidID,
+          long: item.long,
+          exPrice: fixD(precision.divide(1, item._strikePrice), 4),
+          _underlying: getTokenName(item._underlying),
+          _collateral: getTokenName(item._collateral),
+          settleToken: getTokenName(item.settleToken),
+          longAdress: item.longAdress,
+          flag: item.transfer ? true : false,
+        };
+      }
       onExercise(data, data.flag);
     },
     async setTransfer() {

@@ -664,6 +664,7 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
+    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT

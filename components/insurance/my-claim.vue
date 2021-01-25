@@ -20,7 +20,6 @@
           "
         >
           <template>
-            <td>{{ item.askID }}</td>
             <td :class="item._underlying == 'WBNB' ? 'green' : 'orange'">
               {{
                 item._underlying == "WBNB" ? item._collateral : item._underlying
@@ -31,10 +30,10 @@
             </td>
             <td>
               <!-- {{ addCommom(precision.plus(item.col, item.longBalance), 4) }} -->
-              {{ fixD(item.col, 8) }}
+              {{ fixD(item.shortBalance, 8) }}
               {{ item._collateral }}
             </td>
-            <td>{{ fixD(item.und, 8) }} {{ item._underlying }}</td>
+            <td>{{ fixD(item.longBalance, 8) }} {{ item._underlying }}</td>
             <td class="option">
               <button class="b_b_button" @click="toClaim(item)">
                 {{ $t("Table.GetBack") }}
@@ -209,7 +208,6 @@ export default {
             Number(shortBalance),
             Number(longBalance)
           );
-          resultItem["shortAddress"] = item.longInfo.short;
           resultItem["shortBalance"] = shortBalance;
           number = precision.minus(shortBalance, longBalance);
           try {
@@ -232,6 +230,7 @@ export default {
           } catch (err) {
             // console.log(err)
           }
+          result.push(resultItem);
           if (
             Number(resultItem.longBalance) == 0 &&
             Number(resultItem.und) == 0
@@ -241,23 +240,23 @@ export default {
             resultItem["hidden"] = true;
           }
           // // 判断有没有这个品种的单子
-          let Flag = mapArray.some((item) => {
-            return (
-              item._underlying == resultItem._underlying &&
-              item._collateral == resultItem._collateral
-            );
-          });
-          // 没有这个品种则添加
-          if (!Flag && resultItem["hidden"]) {
-            result.push(resultItem);
-          }
-          // 判断
-          mapArray = result.map((item) => {
-            return {
-              _underlying: item._underlying,
-              _collateral: item._collateral,
-            };
-          });
+          // let Flag = mapArray.some((item) => {
+          //   return (
+          //     item._underlying == resultItem._underlying &&
+          //     item._collateral == resultItem._collateral
+          //   );
+          // });
+          // // 没有这个品种则添加
+          // if (!Flag && resultItem["hidden"]) {
+          //   result.push(resultItem);
+          // }
+          // // 判断
+          // mapArray = result.map((item) => {
+          //   return {
+          //     _underlying: item._underlying,
+          //     _collateral: item._collateral,
+          //   };
+          // });
         }
       }
       this.isLoading = false;
@@ -284,7 +283,7 @@ export default {
     // 行权
     toClaim(item) {
       console.log(item);
-      if (Number(item.longBalance) != 0) {
+      if (item.longBalance != 0) {
         burn(
           item.short,
           item.longBalance,

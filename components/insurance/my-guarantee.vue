@@ -328,12 +328,11 @@ export default {
           _underlying_vol: item._strikePrice * item.volume,
           vol: toRounding(item.volume, 8),
           bidID: item.bidID,
-          long: item.long,
+          long: item.long || item.longAdress,
           exPrice: autoRounding(precision.divide(1, item._strikePrice)),
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
-          longAdress: item.longAdress,
           flag: item.transfer ? true : false,
         };
       } else {
@@ -347,7 +346,6 @@ export default {
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
-          longAdress: item.longAdress,
           flag: item.transfer ? true : false,
         };
       }

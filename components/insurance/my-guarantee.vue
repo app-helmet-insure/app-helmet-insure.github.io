@@ -326,10 +326,10 @@ export default {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: item._strikePrice * item.volume,
-          vol: toRounding(item.volume, 8),
+          vol: fixD(item.volume, 8),
           bidID: item.bidID,
           long: item.long || item.longAdress,
-          exPrice: autoRounding(precision.divide(1, item._strikePrice)),
+          exPrice: fixD(precision.divide(1, item._strikePrice), 4),
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
@@ -338,7 +338,7 @@ export default {
       } else {
         data = {
           token: getTokenName(item._underlying),
-          _underlying_vol: toRounding(item.volume, 8),
+          _underlying_vol: fixD(item.volume, 8),
           vol: item.bnbAmount,
           bidID: item.bidID,
           long: item.long,

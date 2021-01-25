@@ -664,6 +664,7 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
+    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
@@ -720,6 +721,7 @@ export const onExercise = async (data, callBack, flag) => {
     }
     // 一键判断是否需要授权，给予无限授权
 
+    console.log(value);
     order.methods
         .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })

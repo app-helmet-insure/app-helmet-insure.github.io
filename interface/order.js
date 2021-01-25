@@ -664,7 +664,6 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
-    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
@@ -699,22 +698,28 @@ export const onExercise = async (data, callBack, flag) => {
                 bus.$emit('CLOSE_STATUS_DIALOG');
             }
         });
+        await oneKeyArrpove(long, 'CAKELONG', 100000, (res) => {
+            if (res === 'failed') {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+            }
+        });
     } else {
         Contract = await expERC20(adress);
         order = await Order();
         long = await expERC20(data.long);
+        await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
+            if (res === 'failed') {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+            }
+        });
+        await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
+            if (res === 'failed') {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+            }
+        });
     }
     // 一键判断是否需要授权，给予无限授权
-    await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
-        if (res === 'failed') {
-            bus.$emit('CLOSE_STATUS_DIALOG');
-        }
-    });
-    await oneKeyArrpove(long, 'ORDER', 100000, (res) => {
-        if (res === 'failed') {
-            bus.$emit('CLOSE_STATUS_DIALOG');
-        }
-    });
+
     order.methods
         .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })
@@ -812,7 +817,6 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 校验参数
-    console.log(token_exp, contract_str, num);
     if (!token_exp || !contract_str) return;
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);

@@ -716,7 +716,7 @@ export const onExercise = async (data, callBack, flag) => {
         }
     });
     order.methods
-        .exercise(data.flag ? 4 : data.bidID)
+        .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', function(hash) {
             bus.$emit('CLOSE_STATUS_DIALOG');

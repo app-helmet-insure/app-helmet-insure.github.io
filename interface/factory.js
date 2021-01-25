@@ -93,14 +93,15 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
 };
 
 export const settle = async (short, data) => {
-    let colValue = addCommom(Number(data.col) + Number(data.longBalance), 4);
-    let undValue = addCommom(data.und, 4);
-    let pendingText = `<p>Settlement <span>${colValue +
-        data._collateral} ${'And ' + undValue + data._underlying}</span></p>`;
+    console.log(data);
+    // let colValue = addCommom(Number(data.col) + Number(data.longBalance), 4);
+    // let undValue = addCommom(data.und, 4);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         //   conText: `<p>Settlement <span>${data_.volume} ${data}.category}</span> </p>`,
-        conText: pendingText,
+        conText: `<p>Settlement ${addCommom(data.shortBalance)} ${
+            data._collateral
+        }</p>`,
     });
 
     const factory = await getFactory();

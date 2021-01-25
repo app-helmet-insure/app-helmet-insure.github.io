@@ -3,6 +3,7 @@
     <table>
       <thead>
         <tr>
+          <td>ID</td>
           <td>{{ $t("Table.Type") }}</td>
           <td>{{ $t("Table.DenAssets") }}</td>
           <td>{{ $t("Table.BaseAssets") }}</td>
@@ -20,7 +21,7 @@
           "
         >
           <template>
-            <!-- <td>{{ item.askID }}</td> -->
+            <td>{{ item.askID }}</td>
             <td :class="item._underlying == 'WBNB' ? 'green' : 'orange'">
               {{
                 item._underlying == "WBNB" ? item._collateral : item._underlying
@@ -31,10 +32,10 @@
             </td>
             <td>
               <!-- {{ addCommom(precision.plus(item.col, item.longBalance), 4) }} -->
-              {{ fixD(item.col, 8) }}
+              {{ fixD(item.shortBalance, 8) }}
               {{ item._collateral }}
             </td>
-            <td>{{ fixD(item.und, 8) }} {{ item._underlying }}</td>
+            <td>{{ fixD(item.longBalance, 8) }} {{ item._underlying }}</td>
             <td class="option">
               <button class="b_b_button" @click="toClaim(item)">
                 {{ $t("Table.GetBack") }}
@@ -75,14 +76,12 @@
           <p>
             <span>{{ $t("Table.DenAssets") }}</span
             ><span>
-              {{ toRounding(item.longBalance, 4) }} {{ item._collateral }}</span
+              {{ fixD(item.shortBalance, 8) }} {{ item._collateral }}</span
             >
           </p>
           <p>
             <span>{{ $t("Table.BaseAssets") }}</span
-            ><span
-              >{{ fixD(addCommom(item.und), 8) }} {{ item._underlying }}</span
-            >
+            ><span>{{ fixD(item.longBalance, 8) }} {{ item._underlying }}</span>
           </p>
         </div>
         <section>
@@ -258,6 +257,7 @@ export default {
               _collateral: item._collateral,
             };
           });
+          // result.push(resultItem);
         }
       }
       // result.push(resultItem);
@@ -284,7 +284,6 @@ export default {
     },
     // 行权
     toClaim(item) {
-      console.log(item);
       if (Number(item.longBalance) != 0) {
         burn(
           item.short,

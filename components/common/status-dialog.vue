@@ -2,7 +2,14 @@
   <div class="status-dialog">
     <div class="mask" @click="closeDialog"></div>
     <div class="status-dialog-content">
-      <h3 class="title">{{ data.title }}</h3>
+      <h3 class="title">
+        <img
+          v-if="data.activeTip"
+          class="activeBG"
+          src="~/assets/img/helmet/activeWarn.png"
+          alt=""
+        />{{ data.title }}
+      </h3>
       <span class="close" @click="closeDialog"></span>
       <div class="img-box">
         <!-- <img
@@ -306,5 +313,12 @@ export default {
       -webkit-transform: rotate(360deg);
     }
   }
+}
+
+.activeBG {
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  transform: translateY(4px);
 }
 </style>

@@ -260,6 +260,7 @@ export default {
           });
         }
       }
+      // result.push(resultItem);
       this.isLoading = false;
       this.claimList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);

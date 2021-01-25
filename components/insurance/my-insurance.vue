@@ -49,7 +49,7 @@
                 >{{ $t("Table.Cancel") }}</span
               >
             </td>
-            <td>{{ item.shortBalance }}</td>
+            <td>{{ fixD(item.shortBalance, 4) }}</td>
             <td>{{ item.dueDate }}</td>
             <td class="option">
               <!-- <button class="o_button">{{ $t("Table.outSure") }}</button> -->
@@ -96,24 +96,20 @@
           </p>
           <p>
             <span>{{ $t("Table.InsurancePrice") }}</span
-            ><span>{{ fixD(toRounding(item.price, 4), 4) }}</span>
+            ><span>{{ fixD(item.price, 4) }}</span>
           </p>
         </div>
         <div>
           <p>
             <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}</span
             ><span
-              >{{ fixD(toRounding(item.beSold, 4), 4) }}/
-              {{
-                item.remain == "0"
-                  ? fixD(toRounding(0, 4), 4)
-                  : fixD(toRounding(item.unSold, 4), 4)
-              }}</span
+              >{{ fixD(item.beSold, 8) }}/
+              {{ item.remain == "0" ? fixD(0, 8) : fixD(item.unSold, 8) }}</span
             >
           </p>
           <p>
             <span>{{ $t("Table.CanCollateral") }}</span
-            ><span>{{ toRounding(item.shortBalance, 4) }}</span>
+            ><span>{{ fixD(item.shortBalance, 4) }}</span>
           </p>
         </div>
         <div>

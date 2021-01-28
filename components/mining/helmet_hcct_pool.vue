@@ -1,20 +1,22 @@
 <template>
-  <div class="helmet_pool">
+  <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>{{ list.name }}</h3>
         <div>
-          <p>
-            <img src="~/assets/img/helmet/longCoin.png" alt="" />
-            50%
-            <span> LONG </span>
-          </p>
-          <p>
-            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            50%
-            <span> HELMET </span>
-          </p>
+          <div>
+            <p>
+              <img src="~/assets/img/helmet/longCoin.png" alt="" />
+              50%
+              <span> LONG </span>
+            </p>
+            <p>
+              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+              50%
+              <span> HELMET </span>
+            </p>
+          </div>
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -81,6 +83,10 @@
             >
           </section>
         </div>
+        <div class="ContractAddress">
+          <span>Long Contract Address：</span>
+          0x17934fef9fc93128858e9945261524ab0581612e
+        </div>
       </div>
       <div class="withdraw">
         <div class="title">
@@ -127,6 +133,10 @@
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
+        </div>
+        <div class="ContractAddress">
+          <span>HCCT Contract Address：</span>
+          0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5
         </div>
       </div>
     </div>
@@ -356,6 +366,14 @@ export default {
 </script>
 
 <style lang='scss' soped>
+.ContractAddress {
+  font-size: 13px;
+  color: #ff9600;
+  margin-top: 20px;
+  span {
+    color: #121212;
+  }
+}
 .icon {
   width: 24px;
   height: 24px;
@@ -390,9 +408,9 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmet_pool {
+  .hcct_pool {
     margin-bottom: 20px;
-    height: 476px;
+    height: 506px;
     background: #ffffff;
     padding: 40px;
     position: relative;
@@ -413,6 +431,7 @@ export default {
       .coin {
         display: flex;
         flex-direction: column;
+
         h3 {
           height: 32px;
           display: flex;
@@ -427,21 +446,29 @@ export default {
         }
         > div {
           display: flex;
-          > p {
+          align-items: center;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
+            p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
+            }
+          }
+          p {
+            color: #919aa6;
             font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
-            }
-            span {
-              margin-left: 4px;
-              color: #919aa6;
-            }
           }
         }
       }
@@ -469,7 +496,7 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 293px;
+        height: 323px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -560,7 +587,10 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .helmet_pool {
+  .ContractAddress {
+    line-height: 20px;
+  }
+  .hcct_pool {
     background: #ffffff;
     padding: 40px 16px;
     position: relative;
@@ -597,20 +627,32 @@ export default {
         }
         > div {
           display: flex;
-          > p {
+          flex-direction: column;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
-            font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
+            > p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
             }
+          }
+          > p {
+            margin-top: 5px;
             span {
-              margin-left: 4px;
               color: #919aa6;
+              font-size: 14px;
+              margin-left: 0 !important;
             }
           }
         }
@@ -640,7 +682,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
+        height: 343px;
         padding: 30px 16px;
         .title {
           display: flex;
@@ -692,6 +734,17 @@ export default {
           }
         }
         .button {
+          section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
           p {
             margin-top: 11px;
             display: flex;

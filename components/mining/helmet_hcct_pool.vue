@@ -1,21 +1,20 @@
 <template>
   <div class="helmet_pool">
-    <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
-        <h3>{{ list.name }} <img src="~/assets/img/helmet/5x.png" alt="" /></h3>
+        <h3>{{ list.name }}</h3>
         <div>
           <p>
-            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            100%
-            <span> HELMET </span>
+            <img src="~/assets/img/helmet/longCoin.png" alt="" />
+            50%
+            <span> LONG </span>
           </p>
-          <!-- <p>
-            <img src="~/assets/img/helmet/bnbCoin.png" alt="" />
+          <p>
+            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
 
             50%
-            <span> BNB </span>
-          </p> -->
+            <span> HELMET </span>
+          </p>
         </div>
       </div>
       <div class="index">
@@ -33,7 +32,7 @@
         <div class="title">
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
-            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} HELMET
+            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
             {{ $t("Table.DAvailable") }}
           </p>
         </div>
@@ -60,29 +59,37 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} HELMET</span>
+            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
           </p>
-          <p>
-            <span>My Pool Share：</span>
-            <span> {{ balance.Share }} %</span>
-          </p>
+
+          <section>
+            <p>
+              <span>My Pool Share：</span>
+              <span> {{ balance.Share }} %</span>
+            </p>
+            <a
+              href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              target="_blank"
+              >Go to Pancake Pool</a
+            >
+          </section>
         </div>
       </div>
       <div class="withdraw">
         <div class="title">
           <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} HELMET {{ $t("Table.WAvailable") }}</p>
+          <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
         </div>
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
           <div class="input">
+            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
             <input
               name="withdraw"
               type="text"
               v-model="balance.Withdraw"
               disabled
             />
-            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
             <span @click="WithdrawNum = balance.Withdraw">{{
               $t("Table.Max")
             }}</span>
@@ -98,11 +105,11 @@
             {{ $t("Table.ClaimRewards") }}
           </button>
           <p>
-            <span>{{ $t("Table.HELMETRewards") }}：</span>
+            <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
             <span>
               <span>
                 {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
-                HELMET</span
+                HCCT</span
               >
             </span>
           </p>
@@ -126,7 +133,7 @@ import {
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
-  getPAYA,
+  getDoubleReward,
   exitStake,
   getLastTime,
   approveStatus,
@@ -143,7 +150,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET POOL",
+        name: "LONG-HELMET",
       },
       textList: [
         {
@@ -181,6 +188,7 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
+        Cake: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -190,20 +198,21 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      apy: 0,
+      helmetapy: 0,
+      cakeapy: 0,
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING1", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING", (data) => {
       this.stakeLoading = data.status;
     });
-    this.$bus.$on("CLAIM_LOADING1", (data) => {
+    this.$bus.$on("CLAIM_LOADING", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING1", (data) => {
+    this.$bus.$on("EXIT_LOADING", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA1", () => {
+    this.$bus.$on("RELOAD_DATA", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -221,8 +230,21 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
-    apy(newValue, value) {
-      this.apy = newValue;
+    helmetapy(newValue, value) {
+      if (newValue) {
+        this.textList[1].num =
+          precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
+          "%";
+      }
+    },
+    cakeapy(newValue, value) {
+      if (newValue) {
+        this.textList[1].num =
+          precision.plus(
+            fixD(this.helmetapy * 100, 2),
+            fixD(newValue * 100, 2)
+          ) + "%";
+      }
     },
   },
   computed: {
@@ -238,20 +260,48 @@ export default {
       }
     },
     async getPrice() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      let apy = fixD(
-        precision.times(
-          precision.divide(precision.times(155433.005, 365), HelmetVolume),
-          100
+      this.helmetPrice = this.indexArray[1]["HELMET"];
+      let cakePrice = this.$store.state.CAKE_BUSD;
+      let bnbPrice = this.$store.state.BNB_BUSD;
+      // 总LPT
+      let totalHelmet = await totalSupply("HELMETBNB_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let helmetReward = await Rewards("HELMETBNB", "0");
+      // BNB总价值
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      // BNB总价值不翻倍
+      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
+      let dayHelmet = totalHelmet;
+      let helmetapy = precision.divide(
+        precision.divide(
+          precision.times(
+            precision.times(
+              this.helmetPrice,
+              precision.minus(HelmetAllowance, helmetReward)
+            ),
+            365
+          ),
+          1000
         ),
-        2
+        bnbValue
       );
-      this.apy = apy;
-      this.textList[1].num = this.apy + "%";
+      let cakeapy = precision.divide(
+        precision.times(cakePrice, 1480000),
+        precision.times(
+          precision.divide(bnbValue, totalHelmet),
+          cakeValue,
+          bnbPrice
+        )
+      );
+      this.helmetapy = helmetapy;
+      this.cakeapy = cakeapy;
+      this.textList[1].num =
+        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
     },
     async getBalance() {
-      let helmetType = "HELMETPOOL_LPT";
-      let type = "HELMETPOOL";
+      let helmetType = "HELMETBNB_LPT";
+      let type = "HELMETBNB";
+      let cakeType = "CAKEHELMET_LPT";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -260,15 +310,21 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
+      //  可领取Cake
+      let Cake = await CangetUNI(type);
       // 总Helmet
-      let totalHelmet = await totalSupply(helmetType);
-
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let helmetReward = await Rewards("HELMETBNB", "0");
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
       this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(155433.005 * 7, 2) + " HELMET";
+      this.textList[0].num =
+        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
+        " HELMET";
+
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
@@ -281,7 +337,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HELMETPOOL";
+      let type = "HELMETBNB";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -290,8 +346,8 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HELMETPOOL";
-      let res = await getPAYA(type);
+      let type = "HELMETBNB";
+      let res = await getDoubleReward(type);
     },
     // 退出
     async toExit() {
@@ -299,14 +355,14 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HELMETPOOL";
+      let type = "HELMETBNB";
       let res = await exitStake(type);
     },
   },
 };
 </script>
 
-<style lang='scss' soped>
+<style lang='scss' scoped>
 .icon {
   width: 24px;
   height: 24px;
@@ -342,18 +398,10 @@ export default {
 }
 @media screen and (min-width: 750px) {
   .helmet_pool {
-    margin-bottom: 20px;
     height: 476px;
     background: #ffffff;
     padding: 40px;
-    position: relative;
-    > img {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      top: 0;
-      transform: translateY(-5px);
-    }
+    margin-bottom: 40px;
     > h3 {
       text-align: center;
     }
@@ -370,11 +418,6 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
-          img {
-            margin-left: 4px;
-            width: 32px;
-            height: 32px;
-          }
         }
         > div {
           display: flex;
@@ -463,6 +506,16 @@ export default {
           }
         }
         .button {
+          section {
+            a {
+              display: block;
+              margin-top: 4px;
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
           p {
             margin-top: 11px;
             display: flex;
@@ -476,6 +529,9 @@ export default {
                 color: #919aa6;
               }
             }
+          }
+          .column {
+            flex-direction: column;
           }
         }
       }
@@ -503,16 +559,9 @@ export default {
 @media screen and (max-width: 750px) {
   .helmet_pool {
     background: #ffffff;
-    padding: 40px 16px;
-    position: relative;
     margin-top: 10px;
-    > img {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      top: 0;
-      transform: translateY(-5px);
-    }
+    margin-bottom: 20px;
+    padding: 40px 16px;
     > h3 {
       text-align: center;
     }
@@ -520,7 +569,6 @@ export default {
       display: flex;
       flex-direction: column;
       // padding: 0 140px;
-      // justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
@@ -633,6 +681,17 @@ export default {
           }
         }
         .button {
+          section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            a {
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
           p {
             margin-top: 11px;
             display: flex;

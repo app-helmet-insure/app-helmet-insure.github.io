@@ -181,11 +181,18 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
-        "Content.HourM"
-      )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
-        "Content.SecondM"
-      )}`;
+      let template;
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+          "Content.HourM"
+        )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+          "Content.SecondM"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayM")} ${0}${this.$t(
+          "Content.HourM"
+        )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
+      }
       this.dueDate = template;
     },
     getHelmetTime(time) {
@@ -200,11 +207,18 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
-        "Content.HourM"
-      )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
-        "Content.SecondM"
-      )}`;
+      let template;
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+          "Content.HourM"
+        )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+          "Content.SecondM"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayM")} ${0}${this.$t(
+          "Content.HourM"
+        )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
+      }
       this.helmetDate = template;
     },
     undAndColWatch(newValue) {

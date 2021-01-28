@@ -282,8 +282,8 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
-      let HCCTHELMET = await uniswap("HCCT", "HELMET");
-      console.log(HCCTHELMET);
+      // let HCCTHELMET = await uniswap("HCCT", "HELMET");
+      // console.log(HCCTHELMET);
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);

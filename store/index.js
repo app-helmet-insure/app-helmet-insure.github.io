@@ -494,6 +494,7 @@ export const actions = {
         // const longMap = state.longMap;
         const sellObj = state.sellObj;
         const buyMap = state.buyMap;
+        const repriceMap = state.repriceMap;
         const aboutInfoBuy = [];
         const myAboutInfoBuy = [];
         const aboutInfoBuySeller = [];
@@ -556,16 +557,28 @@ export const actions = {
                     }
                 }
             } else {
+                function getOldOrder(id, rtArray) {
+                    let list = repriceMap;
+                    let array = list.filter((item) => item.newAskID == id)[0];
+                    if (array && array.newAskID) {
+                        let arr = getOldOrder(array.askID, array);
+                        return arr;
+                    }
+                    return rtArray;
+                }
                 if (item.buyer.toLowerCase() === myAddress) {
+                    let askID = item['askID'];
+                    let result = getOldOrder(askID);
                     let newItem;
-                    for (let i = 0; i < state.repriceMap.length; i++) {
-                        newItem = state.repriceMap[i];
+                    for (let i = 0; i < repriceMap.length; i++) {
+                        newItem = repriceMap[i];
                         if (newItem.newAskID == item.askID) {
-                            let sellInfo = sellObj[newItem.askID];
+                            let sellInfo = sellObj[result.askID];
                             if (sellInfo) {
                                 let list = JSON.parse(JSON.stringify(sellInfo));
                                 list['price'] = newItem.newPrice;
                                 list['askID'] = newItem.newAskID;
+                                console.log(item, list);
                                 myAboutInfoBuy.push({
                                     ...item,
                                     sellInfo: list,

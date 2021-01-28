@@ -3,7 +3,6 @@
     <table>
       <thead>
         <tr>
-          <td>ID</td>
           <td>{{ $t("Table.Type") }}</td>
           <td>{{ $t("Table.DenAssets") }}</td>
           <td>{{ $t("Table.BaseAssets") }}</td>
@@ -21,7 +20,6 @@
           "
         >
           <template>
-            <td>{{ item.askID }}</td>
             <td :class="item._underlying == 'WBNB' ? 'green' : 'orange'">
               {{
                 item._underlying == "WBNB" ? item._collateral : item._underlying
@@ -30,12 +28,22 @@
                 :class="item._underlying == 'WBNB' ? 'call_icon' : 'put_icon'"
               ></i>
             </td>
-            <td>
-              <!-- {{ addCommom(precision.plus(item.col, item.longBalance), 4) }} -->
-              {{ fixD(item.shortBalance, 8) }}
+            <td v-if="item._underlying == 'WBNB'">
+              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
               {{ item._collateral }}
             </td>
-            <td>{{ fixD(item.longBalance, 8) }} {{ item._underlying }}</td>
+            <td v-else>
+              {{ fixD(item.und, 8) }}
+              {{ item._underlying }}
+            </td>
+            <td v-if="item._underlying == 'WBNB'">
+              {{ fixD(item.und, 8) }}
+              {{ item._underlying }}
+            </td>
+            <td v-else>
+              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+              {{ item._collateral }}
+            </td>
             <td class="option">
               <button class="b_b_button" @click="toClaim(item)">
                 {{ $t("Table.GetBack") }}
@@ -75,13 +83,11 @@
         <div>
           <p>
             <span>{{ $t("Table.DenAssets") }}</span
-            ><span>
-              {{ fixD(item.shortBalance, 8) }} {{ item._collateral }}</span
-            >
+            ><span> {{ fixD(item.col, 8) }} {{ item._collateral }}</span>
           </p>
           <p>
             <span>{{ $t("Table.BaseAssets") }}</span
-            ><span>{{ fixD(item.longBalance, 8) }} {{ item._underlying }}</span>
+            ><span>{{ fixD(item.und, 8) }} {{ item._underlying }}</span>
           </p>
         </div>
         <section>
@@ -172,7 +178,7 @@ export default {
         this.setSettlementList(newValue);
       }
     },
-    // 格式化数据
+    // 倒计时
     async setSettlementList(list) {
       this.isLoading = true;
       this.showList = [];
@@ -195,77 +201,59 @@ export default {
         _underlying = getTokenName(item.longInfo._underlying, window.chainID);
         shortBalance = await getBalance(item.longInfo.short, _collateral);
         let Token = _underlying == "WBNB" ? _underlying : _collateral;
-        let resultItem = {};
-        if (Number(shortBalance) > 0) {
-          resultItem["askID"] = item.askID;
-          resultItem["creator"] = item.seller;
-          resultItem["_collateral"] = _collateral;
-          resultItem["_underlying"] = _underlying;
-          resultItem["long"] = item.longInfo.long;
-          resultItem["short"] = item.longInfo.short;
-          resultItem["longBalance"] = longBalance;
-          resultItem["Balance"] = Math.min(
-            Number(shortBalance),
-            Number(longBalance)
-          );
-          resultItem["shortAddress"] = item.longInfo.short;
-          resultItem["shortBalance"] = shortBalance;
-          number = precision.minus(shortBalance, longBalance);
+        if (Number(shortBalance) > 0 && Number(longBalance) > 0) {
+          result.push({
+            creator: item.seller,
+            _collateral,
+            _underlying,
+            col: 0,
+            fee: 0,
+            und: 0,
+            long: item.longInfo.long,
+            short: item.longInfo.short,
+            longBalance:
+              Number(shortBalance) > Number(longBalance)
+                ? longBalance
+                : shortBalance,
+          });
+        }
+        number = precision.minus(shortBalance, longBalance);
+        if (Number(number) > 0) {
           try {
             volume = toWei(number, _collateral);
             const settle = await settleable(item.longInfo.short, volume);
-            if (settle.col != "0" || settle.und != "0") {
-              if (_underlying == "CTK") {
-                und = fromWei(settle.und, "CTK");
-              } else {
-                und = fromWei(settle.und, Token);
-              }
-              resultItem["und"] = und;
-              resultItem["col"] = fromWei(settle.col, Token);
-              resultItem["fee"] = fromWei(settle.fee, Token);
-            } else {
-              resultItem["und"] = 0;
-              resultItem["col"] = 0;
-              resultItem["fee"] = 0;
+
+            if (settle.col !== "0" || settle.und !== "0") {
+              result.push({
+                creator: item.seller,
+                _collateral,
+                _underlying,
+                col: fromWei(settle.col, _collateral),
+                fee: fromWei(settle.fee, _collateral),
+                und: fromWei(settle.und, _collateral),
+                long: item.longInfo.long,
+                short: item.longInfo.short,
+                // longBalance: Number(longBalance) > 0 ? String(number) : 0,
+                longBalance: 0,
+              });
             }
           } catch (err) {
-            // console.log(err)
+            console.log("setSettlementList##err###", err);
           }
-          if (
-            Number(resultItem.longBalance) == 0 &&
-            Number(resultItem.und) == 0
-          ) {
-            resultItem["hidden"] = false;
-          } else {
-            resultItem["hidden"] = true;
-          }
-          // // 判断有没有这个品种的单子
-          let Flag = mapArray.some((item) => {
-            return (
-              item._underlying == resultItem._underlying &&
-              item._collateral == resultItem._collateral
-            );
-          });
-          // 没有这个品种则添加
-          if (!Flag && resultItem["hidden"]) {
-            result.push(resultItem);
-          }
-          // 判断
-          mapArray = result.map((item) => {
-            return {
-              _underlying: item._underlying,
-              _collateral: item._collateral,
-            };
-          });
-          // result.push(resultItem);
         }
       }
-      // result.push(resultItem);
+      var newobj = {};
+      var newArr = [];
+      result.forEach((item) => {
+        if (!newobj[item._collateral + item._underlying + item.short]) {
+          newobj[item._collateral + item._underlying + item.short] = 1;
+          newArr.push(item);
+        }
+      });
       this.isLoading = false;
-      this.claimList = result;
-      this.showList = result.slice(this.page * this.limit, this.limit);
+      this.claimList = newArr;
+      this.showList = newArr.slice(this.page * this.limit, this.limit);
     },
-    // 倒计时
     getDownTime(time) {
       let now = new Date() * 1;
       let dueDate = time * 1000;
@@ -284,7 +272,7 @@ export default {
     },
     // 行权
     toClaim(item) {
-      if (Number(item.longBalance) != 0) {
+      if (item.longBalance != 0) {
         burn(
           item.short,
           item.longBalance,

@@ -28,8 +28,8 @@
             <PInput
               type="number"
               v-model="item.buyNum"
-              fix="8"
-              maxValue="10000000"
+              :fix="14"
+              :maxValue="item.remain"
               :right="$t('Table.Insure')"
               :placeholder="$t('Table.Cont')"
               @numChange="handleClickBuy(item)"
@@ -61,9 +61,10 @@
           <PInput
             type="number"
             v-model="item.buyNum"
-            fix="8"
-            maxValue="10000000"
+            :fix="14"
+            :maxValue="item.remain"
             :right="$t('Table.Insure')"
+            :placeholder="$t('Table.Cont')"
             @numChange="handleClickBuy(item)"
           ></PInput>
         </div>
@@ -287,11 +288,15 @@ export default {
             resultItem["id"] = newArray.newAskID;
           }
           let res = await asks(resultItem["id"], "sync", Token);
-
-          resultItem["remain"] = fixD(
-            precision.divide(res, this.strikePriceArray[1][unToken]),
-            8
-          );
+          resultItem["relVol"] = res;
+          if (this.strikePriceArray[1][unToken]) {
+            resultItem["remain"] = fixD(
+              precision.divide(res, this.strikePriceArray[1][unToken] || 1),
+              8
+            );
+          } else {
+            resultItem["remain"] = fixD(res, 8);
+          }
           if (res != 0 && time > now) {
             sellResult.push(resultItem);
           }
@@ -387,20 +392,22 @@ export default {
         this.listCoin = data._collateral;
       } else {
         let Token = getTokenName(data._underlying);
-        // (fromWei(item.volume, Token) * this.indexArray[0][unToken]) / 2;
+        let num = precision.divide(data.buyNum, data.remain);
         datas = {
           askID: data.id,
-          volume: fixD(
-            precision.divide(
-              data.buyNum,
-              precision.divide(
-                1,
-                this.strikePriceArray[1][getTokenName(data._underlying)]
-              )
-            ),
-            8
-          ),
-          // volume: fixD(data.buyNum * this.indexArray[0][Token], 8) / 2,
+          volume:
+            data.buyNum == data.remain
+              ? precision.times(data.relVol, num)
+              : fixD(
+                  precision.divide(
+                    data.buyNum,
+                    precision.divide(
+                      1,
+                      this.strikePriceArray[1][getTokenName(data._underlying)]
+                    )
+                  ),
+                  8
+                ),
           price: data.price,
           settleToken: "HELMET",
           _strikePrice: data._strikePrice,

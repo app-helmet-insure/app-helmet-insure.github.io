@@ -10,6 +10,7 @@ const netObj = {
     1: '',
     3: 'ropsten.',
     4: 'rinkeby.',
+    56: 'BSC',
 };
 const getFactory = async () => {
     if (!factoryObj) {
@@ -29,8 +30,8 @@ export const settleable = async (seller, short) => {
 };
 
 export const burn = async (longOrshort, volume, opt = {}, data) => {
-    let colValue = addCommom(data.col + Number(data.longBalance), 4);
-    let undValue = addCommom(data.und, 4);
+    let colValue = addCommom(data.col + Number(data.longBalance), 8);
+    let undValue = addCommom(data.und, 8);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         conText: `<p>Settlement ${addCommom(volume)} ${data._collateral}</p>`,
@@ -76,7 +77,8 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                     });
                 }
                 setTimeout(() => {
-                    bus.$emit('reload_my_settle');
+                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
                 }, 1000);
             }
         })
@@ -93,15 +95,21 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
 };
 
 export const settle = async (short, data) => {
-    console.log(data);
-    // let colValue = addCommom(Number(data.col) + Number(data.longBalance), 4);
-    // let undValue = addCommom(data.und, 4);
+    let colValue = addCommom(Number(data.col) + Number(data.longBalance), 8);
+    let undValue = addCommom(data.und, 8);
+    let pendingText;
+    if (undValue > 0) {
+        pendingText = `<p>Settlement <span>${colValue > 0 &&
+            colValue + data._collateral} ${undValue > 0 &&
+            'And' + undValue + data._underlying}</span></p>`;
+    } else {
+        pendingText = `<p>Settlement <span>${colValue > 0 &&
+            colValue + data._collateral}</span></p>`;
+    }
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         //   conText: `<p>Settlement <span>${data_.volume} ${data}.category}</span> </p>`,
-        conText: `<p>Settlement ${addCommom(data.shortBalance)} ${
-            data._collateral
-        }</p>`,
+        conText: pendingText,
     });
 
     const factory = await getFactory();
@@ -145,7 +153,8 @@ export const settle = async (short, data) => {
                     });
                 }
                 setTimeout(() => {
-                    bus.$emit('reload_my_settle');
+                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
                 }, 1000);
             }
         })
@@ -226,7 +235,7 @@ export const onExercise = async (data, callBack) => {
                     });
                 }
                 setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
                 }, 1000);
             }
         })

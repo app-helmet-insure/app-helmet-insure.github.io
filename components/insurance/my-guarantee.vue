@@ -67,22 +67,28 @@
           <p>
             <span>{{ $t("Table.Type") }}</span
             ><span>
-              <!-- {{
+              {{
                 getTokenName(item._underlying) == "WBNB"
                   ? getTokenName(item._collateral)
                   : getTokenName(item._underlying)
-              }} -->
+              }}
             </span>
           </p>
           <p>
             <span>{{ $t("Table.InsurancePrice") }}</span
-            ><span>{{ fixD(item.price, 4) }}</span>
+            ><span>{{
+              fixD(item.price, 4) == "--" ? "Airdrop" : fixD(item.price, 4)
+            }}</span>
           </p>
         </div>
         <div>
           <p>
             <span>{{ $t("Table.Rent") }}</span
-            ><span>{{ fixD(item.Rent, 4) }}</span>
+            ><span>
+              {{
+                fixD(item.Rent, 4) == "--" ? "Airdrop" : fixD(item.Rent, 4)
+              }}</span
+            >
           </p>
           <p>
             <span>{{ $t("Table.Position") }}</span
@@ -293,7 +299,9 @@ export default {
         }
       }
       let transferItem = await this.setTransfer();
-      result.push(transferItem);
+      if (transferItem) {
+        result.push(transferItem);
+      }
       this.isLoading = false;
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
@@ -359,25 +367,27 @@ export default {
       let volume = await getBalance(
         "0x17934fef9fc93128858e9945261524ab0581612e"
       );
-      let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
-      let resultItem;
-      resultItem = {
-        id: 1,
-        bidID: 1,
-        buyer: myAddress,
-        price: "Airdrop",
-        Rent: "Airdrop",
-        volume: volume,
-        settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-        dueDate: this.getDownTime(1613404800),
-        _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-        _strikePrice: fromWei(30000000000000000, Token),
-        _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-        _expiry: 1613404800000,
-        transfer: true,
-        longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
-      };
-      return resultItem;
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
+        let resultItem;
+        resultItem = {
+          id: 1,
+          bidID: 1,
+          buyer: myAddress,
+          price: "Airdrop",
+          Rent: "Airdrop",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1613404800),
+          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+          _strikePrice: fromWei(30000000000000000, Token),
+          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _expiry: 1613404800000,
+          transfer: true,
+          longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+        };
+        return resultItem;
+      }
     },
     // 分页
     upPage() {

@@ -222,13 +222,13 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getPrice();
+      this.getAPY();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
-        this.getPrice();
+        this.getAPY();
       });
-    }, 2000);
+    }, 20000);
   },
   watch: {
     indexArray: {
@@ -261,10 +261,10 @@ export default {
   methods: {
     WatchIndexArray(newValue, value) {
       if (newValue) {
-        this.getPrice();
+        this.getAPY();
       }
     },
-    async getPrice() {
+    async getAPY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let cakePrice = this.$store.state.CAKE_BUSD;
       let bnbPrice = this.$store.state.BNB_BUSD;

@@ -208,11 +208,11 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getPrice();
+      this.getAPY();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
-        this.getPrice();
+        this.getAPY();
       });
     }, 20000);
   },
@@ -234,10 +234,10 @@ export default {
   methods: {
     WatchIndexArray(newValue, value) {
       if (newValue) {
-        this.getPrice();
+        this.getAPY();
       }
     },
-    async getPrice() {
+    async getAPY() {
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);

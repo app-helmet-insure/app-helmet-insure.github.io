@@ -4,7 +4,7 @@
       <div class="imgbanner img2 swiper-slide">
         <div class="center">
           <h3>LONG-HELMET for HCCT</h3>
-          <span>Flash mining for only 15 days </span>
+          <span>Flash mining for only <i>15</i> days </span>
         </div>
       </div>
       <div class="imgbanner img1 swiper-slide"></div>
@@ -174,6 +174,9 @@ export default {
       span {
         font-size: 30px;
         margin-top: 23px;
+        i {
+          color: #e83629;
+        }
       }
     }
     .imgbanner {
@@ -280,16 +283,6 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .img1 {
-      background-image: url("../../assets/img/helmet/bannercake_h5.png");
-    }
-    .img2 {
-      background-image: url("../../assets/img/helmet/hcctbanner_h5.png");
-    }
-    .imgbanner {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
-    }
 
     .bg1 {
       background-image: url("../../assets/img/helmet/banner_ill.png");
@@ -319,7 +312,34 @@ export default {
         width: 500px;
       }
     }
-
+    .img1 {
+      background-image: url("../../assets/img/helmet/bannercake_h5.png");
+    }
+    .img2 {
+      background-image: url("../../assets/img/helmet/hcctbanner_h5.png");
+    }
+    .center {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      text-align: center;
+      h3 {
+        margin-top: 60px;
+        padding: 0 20px;
+        font-size: 40px;
+      }
+      span {
+        font-size: 30px;
+        margin-top: 23px;
+        i {
+          color: #e83629;
+        }
+      }
+    }
+    .imgbanner {
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
     .text {
       width: 100%;
       height: 475px;

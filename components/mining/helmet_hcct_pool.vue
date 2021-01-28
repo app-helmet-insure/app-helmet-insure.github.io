@@ -153,6 +153,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { uniswap } from "~/assets/utils/address-pool.js";
 export default {
   data() {
     return {
@@ -281,6 +282,8 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
+      let HCCTHELMET = await uniswap("HCCT", "HELMET");
+      console.log(HCCTHELMET);
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);

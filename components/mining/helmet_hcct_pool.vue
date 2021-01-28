@@ -15,6 +15,14 @@
             50%
             <span> HELMET </span>
           </p>
+          <p>
+            <span>
+              {{ $t("Table.SurplusTime") }}：
+              <span>
+                {{ list.DownTime }}
+              </span>
+            </span>
+          </p>
         </div>
       </div>
       <div class="index">
@@ -61,10 +69,17 @@
             >
             <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
           </p>
-          <p>
-            <span>My Pool Share：</span>
-            <span> {{ balance.Share }} %</span>
-          </p>
+          <section>
+            <p>
+              <span>My Pool Share：</span>
+              <span> {{ balance.Share }} %</span>
+            </p>
+            <a
+              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
+              target="_blank"
+              >Go to Pancake Pool</a
+            >
+          </section>
         </div>
       </div>
       <div class="withdraw">
@@ -143,6 +158,8 @@ export default {
     return {
       list: {
         name: "LONG-HELMET",
+        dueDate: "2021-02-16 00:00",
+        DownTime: "--",
       },
       textList: [
         {
@@ -193,6 +210,12 @@ export default {
     };
   },
   mounted() {
+    setInterval(() => {
+      setTimeout(() => {
+        this.getDownTime();
+      });
+      clearTimeout();
+    }, 1000);
     this.$bus.$on("DEPOSITE_LOADING2", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
@@ -236,6 +259,26 @@ export default {
       if (newValue) {
         this.getAPY();
       }
+    },
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.dueDate;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
+        "Content.Hour"
+      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
+        "Content.Second"
+      )}`;
+      this.list.DownTime = template;
     },
     async getAPY() {
       let HcctVolume = await totalSupply("HCCTPOOL");
@@ -469,6 +512,16 @@ export default {
           }
         }
         .button {
+          section {
+            a {
+              display: block;
+              margin-top: 4px;
+              font-size: 14px;
+              font-weight: 500;
+              color: #ff9600;
+              line-height: 20px;
+            }
+          }
           p {
             margin-top: 11px;
             display: flex;

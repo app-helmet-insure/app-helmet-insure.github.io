@@ -1,7 +1,13 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="imgbanner swiper-slide"></div>
+      <div class="imgbanner img2 swiper-slide">
+        <div class="center">
+          <h3>LONG-HELMET for HCCT</h3>
+          <span>Flash mining for only 15 days </span>
+        </div>
+      </div>
+      <div class="imgbanner img1 swiper-slide"></div>
       <div class="text bg3 swiper-slide">
         <div>
           <h3>Staking Helmet for Helmet with high APY</h3>
@@ -19,12 +25,12 @@
       <!-- <div class="img swiper-slide">
         <h3>Policy trading start</h3>
       </div> -->
-      <div class="text bg1 swiper-slide">
+      <!-- <div class="text bg1 swiper-slide">
         <div>
           <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
           <span>919,199.5872 CAKE 12,859.9603 BNB </span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="swiper-pagination"></div>
   </div>
@@ -149,8 +155,28 @@ export default {
         width: 500px;
       }
     }
-    .imgbanner {
+    .img1 {
       background-image: url("../../assets/img/helmet/bannercake.png");
+    }
+    .img2 {
+      background-image: url("../../assets/img/helmet/hcctbanner.png");
+    }
+    .center {
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      justify-content: center;
+      margin: 0 auto;
+      text-align: center;
+      h3 {
+        font-size: 40px;
+      }
+      span {
+        font-size: 30px;
+        margin-top: 23px;
+      }
+    }
+    .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
     }
@@ -254,11 +280,17 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .imgbanner {
+    .img1 {
       background-image: url("../../assets/img/helmet/bannercake_h5.png");
+    }
+    .img2 {
+      background-image: url("../../assets/img/helmet/hcctbanner_h5.png");
+    }
+    .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
     }
+
     .bg1 {
       background-image: url("../../assets/img/helmet/banner_ill.png");
       background-size: 320px 196px;
@@ -287,6 +319,7 @@ export default {
         width: 500px;
       }
     }
+
     .text {
       width: 100%;
       height: 475px;

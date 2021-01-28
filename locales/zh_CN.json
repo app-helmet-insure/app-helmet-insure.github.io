@@ -56,7 +56,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "保单单价(HELMET)",
+    "Rent": "保单总价(HELMET)",
     "Amount": "保单数量",
     "Insure": "投保",
     "Options": "操作",

@@ -17,7 +17,7 @@
           v-for="(item, index) in showList"
           :key="index"
           :class="
-            getTokenName(item._underlying) == 'WBNB'
+            getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
               ? 'call_style'
               : 'put_style'
           "
@@ -25,21 +25,31 @@
           <td>{{ item.id }}</td>
           <td>
             {{
-              getTokenName(item._underlying) == "WBNB"
+              getTokenName(item._underlying) == "WBNB" || item.type == "call"
                 ? getTokenName(item._collateral)
                 : getTokenName(item._underlying)
             }}
+            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+          </td>
+
+          <td>
+            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
           </td>
           <td>
-            {{ fixD(item.price, 4) == "--" ? "Airdrop" : fixD(item.price, 4) }}
-          </td>
-          <td>
-            {{ fixD(item.Rent, 4) == "--" ? "Airdrop" : fixD(item.Rent, 4) }}
+            {{ fixD(item.Rent, 4) == "--" ? item.price : fixD(item.Rent, 4) }}
           </td>
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button class="b_b_button" @click="toActive(item)">
+            <button
+              class="b_b_button"
+              @click="toActive(item)"
+              :style="
+                item.symbol == 'HCCT'
+                  ? 'background: #ccc; pointer-events: none'
+                  : ''
+              "
+            >
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -56,7 +66,9 @@
         v-for="(item, index) in showList"
         :key="index"
         :class="
-          getTokenName(item._underlying) == 'WBNB' ? 'call_style' : 'put_style'
+          getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
+            ? 'call_style'
+            : 'put_style'
         "
       >
         <p>
@@ -68,10 +80,11 @@
             <span>{{ $t("Table.Type") }}</span
             ><span>
               {{
-                getTokenName(item._underlying) == "WBNB"
+                getTokenName(item._underlying) == "WBNB" || item.type == "call"
                   ? getTokenName(item._collateral)
                   : getTokenName(item._underlying)
               }}
+              {{ item.symbol ? "(" + item.symbol + ")" : "" }}
             </span>
           </p>
           <p>
@@ -102,7 +115,15 @@
             </svg>
             {{ item.dueDate }}
           </span>
-          <button class="b_b_button" @click="toActive(item)">
+          <button
+            class="b_b_button"
+            @click="toActive(item)"
+            :style="
+              item.symbol == 'HCCT'
+                ? 'background: #ccc; pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Table.outSure") }}
           </button>
         </section>
@@ -334,7 +355,7 @@ export default {
     // 行权
     toActive(item) {
       let data;
-      if (getTokenName(item._underlying) == "WBNB") {
+      if (getTokenName(item._underlying) == "WBNB" || item.type == "call") {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: item._strikePrice * item.volume,
@@ -389,6 +410,7 @@ export default {
           _expiry: 1613404800000,
           transfer: true,
           longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+          symbol: "LONG",
         };
         return resultItem;
       }
@@ -405,20 +427,22 @@ export default {
         let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
         let resultItem;
         resultItem = {
-          id: 1,
-          bidID: 1,
+          id: 2,
+          bidID: 2,
           buyer: myAddress,
-          price: "Airdrop",
-          Rent: "Airdrop",
+          price: volume * 1,
+          Rent: 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1613404800),
-          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82 ",
-          _strikePrice: fromWei(30000000000000000, Token),
+          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+          _strikePrice: fromWei(10000000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1613404800000,
           transfer: true,
           longAdress: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
+          type: "call",
+          symbol: "HCCT",
         };
         return resultItem;
       }

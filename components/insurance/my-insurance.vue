@@ -102,10 +102,11 @@
         <div>
           <p>
             <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}</span
-            ><span
-              >{{ fixD(item.beSold, 8) }}/
-              {{ item.remain == "0" ? fixD(0, 8) : fixD(item.unSold, 8) }}</span
-            >
+            ><span>
+              {{ fixD(item.beSold, 8) }}/{{
+                item.remain == "0" ? fixD(0, 8) : fixD(item.unSold, 8)
+              }}
+            </span>
           </p>
           <p>
             <span>{{ $t("Table.CanCollateral") }}</span

@@ -159,7 +159,7 @@ export default {
     return {
       list: {
         name: "LONG-HELMET",
-        dueDate: "2021-02-16 00:00",
+        dueDate: "2021-02-13 00:00",
         DownTime: "--",
       },
       textList: [
@@ -274,10 +274,8 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
-        "Content.Hour"
-      )}${minute}${this.$t("Content.Min")}${second}${this.$t(
-        "Content.Second"
+      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+        "Content.HourD"
       )}`;
       this.list.DownTime = template;
     },

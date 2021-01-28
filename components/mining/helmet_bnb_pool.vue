@@ -1,5 +1,6 @@
 <template>
   <div class="helmet_pool">
+    <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>{{ list.name }}</h3>
@@ -208,6 +209,7 @@ export default {
   mounted() {
     this.$bus.$on("DEPOSITE_LOADING", (data) => {
       this.stakeLoading = data.status;
+      this.DepositeNum = "";
     });
     this.$bus.$on("CLAIM_LOADING", (data) => {
       this.claimLoading = false;

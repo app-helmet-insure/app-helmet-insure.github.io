@@ -17,6 +17,7 @@ const netObj = {
     1: '',
     3: 'ropsten.',
     4: 'rinkeby.',
+    56: 'BSC',
 };
 export const totalSupply = async (address) => {
     const charID = window.chainID;
@@ -81,10 +82,12 @@ export const toDeposite = async (type, data, flag, callBack) => {
     }
     let result;
     switch (type) {
-        case 'HELMETPOOL':
-            bus.$emit('DEPOSITE_LOADING1', { status: true });
         case 'HELMETBNB':
             bus.$emit('DEPOSITE_LOADING', { status: true });
+        case 'HELMETPOOL':
+            bus.$emit('DEPOSITE_LOADING1', { status: true });
+        case 'HCCTPOOL':
+            bus.$emit('DEPOSITE_LOADING2', { status: true });
         default:
             break;
     }
@@ -124,12 +127,15 @@ export const toDeposite = async (type, data, flag, callBack) => {
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     switch (type) {
-                        case 'HELMETPOOL':
-                            bus.$emit('DEPOSITE_LOADING1', { status: false });
-                            bus.$emit('RELOAD_DATA1');
                         case 'HELMETBNB':
                             bus.$emit('DEPOSITE_LOADING', { status: false });
                             bus.$emit('RELOAD_DATA');
+                        case 'HELMETPOOL':
+                            bus.$emit('DEPOSITE_LOADING1', { status: false });
+                            bus.$emit('RELOAD_DATA1');
+                        case 'HCCTPOOL':
+                            bus.$emit('DEPOSITE_LOADING2', { status: false });
+                            bus.$emit('RELOAD_DATA2');
                         default:
                             break;
                     }
@@ -155,10 +161,12 @@ export const toDeposite = async (type, data, flag, callBack) => {
             })
             .on('error', function(error, receipt) {
                 switch (type) {
-                    case 'HELMETPOOL':
-                        bus.$emit('DEPOSITE_LOADING1', { status: false });
                     case 'HELMETBNB':
                         bus.$emit('DEPOSITE_LOADING', { status: false });
+                    case 'HELMETPOOL':
+                        bus.$emit('DEPOSITE_LOADING1', { status: false });
+                    case 'HCCTPOOL':
+                        bus.$emit('DEPOSITE_LOADING2', { status: false });
                     default:
                         break;
                 }
@@ -355,13 +363,15 @@ export const getPAYA = async (type) => {
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     switch (type) {
-                        case 'HELMETPOOL':
-                            bus.$emit('CLAIM_LOADING1');
-                            bus.$emit('RELOAD_DATA1');
-
                         case 'HELMETBNB':
                             bus.$emit('CLAIM_LOADING');
                             bus.$emit('RELOAD_DATA');
+                        case 'HELMETPOOL':
+                            bus.$emit('CLAIM_LOADING1');
+                            bus.$emit('RELOAD_DATA1');
+                        case 'HCCTPOOL':
+                            bus.$emit('CLAIM_LOADING2');
+                            bus.$emit('RELOAD_DATA2');
                         default:
                             break;
                     }
@@ -387,10 +397,12 @@ export const getPAYA = async (type) => {
             })
             .on('error', function(error, receipt) {
                 switch (type) {
-                    case 'HELMETPOOL':
-                        bus.$emit('CLAIM_LOADING1');
                     case 'HELMETBNB':
                         bus.$emit('CLAIM_LOADING');
+                    case 'HELMETPOOL':
+                        bus.$emit('CLAIM_LOADING1');
+                    case 'HCCTPOOL':
+                        bus.$emit('CLAIM_LOADING2');
                     default:
                         break;
                 }
@@ -648,12 +660,15 @@ export const exitStake = async (type) => {
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     switch (type) {
-                        case 'HELMETPOOL':
-                            bus.$emit('EXIT_LOADING1');
-                            bus.$emit('RELOAD_DATA1');
                         case 'HELMETBNB':
                             bus.$emit('EXIT_LOADING');
                             bus.$emit('RELOAD_DATA');
+                        case 'HELMETPOOL':
+                            bus.$emit('EXIT_LOADING1');
+                            bus.$emit('RELOAD_DATA1');
+                        case 'HCCTPOOL':
+                            bus.$emit('EXIT_LOADING2');
+                            bus.$emit('RELOAD_DATA2');
                         default:
                             break;
                     }
@@ -680,10 +695,12 @@ export const exitStake = async (type) => {
             })
             .on('error', function(error, receipt) {
                 switch (type) {
-                    case 'HELMETPOOL':
-                        bus.$emit('EXIT_LOADING1');
                     case 'HELMETBNB':
                         bus.$emit('EXIT_LOADING');
+                    case 'HELMETPOOL':
+                        bus.$emit('EXIT_LOADING1');
+                    case 'HCCTPOOL':
+                        bus.$emit('EXIT_LOADING2');
                     default:
                         break;
                 }

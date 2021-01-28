@@ -2,9 +2,9 @@
   <div class="mining_container">
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
+    <HelmetHcctPool></HelmetHcctPool>
     <HelmetHelmetPool></HelmetHelmetPool>
     <HelmetBnbPool></HelmetBnbPool>
-    <HelmetHcctPool></HelmetHcctPool>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
     <Deposite

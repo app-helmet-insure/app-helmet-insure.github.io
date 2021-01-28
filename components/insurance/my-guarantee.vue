@@ -298,9 +298,13 @@ export default {
           result.push(resultItem);
         }
       }
-      let transferItem = await this.setTransfer();
-      if (transferItem) {
-        result.push(transferItem);
+      let cakePolicy = await this.CAKEPolicy();
+      let hcctPolicy = await this.HCCTPolicy();
+      if (cakePolicy) {
+        result.push(cakePolicy);
+      }
+      if (hcctPolicy) {
+        result.push(hcctPolicy);
       }
       this.isLoading = false;
       this.guaranteeList = result;
@@ -359,7 +363,7 @@ export default {
       }
       onExercise(data, data.flag);
     },
-    async setTransfer() {
+    async CAKEPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -385,6 +389,36 @@ export default {
           _expiry: 1613404800000,
           transfer: true,
           longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+        };
+        return resultItem;
+      }
+    },
+    async HCCTPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5"
+      );
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
+        let resultItem;
+        resultItem = {
+          id: 1,
+          bidID: 1,
+          buyer: myAddress,
+          price: "Airdrop",
+          Rent: "Airdrop",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1613404800),
+          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82 ",
+          _strikePrice: fromWei(30000000000000000, Token),
+          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _expiry: 1613404800000,
+          transfer: true,
+          longAdress: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
         };
         return resultItem;
       }

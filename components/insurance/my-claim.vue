@@ -82,23 +82,30 @@
         </div>
         <div>
           <p>
-            <span>{{ $t("Table.DenAssets") }}</span
-            ><span> {{ fixD(item.col, 8) }} {{ item._collateral }}</span>
+            <span>{{ $t("Table.DenAssets") }}</span>
+            <span v-if="item._underlying == 'WBNB'">
+              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+              {{ item._collateral }}
+            </span>
+            <span v-else>
+              {{ fixD(item.und, 8) }}
+              {{ item._underlying }}
+            </span>
           </p>
           <p>
-            <span>{{ $t("Table.BaseAssets") }}</span
-            ><span>{{ fixD(item.und, 8) }} {{ item._underlying }}</span>
+            <span>{{ $t("Table.BaseAssets") }}</span>
+            <span v-if="item._underlying == 'WBNB'">
+              {{ fixD(item.und, 8) }} {{ item._underlying }}
+            </span>
+            <span v-else>
+              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+              {{ item._collateral }}
+            </span>
           </p>
         </div>
         <section>
-          <!-- <span>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-time"></use>
-            </svg>
-            200.0100 BNB
-          </span> -->
           <button class="b_b_button" @click="toClaim(item)">
-            {{ $t("Table.outSure") }}
+            {{ $t("Table.GetBack") }}
           </button>
         </section>
       </div>

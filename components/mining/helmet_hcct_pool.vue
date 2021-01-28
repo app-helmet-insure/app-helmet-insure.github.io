@@ -282,15 +282,14 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
-      // let HCCTHELMET = await uniswap("HCCT", "HELMET");
-      // console.log(HCCTHELMET);
+      let HCCTHELMET = await uniswap("HELMET", "HCCT");
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(1, 16000, 365),
+            precision.times(HCCTHELMET, 16000, 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HcctVolume

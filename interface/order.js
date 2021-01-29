@@ -686,20 +686,17 @@ export const onExercise = async (data, callBack, flag) => {
     let order;
     let value;
     if (data.flag) {
-        let AContract = await expERC20(
-            '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
-        );
         Contract = await expERC20(adress);
         order = await TokenOrder(data.long);
         long = await expERC20(data.long);
         value = toWei(data.vol, data.token);
         // 一键判断是否需要授权，给予无限授权
-        await oneKeyArrpove(AContract, 'FACTORY', 100000, (res) => {
+        await oneKeyArrpove(Contract, data.approveAddress1, 100000, (res) => {
             if (res === 'failed') {
                 bus.$emit('CLOSE_STATUS_DIALOG');
             }
         });
-        await oneKeyArrpove(long, 'CAKELONG', 100000, (res) => {
+        await oneKeyArrpove(long, data.approveAddress2, 100000, (res) => {
             if (res === 'failed') {
                 bus.$emit('CLOSE_STATUS_DIALOG');
             }
@@ -721,7 +718,6 @@ export const onExercise = async (data, callBack, flag) => {
     }
     // 一键判断是否需要授权，给予无限授权
 
-    console.log(value);
     order.methods
         .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })

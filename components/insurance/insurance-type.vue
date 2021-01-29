@@ -19,14 +19,9 @@
         <img
           src="~/assets/img/helmet/cover50.png"
           alt=""
-          v-if="lang == 'en_US' && currentCoin != 'HELMET'"
+          v-if="lang == 'en_US'"
         />
-        <img
-          src="~/assets/img/helmet/put.png"
-          alt=""
-          v-else-if="currentCoin != 'HELMET'"
-        />
-        <img src="~/assets/img/helmet/helmet_coin1.png" alt="" v-else />
+        <img src="~/assets/img/helmet/put.png" alt="" v-else />
       </button>
     </div>
   </div>

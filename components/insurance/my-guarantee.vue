@@ -41,15 +41,7 @@
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button
-              class="b_b_button"
-              @click="toActive(item)"
-              :style="
-                item.symbol == 'HCCT'
-                  ? 'background: #ccc; pointer-events: none'
-                  : ''
-              "
-            >
+            <button class="b_b_button" @click="toActive(item)">
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -411,6 +403,8 @@ export default {
           transfer: true,
           longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
           symbol: "LONG",
+          approveAddress1: "FACTORY",
+          approveAddress2: "CAKELONG",
         };
         return resultItem;
       }
@@ -430,7 +424,7 @@ export default {
           id: 2,
           bidID: 2,
           buyer: myAddress,
-          price: volume * 1,
+          price: volume * 10,
           Rent: 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
@@ -443,6 +437,8 @@ export default {
           longAdress: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
           type: "call",
           symbol: "HCCT",
+          approveAddress1: "FACTORY",
+          approveAddress2: "HCCTLONG",
         };
         return resultItem;
       }

@@ -61,11 +61,12 @@
   "Table": {
     "ID": "ID",
     "Rent": "Premium(HELMET)",
+    "AllRent": "Premium",
     "Amount": "Policies In Supply",
     "Insure": "Buy",
     "Options": "Insure",
     "Type": "Type",
-    "InsurancePrice": "Policy Price",
+    "InsurancePrice": "Trigger Price",
     "Position": "Quantity",
     "CountDonm": "Expires At",
     "outSure": "Activate",

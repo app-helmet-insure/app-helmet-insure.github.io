@@ -5,7 +5,7 @@
         <tr>
           <td>{{ $t("Table.ID") }}</td>
           <td>{{ $t("Table.Type") }}</td>
-          <td>{{ $t("Table.Rent") }}</td>
+          <td>{{ $t("Table.AllRent") }}</td>
           <td>{{ $t("Table.InsurancePrice") }}</td>
           <td>{{ $t("Table.Position") }}</td>
           <td>{{ $t("Table.CountDonm") }}</td>
@@ -280,9 +280,9 @@ export default {
         }
 
         if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Dated";
+          resultItem["status"] = "Expired";
           resultItem["sort"] = 0;
-          resultItem["dueDate"] = "Dated";
+          resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
           resultItem["sort"] = 2;

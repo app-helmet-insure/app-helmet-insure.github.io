@@ -5,7 +5,7 @@
         <tr>
           <td>{{ $t("Table.ID") }}</td>
           <td>{{ $t("Table.Type") }}</td>
-          <td>{{ $t("Table.InsurancePrice") }}</td>
+          <td>{{ $t("Table.AllRent") }}</td>
           <td>{{ $t("Table.Besold") }}</td>
           <td>{{ $t("Table.Unsold") }}</td>
           <td>{{ $t("Table.CanCollateral") }}</td>
@@ -299,9 +299,9 @@ export default {
           resultItem["sort"] = 2;
         }
         if (parseInt(resultItem._expiry) < currentTime) {
-          resultItem["status"] = "Dated";
+          resultItem["status"] = "Expired";
           resultItem["sort"] = 0;
-          resultItem["dueDate"] = "Dated";
+          resultItem["dueDate"] = "Expired";
         }
         if (parseInt(resultItem._expiry + 5184000000) < currentTime) {
           resultItem["status"] = "Hidden";

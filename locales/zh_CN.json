@@ -57,6 +57,7 @@
   "Table": {
     "ID": "ID",
     "Rent": "保单总价(HELMET)",
+    "AllRent": "总保费",
     "Amount": "保单数量",
     "Insure": "投保",
     "Options": "操作",

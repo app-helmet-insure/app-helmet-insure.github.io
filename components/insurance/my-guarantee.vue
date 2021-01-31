@@ -41,15 +41,7 @@
           <td>{{ fixD(item.volume, 8) }}</td>
           <td>{{ item.dueDate }}</td>
           <td>
-            <button
-              class="b_b_button"
-              @click="toActive(item)"
-              :style="
-                item.symbol == 'HCCT'
-                  ? 'background: #ccc; pointer-events: none'
-                  : ''
-              "
-            >
+            <button class="b_b_button" @click="toActive(item)">
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -115,15 +107,7 @@
             </svg>
             {{ item.dueDate }}
           </span>
-          <button
-            class="b_b_button"
-            @click="toActive(item)"
-            :style="
-              item.symbol == 'HCCT'
-                ? 'background: #ccc; pointer-events: none'
-                : ''
-            "
-          >
+          <button class="b_b_button" @click="toActive(item)">
             {{ $t("Table.outSure") }}
           </button>
         </section>
@@ -447,7 +431,7 @@ export default {
           longAdress: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
           type: "call",
           symbol: "HCCT",
-          approveAddress1: "ORDER",
+          approveAddress1: "FACTORY",
           approveAddress2: "ORDER",
         };
         return resultItem;

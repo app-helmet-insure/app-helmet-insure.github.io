@@ -432,7 +432,7 @@ export default {
           type: "call",
           symbol: "HCCT",
           approveAddress1: "FACTORY",
-          approveAddress2: "ORDER",
+          approveAddress2: "",
         };
         return resultItem;
       }

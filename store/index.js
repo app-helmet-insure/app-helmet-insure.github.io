@@ -578,7 +578,6 @@ export const actions = {
                                 let list = JSON.parse(JSON.stringify(sellInfo));
                                 list['price'] = newItem.newPrice;
                                 list['askID'] = newItem.newAskID;
-                                console.log(item, list);
                                 myAboutInfoBuy.push({
                                     ...item,
                                     sellInfo: list,

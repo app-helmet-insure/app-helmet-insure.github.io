@@ -11,7 +11,10 @@
           >{{ $t("Header.Trade") }}</nuxt-link
         >
         <nuxt-link to="/mining">{{ $t("Header.Mining") }} </nuxt-link>
-        <!-- <nuxt-link to="/plan">{{ $t("Header.Plan") }}</nuxt-link> -->
+        <nuxt-link to="/activity"
+          >{{ $t("Header.FlashMining") }}
+          <p></p>
+        </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>
@@ -149,10 +152,10 @@ export default {
         font-weight: bold;
         p {
           position: absolute;
-          top: 6px;
-          width: 72px;
-          background: url("../../assets/img/helmet/comingsoon@2x.png") no-repeat;
-          height: 33px;
+          top: 10px;
+          width: 21px;
+          background: url("../../assets/img/helmet/fire.png") no-repeat;
+          height: 26px;
           background-size: cover;
           right: 0;
           transform: translateX(75%);

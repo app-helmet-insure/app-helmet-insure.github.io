@@ -1,11 +1,6 @@
 <template>
   <div class="mining_container">
-    <!-- <Banner></Banner> -->
-    <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
-    <HelmetHelmetPool></HelmetHelmetPool>
-    <HelmetBnbPool></HelmetBnbPool>
-    <!-- <MiningList></MiningList> -->
-    <!-- <Protect :styleClass="'mining-home'"></Protect> -->
+    <HelmetHcctPool></HelmetHcctPool>
     <Deposite
       :current="current"
       :TradeType="TradeType"
@@ -16,23 +11,13 @@
 </template>
 
 <script>
-import Banner from "~/components/mining/banner.vue";
-import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
-import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
-import MiningList from "~/components/mining/mining-list.vue";
-import Protect from "~/components/mining/protect.vue";
+import HelmetHcctPool from "~/components/mining/helmet_hcct_pool.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
-import Withdraw from "~/components/mining/withdraw-dialog.vue";
 export default {
   layout: "default",
   components: {
-    Banner,
-    HelmetHelmetPool,
-    HelmetBnbPool,
-    MiningList,
-    Protect,
+    HelmetHcctPool,
     Deposite,
-    Withdraw,
   },
   data() {
     return {

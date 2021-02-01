@@ -229,7 +229,6 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
   },
   methods: {
@@ -242,12 +241,15 @@ export default {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       let apy = fixD(
         precision.times(
-          precision.divide(precision.times(155433.005, 365), HelmetVolume),
+          precision.divide(
+            precision.times(155433.005, 365),
+            Number(HelmetVolume)
+          ),
           100
         ),
         2
       );
-      this.apy = apy;
+      this.apy = HelmetVolume ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {

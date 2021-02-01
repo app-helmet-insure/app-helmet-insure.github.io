@@ -379,7 +379,7 @@ export default {
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
-      this.$bus.$emit("DRAW_ECHART");
+      this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },
 };
@@ -400,6 +400,7 @@ export default {
   .layout-container {
     > p {
       width: 100%;
+      min-width: 1200px;
       height: 31px;
       background: rgba(255, 150, 0, 0.2);
       font-size: 12px;

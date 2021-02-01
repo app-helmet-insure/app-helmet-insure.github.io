@@ -70,14 +70,19 @@ export default {
       line: [],
       upCover: "",
       dwCover: "",
+      drawFlag: false,
     };
   },
   mounted() {
     this.$bus.$on("WATCH_COIN", (coin) => {
       this.curCoin = coin;
     });
-    this.$bus.$on("DRAW_ECHART", () => {
+    setTimeout(() => {
       this.draw();
+    }, 1000);
+    this.$bus.$on("DRAW_ECHART", (data) => {
+      this.draw();
+      this.drawFlag = data.drawFlag;
     });
   },
   watch: {
@@ -126,6 +131,9 @@ export default {
           this.line[2].cover * 200
         } Z`;
       }
+    },
+    drawFlag(newVal, val) {
+      console.log(newVal);
     },
   },
   computed: {

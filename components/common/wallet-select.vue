@@ -22,60 +22,58 @@
   </div>
 </template>
 <script>
-// import WalletConnect from "@walletconnect/client";
-// import QRCodeModal from "@walletconnect/qrcode-modal";
-import { mateMaskInfo } from '~/assets/utils/matemask.js';
-import WalletConnectProvider from '@walletconnect/web3-provider';
-import Web3 from 'web3';
+import { mateMaskInfo } from "~/assets/utils/matemask.js";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 
 export default {
-  name: 'wallet-select',
+  name: "wallet-select",
   data() {
     return {
-      walletList: ['MetaMask', 'Math'],
+      walletList: ["MetaMask", "WalletConnect"],
       web3: {},
-      coinbase: '',
+      coinbase: "",
     };
   },
   methods: {
     // 链接钱包
     selectWallet(item) {
-      this.$store.dispatch('setWalletType', item);
-      if (item === 'MetaMask') {
+      this.$store.dispatch("setWalletType", item);
+      if (item === "MetaMask") {
         try {
           window.ethereum
-            .request({ method: 'eth_requestAccounts' })
+            .request({ method: "eth_requestAccounts" })
             .then(async (account) => {
-              window.localStorage.setItem('currentType', 'MetaMask');
-              let userInfo = await mateMaskInfo(account[0], 'MetaMask');
-              this.$store.dispatch('setUserInfo', userInfo);
-              this.$bus.$emit('REFRESH_ALL_DATA');
-              this.$bus.$emit('REFRESH_MINING');
+              window.localStorage.setItem("currentType", "MetaMask");
+              let userInfo = await mateMaskInfo(account[0], "MetaMask");
+              this.$store.dispatch("setUserInfo", userInfo);
+              this.$bus.$emit("REFRESH_ALL_DATA");
+              this.$bus.$emit("REFRESH_MINING");
               this.closeDialog();
             });
         } catch (error) {
-          console.log('MateMask 扩展插件未安装或未启用##', error);
+          console.log("MateMask 扩展插件未安装或未启用##", error);
         }
-      } else if (item === 'Math') {
+      } else if (item === "WalletConnect") {
         this.connectWallet();
       }
     },
     closeDialog() {
-      this.$emit('close');
+      this.$emit("close");
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
-        infuraId: '3cd774e14cf34ff78167908f8377051c', // Required
+        infuraId: "3cd774e14cf34ff78167908f8377051c", // Required
       });
       await walletConnectProvider.enable();
       const web3 = new Web3(walletConnectProvider);
       const coinbase = walletConnectProvider.wc.accounts[0];
       window.WEB3 = web3;
-      let userInfo = await mateMaskInfo(coinbase, 'WalletConnect');
-      this.$store.dispatch('setUserInfo', userInfo);
-      window.localStorage.setItem('currentType', 'WalletConnect');
-      this.$bus.$emit('REFRESH_ALL_DATA');
-      this.$bus.$emit('REFRESH_MINING');
+      let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
+      this.$store.dispatch("setUserInfo", userInfo);
+      window.localStorage.setItem("currentType", "WalletConnect");
+      this.$bus.$emit("REFRESH_ALL_DATA");
+      this.$bus.$emit("REFRESH_MINING");
       this.closeDialog();
     },
   },

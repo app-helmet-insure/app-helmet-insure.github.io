@@ -175,7 +175,7 @@
           >
             {{ $t("Table.Cancel") }}
           </button>
-          <button class="b_button" @click="toMining">
+          <button class="b_button" @click="toMining" style="background: #ccc">
             {{ $t("Table.Stakeing") }}
           </button>
         </section>

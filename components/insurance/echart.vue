@@ -4,7 +4,7 @@
       <line
         v-for="item in xAis"
         :key="item"
-        x1="0"
+        x1="40"
         :y1="item"
         x2="100%"
         :y2="item"
@@ -14,7 +14,7 @@
       <line
         v-for="(item, index) in line"
         :key="item.line"
-        x1="0"
+        x1="40"
         :y1="item.line + '%'"
         x2="100%"
         :y2="item.line + '%'"
@@ -32,24 +32,28 @@
       >
         {{ item.num }}
       </text>
+
+      <path :d="this.upCover" style="fill: rgba(0, 185, 0, 0.1)" />
+      <path :d="this.dwCover" style="fill: rgba(255, 100, 0, 0.1)" />
+      <rect
+        v-for="(item, index) in line"
+        :key="item.line"
+        x="60%"
+        :y="item.line - 12 + '%'"
+        width="100"
+        height="24"
+        :fill="item.color"
+      />
       <text
         v-for="(item, index) in line"
         :key="index + 'key'"
-        x="45%"
-        :y="item.line + 1.5 + '%'"
+        x="61%"
+        :y="item.line - 4 + '%'"
         style="font-size: 12px"
-        fill="#919AA6"
+        fill="#fff"
       >
         {{ item.title }}
       </text>
-      <!-- <polyline
-        :points="str"
-        style="fill: none; stroke: #000; stroke-width: 2; stroke: #ff9600"
-      /> -->
-      <path :d="this.upCover" style="fill: rgba(0, 185, 0, 0.1)" />
-      <path :d="this.dwCover" style="fill: rgba(255, 100, 0, 0.1)" />
-
-      <!-- <circle cx="300" cy="150" r="6" fill="#FF9600" /> -->
     </svg>
   </div>
 </template>
@@ -110,26 +114,23 @@ export default {
             line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
             cover: 1 - toRounding(Number(arr2[this.curCoin] / max), 2),
             num: toRounding(arr2[this.curCoin], 4),
-            color: "#919AA6",
+            color: "#FF9600",
             title: this.$t("Content.ChartPrice"),
           },
           {
             line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
             cover: 1 - toRounding(arr1[this.curCoin] / max, 2),
             num: toRounding(arr1[this.curCoin], 4),
-            color: "#FF9600",
-            title:
-              this.curCoin == "HELMET"
-                ? "Cover 0.12$"
-                : this.$t("Content.ChartOff"),
+            color: "#FF6400",
+            title: this.$t("Content.ChartOff"),
           },
         ];
-        this.upCover = `M0 0 L1080 0 L1080 ${this.line[0].cover * 200} L0 ${
+        this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
           this.line[0].cover * 200
         } Z`;
-        this.dwCover = `M0 200 L1080 200 L1080 ${this.line[2].cover * 200} L0 ${
+        this.dwCover = `M40 200 L1080 200 L1080 ${
           this.line[2].cover * 200
-        } Z`;
+        } L40 ${this.line[2].cover * 200} Z`;
       }
     },
     drawFlag(newVal, val) {
@@ -167,26 +168,23 @@ export default {
               line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
               cover: 1 - toRounding(Number(arr2[this.curCoin] / max), 2),
               num: toRounding(arr2[this.curCoin], 4),
-              color: "#919AA6",
+              color: "#FF9600",
               title: this.$t("Content.ChartPrice"),
             },
             {
               line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
               cover: 1 - toRounding(arr1[this.curCoin] / max, 2),
               num: toRounding(arr1[this.curCoin], 4),
-              color: "#FF9600",
-              title:
-                this.curCoin == "HELMET"
-                  ? "Cover 0.12$"
-                  : this.$t("Content.ChartOff"),
+              color: "#FF6400",
+              title: this.$t("Content.ChartOff"),
             },
           ];
-          this.upCover = `M0 0 L1080 0 L1080 ${this.line[0].cover * 200} L0 ${
+          this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
             this.line[0].cover * 200
           } Z`;
-          this.dwCover = `M0 200 L1080 200 L1080 ${
+          this.dwCover = `M40 200 L1080 200 L1080 ${
             this.line[2].cover * 200
-          } L0 ${this.line[2].cover * 200} Z`;
+          } L40 ${this.line[2].cover * 200} Z`;
         }
       }, 1000);
     },

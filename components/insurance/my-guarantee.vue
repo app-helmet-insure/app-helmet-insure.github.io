@@ -170,7 +170,11 @@
           </p>
         </div>
         <section>
-          <button class="b_b_button" @click="toActive(item)">
+          <button
+            class="b_b_button"
+            @click="toActive(item)"
+            v-if="item.dueDate != 'Expired'"
+          >
             {{ $t("Table.outSure") }}
           </button>
         </section>

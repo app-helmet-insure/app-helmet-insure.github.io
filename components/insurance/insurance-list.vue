@@ -511,7 +511,6 @@ export default {
     > div {
       width: 100%;
       section {
-        height: 160px;
         box-sizing: border-box;
         padding: 20px 10px;
         background: #f7f7fa;
@@ -521,6 +520,9 @@ export default {
         }
         p {
           display: flex;
+          span {
+            line-height: 20px;
+          }
           span:nth-of-type(1) {
             font-size: 12px;
             color: #919aa6;
@@ -537,7 +539,7 @@ export default {
           }
         }
         > div {
-          margin: 12px 0 16px 0;
+          margin: 12px 0 0px 0;
           display: flex;
           p {
             flex: 1;

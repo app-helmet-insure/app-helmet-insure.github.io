@@ -5,10 +5,17 @@
         <tr>
           <td>{{ $t("Table.ID") }}</td>
           <td>{{ $t("Table.Type") }}</td>
-          <td>{{ $t("Table.AllRent") }}</td>
-          <td>{{ $t("Table.InsurancePrice") }}</td>
+          <td>
+            {{ $t("Table.PolicyPrice")
+            }}<span style="font-size: 12px">(HELMET)</span>
+          </td>
+          <td>
+            {{ $t("Table.Premium")
+            }}<span style="font-size: 12px">(HELMET)</span>
+          </td>
           <td>{{ $t("Table.Position") }}</td>
           <td>{{ $t("Table.CountDonm") }}</td>
+          <td>{{ $t("Table.Rate") }}</td>
           <td></td>
         </tr>
       </thead>
@@ -22,26 +29,52 @@
               : 'put_style'
           "
         >
+          <!-- Id -->
           <td>{{ item.id }}</td>
-          <td>
+          <!-- Type -->
+          <td
+            :class="
+              getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
+                ? 'call_text'
+                : 'put_text'
+            "
+          >
             {{
               getTokenName(item._underlying) == "WBNB" || item.type == "call"
                 ? getTokenName(item._collateral)
                 : getTokenName(item._underlying)
             }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+            <i
+              :class="
+                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
+                  ? 'call_icon'
+                  : 'put_icon'
+              "
+            >
+            </i>
           </td>
-
-          <td>
-            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
-          </td>
+          <!-- PolicyPrice -->
           <td>
             {{ fixD(item.Rent, 4) == "--" ? item.price : fixD(item.Rent, 4) }}
           </td>
-          <td>{{ fixD(item.volume, 8) }}</td>
-          <td>{{ item.dueDate }}</td>
+          <!-- Premium -->
           <td>
-            <button class="b_b_button" @click="toActive(item)" v-if="item.dueDate!='Expired'">
+            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
+          </td>
+          <!-- Position -->
+          <td>{{ fixD(item.volume, 8) }}</td>
+          <!-- CountDonm -->
+          <td>{{ item.dueDate }}</td>
+          <!-- Rate -->
+          <td>{{ item.outPrice }} {{ item.outPriceUnit }}</td>
+          <!-- Active -->
+          <td>
+            <button
+              class="b_b_button"
+              @click="toActive(item)"
+              v-if="item.dueDate != 'Expired'"
+            >
               {{ $t("Table.outSure") }}
             </button>
           </td>
@@ -64,49 +97,79 @@
         "
       >
         <p>
-          <span>{{ $t("Table.ID") }}</span
-          ><span>{{ item.id }}</span>
+          <span>{{ $t("Table.ID") }}</span>
+          <span>{{ item.id }}</span>
         </p>
         <div>
           <p>
-            <span>{{ $t("Table.Type") }}</span
-            ><span>
+            <span>{{ $t("Table.Type") }}</span>
+            <span
+              :class="
+                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
+                  ? 'call_text'
+                  : 'put_text'
+              "
+            >
               {{
                 getTokenName(item._underlying) == "WBNB" || item.type == "call"
                   ? getTokenName(item._collateral)
                   : getTokenName(item._underlying)
               }}
               {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+              <i
+                :class="
+                  getTokenName(item._underlying) == 'WBNB' ||
+                  item.type == 'call'
+                    ? 'call_icon'
+                    : 'put_icon'
+                "
+              >
+              </i>
             </span>
           </p>
           <p>
-            <span>{{ $t("Table.InsurancePrice") }}</span
-            ><span>{{
-              fixD(item.price, 4) == "--" ? "Airdrop" : fixD(item.price, 4)
-            }}</span>
+            <span
+              >{{ $t("Table.PolicyPrice")
+              }}<span style="font-size: 12px">(HELMET)</span></span
+            >
+            <span>
+              {{ fixD(item.Rent, 4) == "--" ? item.price : fixD(item.Rent, 4) }}
+            </span>
           </p>
         </div>
         <div>
           <p>
-            <span>{{ $t("Table.Rent") }}</span
-            ><span>
-              {{
-                fixD(item.Rent, 4) == "--" ? "Airdrop" : fixD(item.Rent, 4)
-              }}</span
+            <span
+              >{{ $t("Table.Premium")
+              }}<span style="font-size: 12px">(HELMET)</span></span
             >
+            <span>
+              {{
+                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
+              }}
+            </span>
           </p>
           <p>
-            <span>{{ $t("Table.Position") }}</span
-            ><span>{{ fixD(item.volume, 8) }}</span>
+            <span>{{ $t("Table.Position") }}</span>
+            <span>{{ fixD(item.volume, 8) }}</span>
+          </p>
+        </div>
+        <div>
+          <p>
+            <span>{{ $t("Table.Rate") }}</span>
+            <span> {{ item.outPrice }} {{ item.outPriceUnit }} </span>
+          </p>
+          <p>
+            <span>{{ $t("Table.CountDonm") }}</span>
+            <span>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-time"></use>
+              </svg>
+              {{ item.dueDate }}
+            </span>
           </p>
         </div>
         <section>
-          <span>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-time"></use>
-            </svg>
-            {{ item.dueDate }}
-          </span>
           <button class="b_b_button" @click="toActive(item)">
             {{ $t("Table.outSure") }}
           </button>
@@ -250,6 +313,11 @@ export default {
             long: item.sellInfo.long,
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
+            outPrice: fromWei(
+              item.sellInfo.longInfo._strikePrice,
+              item.sellInfo.longInfo._collateral
+            ),
+            outPriceUnit: "BNB",
           };
         } else {
           resultItem = {
@@ -276,6 +344,16 @@ export default {
             long: item.sellInfo.long,
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
+            outPrice: toRounding(
+              precision.divide(
+                1,
+                fromWei(
+                  item.sellInfo.longInfo._strikePrice,
+                  item.sellInfo.longInfo._collateral
+                )
+              )
+            ),
+            outPriceUnit: "BNB",
           };
         }
 
@@ -329,10 +407,13 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.DayM")}${hour}${this.$t(
-        "Content.HourM"
-      )}${minute}${this.$t("Content.MinM")}${second}${this.$t(
-        "Content.SecondM"
+      // let template = `${day}${this.$t("Content.DayM")}${hour}${this.$t(
+      //   "Content.HourM"
+      // )}${minute}${this.$t("Content.MinM")}${second}${this.$t(
+      //   "Content.SecondM"
+      // )}`;
+      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+        "Content.HourD"
       )}`;
       return template;
     },
@@ -399,6 +480,8 @@ export default {
           symbol: "LONG",
           approveAddress1: "FACTORY",
           approveAddress2: "CAKELONG",
+          outPrice: fromWei(30000000000000000, Token),
+          outPriceUnit: "BNB",
         };
         return resultItem;
       }
@@ -433,6 +516,8 @@ export default {
           symbol: "HCCT",
           approveAddress1: "FACTORY",
           approveAddress2: "",
+          outPrice: fromWei(10000000000000000000, Token),
+          outPriceUnit: "HELMET",
         };
         return resultItem;
       }
@@ -502,6 +587,12 @@ export default {
     }
   }
 }
+.call_text {
+  color: #00b900 !important;
+}
+.put_text {
+  color: #ff6400 !important;
+}
 @media screen and (min-width: 750px) {
   .my_guarantee {
     position: relative;
@@ -543,6 +634,15 @@ export default {
             line-height: 40px;
             font-size: 14px;
           }
+          td:first-child {
+            width: 50px;
+          }
+          td:nth-of-type(2) {
+            width: 110px;
+          }
+          td:nth-of-type(3) {
+            width: 100px;
+          }
         }
       }
       tbody {
@@ -560,8 +660,32 @@ export default {
             font-size: 14px;
             font-weight: bold;
             color: #121212;
+            display: flex;
+            align-items: center;
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-repeat: no-repeat;
+              background-size: cover;
+              margin-left: 4px;
+            }
+            .call_icon {
+              background-image: url("../../assets/img/helmet/tablecall.png");
+            }
+            .put_icon {
+              background-image: url("../../assets/img/helmet/tableput.png");
+            }
           }
-
+          td:first-child {
+            width: 50px;
+          }
+          td:nth-of-type(2) {
+            width: 110px;
+          }
+          td:nth-of-type(3) {
+            width: 100px;
+          }
           td:last-child {
             transform: translateX(20px);
             display: flex;
@@ -590,16 +714,36 @@ export default {
       .item_box {
         margin-top: 20px;
         width: 100%;
-        height: 208px;
         padding: 20px 10px;
         box-sizing: border-box;
         p {
           display: flex;
+          span {
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-repeat: no-repeat;
+              background-size: cover;
+              margin-left: 4px;
+            }
+            .call_icon {
+              background-image: url("../../assets/img/helmet/tablecall.png");
+            }
+            .put_icon {
+              background-image: url("../../assets/img/helmet/tableput.png");
+            }
+          }
           span:nth-of-type(1) {
             font-size: 12px;
             color: #919aa6;
           }
           span:nth-of-type(2) {
+            display: flex;
+            align-items: center;
             font-weight: bold;
             color: #121212;
           }
@@ -620,11 +764,8 @@ export default {
           }
         }
         > section {
-          display: flex;
-          justify-content: space-between;
-          span {
-            display: flex;
-            align-items: center;
+          button {
+            width: 100%;
           }
         }
       }

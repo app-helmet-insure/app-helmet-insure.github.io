@@ -10,7 +10,7 @@
       <li v-for="item in this.renderList" :key="item.url" @click="closeMask">
         <a v-if="item.link" :href="item.url">{{ item.text }}</a>
         <span v-else @click="toPath(item)"
-          >{{ item.text }} <i v-if="item.url == '/activity'"></i
+          >{{ item.text }} <i v-if="item.url == '/flashmining'"></i
         ></span>
       </li>
     </ul>
@@ -119,7 +119,7 @@ export default {
           text: this.$t("Header.Mining"),
         },
         {
-          url: "/activity",
+          url: "/flashmining",
           link: false,
           text: this.$t("Header.FlashMining"),
         },

@@ -11,7 +11,7 @@
           >{{ $t("Header.Trade") }}</nuxt-link
         >
         <nuxt-link to="/mining">{{ $t("Header.Mining") }} </nuxt-link>
-        <nuxt-link to="/activity"
+        <nuxt-link to="/flashmining"
           >{{ $t("Header.FlashMining") }}
           <p></p>
         </nuxt-link>

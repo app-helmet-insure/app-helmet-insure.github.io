@@ -1,6 +1,7 @@
 <template>
   <div class="mining_container">
     <HelmetHcctPool></HelmetHcctPool>
+    <HelmetHctkPool></HelmetHctkPool>
     <Deposite
       :current="current"
       :TradeType="TradeType"
@@ -12,11 +13,13 @@
 
 <script>
 import HelmetHcctPool from "~/components/mining/helmet_hcct_pool.vue";
+import HelmetHctkPool from "~/components/mining/helmet_hctk_pool.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 export default {
   layout: "default",
   components: {
     HelmetHcctPool,
+    HelmetHctkPool,
     Deposite,
   },
   data() {

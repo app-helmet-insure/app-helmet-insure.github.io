@@ -1,20 +1,29 @@
 <template>
-  <div class="helmet_pool">
+  <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>{{ list.name }}</h3>
         <div>
+          <div>
+            <p>
+              <img src="~/assets/img/helmet/hcctCoin.png" alt="" />
+              50%
+              <span> HCCT </span>
+            </p>
+            <p>
+              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+              50%
+              <span> HELMET </span>
+            </p>
+          </div>
           <p>
-            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            50%
-            <span> HELMET </span>
-          </p>
-          <p>
-            <img src="~/assets/img/helmet/bnbCoin.png" alt="" />
-
-            50%
-            <span> BNB </span>
+            <span>
+              {{ $t("Table.SurplusTime") }}：
+              <span>
+                {{ list.DownTime }}
+              </span>
+            </span>
           </p>
         </div>
       </div>
@@ -62,18 +71,21 @@
             >
             <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
           </p>
-
           <section>
             <p>
               <span>My Pool Share：</span>
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x17934fef9fC93128858e9945261524ab0581612e"
               target="_blank"
               >Go to Pancake Pool</a
             >
           </section>
+        </div>
+        <div class="ContractAddress">
+          <span>Long Contract Address：</span>
+          0x17934fef9fc93128858e9945261524ab0581612e
         </div>
       </div>
       <div class="withdraw">
@@ -84,13 +96,13 @@
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
           <div class="input">
-            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
             <input
               name="withdraw"
               type="text"
               v-model="balance.Withdraw"
               disabled
             />
+            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
             <span @click="WithdrawNum = balance.Withdraw">{{
               $t("Table.Max")
             }}</span>
@@ -106,14 +118,14 @@
             {{ $t("Table.ClaimRewards") }}
           </button>
           <p>
-            <span>HELMET {{ $t("Table.HELMETRewards") }}：</span>
+            <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
             <span>
-              <span
-                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} CAKE</span
-              >
               <span>
-                {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
-                HELMET</span
+                {{ balance.hCTK.length > 60 ? 0 : balance.hCTK }}
+                hCTK</span
+              ><span>
+                {{ balance.ctkH.length > 60 ? 0 : balance.ctkH }}
+                ctkH</span
               >
             </span>
           </p>
@@ -124,6 +136,10 @@
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
+        </div>
+        <div class="ContractAddress">
+          <span>HCCT Contract Address：</span>
+          0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5
         </div>
       </div>
     </div>
@@ -137,7 +153,7 @@ import {
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
-  getDoubleReward,
+  getPAYA,
   exitStake,
   getLastTime,
   approveStatus,
@@ -150,11 +166,14 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { uniswap } from "~/assets/utils/address-pool.js";
 export default {
   data() {
     return {
       list: {
-        name: "HELMET-BNB",
+        name: "HCCT-HELMET",
+        dueDate: "2021-02-20 00:00",
+        DownTime: "--",
       },
       textList: [
         {
@@ -192,7 +211,8 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
-        Cake: 0,
+        hCTK: 0,
+        ctkH: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -202,22 +222,27 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      helmetapy: 0,
-      cakeapy: 0,
+      apy: 0,
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING", (data) => {
+    setInterval(() => {
+      setTimeout(() => {
+        this.getDownTime();
+      });
+      clearTimeout();
+    }, 1000);
+    this.$bus.$on("DEPOSITE_LOADING2", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING", (data) => {
+    this.$bus.$on("CLAIM_LOADING2", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING", (data) => {
+    this.$bus.$on("EXIT_LOADING2", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA", () => {
+    this.$bus.$on("RELOAD_DATA2", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -235,21 +260,8 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
-    helmetapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
-          "%";
-      }
-    },
-    cakeapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(
-            fixD(this.helmetapy * 100, 2),
-            fixD(newValue * 100, 2)
-          ) + "%";
-      }
+    apy(newValue, value) {
+      this.apy = newValue;
     },
   },
   computed: {
@@ -264,49 +276,48 @@ export default {
         this.getAPY();
       }
     },
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.dueDate;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+        "Content.HourD"
+      )}`;
+      this.list.DownTime = template;
+    },
     async getAPY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let dayHelmet = totalHelmet;
-      let helmetapy = precision.divide(
-        precision.divide(
-          precision.times(
-            precision.times(
-              this.helmetPrice,
-              precision.minus(HelmetAllowance, helmetReward)
-            ),
-            365
-          ),
-          1000
-        ),
-        bnbValue
-      );
-      let cakeapy = precision.divide(
-        precision.times(cakePrice, 1480000),
+      let HCCTHELMET = await uniswap("HCCT", "HELMET");
+      let HcctVolume = await totalSupply("HCCTPOOL");
+      let LptVolume = await totalSupply("HCCTPOOL_LPT");
+      let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
+      let apy = fixD(
         precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
+          precision.divide(
+            precision.times(HCCTHELMET, 16000, 365),
+            precision.times(
+              precision.divide(precision.times(HelmetValue, 2), LptVolume),
+              HcctVolume
+            )
+          ),
+          100
+        ),
+        2
       );
-      this.helmetapy = helmetapy;
-      this.cakeapy = cakeapy;
-      this.textList[1].num =
-        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
+      this.apy = apy;
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HELMETBNB_LPT";
-      let type = "HELMETBNB";
-      let cakeType = "CAKEHELMET_LPT";
+      let helmetType = "HCCTPOOL_LPT";
+      let type = "HCCTPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -315,23 +326,15 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
-      //  可领取Cake
-      let Cake = await CangetUNI(type);
       // 总Helmet
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let totalHelmet = await totalSupply(helmetType);
+
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
+      this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num =
-        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
-        " HELMET";
-
-      // this.textList[3].num = addCommom(Deposite, 4)
-      // this.textList[4].num = addCommom(Helmet, 4)
+      this.textList[0].num = fixD(16000 * 7, 2) + " HCCT";
     },
     // 抵押
     toDeposite() {
@@ -342,7 +345,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HELMETBNB";
+      let type = "HCCTPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -351,8 +354,8 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HELMETBNB";
-      let res = await getDoubleReward(type);
+      let type = "HCCTPOOL";
+      let res = await getPAYA(type);
     },
     // 退出
     async toExit() {
@@ -360,14 +363,22 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HELMETBNB";
+      let type = "HCCTPOOL";
       let res = await exitStake(type);
     },
   },
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' soped>
+.ContractAddress {
+  font-size: 13px;
+  color: #ff9600;
+  margin-top: 20px;
+  span {
+    color: #121212;
+  }
+}
 .icon {
   width: 24px;
   height: 24px;
@@ -402,11 +413,19 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmet_pool {
-    height: 476px;
+  .hcct_pool {
+    margin-bottom: 20px;
+    height: 506px;
     background: #ffffff;
     padding: 40px;
-    margin-bottom: 20px;
+    position: relative;
+    > img {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      top: 0;
+      transform: translateY(-5px);
+    }
     > h3 {
       text-align: center;
     }
@@ -417,30 +436,44 @@ export default {
       .coin {
         display: flex;
         flex-direction: column;
+
         h3 {
           height: 32px;
           display: flex;
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          img {
+            margin-left: 4px;
+            width: 32px;
+            height: 32px;
+          }
         }
         > div {
           display: flex;
-          > p {
+          align-items: center;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
+            p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
+            }
+          }
+          p {
+            color: #919aa6;
             font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
-            }
-            span {
-              margin-left: 4px;
-              color: #919aa6;
-            }
           }
         }
       }
@@ -468,7 +501,7 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 293px;
+        height: 323px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -535,9 +568,6 @@ export default {
               }
             }
           }
-          .column {
-            flex-direction: column;
-          }
         }
       }
       .deposit {
@@ -562,11 +592,21 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .helmet_pool {
+  .ContractAddress {
+    line-height: 20px;
+  }
+  .hcct_pool {
     background: #ffffff;
-    margin-top: 10px;
-    margin-bottom: 20px;
     padding: 40px 16px;
+    position: relative;
+    margin-top: 10px;
+    > img {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      top: 0;
+      transform: translateY(-5px);
+    }
     > h3 {
       text-align: center;
     }
@@ -574,6 +614,7 @@ export default {
       display: flex;
       flex-direction: column;
       // padding: 0 140px;
+      // justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
@@ -591,20 +632,32 @@ export default {
         }
         > div {
           display: flex;
-          > p {
+          flex-direction: column;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
-            font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
+            > p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
             }
+          }
+          > p {
+            margin-top: 5px;
             span {
-              margin-left: 4px;
               color: #919aa6;
+              font-size: 14px;
+              margin-left: 0 !important;
             }
           }
         }
@@ -634,7 +687,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
+        height: 343px;
         padding: 30px 16px;
         .title {
           display: flex;

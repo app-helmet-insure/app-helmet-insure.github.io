@@ -90,7 +90,6 @@ export default {
       fixD,
       addCommom,
       strikePrice: 0.0049,
-      // strikePrice: "--",
       dueDate: 0,
       helmetDate: 0,
     };

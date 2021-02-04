@@ -174,11 +174,6 @@
             class="b_b_button"
             @click="toActive(item)"
             v-if="item.dueDate != 'Expired'"
-            :style="
-              item.symbol == 'hCTK'
-                ? 'background: #ccc !important; pointer-events: none'
-                : ''
-            "
           >
             {{ $t("Table.outSure") }}
           </button>

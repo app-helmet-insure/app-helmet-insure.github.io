@@ -1,13 +1,14 @@
 <template>
   <div class="mining_container">
     <HelmetHcctPool></HelmetHcctPool>
-    <HelmetHctkPool></HelmetHctkPool>
+    <!-- <HelmetHctkPool></HelmetHctkPool> -->
     <Deposite
       :current="current"
       :TradeType="TradeType"
       @close="closeDeposite"
       v-if="showDeposite"
     ></Deposite>
+    <!-- <Onepager></Onepager> -->
   </div>
 </template>
 
@@ -15,12 +16,14 @@
 import HelmetHcctPool from "~/components/mining/helmet_hcct_pool.vue";
 import HelmetHctkPool from "~/components/mining/helmet_hctk_pool.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
+import Onepager from "~/components/mining/onepager.vue";
 export default {
   layout: "default",
   components: {
     HelmetHcctPool,
     HelmetHctkPool,
     Deposite,
+    Onepager,
   },
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="hcct_pool">
+  <div class="hctk_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
@@ -413,7 +413,7 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .hcct_pool {
+  .hctk_pool {
     margin-bottom: 20px;
     height: 506px;
     background: #ffffff;
@@ -595,7 +595,7 @@ export default {
   .ContractAddress {
     line-height: 20px;
   }
-  .hcct_pool {
+  .hctk_pool {
     background: #ffffff;
     padding: 40px 16px;
     position: relative;

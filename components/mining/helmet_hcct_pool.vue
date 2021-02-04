@@ -3,7 +3,10 @@
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
-        <h3>{{ list.name }}</h3>
+        <h3>
+          {{ list.name }}
+          <!-- <p @click="showOnepager"><i></i>What is LONG token？</p> -->
+        </h3>
         <div>
           <div>
             <p>
@@ -438,10 +441,35 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
+          }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
           }
         }
         > div {

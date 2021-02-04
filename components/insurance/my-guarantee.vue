@@ -74,6 +74,11 @@
               class="b_b_button"
               @click="toActive(item)"
               v-if="item.dueDate != 'Expired'"
+              :style="
+                item.symbol == 'hCTK'
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Table.outSure") }}
             </button>
@@ -174,6 +179,11 @@
             class="b_b_button"
             @click="toActive(item)"
             v-if="item.dueDate != 'Expired'"
+            :style="
+              item.symbol == 'hCTK'
+                ? 'background: #ccc !important; pointer-events: none'
+                : ''
+            "
           >
             {{ $t("Table.outSure") }}
           </button>
@@ -553,14 +563,14 @@ export default {
         let Token = getTokenName("0x936909e72951a19a5e1d75a109b0d34f06f39838");
         let resultItem;
         resultItem = {
-          id: 1,
+          id: 3,
           bidID: 1,
           buyer: myAddress,
-          price: 1.834,
-          Rent: volume * 1.834,
+          price: 1.8343,
+          Rent: volume * 1.8343,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1613404800),
+          dueDate: this.getDownTime(1613750400),
           _collateral: "0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929",
           _strikePrice: fromWei(2500000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
@@ -568,7 +578,7 @@ export default {
           transfer: true,
           longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
           type: "call",
-          symbol: "LONG",
+          symbol: "hCTK",
           approveAddress1: "FACTORY",
           approveAddress2: "HCTKLONG",
           outPrice: fromWei(2500000000000000000, Token),

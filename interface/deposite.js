@@ -773,3 +773,16 @@ export const Rewards = async (contractAdress, adress1) => {
 
     return window.WEB3.utils.fromWei(result, getWei());
 };
+export const RewardsDuration = async (contractAdress) => {
+    const charID = window.chainID;
+
+    if (contractAdress.indexOf('0x') === -1) {
+        contractAdress = getContract(contractAdress, charID);
+    }
+
+    const Contract = await Deposite(contractAdress);
+
+    const result = await Contract.methods.rewardsDuration().call();
+
+    return result;
+};

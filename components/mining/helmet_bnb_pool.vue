@@ -147,6 +147,7 @@ import {
   WithdrawAvailable,
   getAllHelmet,
   Rewards,
+  RewardsDuration,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
@@ -276,7 +277,9 @@ export default {
       let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
       // BNB总价值不翻倍
       let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
+      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
       let dayHelmet = totalHelmet;
+      // (helmetPrice*(HelmetAllowance-helmetReward)*365)/(100*bnbValue)
       let helmetapy = precision.divide(
         precision.divide(
           precision.times(
@@ -286,7 +289,7 @@ export default {
             ),
             365
           ),
-          1000
+          miningTime
         ),
         bnbValue
       );

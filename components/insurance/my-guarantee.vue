@@ -572,7 +572,7 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(2500000000000000000, Token),
           outPriceUnit: "HELMET",
-          unit: "lovelace",
+          unit: 6,
         };
         return resultItem;
       }

@@ -136,6 +136,7 @@ import {
   WithdrawAvailable,
   getAllHelmet,
   Rewards,
+  RewardsDuration,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
@@ -239,13 +240,14 @@ export default {
     },
     async getAPY() {
       let HelmetVolume = await totalSupply("HELMETPOOL");
+      let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
       let apy = fixD(
         precision.times(
           precision.divide(
             precision.times(155433.005, 365),
             Number(HelmetVolume)
           ),
-          100
+          helmetTime
         ),
         2
       );

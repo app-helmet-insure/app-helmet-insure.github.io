@@ -174,8 +174,12 @@ export default {
       this.optionFlag = false;
     },
     toAll() {
-      if (this.BalanceArray) {
-        this.volume = this.BalanceArray[this.currentCoin];
+      if (this.currentType == 1) {
+        if (this.BalanceArray) {
+          this.volume = this.BalanceArray[this.currentCoin];
+        }
+      } else {
+        this.volume = this.BalanceArray["BNB"];
       }
     },
     submitSupply() {

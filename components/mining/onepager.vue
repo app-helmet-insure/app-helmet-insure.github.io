@@ -1,18 +1,44 @@
 <template>
-  <div class="onepager_mask">
-    <div class="onepager_wraper">
-      <div class="title">
-        <span></span>
-        <i></i>
+  <transition name="onepager">
+    <div class="onepager_mask" v-if="showFlag">
+      <div class="onepager_wrapper">
+        <div class="title">
+          <span>{{ this.title }}</span>
+          <i @click="closeOnepager"></i>
+        </div>
+        <div class="content">
+          <div>
+            <p v-for="(item, index) in text" :key="index">{{ item }}</p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      showFlag: false,
+      title: "",
+      text: [],
+    };
+  },
   mounted() {
-    this.$bus.$on("OPEN_ONEPAGER", (data) => {});
+    this.$bus.$on("OPEN_ONEPAGER", (data) => {
+      this.showFlag = data.showFlag;
+      this.title = data.title;
+      this.text = data.text;
+    });
+    this.$bus.$on("CLOSE_ONEPAGER", () => {
+      this.showFlag = false;
+    });
+  },
+  methods: {
+    closeOnepager() {
+      this.$bus.$emit("CLOSE_ONEPAGER");
+    },
   },
 };
 </script>
@@ -26,9 +52,109 @@ export default {
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
 }
+
+.onepager-enter-active {
+  animation: onepager-in 0.5s;
+}
+.onepager-leave-active {
+  animation: onepager-in 0.5s reverse;
+}
+@keyframes onepager-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 @media screen and (min-width: 750px) {
   .onepager_wrapper {
     width: 500px;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 30px;
+    .title {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        color: #121212;
+        line-height: 28px;
+      }
+      i {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-image: url("../../assets/img/icon/guanbi.png");
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+    }
+    .content {
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+        color: #121212;
+        line-height: 28px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .onepager_wrapper {
+    width: 90%;
+    height: 80%;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    .title {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 20px;
+        font-weight: 500;
+        color: #121212;
+        line-height: 28px;
+      }
+      i {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-image: url("../../assets/img/icon/guanbi.png");
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+    }
+    .content {
+      flex: 1;
+      overflow-y: scroll;
+      p {
+        margin: 10px 0;
+        font-size: 14px;
+        color: #121212;
+        line-height: 28px;
+      }
+    }
   }
 }
 </style>

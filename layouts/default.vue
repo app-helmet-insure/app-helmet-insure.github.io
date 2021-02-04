@@ -312,11 +312,11 @@ export default {
         let balance = await getBalance(coinList[i]);
         let key = coinList[i];
 
-        BalanceArray[key] = toRounding(balance, 4);
+        BalanceArray[key] = fixD(balance, 4);
       }
       if (window.CURRENTADDRESS) {
         window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
-          BalanceArray["BNB"] = toRounding(fromWei(res), 4);
+          BalanceArray["BNB"] = fixD(fromWei(res), 4);
         });
       }
       this.$store.commit("SET_BALANCE", BalanceArray);

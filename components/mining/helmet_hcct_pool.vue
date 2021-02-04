@@ -5,7 +5,7 @@
       <div class="coin">
         <h3>
           {{ list.name }}
-          <!-- <p @click="showOnepager"><i></i>What is LONG token？</p> -->
+          <p @click="showOnepager"><i></i>What is LONG token？</p>
         </h3>
         <div>
           <div>
@@ -269,6 +269,19 @@ export default {
     },
   },
   methods: {
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is LONG token？",
+        text: [
+          "LONG is the CAKE  Cover Miss Out policy certification. Policy holders can use Long token as proof to activate the policy. It is the certification showing that you have bought policy and it is necessary when you activate policy. ",
+          "To be brief, if $CAKE hit over $1.5 before Feb.15th 24:00 SGT, you could activate your airdrop policy to claim benefits.",
+          "For example, if $CAKE hit $1.6 on Feb.10th, you could use $1.5 to swap a $CAKE token with 1 policy (1 LONG Token). Eventually, you could sell this $CAKE in the market and get extra $0.1 benefit. That is why we call it ‘COVER Miss out’. (the final settlement currency will be BNB)",
+          "However, if $CAKE does not hit $1.5, there will be no need for you to activate the Cover Miss Out policy. and the LONG Token will be a souvenir for you.",
+          "Policy Expire Date: Feb.15th 24:00 SGT",
+        ],
+      });
+    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();
@@ -647,10 +660,35 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
+          }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
           }
         }
         > div {

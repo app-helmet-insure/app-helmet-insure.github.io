@@ -74,11 +74,6 @@
               class="b_b_button"
               @click="toActive(item)"
               v-if="item.dueDate != 'Expired'"
-              :style="
-                item.symbol == 'hCTK'
-                  ? 'background: #ccc !important; pointer-events: none'
-                  : ''
-              "
             >
               {{ $t("Table.outSure") }}
             </button>
@@ -407,7 +402,6 @@ export default {
       let cakePolicy = await this.CAKEPolicy();
       let hcctPolicy = await this.HCCTPolicy();
       let hctkPolicy = await this.HCTKPolicy();
-      console.log(hctkPolicy);
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -576,11 +570,11 @@ export default {
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1613750400000,
           transfer: true,
-          longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+          longAdress: "0x936909e72951a19a5e1d75a109b0d34f06f39838",
           type: "call",
           symbol: "hCTK",
           approveAddress1: "FACTORY",
-          approveAddress2: "HCTKLONG",
+          approveAddress2: "",
           outPrice: fromWei(2500000000000000000, Token),
           outPriceUnit: "HELMET",
         };

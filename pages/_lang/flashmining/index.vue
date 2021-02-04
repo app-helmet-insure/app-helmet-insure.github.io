@@ -8,7 +8,7 @@
       @close="closeDeposite"
       v-if="showDeposite"
     ></Deposite>
-    <!-- <Onepager></Onepager> -->
+    <Onepager></Onepager>
   </div>
 </template>
 

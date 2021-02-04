@@ -128,6 +128,7 @@ export const state = () => ({
             FORTUBE: 0,
             BTCB: 0,
             ETH: 0,
+            CKT: 0,
         },
         {
             HELMET: 0,
@@ -136,6 +137,7 @@ export const state = () => ({
             FORTUBE: 0,
             BTCB: 0,
             ETH: 0,
+            CKT: 0,
         },
     ],
     allHelmetPrice: [
@@ -146,6 +148,7 @@ export const state = () => ({
             FORTUBE: 0,
             BTCB: 0,
             ETH: 0,
+            CKT: 0,
         },
         {
             HELMET: 0,
@@ -154,6 +157,7 @@ export const state = () => ({
             FORTUBE: 0,
             BTCB: 0,
             ETH: 0,
+            CKT: 0,
         },
     ],
     strikePriceArray: [
@@ -167,6 +171,7 @@ export const state = () => ({
         FORTUBE: 0,
         BTCB: 0,
         ETH: 0,
+        CKT: 0,
     },
     transferMap: [],
 });
@@ -350,7 +355,7 @@ export const actions = {
                     );
                     if (!Number(resultItem._strikePrice)) return;
                 }
-                if (Number(resultItem._strikePrice) > Math.pow(10, 30)) return;
+                if (Number(resultItem._strikePrice) > Math.pow(10, 50)) return;
                 // long_map[item.returnValues.long] = item.returnValues;
                 long_map[item.returnValues.long] = resultItem;
             });
@@ -452,13 +457,14 @@ export const actions = {
         for (let key in sellMap) {
             item = sellMap[key];
             longInfo = longMap[item.long];
+
             // 过滤垃圾数据
             // 过滤未创建settleable 之前的数据
             // if (!longInfo) return;
             // if (charID === 1 || (longInfo && parseInt(longInfo.count) >= 63 && parseInt(longInfo._expiry) >= createTime)) {
             if (
                 Number(item.price) < Math.pow(10, 30) &&
-                ((longInfo && charID === 1) ||
+                ((longInfo && charID === 56) ||
                     (longInfo && parseInt(longInfo._expiry) >= 1607997600))
             ) {
                 aboutInfoSell.push({
@@ -471,7 +477,7 @@ export const actions = {
                         longInfo,
                     });
                 }
-                if (item.seller.toLowerCase() === myAddress) {
+                if (item.seller.toLowerCase() == myAddress) {
                     myAboutInfoSell.push({
                         ...item,
                         longInfo,

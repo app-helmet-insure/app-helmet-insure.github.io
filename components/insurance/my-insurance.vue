@@ -279,7 +279,6 @@ export default {
       const currentTime = new Date().getTime();
       for (let i = 0; i < list.length; i++) {
         item = list[i];
-        console.log(item);
         // 数量
         let Token = getTokenName(item.longInfo._collateral);
         let TokenFlag = getTokenName(item.longInfo._underlying);
@@ -334,7 +333,7 @@ export default {
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
           resultItem["outPrice"] = fromWei(
             item.longInfo._strikePrice,
-            item.longInfo._collateral
+            Token == "CTK" ? 30 : Token
           );
         } else {
           resultItem["unSold"] = fixD(
@@ -345,7 +344,10 @@ export default {
           resultItem["outPrice"] = toRounding(
             precision.divide(
               1,
-              fromWei(item.longInfo._strikePrice, item.longInfo._collateral)
+              fromWei(
+                item.longInfo._strikePrice,
+                TokenFlag == "CTK" ? 30 : TokenFlag
+              )
             )
           );
         }
@@ -374,7 +376,7 @@ export default {
       }
       this.isLoading = false;
       this.insuranceList = result;
-
+      console.log(result);
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     //获取已出售

@@ -56,11 +56,11 @@
           </td>
           <!-- PolicyPrice -->
           <td>
-            {{ fixD(item.Rent, 4) == "--" ? item.price : fixD(item.Rent, 4) }}
+            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
           </td>
           <!-- Premium -->
           <td>
-            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
+            {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
           </td>
           <!-- Position -->
           <td>{{ fixD(item.volume, 8) }}</td>
@@ -133,7 +133,9 @@
               }}<span style="font-size: 12px">(HELMET)</span></span
             >
             <span>
-              {{ fixD(item.Rent, 4) == "--" ? item.price : fixD(item.Rent, 4) }}
+              {{
+                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
+              }}
             </span>
           </p>
         </div>
@@ -144,9 +146,7 @@
               }}<span style="font-size: 12px">(HELMET)</span></span
             >
             <span>
-              {{
-                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
-              }}
+              {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
             </span>
           </p>
           <p>
@@ -293,7 +293,9 @@ export default {
           );
         }
         // 保费
+
         Rent = precision.times(amount, InsurancePrice);
+        console.log(amount, item.bidID, Rent);
         //倒计时
         downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
         if (TokenFlag == "WBNB") {
@@ -319,7 +321,7 @@ export default {
             count: item.sellInfo.longInfo.count,
             outPrice: fromWei(
               item.sellInfo.longInfo._strikePrice,
-              item.sellInfo.longInfo._collateral
+              Token == "CTK" ? 30 : Token
             ),
             outPriceUnit: "BNB",
           };
@@ -353,7 +355,7 @@ export default {
                 1,
                 fromWei(
                   item.sellInfo.longInfo._strikePrice,
-                  item.sellInfo.longInfo._collateral
+                  TokenFlag == "CTK" ? 30 : TokenFlag
                 )
               )
             ),
@@ -505,8 +507,8 @@ export default {
           id: 2,
           bidID: 2,
           buyer: myAddress,
-          price: volume * 10,
-          Rent: 1,
+          price: 1,
+          Rent: volume * 10,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1613404800),
@@ -522,6 +524,41 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(10000000000000000000, Token),
           outPriceUnit: "HELMET",
+        };
+        return resultItem;
+      }
+    },
+    async HCTKPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x17934fef9fc93128858e9945261524ab0581612e"
+      );
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
+        let resultItem;
+        resultItem = {
+          id: 1,
+          bidID: 1,
+          buyer: myAddress,
+          price: "Airdrop",
+          Rent: "Airdrop",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1613404800),
+          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+          _strikePrice: fromWei(30000000000000000, Token),
+          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _expiry: 1613404800000,
+          transfer: true,
+          longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+          symbol: "LONG",
+          approveAddress1: "FACTORY",
+          approveAddress2: "CAKELONG",
+          outPrice: fromWei(30000000000000000, Token),
+          outPriceUnit: "BNB",
         };
         return resultItem;
       }

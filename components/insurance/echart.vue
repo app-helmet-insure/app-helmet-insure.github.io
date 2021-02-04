@@ -37,7 +37,7 @@
       <path :d="this.dwCover" style="fill: rgba(255, 100, 0, 0.1)" />
       <rect
         v-for="(item, index) in line"
-        :key="item.line"
+        :key="index + 'keyRect'"
         x="60%"
         :y="item.line - 12 + '%'"
         width="100"
@@ -133,9 +133,7 @@ export default {
         } L40 ${this.line[2].cover * 200} Z`;
       }
     },
-    drawFlag(newVal, val) {
-      console.log(newVal);
-    },
+    drawFlag(newVal, val) {},
   },
   computed: {
     IndexPrice() {

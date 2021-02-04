@@ -54,7 +54,16 @@ export const getContract = (name, charID = 3) => {
 };
 export const getSymbol = (address, char_id) => {
     const charID = char_id || window.chainID;
-    let symbol_list = ['WETH', 'USDT', 'USDC', 'DAI', 'WBTC', 'CRV', 'UNI'];
+    let symbol_list = [
+        'WBNB',
+        'HELMET',
+        'CAKE',
+        'FORTUBE',
+        'BTCB',
+        'HCCT',
+        'ETH',
+        'CTK',
+    ];
     const symbol = symbol_list.filter((item) => {
         return getAddress(item, charID) === address.toLowerCase();
     });
@@ -68,7 +77,16 @@ export const getSymbol = (address, char_id) => {
 // 为什么多写了个返回值不一样的函数，后面确定逻辑后优化下
 export const newGetSymbol = (adress) => {
     const charID = window.chainID;
-    let symbol_list = ['WETH', 'USDT', 'USDC', 'DAI', 'WBTC', 'CRV', 'UNI'];
+    let symbol_list = [
+        'WBNB',
+        'HELMET',
+        'CAKE',
+        'FORTUBE',
+        'BTCB',
+        'HCCT',
+        'ETH',
+        'CTK',
+    ];
     const symbol = symbol_list.filter((item) => {
         return getAddress(item, charID) === adress.toLowerCase();
     });

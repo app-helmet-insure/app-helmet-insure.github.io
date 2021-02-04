@@ -337,15 +337,30 @@ $td-gap: 16px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    .page_item {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 5px;
+        color: #121212;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .page_active {
+        background: #ededf0;
+        border-radius: 3px;
+    }
     div {
-        width: 65px;
-        height: 32px;
-        border: 1px solid #cfcfd2;
+        height: 30px;
         border-radius: 3px;
         display: flex;
         box-sizing: border-box;
         right: 0;
         p {
+            width: 32px;
             cursor: pointer;
             flex: 1;
             display: flex;
@@ -354,11 +369,7 @@ $td-gap: 16px;
             .icon {
                 width: 20px;
                 height: 20px;
-                transform: rotate(90deg);
-                fill: #cfcfd2;
-                &:hover {
-                    fill: #919aa6;
-                }
+                fill: #121212;
             }
         }
 

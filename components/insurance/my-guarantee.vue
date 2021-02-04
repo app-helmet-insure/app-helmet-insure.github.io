@@ -193,13 +193,20 @@
       <div>
         <p @click="upPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronleft"></use>
+            <use xlink:href="#icon-left"></use>
           </svg>
         </p>
-        <i></i>
+        <span
+          class="page_item"
+          v-for="(item, index) in Math.ceil(guaranteeList.length / 5)"
+          :key="index"
+          :class="page == index ? 'page_active' : ''"
+          @click="handleClickChagePage(index)"
+          >{{ index + 1 }}</span
+        >
         <p @click="downPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronright"></use>
+            <use xlink:href="#icon-right"></use>
           </svg>
         </p>
       </div>
@@ -389,11 +396,16 @@ export default {
       }
       let cakePolicy = await this.CAKEPolicy();
       let hcctPolicy = await this.HCCTPolicy();
+      let hctkPolicy = await this.HCTKPolicy();
+      console.log(hctkPolicy);
       if (cakePolicy) {
         result.push(cakePolicy);
       }
       if (hcctPolicy) {
         result.push(hcctPolicy);
+      }
+      if (hctkPolicy) {
+        result.push(hctkPolicy);
       }
       this.isLoading = false;
       this.guaranteeList = result;
@@ -534,34 +546,45 @@ export default {
         this.$store.state.userInfo.data.account &&
         this.$store.state.userInfo.data.account.toLowerCase();
       let volume = await getBalance(
-        "0x17934fef9fc93128858e9945261524ab0581612e"
+        "0x936909e72951a19a5e1d75a109b0d34f06f39838",
+        "CTK"
       );
       if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
+        let Token = getTokenName("0x936909e72951a19a5e1d75a109b0d34f06f39838");
         let resultItem;
         resultItem = {
           id: 1,
           bidID: 1,
           buyer: myAddress,
-          price: "Airdrop",
-          Rent: "Airdrop",
+          price: 1.834,
+          Rent: volume * 1.834,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1613404800),
-          _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-          _strikePrice: fromWei(30000000000000000, Token),
-          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-          _expiry: 1613404800000,
+          _collateral: "0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929",
+          _strikePrice: fromWei(2500000000000000000, Token),
+          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _expiry: 1613750400000,
           transfer: true,
           longAdress: "0x17934fef9fc93128858e9945261524ab0581612e",
+          type: "call",
           symbol: "LONG",
           approveAddress1: "FACTORY",
-          approveAddress2: "CAKELONG",
-          outPrice: fromWei(30000000000000000, Token),
-          outPriceUnit: "BNB",
+          approveAddress2: "HCTKLONG",
+          outPrice: fromWei(2500000000000000000, Token),
+          outPriceUnit: "HELMET",
         };
         return resultItem;
       }
+    },
+    handleClickChagePage(index) {
+      this.page = index;
+      let page = index;
+      let list = this.guaranteeList.slice(
+        this.page * this.limit,
+        (page + 1) * this.limit
+      );
+      this.showList = list;
     },
     // 分页
     upPage() {

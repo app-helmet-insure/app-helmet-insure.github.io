@@ -123,13 +123,20 @@
       <div>
         <p @click="upPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronleft"></use>
+            <use xlink:href="#icon-left"></use>
           </svg>
         </p>
-        <i></i>
+        <span
+          class="page_item"
+          v-for="(item, index) in Math.ceil(claimList.length / 5)"
+          :key="index"
+          :class="page == index ? 'page_active' : ''"
+          @click="handleClickChagePage(index)"
+          >{{ index + 1 }}</span
+        >
         <p @click="downPage">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-chevronright"></use>
+            <use xlink:href="#icon-right"></use>
           </svg>
         </p>
       </div>
@@ -289,6 +296,15 @@ export default {
       } else {
         settle(item.short, item);
       }
+    },
+    handleClickChagePage(index) {
+      this.page = index;
+      let page = index;
+      let list = this.claimList.slice(
+        this.page * this.limit,
+        (page + 1) * this.limit
+      );
+      this.showList = list;
     },
     // 分页
     upPage() {

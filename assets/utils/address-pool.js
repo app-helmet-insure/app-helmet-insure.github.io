@@ -269,6 +269,8 @@ export const getTokenName = (address) => {
             return 'ETH';
         case '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82':
             return 'HTTC';
+        case '0x936909e72951a19a5e1d75a109b0d34f06f39838':
+            return 'hCTK';
         default:
             return '--';
     }

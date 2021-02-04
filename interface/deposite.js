@@ -601,7 +601,6 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
 export const getBalance = async (type, currcy) => {
     // const WEB3 = await web3();
     // const charID = await getID();
-    console.log(currcy);
     const charID = window.chainID;
     let adress = type;
     if (type.indexOf('0x') === -1) {
@@ -616,7 +615,6 @@ export const getBalance = async (type, currcy) => {
         .call()
         .then((res) => {
             let tocurrcy = currcy ? currcy : type;
-            console.log(res, currcy, getWei(tocurrcy));
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };

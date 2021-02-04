@@ -688,7 +688,12 @@ export const onExercise = async (data, callBack, flag) => {
         Contract = await expERC20(adress);
         order = await TokenOrder(data.long);
         long = await expERC20(data.long);
-        value = toWei(data.vol, data.token);
+        if (data.unit) {
+            value = data.vol * data.unit * 10;
+        } else {
+            value = toWei(data.vol, data.token);
+        }
+
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -728,7 +733,7 @@ export const onExercise = async (data, callBack, flag) => {
     // 一键判断是否需要授权，给予无限授权
 
     order.methods
-        .exercise(data.flag ? value : data.bidID)
+        .exercise(data.flag ? 10062486 : data.bidID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', function(hash) {
             bus.$emit('CLOSE_STATUS_DIALOG');

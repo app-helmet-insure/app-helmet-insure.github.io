@@ -307,7 +307,6 @@ export default {
         // 保费
 
         Rent = precision.times(amount, InsurancePrice);
-        console.log(amount, item.bidID, Rent);
         //倒计时
         downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
         if (TokenFlag == "WBNB") {
@@ -456,6 +455,7 @@ export default {
           flag: item.transfer ? true : false,
           approveAddress1: item.approveAddress1,
           approveAddress2: item.approveAddress2,
+          unit: item.unit ? item.unit : "",
         };
       } else {
         data = {
@@ -577,6 +577,7 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(2500000000000000000, Token),
           outPriceUnit: "HELMET",
+          unit: "lovelace",
         };
         return resultItem;
       }

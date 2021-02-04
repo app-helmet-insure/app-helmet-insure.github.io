@@ -106,7 +106,7 @@ export default {
   watch: {
     locale(newValue, Val) {
       if (newValue == "en_US") {
-        this.RectWidth = 120;
+        this.RectWidth = 130;
       } else {
         this.RectWidth = 100;
       }

@@ -119,7 +119,7 @@ export const state = () => ({
     },
     dueDate: '2021-02-15 00:00',
     helmetDate: '2021-02-06 00:00',
-    // dueDate: '--',
+    ctkDate: '2021-03-08 00:00',
     allIndexPrice: [
         {
             HELMET: 0,

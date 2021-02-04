@@ -40,19 +40,20 @@
         :key="index + 'keyRect'"
         x="60%"
         :y="item.line - 12 + '%'"
-        width="100"
+        :width="RectWidth"
         height="24"
         :fill="item.color"
       />
       <text
         v-for="(item, index) in line"
         :key="index + 'key'"
-        x="61%"
+        x="60.5%"
         :y="item.line - 4 + '%'"
         style="font-size: 12px"
         fill="#fff"
+        class="TextWidth"
       >
-        {{ item.title }}
+        {{ item.title }}(${{ fixD(item.num * BNB_BUSD, 2) }})
       </text>
     </svg>
   </div>
@@ -70,11 +71,13 @@ export default {
       linePrice: {},
       toRounding,
       autoRounding,
+      fixD,
       max: 0,
       line: [],
       upCover: "",
       dwCover: "",
       drawFlag: false,
+      RectWidth: 130,
     };
   },
   mounted() {
@@ -89,7 +92,25 @@ export default {
       this.drawFlag = data.drawFlag;
     });
   },
+  computed: {
+    IndexPrice() {
+      return this.$store.state.strikePriceArray;
+    },
+    BNB_BUSD() {
+      return this.$store.state.BNB_BUSD;
+    },
+    locale() {
+      return this.$store.state.locale;
+    },
+  },
   watch: {
+    locale(newValue, Val) {
+      if (newValue == "en_US") {
+        this.RectWidth = 120;
+      } else {
+        this.RectWidth = 100;
+      }
+    },
     curCoin(newVal, Val) {
       let arr = this.$store.state.strikePriceArray[0];
       let arr1 = this.$store.state.strikePriceArray[1];
@@ -135,11 +156,7 @@ export default {
     },
     drawFlag(newVal, val) {},
   },
-  computed: {
-    IndexPrice() {
-      return this.$store.state.strikePriceArray;
-    },
-  },
+
   methods: {
     draw() {
       setTimeout(() => {

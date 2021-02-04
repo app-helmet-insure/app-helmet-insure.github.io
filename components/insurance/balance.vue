@@ -21,13 +21,14 @@
             <use xlink:href="#icon-time"></use>
           </svg>
           <!-- {{ currentCoin == "CAKE" ? "--" : dueDate }} -->
-          {{
+          {{ getTime(currentCoin) }}
+          <!-- {{
             currentCoin == "HELMET"
               ? helmetDate
               : currentCoin == "CAKE"
               ? "--"
               : dueDate
-          }}
+          }} -->
           <!-- -- -->
         </p>
       </div>
@@ -92,6 +93,7 @@ export default {
       strikePrice: 0.0049,
       dueDate: 0,
       helmetDate: 0,
+      ctkDate: 0,
     };
   },
   computed: {
@@ -162,11 +164,24 @@ export default {
       setTimeout(() => {
         this.getDownTime();
         this.getHelmetTime();
+        this.getCtkTime();
       });
       clearTimeout();
     }, 1000);
   },
   methods: {
+    getTime(coin) {
+      switch (coin) {
+        case "HELMET":
+          return this.helmetDate;
+        case "CTK":
+          return this.ctkDate;
+        case "CAKE":
+          return "--";
+        default:
+          return this.dueDate;
+      }
+    },
     // 倒计时
     getDownTime(time) {
       let now = new Date() * 1;
@@ -219,6 +234,32 @@ export default {
         )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
       }
       this.helmetDate = template;
+    },
+    getCtkTime(time) {
+      let now = new Date() * 1;
+      let dueDate = new Date(this.$store.state.ctkDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+          "Content.HourM"
+        )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+          "Content.SecondM"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayM")} ${0}${this.$t(
+          "Content.HourM"
+        )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
+      }
+      this.ctkDate = template;
     },
     undAndColWatch(newValue) {
       let list = this.IndexPxArray;

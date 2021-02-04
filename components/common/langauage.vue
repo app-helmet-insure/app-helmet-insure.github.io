@@ -23,11 +23,11 @@
 
 <script>
 export default {
-  name: 'langauage',
+  name: "langauage",
   data() {
     return {
-      lang: '',
-      langName: '',
+      lang: "",
+      langName: "",
     };
   },
 
@@ -44,18 +44,18 @@ export default {
   },
   watch: {
     lang(newVol) {
-      this.switchLang(newVol);
+      // this.switchLang(newVol);
       this.langName = this.localeList.filter(
         (item) => item.key == newVol
       )[0].name;
     },
     locale: {
-      handler: 'watchLocale',
+      handler: "watchLocale",
       immediate: true,
     },
   },
   mounted() {
-    this.lang = window.localStorage.getItem('lang') || this.locale;
+    this.lang = window.localStorage.getItem("lang") || this.locale;
   },
 
   methods: {
@@ -64,9 +64,10 @@ export default {
     },
     switchLang(lang) {
       this.lang = lang;
-      window.localStorage.setItem('lang', this.lang);
-      this.$store.dispatch('setLanguage', this.lang);
+      window.localStorage.setItem("lang", this.lang);
+      this.$store.dispatch("setLanguage", this.lang);
       this.$i18n.locale = this.lang;
+      window.location.reload();
     },
   },
 };

@@ -337,10 +337,11 @@ export default {
         precision.times(
           precision.divide(
             precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
+            // precision.times(
+            //   precision.divide(precision.times(HelmetValue, 2), LptVolume),
+            //   HctkVolume
+            // )
+            0
           ),
           100
         ),

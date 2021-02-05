@@ -118,7 +118,7 @@
             {{ $t("Table.ClaimRewards") }}
           </button>
           <p>
-            <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
+            <span>hCTK {{ $t("Table.HELMETRewards") }}：</span>
             <span>
               <span>
                 {{ balance.hCTK.length > 60 ? 0 : balance.hCTK }}
@@ -323,7 +323,8 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type, "CTK");
+      console.log(Helmet, "##########3");
       // 总Helmet
       let LptVolume = await totalSupply(helmetType); //发行
 

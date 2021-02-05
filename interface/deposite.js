@@ -94,9 +94,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
             break;
     }
     try {
-        console.log(adressLPT);
         const Contract = await expERC20(adressLPT);
-        console.log(Contract, type);
         if (flag) {
             await oneKeyArrpove(Contract, type, amount, (res) => {
                 if (res === 'failed') {
@@ -311,7 +309,7 @@ export const WithdrawAvailable = async (type) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const CangetPAYA = async (type) => {
+export const CangetPAYA = async (type, currcy) => {
     const charID = window.chainID;
     let adress = type;
     if (type.indexOf('0x') === -1) {
@@ -325,7 +323,7 @@ export const CangetPAYA = async (type) => {
         .earned(window.CURRENTADDRESS)
         .call()
         .then((res) => {
-            let tocurrcy = 'HELMET';
+            let tocurrcy = currcy || 'HELMET';
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };

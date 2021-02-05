@@ -123,9 +123,6 @@
               <span>
                 {{ balance.hCTK.length > 60 ? 0 : balance.hCTK }}
                 hCTK</span
-              ><span>
-                {{ balance.ctkH.length > 60 ? 0 : balance.ctkH }}
-                ctkH</span
               >
             </span>
           </p>
@@ -212,7 +209,6 @@ export default {
         Withdraw: 0,
         Helmet: 0,
         hCTK: 0,
-        ctkH: 0,
         TotalLPT: 0,
         Share: 0,
       },

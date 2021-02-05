@@ -3,7 +3,10 @@
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
-        <h3>{{ list.name }}</h3>
+        <h3>
+          {{ list.name }}
+          <img src="~/assets/img/helmet/3x.png" alt="" />
+        </h3>
         <div>
           <p>
             <img src="~/assets/img/helmet/helmetCoin.png" alt="" />

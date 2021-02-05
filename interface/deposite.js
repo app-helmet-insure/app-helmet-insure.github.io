@@ -88,6 +88,8 @@ export const toDeposite = async (type, data, flag, callBack) => {
             bus.$emit('DEPOSITE_LOADING1', { status: true });
         case 'HCCTPOOL':
             bus.$emit('DEPOSITE_LOADING2', { status: true });
+        case 'HCTKPOOL':
+            bus.$emit('DEPOSITE_LOADING3', { status: true });
         default:
             break;
     }
@@ -136,6 +138,9 @@ export const toDeposite = async (type, data, flag, callBack) => {
                         case 'HCCTPOOL':
                             bus.$emit('DEPOSITE_LOADING2', { status: false });
                             bus.$emit('RELOAD_DATA2');
+                        case 'HCTKPOOL':
+                            bus.$emit('DEPOSITE_LOADING3', { status: false });
+                            bus.$emit('RELOAD_DATA3');
                         default:
                             break;
                     }
@@ -167,6 +172,8 @@ export const toDeposite = async (type, data, flag, callBack) => {
                         bus.$emit('DEPOSITE_LOADING1', { status: false });
                     case 'HCCTPOOL':
                         bus.$emit('DEPOSITE_LOADING2', { status: false });
+                    case 'HCTKPOOL':
+                        bus.$emit('DEPOSITE_LOADING3', { status: false });
                     default:
                         break;
                 }
@@ -372,6 +379,9 @@ export const getPAYA = async (type) => {
                         case 'HCCTPOOL':
                             bus.$emit('CLAIM_LOADING2');
                             bus.$emit('RELOAD_DATA2');
+                        case 'HCTKPOOL':
+                            bus.$emit('CLAIM_LOADING3');
+                            bus.$emit('RELOAD_DATA3');
                         default:
                             break;
                     }
@@ -403,6 +413,8 @@ export const getPAYA = async (type) => {
                         bus.$emit('CLAIM_LOADING1');
                     case 'HCCTPOOL':
                         bus.$emit('CLAIM_LOADING2');
+                    case 'HCTKPOOL':
+                        bus.$emit('CLAIM_LOADING3');
                     default:
                         break;
                 }
@@ -669,6 +681,9 @@ export const exitStake = async (type) => {
                         case 'HCCTPOOL':
                             bus.$emit('EXIT_LOADING2');
                             bus.$emit('RELOAD_DATA2');
+                        case 'HCTKPOOL':
+                            bus.$emit('EXIT_LOADING3');
+                            bus.$emit('RELOAD_DATA3');
                         default:
                             break;
                     }
@@ -701,6 +716,8 @@ export const exitStake = async (type) => {
                         bus.$emit('EXIT_LOADING1');
                     case 'HCCTPOOL':
                         bus.$emit('EXIT_LOADING2');
+                    case 'HCTKPOOL':
+                        bus.$emit('EXIT_LOADING3');
                     default:
                         break;
                 }

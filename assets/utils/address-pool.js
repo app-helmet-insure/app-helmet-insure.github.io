@@ -105,6 +105,8 @@ export const getWei = (token) => {
         token = getSymbol(token)[0];
     }
     switch (token) {
+        case 'HCTK':
+            return 'lovelace'; // 6
         case 'BNB_CTK_LPT':
             return 'lovelace'; // 6
         case 'BNB_CTK':
@@ -155,6 +157,8 @@ export const getWei_2 = (token) => {
         token = getSymbol(token)[0];
     }
     switch (token) {
+        case 'HCTK':
+            return 6; // 6
         case 'CTK':
             return 6; // 6
         case 'USDC':
@@ -236,7 +240,6 @@ export const uniswap = async (token1, token2) => {
         // );
         const route = new Route([pair], TOKEN1);
         let Price = route.midPrice.toSignificant(6);
-
         return Price;
     } catch (error) {
         console.log(error);

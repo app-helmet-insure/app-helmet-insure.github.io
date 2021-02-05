@@ -730,7 +730,6 @@ export const onExercise = async (data, callBack, flag) => {
         });
     }
     // 一键判断是否需要授权，给予无限授权
-
     order.methods
         .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })

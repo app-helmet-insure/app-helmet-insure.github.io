@@ -80,9 +80,10 @@ export default {
             window.localStorage.setItem("currentType", "MetaMask");
             let userInfo = await mateMaskInfo(account[0], "MetaMask");
             this.$store.dispatch("setUserInfo", userInfo);
+            this.closeDialog();
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
-            this.closeDialog();
+            this.$bus.$emit("REFRESH_BALANCE");
           });
       } catch (error) {
         console.log("MateMask 扩展插件未安装或未启用##", error);
@@ -98,9 +99,10 @@ export default {
       window.WEB3 = web3;
       let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
       this.$store.dispatch("setUserInfo", userInfo);
+      this.closeDialog();
       this.$bus.$emit("REFRESH_ALL_DATA");
       this.$bus.$emit("REFRESH_MINING");
-      this.closeDialog();
+      this.$bus.$emit("REFRESH_BALANCE");
     },
   },
 };

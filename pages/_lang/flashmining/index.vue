@@ -1,7 +1,7 @@
 <template>
   <div class="mining_container">
+    <HelmetHctkPool></HelmetHctkPool>
     <HelmetHcctPool></HelmetHcctPool>
-    <!-- <HelmetHctkPool></HelmetHctkPool> -->
     <Deposite
       :current="current"
       :TradeType="TradeType"

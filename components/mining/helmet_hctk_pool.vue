@@ -77,7 +77,7 @@
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x17934fef9fC93128858e9945261524ab0581612e"
+              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
               target="_blank"
               >Go to Pancake Pool</a
             >
@@ -85,7 +85,7 @@
         </div>
         <div class="ContractAddress">
           <span>Long Contract Address：</span>
-          0x17934fef9fc93128858e9945261524ab0581612e
+          0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e
         </div>
       </div>
       <div class="withdraw">
@@ -138,8 +138,8 @@
           </button>
         </div>
         <div class="ContractAddress">
-          <span>HCCT Contract Address：</span>
-          0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5
+          <span>hCTK Contract Address：</span>
+          0x936909e72951A19a5e1d75A109B0D34f06f39838
         </div>
       </div>
     </div>
@@ -232,17 +232,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING2", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING3", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING2", (data) => {
+    this.$bus.$on("CLAIM_LOADING3", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING2", (data) => {
+    this.$bus.$on("EXIT_LOADING3", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA2", () => {
+    this.$bus.$on("RELOAD_DATA3", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -295,29 +295,30 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
-      let HCCTHELMET = await uniswap("HCCT", "HELMET");
-      let HcctVolume = await totalSupply("HCCTPOOL");
-      let LptVolume = await totalSupply("HCCTPOOL_LPT");
-      let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
+      let HCTKHELMET = await uniswap("HCTK", "HELMET"); //Hlemt价格
+      let HctkVolume = await totalSupply("HCTKPOOL"); //数量
+      let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
+      // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HCCTHELMET, 16000, 365),
+            precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HcctVolume
+              HctkVolume
             )
           ),
           100
         ),
         2
       );
-      this.apy = apy;
+      this.apy = apy ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HCCTPOOL_LPT";
-      let type = "HCCTPOOL";
+      let helmetType = "HCTKPOOL_LPT";
+      let type = "HCTKPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -334,7 +335,7 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(16000 * 7, 2) + " HCCT";
+      this.textList[0].num = fixD(16000 * 7, 2) + " hCTK";
     },
     // 抵押
     toDeposite() {

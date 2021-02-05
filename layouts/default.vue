@@ -7,8 +7,8 @@
         <i
           id="copy_default"
           data-clipboard-text="0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-        ></i
-      ></span>
+        ></i>
+      </span>
     </p>
     <PHeader></PHeader>
     <div class="main-container">

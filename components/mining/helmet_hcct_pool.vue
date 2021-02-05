@@ -87,8 +87,15 @@
           </section>
         </div>
         <div class="ContractAddress">
-          <span>Long Contract Address：</span>
+          <span>Long Address：</span>
           0x17934fef9fc93128858e9945261524ab0581612e
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x17934fef9fc93128858e9945261524ab0581612e')
+            "
+          ></i>
         </div>
       </div>
       <div class="withdraw">
@@ -138,8 +145,15 @@
           </button>
         </div>
         <div class="ContractAddress">
-          <span>HCCT Contract Address：</span>
+          <span>HCCT Address：</span>
           0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5')
+            "
+          ></i>
         </div>
       </div>
     </div>
@@ -167,6 +181,8 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   data() {
     return {
@@ -269,6 +285,23 @@ export default {
     },
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
@@ -386,8 +419,20 @@ export default {
   font-size: 13px;
   color: #ff9600;
   margin-top: 20px;
+  display: flex;
+  align-items: center;
   span {
     color: #121212;
+  }
+  i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    margin-left: 4px;
   }
 }
 .icon {

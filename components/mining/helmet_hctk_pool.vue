@@ -84,8 +84,15 @@
           </section>
         </div>
         <div class="ContractAddress">
-          <span>Long Contract Address：</span>
+          <span>Long Address：</span>
           0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
+            "
+          ></i>
         </div>
       </div>
       <div class="withdraw">
@@ -135,8 +142,15 @@
           </button>
         </div>
         <div class="ContractAddress">
-          <span>hCTK Contract Address：</span>
+          <span>hCTK Address：</span>
           0x936909e72951A19a5e1d75A109B0D34f06f39838
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x936909e72951A19a5e1d75A109B0D34f06f39838')
+            "
+          ></i>
         </div>
       </div>
     </div>
@@ -164,6 +178,8 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   data() {
     return {
@@ -267,6 +283,23 @@ export default {
     },
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();

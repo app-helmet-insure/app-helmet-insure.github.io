@@ -85,14 +85,16 @@
         </div>
         <div class="ContractAddress">
           <span>Long Address：</span>
-          0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
-            "
-          ></i>
+          <p>
+            0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e
+            <i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
+              "
+            ></i>
+          </p>
         </div>
       </div>
       <div class="withdraw">
@@ -143,14 +145,16 @@
         </div>
         <div class="ContractAddress">
           <span>hCTK Address：</span>
-          0x936909e72951A19a5e1d75A109B0D34f06f39838
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0x936909e72951A19a5e1d75A109B0D34f06f39838')
-            "
-          ></i>
+          <p>
+            0x936909e72951A19a5e1d75A109B0D34f06f39838
+            <i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0x936909e72951A19a5e1d75A109B0D34f06f39838')
+              "
+            ></i>
+          </p>
         </div>
       </div>
     </div>
@@ -329,7 +333,6 @@ export default {
       let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
-      console.log(HCTKHELMET, HctkVolume, LptVolume, HelmetValue);
       let apy = fixD(
         precision.times(
           precision.divide(
@@ -357,7 +360,6 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type, "CTK");
-      console.log(Helmet, "##########3");
       // 总Helmet
       let LptVolume = await totalSupply(helmetType); //发行
 
@@ -409,6 +411,20 @@ export default {
   margin-top: 20px;
   span {
     color: #121212;
+  }
+  p {
+    display: flex;
+    align-items: center;
+  }
+  i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    margin-left: 4px;
   }
 }
 .icon {

@@ -4,8 +4,8 @@
     <div class="text">
       <div class="coin">
         <h3>
-          {{ list.name }}
-          <p @click="showOnepager"><i></i>What is LONG token？</p>
+          <span>{{ list.name }}</span>
+          <p @click="showOnepager"><i></i>What is LONG(Cake) token？</p>
         </h3>
         <div>
           <div>
@@ -87,15 +87,16 @@
           </section>
         </div>
         <div class="ContractAddress">
-          <span>Long Address：</span>
-          0x17934fef9fc93128858e9945261524ab0581612e
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0x17934fef9fc93128858e9945261524ab0581612e')
-            "
-          ></i>
+          <span>Long Contract Address：</span>
+          <p>
+            0x17934fef9fc93128858e9945261524ab0581612e<i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0x17934fef9fc93128858e9945261524ab0581612e')
+              "
+            ></i>
+          </p>
         </div>
       </div>
       <div class="withdraw">
@@ -145,15 +146,16 @@
           </button>
         </div>
         <div class="ContractAddress">
-          <span>HCCT Address：</span>
-          0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5')
-            "
-          ></i>
+          <span>HCCT Contract Address：</span>
+          <p>
+            0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5<i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5')
+              "
+            ></i>
+          </p>
         </div>
       </div>
     </div>
@@ -420,9 +422,13 @@ export default {
   color: #ff9600;
   margin-top: 20px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   span {
     color: #121212;
+  }
+  p {
+    display: flex;
+    align-items: center;
   }
   i {
     display: inline-block;
@@ -700,18 +706,20 @@ export default {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 32px;
+          height: 55px;
           display: flex;
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
-          align-items: center;
+          flex-direction: column;
+          align-items: start;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
           }
           p {
+            margin: 4px 0;
             height: 16px;
             background: rgba(255, 150, 0, 0.1);
             border-radius: 8px;

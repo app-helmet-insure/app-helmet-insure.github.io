@@ -94,7 +94,9 @@ export const toDeposite = async (type, data, flag, callBack) => {
             break;
     }
     try {
+        console.log(adressLPT);
         const Contract = await expERC20(adressLPT);
+        console.log(Contract, type);
         if (flag) {
             await oneKeyArrpove(Contract, type, amount, (res) => {
                 if (res === 'failed') {

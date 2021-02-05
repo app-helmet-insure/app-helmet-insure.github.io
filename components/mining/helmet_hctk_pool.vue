@@ -169,7 +169,7 @@ export default {
     return {
       list: {
         name: "HCCT-HELMET",
-        dueDate: "2021-02-20 00:00",
+        dueDate: "2021-02-27 00:00",
         DownTime: "--",
       },
       textList: [
@@ -296,6 +296,7 @@ export default {
       let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
+      console.log(HCTKHELMET, HctkVolume, LptVolume, HelmetValue);
       let apy = fixD(
         precision.times(
           precision.divide(
@@ -324,14 +325,14 @@ export default {
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
       // 总Helmet
-      let totalHelmet = await totalSupply(helmetType);
+      let LptVolume = await totalSupply(helmetType); //发行
 
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(16000 * 7, 2) + " hCTK";
+      this.textList[0].num = fixD((LptVolume / 21) * 7, 2) + " hCTK";
     },
     // 抵押
     toDeposite() {
@@ -342,7 +343,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -351,7 +352,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -360,7 +361,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       let res = await exitStake(type);
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="hctk_pool">
-    <span class="miningTime"> {{ MingTime }}</span>
+    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
@@ -365,11 +365,10 @@ export default {
         precision.times(
           precision.divide(
             precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
-            // precision.times(
-            //   precision.divide(precision.times(HelmetValue, 2), LptVolume),
-            //   HctkVolume
-            // )
-            0
+            precision.times(
+              precision.divide(precision.times(HelmetValue, 2), 70000),
+              HctkVolume
+            )
           ),
           100
         ),

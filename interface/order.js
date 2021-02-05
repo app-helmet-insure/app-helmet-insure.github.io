@@ -38,14 +38,13 @@ export const onIssueSell = async (data_, callBack) => {
     let priceFix = getStrikePriceFix(data_.currency, data_.category);
     let priceUnit = getWeiWithFix(priceFix);
     let price = fixD(data.price, priceFix);
-
+    console.log(price);
     data.total = toWei(
         fixD(precision.times(data_.price, data_.volume), 10),
         priceFix
     );
-    price = window.WEB3.utils.toWei(String(price), priceUnit);
+    price = window.WEB3.utils.toWei(String(data.price), priceUnit);
     data.price = price;
-
     let premiumFix = getStrikePriceFix(data_.currency, data_.category);
     let premiumUnit = getWeiWithFix(premiumFix);
     let premium = fixD(
@@ -59,6 +58,7 @@ export const onIssueSell = async (data_, callBack) => {
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
         conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.settleToken}</span></p>`,
     });
+    console.log(data);
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权

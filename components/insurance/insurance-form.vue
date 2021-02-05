@@ -220,6 +220,7 @@ export default {
           settleToken: "HELMET",
           _yield: 0,
         };
+        console.log(data);
         onIssueSell(data, (status) => {});
       }
     },

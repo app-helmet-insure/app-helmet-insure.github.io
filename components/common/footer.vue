@@ -25,6 +25,12 @@
         </svg>
         <span>Guidebook</span>
       </a>
+      <a href="https://certik.foundation/projects/helmet" target="_blank">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-audit"></use>
+        </svg>
+        <span>Audit report</span>
+      </a>
     </div>
     <div class="footer_bottom" :style="`padding:0 ${padding}px`">
       <p>Powered by payaso.io core team</p>
@@ -52,7 +58,7 @@ export default {
     flex-direction: column;
     min-width: 1200px;
     .footer_top {
-      width: 300px;
+      width: 360px;
       flex: 1;
       margin: 74px auto 0;
       display: flex;

@@ -67,6 +67,13 @@
       "font_class": "right",
       "unicode": "e60d",
       "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "19865585",
+      "name": "audit",
+      "font_class": "audit",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
     }
   ]
 }

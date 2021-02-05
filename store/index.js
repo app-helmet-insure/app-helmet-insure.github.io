@@ -118,7 +118,7 @@ export const state = () => ({
         BNB_FOR: false,
     },
     dueDate: '2021-02-15 00:00',
-    helmetDate: '2021-02-06 00:00',
+    helmetDate: '2021-02-21 00:00',
     ctkDate: '2021-03-08 00:00',
     allIndexPrice: [
         {
@@ -161,8 +161,8 @@ export const state = () => ({
         },
     ],
     strikePriceArray: [
-        { BTCB: 1864, ETH: 56.7, HELMET: 0.014, CAKE: 0.03, CTK: 0.04 },
-        { BTCB: 467, ETH: 14.15, HELMET: 0.0035, CAKE: 0.0075, CTK: 0.01 },
+        { BTCB: 1864, ETH: 56.7, HELMET: 0.013, CAKE: 0.03, CTK: 0.04 },
+        { BTCB: 467, ETH: 14.15, HELMET: 0.003, CAKE: 0.0075, CTK: 0.01 },
     ],
     BalanceArray: {
         HELMET: 0,

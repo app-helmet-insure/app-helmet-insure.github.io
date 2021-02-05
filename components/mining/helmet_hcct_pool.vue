@@ -712,7 +712,7 @@ export default {
           font-size: 24px;
           line-height: 32px;
           flex-direction: column;
-          align-items: start;
+          align-items: flex-start;
           img {
             margin-left: 4px;
             width: 32px;

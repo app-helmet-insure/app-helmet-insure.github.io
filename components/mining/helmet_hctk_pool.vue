@@ -84,9 +84,9 @@
           </section>
         </div>
         <div class="ContractAddress">
-          <span>Long Address：</span>
+          <span>HCCT Contract Address：</span>
           <p>
-            0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e
+            0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
             <i
               class="copy"
               id="copy_default"
@@ -144,7 +144,7 @@
           </button>
         </div>
         <div class="ContractAddress">
-          <span>hCTK Address：</span>
+          <span>hCTK Contract Address：</span>
           <p>
             0x936909e72951A19a5e1d75A109B0D34f06f39838
             <i

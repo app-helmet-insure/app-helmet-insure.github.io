@@ -15,7 +15,7 @@
       </div>
       <ul class="wallet-list">
         <li
-          v-if="userInfo.data.name === 'Math'"
+          v-if="userInfo.data.name === 'WalletConnect'"
           @click="changeWallet('MetaMask')"
         >
           <span>MetaMask</span>

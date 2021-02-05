@@ -1,36 +1,23 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img3 swiper-slide"></div>
+
       <div class="imgbanner img2 swiper-slide">
         <div class="center">
           <h3>LONG-HELMET for HCCT</h3>
           <span>Flash mining for only <i>15</i> days </span>
         </div>
       </div>
+
       <div class="imgbanner img1 swiper-slide"></div>
-      <div class="text bg3 swiper-slide">
-        <div>
-          <h3>Staking Helmet for Helmet with high APY</h3>
-          <button class="o_button" style="width: 120px" @click="toMining">
-            START
-          </button>
-        </div>
-      </div>
+
       <div class="text bg2 swiper-slide">
         <div>
           <h3>Double Mining Rewards <i>HELMET & CAKE</i> 30 Days</h3>
           <span>Start: Jan. 15th 18:00 SGT </span>
         </div>
       </div>
-      <!-- <div class="img swiper-slide">
-        <h3>Policy trading start</h3>
-      </div> -->
-      <!-- <div class="text bg1 swiper-slide">
-        <div>
-          <h3>Total raised <i>937.87% </i>of the target <i>9x</i> oversold</h3>
-          <span>919,199.5872 CAKE 12,859.9603 BNB </span>
-        </div>
-      </div> -->
     </div>
     <div class="swiper-pagination"></div>
   </div>
@@ -128,15 +115,6 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .bg1 {
-      background-image: url("../../assets/img/helmet/banner_ill.png");
-      background-size: 344px 200px;
-      background-position: 90% center;
-      background-repeat: no-repeat;
-      h3 {
-        width: 404px;
-      }
-    }
     .bg2 {
       background-image: url("../../assets/img/helmet/helmetPool.png");
       background-size: 448px 220px;
@@ -146,20 +124,15 @@ export default {
         width: 500px;
       }
     }
-    .bg3 {
-      background-image: url("../../assets/img/helmet/banner_illl.png");
-      background-size: 360px 220px;
-      background-position: 95% center;
-      background-repeat: no-repeat;
-      h3 {
-        width: 500px;
-      }
-    }
+
     .img1 {
       background-image: url("../../assets/img/helmet/bannercake.png");
     }
     .img2 {
       background-image: url("../../assets/img/helmet/hcctbanner.png");
+    }
+    .img3 {
+      background-image: url("../../assets/img/helmet/hCTK.png");
     }
     .center {
       display: flex;
@@ -284,15 +257,6 @@ export default {
       display: flex;
     }
 
-    .bg1 {
-      background-image: url("../../assets/img/helmet/banner_ill.png");
-      background-size: 320px 196px;
-      background-position: center 100%;
-      background-repeat: no-repeat;
-      h3 {
-        width: 404px;
-      }
-    }
     .bg2 {
       background-image: url("../../assets/img/helmet/helmetPool.png");
       background-size: 320px 196px;
@@ -302,21 +266,15 @@ export default {
         width: 500px;
       }
     }
-    .bg3 {
-      background-image: url("../../assets/img/helmet/banner_illl.png");
-      background-size: 320px 196px;
-      background-position: center 100%;
-      background-repeat: no-repeat;
 
-      h3 {
-        width: 500px;
-      }
-    }
     .img1 {
       background-image: url("../../assets/img/helmet/bannercake_h5.png");
     }
     .img2 {
       background-image: url("../../assets/img/helmet/hcctbanner_h5.png");
+    }
+    .img3 {
+      background-image: url("../../assets/img/helmet/hctk_h5.png");
     }
     .center {
       display: flex;

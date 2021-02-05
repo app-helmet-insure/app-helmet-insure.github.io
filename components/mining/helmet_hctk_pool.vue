@@ -1,15 +1,6 @@
 <template>
   <div class="hctk_pool">
-    <span
-      style="
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 20px;
-      "
-    >
-      {{ MingTime }}</span
-    >
+    <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
@@ -499,6 +490,12 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
+  .miningTime {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+  }
   .hctk_pool {
     margin-bottom: 20px;
     height: 506px;
@@ -678,6 +675,12 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .miningTime {
+    position: absolute;
+    right: 10%;
+    top: 45px;
+    font-size: 20px;
+  }
   .ContractAddress {
     line-height: 20px;
   }

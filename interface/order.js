@@ -670,7 +670,7 @@ export const onExercise = async (data, callBack, flag) => {
         conText: `<p>you will swap<span> ${toRounding(
             data._underlying_vol,
             8
-        )} ${data._underlying}</span> to <span> ${data.vol} ${
+        )} ${data._underlying}</span> to <span> ${fixD(data.vol, 8)} ${
             data._collateral
         }</span></p>`,
         activeTip: true,

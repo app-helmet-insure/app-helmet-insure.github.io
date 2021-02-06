@@ -440,7 +440,7 @@ export default {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: precision.times(item._strikePrice, item.volume),
-          vol: fixD(item.volume, 8),
+          vol: item.volume,
           bidID: item.bidID,
           long: item.long || item.longAdress,
           exPrice: fixD(precision.divide(1, item._strikePrice), 4),

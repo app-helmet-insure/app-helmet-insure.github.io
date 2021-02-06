@@ -396,7 +396,7 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((LptVolume / 21) * 7, 2) + " hCTK";
+      this.textList[0].num = fixD((70000 / 21) * 7, 2) + " hCTK";
     },
     // 抵押
     toDeposite() {

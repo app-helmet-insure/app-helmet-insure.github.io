@@ -318,7 +318,7 @@ export default {
             _collateral: item.sellInfo.longInfo._collateral,
             _strikePrice: fromWei(
               item.sellInfo.longInfo._strikePrice,
-              item.sellInfo.longInfo._collateral
+              Token == "CTK" ? 30 : Token
             ),
             _underlying: item.sellInfo.longInfo._underlying,
             _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
@@ -349,7 +349,7 @@ export default {
             _collateral: item.sellInfo.longInfo._collateral,
             _strikePrice: fromWei(
               item.sellInfo.longInfo._strikePrice,
-              item.sellInfo.longInfo._collateral
+              TokenFlag == "CTK" ? 30 : TokenFlag
             ),
             _underlying: item.sellInfo.longInfo._underlying,
             _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
@@ -439,7 +439,7 @@ export default {
       if (getTokenName(item._underlying) == "WBNB" || item.type == "call") {
         data = {
           token: getTokenName(item._underlying),
-          _underlying_vol: item._strikePrice * item.volume,
+          _underlying_vol: precision.times(item._strikePrice, item.volume),
           vol: fixD(item.volume, 8),
           bidID: item.bidID,
           long: item.long || item.longAdress,
@@ -466,6 +466,7 @@ export default {
           flag: item.transfer ? true : false,
         };
       }
+      console.log(data);
       onExercise(data, data.flag);
     },
     async CAKEPolicy() {

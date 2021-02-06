@@ -24,11 +24,14 @@
       <h3 class="con-tit" v-html="data.conTit"></h3>
       <div class="con-text" v-html="data.conText"></div>
       <div class="activeWarn" v-if="data.activeTip">{{ $t("Tip.Active") }}</div>
+      <div class="loading_wrap" v-if="data.type != 'success'">
+        <i class="loading_img"></i>
+      </div>
       <div class="btn-box">
         <slot name="footer">
           <button
             @click="closeDialog"
-            :style="data.btnText == 'Approve' ? 'visibility: hidden' : ''"
+            :style="data.btnText == 'Approve' ? 'display:none' : ''"
           >
             {{ data.btnText }}
           </button>
@@ -85,6 +88,29 @@ export default {
 
 <style lang="scss">
 @import "~/assets/css/base.scss";
+.loading_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 5px 0;
+}
+.loading_img {
+  display: block;
+  width: 36px;
+  height: 36px;
+  background-image: url("../../assets/img/helmet/jiazai.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @media screen and(min-width:750px) {
   .status-dialog {
     position: fixed;
@@ -113,6 +139,7 @@ export default {
       text-align: center;
       z-index: 102;
       width: 500px;
+      min-height: 230px;
       > .title {
         font-size: 20px;
         color: $bg-d;
@@ -174,7 +201,7 @@ export default {
       }
       .btn-box {
         text-align: right;
-        padding-top: 35px;
+        padding-top: 20px;
         button {
           min-width: 96px;
           height: 32px;

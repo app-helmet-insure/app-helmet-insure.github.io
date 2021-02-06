@@ -56,6 +56,11 @@ export default {
     userInfoWatch(newValue) {
       let account = newValue.data.account;
       this.accountText = account.substr(0, 6) + "..." + account.substr(-5);
+      setTimeout(() => {
+        this.$bus.$emit("REFRESH_ALL_DATA");
+        this.$bus.$emit("REFRESH_MINING");
+        this.$bus.$emit("REFRESH_BALANCE");
+      }, 1000);
     },
     closeDialog() {
       this.$emit("close");

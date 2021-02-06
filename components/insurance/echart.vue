@@ -115,7 +115,8 @@ export default {
       let arr = this.$store.state.strikePriceArray[0];
       let arr1 = this.$store.state.strikePriceArray[1];
       let arr2 = this.$store.state.allIndexPrice[1];
-      let max = toRounding(arr[this.curCoin] * 1.5, 4);
+      let MaxNum = newVal == "CAKE" ? 2.5 : 1.5;
+      let max = toRounding(arr[this.curCoin] * MaxNum, 4);
       this.max = max;
       if (newVal) {
         this.price = {
@@ -163,8 +164,9 @@ export default {
         let arr = this.$store.state.strikePriceArray[0];
         let arr1 = this.$store.state.strikePriceArray[1];
         let arr2 = this.$store.state.allIndexPrice[1];
+        let MaxNum = this.curCoin == "CAKE" ? 2.5 : 1.5;
         if (arr.BNB != 0) {
-          let max = toRounding(arr[this.curCoin] * 1.5, 4);
+          let max = toRounding(arr[this.curCoin] * MaxNum, 4);
           this.max = max;
           this.price = {
             IndexPrice: toRounding(Number(arr2[this.curCoin]), 4),

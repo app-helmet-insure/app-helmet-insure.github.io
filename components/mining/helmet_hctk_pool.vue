@@ -630,7 +630,7 @@ export default {
             a {
               display: block;
               margin-top: 4px;
-              font-size: 14px;
+              font-size: 20px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
@@ -832,7 +832,7 @@ export default {
             align-items: center;
             justify-content: space-between;
             a {
-              font-size: 14px;
+              font-size: 20px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;

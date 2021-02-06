@@ -635,7 +635,7 @@ export default {
             a {
               display: block;
               margin-top: 4px;
-              font-size: 14px;
+              font-size: 20px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
@@ -728,7 +728,6 @@ export default {
             line-height: 16px;
             display: flex;
             align-items: center;
-            margin-left: 8px;
             cursor: pointer;
             &:hover {
               color: #ff8200;
@@ -858,7 +857,7 @@ export default {
             align-items: center;
             justify-content: space-between;
             a {
-              font-size: 14px;
+              font-size: 20px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;

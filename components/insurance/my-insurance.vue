@@ -322,7 +322,6 @@ export default {
           _expiry: item.longInfo._expiry * 1000,
           _collateral: item.longInfo._collateral,
           _underlying: item.longInfo._underlying,
-          outPriceUnit: "BNB",
         };
 
         newArray = this.getNewPrice(item.askID);
@@ -342,6 +341,7 @@ export default {
             item.longInfo._strikePrice,
             Token == "CTK" ? 30 : Token
           );
+          resultItem["outPriceUnit"] = "BNB";
         } else {
           resultItem["unSold"] = fixD(
             precision.divide(askRes, this.strikePriceArray[1][TokenFlag]),
@@ -349,8 +349,9 @@ export default {
           );
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
           resultItem["outPrice"] = toRounding(
-            fromWei(item.longInfo._strikePrice, TokenFlag)
+            precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag))
           );
+          resultItem["outPriceUnit"] = TokenFlag;
         }
 
         if (askRes == "0") {

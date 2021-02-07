@@ -357,9 +357,12 @@ export default {
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
             outPrice: toRounding(
-              fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
+              precision.divide(
+                1,
+                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
+              )
             ),
-            outPriceUnit: "BNB",
+            outPriceUnit: TokenFlag,
           };
         }
         if (resultItem._expiry < currentTime) {

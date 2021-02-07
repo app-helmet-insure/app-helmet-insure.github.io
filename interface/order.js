@@ -833,10 +833,10 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);
     console.log(parseInt(awc) >= parseInt(num), parseInt(awc), parseInt(num));
-    // if (parseInt(awc) >= parseInt(num)) {
-    //     // console.log("额度充足", parseInt(awc));
-    //     return;
-    // }
+    if (parseInt(awc) >= parseInt(num)) {
+        // console.log("额度充足", parseInt(awc));
+        return;
+    }
     // 无限授权
     const res = await approve(token_exp, contract_str, callback);
 };

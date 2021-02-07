@@ -57,7 +57,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "保单总价(HELMET)",
+    "Rent": "单价(HELMET)",
     "Premium": "保费",
     "AllRent": "总保费",
     "Amount": "保单数量",
@@ -66,7 +66,7 @@
     "Rate": "出险价格",
     "Type": "品种",
     "InsurancePrice": "保单价格",
-    "PolicyPrice": "单价",
+    "PolicyPrice": "保单单价",
     "Position": "持有量",
     "CountDonm": "倒计时",
     "outSure": "出险",

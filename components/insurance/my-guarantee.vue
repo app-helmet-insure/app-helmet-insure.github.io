@@ -402,7 +402,6 @@ export default {
         result.push(hctkPolicy);
       }
       this.isLoading = false;
-      console.log(result);
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },

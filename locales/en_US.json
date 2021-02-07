@@ -61,7 +61,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "Premium(HELMET)",
+    "Rent": "Policy Price(HELMET)",
     "Premium": "Premium",
     "AllRent": "Premium",
     "Amount": "Policies In Supply",

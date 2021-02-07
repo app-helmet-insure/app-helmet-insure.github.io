@@ -4,7 +4,10 @@
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
-        <h3>{{ list.name }}</h3>
+        <h3>
+          <span>{{ list.name }}</span>
+          <p @click="showOnepager"><i></i>What is hCTK token？</p>
+        </h3>
         <div>
           <div>
             <p>
@@ -290,6 +293,18 @@ export default {
     },
   },
   methods: {
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is $hCTK?",
+        text: [
+          "It is $CTK cover miss out policy certification. In this policy, we set a ratio of Helmet& CTK. HELMET : CTK = 2.5:1(Anchored $1)",
+          "It means that you could swap 2.5Helmet+1$hCTK to 1CTK by activate the policy.",
+          "It is the reasonable activate price, for example, if $CTK hit $1.2, you could activate the policy and swap 2.5 $helmet + 1$hCTK to 1 $CTK ",
+          "Policy Expire date: 20th Feb. 0:00 SGT",
+        ],
+      });
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -525,12 +540,38 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
           }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
+          }
         }
+
         > div {
           display: flex;
           align-items: center;
@@ -707,15 +748,41 @@ export default {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 32px;
+          height: 55px;
           display: flex;
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          flex-direction: column;
+          align-items: flex-start;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
+          }
+          p {
+            margin: 4px 0;
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
           }
         }
         > div {

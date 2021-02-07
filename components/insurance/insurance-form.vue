@@ -109,16 +109,20 @@ export default {
     helmetTime() {
       return this.$store.state.helmetDate;
     },
+    ctkTime() {
+      return this.$store.state.ctkDate;
+    },
     // 保费参数
     RentGrounp() {
       return {
         dpr: this.dpr,
         indexPx: this.indexPx,
         strikePrice: this.strikePrice,
-        _expiry:
-          this.currentCoin == "HELMET"
-            ? new Date(this.helmetTime) * 1
-            : new Date(this._expiry) * 1,
+        // _expiry:
+        //   this.currentCoin == "HELMET"
+        //     ? new Date(this.helmetTime) * 1
+        //     : new Date(this._expiry) * 1,
+        _expiry: this.getTime(this.currentCoin),
         num: this.volume,
       };
     },
@@ -166,6 +170,19 @@ export default {
     },
   },
   methods: {
+    getTime(coin) {
+      console.log(coin);
+      switch (coin) {
+        case "HELMET":
+          return new Date(this.helmetTime) * 1;
+        case "CTK":
+          return new Date(this.ctkTime) * 1;
+        case "CAKE":
+          return "--";
+        default:
+          return new Date(this._expiry) * 1;
+      }
+    },
     handleClickDpr() {
       this.optionFlag = !this.optionFlag;
     },
@@ -228,6 +245,7 @@ export default {
         this.Rent = 0;
         return;
       }
+      console.log(newValue);
       let { dpr, indexPx, num, strikePrice, _expiry } = newValue;
       if (
         newValue.dpr &&
@@ -268,7 +286,6 @@ export default {
             number,
             Math.min(precision.minus(indexPx, strikePrice), 0)
           );
-
           earnings = -(Math.max(strikePrice - indexPx, 0) - premium);
         }
         this.Rent = fixD(premium, 8);

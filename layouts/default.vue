@@ -372,6 +372,7 @@ export default {
         ETH: Helmeteth,
       };
       arr1.push(HelmetPirce);
+      console.log(arr1);
       arr1.push(CoinPirce);
       this.$store.commit("SET_ALL_HELMET_PRICE", arr1);
       arr.push(callIndexPirce);

@@ -351,7 +351,7 @@ export default {
           resultItem["outPrice"] = toRounding(
             precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag))
           );
-          resultItem["outPriceUnit"] = TokenFlag;
+          resultItem["outPriceUnit"] = "BNB";
         }
 
         if (askRes == "0") {

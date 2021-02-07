@@ -362,7 +362,7 @@ export default {
                 fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
               )
             ),
-            outPriceUnit: Token,
+            outPriceUnit: "BNB",
           };
         }
         if (resultItem._expiry < currentTime) {

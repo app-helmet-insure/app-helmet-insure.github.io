@@ -20,6 +20,8 @@
       </div>
     </div>
     <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
   </div>
 </template>
 
@@ -75,6 +77,10 @@ export default {
           el: ".swiper-pagination",
           clickable: true,
         },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
       });
     },
   },
@@ -98,6 +104,12 @@ export default {
   /* 分页器选中 */
   .swiper-pagination-bullet-active {
     background-color: #ff9600 !important;
+  }
+  .swiper-button-next {
+    color: #ff9600;
+  }
+  .swiper-button-prev {
+    color: #ff9600;
   }
 }
 </style>

@@ -719,6 +719,7 @@ export const onExercise = async (data, callBack, flag) => {
         Contract = await expERC20(adress);
         order = await Order();
         long = await expERC20(data.long);
+        console.log(Contract, long);
         await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
             if (res === 'failed') {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -831,10 +832,11 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     if (!token_exp || !contract_str) return;
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);
-    if (parseInt(awc) > parseInt(num)) {
-        // console.log("额度充足", parseInt(awc));
-        return;
-    }
+    console.log(parseInt(awc) >= parseInt(num), parseInt(awc), parseInt(num));
+    // if (parseInt(awc) >= parseInt(num)) {
+    //     // console.log("额度充足", parseInt(awc));
+    //     return;
+    // }
     // 无限授权
     const res = await approve(token_exp, contract_str, callback);
 };

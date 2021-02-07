@@ -96,11 +96,20 @@ export default {
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
-        infuraId: "3cd774e14cf34ff78167908f8377051c", // Required // qrcode: true
+        bridge: "https://bridge.walletconnect.org",
+        rpc: {
+          56: "https://bsc-dataseed.binance.org",
+        },
+        qrcode: true,
+        pollingInterval: 12000,
       });
-      await walletConnectProvider.enable();
+      let res = await walletConnectProvider.enable();
+      console.log(res);
       const web3 = new Web3(walletConnectProvider);
+      console.log(web3);
+
       const coinbase = walletConnectProvider.wc.accounts[0];
+      console.log(coinbase);
       window.WEB3 = web3;
       let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
       this.$store.dispatch("setUserInfo", userInfo);

@@ -151,12 +151,15 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     // volume = toWei(volume);
     data.volume = volume;
 
-    let priceFix = getStrikePriceFix(data_.category, data_.currency);
-    let priceUnit = getWeiWithFix(priceFix);
+    // let priceFix = getStrikePriceFix(data_.category, data_.currency);
+    // let priceUnit = getWeiWithFix(priceFix);
     // let price = fixD(precision.divide(1, data.price), fix);
-    let price = fixD(precision.divide(1, data.price), priceFix);
+    // let price = fixD(precision.divide(1, data.price), priceFix);
     // price = toWei(price, data_.currency);
-    price = window.WEB3.utils.toWei(String(price), priceUnit);
+    let price = window.WEB3.utils.toWei(
+        String(data.price),
+        getWei(data_.category)
+    );
     // window.WEB3.utils.toWei(String(number), unit);
     data.price = price;
 

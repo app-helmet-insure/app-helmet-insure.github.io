@@ -349,7 +349,7 @@ export default {
             _collateral: item.sellInfo.longInfo._collateral,
             _strikePrice: fromWei(
               item.sellInfo.longInfo._strikePrice,
-              TokenFlag == "CTK" ? 30 : TokenFlag
+              TokenFlag
             ),
             _underlying: item.sellInfo.longInfo._underlying,
             _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
@@ -357,18 +357,11 @@ export default {
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
             outPrice: toRounding(
-              precision.divide(
-                1,
-                fromWei(
-                  item.sellInfo.longInfo._strikePrice,
-                  TokenFlag == "CTK" ? 30 : TokenFlag
-                )
-              )
+              fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
             ),
             outPriceUnit: "BNB",
           };
         }
-
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 0;
@@ -406,6 +399,7 @@ export default {
         result.push(hctkPolicy);
       }
       this.isLoading = false;
+      console.log(result);
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },

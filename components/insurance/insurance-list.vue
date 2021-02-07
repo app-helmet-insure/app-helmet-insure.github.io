@@ -288,10 +288,7 @@ export default {
           };
           if (newArray) {
             resultItem["volume"] = fromWei(newArray.volume, unToken);
-            resultItem["price"] = fromWei(
-              newArray.newPrice,
-              unToken == "CTK" ? 30 : unToken
-            );
+            resultItem["price"] = fromWei(newArray.newPrice, coToken);
             resultItem["id"] = newArray.newAskID;
           }
           let res = await asks(resultItem["id"], "sync", Token);

@@ -349,13 +349,7 @@ export default {
           );
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
           resultItem["outPrice"] = toRounding(
-            precision.divide(
-              1,
-              fromWei(
-                item.longInfo._strikePrice,
-                TokenFlag == "CTK" ? 30 : TokenFlag
-              )
-            )
+            fromWei(item.longInfo._strikePrice, TokenFlag)
           );
         }
 

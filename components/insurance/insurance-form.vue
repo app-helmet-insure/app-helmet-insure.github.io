@@ -216,7 +216,7 @@ export default {
           annual: this.dpr,
           category: this.currentCoin, //
           currency: this.currency, //
-          expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
+          expire: this.getTime(this.currentCoin), //
           premium: this.Rent,
           price: this.strikePriceArray[1][this.currentCoin],
           volume: this.volume, //
@@ -230,7 +230,7 @@ export default {
           annual: this.dpr,
           category: this.currency, //
           currency: this.currentCoin, //
-          expire: this.currentCoin == "HELMET" ? this.helmetTime : this._expiry, //
+          expire: this.getTime(this.currentCoin), //
           premium: this.Rent,
           price: this.strikePriceArray[0][this.currentCoin],
           volume: this.volume, //

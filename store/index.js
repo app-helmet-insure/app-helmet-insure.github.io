@@ -50,7 +50,7 @@ export const state = () => ({
         },
     ],
     // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],
-    coinList: ['HELMET', 'ETH', 'BTCB', 'CAKE', 'CTK'],
+    coinList: ['HELMET', 'ETH', 'BTCB', 'CAKE', 'CTK', 'BURGER'],
     // coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE', 'CTK', 'FORTUBE'],
     typeFixObj: {
         WETH: 0,
@@ -120,6 +120,7 @@ export const state = () => ({
     dueDate: '2021-02-15 00:00',
     helmetDate: '2021-02-21 00:00',
     ctkDate: '2021-03-08 00:00',
+    burgerDate: '2021-03-12 00:00',
     allIndexPrice: [
         {
             HELMET: 0,
@@ -161,8 +162,22 @@ export const state = () => ({
         },
     ],
     strikePriceArray: [
-        { BTCB: 1864, ETH: 56.7, HELMET: 0.013, CAKE: 0.03, CTK: 0.04 },
-        { BTCB: 467, ETH: 14.15, HELMET: 0.003, CAKE: 0.0075, CTK: 0.01 },
+        {
+            BTCB: 1864,
+            ETH: 56.7,
+            HELMET: 0.013,
+            CAKE: 0.03,
+            CTK: 0.04,
+            BURGER: 0.06,
+        },
+        {
+            BTCB: 467,
+            ETH: 14.15,
+            HELMET: 0.003,
+            CAKE: 0.0075,
+            CTK: 0.01,
+            BURGER: 0.015,
+        },
     ],
     BalanceArray: {
         HELMET: 0,

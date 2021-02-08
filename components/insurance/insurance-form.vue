@@ -112,6 +112,9 @@ export default {
     ctkTime() {
       return this.$store.state.ctkDate;
     },
+    burgerTime() {
+      return this.$store.state.burgerDate;
+    },
     // 保费参数
     RentGrounp() {
       return {
@@ -177,6 +180,8 @@ export default {
           return new Date(this.helmetTime) * 1;
         case "CTK":
           return new Date(this.ctkTime) * 1;
+        case "BURGER":
+          return new Date(this.burgerTime) * 1;
         case "CAKE":
           return "--";
         default:

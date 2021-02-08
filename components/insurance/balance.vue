@@ -94,6 +94,7 @@ export default {
       dueDate: 0,
       helmetDate: 0,
       ctkDate: 0,
+      burgerDate:0
     };
   },
   computed: {
@@ -165,6 +166,7 @@ export default {
         this.getDownTime();
         this.getHelmetTime();
         this.getCtkTime();
+        this.getBurgerTime()
       });
       clearTimeout();
     }, 1000);
@@ -176,6 +178,8 @@ export default {
           return this.helmetDate;
         case "CTK":
           return this.ctkDate;
+        case "BURGER":
+          return this.burgerDate;
         case "CAKE":
           return "--";
         default:
@@ -260,6 +264,32 @@ export default {
         )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
       }
       this.ctkDate = template;
+    },
+    getBurgerTime(time) {
+      let now = new Date() * 1;
+      let dueDate = new Date(this.$store.state.burgerDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayM")} ${hour}${this.$t(
+          "Content.HourM"
+        )} ${minute}${this.$t("Content.MinM")} ${second}${this.$t(
+          "Content.SecondM"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayM")} ${0}${this.$t(
+          "Content.HourM"
+        )} ${0}${this.$t("Content.MinM")} ${0}${this.$t("Content.SecondM")}`;
+      }
+      this.burgerDate = template;
     },
     undAndColWatch(newValue) {
       let list = this.IndexPxArray;

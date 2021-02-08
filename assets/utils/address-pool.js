@@ -274,6 +274,8 @@ export const getTokenName = (address) => {
             return 'HTTC';
         case '0x936909e72951a19a5e1d75a109b0d34f06f39838':
             return 'hCTK';
+        case '0xae9269f27437f0fcbc232d39ec814844a51d6b8f':
+            return 'BURGER';
         default:
             return '--';
     }

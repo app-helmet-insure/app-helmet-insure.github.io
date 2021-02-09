@@ -248,17 +248,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING2", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HCCTPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING2", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HCCTPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING2", (data) => {
+    this.$bus.$on("EXIT_LOADING_HCCTPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA2", () => {
+    this.$bus.$on("RELOAD_DATA_HCCTPOOL", () => {
       this.getBalance();
     });
     setTimeout(() => {

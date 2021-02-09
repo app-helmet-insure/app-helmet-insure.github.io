@@ -254,17 +254,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING3", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HCTKPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING3", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HCTKPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING3", (data) => {
+    this.$bus.$on("EXIT_LOADING_HCTKPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA3", () => {
+    this.$bus.$on("RELOAD_DATA_HCTKPOOL", () => {
       this.getBalance();
     });
     setTimeout(() => {

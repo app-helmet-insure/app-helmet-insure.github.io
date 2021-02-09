@@ -195,17 +195,17 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING1", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HELMETPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING1", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HELMETPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING1", (data) => {
+    this.$bus.$on("EXIT_LOADING_HELMETPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA1", () => {
+    this.$bus.$on("RELOAD_DATA_HELMETPOOL", () => {
       this.getBalance();
     });
     setTimeout(() => {

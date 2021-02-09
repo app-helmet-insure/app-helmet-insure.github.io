@@ -109,10 +109,10 @@
             {{ $t("Table.ClaimRewards") }}
           </button>
           <p>
-            <span>HELMET {{ $t("Table.HELMETRewards") }}：</span>
+            <span>TOKEN {{ $t("Table.HELMETRewards") }}：</span>
             <span>
               <span
-                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} CAKE</span
+                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} BURGER</span
               >
               <span>
                 {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
@@ -154,6 +154,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { uniswap } from "~/assets/utils/address-pool.js";
 export default {
   data() {
     return {
@@ -211,17 +212,17 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_BURGERHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING", (data) => {
+    this.$bus.$on("CLAIM_LOADING_BURGERHELMET", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING", (data) => {
+    this.$bus.$on("EXIT_LOADING_BURGERHELMET", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA", () => {
+    this.$bus.$on("RELOAD_DATA_BURGERHELMET", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -259,7 +260,6 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
   },
   methods: {
@@ -269,45 +269,7 @@ export default {
       }
     },
     async getAPY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
-      let dayHelmet = totalHelmet;
-      // (helmetPrice*(HelmetAllowance-helmetReward)*365)/(100*bnbValue)
-      let helmetapy = precision.divide(
-        precision.divide(
-          precision.times(
-            precision.times(
-              this.helmetPrice,
-              precision.minus(HelmetAllowance, helmetReward)
-            ),
-            365
-          ),
-          miningTime
-        ),
-        bnbValue
-      );
-      let cakeapy = precision.divide(
-        precision.times(cakePrice, 1480000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
-      );
-      this.helmetapy = helmetapy;
-      this.cakeapy = cakeapy;
-      this.textList[1].num =
-        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
+      let helmetVolume = await totalSupply("HCTKPOOL");
     },
     async getBalance() {
       let helmetType = "BURGERHELMET_LPT";
@@ -322,26 +284,19 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
-
-      // 总Helmet
-      let HelmetAllowance = await getAllHelmet(
-        "HELMET",
-        "FARM",
-        "BURGERHELMET"
-      );
-      let helmetReward = await Rewards("BURGERHELMET", "0");
+      // BURGER的BNB价值
+      let burgebnbrValue = await uniswap("BURGER", "WBNB");
+      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
+      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
+      let allValue = burgerHelmet * 15000 + 75000;
+      // 赋值
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num =
-        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
-        " HELMET";
-
-      // this.textList[3].num = addCommom(Deposite, 4)
-      // this.textList[4].num = addCommom(Helmet, 4)
+      this.textList[0].num = fixD((allValue / 25) * 7, 2) + " HELMET";
     },
     // 抵押
     toDeposite() {

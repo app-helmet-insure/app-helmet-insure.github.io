@@ -109,7 +109,7 @@
             {{ $t("Table.ClaimRewards") }}
           </button>
           <p>
-            <span>HELMET {{ $t("Table.HELMETRewards") }}：</span>
+            <span>TOKEN {{ $t("Table.HELMETRewards") }}：</span>
             <span>
               <span
                 >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} CAKE</span
@@ -211,17 +211,17 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HELMETBNB", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HELMETBNB", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING", (data) => {
+    this.$bus.$on("EXIT_LOADING_HELMETBNB", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA", () => {
+    this.$bus.$on("RELOAD_DATA_HELMETBNB", () => {
       this.getBalance();
     });
     setTimeout(() => {

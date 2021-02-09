@@ -334,7 +334,6 @@ export default {
       this.textList[0].num =
         fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
         " HELMET";
-
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

@@ -18,7 +18,7 @@
             <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
 
             50%
-            <span> HBURGER </span>
+            <span> hBURGER </span>
           </p>
         </div>
       </div>

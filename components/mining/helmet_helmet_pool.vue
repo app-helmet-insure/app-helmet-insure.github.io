@@ -273,7 +273,7 @@ export default {
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(155433.005 * 7, 2) + " HELMET";
+      this.textList[0].num = fixD(74601.783 * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

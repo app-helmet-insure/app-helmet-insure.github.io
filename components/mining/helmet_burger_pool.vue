@@ -1,6 +1,6 @@
 <template>
   <div class="helmet_pool">
-    <span class="miningTime"> {{ MingTime }}</span>
+    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -9,17 +9,19 @@
           <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
-          <p>
-            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            50%
-            <span> HELMET </span>
-          </p>
-          <p>
-            <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
+          <div>
+            <p>
+              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+              50%
+              <span> HELMET </span>
+            </p>
+            <p>
+              <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
 
-            50%
-            <span> hBURGER </span>
-          </p>
+              50%
+              <span> hBURGER </span>
+            </p>
+          </div>
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -394,17 +396,8 @@ export default {
         ),
         2
       );
-      let now = new Date() * 1;
-      let dueDate = "2021-02-10 00:00";
-      dueDate = new Date(dueDate);
-
       let apy = precision.plus(burgerApy, helmetApy);
-      if (dueDate < now) {
-        this.apy = apy ? apy : 0;
-      } else {
-        this.apy = "infinly";
-      }
-
+      this.apy = apy ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
@@ -535,21 +528,29 @@ export default {
         }
         > div {
           display: flex;
-          > p {
+          align-items: center;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
+            > p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
+            }
+          }
+          p {
+            color: #919aa6;
             font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
-            }
-            span {
-              margin-left: 4px;
-              color: #919aa6;
-            }
           }
         }
       }
@@ -715,20 +716,32 @@ export default {
         }
         > div {
           display: flex;
-          > p {
+          flex-direction: column;
+          > div {
             display: flex;
-            align-items: center;
-            color: #121212;
-            font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
+            > p {
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+              span {
+                margin-left: 4px;
+                color: #919aa6;
+              }
             }
+          }
+          > p {
+            margin-top: 5px;
             span {
-              margin-left: 4px;
               color: #919aa6;
+              font-size: 14px;
+              margin-left: 0 !important;
             }
           }
         }

@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
 
       <div class="imgbanner img2 swiper-slide">
@@ -146,6 +147,9 @@ export default {
     .img3 {
       background-image: url("../../assets/img/helmet/hCTK.png");
     }
+    .img4 {
+      background-image: url("../../assets/img/helmet/burger.png");
+    }
     .center {
       display: flex;
       flex-direction: column;
@@ -287,6 +291,9 @@ export default {
     }
     .img3 {
       background-image: url("../../assets/img/helmet/hctk_h5.png");
+    }
+    .img4 {
+      background-image: url("../../assets/img/helmet/burger_h5.png");
     }
     .center {
       display: flex;

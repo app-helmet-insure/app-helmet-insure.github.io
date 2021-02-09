@@ -3,8 +3,8 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetBurgerPool></HelmetBurgerPool>
-    <HelmetHelmetPool></HelmetHelmetPool>
     <HelmetBnbPool></HelmetBnbPool>
+    <HelmetHelmetPool></HelmetHelmetPool>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
     <Deposite

@@ -375,6 +375,7 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
           img {
             margin-left: 4px;
             width: 32px;

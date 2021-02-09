@@ -1,11 +1,11 @@
 <template>
-  <div class="helmet_pool">
-    <img src="~/assets/img/helmet/star.png" alt="" />
+  <div class="helmetburger_pool">
+    <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
         <h3>
           {{ list.name }}
-          <img src="~/assets/img/helmet/3x.png" alt="" />
+          <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
           <p>
@@ -72,7 +72,7 @@
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
               >Get LPT</a
             >
@@ -207,8 +207,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      helmetapy: 0,
-      cakeapy: 0,
     };
   },
   mounted() {
@@ -240,22 +238,6 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
-    helmetapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
-          "%";
-      }
-    },
-    cakeapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(
-            fixD(this.helmetapy * 100, 2),
-            fixD(newValue * 100, 2)
-          ) + "%";
-      }
-    },
   },
   computed: {
     indexArray() {
@@ -269,7 +251,30 @@ export default {
       }
     },
     async getAPY() {
-      let helmetVolume = await totalSupply("HCTKPOOL");
+      // BURGER的helmet价值
+      let burgebnbrValue = await uniswap("BURGER", "WBNB");
+      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
+      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
+      let allVolume = burgerHelmet * 15000 + 75000;
+      // 总发行
+      let supplyVolume = await totalSupply("HCTKPOOL"); //数量
+      let burgerValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
+      let helmetValue = await balanceOf("HELMET", "HELMETBURGER_LPT", true);
+      let apy = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(precision.divide(allVolume, 25), 365),
+            precision.times(
+              precision.divide(precision.times(burgerValue, 2), allVolume),
+              supplyVolume
+            )
+          ),
+          100
+        ),
+        2
+      );
+      this.apy = apy ? apy : 0;
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "BURGERHELMET_LPT";
@@ -284,7 +289,7 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
-      // BURGER的BNB价值
+      // BURGER的helmet价值
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
       let bnbhelmetValue = await uniswap("WBNB", "HELMET");
       let burgerHelmet = burgebnbrValue * bnbhelmetValue;
@@ -367,11 +372,15 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmet_pool {
+  .helmetburger_pool {
     height: 476px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
+    > .combo {
+      width: 148px;
+      transform: translateY(-8px);
+    }
     > h3 {
       text-align: center;
     }
@@ -527,11 +536,15 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .helmet_pool {
+  .helmetburger_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;
     padding: 40px 16px;
+    > .combo {
+      width: 148px;
+      transform: translateY(-8px);
+    }
     > h3 {
       text-align: center;
     }

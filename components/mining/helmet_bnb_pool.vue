@@ -1,6 +1,6 @@
 <template>
-  <div class="helmet_pool">
-    <img src="~/assets/img/helmet/star.png" alt="" />
+  <div class="helmetbnb_pool">
+    <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -407,11 +407,15 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmet_pool {
-    height: 476px;
+  .helmetbnb_pool {
+    height: 506px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
+    > .combo {
+      width: 148px;
+      transform: translateY(-8px);
+    }
     > h3 {
       text-align: center;
     }
@@ -428,6 +432,12 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
+          img {
+            margin-left: 4px;
+            width: 32px;
+            height: 32px;
+          }
         }
         > div {
           display: flex;
@@ -567,11 +577,15 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .helmet_pool {
+  .helmetbnb_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;
     padding: 40px 16px;
+    > .combo {
+      width: 148px;
+      transform: translateY(-8px);
+    }
     > h3 {
       text-align: center;
     }

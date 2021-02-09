@@ -86,6 +86,7 @@ export const newGetSymbol = (adress) => {
         'HCCT',
         'ETH',
         'CTK',
+        'BURGER',
     ];
     const symbol = symbol_list.filter((item) => {
         return getAddress(item, charID) === adress.toLowerCase();
@@ -276,6 +277,8 @@ export const getTokenName = (address) => {
             return 'hCTK';
         case '0xae9269f27437f0fcbc232d39ec814844a51d6b8f':
             return 'BURGER';
+        case '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea':
+            return 'HBURGER';
         default:
             return '--';
     }

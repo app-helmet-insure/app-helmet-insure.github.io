@@ -21,10 +21,7 @@
       <div class="index">
         <p v-for="(item, index) in textList" :key="index">
           <span>{{ item.text }}</span>
-          <span :style="`color:${item.color}`"
-            >{{ item.num
-            }}<i v-if="item.unit" style="color: #919aa6">{{ item.unit }}</i>
-          </span>
+          <span :style="`color:${item.color}`">{{ item.num }} </span>
         </p>
       </div>
     </div>
@@ -148,10 +145,10 @@ export default {
       },
       textList: [
         {
-          text: this.$t("Table.RewardsDistribution"),
+          text: this.$t("Table.RewardsDistribution") + "（weekly）",
           num: 0,
           color: "#00B900",
-          unit: "（weekly）",
+          unit: "",
         },
         {
           text: this.$t("Table.PoolAPY"),
@@ -244,7 +241,7 @@ export default {
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(155433.005, 365),
+            precision.times(74601.783, 365),
             Number(HelmetVolume)
           ),
           helmetTime

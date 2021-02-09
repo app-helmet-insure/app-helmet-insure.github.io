@@ -1,5 +1,5 @@
 <template>
-  <div class="helmetburger_pool">
+  <div class="helmet_pool">
     <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
@@ -25,10 +25,10 @@
       <div class="index">
         <p v-for="(item, index) in textList" :key="index">
           <span>{{ item.text }}</span>
-          <span :style="`color:${item.color}`"
-            >{{ item.num
-            }}<i v-if="item.unit" style="color: #919aa6">{{ item.unit }}</i>
-          </span>
+          <span :style="`color:${item.color}`">{{ item.num }} </span>
+          <span v-if="item.num1" :style="`color:${item.color}`">{{
+            item.num1
+          }}</span>
         </p>
       </div>
     </div>
@@ -192,10 +192,11 @@ export default {
       },
       textList: [
         {
-          text: this.$t("Table.RewardsDistribution"),
+          text: this.$t("Table.RewardsDistribution") + `（weekly）`,
           num: 0,
           color: "#00B900",
-          unit: "（weekly）",
+          unit: "",
+          num1: 0,
         },
         {
           text: this.$t("Table.PoolAPY"),
@@ -236,7 +237,7 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      MingTime: "--",
+      MingTime: "",
     };
   },
   mounted() {
@@ -296,9 +297,7 @@ export default {
       );
       let template;
       if (dueDate < now) {
-        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
-          "Content.MinD"
-        )} ${0}${this.$t("Content.SecondD")}`;
+        template = ``;
       } else {
         template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
           "Content.MinD"
@@ -366,8 +365,17 @@ export default {
         ),
         2
       );
+      let now = new Date() * 1;
+      let dueDate = "2021-02-10 00:00";
+      dueDate = new Date(dueDate);
+
       let apy = precision.plus(burgerApy, helmetApy);
-      this.apy = apy ? apy : 0;
+      if (dueDate < now) {
+        this.apy = apy ? apy : 0;
+      } else {
+        this.apy = "infinly";
+      }
+
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
@@ -383,11 +391,7 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
-      // BURGER的helmet价值
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
-      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allValue = burgerHelmet * 15000 + 75000;
+
       // 赋值
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
@@ -395,7 +399,8 @@ export default {
       this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((allValue / 25) * 7, 2) + " HELMET";
+      this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
+      this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
     },
     // 抵押
     toDeposite() {
@@ -466,14 +471,21 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmetburger_pool {
-    height: 506px;
+  .miningTime {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+  }
+  .helmet_pool {
+    height: 536px;
     background: #ffffff;
-    padding: 40px;
+    padding: 60px 40px 40px 40px;
     margin-bottom: 20px;
     > .combo {
       width: 148px;
-      transform: translateY(-8px);
+      transform: translateY(20px);
+      height: 28px;
     }
     > h3 {
       text-align: center;
@@ -525,6 +537,9 @@ export default {
             }
             &:nth-of-type(2) {
               margin-top: 12px;
+            }
+            &:nth-of-type(3) {
+              margin-top: 4px;
             }
           }
         }
@@ -631,14 +646,21 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .helmetburger_pool {
+  .miningTime {
+    position: absolute;
+    right: 16px;
+    top: 48px;
+    font-size: 14px;
+  }
+  .helmet_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;
-    padding: 40px 16px;
+    padding: 50px 16px 40px;
     > .combo {
       width: 148px;
-      transform: translateY(-8px);
+      transform: translateY(15px);
+      height: 28px;
     }
     > h3 {
       text-align: center;

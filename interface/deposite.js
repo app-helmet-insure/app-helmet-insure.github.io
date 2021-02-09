@@ -141,7 +141,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
-                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit(`CLOSE_STATUS_${type}`);
                 bus.$emit('DEPOSITE_LOADING', {
                     type: type,
                     status: false,
@@ -394,8 +394,9 @@ export const getDoubleReward = async (type) => {
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
-                bus.$emit('CLAIM_LOADING');
                 if (confirmationNumber === 0) {
+                    bus.$emit(`CLAIM_LOADING_${type}`);
+                    bus.$emit(`RELOAD_DATA_${type}`);
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -417,7 +418,8 @@ export const getDoubleReward = async (type) => {
                 }
             })
             .on('error', function(error, receipt) {
-                bus.$emit('CLAIM_LOADING');
+                bus.$emit(`CLAIM_LOADING_${type}`);
+                bus.$emit(`RELOAD_DATA_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 if (error && error.message) {
                     Message({

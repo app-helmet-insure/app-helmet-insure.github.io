@@ -281,17 +281,12 @@ export default {
       let dayHelmet = totalHelmet;
       // (helmetPrice*(HelmetAllowance-helmetReward)*365)/(100*bnbValue)
       let helmetapy = precision.divide(
-        precision.divide(
-          precision.times(
-            precision.times(
-              this.helmetPrice,
-              precision.minus(HelmetAllowance, helmetReward)
-            ),
-            365
-          ),
-          miningTime
+        precision.times(
+          this.helmetPrice,
+          precision.minus(HelmetAllowance, helmetReward),
+          365
         ),
-        bnbValue
+        precision.times(miningTime, bnbValue)
       );
       let cakeapy = precision.divide(
         precision.times(cakePrice, 1480000),
@@ -301,6 +296,8 @@ export default {
           bnbPrice
         )
       );
+      console.log(bnbValue, totalHelmet, cakeValue, bnbPrice);
+
       this.helmetapy = helmetapy;
       this.cakeapy = cakeapy;
       this.textList[1].num =

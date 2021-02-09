@@ -190,6 +190,8 @@ export default {
     return {
       list: {
         name: "HCCT-HELMET",
+        dueDate: "2021-02-28 00:00",
+        DownTime: "--",
       },
       textList: [
         {
@@ -245,6 +247,7 @@ export default {
     setInterval(() => {
       setTimeout(() => {
         this.getMiningTime();
+        this.getDownTime();
       });
       clearTimeout();
     }, 1000);
@@ -319,6 +322,24 @@ export default {
       if (newValue) {
         this.getAPY();
       }
+    },
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.dueDate;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+        "Content.HourD"
+      )}`;
+      this.list.DownTime = template;
     },
     getMiningTime() {
       let now = new Date() * 1;

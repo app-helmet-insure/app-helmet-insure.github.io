@@ -1,5 +1,6 @@
 <template>
   <div class="helmetburger_pool">
+    <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -17,7 +18,7 @@
             <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
 
             50%
-            <span> BURGER </span>
+            <span> HBURGER </span>
           </p>
         </div>
       </div>
@@ -74,9 +75,22 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get LPT</a
+              >Get HELMET-hBURGER LPT</a
             >
           </section>
+        </div>
+        <div class="ContractAddress">
+          <span>hBURGER Contract Address：</span>
+          <p>
+            0x9ebbb98f2bc5d5d8e49579995c5efac487303bea
+            <i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
+              "
+            ></i>
+          </p>
         </div>
       </div>
       <div class="withdraw">
@@ -128,6 +142,19 @@
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
         </div>
+        <!-- <div class="ContractAddress">
+          <span>HCCT Contract Address：</span>
+          <p>
+            0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
+            <i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
+              "
+            ></i>
+          </p>
+        </div> -->
       </div>
     </div>
   </div>
@@ -155,11 +182,13 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   data() {
     return {
       list: {
-        name: "HELMET-HBURGER",
+        name: "HELMET-hBURGER",
       },
       textList: [
         {
@@ -207,9 +236,16 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
+      MingTime: "--",
     };
   },
   mounted() {
+    setInterval(() => {
+      setTimeout(() => {
+        this.getMiningTime();
+      });
+      clearTimeout();
+    }, 1000);
     this.$bus.$on("DEPOSITE_LOADING_BURGERHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
@@ -245,6 +281,48 @@ export default {
     },
   },
   methods: {
+    getMiningTime() {
+      let now = new Date() * 1;
+      let dueDate = "2021-02-10 00:00";
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate < now) {
+        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
+          "Content.MinD"
+        )} ${0}${this.$t("Content.SecondD")}`;
+      } else {
+        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
+          "Content.MinD"
+        )} ${second}${this.$t("Content.SecondD")}`;
+      }
+      this.MingTime = template;
+    },
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();
@@ -255,17 +333,19 @@ export default {
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
       let bnbhelmetValue = await uniswap("WBNB", "HELMET");
       let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allVolume = burgerHelmet * 15000 + 75000;
+      let allVolume = burgerHelmet * 15000;
+      //总抵押
+      let supplyVolume = await totalSupply("BURGERHELMET"); //数量
       // 总发行
-      let supplyVolume = await totalSupply("HCTKPOOL"); //数量
-      let burgerValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
-      let helmetValue = await balanceOf("HELMET", "HELMETBURGER_LPT", true);
-      let apy = fixD(
+      let stakeVolue = await totalSupply("BURGERHELMET_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
+      let burgerApy = fixD(
         precision.times(
           precision.divide(
             precision.times(precision.divide(allVolume, 25), 365),
             precision.times(
-              precision.divide(precision.times(burgerValue, 2), allVolume),
+              precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
             )
           ),
@@ -273,6 +353,20 @@ export default {
         ),
         2
       );
+      let helmetApy = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(precision.divide(75000, 25), 365),
+            precision.times(
+              precision.divide(precision.times(stakeValue, 2), stakeVolue),
+              supplyVolume
+            )
+          ),
+          100
+        ),
+        2
+      );
+      let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },
@@ -373,7 +467,7 @@ export default {
 }
 @media screen and (min-width: 750px) {
   .helmetburger_pool {
-    height: 476px;
+    height: 506px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
@@ -442,7 +536,7 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 293px;
+        height: 323px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -493,6 +587,7 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {
@@ -612,7 +707,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
+        height: 343px;
         padding: 30px 16px;
         .title {
           display: flex;
@@ -673,6 +768,7 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {

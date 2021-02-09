@@ -82,7 +82,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x17934fef9fC93128858e9945261524ab0581612e"
               target="_blank"
-              >Get LPT</a
+              >Get LONG-HELMET LPT</a
             >
           </section>
         </div>
@@ -420,7 +420,7 @@ export default {
 .ContractAddress {
   font-size: 13px;
   color: #ff9600;
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   span {
@@ -635,10 +635,11 @@ export default {
             a {
               display: block;
               margin-top: 4px;
-              font-size: 20px;
+              font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {
@@ -857,10 +858,11 @@ export default {
             align-items: center;
             justify-content: space-between;
             a {
-              font-size: 20px;
               font-weight: 500;
               color: #ff9600;
+              font-size: 14px;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {

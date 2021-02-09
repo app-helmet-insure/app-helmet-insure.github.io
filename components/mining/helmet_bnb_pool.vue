@@ -74,7 +74,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get LPT</a
+              >Get HELMET-BNB LPT</a
             >
           </section>
         </div>
@@ -531,6 +531,7 @@ export default {
               display: block;
               margin-top: 4px;
               font-size: 14px;
+              text-decoration: underline;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
@@ -714,6 +715,7 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {

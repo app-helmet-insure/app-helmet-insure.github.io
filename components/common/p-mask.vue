@@ -9,9 +9,10 @@
     <ul class="navList">
       <li v-for="item in this.renderList" :key="item.url" @click="closeMask">
         <a v-if="item.link" :href="item.url">{{ item.text }}</a>
-        <span v-else @click="toPath(item)"
-          >{{ item.text }} <i v-if="item.url == '/flashmining'"></i
-        ></span>
+        <span v-else @click="toPath(item)">
+          {{ item.text }}
+          <i :class="item.logo" v-if="item.logo"></i>
+        </span>
       </li>
     </ul>
     <ul class="navList">
@@ -117,11 +118,13 @@ export default {
           url: "/mining",
           link: false,
           text: this.$t("Header.Mining"),
+          logo: "new",
         },
         {
           url: "/flashmining",
           link: false,
           text: this.$t("Header.FlashMining"),
+          logo: "fire",
         },
         // {
         //   url: '/plan',
@@ -264,7 +267,7 @@ export default {
       span {
         position: relative;
       }
-      i {
+      .fire {
         display: block;
         width: 21px;
         height: 26px;
@@ -274,6 +277,18 @@ export default {
         position: absolute;
         right: 0;
         top: -100%;
+        transform: translateX(90%);
+      }
+      .new {
+        display: block;
+        width: 18px;
+        height: 18px;
+        background-image: url("../../assets/img/helmet/new.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: absolute;
+        right: 0;
+        top: -90%;
         transform: translateX(90%);
       }
     }

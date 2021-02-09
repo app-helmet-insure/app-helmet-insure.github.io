@@ -10,10 +10,13 @@
           :class="routeObj.name === 'product-id' ? 'active' : ''"
           >{{ $t("Header.Trade") }}</nuxt-link
         >
-        <nuxt-link to="/mining">{{ $t("Header.Mining") }} </nuxt-link>
+        <nuxt-link to="/mining"
+          >{{ $t("Header.Mining") }}
+          <p class="new"></p>
+        </nuxt-link>
         <nuxt-link to="/flashmining"
           >{{ $t("Header.FlashMining") }}
-          <p></p>
+          <p class="fire"></p>
         </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
@@ -152,12 +155,23 @@ export default {
         font-weight: bold;
         p {
           position: absolute;
-          top: 10px;
-          width: 21px;
-          background: url("../../assets/img/helmet/fire.png") no-repeat;
-          height: 26px;
-          background-size: cover;
+        }
+        .new {
+          background: url("../../assets/img/helmet/new.png") no-repeat;
+          width: 18px;
+          height: 18px;
+          top: 15px;
           right: 0;
+          background-size: cover;
+          transform: translateX(80%);
+        }
+        .fire {
+          background: url("../../assets/img/helmet/fire.png") no-repeat;
+          width: 21px;
+          height: 26px;
+          top: 10px;
+          right: 0;
+          background-size: cover;
           transform: translateX(75%);
         }
         &::after {

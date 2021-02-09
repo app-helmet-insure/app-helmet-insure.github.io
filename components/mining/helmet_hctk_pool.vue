@@ -83,7 +83,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
               target="_blank"
-              >Get LPT</a
+              >Get HCCT-HELMET LPT</a
             >
           </section>
         </div>
@@ -193,8 +193,6 @@ export default {
     return {
       list: {
         name: "HCCT-HELMET",
-        dueDate: "2021-02-27 00:00",
-        DownTime: "--",
       },
       textList: [
         {
@@ -249,7 +247,6 @@ export default {
   mounted() {
     setInterval(() => {
       setTimeout(() => {
-        this.getDownTime();
         this.getMiningTime();
       });
       clearTimeout();
@@ -289,7 +286,6 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
   },
   methods: {
@@ -327,24 +323,6 @@ export default {
         this.getAPY();
       }
     },
-    getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.dueDate;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-        "Content.HourD"
-      )}`;
-      this.list.DownTime = template;
-    },
     getMiningTime() {
       let now = new Date() * 1;
       let dueDate = "2021-02-06 00:00";
@@ -381,7 +359,7 @@ export default {
           precision.divide(
             precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
             precision.times(
-              precision.divide(precision.times(HelmetValue, 2), 70000),
+              precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
             )
           ),
@@ -671,10 +649,11 @@ export default {
             a {
               display: block;
               margin-top: 4px;
-              font-size: 20px;
+              font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {
@@ -899,10 +878,11 @@ export default {
             align-items: center;
             justify-content: space-between;
             a {
-              font-size: 20px;
+              font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              text-decoration: underline;
             }
           }
           p {

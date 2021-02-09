@@ -14,10 +14,10 @@
             <span> HELMET </span>
           </p>
           <p>
-            <img src="~/assets/img/helmet/bnbCoin.png" alt="" />
+            <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
 
             50%
-            <span> BNB </span>
+            <span> BURGER </span>
           </p>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-BNB",
+        name: "HELMET-HBURGER",
       },
       textList: [
         {
@@ -310,8 +310,8 @@ export default {
         precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
     },
     async getBalance() {
-      let helmetType = "HELMETBNB_LPT";
-      let type = "HELMETBNB";
+      let helmetType = "BURGERHELMET_LPT";
+      let type = "BURGERHELMET";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -322,9 +322,14 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
+
       // 总Helmet
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let HelmetAllowance = await getAllHelmet(
+        "HELMET",
+        "FARM",
+        "BURGERHELMET"
+      );
+      let helmetReward = await Rewards("BURGERHELMET", "0");
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
       this.balance.Helmet = fixD(Helmet, 8);
@@ -347,7 +352,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HELMETBNB";
+      let type = "BURGERHELMET";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -356,7 +361,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HELMETBNB";
+      let type = "BURGERHELMET";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -365,7 +370,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HELMETBNB";
+      let type = "BURGERHELMET";
       let res = await exitStake(type);
     },
   },

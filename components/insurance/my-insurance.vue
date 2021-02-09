@@ -269,7 +269,6 @@ export default {
     },
     // 格式化数据
     async setSettlementList(list) {
-      console.log(list);
       this.isLoading = true;
       this.showList = [];
       let result = [];
@@ -378,8 +377,8 @@ export default {
         }
       }
       this.isLoading = false;
+      result = result.reverse();
       this.insuranceList = result;
-      console.log(result);
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     //获取已出售

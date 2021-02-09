@@ -278,7 +278,7 @@ export default {
     async setSettlementList(list) {
       this.isLoading = true;
       this.showList = [];
-      const result = [];
+      let result = [];
       let item, resultItem, amount, InsurancePrice, Rent, downTime;
       let currentTime = new Date().getTime();
       let exerciseRes;
@@ -392,6 +392,7 @@ export default {
       let cakePolicy = await this.CAKEPolicy();
       let hcctPolicy = await this.HCCTPolicy();
       let hctkPolicy = await this.HCTKPolicy();
+      let hburgerPolicy = await this.HBURGERPolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -401,7 +402,11 @@ export default {
       if (hctkPolicy) {
         result.push(hctkPolicy);
       }
+      if (hburgerPolicy) {
+        result.push(hburgerPolicy);
+      }
       this.isLoading = false;
+      result = result.reverse();
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
@@ -570,6 +575,42 @@ export default {
           outPrice: fromWei(2500000000000000000, Token),
           outPriceUnit: "HELMET",
           unit: 6,
+        };
+        return resultItem;
+      }
+    },
+    async HBURGERPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa"
+      );
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa");
+        let resultItem;
+        resultItem = {
+          id: 4,
+          bidID: 1,
+          buyer: myAddress,
+          price: 1,
+          Rent: volume * 1,
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1615226400),
+          _collateral: "0xae9269f27437f0fcbc232d39ec814844a51d6b8f",
+          _strikePrice: fromWei(70000000000000000, Token),
+          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _expiry: 1615226400000,
+          transfer: true,
+          longAdress: "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa",
+          type: "call",
+          symbol: "hBURGER",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(70000000000000000, Token),
+          outPriceUnit: "BNB",
         };
         return resultItem;
       }

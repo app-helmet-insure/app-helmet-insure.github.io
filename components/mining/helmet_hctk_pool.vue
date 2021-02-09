@@ -404,7 +404,7 @@ export default {
       // 可领取Helmet
       let Helmet = await CangetPAYA(type, "CTK");
       // 总Helmet
-      let LptVolume = await totalSupply(helmetType); //发行
+      // let LptVolume = await totalSupply(helmetType); //发行
 
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);

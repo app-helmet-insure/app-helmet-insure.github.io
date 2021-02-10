@@ -1,6 +1,6 @@
 <template>
   <div class="helmet_pool">
-    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
+    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -315,7 +315,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-10 00:00";
+      let dueDate = "2021-02-10 15:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -396,9 +396,11 @@ export default {
         ),
         2
       );
+
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
-      this.textList[1].num = this.apy + "%";
+      // this.textList[1].num = this.apy + "%";
+      this.textList[1].num = "Infinity" + "%";
     },
     async getBalance() {
       let helmetType = "BURGERHELMET_LPT";
@@ -679,7 +681,7 @@ export default {
   .miningTime {
     position: absolute;
     right: 16px;
-    top: 48px;
+    top: 0px;
     font-size: 14px;
   }
   .helmet_pool {

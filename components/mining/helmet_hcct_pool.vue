@@ -311,6 +311,7 @@ export default {
           "For example, if $CAKE hit $1.6 on Feb.10th, you could use $1.5 to swap a $CAKE token with 1 policy (1 LONG Token). Eventually, you could sell this $CAKE in the market and get extra $0.1 benefit. That is why we call it ‘COVER Miss out’. (the final settlement currency will be BNB)",
           "However, if $CAKE does not hit $1.5, there will be no need for you to activate the Cover Miss Out policy. and the LONG Token will be a souvenir for you.",
           "Policy Expire Date: Feb.15th 24:00 SGT",
+          "More details in our Medium.",
         ],
       });
     },

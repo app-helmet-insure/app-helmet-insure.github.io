@@ -5,6 +5,7 @@
     <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetBnbPool></HelmetBnbPool>
     <HelmetHelmetPool></HelmetHelmetPool>
+    <Onepager></Onepager>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
     <Deposite
@@ -25,6 +26,7 @@ import MiningList from "~/components/mining/mining-list.vue";
 import Protect from "~/components/mining/protect.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Withdraw from "~/components/mining/withdraw-dialog.vue";
+import Onepager from "~/components/mining/onepager.vue";
 export default {
   layout: "default",
   components: {
@@ -36,6 +38,7 @@ export default {
     Protect,
     Deposite,
     Withdraw,
+    Onepager,
   },
   data() {
     return {

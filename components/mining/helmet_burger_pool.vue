@@ -5,7 +5,8 @@
     <div class="text">
       <div class="coin">
         <h3>
-          {{ list.name }}
+          <span> {{ list.name }}</span>
+          <p @click="showOnepager"><i></i>What is hBURGER token？</p>
           <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
@@ -295,6 +296,19 @@ export default {
     },
   },
   methods: {
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is $hBurger?",
+        text: [
+          "A total of $450,000 $hBurger was given away to LPT Miners on helmet.insure (including Helmet-BNB, Helmet-LONG, Helmet-HCCT LPT Pool, PancakeSwap Helmet-BNB Farm) ",
+          "Groundbreaking design of Policy Mining for Real Token!!! $60,000 COMBO Mining Bonus of $Helmet & $Burger !",
+          "It is $Burger cover miss out policy. The reasonable activate price: 1 $Burger=0.07 BNB. For example, if $Burger hit 0.08 BNB, you could swap 0.07BNB+1$hBurger to 1 $Burger, and get 0.01BNB profit.",
+          "Expire date: March, 9th, 2021",
+          "More details in our Medium.",
+        ],
+      });
+    },
     getDownTime() {
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;
@@ -526,6 +540,35 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          img {
+            margin-left: 4px;
+            width: 32px;
+            height: 32px;
+          }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
+          }
         }
         > div {
           display: flex;
@@ -709,10 +752,36 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          flex-direction: column;
+          align-items: flex-start;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
+          }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
           }
         }
         > div {

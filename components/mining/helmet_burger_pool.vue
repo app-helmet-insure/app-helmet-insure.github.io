@@ -1,6 +1,6 @@
 <template>
   <div class="helmet_pool">
-    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
+    <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -399,8 +399,7 @@ export default {
 
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = "Infinity" + "%";
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "BURGERHELMET_LPT";

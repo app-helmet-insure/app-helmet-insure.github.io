@@ -56,11 +56,23 @@
           </td>
           <!-- PolicyPrice -->
           <td>
-            {{ fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4) }}
+            <template v-if="item.showType">
+              <img :src="require(`~/assets/img/helmet/${item.price}`)" alt="" />
+            </template>
+            <template v-else>
+              {{
+                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
+              }}
+            </template>
           </td>
           <!-- Premium -->
           <td>
-            {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
+            <template v-if="item.showType">
+              <img :src="require(`~/assets/img/helmet/${item.Rent}`)" alt="" />
+            </template>
+            <template v-else>
+              {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
+            </template>
           </td>
           <!-- Position -->
           <td>{{ fixD(item.volume, 8) }}</td>
@@ -133,9 +145,17 @@
               }}<span style="font-size: 12px">(HELMET)</span></span
             >
             <span>
-              {{
-                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
-              }}
+              <template v-if="item.showType">
+                <img
+                  :src="require(`~/assets/img/helmet/${item.price}`)"
+                  alt=""
+                />
+              </template>
+              <template v-else>
+                {{
+                  fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
+                }}
+              </template>
             </span>
           </p>
         </div>
@@ -146,7 +166,17 @@
               }}<span style="font-size: 12px">(HELMET)</span></span
             >
             <span>
-              {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
+              <template v-if="item.showType">
+                <img
+                  :src="require(`~/assets/img/helmet/${item.Rent}`)"
+                  alt=""
+                />
+              </template>
+              <template v-else>
+                {{
+                  fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4)
+                }}
+              </template>
             </span>
           </p>
           <p>
@@ -228,6 +258,7 @@ import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 import { balanceOf, getBalance } from "~/interface/deposite";
+
 export default {
   data() {
     return {
@@ -393,6 +424,7 @@ export default {
       let hcctPolicy = await this.HCCTPolicy();
       let hctkPolicy = await this.HCTKPolicy();
       let hburgerPolicy = await this.HBURGERPolicy();
+      let lishiPolicy = await this.LISHIPolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -404,6 +436,9 @@ export default {
       }
       if (hburgerPolicy) {
         result.push(hburgerPolicy);
+      }
+      if (lishiPolicy) {
+        result.push(lishiPolicy);
       }
       this.isLoading = false;
       result = result.reverse();
@@ -467,7 +502,6 @@ export default {
           flag: item.transfer ? true : false,
         };
       }
-      console.log(data);
       onExercise(data, data.flag);
     },
     async CAKEPolicy() {
@@ -555,7 +589,7 @@ export default {
         let resultItem;
         resultItem = {
           id: 3,
-          bidID: 1,
+          bidID: 3,
           buyer: myAddress,
           price: 1.8343,
           Rent: volume * 1.8343,
@@ -592,7 +626,7 @@ export default {
         let resultItem;
         resultItem = {
           id: 4,
-          bidID: 1,
+          bidID: 4,
           buyer: myAddress,
           price: 1,
           Rent: volume * 1,
@@ -611,6 +645,43 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(70000000000000000, Token),
           outPriceUnit: "BNB",
+        };
+        return resultItem;
+      }
+    },
+    async LISHIPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417"
+      );
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417");
+        let resultItem;
+        resultItem = {
+          id: 5,
+          bidID: 5,
+          buyer: myAddress,
+          price: "redbag.png",
+          Rent: "redbag.png",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1613577600),
+          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          _strikePrice: fromWei(1000000000000000000, Token),
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1613577600000,
+          transfer: true,
+          longAdress: "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417",
+          type: "call",
+          symbol: "LiShi",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(1000000000000000000, Token),
+          outPriceUnit: "BUSD",
+          showType: "img",
         };
         return resultItem;
       }

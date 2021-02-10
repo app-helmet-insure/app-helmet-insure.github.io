@@ -670,7 +670,7 @@ export default {
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1613577600),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          _strikePrice: fromWei(1000000000000000000, Token),
+          _strikePrice: fromWei(100000000000000000, Token),
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1613577600000,
           transfer: true,
@@ -679,7 +679,7 @@ export default {
           symbol: "LiShi",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(1000000000000000000, Token),
+          outPrice: fromWei(100000000000000000, Token),
           outPriceUnit: "BUSD",
           showType: "img",
         };

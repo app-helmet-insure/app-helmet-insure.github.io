@@ -244,7 +244,7 @@ export default {
             precision.times(74601.783, 365),
             Number(HelmetVolume)
           ),
-          helmetTime
+          100
         ),
         2
       );

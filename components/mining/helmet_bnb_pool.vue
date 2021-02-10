@@ -296,7 +296,6 @@ export default {
           bnbPrice
         )
       );
-      console.log(bnbValue, totalHelmet, cakeValue, bnbPrice);
 
       this.helmetapy = helmetapy;
       this.cakeapy = cakeapy;

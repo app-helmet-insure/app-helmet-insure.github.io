@@ -314,7 +314,7 @@ export default {
       let currentTime = new Date().getTime();
       let exerciseRes;
       let bidIDArr;
-
+      
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);

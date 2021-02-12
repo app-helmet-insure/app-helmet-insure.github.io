@@ -38,7 +38,7 @@
       <rect
         v-for="(item, index) in line"
         :key="index + 'keyRect'"
-        x="60%"
+        :x="item.rectX + '%'"
         :y="item.line - 12 + '%'"
         :width="RectWidth"
         height="24"
@@ -47,7 +47,7 @@
       <text
         v-for="(item, index) in line"
         :key="index + 'key'"
-        x="60.5%"
+        :x="item.rectX + 0.5 + '%'"
         :y="item.line - 4 + '%'"
         style="font-size: 12px"
         fill="#fff"
@@ -131,6 +131,7 @@ export default {
             num: toRounding(arr[this.curCoin], 4),
             color: "#00B900",
             title: this.$t("Content.ChartUp"),
+            rectX: 30,
           },
           {
             line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
@@ -138,6 +139,7 @@ export default {
             num: toRounding(arr2[this.curCoin], 4),
             color: "#FF9600",
             title: this.$t("Content.ChartPrice"),
+            rectX: 45,
           },
           {
             line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
@@ -145,6 +147,7 @@ export default {
             num: toRounding(arr1[this.curCoin], 4),
             color: "#FF6400",
             title: this.$t("Content.ChartOff"),
+            rectX: 60,
           },
         ];
         this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
@@ -180,6 +183,7 @@ export default {
               num: toRounding(arr[this.curCoin], 4),
               color: "#00B900",
               title: this.$t("Content.ChartUp"),
+              rectX: 30,
             },
             {
               line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
@@ -187,6 +191,7 @@ export default {
               num: toRounding(arr2[this.curCoin], 4),
               color: "#FF9600",
               title: this.$t("Content.ChartPrice"),
+              rectX: 45,
             },
             {
               line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
@@ -194,6 +199,7 @@ export default {
               num: toRounding(arr1[this.curCoin], 4),
               color: "#FF6400",
               title: this.$t("Content.ChartOff"),
+              rectX: 60,
             },
           ];
           this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${

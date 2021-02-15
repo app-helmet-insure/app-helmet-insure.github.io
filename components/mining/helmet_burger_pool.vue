@@ -98,7 +98,7 @@
               class="copy"
               id="copy_default"
               @click="
-                copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
+                copyAdress($event, '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea')
               "
             ></i>
           </p>

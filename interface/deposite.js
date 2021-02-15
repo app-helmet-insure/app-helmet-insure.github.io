@@ -119,6 +119,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
                 if (confirmationNumber === 0) {
                     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
                     bus.$emit(`RELOAD_DATA_${type}`, { status: false });
+                    bus.$emit('REFRESH_BALANCE');
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -142,6 +143,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
                 bus.$emit(`CLOSE_STATUS_${type}`);
+                bus.$emit('REFRESH_BALANCE');
                 bus.$emit('DEPOSITE_LOADING', {
                     type: type,
                     status: false,
@@ -335,6 +337,7 @@ export const getPAYA = async (type) => {
                 if (confirmationNumber === 0) {
                     bus.$emit(`CLAIM_LOADING_${type}`);
                     bus.$emit(`RELOAD_DATA_${type}`);
+                    bus.$emit('REFRESH_BALANCE');
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -358,6 +361,7 @@ export const getPAYA = async (type) => {
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('REFRESH_BALANCE');
                 if (error && error.message) {
                     Message({
                         message: error && error.message,
@@ -397,6 +401,7 @@ export const getDoubleReward = async (type) => {
                 if (confirmationNumber === 0) {
                     bus.$emit(`CLAIM_LOADING_${type}`);
                     bus.$emit(`RELOAD_DATA_${type}`);
+                    bus.$emit('REFRESH_BALANCE');
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -420,6 +425,7 @@ export const getDoubleReward = async (type) => {
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit(`RELOAD_DATA_${type}`);
+                bus.$emit('REFRESH_BALANCE');
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 if (error && error.message) {
                     Message({
@@ -614,7 +620,7 @@ export const exitStake = async (type) => {
                 if (confirmationNumber === 0) {
                     bus.$emit(`EXIT_LOADING_${type}`);
                     bus.$emit(`RELOAD_DATA_${type}`);
-
+                    bus.$emit('REFRESH_BALANCE');
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
@@ -639,6 +645,7 @@ export const exitStake = async (type) => {
             .on('error', function(error, receipt) {
                 bus.$emit(`EXIT_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('REFRESH_BALANCE');
                 if (error && error.message) {
                     Message({
                         message: error && error.message,

@@ -32,9 +32,15 @@
         @click="openWallectSelect"
         >CONNECT WALLET</a
       >
-      <div v-else class="wallet-address" @click="openCurrentAccount">
-        <span>{{ accountText }}</span>
-        <i></i>
+      <div v-else class="address-wrap">
+        <div class="balance-wrap">
+          <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+          <span>{{ BalanceArray["HELMET"] }}</span>
+        </div>
+        <div class="wallet-address" @click="openCurrentAccount">
+          <span>{{ accountText }}</span>
+          <i></i>
+        </div>
       </div>
 
       <WallectSelect
@@ -85,6 +91,10 @@ export default {
     },
     routeObj() {
       return this.$route;
+    },
+    BalanceArray() {
+      let obj = this.$store.state.BalanceArray;
+      return obj;
     },
   },
   watch: {
@@ -192,8 +202,39 @@ export default {
         }
       }
     }
+    .address-wrap {
+      border-radius: 20px;
+      display: flex;
+      height: 36px;
+      align-items: center;
+      overflow: hidden;
+    }
+    .balance-wrap {
+      height: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 150, 0, 0.1);
+      padding: 0 12px 0 4px;
+      img {
+        width: 30px;
+        height: 30px;
+        margin-right: 4px;
+        text-align: center;
+      }
+      span {
+        min-width: 80px;
+        height: 20px;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 600;
+        color: #ff9600;
+        line-height: 20px;
+      }
+    }
     .wallet-address {
       padding: 0px 12px;
+      height: 100%;
       display: flex;
       align-items: center;
       background: #121212;
@@ -206,13 +247,15 @@ export default {
         border-radius: 50%;
         background-color: #14b465;
         margin-left: 8px;
+        border: 1px solid #fff;
       }
     }
     .connect-wallet-btn {
       display: block;
       background: #121212;
-      padding: 0px 12px;
+      padding: 0px 18px;
       color: #ffffff;
+      border-radius: 20px;
       &:hover {
         background: #2c2c2c;
       }
@@ -238,11 +281,11 @@ export default {
         }
       }
       .wallet-address {
-        height: 48px;
+        height: 40px;
       }
       .connect-wallet-btn {
-        height: 48px;
-        line-height: 48px;
+        height: 40px;
+        line-height: 40px;
         font-size: 16px;
       }
     }
@@ -303,6 +346,9 @@ export default {
         }
       }
       .nav-list {
+        display: none;
+      }
+      .address-wrap {
         display: none;
       }
       .wallet-address {

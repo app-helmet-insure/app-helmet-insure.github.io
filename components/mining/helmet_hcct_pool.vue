@@ -1,6 +1,7 @@
 <template>
   <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
+    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -491,6 +492,14 @@ export default {
       top: 0;
       transform: translateY(-5px);
     }
+    .finished {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 78px;
+      height: 78px;
+      transform: translateY(0px);
+    }
     > h3 {
       text-align: center;
     }
@@ -697,6 +706,14 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
+    }
+    .finished {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 78px;
+      height: 78px;
+      transform: translateY(0px);
     }
     > h3 {
       text-align: center;

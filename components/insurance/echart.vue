@@ -77,7 +77,7 @@ export default {
       upCover: "",
       dwCover: "",
       drawFlag: false,
-      RectWidth: 130,
+      RectWidth: 155,
     };
   },
   mounted() {
@@ -106,7 +106,7 @@ export default {
   watch: {
     locale(newValue, Val) {
       if (newValue == "en_US") {
-        this.RectWidth = 130;
+        this.RectWidth = 155;
       } else {
         this.RectWidth = 100;
       }

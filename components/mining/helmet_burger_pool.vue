@@ -747,7 +747,7 @@ export default {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 32px;
+          height: 55px;
           display: flex;
           margin-bottom: 8px;
           font-size: 24px;
@@ -760,6 +760,7 @@ export default {
             height: 32px;
           }
           p {
+            margin: 4px 0;
             height: 16px;
             background: rgba(255, 150, 0, 0.1);
             border-radius: 8px;

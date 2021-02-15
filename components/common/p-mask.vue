@@ -26,10 +26,17 @@
       @click="openWallectSelect"
       >Connect to a wallet</a
     >
-    <div v-else class="wallet-address" @click="openCurrentAccount">
-      <span>{{ accountText }}</span>
-      <i></i>
+    <div v-else class="address-wrap">
+      <div class="balance-wrap">
+        <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+        <span>{{ BalanceArray["HELMET"] }}</span>
+      </div>
+      <div class="wallet-address" @click="openCurrentAccount">
+        <span>{{ accountText }}</span>
+        <i></i>
+      </div>
     </div>
+
     <WallectSelect
       v-if="showWallectSelect"
       @close="closeWallectSelect"
@@ -106,6 +113,10 @@ export default {
     },
     localeList() {
       return this.$store.state.localeList;
+    },
+    BalanceArray() {
+      let obj = this.$store.state.BalanceArray;
+      return obj;
     },
     renderList() {
       return [
@@ -293,14 +304,46 @@ export default {
       }
     }
   }
-  .connect-wallet-btn {
+  .address-wrap {
+    position: absolute;
     margin-top: 30px;
+    border-radius: 20px;
+    display: flex;
+    height: 36px;
+    align-items: center;
+    overflow: hidden;
+  }
+  .balance-wrap {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 12px 0 4px;
+    background: rgba(255, 150, 0, 0.1);
+    img {
+      width: 30px;
+      height: 30px;
+      margin-right: 4px;
+    }
+    span {
+      min-width: 80px;
+      height: 20px;
+      font-size: 14px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 600;
+      color: #ff9600;
+      line-height: 20px;
+      text-align: center;
+    }
+  }
+  .connect-wallet-btn {
     display: block;
+    margin-top: 30px;
     width: 180px;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     background: transparent;
-    padding: 0px 12px;
+    padding: 0px 18px;
+    border-radius: 20px;
     background: #ff9600;
     font-weight: 500;
     color: #ffffff;
@@ -309,13 +352,11 @@ export default {
   }
   .wallet-address {
     display: flex;
-    margin-top: 30px;
     background: #ff9600;
-    height: 40px;
-    line-height: 40px;
+    height: 36px;
+    line-height: 36px;
     padding: 0px 12px;
     align-items: center;
-    width: 180px;
     span {
       font-size: 16px;
       font-weight: 500;

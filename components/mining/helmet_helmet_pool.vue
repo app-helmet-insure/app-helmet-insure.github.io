@@ -151,7 +151,7 @@ export default {
           unit: "",
         },
         {
-          text: this.$t("Table.PoolAPR"),
+          text: this.$t("Table.PoolAPY"),
           num: 0,
           color: "#00B900",
           unit: "",
@@ -239,24 +239,24 @@ export default {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
       // （1+日产量/总质押量）^365
-      let apy = fixD(
-        Math.pow(
-          precision.plus(1, precision.divide(74601.783, HelmetVolume)),
-          365
-        ) * 100,
-        2
-      );
-
       // let apy = fixD(
-      //   precision.times(
-      //     precision.divide(
-      //       precision.times(74601.783, 365),
-      //       Number(HelmetVolume)
-      //     ),
-      //     100
-      //   ),
+      //   Math.pow(
+      //     precision.plus(1, precision.divide(74601.783, HelmetVolume)),
+      //     365
+      //   ) * 100,
       //   2
       // );
+
+      let apy = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(74601.783, 365),
+            Number(HelmetVolume)
+          ),
+          100
+        ),
+        2
+      );
       this.apy = HelmetVolume ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },

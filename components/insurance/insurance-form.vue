@@ -174,7 +174,6 @@ export default {
   },
   methods: {
     getTime(coin) {
-      console.log(coin);
       switch (coin) {
         case "HELMET":
           return new Date(this.helmetTime) * 1;
@@ -250,7 +249,6 @@ export default {
         this.Rent = 0;
         return;
       }
-      console.log(newValue);
       let { dpr, indexPx, num, strikePrice, _expiry } = newValue;
       if (
         newValue.dpr &&

@@ -132,7 +132,7 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     data.category = getAddress(data.category);
     data.currency = getAddress(data.currency);
     data.settleToken = getAddress(data.settleToken);
-    let cwei = getWei(data.currency);
+    let cwei = getWei(data.category);
     let fix = cwei === 'lovelace' ? 6 : 18;
     // let fix = 18;
     data.expire = new Date(data.expire).getTime();
@@ -154,10 +154,13 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     // let priceFix = getStrikePriceFix(data_.category, data_.currency);
     // let priceUnit = getWeiWithFix(priceFix);
     // let price = fixD(precision.divide(1, data.price), fix);
-    let price = fixD(precision.divide(1, data.price));
+    console.log(cwei);
+    let price = fixD(precision.divide(1, data.price), fix);
+    console.log(price, precision.divide(1, data.price));
     // price = toWei(price, data_.currency);
     price = window.WEB3.utils.toWei(String(price), getWei(data_.category));
     // window.WEB3.utils.toWei(String(number), unit);
+    console.log(price);
     data.price = price;
 
     bus.$emit('OPEN_STATUS_DIALOG', {
@@ -821,6 +824,7 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
             callback('success');
         })
         .on('error', (err, receipt) => {
+            bus.$emit('CLOSE_STATUS_DIALOG');
             callback('failed');
         });
     return result;

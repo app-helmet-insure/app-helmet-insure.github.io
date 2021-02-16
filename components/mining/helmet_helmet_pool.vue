@@ -601,7 +601,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 313px;
+        height: 340px;
         padding: 30px 16px;
         .title {
           display: flex;

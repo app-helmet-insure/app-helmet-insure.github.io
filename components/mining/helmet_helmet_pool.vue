@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="index">
-        <p v-for="(item, index) in textList" :key="index">
+        <p v-for="(item, index) in textList" :key="index" v-if="index != 0">
           <span>{{ item.text }}</span>
           <span :style="`color:${item.color}`">{{ item.num }} </span>
         </p>

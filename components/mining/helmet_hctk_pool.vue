@@ -514,7 +514,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
 }
 .o_button {
   width: 100%;
@@ -522,7 +521,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
 }
 .loading_pic {
   display: block;
@@ -742,8 +740,10 @@ export default {
           }
           > .button {
             > button {
-              font-weight: 500;
+              font-weight: 550;
+              border-radius: 6px;
             }
+
             > p {
               display: flex;
               justify-content: space-between;
@@ -968,7 +968,8 @@ export default {
           }
           > .button {
             > button {
-              font-weight: 500;
+              font-weight: 550;
+              border-radius: 6px;
             }
             > p {
               display: flex;

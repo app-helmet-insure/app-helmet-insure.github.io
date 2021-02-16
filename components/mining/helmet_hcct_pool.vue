@@ -482,20 +482,7 @@ export default {
   fill: #787878;
   overflow: hidden;
 }
-.b_button {
-  width: 100%;
-  margin-top: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.o_button {
-  width: 100%;
-  margin-top: 11px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .loading_pic {
   display: block;
   width: 24px;
@@ -721,7 +708,24 @@ export default {
           }
           > .button {
             > button {
-              font-weight: 500;
+              font-weight: 550;
+              border-radius: 6px;
+            }
+            .b_button {
+              width: 100%;
+              margin-top: 11px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 6px;
+            }
+            .o_button {
+              width: 100%;
+              margin-top: 11px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 6px;
             }
             > p {
               display: flex;
@@ -961,7 +965,7 @@ export default {
           }
           > .button {
             > button {
-              font-weight: 500;
+              font-weight: 550;
             }
             > p {
               display: flex;

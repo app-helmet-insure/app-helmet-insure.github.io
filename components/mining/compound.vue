@@ -143,4 +143,70 @@ export default {
     }
   }
 }
+@media screen and (max-width: 750px) {
+  .compound {
+    width: 90% !important;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 3px;
+    padding: 35px 30px;
+    .title {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      span {
+        font-size: 16px;
+        font-weight: 600;
+        color: #121212;
+        line-height: 19px;
+      }
+      i {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-image: url("../../assets/img/icon/guanbi.png");
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+    }
+    .content {
+      margin: 40px 0;
+      p {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ff9600;
+        line-height: 20px;
+        text-align: center;
+      }
+    }
+    .button {
+      display: flex;
+      justify-content: center;
+      button {
+        padding: 10px 26px;
+        min-width: 100px;
+        margin: 0px 6px;
+      }
+      .orange {
+        border: 1px solid #ff9600;
+        font-size: 14px;
+        font-weight: 500;
+        color: #ff9600;
+        background: transparent;
+      }
+      .black {
+        border: 1px solid #121212;
+        background: #121212;
+        font-size: 14px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+    }
+  }
+}
 </style>

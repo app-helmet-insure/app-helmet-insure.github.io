@@ -8,6 +8,7 @@
     <Onepager></Onepager>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->
+    <Compound></Compound>
     <Deposite
       :current="current"
       :TradeType="TradeType"
@@ -27,6 +28,7 @@ import Protect from "~/components/mining/protect.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Withdraw from "~/components/mining/withdraw-dialog.vue";
 import Onepager from "~/components/mining/onepager.vue";
+import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "default",
   components: {
@@ -39,6 +41,7 @@ export default {
     Deposite,
     Withdraw,
     Onepager,
+    Compound,
   },
   data() {
     return {

@@ -1,4 +1,4 @@
-import { Factory, Order, expERC20, Deposite } from './index';
+import { Factory, Order, expERC20, Deposite, HelmetMining } from './index';
 import {
     getAddress,
     getContract,
@@ -18,6 +18,64 @@ const netObj = {
     3: 'ropsten.',
     4: 'rinkeby.',
     56: 'BSC',
+};
+export const compound = async (address,type) => {
+    const charID = window.chainID;
+    let adress = address;
+    if (address.indexOf('0x') === -1) {
+        adress = getContract(address, charID);
+    }
+    let result;
+    const account = window.CURRENTADDRESS;
+    const HelmetMetheds = await HelmetMining(adress);
+    bus.$emit('CLOSE_COMPOUND');
+    try {
+        result = HelmetMetheds.methods
+            .compound()
+            .send({ from: account })
+            .on('transactionHash', function(hash) {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    type: 'submit',
+                    conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                });
+            })
+            .on('confirmation', function(confirmationNumber, receipt) {
+                if (confirmationNumber === 0) {
+                    if (window.statusDialog) {
+                        bus.$emit('CLOSE_STATUS_DIALOG');
+                        bus.$emit('OPEN_STATUS_DIALOG', {
+                            type: 'success',
+                            title: 'Successfully Compound',
+                            conTit:
+                                '<div>Compound activated successfully</div>',
+                            conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                        });
+                    } else {
+                        Message({
+                            message: 'Compound activated successfully',
+                            type: 'success',
+                        });
+                    }
+                    setTimeout(() => {
+                        bus.$emit('REFRESH_ASSETS');
+                        bus.$emit('REFRESH_MINING');
+                        bus.$emit('REFRESH_BALANCE');
+                        bus.$emit(`RELOAD_DATA_${type}`);
+                    }, 1000);
+                }
+            })
+            .on('error', function(error, receipt) {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('REFRESH_BALANCE');
+                if (error && error.message) {
+                    Message({
+                        message: error && error.message,
+                        type: 'error',
+                    });
+                }
+            });
+    } catch {}
 };
 export const totalSupply = async (address) => {
     const charID = window.chainID;
@@ -87,19 +145,13 @@ export const toDeposite = async (type, data, flag, callBack) => {
         if (flag) {
             await oneKeyArrpove(Contract, type, amount, (res) => {
                 if (res === 'failed') {
-                    bus.$emit('DEPOSITE_LOADING', {
-                        type: type,
-                        status: false,
-                    });
+                    bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
                 }
             });
         } else {
             await approve2(Contract, type, num, (res) => {
                 if (res === 'failed') {
-                    bus.$emit('DEPOSITE_LOADING', {
-                        type: type,
-                        status: false,
-                    });
+                    bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
                 }
             });
         }
@@ -118,7 +170,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
-                    bus.$emit(`RELOAD_DATA_${type}`, { status: false });
+                    bus.$emit(`RELOAD_DATA_${type}`);
                     bus.$emit('REFRESH_BALANCE');
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
@@ -142,12 +194,9 @@ export const toDeposite = async (type, data, flag, callBack) => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
-                bus.$emit(`CLOSE_STATUS_${type}`);
+                bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                bus.$emit('DEPOSITE_LOADING', {
-                    type: type,
-                    status: false,
-                });
+
                 if (error && error.message) {
                     Message({
                         message: error && error.message,

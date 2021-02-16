@@ -1,7 +1,9 @@
 <template>
   <div class="mining_container">
-    <HelmetHctkPool></HelmetHctkPool>
-    <HelmetHcctPool></HelmetHcctPool>
+    <div class="pool_wrap">
+      <HelmetHctkPool></HelmetHctkPool>
+      <HelmetHcctPool></HelmetHcctPool>
+    </div>
     <Deposite
       :current="current"
       :TradeType="TradeType"
@@ -65,10 +67,16 @@ export default {
 .mining_container {
   background: #f7f7fa;
 }
+
 @media screen and (min-width: 750px) {
   .mining-list-title {
     height: 60px;
     line-height: 60px;
+  }
+  .pool_wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 80px;
   }
 }
 @media screen and (max-width: 750px) {

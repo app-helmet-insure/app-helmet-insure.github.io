@@ -10,12 +10,6 @@
             100%
             <span> HELMET </span>
           </p>
-          <!-- <p>
-            <img src="~/assets/img/helmet/bnbCoin.png" alt="" />
-
-            50%
-            <span> BNB </span>
-          </p> -->
         </div>
       </div>
       <div class="index">
@@ -63,6 +57,15 @@
             <span>My Pool Share：</span>
             <span> {{ balance.Share }} %</span>
           </p>
+          <button
+            @click="toCompound"
+            :class="
+              stakeLoading ? 'disable o_button compound' : 'compound o_button'
+            "
+          >
+            <i :class="stakeLoading ? 'loading_pic' : ''"></i
+            >{{ $t("Table.Compound") }}
+          </button>
         </div>
       </div>
       <div class="withdraw">
@@ -119,21 +122,14 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
-  CangetUNI,
   getPAYA,
   exitStake,
-  getLastTime,
-  approveStatus,
   getBalance,
   toDeposite,
-  getMined,
-  WithdrawAvailable,
-  getAllHelmet,
-  Rewards,
   RewardsDuration,
+  compound,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
@@ -295,6 +291,14 @@ export default {
       let type = "HELMETPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
+    // 复投
+    toCompound() {
+      this.$bus.$emit("OPEN_COMPOUND", {
+        title: "Compound HELMET Earned",
+        number: this.balance.Helmet,
+        pool: "HELMETPOOL",
+      });
+    },
     // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
@@ -347,6 +351,10 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
+}
+.compound {
+  width: auto !important;
+  min-width: 106px;
 }
 .disable {
   pointer-events: none;
@@ -432,7 +440,7 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 293px;
+        height: 313px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -593,7 +601,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
+        height: 313px;
         padding: 30px 16px;
         .title {
           display: flex;

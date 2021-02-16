@@ -2,6 +2,7 @@
   <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
+    <img class="circle" src="~/assets/img/helmet/rightCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -21,7 +22,7 @@
               <span> HELMET </span>
             </p>
           </div>
-          <p v-if="list.DownTime">
+          <p :style="list.DonwTime ? '' : 'visibility: hidden;'">
             <span>
               {{ $t("Table.SurplusTime") }}：
               <span>
@@ -39,41 +40,62 @@
       </div>
     </div>
     <div class="pool">
-      <div class="deposit">
-        <div class="title">
-          <span>{{ $t("Table.Deposit") }}</span>
-          <p>
-            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
-            {{ $t("Table.DAvailable") }}
-          </p>
-        </div>
-        <div class="content">
-          <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
-          <div class="input">
-            <input name="deposit" type="text" v-model="DepositeNum" />
-            <span @click="DepositeNum = balance.Deposite">{{
-              $t("Table.Max")
-            }}</span>
+      <div class="pool_tab">
+        <button
+          :class="
+            actionType == 'deposit'
+              ? 'deposit_btn deposit_active'
+              : 'deposit_btn'
+          "
+          @click="actionType = 'deposit'"
+        >
+          {{ $t("Table.Deposit") }}
+        </button>
+        <button
+          :class="
+            actionType == 'withdraw'
+              ? 'withdraw_btn withdraw_active'
+              : 'withdraw_btn'
+          "
+          @click="actionType = 'withdraw'"
+        >
+          {{ $t("Table.Withdraw") }}
+        </button>
+      </div>
+      <div class="pool_content">
+        <div class="deposit" v-show="actionType == 'deposit'">
+          <div class="title">
+            <p>
+              {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
+              {{ $t("Table.DAvailable") }}
+            </p>
           </div>
-        </div>
-        <div class="button">
-          <button
-            @click="toDeposite"
-            :class="stakeLoading ? 'disable b_button' : 'b_button'"
-            style="background: #ccc !important; pointer-events: none"
-          >
-            <i :class="stakeLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ConfirmDeposit") }}
-          </button>
-          <p>
-            <span
-              >{{ $t("Table.MyDeposits") }}/{{
-                $t("Table.TotalDeposited")
-              }}：</span
+          <div class="content">
+            <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
+            <div class="input">
+              <input name="deposit" type="text" v-model="DepositeNum" />
+              <span @click="DepositeNum = balance.Deposite">{{
+                $t("Table.Max")
+              }}</span>
+            </div>
+          </div>
+          <div class="button">
+            <button
+              @click="toDeposite"
+              :class="stakeLoading ? 'disable b_button' : 'b_button'"
+              style="background: #ccc !important; pointer-events: none"
             >
-            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
-          </p>
-          <section>
+              <i :class="stakeLoading ? 'loading_pic' : ''"></i
+              >{{ $t("Table.ConfirmDeposit") }}
+            </button>
+            <p>
+              <span
+                >{{ $t("Table.MyDeposits") }}/{{
+                  $t("Table.TotalDeposited")
+                }}：</span
+              >
+              <span> {{ balance.Withdraw }}/{{ balance.TotalLPT }} LPT</span>
+            </p>
             <p>
               <span>My Pool Share：</span>
               <span> {{ balance.Share }} %</span>
@@ -83,79 +105,84 @@
               target="_blank"
               >Get LONG-HELMET LPT</a
             >
-          </section>
-        </div>
-        <div class="ContractAddress">
-          <span>Long Contract Address：</span>
-          <p>
-            0x17934fef9fc93128858e9945261524ab0581612e<i
-              class="copy"
-              id="copy_default"
-              @click="
-                copyAdress($event, '0x17934fef9fc93128858e9945261524ab0581612e')
-              "
-            ></i>
-          </p>
-        </div>
-      </div>
-      <div class="withdraw">
-        <div class="title">
-          <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
-        </div>
-        <div class="content">
-          <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
-          <div class="input">
-            <input
-              name="withdraw"
-              type="text"
-              v-model="balance.Withdraw"
-              disabled
-            />
-            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
-            <span @click="WithdrawNum = balance.Withdraw">{{
-              $t("Table.Max")
-            }}</span>
+          </div>
+          <div class="ContractAddress">
+            <span>Long Contract Address：</span>
+            <p>
+              0x17934fef9fc93128858e9945261524ab0581612e<i
+                class="copy"
+                id="copy_default"
+                @click="
+                  copyAdress(
+                    $event,
+                    '0x17934fef9fc93128858e9945261524ab0581612e'
+                  )
+                "
+              ></i>
+            </p>
           </div>
         </div>
-        <div class="button">
-          <button
-            @click="toExit"
-            :class="exitLoading ? 'disable b_button' : 'b_button'"
-          >
-            <i :class="exitLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ConfirmWithdraw") }} &
-            {{ $t("Table.ClaimRewards") }}
-          </button>
-          <p>
-            <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
-            <span>
+        <div class="withdraw" v-show="actionType == 'withdraw'">
+          <div class="title">
+            <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
+          </div>
+          <div class="content">
+            <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
+            <div class="input">
+              <input
+                name="withdraw"
+                type="text"
+                v-model="balance.Withdraw"
+                disabled
+              />
+              <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
+              <span @click="WithdrawNum = balance.Withdraw">{{
+                $t("Table.Max")
+              }}</span>
+            </div>
+          </div>
+          <div class="button">
+            <button
+              @click="toExit"
+              :class="exitLoading ? 'disable b_button' : 'b_button'"
+            >
+              <i :class="exitLoading ? 'loading_pic' : ''"></i
+              >{{ $t("Table.ConfirmWithdraw") }} &
+              {{ $t("Table.ClaimRewards") }}
+            </button>
+            <p>
+              <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
               <span>
-                {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
-                HCCT</span
-              >
-            </span>
-          </p>
-          <button
-            @click="toClaim"
-            :class="claimLoading ? 'disable o_button' : 'o_button'"
-            style="background: #ccc !important; pointer-events: none"
-          >
-            <i :class="claimLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ClaimAllRewards") }}
-          </button>
-        </div>
-        <div class="ContractAddress">
-          <span>HCCT Contract Address：</span>
-          <p>
-            0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5<i
-              class="copy"
-              id="copy_default"
-              @click="
-                copyAdress($event, '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5')
-              "
-            ></i>
-          </p>
+                <span>
+                  {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
+                  HCCT</span
+                >
+              </span>
+            </p>
+            <button
+              @click="toClaim"
+              :class="claimLoading ? 'disable o_button' : 'o_button'"
+              style="background: #ccc !important; pointer-events: none"
+            >
+              <i :class="claimLoading ? 'loading_pic' : ''"></i
+              >{{ $t("Table.ClaimAllRewards") }}
+            </button>
+          </div>
+          <div class="ContractAddress">
+            <span>HCCT Contract Address：</span>
+            <p>
+              0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5<i
+                class="copy"
+                id="copy_default"
+                @click="
+                  copyAdress(
+                    $event,
+                    '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5'
+                  )
+                "
+              ></i>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -239,6 +266,7 @@ export default {
       exitLoading: false,
       helmetPrice: 0,
       apy: 0,
+      actionType: "deposit",
     };
   },
   mounted() {
@@ -481,12 +509,19 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
+  .miningTime {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+  }
   .hcct_pool {
+    width: 500px;
     margin-bottom: 20px;
-    height: 506px;
     background: #ffffff;
     padding: 40px;
     position: relative;
+    border-radius: 10px;
     > img {
       position: absolute;
       width: 36px;
@@ -495,24 +530,26 @@ export default {
       transform: translateY(-5px);
     }
     .finished {
-      position: absolute;
-      right: 0;
+      width: 102px;
+      height: 102px;
       top: 0;
-      width: 78px;
-      height: 78px;
-      transform: translateY(0px);
+      right: 0;
+      transform: translateY(0);
+    }
+    .circle {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      left: 0;
+      transform: translateY(0);
     }
     > h3 {
       text-align: center;
     }
     .text {
-      display: flex;
-      // padding: 0 140px;
-      justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
-
         h3 {
           height: 32px;
           display: flex;
@@ -550,9 +587,10 @@ export default {
             }
           }
         }
+
         > div {
           display: flex;
-          align-items: center;
+          flex-direction: column;
           > div {
             display: flex;
             p {
@@ -572,25 +610,26 @@ export default {
               }
             }
           }
-          p {
+          > p {
             color: #919aa6;
             font-size: 14px;
+            margin: 5px 0;
           }
         }
       }
       .index {
         display: flex;
+        justify-content: space-between;
         > p {
           display: flex;
           flex-direction: column;
-          margin-left: 100px;
           span {
             &:nth-of-type(1) {
               font-size: 14px;
               color: #919aa6;
             }
             &:nth-of-type(2) {
-              margin-top: 12px;
+              margin-top: 8px;
             }
           }
         }
@@ -598,151 +637,173 @@ export default {
     }
     .pool {
       display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      > div {
-        width: 540px;
-        height: 323px;
-        padding: 30px 40px;
-        .title {
-          display: flex;
-          justify-content: space-between;
-          font-weight: 500;
-          line-height: 16px;
-          p {
-            color: #919aa6;
-            font-size: 14px;
-            line-height: 16px;
-          }
+      flex-direction: column;
+      background: #f7f7fa;
+      border-radius: 10px;
+      margin-top: 20px;
+      padding: 20px 30px;
+      box-sizing: border-box;
+      min-height: 352px;
+      .pool_tab {
+        display: flex;
+        button {
+          min-width: 50%;
+          height: 40px;
+          border-radius: 6px;
+          background: transparent;
+          font-weight: 550;
+          font-size: 16px;
+          margin: 0 4px;
         }
-        .content {
-          margin-top: 20px;
-          label {
-            font-size: 14px;
-            color: #919aa6;
-            line-height: 20px;
-          }
-          input {
-            width: 100%;
-            height: 40px;
-            border: 1px solid #cfcfd2;
-            background: transparent;
-            padding: 0 100px 0 12px;
-            color: #121212;
-          }
-          .input {
-            margin-top: 4px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            span {
-              position: absolute;
-              right: 15px;
-              font-size: 14px;
-              color: #121212;
-              cursor: pointer;
+        .deposit_btn {
+          color: #00b900;
+        }
+        .withdraw_btn {
+          color: #ff6400;
+        }
+        .deposit_active {
+          color: #ffffff;
+          background: #00b900;
+        }
+        .withdraw_active {
+          color: #ffffff;
+          background: #ff6400;
+        }
+      }
+      .pool_content {
+        .deposit,
+        .withdraw {
+          > .title {
+            p {
+              font-size: 13px;
+              margin: 12px 0 10px 0;
             }
           }
-        }
-        .button {
-          section {
-            a {
-              display: block;
-              margin-top: 4px;
+          > .content {
+            label {
               font-size: 14px;
-              font-weight: 500;
-              color: #ff9600;
-              line-height: 20px;
-              text-decoration: underline;
+              color: #919aa6;
             }
-          }
-          p {
-            margin-top: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              font-size: 14px;
-              color: #121212;
-              > &:first-of-type {
+            .input {
+              width: 100%;
+              height: 40px;
+              position: relative;
+              margin-top: 6px;
+              display: flex;
+              align-items: center;
+              input {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #cfcfd2;
+                border-radius: 6px;
+                padding: 0 100px 0 12px;
                 font-size: 14px;
-                color: #919aa6;
+                color: #121212;
+              }
+              input:focus {
+                border: 1px solid #ff9600;
+              }
+              span {
+                position: absolute;
+                display: block;
+                right: 12px;
+                padding: 6px 8px;
+                border: 1px solid #ff9600;
+                border-radius: 6px;
+                font-size: 12px;
+                color: #ff9600;
+                cursor: pointer;
+                &:hover {
+                  color: #ff8200;
+                }
               }
             }
           }
-        }
-      }
-      .deposit {
-        border-top: 2px solid #00b900;
-        background: rgba(0, 185, 0, 0.04);
-        .title {
-          > span {
-            color: #00b900;
+          > .button {
+            > button {
+              font-weight: 500;
+            }
+            > p {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 13px;
+              color: #919aa6;
+              margin-top: 8px;
+              span:nth-of-type(2) {
+                color: #121212;
+                font-weight: 550;
+              }
+            }
+            > a {
+              font-size: 13px;
+              font-weight: 550;
+              color: #ff9600;
+              margin-top: 8px;
+              display: block;
+            }
           }
         }
-      }
-      .withdraw {
-        border-top: 2px solid #ff6400;
-        background: rgba(255, 100, 0, 0.04);
-        .title {
-          > span {
-            color: #ff6400;
-          }
+        .withdraw {
         }
       }
     }
   }
 }
 @media screen and (max-width: 750px) {
-  .ContractAddress {
-    line-height: 20px;
-  }
   .hcct_pool {
+    width: 100%;
+    margin-bottom: 20px;
     background: #ffffff;
     padding: 40px 16px;
     position: relative;
-    margin-top: 10px;
+    border-radius: 10px;
     > img {
       position: absolute;
       width: 36px;
       height: 36px;
       top: 0;
-      transform: translateY(-5px);
     }
-    .finished {
-      position: absolute;
-      right: 0;
+    .circle {
+      width: 102px;
+      height: 102px;
       top: 0;
-      width: 78px;
-      height: 78px;
-      transform: translateY(0px);
+      right: 0;
     }
     > h3 {
       text-align: center;
     }
     .text {
-      display: flex;
-      flex-direction: column;
-      // padding: 0 140px;
-      // justify-content: space-between;
       .coin {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 55px;
           display: flex;
-          margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
           flex-direction: column;
-          align-items: flex-start;
           img {
             margin-left: 4px;
             width: 32px;
             height: 32px;
           }
+          .finished {
+            width: 102px;
+            height: 102px;
+            top: 0;
+            right: 0;
+            transform: translateY(0);
+          }
+          .circle {
+            width: 102px;
+            height: 102px;
+            top: 0;
+            right: 0;
+            transform: translateY(0);
+          }
           p {
-            margin: 4px 0;
+            margin: 8px 0;
+            align-self: flex-start;
             height: 16px;
             background: rgba(255, 150, 0, 0.1);
             border-radius: 8px;
@@ -766,12 +827,13 @@ export default {
             }
           }
         }
+
         > div {
           display: flex;
           flex-direction: column;
           > div {
             display: flex;
-            > p {
+            p {
               display: flex;
               align-items: center;
               color: #121212;
@@ -789,17 +851,13 @@ export default {
             }
           }
           > p {
-            margin-top: 5px;
-            span {
-              color: #919aa6;
-              font-size: 14px;
-              margin-left: 0 !important;
-            }
+            color: #919aa6;
+            font-size: 14px;
+            margin: 5px 0;
           }
         }
       }
       .index {
-        margin-top: 10px;
         display: flex;
         justify-content: space-between;
         > p {
@@ -811,7 +869,7 @@ export default {
               color: #919aa6;
             }
             &:nth-of-type(2) {
-              margin-top: 12px;
+              margin-top: 8px;
             }
           }
         }
@@ -819,118 +877,110 @@ export default {
     }
     .pool {
       display: flex;
-      // justify-content: space-between;
       flex-direction: column;
-      margin-top: 30px;
-      > div {
-        height: 343px;
-        padding: 30px 16px;
-        .title {
-          display: flex;
-          justify-content: space-between;
-          font-weight: 500;
-          line-height: 16px;
-          p {
-            color: #919aa6;
-            font-size: 14px;
-            line-height: 16px;
-          }
+      background: #f7f7fa;
+      border-radius: 10px;
+      margin-top: 20px;
+      padding: 20px 16px;
+      box-sizing: border-box;
+      min-height: 352px;
+      .pool_tab {
+        display: flex;
+        button {
+          min-width: 50%;
+          height: 40px;
+          border-radius: 6px;
+          background: transparent;
+          font-weight: 550;
+          font-size: 16px;
+          margin: 0 4px;
         }
-        .content {
-          margin-top: 20px;
-          label {
-            font-size: 14px;
-            color: #919aa6;
-            line-height: 20px;
-          }
-          input {
-            width: 100%;
-            height: 40px;
-            border: 1px solid #cfcfd2;
-            background: transparent;
-            padding: 0 100px 0 12px;
-            color: #121212;
-          }
-          .input {
-            margin-top: 4px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            span {
-              position: absolute;
-              right: 15px;
-              font-size: 14px;
-              color: #121212;
-              cursor: pointer;
-            }
-          }
+        .deposit_btn {
+          color: #00b900;
+        }
+        .withdraw_btn {
+          color: #ff6400;
+        }
+        .deposit_active {
+          color: #ffffff;
+          background: #00b900;
+        }
+        .withdraw_active {
+          color: #ffffff;
+          background: #ff6400;
         }
       }
-      .deposit {
-        border-top: 2px solid #00b900;
-        background: rgba(0, 185, 0, 0.04);
-        .title {
-          > span {
-            color: #00b900;
+      .pool_content {
+        .deposit,
+        .withdraw {
+          > .title {
+            p {
+              font-size: 13px;
+              margin: 12px 0 10px 0;
+            }
           }
-        }
-        .button {
-          section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            a {
+          > .content {
+            label {
+              font-size: 14px;
+              color: #919aa6;
+            }
+            .input {
+              width: 100%;
+              height: 40px;
+              position: relative;
+              margin-top: 6px;
+              display: flex;
+              align-items: center;
+              input {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #cfcfd2;
+                border-radius: 6px;
+                padding: 0 100px 0 12px;
+                font-size: 14px;
+                color: #121212;
+              }
+              input:focus {
+                border: 1px solid #ff9600;
+              }
+              span {
+                position: absolute;
+                display: block;
+                right: 12px;
+                padding: 6px 8px;
+                border: 1px solid #ff9600;
+                border-radius: 6px;
+                font-size: 12px;
+                color: #ff9600;
+                cursor: pointer;
+                &:hover {
+                  color: #ff8200;
+                }
+              }
+            }
+          }
+          > .button {
+            > button {
               font-weight: 500;
+            }
+            > p {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 13px;
+              color: #919aa6;
+              margin-top: 8px;
+              span:nth-of-type(2) {
+                color: #121212;
+                font-weight: 550;
+              }
+            }
+            > a {
+              font-size: 13px;
+              font-weight: 550;
               color: #ff9600;
-              font-size: 14px;
-              line-height: 20px;
-              text-decoration: underline;
-            }
-          }
-          p {
-            margin-top: 11px;
-            display: flex;
-            flex-direction: column;
-            span {
-              font-size: 14px;
-              color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
-              span {
-                display: flex;
-                flex-direction: column;
-              }
-            }
-          }
-        }
-      }
-      .withdraw {
-        border-top: 2px solid #ff6400;
-        background: rgba(255, 100, 0, 0.04);
-        .title {
-          > span {
-            color: #ff6400;
-          }
-        }
-        .button {
-          p {
-            margin-top: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              font-size: 14px;
-              color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
-              span {
-                display: flex;
-                flex-direction: column;
-              }
+              margin-top: 8px;
+              display: block;
             }
           }
         }

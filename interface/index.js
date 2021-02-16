@@ -5,6 +5,7 @@ import factory_abi from '~/abi/factory_abi.json';
 import order_abi from '~/abi/order_abi.json';
 import deposite_abi from '~/abi/deposite_abi.json';
 import token_abi from '~/abi/token_abi.json';
+import helmet_abi from '~/abi/helmet_abi.json';
 import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 
 export const getCurrentAccount = async () => {
@@ -82,4 +83,7 @@ export const TokenExpERC20 = async (address) => {
 };
 export const TokenOrder = async (address) => {
     return await new window.WEB3.eth.Contract(order_abi.abi, address);
+};
+export const HelmetMining = async (address) => {
+    return await new window.WEB3.eth.Contract(helmet_abi.abi, address);
 };

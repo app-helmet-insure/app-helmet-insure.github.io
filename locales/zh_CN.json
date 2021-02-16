@@ -100,6 +100,7 @@
     "Withdraw": "取回",
     "AmountWithdraw": "输入取回量",
     "ConfirmWithdraw": "赎回质押",
+    "Compound": "复投",
     "ConfirmDeposit": "质押挖矿",
     "ClaimRewards": "领取奖励",
     "HELMETRewards": "待领取奖励",

@@ -507,6 +507,14 @@ export default {
             color: #00b900;
           }
         }
+        > .button {
+          .compound {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+          }
+        }
       }
       .withdraw {
         border-top: 2px solid #ff6400;

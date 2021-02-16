@@ -147,7 +147,7 @@ export default {
           unit: "",
         },
         {
-          text: this.$t("Table.PoolAPY"),
+          text: this.$t("Table.PoolAPR"),
           num: 0,
           color: "#00B900",
           unit: "",
@@ -235,24 +235,24 @@ export default {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
       // （1+日产量/总质押量）^365
-      // let apy = fixD(
-      //   Math.pow(
-      //     precision.plus(1, precision.divide(74601.783, HelmetVolume)),
-      //     365
-      //   ) * 100,
-      //   2
-      // );
-
       let apy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(74601.783, 365),
-            Number(HelmetVolume)
-          ),
-          100
-        ),
+        Math.pow(
+          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
+          365
+        ) * 100,
         2
       );
+
+      // let apy = fixD(
+      //   precision.times(
+      //     precision.divide(
+      //       precision.times(33057.57, 365),
+      //       Number(HelmetVolume)
+      //     ),
+      //     100
+      //   ),
+      //   2
+      // );
       this.apy = HelmetVolume ? apy : 0;
       this.textList[1].num = this.apy + "%";
     },
@@ -275,7 +275,7 @@ export default {
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD(74601.783 * 7, 2) + " HELMET";
+      this.textList[0].num = fixD(33057.57 * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },

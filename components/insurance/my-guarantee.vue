@@ -314,7 +314,7 @@ export default {
       let currentTime = new Date().getTime();
       let exerciseRes;
       let bidIDArr;
-      
+
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
@@ -547,6 +547,8 @@ export default {
       let volume = await getBalance(
         "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5"
       );
+      let currentTime = new Date().getTime();
+
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
         let resultItem;
@@ -572,6 +574,18 @@ export default {
           outPrice: fromWei(10000000000000000000, Token),
           outPriceUnit: "HELMET",
         };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
         return resultItem;
       }
     },
@@ -584,6 +598,7 @@ export default {
         "0x936909e72951a19a5e1d75a109b0d34f06f39838",
         "CTK"
       );
+      let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x936909e72951a19a5e1d75a109b0d34f06f39838");
         let resultItem;
@@ -610,6 +625,18 @@ export default {
           outPriceUnit: "HELMET",
           unit: 6,
         };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
         return resultItem;
       }
     },
@@ -621,6 +648,7 @@ export default {
       let volume = await getBalance(
         "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa"
       );
+      let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa");
         let resultItem;
@@ -646,6 +674,18 @@ export default {
           outPrice: fromWei(70000000000000000, Token),
           outPriceUnit: "BNB",
         };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
         return resultItem;
       }
     },
@@ -657,6 +697,7 @@ export default {
       let volume = await getBalance(
         "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417"
       );
+      let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417");
         let resultItem;
@@ -683,6 +724,18 @@ export default {
           outPriceUnit: "BUSD",
           showType: "img",
         };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
         return resultItem;
       }
     },

@@ -512,6 +512,7 @@ export default {
       let volume = await getBalance(
         "0x17934fef9fc93128858e9945261524ab0581612e"
       );
+      let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
         let resultItem;
@@ -536,6 +537,18 @@ export default {
           outPrice: fromWei(30000000000000000, Token),
           outPriceUnit: "BNB",
         };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
         return resultItem;
       }
     },

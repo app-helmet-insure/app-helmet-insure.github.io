@@ -59,7 +59,7 @@
           "
           @click="actionType = 'withdraw'"
         >
-          {{ $t("Table.Withdraw") }}
+          {{ $t("Table.Claim") }}
         </button>
       </div>
       <div class="pool_content">

@@ -84,13 +84,13 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
 };
 
@@ -160,13 +160,13 @@ export const settle = async (short, data) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
     // }
 };
@@ -242,12 +242,12 @@ export const onExercise = async (data, callBack) => {
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
 
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
 };

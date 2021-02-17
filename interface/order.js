@@ -115,12 +115,12 @@ export const onIssueSell = async (data_, callBack) => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSell', error);
@@ -228,12 +228,12 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSellOnETH', error);
@@ -521,12 +521,12 @@ export const claim = async () => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);

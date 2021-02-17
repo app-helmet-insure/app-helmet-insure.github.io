@@ -82,12 +82,12 @@ export const recruit = async (address, num) => {
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {}
 };

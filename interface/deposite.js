@@ -19,7 +19,7 @@ const netObj = {
     4: 'rinkeby.',
     56: 'BSC',
 };
-export const compound = async (address,type) => {
+export const compound = async (address, type) => {
     const charID = window.chainID;
     let adress = address;
     if (address.indexOf('0x') === -1) {
@@ -68,12 +68,12 @@ export const compound = async (address,type) => {
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch {}
 };
@@ -197,12 +197,12 @@ export const toDeposite = async (type, data, flag, callBack) => {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
 
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);
@@ -294,12 +294,12 @@ export const toWithdraw = async (type, data, flag, callBack) => {
                     type: type,
                     status: false,
                 });
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);
@@ -411,12 +411,12 @@ export const getPAYA = async (type) => {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);
@@ -476,12 +476,12 @@ export const getDoubleReward = async (type) => {
                 bus.$emit(`RELOAD_DATA_${type}`);
                 bus.$emit('REFRESH_BALANCE');
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);
@@ -695,12 +695,12 @@ export const exitStake = async (type) => {
                 bus.$emit(`EXIT_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log(error);

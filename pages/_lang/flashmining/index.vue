@@ -1,11 +1,11 @@
 <template>
   <div class="mining_container">
     <div class="pool_wrap">
+      <HelmetBnb500Pool></HelmetBnb500Pool>
       <HelmetHctkPool></HelmetHctkPool>
-      <HelmetHcctPool></HelmetHcctPool>
     </div>
     <div class="pool_wrap">
-      <HelmetBnb500Pool></HelmetBnb500Pool>
+      <HelmetHcctPool></HelmetHcctPool>
     </div>
     <Compound></Compound>
     <Deposite

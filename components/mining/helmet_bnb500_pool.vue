@@ -2,12 +2,12 @@
   <div class="hctk_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="circle" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img class="circle right" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
           <span>{{ list.name }}</span>
-          <p @click="showOnepager"><i></i>What is hCTK token？</p>
+          <p @click="showOnepager"><i></i>What is BNB500 token？</p>
         </h3>
         <div>
           <div>
@@ -219,7 +219,7 @@ export default {
     return {
       list: {
         name: "hCTK-HELMET",
-        dueDate: "2021-03-21 00:00",
+        dueDate: "2021-02-29 00:00",
         DownTime: "--",
       },
       textList: [
@@ -323,7 +323,7 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is HCCT?",
+        title: "What is BNB500?",
         text: [
           "HCCT is the abbreviation of Helmet Cover Cake TokenLiterally, it is the CAKE Cover Miss Out policy ( it is more like the call option of CAKE )",
           "Underlying asset: Cake",
@@ -563,8 +563,13 @@ export default {
       width: 102px;
       height: 102px;
       top: 0;
-      right: 0;
       transform: translateY(0);
+    }
+    .right {
+      right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;
@@ -792,8 +797,14 @@ export default {
       width: 102px;
       height: 102px;
       top: 0;
-      right: 0;
+
       transform: translateY(0);
+    }
+    .right {
+      right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;

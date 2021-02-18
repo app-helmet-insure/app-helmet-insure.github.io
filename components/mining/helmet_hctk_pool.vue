@@ -2,7 +2,7 @@
   <div class="hctk_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="circle" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img class="circle left" src="~/assets/img/helmet/rightCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -562,8 +562,13 @@ export default {
       width: 102px;
       height: 102px;
       top: 0;
-      right: 0;
       transform: translateY(0);
+    }
+    .right {
+      right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;
@@ -791,8 +796,14 @@ export default {
       width: 102px;
       height: 102px;
       top: 0;
-      right: 0;
+
       transform: translateY(0);
+    }
+    .right {
+      right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;

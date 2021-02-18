@@ -540,13 +540,6 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .miningTime {
-    position: absolute;
-    left: 75%;
-    top: 10px;
-    font-size: 20px;
-    transform: translateX(5%);
-  }
   .bnb500 {
     width: 500px;
     margin-bottom: 20px;
@@ -554,6 +547,13 @@ export default {
     padding: 40px;
     position: relative;
     border-radius: 10px;
+    .miningTime {
+      position: absolute;
+      left: 75%;
+      top: 10px;
+      font-size: 20px;
+      transform: translateX(5%);
+    }
     > img {
       position: absolute;
       width: 36px;

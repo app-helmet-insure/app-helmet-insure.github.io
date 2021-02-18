@@ -545,6 +545,7 @@ export default {
     left: 75%;
     top: 10px;
     font-size: 20px;
+    transform: translateX(5%);
   }
   .hctk_pool {
     width: 500px;
@@ -792,6 +793,7 @@ export default {
       left: 75%;
       top: 10px;
       font-size: 14px;
+      transform: translateX(5%);
     }
     > img {
       position: absolute;

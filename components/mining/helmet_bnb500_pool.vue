@@ -1,6 +1,6 @@
 <template>
   <div class="bnb500">
-    <span class="miningTime"> {{ MingTime }}</span>
+    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="circle right" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
@@ -423,8 +423,7 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = "Infinity" + "%";
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "BNB500POOL_LPT";

@@ -1,5 +1,5 @@
 <template>
-  <div class="hctk_pool">
+  <div class="bnb500">
     <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="circle right" src="~/assets/img/helmet/leftCircle.png" alt="" />
@@ -547,7 +547,7 @@ export default {
     font-size: 20px;
     transform: translateX(5%);
   }
-  .hctk_pool {
+  .bnb500 {
     width: 500px;
     margin-bottom: 20px;
     background: #ffffff;
@@ -781,7 +781,7 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .hctk_pool {
+  .bnb500 {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;

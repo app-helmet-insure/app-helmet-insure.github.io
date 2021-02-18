@@ -323,17 +323,13 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is BNB500?",
+        title: "What is $BNB500?",
         text: [
-          "HCCT is the abbreviation of Helmet Cover Cake TokenLiterally, it is the CAKE Cover Miss Out policy ( it is more like the call option of CAKE )",
-          "Underlying asset: Cake",
-          "Denominated asset: Helmet (it means that if you activate this policy, you would swap 10Helmet for 1Cake with HCCT)",
-          "Premium：1Helmet（ from Helmet Vault）",
-          "Insurance Price：1CAKE=10Helmet (it means that if you activate this policy, you would swap 10Helmet for 1Cake with 1HCCT)",
-          "Supply: 300,000 (80% minted by mining, 20% as initial liquidity)",
-          "Reference Activate Price: When “Cake:Helmet ＞1:10”, you could activate this policy ( plz recheck the price to make sure this activation is profitable)",
-          "Insurance Period：2021, Feb.15",
-          "More details in our Medium.",
+          "$BNB500 is BNB cover miss out policy.",
+          "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.insure and 1000 for Flash Mining)",
+          "In this policy, we set a ratio: ",
+          "BNB : BUSD = 1:500 ",
+          "it means that you could swap 500 BUSD+1$BNB500 to 1BNB. It is the reasonable active price, for example, if BNB hit $600, you could active the policy and swap 500 BUSD + 1 $BNB500 to 1 BNB with 100BUSD profit.",
         ],
       });
     },

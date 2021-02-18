@@ -147,7 +147,7 @@ export default {
           unit: "",
         },
         {
-          text: this.$t("Table.PoolAPR"),
+          text: this.$t("Table.PoolAPY"),
           num: 0,
           color: "#00B900",
           unit: "",

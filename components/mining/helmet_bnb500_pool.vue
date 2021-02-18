@@ -93,29 +93,31 @@
                   $t("Table.TotalDeposited")
                 }}：</span
               >
-              <span> {{ balance.Withdraw }}/{{ balance.TotalLPT }} LPT</span>
+              <span>
+                {{ fixD(balance.Withdraw, 4) }}/{{ balance.TotalLPT }} LPT</span
+              >
             </p>
             <p>
               <span>My Pool Share：</span>
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
+              href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0x936909e72951A19a5e1d75A109B0D34f06f39838/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get HCCT-HELMET LPT</a
+              >Get hCTK-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
-            <span>HCCT Contract Address：</span>
+            <span>hCTK Contract Address：</span>
             <p>
-              0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
+              0x936909e72951A19a5e1d75A109B0D34f06f39838
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e'
+                    '0x936909e72951A19a5e1d75A109B0D34f06f39838'
                   )
                 "
               ></i>
@@ -151,11 +153,11 @@
               {{ $t("Table.ClaimRewards") }}
             </button>
             <p>
-              <span>hCTK {{ $t("Table.HELMETRewards") }}：</span>
+              <span>BNB500 {{ $t("Table.HELMETRewards") }}：</span>
               <span>
                 <span>
                   {{ balance.hCTK.length > 60 ? 0 : balance.hCTK }}
-                  hCTK</span
+                  BNB500</span
                 >
               </span>
             </p>
@@ -168,16 +170,16 @@
             </button>
           </div>
           <div class="ContractAddress">
-            <span>hCTK Contract Address：</span>
+            <span>BNB500 Contract Address：</span>
             <p>
-              0x936909e72951A19a5e1d75A109B0D34f06f39838
+              0xe204c4c21c6ed90e37cb06cb94436614f3208d58
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0x936909e72951A19a5e1d75A109B0D34f06f39838'
+                    '0xe204c4c21c6ed90e37cb06cb94436614f3208d58'
                   )
                 "
               ></i>
@@ -216,8 +218,8 @@ export default {
   data() {
     return {
       list: {
-        name: "HCCT-HELMET",
-        dueDate: "2021-02-28 00:00",
+        name: "hCTK-HELMET",
+        dueDate: "2021-03-21 00:00",
         DownTime: "--",
       },
       textList: [
@@ -269,6 +271,7 @@ export default {
       apy: 0,
       MingTime: 0,
       actionType: "deposit",
+      fixD,
     };
   },
   mounted() {
@@ -279,17 +282,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HCTKPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_BNB500POOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HCTKPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_BNB500POOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HCTKPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_BNB500POOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HCTKPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_BNB500POOL", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -400,15 +403,16 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("HCTK", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HCTKPOOL"); //数量
-      let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
+      let HCTKHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let HctkVolume = await totalSupply("BNB500POOL"); //数量
+      let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
+      console.log(HCTKHELMET, HctkVolume, LptVolume, HelmetValue);
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
+            precision.times(HCTKHELMET, precision.divide(1000, 10), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -422,8 +426,8 @@ export default {
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HCTKPOOL_LPT";
-      let type = "HCTKPOOL";
+      let helmetType = "BNB500POOL_LPT";
+      let type = "BNB500POOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -431,16 +435,16 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type, "CTK");
+      let Helmet = await CangetPAYA(type);
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Deposite = fixD(Deposite, 8);
+      this.balance.Withdraw = fixD(Withdraw, 8);
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((70000 / 21) * 7, 2) + " hCTK";
+      this.textList[0].num = fixD((1000 / 10) * 7, 2) + " BNB500";
     },
     // 抵押
     toDeposite() {
@@ -451,7 +455,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HCTKPOOL";
+      let type = "BNB500POOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -460,7 +464,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HCTKPOOL";
+      let type = "BNB500POOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -469,7 +473,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HCTKPOOL";
+      let type = "BNB500POOL";
       let res = await exitStake(type);
     },
   },

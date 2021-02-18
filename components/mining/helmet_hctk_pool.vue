@@ -93,7 +93,9 @@
                   $t("Table.TotalDeposited")
                 }}：</span
               >
-              <span> {{ balance.Withdraw }}/{{ balance.TotalLPT }} LPT</span>
+              <span>
+                {{ fixD(balance.Withdraw, 4) }}/{{ balance.TotalLPT }} LPT</span
+              >
             </p>
             <p>
               <span>My Pool Share：</span>
@@ -115,7 +117,7 @@
                 @click="
                   copyAdress(
                     $event,
-                    '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e'
+                    '0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5'
                   )
                 "
               ></i>
@@ -269,6 +271,7 @@ export default {
       apy: 0,
       MingTime: 0,
       actionType: "deposit",
+      fixD,
     };
   },
   mounted() {
@@ -435,8 +438,8 @@ export default {
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Deposite = fixD(Deposite, 8);
+      this.balance.Withdraw = fixD(Withdraw, 8);
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);

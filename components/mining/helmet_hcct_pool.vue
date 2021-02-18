@@ -94,7 +94,9 @@
                   $t("Table.TotalDeposited")
                 }}：</span
               >
-              <span> {{ balance.Withdraw }}/{{ balance.TotalLPT }} LPT</span>
+              <span>
+                {{ fixD(balance.Withdraw, 4) }}/{{ balance.TotalLPT }} LPT</span
+              >
             </p>
             <p>
               <span>My Pool Share：</span>
@@ -267,6 +269,7 @@ export default {
       helmetPrice: 0,
       apy: 0,
       actionType: "deposit",
+      fixD,
     };
   },
   mounted() {
@@ -410,8 +413,8 @@ export default {
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Deposite = fixD(Deposite, 8);
+      this.balance.Withdraw = fixD(Withdraw, 8);
       this.balance.Helmet = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);

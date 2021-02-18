@@ -4,6 +4,7 @@
       <HelmetHctkPool></HelmetHctkPool>
       <HelmetHcctPool></HelmetHcctPool>
     </div>
+    <Compound></Compound>
     <Deposite
       :current="current"
       :TradeType="TradeType"
@@ -19,6 +20,7 @@ import HelmetHcctPool from "~/components/mining/helmet_hcct_pool.vue";
 import HelmetHctkPool from "~/components/mining/helmet_hctk_pool.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Onepager from "~/components/mining/onepager.vue";
+import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "default",
   components: {
@@ -26,6 +28,7 @@ export default {
     HelmetHctkPool,
     Deposite,
     Onepager,
+    Compound,
   },
   data() {
     return {

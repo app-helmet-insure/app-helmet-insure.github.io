@@ -3,7 +3,10 @@
     <img src="~/assets/img/helmet/star.png" alt="" />
     <div class="text">
       <div class="coin">
-        <h3>{{ list.name }} <img src="~/assets/img/helmet/5x.png" alt="" /></h3>
+        <h3>
+          {{ list.name }}
+          <!-- <img src="~/assets/img/helmet/5x.png" alt="" /> -->
+        </h3>
         <div>
           <p>
             <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
@@ -57,15 +60,6 @@
             <span>My Pool Share：</span>
             <span> {{ balance.Share }} %</span>
           </p>
-          <button
-            @click="toCompound"
-            :class="
-              stakeLoading ? 'disable o_button compound' : 'compound o_button'
-            "
-          >
-            <i :class="stakeLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.Compound") }}
-          </button>
         </div>
       </div>
       <div class="withdraw">
@@ -107,11 +101,11 @@
             </span>
           </p>
           <button
-            @click="toClaim"
+            @click="toCompound"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
           >
             <i :class="claimLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ClaimAllRewards") }}
+            >{{ $t("Table.Compound") }}
           </button>
         </div>
       </div>

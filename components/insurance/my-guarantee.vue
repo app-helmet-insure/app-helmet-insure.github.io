@@ -425,6 +425,7 @@ export default {
       let hctkPolicy = await this.HCTKPolicy();
       let hburgerPolicy = await this.HBURGERPolicy();
       let lishiPolicy = await this.LISHIPolicy();
+      let BNB500Policy = await this.BNB500Policy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -439,6 +440,9 @@ export default {
       }
       if (lishiPolicy) {
         result.push(lishiPolicy);
+      }
+      if (BNB500Policy) {
+        result.push(BNB500Policy);
       }
       this.isLoading = false;
       result = result.reverse();
@@ -736,6 +740,56 @@ export default {
           outPrice: fromWei(100000000000000000, Token),
           outPriceUnit: "BUSD",
           showType: "img",
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 0;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 2;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 4;
+        }
+        return resultItem;
+      }
+    },
+    async BNB500Policy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xe204c4c21c6ed90e37cb06cb94436614f3208d58"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xe204c4c21c6ed90e37cb06cb94436614f3208d58");
+        let resultItem;
+        resultItem = {
+          id: 5,
+          bidID: 5,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1616256000),
+          _collateral: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _strikePrice: fromWei(500000000000000000000, Token),
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1616256000000,
+          transfer: true,
+          longAdress: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
+          type: "call",
+          symbol: "BNB500",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(500000000000000000000, Token),
+          outPriceUnit: "BUSD",
+          // showType: "img",
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

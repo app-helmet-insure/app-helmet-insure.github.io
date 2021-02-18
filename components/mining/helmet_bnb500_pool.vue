@@ -1,6 +1,6 @@
 <template>
   <div class="hctk_pool">
-    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
+    <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="circle right" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
@@ -380,7 +380,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-06 00:00";
+      let dueDate = "2021-02-19 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -409,7 +409,6 @@ export default {
       let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
-      console.log(HCTKHELMET, HctkVolume, LptVolume, HelmetValue);
       let apy = fixD(
         precision.times(
           precision.divide(
@@ -424,7 +423,8 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      this.textList[1].num = this.apy + "%";
+      // this.textList[1].num = this.apy + "%";
+      this.textList[1].num = "Infinity" + "%";
     },
     async getBalance() {
       let helmetType = "BNB500POOL_LPT";
@@ -542,8 +542,8 @@ export default {
 @media screen and (min-width: 750px) {
   .miningTime {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 75%;
+    top: 10px;
     font-size: 20px;
   }
   .hctk_pool {
@@ -787,6 +787,12 @@ export default {
     padding: 40px 16px;
     position: relative;
     border-radius: 10px;
+    .miningTime {
+      position: absolute;
+      left: 75%;
+      top: 10px;
+      font-size: 14px;
+    }
     > img {
       position: absolute;
       width: 36px;

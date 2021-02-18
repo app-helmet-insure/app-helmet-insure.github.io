@@ -538,12 +538,6 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .miningTime {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 20px;
-  }
   .hctk_pool {
     width: 500px;
     margin-bottom: 20px;
@@ -551,6 +545,12 @@ export default {
     padding: 40px;
     position: relative;
     border-radius: 10px;
+    > .miningTime {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
     > img {
       position: absolute;
       width: 36px;
@@ -785,6 +785,12 @@ export default {
     padding: 40px 16px;
     position: relative;
     border-radius: 10px;
+    > .miningTime {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 20px;
+    }
     > img {
       position: absolute;
       width: 36px;

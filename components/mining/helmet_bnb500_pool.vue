@@ -547,7 +547,7 @@ export default {
     padding: 40px;
     position: relative;
     border-radius: 10px;
-    .miningTime {
+    > .miningTime {
       position: absolute;
       left: 75%;
       top: 10px;
@@ -788,7 +788,7 @@ export default {
     padding: 40px 16px;
     position: relative;
     border-radius: 10px;
-    .miningTime {
+    > .miningTime {
       position: absolute;
       left: 75%;
       top: 10px;

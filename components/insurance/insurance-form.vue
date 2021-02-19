@@ -137,6 +137,9 @@ export default {
     policyUndArray() {
       return this.$store.state.policyUndArray;
     },
+    HELMET_BUSD() {
+      return this.$store.state.HELMET_BUSD;
+    },
   },
   watch: {
     dpr(newValue, val) {
@@ -216,6 +219,8 @@ export default {
       }
     },
     watchRent(newValue) {
+      console.log(newValue, this.HelmetPrice);
+
       if (!newValue.dpr || !newValue.num) {
         this.Rent = 0;
         return;
@@ -245,17 +250,27 @@ export default {
               day
             );
           }
+
           premium = precision.minus(
             number,
             Math.min(precision.minus(strikePrice, indexPx), 0)
           );
           earnings = -(Math.max(indexPx - strikePrice, 0) - premium);
         } else {
-          number = precision.times(
-            DPR,
-            precision.times(this.IndexPxArray[0]["HELMET"], num),
-            day
-          );
+          if (this.currentCoin == "WBNB") {
+            number = precision.times(
+              DPR,
+              precision.times(this.HELMET_BUSD, num),
+              day
+            );
+          } else {
+            number = precision.times(
+              DPR,
+              precision.times(this.IndexPxArray[0]["HELMET"], num),
+              day
+            );
+          }
+
           premium = precision.minus(
             number,
             Math.min(precision.minus(indexPx, strikePrice), 0)

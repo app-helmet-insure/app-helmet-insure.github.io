@@ -338,17 +338,28 @@ export default {
       // helmet
       let bnbbusd = await uniswap("WBNB", "BUSD");
       let cakebusd = await uniswap("CAKE", "BUSD");
+      let helmetbusd = await uniswap("HELMET", "BUSD");
       for (let i = 0; i < list.length; i++) {
-        let px = await uniswap(this.policyColArray[1][list[i]], list[i]);
+        let px;
+        if ("WBNB" != list[i]) {
+          px = await uniswap("WBNB", list[i]);
+        } else {
+          px = 1;
+        }
         let key = list[i];
         callIndexPirce[key] = px;
       }
       for (let i = 0; i < list.length; i++) {
-        let px = await uniswap(list[i], this.policyColArray[1][list[i]]);
+        let px;
+        if ("WBNB" != list[i]) {
+          px = await uniswap(list[i], "WBNB");
+        } else {
+          px = 1;
+        }
         const key = list[i];
         putIndexPirce[key] = px;
       }
-
+      console.log(callIndexPirce, putIndexPirce);
       let arr = [];
       let arr1 = [];
       let bnbHelmet = callIndexPirce["HELMET"] || 0;
@@ -359,6 +370,7 @@ export default {
       let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"] || 0;
       let burgerHelmet =
         callIndexPirce["BURGER"] / callIndexPirce["HELMET"] || 0;
+      let wbnbHelmet = callIndexPirce["WBNB"] / callIndexPirce["HELMET"] || 0;
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -367,6 +379,7 @@ export default {
         BTCB: btcHelmet,
         ETH: ethHelmet,
         BURGER: burgerHelmet,
+        WBNB: wbnbHelmet,
       };
       let Helmetbnb = putIndexPirce["HELMET"] || 0;
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
@@ -375,6 +388,7 @@ export default {
       let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"] || 0;
       let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
       let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
+      let Helmetwbnb = putIndexPirce["WBNB"] / putIndexPirce["HELMET"] || 0;
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
@@ -383,17 +397,17 @@ export default {
         BTCB: Helmetbtc,
         ETH: Helmeteth,
         BURGER: Helmetburger,
+        WBNB: Helmetwbnb,
       };
       arr1.push(HelmetPirce);
       arr1.push(CoinPirce);
       this.$store.commit("SET_ALL_HELMET_PRICE", arr1);
       arr.push(callIndexPirce);
       arr.push(putIndexPirce);
-      // console.log(arr1, arr);
-
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
+      this.$store.commit("SET_HELMET_BUSD", helmetbusd);
       this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },

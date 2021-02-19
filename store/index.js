@@ -104,6 +104,7 @@ export const state = () => ({
     myPAYA: 0,
     BNB_BUSD: 0,
     CAKE_BUSD: 0,
+    HELMET_BUSD: 0,
     helmetVarieties: 0, // 已经成交的保险品种的种类
     totalHelmetsBorrowedVolume: 0, // 保险交易过的资金量  （保单数量累加， vol 用抵押物处理）
     longTokenCreatedVolume: 0, // 24小时Long token 铸造量
@@ -203,7 +204,7 @@ export const state = () => ({
     allIndexPrice: [
         {
             HELMET: 0,
-            BNB: 0,
+            WBNB: 0,
             CAKE: 0,
             FORTUBE: 0,
             BTCB: 0,
@@ -213,7 +214,7 @@ export const state = () => ({
         },
         {
             HELMET: 0,
-            BNB: 0,
+            WBNB: 0,
             CAKE: 0,
             FORTUBE: 0,
             BTCB: 0,
@@ -225,7 +226,7 @@ export const state = () => ({
     allHelmetPrice: [
         {
             HELMET: 0,
-            BNB: 0,
+            WBNB: 0,
             CAKE: 0,
             FORTUBE: 0,
             BTCB: 0,
@@ -235,7 +236,7 @@ export const state = () => ({
         },
         {
             HELMET: 0,
-            BNB: 0,
+            WBNB: 0,
             CAKE: 0,
             FORTUBE: 0,
             BTCB: 0,
@@ -380,6 +381,9 @@ export const mutations = {
     },
     SET_CAKE_BUSD(state, data) {
         state.CAKE_BUSD = data;
+    },
+    SET_HELMET_BUSD(state, data) {
+        state.HELMET_BUSD = data;
     },
 };
 

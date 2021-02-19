@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img5 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
 
@@ -10,15 +11,7 @@
           <span>Flash mining for only <i>15</i> days </span>
         </div>
       </div>
-
       <div class="imgbanner img1 swiper-slide"></div>
-
-      <div class="text bg2 swiper-slide">
-        <div>
-          <h3>Double Mining Rewards <i>HELMET & CAKE</i> 30 Days</h3>
-          <span>Start: Jan. 15th 18:00 SGT </span>
-        </div>
-      </div>
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next"></div>
@@ -128,15 +121,6 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .bg2 {
-      background-image: url("../../assets/img/helmet/helmetPool.png");
-      background-size: 448px 220px;
-      background-position: 95% center;
-      background-repeat: no-repeat;
-      h3 {
-        width: 500px;
-      }
-    }
 
     .img1 {
       background-image: url("../../assets/img/helmet/bannercake.png");
@@ -149,6 +133,9 @@ export default {
     }
     .img4 {
       background-image: url("../../assets/img/helmet/burger.png");
+    }
+    .img5 {
+      background-image: url("../../assets/img/helmet/BNB500.png");
     }
     .center {
       display: flex;
@@ -273,16 +260,6 @@ export default {
       display: flex;
     }
 
-    .bg2 {
-      background-image: url("../../assets/img/helmet/helmetPool.png");
-      background-size: 320px 196px;
-      background-position: center 100%;
-      background-repeat: no-repeat;
-      h3 {
-        width: 500px;
-      }
-    }
-
     .img1 {
       background-image: url("../../assets/img/helmet/bannercake_h5.png");
     }
@@ -294,6 +271,9 @@ export default {
     }
     .img4 {
       background-image: url("../../assets/img/helmet/burger_h5.png");
+    }
+    .img5 {
+      background-image: url("../../assets/img/helmet/BNB500_h5.png");
     }
     .center {
       display: flex;

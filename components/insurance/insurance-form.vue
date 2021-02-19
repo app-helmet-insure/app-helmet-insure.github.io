@@ -195,9 +195,6 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      if (this.currentCoin == "CAKE") {
-        return;
-      }
       let data;
       data = {
         private: false, //

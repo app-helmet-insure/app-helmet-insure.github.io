@@ -102,19 +102,22 @@ export default {
     locale() {
       return this.$store.state.locale;
     },
+    echartIndexArray() {
+      return this.$store.state.echartIndexArray;
+    },
   },
   watch: {
     locale(newValue, Val) {
       if (newValue == "en_US") {
         this.RectWidth = 155;
       } else {
-        this.RectWidth = 100;
+        this.RectWidth = 120;
       }
     },
     curCoin(newVal, Val) {
       let arr = this.$store.state.strikePriceArray[0];
       let arr1 = this.$store.state.strikePriceArray[1];
-      let arr2 = this.$store.state.allIndexPrice[1];
+      let arr2 = this.$store.state.echartIndexArray;
       let MaxNum = newVal == "CAKE" ? 2.5 : 1.5;
       let max = toRounding(arr[this.curCoin] * MaxNum, 4);
       this.max = max;
@@ -178,7 +181,8 @@ export default {
       setTimeout(() => {
         let arr = this.$store.state.strikePriceArray[0];
         let arr1 = this.$store.state.strikePriceArray[1];
-        let arr2 = this.$store.state.allIndexPrice[1];
+        let arr2 = this.$store.state.echartIndexArray;
+        console.log(arr2);
         let MaxNum = this.curCoin == "CAKE" ? 2.5 : 1.5;
         if (arr.BNB != 0) {
           let max = toRounding(arr[this.curCoin] * MaxNum, 4);

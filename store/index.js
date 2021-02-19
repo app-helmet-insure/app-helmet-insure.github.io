@@ -127,19 +127,28 @@ export const state = () => ({
             BTCB: '2021-03-18 00:00',
             ETH: '2021-03-18 00:00',
             HELMET: '2021-02-21 00:00',
-            CAKE: '2021-03-18 00:00',
+            CAKE: '2021-03-07 00:00',
             CTK: '2021-03-08 00:00',
             BURGER: '2021-03-12 00:00',
             WBNB: '2021-03-21 00:00',
         },
     ],
+    echartIndexArray: {
+        BTCB: 0,
+        ETH: 0,
+        HELMET: 0,
+        CAKE: 0,
+        CTK: 0,
+        BURGER: 0,
+        WBNB: 0,
+    },
     strikePriceArray: [
         // 翻倍价格
         {
             BTCB: 720,
             ETH: 27.5,
             HELMET: 0.013,
-            CAKE: 0.03,
+            CAKE: 0.12,
             CTK: 0.04,
             BURGER: 0.06,
             WBNB: 600,
@@ -150,7 +159,7 @@ export const state = () => ({
             ETH: 3.3,
             HELMET: 0.003,
             CAKE: 0.0075,
-            CTK: 0.01,
+            CTK: 0.03,
             BURGER: 0.015,
             WBNB: 150,
         },
@@ -362,6 +371,9 @@ export const mutations = {
     // 保存所有指数价格
     SET_ALL_INDEX_PRICE(state, data) {
         state.allIndexPrice = data;
+    },
+    SET_ECHART_INDEX_PRICE(state, data) {
+        state.echartIndexArray = data;
     },
     SET_ALL_HELMET_PRICE(state, data) {
         state.allHelmetPrice = data;

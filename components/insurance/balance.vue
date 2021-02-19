@@ -5,13 +5,8 @@
         <span>{{ $t("Content.InsurancePrice") }}</span>
         <p>
           1 {{ currentCoin == "FORTUBE" ? "FOR" : currentCoin }} :
-          {{
-            currentCoin != "CAKE"
-              ? strikePriceArray[this.currentType - 1][this.currentCoin]
-              : "--"
-          }}{{
-            currentCoin != "CAKE" ? policyColArray[1][this.currentCoin] : "--"
-          }}
+          {{ strikePriceArray[this.currentType - 1][this.currentCoin]
+          }}{{ policyColArray[1][this.currentCoin] }}
         </p>
       </div>
       <div>

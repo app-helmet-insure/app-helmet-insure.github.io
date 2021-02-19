@@ -4,14 +4,6 @@
       <div class="imgbanner img5 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
-
-      <div class="imgbanner img2 swiper-slide">
-        <div class="center">
-          <h3>LONG-HELMET for HCCT</h3>
-          <span>Flash mining for only <i>15</i> days </span>
-        </div>
-      </div>
-      <div class="imgbanner img1 swiper-slide"></div>
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next"></div>

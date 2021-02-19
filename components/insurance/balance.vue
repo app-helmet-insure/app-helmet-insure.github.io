@@ -9,9 +9,9 @@
             currentCoin != "CAKE"
               ? strikePriceArray[this.currentType - 1][this.currentCoin]
               : "--"
+          }}{{
+            currentCoin != "CAKE" ? policyColArray[1][this.currentCoin] : "--"
           }}
-          BNB
-          <!-- {{ currentCoin == "HELMET" ? "--" : strikePrice }} BNB -->
         </p>
       </div>
       <div>
@@ -22,14 +22,6 @@
           </svg>
           <!-- {{ currentCoin == "CAKE" ? "--" : dueDate }} -->
           {{ getTime(currentCoin) }}
-          <!-- {{
-            currentCoin == "HELMET"
-              ? helmetDate
-              : currentCoin == "CAKE"
-              ? "--"
-              : dueDate
-          }} -->
-          <!-- -- -->
         </p>
       </div>
     </section>
@@ -94,7 +86,7 @@ export default {
       dueDate: 0,
       helmetDate: 0,
       ctkDate: 0,
-      burgerDate:0
+      burgerDate: 0,
     };
   },
   computed: {
@@ -120,6 +112,9 @@ export default {
     },
     strikePriceArray() {
       return this.$store.state.strikePriceArray;
+    },
+    policyColArray() {
+      return this.$store.state.policyColArray;
     },
   },
   watch: {
@@ -166,7 +161,7 @@ export default {
         this.getDownTime();
         this.getHelmetTime();
         this.getCtkTime();
-        this.getBurgerTime()
+        this.getBurgerTime();
       });
       clearTimeout();
     }, 1000);

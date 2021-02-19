@@ -235,8 +235,10 @@ export default {
           "..." +
           item.seller.substr(-5).toUpperCase();
         newArray = this.getNewPrice(item.askID);
-
-        if (token == "WBNB") {
+        if (
+          (token == "WBNB" && coToken != "BUSD") ||
+          (token == "BUSD" && coToken == "WBNB")
+        ) {
           resultItem = {
             seller: item.seller,
             id: item.askID,
@@ -309,6 +311,7 @@ export default {
 
       this.isLoading = false;
       this.buyList = buyResult;
+
       buyResult.sort(function (a, b) {
         return Number(a.price) - Number(b.price);
       });

@@ -20,15 +20,11 @@
           "
         >
           <template>
-            <td :class="item._underlying == 'WBNB' ? 'green' : 'orange'">
-              {{
-                item._underlying == "WBNB" ? item._collateral : item._underlying
-              }}
-              <i
-                :class="item._underlying == 'WBNB' ? 'call_icon' : 'put_icon'"
-              ></i>
+            <td :class="item.type == 'call' ? 'green' : 'orange'">
+              {{ item.TypeCoin }}
+              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"></i>
             </td>
-            <td v-if="item._underlying == 'WBNB'">
+            <td v-if="item.type == 'call'">
               {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
               {{ item._collateral }}
             </td>
@@ -36,7 +32,7 @@
               {{ fixD(item.und, 8) }}
               {{ item._underlying }}
             </td>
-            <td v-if="item._underlying == 'WBNB'">
+            <td v-if="item.type == 'call'">
               {{ fixD(item.und, 8) }}
               {{ item._underlying }}
             </td>
@@ -70,20 +66,18 @@
         <div>
           <p>
             <span>{{ $t("Table.Type") }}</span
-            ><span :class="item._underlying == 'WBNB' ? 'green' : 'orange'">
+            ><span :class="item.type == 'call' ? 'green' : 'orange'">
               {{
                 item._underlying == "WBNB" ? item._collateral : item._underlying
               }}
-              <i
-                :class="item._underlying == 'WBNB' ? 'call_icon' : 'put_icon'"
-              ></i
+              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"></i
             ></span>
           </p>
         </div>
         <div>
           <p>
             <span>{{ $t("Table.DenAssets") }}</span>
-            <span v-if="item._underlying == 'WBNB'">
+            <span v-if="item.type == 'call'">
               {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
               {{ item._collateral }}
             </span>
@@ -94,7 +88,7 @@
           </p>
           <p>
             <span>{{ $t("Table.BaseAssets") }}</span>
-            <span v-if="item._underlying == 'WBNB'">
+            <span v-if="item.type == 'call'">
               {{ fixD(item.und, 8) }} {{ item._underlying }}
             </span>
             <span v-else>
@@ -215,6 +209,21 @@ export default {
         _underlying = getTokenName(item.longInfo._underlying, window.chainID);
         shortBalance = await getBalance(item.longInfo.short, _collateral);
         let Token = _underlying == "WBNB" ? _underlying : _collateral;
+        if (_underlying == "WBNB") {
+          item.TypeCoin = _collateral;
+          item.type = "call";
+        } else {
+          item.TypeCoin = _underlying;
+          item.type = "put";
+        }
+        if (_underlying == "BUSD" && _collateral == "WBNB") {
+          item.TypeCoin = _collateral;
+          item.type = "call";
+        }
+        if (_collateral == "BUSD" && _underlying == "WBNB") {
+          item.TypeCoin = _underlying;
+          item.type = "put";
+        }
         if (Number(shortBalance) > 0 && Number(longBalance) > 0) {
           result.push({
             creator: item.seller,
@@ -229,6 +238,8 @@ export default {
               Number(shortBalance) > Number(longBalance)
                 ? longBalance
                 : shortBalance,
+            type: item.type,
+            TypeCoin: item.TypeCoin,
           });
         }
         number = precision.minus(shortBalance, longBalance);
@@ -249,6 +260,8 @@ export default {
                 short: item.longInfo.short,
                 // longBalance: Number(longBalance) > 0 ? String(number) : 0,
                 longBalance: 0,
+                type: item.type,
+                TypeCoin: item.TypeCoin,
               });
             }
           } catch (err) {

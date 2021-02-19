@@ -38,7 +38,7 @@ export const onIssueSell = async (data_, callBack) => {
     let priceFix = getStrikePriceFix(data_.currency, data_.category);
     let priceUnit = getWeiWithFix(priceFix);
     let price = fixD(data.price, priceFix);
-    console.log(price);
+    console.log(data);
     data.total = toWei(
         fixD(precision.times(data_.price, data_.volume), 10),
         priceFix

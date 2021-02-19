@@ -20,37 +20,15 @@
         <tr
           v-for="(item, index) in showList"
           :key="index"
-          :class="
-            getTokenName(item._underlying) == 'WBNB'
-              ? 'call_style'
-              : 'put_style'
-          "
+          :class="item.type == 'call' ? 'call_style' : 'put_style'"
         >
           <template>
             <!-- ID -->
             <td>{{ item.id }}</td>
             <!-- Type -->
-            <td
-              :class="
-                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-                  ? 'call_text'
-                  : 'put_text'
-              "
-            >
-              {{
-                getTokenName(item._underlying) == "WBNB"
-                  ? getTokenName(item._collateral)
-                  : getTokenName(item._underlying)
-              }}
-              <i
-                :class="
-                  getTokenName(item._underlying) == 'WBNB' ||
-                  item.type == 'call'
-                    ? 'call_icon'
-                    : 'put_icon'
-                "
-              >
-              </i>
+            <td :class="item.type == 'call' ? 'call_text' : 'put_text'">
+              {{ item.TypeCoin }}
+              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
             </td>
             <!-- PolicyPrice -->
             <td>
@@ -269,6 +247,7 @@ export default {
     },
     // 格式化数据
     async setSettlementList(list) {
+      console.log(list);
       this.isLoading = true;
       this.showList = [];
       let result = [];
@@ -289,8 +268,12 @@ export default {
         // 数量
         let Token = getTokenName(item.longInfo._collateral);
         let TokenFlag = getTokenName(item.longInfo._underlying);
-        if (TokenFlag == "WBNB") {
+        if (
+          (TokenFlag == "WBNB" && Token != "BUSD") ||
+          (TokenFlag == "BUSD" && Token == "WBNB")
+        ) {
           amount = fromWei(item.volume, Token);
+          item.flagType = true;
         } else {
           amount = fixD(
             precision.divide(
@@ -299,6 +282,26 @@ export default {
             ),
             8
           );
+          item.flagType = false;
+        }
+        if (TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._collateral);
+          item.type = "call";
+          item.outPriceUnit = "BNB";
+        } else {
+          item.TypeCoin = getTokenName(item.longInfo._underlying);
+          item.type = "put";
+          item.outPriceUnit = "BNB";
+        }
+        if (TokenFlag == "BUSD" && Token == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._collateral);
+          item.type = "call";
+          item.outPriceUnit = "BUSD";
+        }
+        if (Token == "BUSD" && TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._underlying);
+          item.type = "put";
+          item.outPriceUnit = "BUSD";
         }
         // 保单价格
         InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
@@ -322,6 +325,9 @@ export default {
           _expiry: item.longInfo._expiry * 1000,
           _collateral: item.longInfo._collateral,
           _underlying: item.longInfo._underlying,
+          TypeCoin: item.TypeCoin,
+          type: item.type,
+          outPriceUnit: item.outPriceUnit,
         };
 
         newArray = this.getNewPrice(item.askID);
@@ -334,14 +340,13 @@ export default {
           resultItem["id"] = newArray.newAskID;
         }
         askRes = await asks(resultItem.id, "sync", resultItem._collateral);
-        if (TokenFlag == "WBNB") {
+        if (item.flagType) {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
           resultItem["outPrice"] = fromWei(
             item.longInfo._strikePrice,
             Token == "CTK" ? 30 : Token
           );
-          resultItem["outPriceUnit"] = "BNB";
         } else {
           resultItem["unSold"] = fixD(
             precision.divide(askRes, this.strikePriceArray[1][TokenFlag]),
@@ -351,7 +356,6 @@ export default {
           resultItem["outPrice"] = toRounding(
             precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag))
           );
-          resultItem["outPriceUnit"] = "BNB";
         }
 
         if (askRes == "0") {

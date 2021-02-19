@@ -26,7 +26,6 @@
       </div>
       <div class="num">
         <input type="text" v-model="volume" />
-
         <i>{{ unit == "FORTUBE" ? "FOR" : unit }}</i>
         <span class="right" @click="toAll">{{ $t("Table.ALL") }}</span>
       </div>
@@ -144,6 +143,14 @@ export default {
     strikePriceArray() {
       return this.$store.state.strikePriceArray;
     },
+    // 抵押物
+    policyColArray() {
+      return this.$store.state.policyColArray;
+    },
+    // 标的物
+    policyUndArray() {
+      return this.$store.state.policyUndArray;
+    },
   },
   watch: {
     dpr(newValue, val) {
@@ -214,33 +221,21 @@ export default {
         return;
       }
       let data;
-      if (this.currentType == 2) {
-        data = {
-          private: false, //
-          annual: this.dpr,
-          category: this.currentCoin, //
-          currency: this.currency, //
-          expire: this.getTime(this.currentCoin), //
-          premium: this.Rent,
-          price: this.strikePriceArray[1][this.currentCoin],
-          volume: this.volume, //
-          settleToken: "HELMET",
-          _yield: 0,
-        };
+      data = {
+        private: false, //
+        annual: this.dpr,
+        category: this.policyUndArray[this.currentType - 1][this.currentCoin], //标的物
+        currency: this.policyColArray[this.currentType - 1][this.currentCoin], //抵押物
+        expire: this.getTime(this.currentCoin), //
+        premium: this.Rent,
+        price: this.strikePriceArray[this.currentType - 1][this.currentCoin],
+        volume: this.volume, //
+        settleToken: "HELMET",
+        _yield: 0,
+      };
+      if (data.currency == "WBNB" && data.category != "BUSD") {
         onIssueSellOnETH(data, (status) => {});
       } else {
-        data = {
-          private: false, //
-          annual: this.dpr,
-          category: this.currency, //
-          currency: this.currentCoin, //
-          expire: this.getTime(this.currentCoin), //
-          premium: this.Rent,
-          price: this.strikePriceArray[0][this.currentCoin],
-          volume: this.volume, //
-          settleToken: "HELMET",
-          _yield: 0,
-        };
         onIssueSell(data, (status) => {});
       }
     },
@@ -317,7 +312,7 @@ export default {
       } else {
         px = list[1][coin];
         exPx = list[1][coin] * 0.5;
-        this.unit = "BNB";
+        this.unit = this.currentCoin == "WBNB" ? "BUSD" : "BNB";
         if (this.currentCoin == "HELMET") {
           this.strikePrice = addCommom(0.12 / this.BNB_BUSD, 4);
         }

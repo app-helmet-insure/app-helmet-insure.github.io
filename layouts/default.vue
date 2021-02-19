@@ -101,6 +101,14 @@ export default {
     aboutInfoSell() {
       return this.$store.state.aboutInfoSell;
     },
+    // 抵押物
+    policyColArray() {
+      return this.$store.state.policyColArray;
+    },
+    // 标的物
+    policyUndArray() {
+      return this.$store.state.policyUndArray;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -331,12 +339,12 @@ export default {
       let bnbbusd = await uniswap("WBNB", "BUSD");
       let cakebusd = await uniswap("CAKE", "BUSD");
       for (let i = 0; i < list.length; i++) {
-        let px = await uniswap("WBNB", list[i]);
+        let px = await uniswap(this.policyColArray[1][list[i]], list[i]);
         let key = list[i];
         callIndexPirce[key] = px;
       }
       for (let i = 0; i < list.length; i++) {
-        let px = await uniswap(list[i], "WBNB");
+        let px = await uniswap(list[i], this.policyColArray[1][list[i]]);
         const key = list[i];
         putIndexPirce[key] = px;
       }
@@ -346,7 +354,7 @@ export default {
       let bnbHelmet = callIndexPirce["HELMET"] || 0;
       let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"] || 0;
       let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"] || 0;
-      let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"] || 0;
+      // let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"] || 0;
       let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"] || 0;
       let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"] || 0;
       let burgerHelmet =
@@ -355,7 +363,7 @@ export default {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
         CTK: ctkHelmet,
-        FORTUBE: forHelmet,
+        // FORTUBE: forHelmet,
         BTCB: btcHelmet,
         ETH: ethHelmet,
         BURGER: burgerHelmet,
@@ -363,7 +371,7 @@ export default {
       let Helmetbnb = putIndexPirce["HELMET"] || 0;
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
       let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"] || 0;
-      let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"] || 0;
+      // let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"] || 0;
       let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"] || 0;
       let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
       let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
@@ -371,7 +379,7 @@ export default {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
         CTK: Helmetctk,
-        FORTUBE: Helmetfor,
+        // FORTUBE: Helmetfor,
         BTCB: Helmetbtc,
         ETH: Helmeteth,
         BURGER: Helmetburger,

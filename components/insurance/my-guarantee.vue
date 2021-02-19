@@ -23,36 +23,15 @@
         <tr
           v-for="(item, index) in showList"
           :key="index"
-          :class="
-            getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-              ? 'call_style'
-              : 'put_style'
-          "
+          :class="item.type == 'call' ? 'call_style' : 'put_style'"
         >
           <!-- Id -->
           <td>{{ item.id }}</td>
           <!-- Type -->
-          <td
-            :class="
-              getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-                ? 'call_text'
-                : 'put_text'
-            "
-          >
-            {{
-              getTokenName(item._underlying) == "WBNB" || item.type == "call"
-                ? getTokenName(item._collateral)
-                : getTokenName(item._underlying)
-            }}
+          <td :class="item.type == 'call' ? 'call_text' : 'put_text'">
+            {{ item.TypeCoin }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i
-              :class="
-                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-                  ? 'call_icon'
-                  : 'put_icon'
-              "
-            >
-            </i>
+            <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
           </td>
           <!-- PolicyPrice -->
           <td>
@@ -307,6 +286,7 @@ export default {
     },
     // 格式化数据
     async setSettlementList(list) {
+      console.log(list);
       this.isLoading = true;
       this.showList = [];
       let result = [];
@@ -331,7 +311,25 @@ export default {
           );
         }
         // 保费
-
+        if (TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.sellInfo.longInfo._collateral);
+          item.type = "call";
+          item.outPriceUnit = "BNB";
+        } else {
+          item.TypeCoin = getTokenName(item.sellInfo.longInfo._underlying);
+          item.type = "put";
+          item.outPriceUnit = "BNB";
+        }
+        if (TokenFlag == "BUSD" && Token == "WBNB") {
+          item.TypeCoin = getTokenName(item.sellInfo.longInfo._collateral);
+          item.type = "call";
+          item.outPriceUnit = "BUSD";
+        }
+        if (Token == "BUSD" && TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.sellInfo.longInfo._underlying);
+          item.type = "put";
+          item.outPriceUnit = "BUSD";
+        }
         Rent = precision.times(amount, InsurancePrice);
         //倒计时
         downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
@@ -360,7 +358,8 @@ export default {
               item.sellInfo.longInfo._strikePrice,
               Token == "CTK" ? 30 : Token
             ),
-            outPriceUnit: "BNB",
+            TypeCoin: item.TypeCoin,
+            outPriceUnit: item.outPriceUnit,
           };
         } else {
           resultItem = {
@@ -393,25 +392,26 @@ export default {
                 fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
               )
             ),
-            outPriceUnit: "BNB",
+            TypeCoin: item.TypeCoin,
+            outPriceUnit: item.outPriceUnit,
           };
-        }
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
         }
         exerciseRes = await getExercise(resultItem.buyer);
         bidIDArr = exerciseRes.map((eItem) => {
           return eItem.returnValues.bidID;
         });
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
         if (bidIDArr.includes(resultItem.bidID)) {
           resultItem["status"] = "Activated";
           resultItem["sort"] = 1;
@@ -445,8 +445,10 @@ export default {
         result.push(BNB500Policy);
       }
       this.isLoading = false;
-      result = result.reverse();
-      this.guaranteeList = result;
+      result = result.sort(function (a, b) {
+        return b.sort - a.sort;
+      });
+      this.guaranteeList = result.reverse();
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     // 倒计时
@@ -543,15 +545,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }
@@ -593,15 +595,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }
@@ -644,15 +646,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }
@@ -693,15 +695,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }
@@ -743,15 +745,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }
@@ -793,15 +795,15 @@ export default {
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
           resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         return resultItem;
       }

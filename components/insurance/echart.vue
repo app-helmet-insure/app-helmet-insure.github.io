@@ -53,7 +53,7 @@
         fill="#fff"
         class="TextWidth"
       >
-        {{ item.title }}(${{ fixD(item.num * BNB_BUSD, 2) }})
+        {{ item.title }}(${{ fixD(item.price, 2) }})
       </text>
     </svg>
   </div>
@@ -132,6 +132,10 @@ export default {
             color: "#00B900",
             title: this.$t("Content.ChartUp"),
             rectX: 30,
+            price:
+              this.curCoin == "WBNB"
+                ? toRounding(arr[this.curCoin], 4)
+                : fixD(toRounding(arr[this.curCoin], 4) * this.BNB_BUSD, 2),
           },
           {
             line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
@@ -140,6 +144,10 @@ export default {
             color: "#FF9600",
             title: this.$t("Content.ChartPrice"),
             rectX: 45,
+            price:
+              this.curCoin == "WBNB"
+                ? toRounding(arr2[this.curCoin], 4)
+                : fixD(toRounding(arr2[this.curCoin], 4) * this.BNB_BUSD, 2),
           },
           {
             line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
@@ -148,6 +156,10 @@ export default {
             color: "#FF6400",
             title: this.$t("Content.ChartOff"),
             rectX: 60,
+            price:
+              this.curCoin == "WBNB"
+                ? toRounding(arr1[this.curCoin], 4)
+                : fixD(toRounding(arr1[this.curCoin], 4) * this.BNB_BUSD, 2),
           },
         ];
         this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
@@ -184,6 +196,10 @@ export default {
               color: "#00B900",
               title: this.$t("Content.ChartUp"),
               rectX: 30,
+              price:
+                this.curCoin == "WBNB"
+                  ? toRounding(arr[this.curCoin], 4)
+                  : fixD(toRounding(arr[this.curCoin], 4) * this.BNB_BUSD, 2),
             },
             {
               line: 100 - toRounding(Number(arr2[this.curCoin] / max) * 100, 0),
@@ -192,6 +208,10 @@ export default {
               color: "#FF9600",
               title: this.$t("Content.ChartPrice"),
               rectX: 45,
+              price:
+                this.curCoin == "WBNB"
+                  ? toRounding(arr2[this.curCoin], 4)
+                  : fixD(toRounding(arr2[this.curCoin], 4) * this.BNB_BUSD, 2),
             },
             {
               line: 100 - toRounding((arr1[this.curCoin] / max) * 100, 0),
@@ -200,6 +220,10 @@ export default {
               color: "#FF6400",
               title: this.$t("Content.ChartOff"),
               rectX: 60,
+              price:
+                this.curCoin == "WBNB"
+                  ? toRounding(arr1[this.curCoin], 4)
+                  : fixD(toRounding(arr1[this.curCoin], 4) * this.BNB_BUSD, 2),
             },
           ];
           this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${

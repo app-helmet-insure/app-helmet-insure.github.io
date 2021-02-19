@@ -50,7 +50,7 @@ export const state = () => ({
         },
     ],
     // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],
-    coinList: ['HELMET', 'ETH', 'BTCB', 'CAKE', 'CTK', 'BURGER'],
+    coinList: ['HELMET', 'ETH', 'BTCB', 'CAKE', 'CTK', 'BURGER', 'WBNB'],
     // coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE', 'CTK', 'FORTUBE'],
     typeFixObj: {
         WETH: 0,
@@ -121,6 +121,74 @@ export const state = () => ({
     helmetDate: '2021-02-21 00:00',
     ctkDate: '2021-03-08 00:00',
     burgerDate: '2021-03-12 00:00',
+    strikePriceArray: [
+        // 翻倍价格
+        {
+            BTCB: 720,
+            ETH: 27.5,
+            HELMET: 0.013,
+            CAKE: 0.03,
+            CTK: 0.04,
+            BURGER: 0.06,
+            WBNB: 600,
+        },
+        // 腰斩价格
+        {
+            BTCB: 180,
+            ETH: 3.3,
+            HELMET: 0.003,
+            CAKE: 0.0075,
+            CTK: 0.01,
+            BURGER: 0.015,
+            WBNB: 150,
+        },
+    ],
+    // 抵押物
+    policyColArray: [
+        // 翻倍抵押物
+        {
+            BTCB: 'BTCB',
+            ETH: 'ETH',
+            HELMET: 'HELMET',
+            CAKE: 'CAKE',
+            CTK: 'CTK',
+            BURGER: 'BURGER',
+            WBNB: 'WBNB',
+        },
+        // 腰斩抵押物
+        {
+            BTCB: 'WBNB',
+            ETH: 'WBNB',
+            HELMET: 'WBNB',
+            CAKE: 'WBNB',
+            CTK: 'WBNB',
+            BURGER: 'WBNB',
+            WBNB: 'BUSD',
+        },
+    ],
+    // 标的物
+    policyUndArray: [
+        // 翻倍标的物
+        {
+            BTCB: 'WBNB',
+            ETH: 'WBNB',
+            HELMET: 'WBNB',
+            CAKE: 'WBNB',
+            CTK: 'WBNB',
+            BURGER: 'WBNB',
+            WBNB: 'BUSD',
+        },
+        // 腰斩标的物
+        {
+            BTCB: 'BTCB',
+            ETH: 'ETH',
+            HELMET: 'HELMET',
+            CAKE: 'CAKE',
+            CTK: 'CTK',
+            BURGER: 'BURGER',
+            WBNB: 'WBNB',
+        },
+    ],
     allIndexPrice: [
         {
             HELMET: 0,
@@ -130,6 +198,7 @@ export const state = () => ({
             BTCB: 0,
             ETH: 0,
             CKT: 0,
+            BURGER: 0,
         },
         {
             HELMET: 0,
@@ -139,6 +208,7 @@ export const state = () => ({
             BTCB: 0,
             ETH: 0,
             CKT: 0,
+            BURGER: 0,
         },
     ],
     allHelmetPrice: [
@@ -150,6 +220,7 @@ export const state = () => ({
             BTCB: 0,
             ETH: 0,
             CKT: 0,
+            BURGER: 0,
         },
         {
             HELMET: 0,
@@ -159,26 +230,10 @@ export const state = () => ({
             BTCB: 0,
             ETH: 0,
             CKT: 0,
+            BURGER: 0,
         },
     ],
-    strikePriceArray: [
-        {
-            BTCB: 720,
-            ETH: 27.5,
-            HELMET: 0.013,
-            CAKE: 0.03,
-            CTK: 0.04,
-            BURGER: 0.06,
-        },
-        {
-            BTCB: 180,
-            ETH: 3.3,
-            HELMET: 0.003,
-            CAKE: 0.0075,
-            CTK: 0.01,
-            BURGER: 0.015,
-        },
-    ],
+
     BalanceArray: {
         HELMET: 0,
         BNB: 0,
@@ -187,6 +242,7 @@ export const state = () => ({
         BTCB: 0,
         ETH: 0,
         CKT: 0,
+        BURGER: 0,
     },
     transferMap: [],
 });

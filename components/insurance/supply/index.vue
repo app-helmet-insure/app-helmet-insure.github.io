@@ -95,21 +95,21 @@
   </PDialog>
 </template>
 <script>
-import PDialog from '~/components/common/p-dialog.vue';
-import TypeSelect from '~/components/common/type-select.vue';
-import CoinRadio from './coin-radio.vue';
-import PrivateRadio from './private-radio.vue';
-import DueDate from './due-date.vue';
-import SelectPrice from './select-price.vue';
-import PInput from '~/components/common/p-input.vue';
-import { uniswap } from '~/assets/utils/address-pool.js';
-import precision from '~/assets/js/precision.js';
-import { getBalance, onIssueSell } from '~/interface/order.js';
-import moment from 'moment';
-import { fixD, fixInput } from '~/assets/js/util.js';
+import PDialog from "~/components/common/p-dialog.vue";
+import TypeSelect from "~/components/common/type-select.vue";
+import CoinRadio from "./coin-radio.vue";
+import PrivateRadio from "./private-radio.vue";
+import DueDate from "./due-date.vue";
+import SelectPrice from "./select-price.vue";
+import PInput from "~/components/common/p-input.vue";
+import { uniswap } from "~/assets/utils/address-pool.js";
+import precision from "~/assets/js/precision.js";
+import { getBalance, onIssueSell } from "~/interface/order.js";
+import moment from "moment";
+import { fixD, fixInput } from "~/assets/js/util.js";
 
 export default {
-  name: 'supply',
+  name: "supply",
   components: {
     PDialog,
     TypeSelect,
@@ -119,20 +119,20 @@ export default {
     PInput,
     PrivateRadio,
   },
-  props: ['showDialog'],
+  props: ["showDialog"],
   data() {
     return {
-      col: 'WETH',
-      dueDate: '', // 过期时间
-      price: '', // 执行价格
-      qty: '1',
-      dpr: '1',
-      und: 'USDT',
-      indexPx: '', // 指数价格
-      balance: '', // 余额
+      col: "WETH",
+      dueDate: "", // 过期时间
+      price: "", // 执行价格
+      qty: "1",
+      dpr: "1",
+      und: "USDT",
+      indexPx: "", // 指数价格
+      balance: "", // 余额
       private: false,
       moment: moment,
-      address: '',
+      address: "",
     };
   },
   computed: {
@@ -151,7 +151,7 @@ export default {
         );
         return premium;
       }
-      return '--';
+      return "--";
     },
     // 标的物价值
     collateral() {
@@ -180,15 +180,15 @@ export default {
         Number(this.balance) &&
         Number(this.balance) > Number(this.collateral)
       ) {
-        return 'Publish';
+        return "Publish";
       } else {
-        return 'Balance Shortfall';
+        return "Balance Shortfall";
       }
     },
   },
   watch: {
     undAndCol: {
-      handler: 'undAndcolWatch',
+      handler: "undAndcolWatch",
       immediate: true,
     },
   },
@@ -203,14 +203,14 @@ export default {
       this.price = price;
     },
     closeSupply() {
-      this.$emit('close');
+      this.$emit("close");
     },
     undChanged(coin) {
       this.und = coin;
       this.getBalance();
     },
     praChanged(flag) {
-      if (flag == 'YES') {
+      if (flag == "YES") {
         this.private = true;
       } else {
         this.private = false;
@@ -218,10 +218,10 @@ export default {
     },
     async undAndcolWatch(newValue) {
       if (newValue.col && newValue.und) {
-        this.$bus.$emit('PRICE_START_CHANGE', true);
+        this.$bus.$emit("PRICE_START_CHANGE", true);
         const px = await uniswap(newValue.col, newValue.und, window.chainID);
         this.indexPx = px;
-        this.$bus.$emit('PRICE_CHANGE_SUCCESS', true);
+        this.$bus.$emit("PRICE_CHANGE_SUCCESS", true);
         if (!this.balance) {
           this.getBalance();
         }

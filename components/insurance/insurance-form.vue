@@ -212,6 +212,9 @@ export default {
         showType: this.currentCoin == "WBNB" ? "BUSD" : "HELMET",
         _yield: 0,
       };
+      if (data.category == "WBNB" && data.currency == "BUSD") {
+        data["divide"] = true;
+      }
       if (data.currency == "WBNB" && data.category != "BUSD") {
         onIssueSellOnETH(data, (status) => {});
       } else {
@@ -219,8 +222,6 @@ export default {
       }
     },
     watchRent(newValue) {
-      console.log(newValue, this.HelmetPrice);
-
       if (!newValue.dpr || !newValue.num) {
         this.Rent = 0;
         return;
@@ -250,7 +251,7 @@ export default {
               day
             );
           }
-
+          console.log(DPR, this.HelmetPrice[1][this.currentCoin], num, day);
           premium = precision.minus(
             number,
             Math.min(precision.minus(strikePrice, indexPx), 0)
@@ -258,11 +259,8 @@ export default {
           earnings = -(Math.max(indexPx - strikePrice, 0) - premium);
         } else {
           if (this.currentCoin == "WBNB") {
-            number = precision.times(
-              DPR,
-              precision.times(this.HELMET_BUSD, num),
-              day
-            );
+            number = precision.times(DPR, this.HELMET_BUSD * num, day);
+            console.log(DPR, this.HELMET_BUSD, num, day);
           } else {
             number = precision.times(
               DPR,

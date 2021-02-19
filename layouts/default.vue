@@ -338,7 +338,7 @@ export default {
       // helmet
       let bnbbusd = await uniswap("WBNB", "BUSD");
       let cakebusd = await uniswap("CAKE", "BUSD");
-      let helmetbusd = await uniswap("HELMET", "BUSD");
+      let helmetbusd = await uniswap("BUSD", "HELMET");
       for (let i = 0; i < list.length; i++) {
         let px;
         if ("WBNB" != list[i]) {

@@ -297,7 +297,7 @@ export default {
           }
           let res = await asks(resultItem["id"], "sync", Token);
           resultItem["relVol"] = res;
-          if (this.strikePriceArray[1][unToken] && Token != "BUSD") {
+          if (this.strikePriceArray[1][unToken]) {
             resultItem["remain"] = fixD(
               precision.divide(res, this.strikePriceArray[1][unToken] || 1),
               8

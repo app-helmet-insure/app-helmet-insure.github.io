@@ -38,12 +38,17 @@ export const onIssueSell = async (data_, callBack) => {
     let priceFix = getStrikePriceFix(data_.currency, data_.category);
     let priceUnit = getWeiWithFix(priceFix);
     let price = fixD(data.price, priceFix);
-    console.log(data);
     data.total = toWei(
         fixD(precision.times(data_.price, data_.volume), 10),
         priceFix
     );
-    price = window.WEB3.utils.toWei(String(data.price), priceUnit);
+    if (data_.divide) {
+        price = fixD(precision.divide(1, data.price), fix);
+        price = window.WEB3.utils.toWei(String(price), priceUnit);
+    } else {
+        price = window.WEB3.utils.toWei(String(data.price), priceUnit);
+    }
+    console.log(price, data);
     data.price = price;
     let premiumFix = getStrikePriceFix(data_.currency, data_.category);
     let premiumUnit = getWeiWithFix(premiumFix);
@@ -153,9 +158,7 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     // let priceFix = getStrikePriceFix(data_.category, data_.currency);
     // let priceUnit = getWeiWithFix(priceFix);
     // let price = fixD(precision.divide(1, data.price), fix);
-    console.log(cwei);
     let price = fixD(precision.divide(1, data.price), fix);
-    console.log(price, precision.divide(1, data.price));
     // price = toWei(price, data_.currency);
     price = window.WEB3.utils.toWei(String(price), getWei(data_.category));
     // window.WEB3.utils.toWei(String(number), unit);

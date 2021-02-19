@@ -298,7 +298,6 @@ export default {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
         let Token = getTokenName(item.sellInfo.longInfo._collateral);
-        amount = fromWei(item.vol, Token);
         if (item.new) {
           // 保单价格
           InsurancePrice = fromWei(item.newPrice, Token == "CTK" ? 30 : Token);
@@ -307,6 +306,20 @@ export default {
           InsurancePrice = fromWei(
             item.sellInfo.price,
             Token == "CTK" ? 30 : Token
+          );
+        }
+        if (
+          (TokenFlag == "WBNB" && Token != "BUSD") ||
+          (TokenFlag == "BUSD" && Token == "WBNB")
+        ) {
+          amount = fromWei(item.vol, Token);
+        } else {
+          amount = fixD(
+            precision.divide(
+              fromWei(item.vol, Token),
+              this.strikePriceArray[1][TokenFlag]
+            ),
+            8
           );
         }
         // 保费
@@ -368,10 +381,7 @@ export default {
             amt: fromWei(item.amt),
             price: InsurancePrice,
             bnbAmount: amount,
-            volume: fixD(
-              precision.divide(amount, this.strikePriceArray[1][TokenFlag]),
-              8
-            ),
+            volume: amount,
             Rent: Rent,
             settleToken: item.sellInfo.settleToken,
             dueDate: downTime,

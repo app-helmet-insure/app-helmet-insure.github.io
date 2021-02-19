@@ -81,11 +81,7 @@
         class="item_box"
         v-for="(item, index) in showList"
         :key="index"
-        :class="
-          getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-            ? 'call_style'
-            : 'put_style'
-        "
+        :class="item.type == 'call' ? 'call_style' : 'put_style'"
       >
         <p>
           <span>{{ $t("Table.ID") }}</span>
@@ -94,28 +90,14 @@
         <div>
           <p>
             <span>{{ $t("Table.Type") }}</span>
-            <span
-              :class="
-                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-                  ? 'call_text'
-                  : 'put_text'
-              "
-            >
+            <span :class="item.type == 'call' ? 'call_text' : 'put_text'">
               {{
-                getTokenName(item._underlying) == "WBNB" || item.type == "call"
+                item.type == "call"
                   ? getTokenName(item._collateral)
                   : getTokenName(item._underlying)
               }}
               {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-              <i
-                :class="
-                  getTokenName(item._underlying) == 'WBNB' ||
-                  item.type == 'call'
-                    ? 'call_icon'
-                    : 'put_icon'
-                "
-              >
-              </i>
+              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
             </span>
           </p>
           <p>
@@ -324,28 +306,28 @@ export default {
         }
         // 保费
         if (TokenFlag == "WBNB") {
-          item.TypeCoin = getTokenName(item.sellInfo.longInfo._collateral);
+          item.TypeCoin = Token;
           item.type = "call";
           item.outPriceUnit = "BNB";
         } else {
-          item.TypeCoin = getTokenName(item.sellInfo.longInfo._underlying);
+          item.TypeCoin = TokenFlag;
           item.type = "put";
           item.outPriceUnit = "BNB";
         }
         if (TokenFlag == "BUSD" && Token == "WBNB") {
-          item.TypeCoin = getTokenName(item.sellInfo.longInfo._collateral);
+          item.TypeCoin = Token;
           item.type = "call";
           item.outPriceUnit = "BUSD";
         }
         if (Token == "BUSD" && TokenFlag == "WBNB") {
-          item.TypeCoin = getTokenName(item.sellInfo.longInfo._underlying);
+          item.TypeCoin = TokenFlag;
           item.type = "put";
           item.outPriceUnit = "BUSD";
         }
         Rent = precision.times(amount, InsurancePrice);
         //倒计时
         downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
-        if (TokenFlag == "WBNB") {
+        if (item.type == "call") {
           resultItem = {
             id: item.bidID,
             bidID: item.bidID,
@@ -370,6 +352,7 @@ export default {
               item.sellInfo.longInfo._strikePrice,
               Token == "CTK" ? 30 : Token
             ),
+            type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
           };
@@ -401,6 +384,7 @@ export default {
                 fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
               )
             ),
+            type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
           };

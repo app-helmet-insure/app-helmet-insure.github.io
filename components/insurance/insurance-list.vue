@@ -13,7 +13,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in showList" :key="index">
+        <tr
+          v-for="(item, index) in showList"
+          :key="index"
+          v-if="item.price.length < 10"
+        >
           <td>
             {{ item.showID }}
             <i
@@ -24,7 +28,14 @@
           </td>
           <td>{{ item.price }}</td>
           <td>{{ item.remain }}</td>
-          <td class="option">
+          <td
+            class="option"
+            :style="
+              item.status == 'dated' || item.remain == 0
+                ? 'visibility: hidden;'
+                : ''
+            "
+          >
             <PInput
               type="number"
               v-model="item.buyNum"
@@ -43,7 +54,11 @@
     </table>
     <!-- H5 -->
     <div>
-      <section v-for="(item, index) in showList" :key="index">
+      <section
+        v-for="(item, index) in showList"
+        :key="index"
+        v-if="item.price.length < 10"
+      >
         <p>
           <span>{{ $t("Table.ID") }}</span
           ><span>{{ item.showID }}</span>
@@ -57,7 +72,13 @@
             ><span>{{ item.remain }}</span>
           </p>
         </div>
-        <div>
+        <div
+          :style="
+            item.status == 'dated' || item.remain == 0
+              ? 'visibility: hidden;'
+              : ''
+          "
+        >
           <PInput
             type="number"
             v-model="item.buyNum"
@@ -86,14 +107,14 @@
             <use xlink:href="#icon-left"></use>
           </svg>
         </p>
-        <span
+        <!-- <span
           class="page_item"
           v-for="(item, index) in Math.ceil(insuranceList.length / 10)"
           :key="index"
           :class="page == index ? 'page_active' : ''"
           @click="handleClickChagePage(index)"
           >{{ index + 1 }}</span
-        >
+        > -->
         <p @click="downPage">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-right"></use>
@@ -214,8 +235,8 @@ export default {
     async setList(sell, coin, type) {
       this.isLoading = true;
       this.showList = [];
-      const sellResult = [];
-      const buyResult = [];
+      let sellResult = [];
+      let buyResult = [];
       let spliceResult = [];
       let item, volume, price, id, seller;
       let resultItem, newArray;
@@ -235,6 +256,7 @@ export default {
           "..." +
           item.seller.substr(-5).toUpperCase();
         newArray = this.getNewPrice(item.askID);
+
         if (
           (token == "WBNB" && coToken != "BUSD") ||
           (token == "BUSD" && coToken == "WBNB")
@@ -242,7 +264,7 @@ export default {
           resultItem = {
             seller: item.seller,
             id: item.askID,
-            volume: fromWei(item.volume, coToken),
+            volume: fixD(fromWei(item.volume, coToken), 8),
             price: fixD(price, 4),
             settleToken: item.settleToken,
             _strikePrice: fromWei(item.longInfo._strikePrice, coToken),
@@ -252,6 +274,7 @@ export default {
             remain: 0,
             showID,
             buyNum: "",
+            sort: 1,
           };
           if (newArray) {
             resultItem["volume"] = fromWei(newArray.volume, coToken);
@@ -262,8 +285,12 @@ export default {
             resultItem["id"] = newArray.newAskID;
           }
           let res = await asks(resultItem["id"], "sync", coToken);
-          resultItem["remain"] = res;
-          if (res != 0 && time > now) {
+          resultItem["remain"] = fixD(res, 8);
+          if (resultItem["remain"] == 0 || time < now) {
+            resultItem["status"] = "dated";
+            resultItem["sort"] = 0;
+          }
+          if (time + 2592000000 > now) {
             buyResult.push(resultItem);
           }
         } else {
@@ -289,6 +316,7 @@ export default {
             remain: 0,
             showID,
             buyNum: "",
+            sort: 1,
           };
           if (newArray) {
             resultItem["volume"] = fromWei(newArray.volume, unToken);
@@ -305,12 +333,15 @@ export default {
           } else {
             resultItem["remain"] = fixD(res, 8);
           }
-          if (res != 0 && time > now) {
+          if (resultItem["remain"] == 0 || time < now) {
+            resultItem["status"] = "dated";
+            resultItem["sort"] = 0;
+          }
+          if (time + 2592000000 > now) {
             sellResult.push(resultItem);
           }
         }
       }
-
       this.isLoading = false;
       this.buyList = buyResult;
 
@@ -331,7 +362,9 @@ export default {
           (item) => getTokenName(item._underlying) == coin
         );
       }
-      this.insuranceList = result;
+      this.insuranceList = result.sort(function (a, b) {
+        return b.sort - a.sort;
+      });
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     checkList(coin, type) {
@@ -339,13 +372,17 @@ export default {
         let result = this.buyList.filter(
           (item) => getTokenName(item._collateral) == this.currentCoin
         );
-        this.insuranceList = result;
+        this.insuranceList = result.sort(function (a, b) {
+          return b.sort - a.sort;
+        });
         this.showList = result.slice(this.page * this.limit, this.limit);
       } else {
         let result = this.sellList.filter(
           (item) => getTokenName(item._underlying) == this.currentCoin
         );
-        this.insuranceList = result;
+        this.insuranceList = result.sort(function (a, b) {
+          return b.sort - a.sort;
+        });
         this.showList = result.slice(this.page * this.limit, this.limit);
       }
     },

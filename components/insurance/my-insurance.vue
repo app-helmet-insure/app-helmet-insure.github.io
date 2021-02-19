@@ -77,9 +77,7 @@
         v-for="(item, index) in showList"
         :key="index"
         :class="
-          getTokenName(item._underlying) == 'WBNB'
-            ? 'call_style item_box'
-            : 'put_style item_box'
+          item.type == 'call' ? 'call_style item_box' : 'put_style item_box'
         "
       >
         <p>
@@ -89,27 +87,9 @@
         <div>
           <p>
             <span>{{ $t("Table.Type") }}</span>
-            <span
-              :class="
-                getTokenName(item._underlying) == 'WBNB' || item.type == 'call'
-                  ? 'call_text'
-                  : 'put_text'
-              "
-            >
-              {{
-                getTokenName(item._underlying) == "WBNB"
-                  ? getTokenName(item._collateral)
-                  : getTokenName(item._underlying)
-              }}
-              <i
-                :class="
-                  getTokenName(item._underlying) == 'WBNB' ||
-                  item.type == 'call'
-                    ? 'call_icon'
-                    : 'put_icon'
-                "
-              >
-              </i>
+            <span :class="item.type == 'call' ? 'call_text' : 'put_text'">
+              {{ item.TypeCoin }}
+              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
             </span>
           </p>
           <p>
@@ -247,7 +227,6 @@ export default {
     },
     // 格式化数据
     async setSettlementList(list) {
-      console.log(list);
       this.isLoading = true;
       this.showList = [];
       let result = [];

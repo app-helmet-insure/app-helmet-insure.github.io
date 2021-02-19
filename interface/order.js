@@ -56,9 +56,8 @@ export const onIssueSell = async (data_, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.settleToken}</span></p>`,
+        conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.showType}</span></p>`,
     });
-    console.log(data);
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权

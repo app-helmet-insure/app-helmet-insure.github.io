@@ -101,18 +101,8 @@ export default {
         };
       }
     },
-    // 时间
-    _expiry() {
-      return this.$store.state.dueDate;
-    },
-    helmetTime() {
-      return this.$store.state.helmetDate;
-    },
-    ctkTime() {
-      return this.$store.state.ctkDate;
-    },
-    burgerTime() {
-      return this.$store.state.burgerDate;
+    allDueDate() {
+      return this.$store.state.allDueDate;
     },
     // 保费参数
     RentGrounp() {
@@ -120,10 +110,6 @@ export default {
         dpr: this.dpr,
         indexPx: this.indexPx,
         strikePrice: this.strikePrice,
-        // _expiry:
-        //   this.currentCoin == "HELMET"
-        //     ? new Date(this.helmetTime) * 1
-        //     : new Date(this._expiry) * 1,
         _expiry: this.getTime(this.currentCoin),
         num: this.volume,
       };
@@ -181,18 +167,7 @@ export default {
   },
   methods: {
     getTime(coin) {
-      switch (coin) {
-        case "HELMET":
-          return new Date(this.helmetTime) * 1;
-        case "CTK":
-          return new Date(this.ctkTime) * 1;
-        case "BURGER":
-          return new Date(this.burgerTime) * 1;
-        case "CAKE":
-          return "--";
-        default:
-          return new Date(this._expiry) * 1;
-      }
+      return this.allDueDate[0][coin];
     },
     handleClickDpr() {
       this.optionFlag = !this.optionFlag;
@@ -231,6 +206,7 @@ export default {
         price: this.strikePriceArray[this.currentType - 1][this.currentCoin],
         volume: this.volume, //
         settleToken: "HELMET",
+        showType: this.currentCoin == "WBNB" ? "BUSD" : "HELMET",
         _yield: 0,
       };
       if (data.currency == "WBNB" && data.category != "BUSD") {

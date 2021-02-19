@@ -272,7 +272,9 @@ export default {
           let exPirce = fromWei(item.longInfo._strikePrice, Token);
           exPirce = precision.divide(1, exPirce);
           let volume =
-            (fromWei(item.volume, Token) * this.indexArray[0][unToken]) / 2;
+            Token == "BUSD"
+              ? fromWei(item.volume, Token)
+              : (fromWei(item.volume, Token) * this.indexArray[0][unToken]) / 2;
           let price = fromWei(item.price, Token);
           resultItem = {
             seller: item.seller,
@@ -295,7 +297,7 @@ export default {
           }
           let res = await asks(resultItem["id"], "sync", Token);
           resultItem["relVol"] = res;
-          if (this.strikePriceArray[1][unToken]) {
+          if (this.strikePriceArray[1][unToken] && Token != "BUSD") {
             resultItem["remain"] = fixD(
               precision.divide(res, this.strikePriceArray[1][unToken] || 1),
               8

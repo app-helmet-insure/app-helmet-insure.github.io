@@ -13,7 +13,13 @@
         <!-- LONG当前总价值 -->
         <p>
           <label>{{ $t("Banner.LongValue") }}</label>
-          <span> {{ addCommom(totalHelmetsBorrowedVolume, 4) }}</span>
+          <span
+            ><countTo
+              :startVal="Number(0)"
+              :endVal="Number(totalHelmetsBorrowedVolume)"
+              :duration="3000"
+              :decimals="4"
+          /></span>
         </p>
         <img src="~/assets/img/helmet/ba2@2x.png" alt="" />
       </li>
@@ -42,8 +48,12 @@
 <script>
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import countTo from "vue-count-to";
 export default {
   name: "insurance-banner",
+  components: {
+    countTo,
+  },
   data() {
     return {
       precision: precision,

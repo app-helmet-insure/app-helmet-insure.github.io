@@ -128,8 +128,8 @@
     "Copy": "复制成功",
     "Active": "请务必确认价格是否匹配，不合适的价格行权可能会造成亏损",
     "SendCoin": "请不要把您的helmet打入合约地址，连接钱包并调至BSC网络，我们会自动读取数据。",
-    "RiskWarning": "注意",
-    "RiskWarningContent": "Helmet保单交易是期权逻辑，请在阅读完《使用指南》后再进行保单交易。保单交易有风险，请谨慎操作。",
-    "RiskWarnCheck": "我已知晓"
+    "RiskWarning": "NOTICE",
+    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 《Paper& Guide》.",
+    "RiskWarnCheck": "I Agree"
   }
 }

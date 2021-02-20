@@ -48,7 +48,6 @@ export const onIssueSell = async (data_, callBack) => {
     } else {
         price = window.WEB3.utils.toWei(String(data.price), priceUnit);
     }
-    console.log(price, data);
     data.price = price;
     let premiumFix = getStrikePriceFix(data_.currency, data_.category);
     let premiumUnit = getWeiWithFix(premiumFix);
@@ -252,7 +251,7 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     // const WEB3 = new web3();
     const charID = window.chainID;
     data.settleToken = getAddress(data.settleToken, charID);
-    let cwei = getWei(data.settleToken);
+    let cwei = getWei(data._collateral);
     let fix = cwei === 'lovelace' ? 6 : 18;
     // let fix = 18;
     let payPrice = fixD(
@@ -269,7 +268,9 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     //   getWei(data.settleToken)
     // );
     // let volume = fixD(precision.divide(data.volume, data._strikePrice), fix);
-    let volume = toWei(_data.volume, _data._collateral);
+    let fixVolume = fixD(_data.volume, fix);
+    let volume = toWei(fixVolume, _data._collateral);
+    console.log(fixVolume, volume);
     // volume = toWei(volume);
     data.volume = volume;
     let pay = precision.times(_data._strikePrice, _data.volume);
@@ -284,11 +285,12 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     const Contract = await expERC20(data.settleToken);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
-        conText: `<p>Rent <span>${_data.volume} ${_data._underlying}
+        conText: `<p>Rent <span>${_data.showVolueme} ${_data._underlying}
     </span> policys, the Premium is <span>
     ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
     </span></p>`,
     });
+    console.log(data);
     // return;
     try {
         // 一键判断是否需要授权，给予无限授权

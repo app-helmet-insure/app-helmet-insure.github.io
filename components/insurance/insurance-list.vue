@@ -254,7 +254,7 @@ export default {
           item.seller.substr(0, 2) +
           item.seller.substr(2, 4) +
           "..." +
-          item.seller.substr(-5).toUpperCase(); 
+          item.seller.substr(-5).toUpperCase();
         newArray = this.getNewPrice(item.askID);
 
         if (
@@ -431,11 +431,13 @@ export default {
       if (!data.buyNum) {
         return;
       }
+      console.log(data);
       let datas;
       if (this.currentType == 1) {
         datas = {
           askID: data.id,
           volume: data.buyNum,
+          showVolueme: data.buyNum,
           price: data.price,
           settleToken: "HELMET",
           _strikePrice: data._strikePrice,
@@ -450,6 +452,7 @@ export default {
         let num = precision.divide(data.buyNum, data.remain);
         datas = {
           askID: data.id,
+          showVolueme: data.buyNum,
           volume:
             data.buyNum == data.remain
               ? precision.times(data.relVol, num)

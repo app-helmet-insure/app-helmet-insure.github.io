@@ -63,10 +63,16 @@
         </button>
       </div>
       <div class="pool_content">
-        <div class="deposit" v-show="actionType == 'deposit'">
+        <div class="deposit" v-if="actionType == 'deposit'">
           <div class="title">
             <p>
-              {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
+              <countTo
+                :startVal="Number(0)"
+                :endVal="Number(balance.Deposite)"
+                :duration="3000"
+                :decimals="8"
+              />
+              LPT
               {{ $t("Table.DAvailable") }}
             </p>
           </div>
@@ -95,7 +101,19 @@
                 }}：</span
               >
               <span>
-                {{ fixD(balance.Withdraw, 4) }}/{{ balance.TotalLPT }} LPT</span
+                <countTo
+                  :startVal="Number(0)"
+                  :endVal="Number(balance.Withdraw)"
+                  :duration="3000"
+                  :decimals="4"
+                />/
+                <countTo
+                  :startVal="Number(0)"
+                  :endVal="Number(balance.TotalLPT)"
+                  :duration="3000"
+                  :decimals="4"
+                />
+                LPT</span
               >
             </p>
             <p>
@@ -124,9 +142,17 @@
             </p>
           </div>
         </div>
-        <div class="withdraw" v-show="actionType == 'withdraw'">
+        <div class="withdraw" v-if="actionType == 'withdraw'">
           <div class="title">
-            <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
+            <p>
+              <countTo
+                :startVal="Number(0)"
+                :endVal="Number(balance.Withdraw)"
+                :duration="3000"
+                :decimals="8"
+              />
+              LPT {{ $t("Table.WAvailable") }}
+            </p>
           </div>
           <div class="content">
             <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
@@ -156,7 +182,12 @@
               <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
               <span>
                 <span>
-                  {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
+                  <countTo
+                    :startVal="Number(0)"
+                    :endVal="Number(balance.Helmet)"
+                    :duration="3000"
+                    :decimals="8"
+                  />
                   HCCT</span
                 >
               </span>
@@ -214,7 +245,11 @@ import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import countTo from "vue-count-to";
 export default {
+  components: {
+    countTo,
+  },
   data() {
     return {
       list: {

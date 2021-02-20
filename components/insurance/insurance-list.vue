@@ -431,7 +431,6 @@ export default {
       if (!data.buyNum) {
         return;
       }
-      console.log(data);
       let datas;
       if (this.currentType == 1) {
         datas = {
@@ -444,6 +443,7 @@ export default {
           _underlying: getTokenName(data._underlying),
           _expiry: data._expiry,
           _collateral: getTokenName(data._collateral),
+          showType: getTokenName(data._collateral),
         };
         this.listType = 2;
         this.listCoin = data._collateral;
@@ -472,6 +472,7 @@ export default {
           _underlying: getTokenName(data._underlying),
           _expiry: data._expiry,
           _collateral: getTokenName(data._collateral),
+          showType: getTokenName(data._underlying),
         };
         this.listType = 2;
         this.listCoin = data._underlying;

@@ -30,12 +30,12 @@
       :TradeType="type"
     ></Balance>
     <InsuranceList
-      v-if="type == 'buy'"
+      v-show="type == 'buy'"
       :currentCoin="curCoin"
       :currentType="TradeType"
     ></InsuranceList>
     <InsuranceForm
-      v-if="type == 'sell'"
+      v-show="type == 'sell'"
       :currentCoin="curCoin"
       :currentType="TradeType"
     ></InsuranceForm>

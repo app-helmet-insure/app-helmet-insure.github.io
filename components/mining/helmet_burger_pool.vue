@@ -48,7 +48,13 @@
         <div class="title">
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
-            {{ balance.Deposite.length > 60 ? 0 : balance.Deposite }} LPT
+            <countTo
+              :startVal="Number(0)"
+              :endVal="Number(balance.Deposite)"
+              :duration="3000"
+              :decimals="8"
+            />
+            LPT
             {{ $t("Table.DAvailable") }}
           </p>
         </div>
@@ -75,7 +81,22 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span> {{ balance.Withdraw }} /{{ balance.TotalLPT }} LPT</span>
+            <span>
+              <countTo
+                :startVal="Number(0)"
+                :endVal="Number(balance.Withdraw)"
+                :duration="3000"
+                :decimals="4"
+              />
+              /
+              <countTo
+                :startVal="Number(0)"
+                :endVal="Number(balance.TotalLPT)"
+                :duration="3000"
+                :decimals="4"
+              />
+              LPT</span
+            >
           </p>
 
           <section>
@@ -107,7 +128,15 @@
       <div class="withdraw">
         <div class="title">
           <span>{{ $t("Table.Withdraw") }}</span>
-          <p>{{ balance.Withdraw }} LPT {{ $t("Table.WAvailable") }}</p>
+          <p>
+            <countTo
+              :startVal="Number(0)"
+              :endVal="Number(balance.Withdraw)"
+              :duration="3000"
+              :decimals="8"
+            />
+            LPT {{ $t("Table.WAvailable") }}
+          </p>
         </div>
         <div class="content">
           <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
@@ -136,11 +165,22 @@
           <p>
             <span>TOKEN {{ $t("Table.HELMETRewards") }}：</span>
             <span>
-              <span
-                >{{ balance.Cake.length > 60 ? 0 : balance.Cake }} BURGER</span
+              <span>
+                <countTo
+                  :startVal="Number(0)"
+                  :endVal="Number(balance.Cake)"
+                  :duration="3000"
+                  :decimals="8"
+                />
+                BURGER</span
               >
               <span>
-                {{ balance.Helmet.length > 60 ? 0 : balance.Helmet }}
+                <countTo
+                  :startVal="Number(0)"
+                  :endVal="Number(balance.Helmet)"
+                  :duration="3000"
+                  :decimals="8"
+                />
                 HELMET</span
               >
             </span>
@@ -195,7 +235,11 @@ import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import countTo from "vue-count-to";
 export default {
+  components: {
+    countTo,
+  },
   data() {
     return {
       list: {

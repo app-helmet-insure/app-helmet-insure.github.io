@@ -247,6 +247,7 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     // 比如 WETH/DAI，两者精度都是18，那么价格的精度就是18-18+18=18
     // USDT/USDT，精度=6-6+18=18  在抵押物和结算物相同时，总是18
     let data = { ..._data };
+    console.log(_data);
 
     // const WEB3 = new web3();
     const charID = window.chainID;
@@ -270,7 +271,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     // let volume = fixD(precision.divide(data.volume, data._strikePrice), fix);
     let fixVolume = fixD(_data.volume, fix);
     let volume = toWei(fixVolume, _data._collateral);
-    console.log(fixVolume, volume);
     // volume = toWei(volume);
     data.volume = volume;
     let pay = precision.times(_data._strikePrice, _data.volume);
@@ -285,7 +285,7 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     const Contract = await expERC20(data.settleToken);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
-        conText: `<p>Rent <span>${_data.showVolueme} ${_data._underlying}
+        conText: `<p>Rent <span>${_data.showVolueme} ${_data.showType}
     </span> policys, the Premium is <span>
     ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
     </span></p>`,

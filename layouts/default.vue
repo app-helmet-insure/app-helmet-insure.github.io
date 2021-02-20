@@ -10,6 +10,9 @@
         ></i>
       </span>
     </p>
+    <p>
+      <span>{{ $t("Tip.SendCoin") }}</span>
+    </p>
     <PHeader></PHeader>
     <div class="main-container">
       <nuxt />
@@ -17,11 +20,11 @@
     <PFooter :padding="200"></PFooter>
     <!-- <MyPayaso></MyPayaso> -->
     <PMask></PMask>
-    <!-- <RiskWarning
+    <RiskWarning
       v-if="showRiskWarning"
       @close="closeRiskWarning"
       @confirm="closeRiskWarning"
-    ></RiskWarning> -->
+    ></RiskWarning>
     <!-- 下载钱包指引界面 -->
     <WallectDownLoad></WallectDownLoad>
     <!-- 钱包交互状态提示弹框 -->
@@ -122,9 +125,9 @@ export default {
   },
   async mounted() {
     // 是否阅读过【风险提示】
-    // if (!window.localStorage.getItem('readRisk')) {
-    //   this.showRiskWarning = true;
-    // }
+    if (!window.localStorage.getItem("readRisk")) {
+      this.showRiskWarning = true;
+    }
     this.copy();
     window.WEB3 = await web3();
     window.chainID = await getID();
@@ -445,11 +448,10 @@ export default {
     > p {
       width: 100%;
       min-width: 1200px;
-      height: 31px;
+      height: 24px;
       background: rgba(255, 150, 0, 0.2);
       font-size: 12px;
       color: #ff9600;
-      line-height: 30px;
       text-align: center;
       display: flex;
       justify-content: center;

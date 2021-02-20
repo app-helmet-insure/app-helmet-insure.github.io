@@ -1,19 +1,22 @@
 <template>
-  <PDialog :title="$t('Dialog.RiskWarning')" @close="closeDialog">
+  <PDialog :title="$t('Tip.RiskWarning')" @close="closeDialog">
     <div class="risk-wraning">
-      <!-- <p>PAYASO V1.0 is currently a beta version, but the assets of ERC-20 used are real assets . V1.0 version contract were audit performed by KNOWNSEC and tested by community , but there' s still a risk of unintended use. Please communicate with community in discord #official channel if you encounter unintended product issues! Supply a safety helmet may take a risk of token price falling！We highly recommend that you use Payaso with a clear understanding of its functionality.</p> -->
-      <p>{{ $t("Dialog.RiskWarningContent") }}</p>
-      <div class="agreement-box" @click="toggleAgree">
-        <span class="checkbox">
-          <img v-if="isAgree" src="~/assets/img/icon/checked1.png" />
-          <img v-else src="~/assets/img/icon/checked2.png" />
-        </span>
-        <label>{{ $t("Dialog.RiskWarnCheck") }}</label>
-      </div>
+      <p>{{ $t("Tip.RiskWarningContent") }}</p>
     </div>
     <template v-slot:footer>
-      <div class="btn-box">
-        <button class="o_button" @click="confirmDialog" :disabled="!isAgree">
+      <div class="footer_risk">
+        <div class="agreement-box" @click="toggleAgree">
+          <span class="checkbox">
+            <img v-if="isAgree" src="~/assets/img/helmet/checked2.png" />
+            <img v-else src="~/assets/img/helmet/checked1.png" />
+          </span>
+          <label>{{ $t("Tip.RiskWarnCheck") }}</label>
+        </div>
+        <button
+          class="o_button agreeButton"
+          @click="confirmDialog"
+          :disabled="!isAgree"
+        >
           Confirm
         </button>
       </div>
@@ -50,43 +53,46 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 .risk-wraning {
-  color: $text-g;
-  font-size: 14px;
-  padding-top: 20px;
+  font-size: 16px;
+  padding: 30px 20px 20px 20px;
   > p {
     line-height: 1.8;
+    color: #1d1d1d;
   }
+}
+.footer_risk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   .agreement-box {
-    margin-top: 20px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
     .checkbox {
       img {
-        width: 14px;
-        height: 14px;
+        width: 20px;
+        height: 20px;
         margin-right: 10px;
       }
     }
     label {
-      color: $text-t;
-      font-size: 12px;
+      font-size: 14px;
+      color: #1d1d1d;
     }
   }
-}
-.btn-box {
-  > button {
+  .agreeButton {
+    max-width: 120px;
+    margin-top: 0px;
     cursor: pointer;
     &:hover {
-      background: $main-hover;
+      background: #ffa000;
     }
     &:disabled {
       opacity: 0.4;
       cursor: not-allowed;
-      /* background: rgba($main-color, 0.4); */
       &:hover {
-        background: $main-color;
+        background: #ffa000;
       }
     }
   }

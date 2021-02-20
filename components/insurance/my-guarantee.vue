@@ -471,7 +471,8 @@ export default {
     // 行权
     toActive(item) {
       let data;
-      if (getTokenName(item._underlying) == "WBNB" || item.type == "call") {
+      console.log(item);
+      if (item.type == "call") {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: precision.times(item._strikePrice, item.volume),
@@ -487,10 +488,11 @@ export default {
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
         };
+        console.log(data, 1);
       } else {
         data = {
           token: getTokenName(item._underlying),
-          _underlying_vol: fixD(item.volume, 8),
+          _underlying_vol: item.volume,
           vol: fixD(item.bnbAmount * item.outPrice, 8),
           bidID: item.bidID,
           long: item.long,
@@ -500,6 +502,7 @@ export default {
           settleToken: getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
         };
+        console.log(data, 2);
       }
       onExercise(data, data.flag);
     },
@@ -535,6 +538,7 @@ export default {
           approveAddress2: "CAKELONG",
           outPrice: fromWei(30000000000000000, Token),
           outPriceUnit: "BNB",
+          type: "call",
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

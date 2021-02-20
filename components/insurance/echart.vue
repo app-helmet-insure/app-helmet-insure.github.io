@@ -182,7 +182,6 @@ export default {
         let arr = this.$store.state.strikePriceArray[0];
         let arr1 = this.$store.state.strikePriceArray[1];
         let arr2 = this.$store.state.echartIndexArray;
-        console.log(arr2);
         let MaxNum = this.curCoin == "CAKE" ? 2.5 : 1.5;
         if (arr.BNB != 0) {
           let max = toRounding(arr[this.curCoin] * MaxNum, 4);

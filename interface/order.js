@@ -669,15 +669,13 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
+    console.log(data);
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>you will swap<span> ${toRounding(
-            data._underlying_vol,
-            8
-        )} ${data._underlying}</span> to <span> ${fixD(data.vol, 8)} ${
-            data._collateral
-        }</span></p>`,
+        conText: `<p>you will swap<span> ${fixD(data._underlying_vol, 8)} ${
+            data._underlying
+        }</span> to <span> ${fixD(data.vol, 8)} ${data._collateral}</span></p>`,
         activeTip: true,
     });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
@@ -838,7 +836,6 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     if (!token_exp || !contract_str) return;
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);
-    console.log(parseInt(awc) >= parseInt(num), parseInt(awc), parseInt(num));
     if (parseInt(awc) >= parseInt(num)) {
         // console.log("额度充足", parseInt(awc));
         return;

@@ -5,25 +5,35 @@
       <h3 class="title">Account</h3>
       <span class="close" @click="closeDialog"></span>
       <div class="account-box">
-        <div class="top">
+        <div class="left">
           <span>Connected with {{ userInfo.data.name }}</span>
-          <a @click="changeAccount">Change</a>
+          <div class="address">
+            <span class="circle"></span>
+            <span class="address-text">{{ accountText }}</span>
+            <img
+              class="copy"
+              src="~/assets/img/icon/copy.png"
+              @click="copyAdress($event, account)"
+            />
+          </div>
         </div>
-        <div class="address">
-          <span class="circle"></span>
-          <span class="address-text">{{ accountText }}</span>
-          <img src="~/assets/img/icon/copy.png" />
+        <div class="right">
+          <a @click="changeAccount">Change</a>
+          <a @click="SignoutAccount">SignOut</a>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
-  name: 'current-account',
+  name: "current-account",
   data() {
     return {
-      accountText: '',
+      accountText: "",
+      account: "",
     };
   },
   computed: {
@@ -33,37 +43,68 @@ export default {
   },
   watch: {
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
-  mounted() {
-    console.log(1);
-  },
+  mounted() {},
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", {
+        text: () => text,
+      });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     userInfoWatch(newValue) {
       let account = newValue.data.account;
-      this.accountText =
-        account.substr(0, 1) +
-        ' ' +
-        account.substr(1, 1) +
-        ' ' +
-        account.substr(2, 4) +
-        '...' +
-        account.substr(-5);
+      this.account = newValue.data.account;
+      if (account) {
+        this.accountText =
+          account.substr(0, 1) +
+          " " +
+          account.substr(1, 1) +
+          " " +
+          account.substr(2, 4) +
+          "..." +
+          account.substr(-5);
+      }
     },
     closeDialog() {
-      this.$emit('close');
+      this.$emit("close");
     },
     changeAccount() {
-      this.$emit('change');
+      this.$emit("change");
       this.closeDialog();
+    },
+    SignoutAccount() {
+      this.$store.dispatch("setUserInfo", {
+        data: {
+          isLogin: false,
+          account: null,
+          balace: "--",
+        },
+        status: 0,
+        signOut: true,
+      });
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 .current-account {
   position: fixed;
   left: 0px;
@@ -93,7 +134,7 @@ export default {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;
@@ -107,14 +148,20 @@ export default {
       padding: 16px;
       padding-bottom: 20px;
       margin-top: 16px;
-      .top {
+      display: flex;
+      justify-content: space-between;
+      .left {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
         > span {
           font-size: 14px;
           color: $text-d;
         }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         > a {
           display: inline-block;
           background: #ff9600;

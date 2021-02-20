@@ -213,8 +213,8 @@ export default {
             // setTimeout(() => {
             //     window.location.reload()
             // }, 500)
-            let userInfo = await mateMaskInfo(account[0], "MetaMask");
-            this.$store.dispatch("setUserInfo", userInfo);
+            // let userInfo = await mateMaskInfo(account[0], "MetaMask");
+            // this.$store.dispatch("setUserInfo", userInfo);
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
@@ -299,12 +299,17 @@ export default {
       }
     },
     async getUserInfo() {
+      let signOut = this.$store.state.userInfo.signOut;
+      console.log(signOut);
       let res = await mateMaskInfo();
       try {
         if (res.status === -1) {
           return;
         }
-        this.$store.dispatch("setUserInfo", res);
+        if (!signOut) {
+          res.signOut = false;
+          this.$store.dispatch("setUserInfo", res);
+        }
       } catch (error) {
         alert(error);
       }

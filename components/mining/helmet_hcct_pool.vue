@@ -2,7 +2,7 @@
   <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
-    <img class="circle" src="~/assets/img/helmet/rightCircle.png" alt="" />
+    <img class="circle" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -778,6 +778,13 @@ export default {
       width: 36px;
       height: 36px;
       top: 0;
+    }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     .circle {
       width: 102px;

@@ -89,6 +89,7 @@ export default {
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
             this.$bus.$emit("REFRESH_BALANCE");
+            this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
           });
       } catch (error) {
         console.log("MateMask 扩展插件未安装或未启用##", error);
@@ -113,6 +114,7 @@ export default {
       this.$bus.$emit("REFRESH_ALL_DATA");
       this.$bus.$emit("REFRESH_MINING");
       this.$bus.$emit("REFRESH_BALANCE");
+      this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },
 };

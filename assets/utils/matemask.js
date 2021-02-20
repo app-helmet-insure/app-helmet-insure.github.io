@@ -10,7 +10,7 @@ import { getID } from "~/assets/utils/address-pool.js";
 
 export const mateMaskInfo = async (address, name) => {
   let obj = {
-    status: 1,
+    status: 0,
     data: {
       isLogin: false,
     },

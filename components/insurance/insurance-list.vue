@@ -254,7 +254,7 @@ export default {
           item.seller.substr(0, 2) +
           item.seller.substr(2, 4) +
           "..." +
-          item.seller.substr(-5).toUpperCase();
+          item.seller.substr(-5).toUpperCase(); 
         newArray = this.getNewPrice(item.askID);
 
         if (

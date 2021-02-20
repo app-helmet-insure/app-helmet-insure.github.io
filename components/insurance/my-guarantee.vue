@@ -393,23 +393,23 @@ export default {
         bidIDArr = exerciseRes.map((eItem) => {
           return eItem.returnValues.bidID;
         });
+        if (bidIDArr.includes(resultItem.bidID)) {
+          resultItem["status"] = "Activated";
+          resultItem["sort"] = 1;
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
         }
         if (resultItem._expiry + 5184000000 < currentTime) {
           resultItem["status"] = "Hidden";
           resultItem["sort"] = 3;
         }
-        if (bidIDArr.includes(resultItem.bidID)) {
-          resultItem["status"] = "Activated";
-          resultItem["sort"] = 1;
-        }
-        if (resultItem["sort"] != 1 || resultItem["sort"] != 4) {
+        if (resultItem["sort"] != 1 && resultItem["sort"] != 3) {
           result.push(resultItem);
         }
       }
@@ -491,7 +491,7 @@ export default {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: fixD(item.volume, 8),
-          vol: item.bnbAmount,
+          vol: fixD(item.bnbAmount * item.outPrice, 8),
           bidID: item.bidID,
           long: item.long,
           exPrice: fixD(precision.divide(1, item._strikePrice), 4),

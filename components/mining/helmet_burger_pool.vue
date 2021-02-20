@@ -1,5 +1,5 @@
 <template>
-  <div class="helmet_pool">
+  <div class="burger_pool">
     <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
@@ -51,7 +51,7 @@
             <countTo
               :startVal="Number(0)"
               :endVal="Number(balance.Deposite)"
-              :duration="3000"
+              :duration="2000"
               :decimals="8"
             />
             LPT
@@ -81,18 +81,18 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span>
+            <span style="display: flex; align-self: flex-start">
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="4"
               />
               /
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.TotalLPT)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="4"
               />
               LPT</span
@@ -132,7 +132,7 @@
             <countTo
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
-              :duration="3000"
+              :duration="2000"
               :decimals="8"
             />
             LPT {{ $t("Table.WAvailable") }}
@@ -169,7 +169,7 @@
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.Cake)"
-                  :duration="3000"
+                  :duration="2000"
                   :decimals="8"
                 />
                 BURGER</span
@@ -178,7 +178,7 @@
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.Helmet)"
-                  :duration="3000"
+                  :duration="2000"
                   :decimals="8"
                 />
                 HELMET</span
@@ -558,7 +558,7 @@ export default {
     transform: translateX(-50%);
     font-size: 20px;
   }
-  .helmet_pool {
+  .burger_pool {
     height: 536px;
     background: #ffffff;
     padding: 60px 40px 40px 40px;
@@ -723,20 +723,6 @@ export default {
               text-decoration: underline;
             }
           }
-          p {
-            margin-top: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            span {
-              font-size: 14px;
-              color: #121212;
-              > &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
-            }
-          }
           .column {
             flex-direction: column;
           }
@@ -750,6 +736,27 @@ export default {
             color: #00b900;
           }
         }
+        .button {
+          p {
+            margin-top: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            > span:first-child {
+              color: #919aa6;
+            }
+            > span:last-child {
+              color: #121212;
+            }
+            > span {
+              font-size: 14px;
+              span {
+                display: flex;
+                color: #121212;
+              }
+            }
+          }
+        }
       }
       .withdraw {
         border-top: 2px solid #ff6400;
@@ -757,6 +764,27 @@ export default {
         .title {
           > span {
             color: #ff6400;
+          }
+        }
+        .button {
+          p {
+            margin-top: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &:nth-of-type(1) span {
+              font-size: 14px;
+            }
+            > span {
+              font-size: 14px;
+              color: #919aa6;
+              display: flex;
+              span {
+                display: flex;
+                color: #121212;
+                margin-left: 2px;
+              }
+            }
           }
         }
       }
@@ -770,14 +798,14 @@ export default {
     top: 0px;
     font-size: 14px;
   }
-  .helmet_pool {
+  .burger_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;
-    padding: 50px 16px 40px;
+    padding: 40px 16px;
     > .combo {
       width: 148px;
-      transform: translateY(15px);
+      transform: translateY(-8px);
       height: 28px;
     }
     > h3 {
@@ -954,16 +982,18 @@ export default {
             margin-top: 11px;
             display: flex;
             flex-direction: column;
-            span {
-              font-size: 14px;
+            > span:first-child {
+              color: #919aa6;
+            }
+            > span:last-child {
               color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
+            }
+            > span {
+              font-size: 14px;
               span {
                 display: flex;
                 flex-direction: column;
+                color: #121212;
               }
             }
           }
@@ -983,16 +1013,15 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            span {
+            &:nth-of-type(1) span {
               font-size: 14px;
-              color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
+            }
+            > span {
+              font-size: 14px;
+              color: #919aa6;
               span {
                 display: flex;
-                flex-direction: column;
+                color: #121212;
               }
             }
           }

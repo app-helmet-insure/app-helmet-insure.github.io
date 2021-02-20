@@ -17,7 +17,7 @@
             ><countTo
               :startVal="Number(0)"
               :endVal="Number(totalHelmetsBorrowedVolume)"
-              :duration="3000"
+              :duration="2000"
               :decimals="4"
           /></span>
         </p>

@@ -30,7 +30,7 @@
             <countTo
               :startVal="Number(0)"
               :endVal="Number(balance.Deposite)"
-              :duration="3000"
+              :duration="2000"
               :decimals="8"
             />
             HELMET
@@ -60,18 +60,18 @@
                 $t("Table.TotalDeposited")
               }}：</span
             >
-            <span>
+            <span style="display: flex; align-self: flex-start">
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="4"
               />
               /
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.TotalLPT)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="4"
               />
               HELMET</span
@@ -90,7 +90,7 @@
             <countTo
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
-              :duration="3000"
+              :duration="2000"
               :decimals="8"
             />
             HELMET {{ $t("Table.WAvailable") }}
@@ -127,7 +127,7 @@
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.Helmet)"
-                  :duration="3000"
+                  :duration="2000"
                   :decimals="8"
                 />
                 HELMET</span
@@ -391,6 +391,30 @@ export default {
 .disable {
   pointer-events: none;
 }
+.ContractAddress {
+  font-size: 13px;
+  color: #ff9600;
+  margin-top: 8px;
+  span {
+    color: #121212;
+  }
+  p {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    font-weight: 550;
+  }
+  i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+}
 @media screen and (min-width: 750px) {
   .helmet_pool {
     margin-bottom: 20px;
@@ -520,7 +544,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            span {
+            > span {
               font-size: 14px;
               color: #121212;
               > &:first-of-type {
@@ -539,12 +563,25 @@ export default {
             color: #00b900;
           }
         }
-        > .button {
-          .compound {
-            position: absolute;
-            left: 50%;
-            top: 30px;
-            transform: translateX(-50%);
+        .button {
+          p {
+            margin-top: 11px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            > span:first-child {
+              color: #919aa6;
+            }
+            > span:last-child {
+              color: #121212;
+            }
+            > span {
+              font-size: 14px;
+              span {
+                display: flex;
+                color: #121212;
+              }
+            }
           }
         }
       }
@@ -556,11 +593,37 @@ export default {
             color: #ff6400;
           }
         }
+        .button {
+          p {
+            margin-top: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &:nth-of-type(1) span {
+              font-size: 14px;
+            }
+            > span {
+              font-size: 14px;
+              color: #919aa6;
+              display: flex;
+              span {
+                display: flex;
+                color: #121212;
+                margin-left: 2px;
+              }
+            }
+          }
+        }
       }
     }
   }
 }
 @media screen and (max-width: 750px) {
+  .ContractAddress {
+    p {
+      font-size: 12px;
+    }
+  }
   .helmet_pool {
     background: #ffffff;
     padding: 40px 16px;
@@ -697,16 +760,18 @@ export default {
             margin-top: 11px;
             display: flex;
             flex-direction: column;
-            span {
-              font-size: 14px;
+            > span:first-child {
+              color: #919aa6;
+            }
+            > span:last-child {
               color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
+            }
+            > span {
+              font-size: 14px;
               span {
                 display: flex;
                 flex-direction: column;
+                color: #121212;
               }
             }
           }
@@ -726,16 +791,15 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            span {
+            &:nth-of-type(1) span {
               font-size: 14px;
-              color: #121212;
-              &:first-of-type {
-                font-size: 14px;
-                color: #919aa6;
-              }
+            }
+            > span {
+              font-size: 14px;
+              color: #919aa6;
               span {
                 display: flex;
-                flex-direction: column;
+                color: #121212;
               }
             }
           }

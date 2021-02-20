@@ -69,7 +69,7 @@
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.Deposite)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="8"
               />
               LPT
@@ -99,18 +99,18 @@
                   $t("Table.TotalDeposited")
                 }}：</span
               >
-              <span>
+              <span style="display: flex; align-self: flex-start">
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.Withdraw)"
-                  :duration="3000"
+                  :duration="2000"
                   :decimals="4"
                 />
                 /
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.TotalLPT)"
-                  :duration="3000"
+                  :duration="2000"
                   :decimals="4"
                 />
                 LPT</span
@@ -149,7 +149,7 @@
               <countTo
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
-                :duration="3000"
+                :duration="2000"
                 :decimals="8"
               />
               LPT {{ $t("Table.WAvailable") }}
@@ -186,7 +186,7 @@
                   <countTo
                     :startVal="Number(0)"
                     :endVal="Number(balance.hCTK)"
-                    :duration="3000"
+                    :duration="2000"
                     :decimals="8"
                   />
                   hCTK</span

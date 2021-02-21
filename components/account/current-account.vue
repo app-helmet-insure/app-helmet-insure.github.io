@@ -97,7 +97,6 @@ export default {
           balace: "--",
         },
         status: 0,
-        signOut: true,
       });
     },
   },

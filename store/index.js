@@ -78,7 +78,6 @@ export const state = () => ({
             balace: '--',
         },
         status: 0,
-        signOut: false,
     },
     hatList: [], // 矿工帽列表'
     walletType: '', // 钱包类型

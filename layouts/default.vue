@@ -302,17 +302,12 @@ export default {
       }
     },
     async getUserInfo() {
-      let signOut = this.$store.state.userInfo.signOut;
-      console.log(signOut);
       let res = await mateMaskInfo();
       try {
         if (res.status === -1) {
           return;
         }
-        if (!signOut) {
-          res.signOut = false;
-          this.$store.dispatch("setUserInfo", res);
-        }
+        this.$store.dispatch("setUserInfo", res);
       } catch (error) {
         alert(error);
       }

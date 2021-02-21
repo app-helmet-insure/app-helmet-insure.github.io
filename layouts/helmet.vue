@@ -14,6 +14,7 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
+  
   },
 };
 </script>

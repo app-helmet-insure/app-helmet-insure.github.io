@@ -207,25 +207,6 @@ export default {
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
       }, 2000);
     },
-    showWallet() {
-      try {
-        window.ethereum
-          .request({ method: "eth_requestAccounts" })
-          .then(async (account) => {
-            window.localStorage.setItem("currentType", "MetaMask");
-            // setTimeout(() => {
-            //     window.location.reload()
-            // }, 500)
-            // let userInfo = await mateMaskInfo(account[0], "MetaMask");
-            // this.$store.dispatch("setUserInfo", userInfo);
-            this.$bus.$emit("REFRESH_ALL_DATA");
-            this.$bus.$emit("REFRESH_MINING");
-            this.closeDialog();
-          });
-      } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
-      }
-    },
     getStatusTitle(type) {
       switch (type) {
         case "warning":
@@ -299,6 +280,25 @@ export default {
             this.monitorNetWorkChange();
           }, 1000);
         }
+      }
+    },
+    showWallet() {
+      try {
+        window.ethereum
+          .request({ method: "eth_requestAccounts" })
+          .then(async (account) => {
+            window.localStorage.setItem("currentType", "MetaMask");
+            // setTimeout(() => {
+            //     window.location.reload()
+            // }, 500)
+            let userInfo = await mateMaskInfo(account[0], "MetaMask");
+            this.$store.dispatch("setUserInfo", userInfo);
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
+            this.closeDialog();
+          });
+      } catch (error) {
+        console.log("MateMask 扩展插件未安装或未启用##", error);
       }
     },
     async getUserInfo() {

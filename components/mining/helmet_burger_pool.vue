@@ -565,7 +565,7 @@ export default {
     margin-bottom: 20px;
     > .combo {
       width: 148px;
-      transform: translateY(20px);
+      transform: translateY(-8px);
       height: 28px;
     }
     > h3 {

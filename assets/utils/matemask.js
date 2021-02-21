@@ -22,9 +22,13 @@ export const mateMaskInfo = async (address, name) => {
         let currentType = window.localStorage.getItem('currentType');
 
         const walletConnectProvider = new WalletConnectProvider({
-            infuraId: '3cd774e14cf34ff78167908f8377051c', // Required
-            // bridge: 'https://bridge.myhostedserver.com'
-            // qrcode: true
+            chainId: 56,
+            bridge: 'https://bridge.walletconnect.org',
+            rpc: {
+                56: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+            },
+            qrcode: true,
+            pollingInterval: 10000,
         });
         // await walletConnectProvider.enable();
         const coinbase = walletConnectProvider.wc.accounts[0];

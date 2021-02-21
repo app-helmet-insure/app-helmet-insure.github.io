@@ -63,7 +63,13 @@ export default {
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
-        infuraId: "3cd774e14cf34ff78167908f8377051c", // Required
+        chainId: 56,
+        bridge: "https://bridge.walletconnect.org",
+        rpc: {
+          56: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        },
+        qrcode: true,
+        pollingInterval: 10000,
       });
       await walletConnectProvider.enable();
       const web3 = new Web3(walletConnectProvider);

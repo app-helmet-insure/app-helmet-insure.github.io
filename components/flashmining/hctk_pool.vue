@@ -1,28 +1,32 @@
 <template>
-  <div class="hcct_pool">
+  <div class="hctk_pool">
+    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
-    <img class="circle" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img
+      class="circle right"
+      src="~/assets/img/helmet/rightCircle.png"
+      alt=""
+    />
     <div class="text">
       <div class="coin">
         <h3>
           <span>{{ list.name }}</span>
-          <p @click="showOnepager"><i></i>What is LONG(Cake) token？</p>
+          <p @click="showOnepager"><i></i>What is HCCT token？</p>
         </h3>
         <div>
-          <div>
+          <!-- <div>
             <p>
-              <img src="~/assets/img/helmet/longCoin.png" alt="" />
+              <img src="~/assets/img/helmet/hcctCoin.png" alt="" />
               50%
-              <span> LONG </span>
+              <span> HCCT </span>
             </p>
             <p>
               <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
               50%
               <span> HELMET </span>
             </p>
-          </div>
-          <p :style="list.DonwTime ? '' : 'visibility: hidden;'">
+          </div> -->
+          <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
               <span>
@@ -89,7 +93,6 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
-              style="background: #ccc !important; pointer-events: none"
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -106,7 +109,8 @@
                   :endVal="Number(balance.Withdraw)"
                   :duration="2000"
                   :decimals="4"
-                />/
+                />
+                /
                 <countTo
                   :startVal="Number(0)"
                   :endVal="Number(balance.TotalLPT)"
@@ -121,21 +125,22 @@
               <span> {{ balance.Share }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x17934fef9fC93128858e9945261524ab0581612e"
+              href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
               target="_blank"
-              >Get LONG-HELMET LPT</a
+              >Get HCCT-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
-            <span>Long Contract Address：</span>
+            <span>HCCT Contract Address：</span>
             <p>
-              0x17934fef9fc93128858e9945261524ab0581612e<i
+              0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
+              <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0x17934fef9fc93128858e9945261524ab0581612e'
+                    '0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5'
                   )
                 "
               ></i>
@@ -179,38 +184,38 @@
               {{ $t("Table.ClaimRewards") }}
             </button>
             <p>
-              <span>HCCT {{ $t("Table.HELMETRewards") }}：</span>
+              <span>hCTK {{ $t("Table.HELMETRewards") }}：</span>
               <span>
                 <span>
                   <countTo
                     :startVal="Number(0)"
-                    :endVal="Number(balance.Helmet)"
+                    :endVal="Number(balance.hCTK)"
                     :duration="2000"
                     :decimals="8"
                   />
-                  HCCT</span
+                  hCTK</span
                 >
               </span>
             </p>
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
-              style="background: #ccc !important; pointer-events: none"
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
             </button>
           </div>
           <div class="ContractAddress">
-            <span>HCCT Contract Address：</span>
+            <span>hCTK Contract Address：</span>
             <p>
-              0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5<i
+              0x936909e72951A19a5e1d75A109B0D34f06f39838
+              <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5'
+                    '0x936909e72951A19a5e1d75A109B0D34f06f39838'
                   )
                 "
               ></i>
@@ -253,8 +258,8 @@ export default {
   data() {
     return {
       list: {
-        name: "LONG-HELMET",
-        dueDate: "2021-02-13 00:00",
+        name: "hCTK Pool (By HCCT-Helmet LPT)",
+        dueDate: "2021-02-28 00:00",
         DownTime: "--",
       },
       textList: [
@@ -293,6 +298,7 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
+        hCTK: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -303,6 +309,7 @@ export default {
       exitLoading: false,
       helmetPrice: 0,
       apy: 0,
+      MingTime: 0,
       actionType: "deposit",
       fixD,
     };
@@ -310,21 +317,22 @@ export default {
   mounted() {
     setInterval(() => {
       setTimeout(() => {
+        this.getMiningTime();
         this.getDownTime();
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HCCTPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HCTKPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HCCTPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HCTKPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HCCTPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HCTKPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HCCTPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_HCTKPOOL", () => {
       this.getBalance();
     });
     setTimeout(() => {
@@ -349,10 +357,26 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
   },
   methods: {
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is HCCT?",
+        text: [
+          "HCCT is the abbreviation of Helmet Cover Cake TokenLiterally, it is the CAKE Cover Miss Out policy ( it is more like the call option of CAKE )",
+          "Underlying asset: Cake",
+          "Denominated asset: Helmet (it means that if you activate this policy, you would swap 10Helmet for 1Cake with HCCT)",
+          "Premium：1Helmet（ from Helmet Vault）",
+          "Insurance Price：1CAKE=10Helmet (it means that if you activate this policy, you would swap 10Helmet for 1Cake with 1HCCT)",
+          "Supply: 300,000 (80% minted by mining, 20% as initial liquidity)",
+          "Reference Activate Price: When “Cake:Helmet ＞1:10”, you could activate this policy ( plz recheck the price to make sure this activation is profitable)",
+          "Insurance Period：2021, Feb.15",
+          "More details in our Medium.",
+        ],
+      });
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -368,20 +392,6 @@ export default {
         console.error("Action:", e.action);
         console.error("Trigger:", e.trigger);
         copys.destroy();
-      });
-    },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is LONG token？",
-        text: [
-          "LONG is the CAKE  Cover Miss Out policy certification. Policy holders can use Long token as proof to activate the policy. It is the certification showing that you have bought policy and it is necessary when you activate policy. ",
-          "To be brief, if $CAKE hit over $1.5 before Feb.15th 24:00 SGT, you could activate your airdrop policy to claim benefits.",
-          "For example, if $CAKE hit $1.6 on Feb.10th, you could use $1.5 to swap a $CAKE token with 1 policy (1 LONG Token). Eventually, you could sell this $CAKE in the market and get extra $0.1 benefit. That is why we call it ‘COVER Miss out’. (the final settlement currency will be BNB)",
-          "However, if $CAKE does not hit $1.5, there will be no need for you to activate the Cover Miss Out policy. and the LONG Token will be a souvenir for you.",
-          "Policy Expire Date: Feb.15th 24:00 SGT",
-          "More details in our Medium.",
-        ],
       });
     },
     WatchIndexArray(newValue, value) {
@@ -408,35 +418,62 @@ export default {
           "Content.HourD"
         )}`;
       } else {
-        template = false;
+        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
+          "Content.HourD"
+        )}`;
       }
       this.list.DownTime = template;
     },
+    getMiningTime() {
+      let now = new Date() * 1;
+      let dueDate = "2021-02-06 00:00";
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate < now) {
+        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
+          "Content.MinD"
+        )} ${0}${this.$t("Content.SecondD")}`;
+      } else {
+        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
+          "Content.MinD"
+        )} ${second}${this.$t("Content.SecondD")}`;
+      }
+      this.MingTime = template;
+    },
     async getAPY() {
-      let HCCTHELMET = await uniswap("HCCT", "HELMET");
-      let HcctVolume = await totalSupply("HCCTPOOL");
-      let LptVolume = await totalSupply("HCCTPOOL_LPT");
-      let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
+      let HCTKHELMET = await uniswap("HCTK", "HELMET"); //Hlemt价格
+      let HctkVolume = await totalSupply("HCTKPOOL"); //数量
+      let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
+      // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HCCTHELMET, 16000, 365),
+            precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HcctVolume
+              HctkVolume
             )
           ),
           100
         ),
         2
       );
-      this.apy = apy;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = "--";
+      this.apy = apy ? apy : 0;
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HCCTPOOL_LPT";
-      let type = "HCCTPOOL";
+      let helmetType = "HCTKPOOL_LPT";
+      let type = "HCTKPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -444,17 +481,16 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type, "CTK");
       // 总Helmet
-      let totalHelmet = await totalSupply(helmetType);
+      // let LptVolume = await totalSupply(helmetType); //发行
 
       this.balance.Deposite = fixD(Deposite, 8);
       this.balance.Withdraw = fixD(Withdraw, 8);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.hCTK = fixD(Helmet, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      // this.textList[0].num = fixD(16000 * 7, 2) + " HCCT";
-      this.textList[0].num = "--";
+      this.textList[0].num = fixD((70000 / 21) * 7, 2) + " hCTK";
     },
     // 抵押
     toDeposite() {
@@ -465,7 +501,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -474,7 +510,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -483,7 +519,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HCCTPOOL";
+      let type = "HCTKPOOL";
       let res = await exitStake(type);
     },
   },
@@ -492,17 +528,17 @@ export default {
 
 <style lang='scss' soped>
 .ContractAddress {
-  font-size: 13px;
+  font-size: 14px;
   color: #ff9600;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
+  margin-top: 8px;
   span {
     color: #121212;
   }
   p {
     display: flex;
+    margin-top: 4px;
     align-items: center;
+    font-weight: 550;
   }
   i {
     display: inline-block;
@@ -522,7 +558,20 @@ export default {
   fill: #787878;
   overflow: hidden;
 }
-
+.b_button {
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.o_button {
+  width: 100%;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .loading_pic {
   display: block;
   width: 24px;
@@ -536,8 +585,13 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .hcct_pool {
-    width: 500px;
+  .ContractAddress {
+    p {
+      font-size: 14px;
+    }
+  }
+  .hctk_pool {
+    width: 530px;
     margin-bottom: 20px;
     background: #ffffff;
     padding: 40px;
@@ -556,19 +610,17 @@ export default {
       top: 0;
       transform: translateY(-5px);
     }
-    .finished {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      right: 0;
-      transform: translateY(0);
-    }
     .circle {
       width: 102px;
       height: 102px;
       top: 0;
-      left: 0;
       transform: translateY(0);
+    }
+    .right {
+      right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;
@@ -578,12 +630,11 @@ export default {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 32px;
           display: flex;
-          margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
-          align-items: center;
+          flex-direction: column;
+          margin-bottom: 10px;
           img {
             margin-left: 4px;
             width: 32px;
@@ -598,8 +649,9 @@ export default {
             line-height: 16px;
             display: flex;
             align-items: center;
-            margin-left: 8px;
             cursor: pointer;
+            margin-top: 3px;
+            align-self: flex-start;
             &:hover {
               color: #ff8200;
             }
@@ -702,7 +754,7 @@ export default {
         .withdraw {
           > .title {
             p {
-              font-size: 13px;
+              font-size: 14px;
               margin: 12px 0 10px 0;
             }
           }
@@ -751,27 +803,12 @@ export default {
               font-weight: 550;
               border-radius: 6px;
             }
-            .b_button {
-              width: 100%;
-              margin-top: 11px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border-radius: 6px;
-            }
-            .o_button {
-              width: 100%;
-              margin-top: 11px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              border-radius: 6px;
-            }
+
             > p {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              font-size: 13px;
+              font-size: 14px;
               color: #919aa6;
               margin-top: 8px;
               span:nth-of-type(2) {
@@ -780,7 +817,7 @@ export default {
               }
             }
             > a {
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
@@ -788,14 +825,17 @@ export default {
             }
           }
         }
-        .withdraw {
-        }
       }
     }
   }
 }
 @media screen and (max-width: 750px) {
-  .hcct_pool {
+  .ContractAddress {
+    p {
+      font-size: 12px;
+    }
+  }
+  .hctk_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;
@@ -813,19 +853,20 @@ export default {
       width: 36px;
       height: 36px;
       top: 0;
-    }
-    .finished {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      right: 0;
-      transform: translateY(0);
+      transform: translateY(-5px);
     }
     .circle {
       width: 102px;
       height: 102px;
       top: 0;
+
+      transform: translateY(0);
+    }
+    .right {
       right: 0;
+    }
+    .left {
+      left: 0;
     }
     > h3 {
       text-align: center;
@@ -843,20 +884,6 @@ export default {
             margin-left: 4px;
             width: 32px;
             height: 32px;
-          }
-          .finished {
-            width: 102px;
-            height: 102px;
-            top: 0;
-            right: 0;
-            transform: translateY(0);
-          }
-          .circle {
-            width: 102px;
-            height: 102px;
-            top: 0;
-            right: 0;
-            transform: translateY(0);
           }
           p {
             margin: 8px 0;
@@ -1019,6 +1046,7 @@ export default {
           > .button {
             > button {
               font-weight: 550;
+              border-radius: 6px;
             }
             > p {
               display: flex;

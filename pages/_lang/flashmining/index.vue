@@ -1,39 +1,31 @@
 <template>
   <div class="mining_container">
     <div class="pool_wrap">
-      <HelmetBnb500Pool></HelmetBnb500Pool>
-      <HelmetHctkPool></HelmetHctkPool>
+      <HautoPool></HautoPool>
+      <Bnb500Pool></Bnb500Pool>
     </div>
     <div class="pool_wrap">
-      <HelmetHcctPool></HelmetHcctPool>
+      <HctkPool></HctkPool>
+      <HcctPool></HcctPool>
     </div>
-    <Compound></Compound>
-    <Deposite
-      :current="current"
-      :TradeType="TradeType"
-      @close="closeDeposite"
-      v-if="showDeposite"
-    ></Deposite>
     <Onepager></Onepager>
   </div>
 </template>
 
 <script>
-import HelmetHcctPool from "~/components/mining/helmet_hcct_pool.vue";
-import HelmetHctkPool from "~/components/mining/helmet_hctk_pool.vue";
-import HelmetBnb500Pool from "~/components/mining/helmet_bnb500_pool.vue";
-import Deposite from "~/components/mining/deposite-dialog.vue";
+import HcctPool from "~/components/flashmining/hcct_pool.vue";
+import HctkPool from "~/components/flashmining/hctk_pool.vue";
+import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
+import HautoPool from "~/components/flashmining/hauto_pool.vue";
 import Onepager from "~/components/mining/onepager.vue";
-import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "default",
   components: {
-    HelmetHcctPool,
-    HelmetHctkPool,
-    Deposite,
+    HcctPool,
+    HctkPool,
     Onepager,
-    Compound,
-    HelmetBnb500Pool,
+    Bnb500Pool,
+    HautoPool,
   },
   data() {
     return {
@@ -84,7 +76,7 @@ export default {
   .pool_wrap {
     display: flex;
     justify-content: space-between;
-    padding: 0 80px;
+    padding: 0 50px;
   }
 }
 @media screen and (max-width: 750px) {

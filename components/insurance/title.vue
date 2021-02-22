@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img6 swiper-slide">
+        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
+      </div>
       <div class="imgbanner img5 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
@@ -114,12 +117,6 @@ export default {
       display: flex;
     }
 
-    .img1 {
-      background-image: url("../../assets/img/helmet/bannercake.png");
-    }
-    .img2 {
-      background-image: url("../../assets/img/helmet/hcctbanner.png");
-    }
     .img3 {
       background-image: url("../../assets/img/helmet/hCTK.png");
     }
@@ -129,113 +126,23 @@ export default {
     .img5 {
       background-image: url("../../assets/img/helmet/BNB500.png");
     }
-    .center {
-      display: flex;
-      flex-direction: column;
-      align-self: center;
-      justify-content: center;
-      margin: 0 auto;
-      text-align: center;
-      h3 {
-        font-size: 40px;
-      }
-      span {
-        font-size: 30px;
-        margin-top: 23px;
-        i {
-          color: #e83629;
-        }
+    .img6 {
+      background-image: url("../../assets/img/helmet/hauto.png");
+      > button {
+        width: 120px;
+        height: 48px;
+        background: #121212;
+        border-radius: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 148px 0 0 157px;
       }
     }
+
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
-    }
-    .text {
-      width: 1200px;
-      height: 220px;
-      padding: 0 60px;
-
-      display: flex;
-      justify-content: space-between;
-      div {
-        h3 {
-          font-size: 24px;
-          font-weight: 600;
-          color: #121212;
-          line-height: 33px;
-          margin: 50px 0 16px 0;
-          i {
-            color: #ff9600;
-          }
-        }
-        span {
-          color: #919aa6;
-          line-height: 20px;
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 20px;
-
-          a {
-            color: #ff9600;
-          }
-        }
-        div {
-          display: flex;
-          font-size: 36px;
-          align-items: center;
-          margin-top: 14px;
-          P {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            i {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 62px;
-              height: 62px;
-              background-image: url("../../assets/img/helmet/time_BG@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              font-size: 27px;
-              font-weight: 600;
-              color: #ffffff;
-            }
-            span {
-              font-size: 12px;
-              color: #919aa6;
-              line-height: 17px;
-            }
-          }
-          > span {
-            margin: 0 4px;
-          }
-        }
-      }
-    }
-    .img {
-      width: 1200px;
-      background-image: url("../../assets/img/helmet/banner2@2x.png");
-      background-size: 100% 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      h3 {
-        font-size: 48px;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 60px;
-        text-shadow: 0px 0px 20px rgba(255, 0, 0, 0.26);
-      }
-      p {
-        font-size: 24px;
-        font-weight: 500;
-        color: #ffffff;
-        line-height: 24px;
-        text-shadow: 0px 0px 20px rgba(255, 0, 0, 0.26);
-      }
     }
   }
 }
@@ -252,12 +159,6 @@ export default {
       display: flex;
     }
 
-    .img1 {
-      background-image: url("../../assets/img/helmet/bannercake_h5.png");
-    }
-    .img2 {
-      background-image: url("../../assets/img/helmet/hcctbanner_h5.png");
-    }
     .img3 {
       background-image: url("../../assets/img/helmet/hctk_h5.png");
     }
@@ -267,118 +168,22 @@ export default {
     .img5 {
       background-image: url("../../assets/img/helmet/BNB500_h5.png");
     }
-    .center {
-      display: flex;
-      flex-direction: column;
-      margin: 0 auto;
-      text-align: center;
-      h3 {
-        margin-top: 60px;
-        padding: 0 20px;
-        font-size: 40px;
-      }
-      span {
-        font-size: 30px;
-        margin-top: 23px;
-        i {
-          color: #e83629;
-        }
+    .img6 {
+      background-image: url("../../assets/img/helmet/hauto_h5.png");
+      > button {
+        width: 120px;
+        height: 48px;
+        background: #121212;
+        border-radius: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 180px 0 0 40px;
       }
     }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
-    }
-    .text {
-      width: 100%;
-      height: 475px;
-      padding: 0 28px;
-      background-size: 320px 196px;
-      background-position: center 100%;
-      background-repeat: no-repeat;
-      display: flex;
-      justify-content: space-between;
-      div {
-        h3 {
-          width: 320px;
-          font-size: 24px;
-          font-weight: 600;
-          color: #121212;
-          line-height: 33px;
-          margin: 50px 0 6px 0;
-          i {
-            color: #ff9600;
-          }
-        }
-        span {
-          color: #919aa6;
-          line-height: 20px;
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 20px;
-          a {
-            color: #ff9600;
-          }
-        }
-        div {
-          display: flex;
-          font-size: 36px;
-          align-items: center;
-          justify-content: center;
-          margin-top: 14px;
-          P {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            i {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              width: 62px;
-              height: 62px;
-              background-image: url("../../assets/img/helmet/time_BG@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              font-size: 27px;
-              font-weight: 600;
-              color: #ffffff;
-            }
-            span {
-              font-size: 12px;
-              color: #919aa6;
-              line-height: 17px;
-            }
-          }
-          > span {
-            margin: 0 4px;
-          }
-        }
-      }
-    }
-    .img {
-      padding: 0 28px;
-      width: 100%;
-      height: 100%;
-      background-image: url("../../assets/img/helmet/banner2h5@2x.png");
-      background-size: 100% 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      h3 {
-        margin-top: 20px;
-        font-size: 38px;
-        font-weight: 500;
-        color: #ffffff;
-        line-height: 50px;
-        text-shadow: 0px 0px 20px rgba(255, 0, 0, 0.26);
-      }
-      p {
-        font-size: 20px;
-        font-weight: 500;
-        color: #ffffff;
-        line-height: 24px;
-        text-shadow: 0px 0px 20px rgba(255, 0, 0, 0.26);
-      }
     }
   }
 }

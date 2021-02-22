@@ -1,8 +1,8 @@
 <template>
-  <div class="bnb500">
+  <div class="bnb500_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="circle right" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -10,7 +10,7 @@
           <p @click="showOnepager"><i></i>What is BNB500 token？</p>
         </h3>
         <div>
-          <div>
+          <!-- <div>
             <p>
               <img src="~/assets/img/helmet/hctkCoin.png" alt="" />
               50%
@@ -21,7 +21,7 @@
               50%
               <span> HELMET </span>
             </p>
-          </div>
+          </div> -->
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -254,7 +254,7 @@ export default {
   data() {
     return {
       list: {
-        name: "hCTK-HELMET",
+        name: "BNB500 Pool (By hCTK-Helmet LPT)",
         dueDate: "2021-02-29 00:00",
         DownTime: "--",
       },
@@ -409,9 +409,16 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-        "Content.HourD"
-      )}`;
+      let template;
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+          "Content.HourD"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
+          "Content.HourD"
+        )}`;
+      }
       this.list.DownTime = template;
     },
     getMiningTime() {
@@ -478,7 +485,7 @@ export default {
       this.balance.Deposite = fixD(Deposite, 8);
       this.balance.Withdraw = fixD(Withdraw, 8);
       this.balance.hCTK = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       this.textList[0].num = fixD((1000 / 10) * 7, 2) + " BNB500";
     },
@@ -518,7 +525,7 @@ export default {
 
 <style lang='scss' soped>
 .ContractAddress {
-  font-size: 13px;
+  font-size: 14px;
   color: #ff9600;
   margin-top: 8px;
   span {
@@ -575,8 +582,13 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .bnb500 {
-    width: 500px;
+  .ContractAddress {
+    p {
+      font-size: 14px;
+    }
+  }
+  .bnb500_pool {
+    width: 530px;
     margin-bottom: 20px;
     background: #ffffff;
     padding: 40px;
@@ -616,12 +628,11 @@ export default {
         display: flex;
         flex-direction: column;
         h3 {
-          height: 32px;
           display: flex;
-          margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
-          align-items: center;
+          flex-direction: column;
+          margin-bottom: 10px;
           img {
             margin-left: 4px;
             width: 32px;
@@ -636,8 +647,9 @@ export default {
             line-height: 16px;
             display: flex;
             align-items: center;
-            margin-left: 8px;
             cursor: pointer;
+            margin-top: 3px;
+            align-self: flex-start;
             &:hover {
               color: #ff8200;
             }
@@ -740,7 +752,7 @@ export default {
         .withdraw {
           > .title {
             p {
-              font-size: 13px;
+              font-size: 14px;
               margin: 12px 0 10px 0;
             }
           }
@@ -794,7 +806,7 @@ export default {
               display: flex;
               justify-content: space-between;
               align-items: center;
-              font-size: 13px;
+              font-size: 14px;
               color: #919aa6;
               margin-top: 8px;
               span:nth-of-type(2) {
@@ -803,7 +815,7 @@ export default {
               }
             }
             > a {
-              font-size: 13px;
+              font-size: 14px;
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
@@ -821,7 +833,7 @@ export default {
       font-size: 12px;
     }
   }
-  .bnb500 {
+  .bnb500_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;

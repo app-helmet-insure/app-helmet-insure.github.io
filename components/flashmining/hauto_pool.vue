@@ -363,18 +363,15 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $BNB500?",
+        title: "What is $hAUTO?",
         text: [
-          "$BNB500 is BNB cover miss out policy.",
-          "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.insure and 1000 for Flash Mining)",
-          "In this policy, we set a ratio: ",
-          "BNB : BUSD = 1:500 ",
-          "it means that you could swap 500 BUSD+1$BNB500 to 1BNB. It is the reasonable active price, for example, if BNB hit $600, you could active the policy and swap 500 BUSD + 1 $BNB500 to 1 BNB with 100BUSD profit.",
-          "Flash Mining Type: ",
-          "$hCTK-$Helmet LP Mining Pool Notice: $hCTK will be expired on 20th Feb. 0:00 SGT , you could activate it ASAP or take part in $BNB500 Flash Mining.",
-          "Flash Mining Start: 18th Feb. 24:00 SGT",
-          "Flash Mining End: 28th Feb. 24:00 SGT",
-          "Expire date: 20th Mar. 24:00 SGT",
+          "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
+          "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
+          "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
+          "$hAUTO Flash Mining",
+          "Start: Feb. 23rd 20:00 SGT",
+          "End: Mar.9th 24:00",
+          "Policy Expire date: Mar. 24th 24:00 SGT",
         ],
       });
     },

@@ -428,6 +428,7 @@ export const actions = {
     setAllMap({ commit }) {
         // 创建long映射对象
         getOptionCreatedLog((err, data) => {
+
             if (err) {
                 return;
             }

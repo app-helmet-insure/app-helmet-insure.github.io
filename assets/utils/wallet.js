@@ -13,10 +13,11 @@ export const mateMaskInfo = (address) => {
     try {
         let current;
         const connector = new WalletConnect({
+            chainId: 56,
             bridge: 'https://bridge.walletconnect.org', // Required
             qrcodeModal: QRCodeModal,
             rpc: {
-                56: 'https://bsc-dataseed.binance.org',
+                56: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
             },
             qrcode: true,
             pollingInterval: 10000,

@@ -283,6 +283,8 @@ export const getTokenName = (address) => {
             return 'BURGER';
         case '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea':
             return 'HBURGER';
+        case '0xa184088a740c695e156f91f5cC086a06bb78b827':
+            return 'AUTO';
         default:
             return '--';
     }

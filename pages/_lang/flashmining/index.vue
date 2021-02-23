@@ -76,7 +76,7 @@ export default {
   .pool_wrap {
     display: flex;
     justify-content: space-between;
-    padding: 0 50px;
+    padding: 0 80px;
   }
 }
 @media screen and (max-width: 750px) {

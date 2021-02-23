@@ -133,14 +133,14 @@
           <div class="ContractAddress">
             <span>BNB500 Contract Address：</span>
             <p>
-              0xa184088a740c695E156F91f5cC086a06bb78b827
+              0xe204c4c21c6ed90e37cb06cb94436614f3208d58
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xa184088a740c695E156F91f5cC086a06bb78b827'
+                    '0xe204c4c21c6ed90e37cb06cb94436614f3208d58'
                   )
                 "
               ></i>
@@ -258,7 +258,7 @@ export default {
   data() {
     return {
       list: {
-        name: "hAUTO Pool (By BNB500-Helmet LPT",
+        name: "hAUTO Pool (By BNB500-Helmet LPT)",
         dueDate: "2021-03-09 00:00",
         DownTime: "--",
       },
@@ -451,7 +451,10 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let WBNBHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
+      let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
+
       let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
       let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
@@ -459,7 +462,7 @@ export default {
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HCTKHELMET, precision.divide(0.7, 10), 365),
+            precision.times(AUTOHELMET, precision.divide(10, 14), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -481,6 +484,7 @@ export default {
       let Withdraw = await getLPTOKEN(type);
       // 总抵押
       let TotalLPT = await totalSupply(type);
+      console.log(TotalLPT);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
       // 总Helmet
@@ -491,7 +495,7 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((0.7 / 10) * 7, 2) + " hAUTO";
+      this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
     },
     // 抵押
     toDeposite() {
@@ -592,7 +596,7 @@ export default {
     }
   }
   .hauto_pool {
-    width: 530px;
+    width: 500px;
     margin-bottom: 20px;
     background: #ffffff;
     padding: 40px;
@@ -633,7 +637,7 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 24px;
+          font-size: 22px;
           line-height: 32px;
           flex-direction: column;
           margin-bottom: 10px;
@@ -880,9 +884,10 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 24px;
+          font-size: 22px;
           line-height: 32px;
           flex-direction: column;
+          width: 80%;
           img {
             margin-left: 4px;
             width: 32px;

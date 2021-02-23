@@ -591,7 +591,7 @@ export default {
     }
   }
   .hctk_pool {
-    width: 530px;
+    width: 500px;
     margin-bottom: 20px;
     background: #ffffff;
     padding: 40px;
@@ -631,7 +631,7 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 24px;
+          font-size: 22px;
           line-height: 32px;
           flex-direction: column;
           margin-bottom: 10px;
@@ -877,9 +877,10 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 24px;
+          font-size: 22px;
           line-height: 32px;
           flex-direction: column;
+          width: 80%;
           img {
             margin-left: 4px;
             width: 32px;

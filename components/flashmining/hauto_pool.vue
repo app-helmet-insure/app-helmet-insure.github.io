@@ -1,6 +1,6 @@
 <template>
   <div class="hauto_pool">
-    <!-- <span class="miningTime"> {{ MingTime }}</span> -->
+    <span class="miningTime"> {{ MingTime }}</span>
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img
       class="circle right"
@@ -427,7 +427,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-19 00:00";
+      let dueDate = "2021-02-23 20:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -473,7 +473,8 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      this.textList[1].num = this.apy + "%";
+      this.textList[1].num = "Infinity" + "%";
+      // this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "HAUTOPOOL_LPT";
@@ -484,7 +485,6 @@ export default {
       let Withdraw = await getLPTOKEN(type);
       // 总抵押
       let TotalLPT = await totalSupply(type);
-      console.log(TotalLPT);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
       // 总Helmet

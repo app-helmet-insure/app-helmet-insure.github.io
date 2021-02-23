@@ -134,7 +134,6 @@ export default {
     this.showWallet();
 
     this.getUserInfo();
-    this.$bus.$emit("REFRESH_ALL_DATA");
     // 获取映射
     this.$store.dispatch("setAllMap");
     this.monitorNetWorkChange();

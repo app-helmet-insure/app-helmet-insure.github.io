@@ -180,21 +180,13 @@
                 name="withdraw"
                 type="text"
                 v-model="balance.Withdraw"
-                readonly
-                :style="
-                  WithdrawNum == balance.Withdraw
-                    ? 'border: 1px solid #FF9600 !important'
-                    : ''
-                "
+                disabled
+                style="border: 1px solid #ff9600 !important"
               />
               <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
               <span
                 @click="WithdrawNum = balance.Withdraw"
-                :style="
-                  WithdrawNum == balance.Withdraw
-                    ? 'background: rgba(255, 150, 0, 0.1);'
-                    : ''
-                "
+                style="background: rgba(255, 150, 0, 0.1)"
                 >{{ $t("Table.Max") }}</span
               >
             </div>

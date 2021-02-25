@@ -29,7 +29,7 @@
             <span>
               {{ $t("Table.SurplusTime") }}：
               <span>
-                {{ list.DownTime }}
+                {{ isLogin ? list.DownTime : "--" }}
               </span>
             </span>
           </p>
@@ -70,11 +70,13 @@
           <div class="title">
             <p>
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.Deposite)"
                 :duration="2000"
                 :decimals="8"
               />
+              <span v-else>--</span>
               LPT
               {{ $t("Table.DAvailable") }}
             </p>
@@ -119,24 +121,28 @@
               >
               <span style="display: flex; align-self: flex-start">
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Withdraw)"
                   :duration="2000"
                   :decimals="4"
                 />
+                <span v-else>--</span>
                 /
                 <countTo
-                  :startVal="0"
+                  v-if="isLogin"
+                  :startVal="Number(0)"
                   :endVal="Number(balance.TotalLPT)"
                   :duration="2000"
                   :decimals="4"
                 />
+                <span v-else>--</span>
                 LPT
               </span>
             </p>
             <p>
               <span>My Pool Share：</span>
-              <span> {{ balance.Share }} %</span>
+              <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0x936909e72951A19a5e1d75A109B0D34f06f39838/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -165,11 +171,13 @@
           <div class="title">
             <p>
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
                 :duration="2000"
                 :decimals="8"
               />
+              <span v-else>--</span>
               LPT {{ $t("Table.WAvailable") }}
             </p>
           </div>
@@ -205,11 +213,13 @@
               <span>
                 <span>
                   <countTo
+                    v-if="isLogin"
                     :startVal="Number(0)"
                     :endVal="Number(balance.hCTK)"
                     :duration="2000"
                     :decimals="8"
                   />
+                  <span v-else>--</span>
                   BNB500</span
                 >
               </span>
@@ -329,6 +339,7 @@ export default {
       MingTime: 0,
       actionType: "deposit",
       fixD,
+      isLogin: false,
     };
   },
   mounted() {
@@ -370,13 +381,25 @@ export default {
     apy(newValue, value) {
       this.apy = newValue;
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,

@@ -1,6 +1,7 @@
 <template>
   <div class="my_claim">
-    <table>
+    <!-- pc -->
+    <table v-if="isLogin">
       <thead>
         <tr>
           <td>{{ $t("Table.Type") }}</td>
@@ -52,8 +53,8 @@
         <img src="~/assets/img/loading.gif" />
       </div>
     </table>
-
-    <div>
+    <!-- h5 -->
+    <div v-if="isLogin">
       <div
         v-for="(item, index) in showList"
         :key="index"
@@ -103,17 +104,20 @@
           </button>
         </section>
       </div>
-      <div class="loading" v-if="isLoading">
+      <div class="loading" v-if="isLoading && !isLogin">
         <img src="~/assets/img/loading.gif" />
       </div>
     </div>
-    <section class="noData" v-if="showList.length < 1 && !isLoading">
+    <section
+      class="noData"
+      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+    >
       <div>
         <img src="~/assets/img/helmet/nodata.png" alt="" />
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="claimList.length > 5">
+    <section class="pages" v-if="claimList.length > 5 && !isLogin">
       <div>
         <p @click="upPage">
           <svg class="icon" aria-hidden="true">
@@ -164,11 +168,15 @@ export default {
       page: 0,
       limit: 8,
       isLoading: true,
+      isLogin: false,
     };
   },
   computed: {
     myAboutInfoSell() {
       return this.$store.state.myAboutInfoSell;
+    },
+    userInfo() {
+      return this.$store.state.userInfo;
     },
   },
   watch: {
@@ -176,9 +184,18 @@ export default {
       handler: "myAboutInfoSellWatch",
       immediate: true,
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
 
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
         this.page = 0;

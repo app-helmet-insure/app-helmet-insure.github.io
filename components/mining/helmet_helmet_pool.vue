@@ -28,11 +28,13 @@
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Deposite)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
             HELMET
             {{ $t("Table.DAvailable") }}
           </p>
@@ -62,18 +64,23 @@
             >
             <span style="display: flex; align-self: flex-start">
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
+
               /
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.TotalLPT)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
               HELMET</span
             >
           </p>
@@ -88,11 +95,13 @@
           <span>{{ $t("Table.Withdraw") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
             HELMET {{ $t("Table.WAvailable") }}
           </p>
         </div>
@@ -125,11 +134,13 @@
             <span>
               <span>
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Helmet)"
                   :duration="2000"
                   :decimals="8"
                 />
+                <span v-else>--</span>
                 HELMET</span
               >
             </span>
@@ -217,6 +228,7 @@ export default {
       exitLoading: false,
       helmetPrice: 0,
       apy: 0,
+      isLogin: false,
     };
   },
   mounted() {
@@ -251,13 +263,25 @@ export default {
     apy(newValue, value) {
       this.apy = newValue;
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();

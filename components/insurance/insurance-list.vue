@@ -1,6 +1,6 @@
 <template>
   <div class="insurance_list">
-    <table>
+    <table v-if="isLogin">
       <thead>
         <tr>
           <td>{{ $t("Table.ID") }}</td>
@@ -53,7 +53,7 @@
       </div>
     </table>
     <!-- H5 -->
-    <div>
+    <div v-if="isLogin">
       <section
         v-for="(item, index) in showList"
         :key="index"
@@ -90,17 +90,20 @@
           ></PInput>
         </div>
       </section>
-      <div class="loading" v-if="isLoading">
+      <div class="loading" v-if="isLoading && !isLogin">
         <img src="~/assets/img/loading.gif" />
       </div>
     </div>
-    <section class="noData" v-if="showList.length < 1 && !isLoading">
+    <section
+      class="noData"
+      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+    >
       <div>
         <img src="~/assets/img/helmet/nodata.png" alt="" />
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="insuranceList.length > 10">
+    <section class="pages" v-if="insuranceList.length > 10 && isLogin">
       <div>
         <p @click="upPage">
           <svg class="icon" aria-hidden="true">
@@ -162,6 +165,7 @@ export default {
       isLoading: true,
       listCoin: "",
       listType: "",
+      isLogin: false,
     };
   },
   watch: {
@@ -185,6 +189,10 @@ export default {
       handler: "aboutInfoSellWatch",
       immediate: true,
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
 
   computed: {
@@ -202,9 +210,17 @@ export default {
     strikePriceArray() {
       return this.$store.state.strikePriceArray;
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
 
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     copyAdress(e, text) {
       let _this = this;
 

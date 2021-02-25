@@ -98,6 +98,7 @@ export default {
         },
         status: 0,
       });
+      this.closeDialog();
     },
   },
 };

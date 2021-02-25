@@ -27,7 +27,7 @@
             <span>
               {{ $t("Table.SurplusTime") }}：
               <span>
-                {{ list.DownTime }}
+                {{ isLogin ? list.DownTime : "--" }}
               </span>
             </span>
           </p>
@@ -49,11 +49,13 @@
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Deposite)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
             LPT
             {{ $t("Table.DAvailable") }}
           </p>
@@ -83,18 +85,22 @@
             >
             <span style="display: flex; align-self: flex-start">
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
               /
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.TotalLPT)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
               LPT</span
             >
           </p>
@@ -102,7 +108,7 @@
           <section>
             <p>
               <span>My Pool Share：</span>
-              <span> {{ balance.Share }} %</span>
+              <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -130,11 +136,14 @@
           <span>{{ $t("Table.Withdraw") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
+
             LPT {{ $t("Table.WAvailable") }}
           </p>
         </div>
@@ -167,20 +176,24 @@
             <span>
               <span>
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Cake)"
                   :duration="2000"
                   :decimals="8"
                 />
+                <span v-else>--</span>
                 BURGER</span
               >
               <span>
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Helmet)"
                   :duration="2000"
                   :decimals="8"
                 />
+                <span v-else>--</span>
                 HELMET</span
               >
             </span>
@@ -193,19 +206,6 @@
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
         </div>
-        <!-- <div class="ContractAddress">
-          <span>HCCT Contract Address：</span>
-          <p>
-            0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
-            <i
-              class="copy"
-              id="copy_default"
-              @click="
-                copyAdress($event, '0xcbbd24dbbf6a487370211bb8b58c3b43c4c32b9e')
-              "
-            ></i>
-          </p>
-        </div> -->
       </div>
     </div>
   </div>
@@ -295,6 +295,7 @@ export default {
       exitLoading: false,
       helmetPrice: 0,
       MingTime: "",
+      isLogin: false,
     };
   },
   mounted() {
@@ -333,13 +334,25 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
@@ -584,6 +597,7 @@ export default {
           margin-bottom: 8px;
           font-size: 24px;
           line-height: 32px;
+          align-items: center;
           img {
             margin-left: 4px;
             width: 32px;

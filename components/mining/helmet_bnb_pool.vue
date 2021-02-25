@@ -34,11 +34,13 @@
           <span>{{ $t("Table.Deposit") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Deposite)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
             LPT
             {{ $t("Table.DAvailable") }}
           </p>
@@ -68,18 +70,22 @@
             >
             <span style="display: flex; align-self: flex-start">
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.Withdraw)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
               /
               <countTo
+                v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(balance.TotalLPT)"
                 :duration="2000"
                 :decimals="4"
               />
+              <span v-else>--</span>
               LPT</span
             >
           </p>
@@ -87,7 +93,7 @@
           <section>
             <p>
               <span>My Pool Share：</span>
-              <span> {{ balance.Share }} %</span>
+              <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -102,11 +108,13 @@
           <span>{{ $t("Table.Withdraw") }}</span>
           <p>
             <countTo
+              v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
               :decimals="8"
             />
+            <span v-else>--</span>
             LPT {{ $t("Table.WAvailable") }}
           </p>
         </div>
@@ -139,20 +147,24 @@
             <span>
               <span>
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Cake)"
                   :duration="2000"
                   :decimals="8"
                 />
+                <span v-else>--</span>
                 CAKE</span
               >
               <span>
                 <countTo
+                  v-if="isLogin"
                   :startVal="Number(0)"
                   :endVal="Number(balance.Helmet)"
                   :duration="2000"
                   :decimals="8"
                 />
+                <span v-else>--</span>
                 HELMET</span
               >
             </span>
@@ -249,6 +261,7 @@ export default {
       helmetPrice: 0,
       helmetapy: 0,
       cakeapy: 0,
+      isLogin: false,
     };
   },
   mounted() {
@@ -280,6 +293,10 @@ export default {
       handler: "WatchIndexArray",
       immediate: true,
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
     helmetapy(newValue, value) {
       if (newValue) {
         this.textList[1].num =
@@ -302,8 +319,16 @@ export default {
       return this.$store.state.allIndexPrice;
       this.textList[1].num = this.apy + "%";
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();

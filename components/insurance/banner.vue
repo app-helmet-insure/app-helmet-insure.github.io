@@ -5,7 +5,7 @@
         <!-- 已成交保单 -->
         <p>
           <label>{{ $t("Banner.ClosedPolicy") }}</label>
-          <span>{{ helmetVarieties }}</span>
+          <span>{{ isLogin ? helmetVarieties : "--" }}</span>
         </p>
         <img src="~/assets/img/helmet/ba1@2x.png" alt="" />
       </li>
@@ -13,13 +13,15 @@
         <!-- LONG当前总价值 -->
         <p>
           <label>{{ $t("Banner.LongValue") }}</label>
-          <span
-            ><countTo
+          <span v-if="isLogin">
+            <countTo
               :startVal="Number(0)"
               :endVal="Number(totalHelmetsBorrowedVolume)"
               :duration="2000"
               :decimals="4"
-          /></span>
+            />
+          </span>
+          <span v-else>--</span>
         </p>
         <img src="~/assets/img/helmet/ba2@2x.png" alt="" />
       </li>
@@ -37,7 +39,7 @@
               2
             )
           }} -->
-            {{ helmetPrice }} BNB
+            {{ isLogin ? helmetPrice : "--" }} BNB
           </span>
         </p>
         <img src="~/assets/img/helmet/ba3@2x.png" alt="" />
@@ -60,6 +62,7 @@ export default {
       fixD: fixD,
       addCommom: addCommom,
       helmetPrice: 0,
+      isLogin: false,
     };
   },
   computed: {
@@ -91,10 +94,17 @@ export default {
       let list = this.$store.state.allIndexPrice;
       return list;
     },
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   watch: {
     indexArray: {
       handler: "IndexWacth",
+      immediate: true,
+    },
+    userInfo: {
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
@@ -104,6 +114,11 @@ export default {
     }
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     async getBannerData() {
       setTimeout(() => {
         this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量

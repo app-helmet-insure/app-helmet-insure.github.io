@@ -15,7 +15,6 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-time"></use>
           </svg>
-          <!-- {{ currentCoin == "CAKE" ? "--" : dueDate }} -->
           {{ getTime(currentCoin) }}
         </p>
       </div>
@@ -26,20 +25,23 @@
       <div>
         <p v-if="TradeType == 'sell'">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-Helmet"></use></svg
-          >{{ BalanceArray[underly] }}
+            <use xlink:href="#icon-Helmet"></use>
+          </svg>
+          {{ isLogin ? BalanceArray[underly] : "--" }}
           {{ underly == "FORTUBE" ? "FOR" : underly }}
         </p>
         <p v-else>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-Helmet"></use></svg
-          >{{ BalanceArray["HELMET"] }}
+            <use xlink:href="#icon-Helmet"></use>
+          </svg>
+          {{ isLogin ? BalanceArray["HELMET"] : "--" }}
           HELMET
         </p>
         <p v-if="TradeType != 'buy'">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-BNB"></use></svg
-          >{{ BalanceArray["BNB"] }} BNB
+            <use xlink:href="#icon-BNB"></use>
+          </svg>
+          {{ isLogin ? BalanceArray["BNB"] : "--" }} BNB
         </p>
         <!-- <p>
           <svg class="icon" aria-hidden="true">
@@ -78,6 +80,7 @@ export default {
       fixD,
       addCommom,
       strikePrice: 0.0049,
+      isLogin: false,
     };
   },
   computed: {
@@ -109,6 +112,9 @@ export default {
     },
     allDueDate() {
       return this.$store.state.allDueDate;
+    },
+    userInfo() {
+      return this.$store.state.userInfo;
     },
   },
   watch: {
@@ -148,9 +154,17 @@ export default {
         // this.strikePrice = addCommom(0.2 / this.BNB_BUSD, 4);
       }
     },
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
   },
-  mounted() {},
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
     getTime(coin) {
       return this.allDueDate[0][coin];
     },

@@ -56,18 +56,18 @@ module.exports = {
      ** Nuxt.js modules
      */
     // axios和proxy 暂时用不上
-    // modules: ["@nuxtjs/axios", "@nuxtjs/proxy"],
-    // axios: {
-    //   proxy: true
-    // },
-    // proxy: {
-    //   "/baseapi": {
-    //     target: "https://tronsage.bitank.com",
-    //     pathRewrite: {
-    //       "^/baseapi": "/"
-    //     }
-    //   }
-    // },
+    modules: ['@nuxtjs/axios', '@nuxtjs/proxy'],
+    axios: {
+        proxy: true,
+    },
+    proxy: {
+        '/api': {
+            target: 'https://api.helmet.insure',
+            pathRewrite: {
+                '^/api': '/',
+            },
+        },
+    },
     /*
      ** Build configuration
      */

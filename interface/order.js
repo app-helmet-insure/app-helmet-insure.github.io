@@ -173,7 +173,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             data_.price
         } ${'BNB'}</span></p>`,
     });
-    console.log(data);
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权
@@ -362,8 +361,8 @@ export const getSellLog = async (callback) => {
         contract.getPastEvents(
             'Sell',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 callback(error, events);
@@ -377,8 +376,8 @@ export const getRePrice = async (callback) => {
         contract.getPastEvents(
             'Reprice',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 callback(error, events);
@@ -391,8 +390,8 @@ export const getTransfer = async (callback) => {
         contract.getPastEvents(
             'Transfer',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 callback(error, events);
@@ -405,8 +404,8 @@ export const getOptionCreatedLog = async (callback) => {
         contract.getPastEvents(
             'OptionCreated',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 callback(error, events);
@@ -420,8 +419,8 @@ export const getBuyLog = async (callback) => {
         contract.getPastEvents(
             'Buy',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 callback(error, events);
@@ -438,8 +437,8 @@ export const getExercise = async (buyer) => {
     const list = await contract.getPastEvents('Exercise', {
         filter: { buyer: buyer },
         // fromBlock: 8889011,
-        fromBlock: 0,
-        toBlock: 'latest',
+        fromBlock: 500000,
+        toBlock: 505000,
     });
     return list;
 };
@@ -449,8 +448,8 @@ export const getMint = async (callback) => {
         contract.getPastEvents(
             'Mint',
             {
-                fromBlock: 0,
-                toBlock: 'latest',
+                fromBlock: 500000,
+                toBlock: 505000,
             },
             (error, events) => {
                 // callback(error, events);
@@ -466,8 +465,8 @@ export const getWaive = async (buyer) => {
     }
     const list = await contract.getPastEvents('Waive', {
         filter: { buyer: buyer },
-        fromBlock: 0,
-        toBlock: 'latest',
+        fromBlock: 500000,
+        toBlock: 505000,
     });
     return list;
 };

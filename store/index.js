@@ -6,8 +6,14 @@ import {
     getBuyLog,
     getMint,
     getRePrice,
-    getTransfer,
 } from '~/interface/order.js';
+import {
+    getLongList,
+    getSellList,
+    getBuyList,
+    getRePriceList,
+    getMintList,
+} from '~/interface/event.js';
 import { getProgress } from '~/interface/price.js';
 import {
     getID,
@@ -31,6 +37,7 @@ import { getUnderlying } from '~/interface/price.js';
 // import precision from '~/assets/js/precision.js';
 import { accDiv, add, mul } from '~/assets/utils/calculate.js';
 import { toRounding } from '~/assets/js/util.js';
+import factory_abi from '~/abi/factory_abi.json';
 
 export const state = () => ({
     locales: ['en_US', 'zh_CN'],
@@ -427,11 +434,8 @@ export const actions = {
     // 获取long, Sell, Buy映射
     setAllMap({ commit }) {
         // 创建long映射对象
-        getOptionCreatedLog((err, data) => {
-
-            if (err) {
-                return;
-            }
+        getLongList((res) => {
+            let data = res;
             let long_map = {};
             let resultItem;
             let _col;
@@ -460,11 +464,10 @@ export const actions = {
             });
             commit('SET_LONG_MAP', long_map);
         });
+
         // 创建Sell 映射对象
-        getSellLog((err, data) => {
-            if (err) {
-                return;
-            }
+        getSellList((res) => {
+            let data = res;
             let sell_map = {};
             data.forEach((item, index) => {
                 sell_map[item.returnValues.long + index] = item.returnValues;
@@ -472,54 +475,33 @@ export const actions = {
             commit('SET_SELL_MAP', sell_map);
         });
         // 创建Buy 映射对象
-        getBuyLog((err, data) => {
-            if (err) {
-                return;
-            }
+        getBuyList((res) => {
+            let data = res;
             let buy_map = {};
             data.forEach((item, index) => {
                 buy_map[item.returnValues.askID + index] = item.returnValues;
             });
             commit('SET_BUY_MAP', buy_map);
         });
+
         // 创建修改价格 映射对象
-        getRePrice((err, data) => {
-            if (err) {
-                return;
-            }
+        getRePriceList((res) => {
+            let data = res;
             let reprice_map = [];
             data.forEach((item, index) => {
                 reprice_map.push(item.returnValues);
             });
             commit('SET_REPRICE_MAP', reprice_map);
         });
-        // 创建空头保单 映射对象
-        getTransfer((err, data) => {
-            if (err) {
-                return;
-            }
-            let transfer_map = [];
-            data.forEach((item, index) => {
-                transfer_map.push({
-                    transfer: true,
-                    _collateral: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
-                    _underlying: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
-                    _strikePrice: 30000000000000000,
-                    _expiry: 1613404800,
-                    address: item.address,
-                    ...item.returnValues,
-                });
-            });
-
-            commit('SET_TRANSFER_MAP', transfer_map);
-        });
-        getMint((err, data) => {
+        //获取 mint
+        getMintList((res) => {
+            let data = res;
             let longTokenCreatedVolume = 0;
             if (err) {
                 return;
             }
-            let last = data[data.length - 1].blockNumber;
-            let h24 = 24 * 60 * 60;
+            // let last = data[data.length - 1].blockNumber;
+            // let h24 = 24 * 60 * 60;
             let _col;
             for (let i = 0; i < data.length; i++) {
                 // if (last - data[i].blockNumber < h24) {

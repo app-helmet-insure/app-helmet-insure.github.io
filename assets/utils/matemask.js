@@ -25,7 +25,7 @@ export const mateMaskInfo = async (address, name) => {
             chainId: 56,
             bridge: 'https://bridge.walletconnect.org',
             rpc: {
-                56: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+                56: 'https://bsc-dataseed1.binance.org/',
             },
             qrcode: true,
             pollingInterval: 10000,
@@ -74,7 +74,7 @@ export const mateMaskInfo = async (address, name) => {
     } catch (error) {
         console.log('util=>matemask=>mateMaskInfo', error);
         // 打开下载弹框
-        bus.$emit('OPEN_DOWNLOAD');
+        // bus.$emit('OPEN_DOWNLOAD');
         return {
             status: -1,
             error,

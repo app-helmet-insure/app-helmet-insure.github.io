@@ -17,7 +17,7 @@ export const mateMaskInfo = (address) => {
             bridge: 'https://bridge.walletconnect.org', // Required
             qrcodeModal: QRCodeModal,
             rpc: {
-                56: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+                56: 'https://bsc-dataseed1.binance.org/',
             },
             qrcode: true,
             pollingInterval: 10000,
@@ -41,9 +41,7 @@ export const mateMaskInfo = (address) => {
     } catch (error) {
         console.log('util=>matemask=>mateMaskInfo', error);
         // 打开下载弹框
-        alert(1);
-
-        bus.$emit('OPEN_DOWNLOAD');
+        // bus.$emit('OPEN_DOWNLOAD');
         return {
             status: -1,
             error,

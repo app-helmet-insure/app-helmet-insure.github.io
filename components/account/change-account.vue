@@ -100,7 +100,7 @@ export default {
         chainId: 56,
         bridge: "https://bridge.walletconnect.org",
         rpc: {
-          56: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+          56: "https://bsc-dataseed1.binance.org/",
         },
         qrcode: true,
         pollingInterval: 10000,

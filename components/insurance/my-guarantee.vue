@@ -475,7 +475,6 @@ export default {
     // 行权
     toActive(item) {
       let data;
-      console.log(item);
       if (item.type == "call") {
         data = {
           token: getTokenName(item._underlying),
@@ -492,7 +491,6 @@ export default {
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
         };
-        console.log(data, 1);
       } else {
         data = {
           token: getTokenName(item._underlying),

@@ -137,7 +137,7 @@ export default {
     // 获取映射
     this.$store.dispatch("setAllMap");
     this.monitorNetWorkChange();
-
+    this.mointorAccountChange();
     // 显示状态弹框
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       const result = {
@@ -280,6 +280,16 @@ export default {
             this.monitorNetWorkChange();
           }, 1000);
         }
+      }
+    },
+    mointorAccountChange() {
+      if (window.ethereum) {
+        ethereum.on("accountsChanged", async (account) => {
+          let userInfo = await mateMaskInfo(account[0], "MetaMask");
+          this.$store.dispatch("setUserInfo", userInfo);
+          this.$bus.$emit("REFRESH_ALL_DATA");
+          this.$bus.$emit("REFRESH_MINING");
+        });
       }
     },
     showWallet() {

@@ -363,6 +363,9 @@ export default {
     this.$bus.$on("RELOAD_DATA_BNB500POOL", () => {
       this.getBalance();
     });
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
       this.getAPY();

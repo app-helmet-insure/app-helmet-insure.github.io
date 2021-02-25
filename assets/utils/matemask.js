@@ -30,6 +30,7 @@ export const mateMaskInfo = async (address, name) => {
             qrcode: true,
             pollingInterval: 10000,
         });
+
         // await walletConnectProvider.enable();
         const coinbase = walletConnectProvider.wc.accounts[0];
         if (address) {

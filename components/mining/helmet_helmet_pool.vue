@@ -245,6 +245,9 @@ export default {
     this.$bus.$on("RELOAD_DATA_HELMETPOOL", () => {
       this.getBalance();
     });
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
       this.getAPY();

@@ -360,6 +360,9 @@ export default {
     this.$bus.$on("RELOAD_DATA_HCCTPOOL", () => {
       this.getBalance();
     });
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
       this.getAPY();

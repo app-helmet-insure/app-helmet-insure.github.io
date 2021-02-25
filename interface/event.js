@@ -160,7 +160,7 @@ export const getMintList = async function(callback) {
         method: 'get',
         url: 'https://api.helmet.insure/contract/logs',
         params: {
-            contract: '0x4c899b7C39ded9a06a5db387f0b0722a18B8d70d',
+            contract: '0x021297e233550eDBa8e6487EB7c6696cFBB63b88',
             include_data: true,
             topic0,
         },

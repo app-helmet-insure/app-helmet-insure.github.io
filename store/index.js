@@ -444,7 +444,7 @@ export const actions = {
             data.forEach((item) => {
                 if (!item.returnValues.long) return;
                 resultItem = item.returnValues;
-                _col = newGetSymbol(resultItem._collateral, window.chainID);
+                _col = getTokenName(resultItem._collateral, window.chainID);
                 if (_col === 'USDT' || _col === 'USDC') {
                     // if (Number(resultItem._strikePrice) < Math.pow(10, 8)) return;
                     resultItem._strikePrice = String(
@@ -497,15 +497,13 @@ export const actions = {
         getMintList((res) => {
             let data = res;
             let longTokenCreatedVolume = 0;
-            if (err) {
-                return;
-            }
             // let last = data[data.length - 1].blockNumber;
             // let h24 = 24 * 60 * 60;
             let _col;
             for (let i = 0; i < data.length; i++) {
                 // if (last - data[i].blockNumber < h24) {
-                _col = newGetSymbol(
+                console.log(data[i]);
+                _col = getTokenName(
                     data[i].returnValues._collateral,
                     window.chainID
                 );

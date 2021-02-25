@@ -259,7 +259,8 @@ export default {
     },
   },
   methods: {
-    myAboutInfoBuyWatch(newValue) {
+    myAboutInfoBuyWatch(newValue, old) {
+      console.log(newValue, old);
       if (newValue) {
         this.page = 0;
         this.limit = 5;

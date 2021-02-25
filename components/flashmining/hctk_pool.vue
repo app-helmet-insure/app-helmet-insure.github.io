@@ -10,8 +10,11 @@
     <div class="text">
       <div class="coin">
         <h3>
-          <span>{{ list.name }}</span>
-          <p @click="showOnepager"><i></i>What is HCCT token？</p>
+          <img src="~/assets/img/flashmining/hctk_logo.png" alt="" />
+          <div>
+            <span>{{ list.name }}</span>
+            <p @click="showOnepager"><i></i>What is HCCT token？</p>
+          </div>
         </h3>
         <div>
           <!-- <div>
@@ -83,10 +86,25 @@
           <div class="content">
             <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
             <div class="input">
-              <input name="deposit" type="text" v-model="DepositeNum" />
-              <span @click="DepositeNum = balance.Deposite">{{
-                $t("Table.Max")
-              }}</span>
+              <input
+                name="deposit"
+                type="text"
+                v-model="DepositeNum"
+                :style="
+                  DepositeNum == balance.Deposite
+                    ? 'border: 1px solid #FF9600 !important'
+                    : ''
+                "
+              />
+              <span
+                @click="DepositeNum = balance.Deposite"
+                :style="
+                  DepositeNum == balance.Deposite
+                    ? 'background: rgba(255, 150, 0, 0.1);'
+                    : ''
+                "
+                >{{ $t("Table.Max") }}</span
+              >
             </div>
           </div>
           <div class="button">
@@ -166,12 +184,23 @@
                 name="withdraw"
                 type="text"
                 v-model="balance.Withdraw"
-                disabled
+                readonly
+                :style="
+                  WithdrawNum == balance.Withdraw
+                    ? 'border: 1px solid #FF9600 !important'
+                    : ''
+                "
               />
               <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
-              <span @click="WithdrawNum = balance.Withdraw">{{
-                $t("Table.Max")
-              }}</span>
+              <span
+                @click="WithdrawNum = balance.Withdraw"
+                :style="
+                  WithdrawNum == balance.Withdraw
+                    ? 'background: rgba(255, 150, 0, 0.1);'
+                    : ''
+                "
+                >{{ $t("Table.Max") }}</span
+              >
             </div>
           </div>
           <div class="button">
@@ -591,7 +620,7 @@ export default {
     }
   }
   .hctk_pool {
-    width: 500px;
+    width: 540px;
     margin-bottom: 20px;
     background: #ffffff;
     padding: 40px;
@@ -631,38 +660,46 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 22px;
-          line-height: 32px;
-          flex-direction: column;
-          margin-bottom: 10px;
           img {
-            margin-left: 4px;
-            width: 32px;
-            height: 32px;
+            width: 54px;
+            height: 54px;
+            margin-right: 12px;
           }
-          p {
-            height: 16px;
-            background: rgba(255, 150, 0, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            color: #ff9600;
-            line-height: 16px;
+          > div {
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            margin-top: 3px;
-            align-self: flex-start;
-            &:hover {
-              color: #ff8200;
+            font-size: 21px;
+            line-height: 32px;
+            flex-direction: column;
+            margin-bottom: 10px;
+            img {
+              margin-left: 4px;
+              width: 32px;
+              height: 32px;
             }
-            i {
-              display: inline-block;
-              width: 16px;
+            p {
               height: 16px;
-              background-image: url("../../assets/img/helmet/icon_long.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 3px;
+              background: rgba(255, 150, 0, 0.1);
+              border-radius: 8px;
+              font-size: 12px;
+              color: #ff9600;
+              line-height: 16px;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              margin-top: 3px;
+              align-self: flex-start;
+              &:hover {
+                color: #ff8200;
+              }
+              i {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                background-image: url("../../assets/img/helmet/icon_long.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
             }
           }
         }
@@ -877,38 +914,46 @@ export default {
         flex-direction: column;
         h3 {
           display: flex;
-          font-size: 22px;
-          line-height: 32px;
-          flex-direction: column;
-          width: 80%;
+          align-items: center;
           img {
-            margin-left: 4px;
-            width: 32px;
-            height: 32px;
+            width: 54px;
+            height: 54px;
+            margin-right: 8px;
           }
-          p {
-            margin: 8px 0;
-            align-self: flex-start;
-            height: 16px;
-            background: rgba(255, 150, 0, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            color: #ff9600;
-            line-height: 16px;
+          > div {
             display: flex;
-            align-items: center;
-            cursor: pointer;
-            &:hover {
-              color: #ff8200;
+            font-size: 14px;
+            flex-direction: column;
+            width: 80%;
+            img {
+              margin-left: 4px;
+              width: 32px;
+              height: 32px;
             }
-            i {
-              display: inline-block;
-              width: 16px;
+            p {
+              margin: 8px 0;
+              align-self: flex-start;
               height: 16px;
-              background-image: url("../../assets/img/helmet/icon_long.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 3px;
+              background: rgba(255, 150, 0, 0.1);
+              border-radius: 8px;
+              font-size: 12px;
+              color: #ff9600;
+              line-height: 16px;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+              &:hover {
+                color: #ff8200;
+              }
+              i {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                background-image: url("../../assets/img/helmet/icon_long.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
             }
           }
         }

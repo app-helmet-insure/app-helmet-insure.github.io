@@ -339,9 +339,9 @@ export default {
         if (item.flagType) {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
-          resultItem["outPrice"] = fromWei(
-            item.longInfo._strikePrice,
-            Token == "CTK" ? 30 : Token
+          resultItem["outPrice"] = fixD(
+            fromWei(item.longInfo._strikePrice, Token == "CTK" ? 30 : Token),
+            4
           );
         } else {
           resultItem["unSold"] = fixD(
@@ -349,8 +349,9 @@ export default {
             8
           );
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
-          resultItem["outPrice"] = toRounding(
-            precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag))
+          resultItem["outPrice"] = fixD(
+            precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag)),
+            4
           );
         }
 

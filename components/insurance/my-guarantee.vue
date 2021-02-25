@@ -521,7 +521,6 @@ export default {
           settleToken: getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
         };
-        console.log(data, 2);
       }
       onExercise(data, data.flag);
     },
@@ -837,8 +836,8 @@ export default {
         let Token = getTokenName("0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112");
         let resultItem;
         resultItem = {
-          id: 5,
-          bidID: 5,
+          id: 6,
+          bidID: 6,
           buyer: myAddress,
           price: 1000,
           Rent: volume * 1000,

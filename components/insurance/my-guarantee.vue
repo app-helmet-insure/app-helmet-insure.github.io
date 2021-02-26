@@ -185,26 +185,12 @@
       </div>
     </section>
     <section class="pages" v-if="guaranteeList.length > 5 && isLogin">
-      <div>
-        <p @click="upPage">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-left"></use>
-          </svg>
-        </p>
-        <span
-          class="page_item"
-          v-for="(item, index) in Math.ceil(guaranteeList.length / 5)"
-          :key="index"
-          :class="page == index ? 'page_active' : ''"
-          @click="handleClickChagePage(index)"
-          >{{ index + 1 }}</span
-        >
-        <p @click="downPage">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-right"></use>
-          </svg>
-        </p>
-      </div>
+      <Page
+        :total="guaranteeList.length"
+        :limit="limit"
+        :page="page + 1"
+        @page-change="handleClickChagePage"
+      />
     </section>
   </div>
 </template>
@@ -212,6 +198,7 @@
 <script>
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
+import Page from "~/components/common/page.vue";
 import {
   fixD,
   addCommom,
@@ -225,6 +212,9 @@ import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 import { balanceOf, getBalance } from "~/interface/deposite";
 
 export default {
+  components: {
+    Page,
+  },
   data() {
     return {
       precision,
@@ -270,6 +260,7 @@ export default {
       immediate: true,
     },
   },
+
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
@@ -460,9 +451,9 @@ export default {
       }
       this.isLoading = false;
       result = result.sort(function (a, b) {
-        return b.sort - a.sort;
+        return a.sort - b.sort;
       });
-      this.guaranteeList = result.reverse();
+      this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
     // 倒计时
@@ -874,33 +865,9 @@ export default {
       }
     },
     handleClickChagePage(index) {
+      index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.guaranteeList.slice(
-        this.page * this.limit,
-        (page + 1) * this.limit
-      );
-      this.showList = list;
-    },
-    // 分页
-    upPage() {
-      if (this.page <= 0) {
-        return;
-      }
-      let page = this.page;
-      this.page = page - 1;
-      let list = this.guaranteeList.slice(
-        this.page * this.limit,
-        page * this.limit
-      );
-      this.showList = list;
-    },
-    downPage() {
-      if (Math.ceil(this.guaranteeList.length / this.limit) <= this.page + 1) {
-        return;
-      }
-      let page = this.page + 1;
-      this.page = page;
       let list = this.guaranteeList.slice(
         this.page * this.limit,
         (page + 1) * this.limit

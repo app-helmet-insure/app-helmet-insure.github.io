@@ -118,26 +118,12 @@
       </div>
     </section>
     <section class="pages" v-if="claimList.length > 5 && !isLogin">
-      <div>
-        <p @click="upPage">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-left"></use>
-          </svg>
-        </p>
-        <span
-          class="page_item"
-          v-for="(item, index) in Math.ceil(claimList.length / 5)"
-          :key="index"
-          :class="page == index ? 'page_active' : ''"
-          @click="handleClickChagePage(index)"
-          >{{ index + 1 }}</span
-        >
-        <p @click="downPage">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-right"></use>
-          </svg>
-        </p>
-      </div>
+      <Page
+        :total="claimList.length"
+        :limit="limit"
+        :page="page + 1"
+        @page-change="handleClickChagePage"
+      />
     </section>
   </div>
 </template>
@@ -154,7 +140,11 @@ import {
 } from "~/assets/utils/address-pool.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { settleable, burn, settle } from "~/interface/factory.js";
+import Page from "~/components/common/page.vue";
 export default {
+  components: {
+    Page,
+  },
   data() {
     return {
       precision,
@@ -328,33 +318,9 @@ export default {
       }
     },
     handleClickChagePage(index) {
+      index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.claimList.slice(
-        this.page * this.limit,
-        (page + 1) * this.limit
-      );
-      this.showList = list;
-    },
-    // 分页
-    upPage() {
-      if (this.page <= 0) {
-        return;
-      }
-      let page = this.page;
-      this.page = page - 1;
-      let list = this.claimList.slice(
-        this.page * this.limit,
-        page * this.limit
-      );
-      this.showList = list;
-    },
-    downPage() {
-      if (Math.ceil(this.claimList.length / this.limit) <= this.page + 1) {
-        return;
-      }
-      let page = this.page + 1;
-      this.page = page;
       let list = this.claimList.slice(
         this.page * this.limit,
         (page + 1) * this.limit

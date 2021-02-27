@@ -434,7 +434,6 @@ export default {
         Message({
           message: "Successfully copied",
           type: "success",
-          // duration: 0,
         });
         copys.destroy();
       });

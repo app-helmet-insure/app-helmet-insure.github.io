@@ -2,6 +2,7 @@
   <div class="hctk_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
+    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
     <img
       class="circle right"
       src="~/assets/img/helmet/rightCircle.png"
@@ -659,6 +660,13 @@ export default {
       top: 0;
       transform: translateY(-5px);
     }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
+    }
     .circle {
       width: 102px;
       height: 102px;
@@ -911,6 +919,13 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
+    }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     .circle {
       width: 102px;

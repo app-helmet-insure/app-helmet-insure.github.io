@@ -516,7 +516,8 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      this.textList[1].num = this.apy + "%";
+      // this.textList[1].num = this.apy + "%";
+      this.textList[1].num = "--";
     },
     async getBalance() {
       let helmetType = "HCTKPOOL_LPT";
@@ -537,7 +538,8 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((70000 / 21) * 7, 2) + " hCTK";
+      // this.textList[0].num = fixD((70000 / 21) * 7, 2) + " hCTK";
+      this.textList[0].num = "--";
     },
     // 抵押
     toDeposite() {

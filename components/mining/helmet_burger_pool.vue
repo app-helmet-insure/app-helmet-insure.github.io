@@ -509,7 +509,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BURGERHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {
@@ -575,7 +575,7 @@ export default {
     font-size: 20px;
   }
   .burger_pool {
-    height: 536px;
+    height: 506px;
     background: #ffffff;
     padding: 60px 40px 40px 40px;
     margin-bottom: 20px;
@@ -931,7 +931,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 343px;
+        height: 293px;
         padding: 30px 16px;
         .title {
           display: flex;
@@ -975,6 +975,7 @@ export default {
         }
       }
       .deposit {
+        height: 343px;
         border-top: 2px solid #00b900;
         background: rgba(0, 185, 0, 0.04);
         .title {

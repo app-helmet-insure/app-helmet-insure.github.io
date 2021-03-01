@@ -5,7 +5,7 @@
       <div class="coin">
         <h3>
           {{ list.name }}
-          <img src="~/assets/img/helmet/3x.png" alt="" />
+          Earn：
           <img src="~/assets/img/flashmining/helmetlogo.png" alt="" />
           +
           <img src="~/assets/img/flashmining/cakelogo.png" alt="" />

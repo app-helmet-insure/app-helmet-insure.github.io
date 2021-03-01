@@ -6,7 +6,9 @@
     "Plan": "Plan",
     "Govern": "Governance",
     "GuideBook": "Paper&Guide",
-    "Medium": "Medium"
+    "Medium": "Medium",
+    "ConnectWrong": "Wrong Network",
+    "ConnectWallet": "CONNECT WALLET"
   },
   "Banner": {
     "ClosedPolicy": "Policy Category",

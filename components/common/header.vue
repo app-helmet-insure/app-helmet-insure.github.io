@@ -30,12 +30,12 @@
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
         @click="openWallectSelect"
-        >CONNECT WALLET</a
+        >{{ $t("Header.ConnectWallet") }}</a
       >
       <div v-else class="address-wrap">
         <div v-if="ChainID != 56" class="wrong">
           <img src="~/assets/img/helmet/wrongnetwork.png" alt="" />
-          <span>Wrong Network</span>
+          <span>{{ $t("Header.ConnectWrong") }}</span>
         </div>
         <template v-else>
           <div class="balance-wrap">

@@ -6,7 +6,9 @@
     "Plan": "私募",
     "Govern": "治理",
     "GuideBook": "使用指南",
-    "Medium": "博客"
+    "Medium": "博客",
+    "ConnectWrong": "网络错误",
+    "ConnectWallet": "连接钱包"
   },
   "Banner": {
     "ClosedPolicy": "支持保险种类",

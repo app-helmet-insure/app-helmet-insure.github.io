@@ -10,19 +10,6 @@
           <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
-          <div>
-            <p>
-              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-              50%
-              <span> HELMET </span>
-            </p>
-            <p>
-              <img src="~/assets/img/helmet/burgerCoin.png" alt="" />
-
-              50%
-              <span> hBURGER </span>
-            </p>
-          </div>
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：

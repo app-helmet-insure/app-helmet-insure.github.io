@@ -310,6 +310,8 @@ export default {
           setTimeout(() => {
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
+            this.getBalance()
+            this.getIndexPirce()
           }, 200);
 
         });

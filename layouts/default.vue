@@ -112,6 +112,10 @@ export default {
     policyUndArray() {
       return this.$store.state.policyUndArray;
     },
+    ChainID() {
+      let chainID = this.$store.state.chainID
+      return chainID
+    }
   },
   watch: {
     longMapAndSellMap: {
@@ -121,6 +125,14 @@ export default {
     aboutInfoSell: {
       handler: "aboutInfoSellWatch",
       immediate: true,
+    },
+    ChainID(newValue) {
+      if (newValue == 56) {
+        this.getBannerData();
+        this.closeNetWorkTip()
+      } else {
+        this.showNetWorkTip()
+      }
     },
   },
   async mounted() {
@@ -159,12 +171,6 @@ export default {
       this.closeStatusDialog();
       window.statusDialog = false;
     });
-    if (window.chainID != 56) {
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        type: "warning",
-        conText: "请连接到Binance Smart Chain网络",
-      });
-    }
     if (window.chainID == 56) {
       this.getBannerData();
     }
@@ -181,6 +187,18 @@ export default {
     }, 1000);
   },
   methods: {
+    closeNetWorkTip() {
+      this.$bus.$emit("CLOSE_STATUS_DIALOG", (data) => {
+        this.closeStatusDialog();
+        window.statusDialog = false;
+      });
+    },
+    showNetWorkTip() {
+      this.$bus.$emit("OPEN_STATUS_DIALOG", {
+        type: "warning",
+        conText: "请连接到Binance Smart Chain网络",
+      });
+    },
     copy() {
       let copy = new ClipboardJS("#copy_default");
       copy.on("success", function (e) {
@@ -289,8 +307,11 @@ export default {
         ethereum.on("accountsChanged", async (account) => {
           let userInfo = await mateMaskInfo(account[0], "MetaMask");
           this.$store.dispatch("setUserInfo", userInfo);
-          this.$bus.$emit("REFRESH_ALL_DATA");
-          this.$bus.$emit("REFRESH_MINING");
+          setTimeout(() => {
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
+          }, 200);
+
         });
       }
     },

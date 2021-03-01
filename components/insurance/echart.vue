@@ -165,15 +165,13 @@ export default {
                 : fixD(toRounding(arr1[this.curCoin], 4) * this.BNB_BUSD, 2),
           },
         ];
-        this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
-          this.line[0].cover * 200
-        } Z`;
-        this.dwCover = `M40 200 L1080 200 L1080 ${
-          this.line[2].cover * 200
-        } L40 ${this.line[2].cover * 200} Z`;
+        this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${this.line[0].cover * 200
+          } Z`;
+        this.dwCover = `M40 200 L1080 200 L1080 ${this.line[2].cover * 200
+          } L40 ${this.line[2].cover * 200} Z`;
       }
     },
-    drawFlag(newVal, val) {},
+    drawFlag(newVal, val) { },
   },
 
   methods: {
@@ -229,12 +227,10 @@ export default {
                   : fixD(toRounding(arr1[this.curCoin], 4) * this.BNB_BUSD, 2),
             },
           ];
-          this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${
-            this.line[0].cover * 200
-          } Z`;
-          this.dwCover = `M40 200 L1080 200 L1080 ${
-            this.line[2].cover * 200
-          } L40 ${this.line[2].cover * 200} Z`;
+          this.upCover = `M40 0 L1080 0 L1080 ${this.line[0].cover * 200} L40 ${this.line[0].cover * 200
+            } Z`;
+          this.dwCover = `M40 200 L1080 200 L1080 ${this.line[2].cover * 200
+            } L40 ${this.line[2].cover * 200} Z`;
         }
       }, 1000);
     },

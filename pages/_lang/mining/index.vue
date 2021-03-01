@@ -2,8 +2,8 @@
   <div class="mining_container">
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
-    <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetBnbPool></HelmetBnbPool>
+    <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetHelmetPool></HelmetHelmetPool>
     <Onepager></Onepager>
     <!-- <MiningList></MiningList> -->

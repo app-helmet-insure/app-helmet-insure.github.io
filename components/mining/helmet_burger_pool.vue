@@ -575,9 +575,9 @@ export default {
     font-size: 20px;
   }
   .burger_pool {
-    height: 506px;
+    height: 536px;
     background: #ffffff;
-    padding: 60px 40px 40px 40px;
+    padding: 40px;
     margin-bottom: 20px;
     > .combo {
       width: 148px;

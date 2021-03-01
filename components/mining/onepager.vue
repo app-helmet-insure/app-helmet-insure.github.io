@@ -72,7 +72,7 @@ export default {
 }
 @media screen and (min-width: 750px) {
   .onepager_wrapper {
-    width: 500px;
+    width: 627px;
     background: #fff;
     position: absolute;
     left: 50%;

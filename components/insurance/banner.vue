@@ -29,18 +29,7 @@
         <!-- Helmet流通量 -->
         <p>
           <label>{{ $t("Banner.HelmetPcice") }}</label>
-          <span>
-            <!-- {{
-            addCommom(
-              precision.plus(
-                precision.minus(totalHelmet, balanceMine),
-                claimAbleHelmet
-              ),
-              2
-            )
-          }} -->
-            {{ isLogin ? helmetPrice : "--" }} BNB
-          </span>
+          <span> {{ isLogin ? helmetPrice : "--" }} USD </span>
         </p>
         <img src="~/assets/img/helmet/ba3@2x.png" alt="" />
       </li>
@@ -129,7 +118,7 @@ export default {
       }, 2000);
     },
     getPrice() {
-      this.helmetPrice = toRounding(this.indexArray[1]["HELMET"], 4);
+      this.helmetPrice = toRounding(precision.times(this.indexArray[1]["HELMET"], this.$store.state.BNB_BUSD), 4);
     },
     IndexWacth(newValue, val) {
       if (newValue) {

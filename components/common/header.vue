@@ -33,14 +33,20 @@
         >CONNECT WALLET</a
       >
       <div v-else class="address-wrap">
-        <div class="balance-wrap">
-          <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-          <span>{{ BalanceArray["HELMET"] }}</span>
+        <div v-if="ChainID != 56" class="wrong">
+          <img src="~/assets/img/helmet/wrongnetwork.png" alt="" />
+          <span>Wrong Network</span>
         </div>
-        <div class="wallet-address" @click="openCurrentAccount">
-          <span>{{ accountText }}</span>
-          <i></i>
-        </div>
+        <template v-else>
+          <div class="balance-wrap">
+            <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+            <span>{{ BalanceArray["HELMET"] }}</span>
+          </div>
+          <div class="wallet-address" @click="openCurrentAccount">
+            <span>{{ accountText }}</span>
+            <i></i>
+          </div>
+        </template>
       </div>
 
       <WallectSelect
@@ -68,6 +74,7 @@ import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
+import { getID } from '~/assets/utils/address-pool.js'
 export default {
   name: "p-header",
   components: {
@@ -96,12 +103,22 @@ export default {
       let obj = this.$store.state.BalanceArray;
       return obj;
     },
+    ChainID() {
+      let chainID = this.$store.state.chainID
+      return chainID
+    }
   },
   watch: {
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
     },
+    ChainID(newValue) {
+      this.chainID = newValue
+    },
+  },
+  mounted() {
+
   },
   methods: {
     openChangeWallet() {
@@ -200,6 +217,26 @@ export default {
             display: block;
           }
         }
+      }
+    }
+    .wrong {
+      min-width: 171px;
+      height: 36px;
+      background: #ec4711;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      padding: 0 11px;
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+      }
+      span {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        line-height: 22px;
       }
     }
     .address-wrap {

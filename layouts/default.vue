@@ -132,6 +132,7 @@ export default {
     window.WEB3 = await web3();
     window.chainID = await getID();
     this.showWallet();
+    this.$store.commit('SET_CHAINID', window.chainID)
 
     this.getUserInfo();
     // 获取映射
@@ -271,6 +272,7 @@ export default {
       if (window.ethereum) {
         ethereum.on("networkChanged", (chainID) => {
           window.chainID = chainID;
+          this.$store.commit('SET_CHAINID', (chainID))
           this.$bus.$emit("REFRESH_ALL_DATA");
         });
       } else {

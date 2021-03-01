@@ -6,6 +6,9 @@
         <h3>
           {{ list.name }}
           <img src="~/assets/img/helmet/3x.png" alt="" />
+          <img src="~/assets/img/flashmining/helmetlogo.png" alt="" />
+          +
+          <img src="~/assets/img/flashmining/cakelogo.png" alt="" />
         </h3>
         <div>
           <p>
@@ -412,7 +415,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HELMETBNB";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {

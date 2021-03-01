@@ -27,14 +27,20 @@
       >Connect to a wallet</a
     >
     <div v-else class="address-wrap">
-      <div class="balance-wrap">
-        <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-        <span>{{ BalanceArray["HELMET"] }}</span>
+      <div v-if="ChainID != 56" class="wrong">
+        <img src="~/assets/img/helmet/wrongnetwork.png" alt="" />
+        <span>{{ $t("Header.ConnectWrong") }}</span>
       </div>
-      <div class="wallet-address" @click="openCurrentAccount">
-        <span>{{ accountText }}</span>
-        <i></i>
-      </div>
+      <template v-else>
+        <div class="balance-wrap">
+          <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
+          <span>{{ BalanceArray["HELMET"] }}</span>
+        </div>
+        <div class="wallet-address" @click="openCurrentAccount">
+          <span>{{ accountText }}</span>
+          <i></i>
+        </div>
+      </template>
     </div>
 
     <WallectSelect
@@ -90,12 +96,18 @@ export default {
     locale: {
       handler: "watchLocale",
       immediate: true,
+    }, ChainID(newValue) {
+      this.chainID = newValue
     },
   },
   mounted() {
     this.lang = window.localStorage.getItem("lang") || this.locale;
   },
   computed: {
+    ChainID() {
+      let chainID = this.$store.state.chainID
+      return chainID
+    },
     showMask() {
       return this.$store.state.showDialog.showMask;
     },
@@ -302,6 +314,26 @@ export default {
         top: -90%;
         transform: translateX(90%);
       }
+    }
+  }
+  .wrong {
+    min-width: 171px;
+    height: 36px;
+    background: #ec4711;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 0 11px;
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+    }
+    span {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 22px;
     }
   }
   .address-wrap {

@@ -10,7 +10,7 @@
     <div class="text">
       <div class="coin">
         <h3>
-          <img src="~/assets/img/flashmining/hauto_logo.png" alt="" />
+          <img src="~/assets/img/flashmining/hmath_logo.png" alt="" />
           <div>
             <span>{{ list.name }}</span>
             <p @click="showOnepager"><i></i>What is hMATH token？</p>

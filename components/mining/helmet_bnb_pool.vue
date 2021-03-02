@@ -703,6 +703,15 @@ export default {
         }
         > div {
           display: flex;
+          > h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            img {
+              width: 58px;
+              height: 32px;
+            }
+          }
           > p {
             display: flex;
             align-items: center;

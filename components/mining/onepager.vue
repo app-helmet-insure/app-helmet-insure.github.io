@@ -11,9 +11,12 @@
           </span>
         </h3>
         <div class="content">
-          <div>
-            <p v-for="(item, index) in text" :key="index">{{ item }}</p>
-          </div>
+          <section>
+            <div>
+              <p v-for="(item, index) in text" :key="index">{{ item }}</p>
+            </div>
+          </section>
+          <div class="bg"></div>
         </div>
       </div>
     </div>
@@ -135,26 +138,20 @@ export default {
   .onepager_wrapper {
     width: 90%;
     height: 80%;
+    max-height: 550px;
     background: #fff;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 3px;
-    padding: 30px;
+    padding: 20px 10px;
     display: flex;
     flex-direction: column;
     .title {
-      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      span {
-        font-size: 20px;
-        font-weight: 500;
-        color: #121212;
-        line-height: 28px;
-      }
+      justify-content: flex-end;
       i {
         width: 24px;
         height: 24px;
@@ -165,14 +162,43 @@ export default {
         cursor: pointer;
       }
     }
+    h3 {
+      text-align: center;
+      height: 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #ffcb82 150%);
+      align-self: center;
+      transform: translateY(10px);
+      padding: 0 10px;
+      min-width: 196px;
+      span {
+        display: inline-block;
+        transform: translateY(-5px);
+      }
+    }
     .content {
       flex: 1;
-      overflow-y: scroll;
-      p {
-        margin: 10px 0;
-        font-size: 14px;
-        color: #121212;
-        line-height: 28px;
+      border: 1px solid #f96001;
+      border-radius: 50px;
+      padding: 30px 20px 0;
+      overflow: hidden;
+      section {
+        overflow-y: scroll;
+        height: 80%;
+        p {
+          margin: 10px 0;
+          font-size: 14px;
+          color: #121212;
+          line-height: 28px;
+        }
+      }
+
+      .bg {
+        width: 100%;
+        height: 70px;
+        background-image: url("../../assets/img/flashmining/pagerlogo.png");
+        background-repeat: no-repeat;
+        background-size: 96px 70px;
+        background-position: right;
       }
     }
   }

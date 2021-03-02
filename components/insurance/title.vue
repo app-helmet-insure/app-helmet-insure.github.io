@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <!-- <div class="imgbanner img7 swiper-slide">
+        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
+      </div> -->
       <div class="imgbanner img6 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
       </div>
@@ -139,7 +142,19 @@ export default {
         margin: 148px 0 0 157px;
       }
     }
-
+    .img7 {
+      background-image: url("../../assets/img/helmet/math.png");
+      > button {
+        width: 120px;
+        height: 48px;
+        background: #121212;
+        border-radius: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 148px 0 0 157px;
+      }
+    }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
@@ -170,6 +185,19 @@ export default {
     }
     .img6 {
       background-image: url("../../assets/img/helmet/hauto_h5.png");
+      > button {
+        width: 120px;
+        height: 48px;
+        background: #121212;
+        border-radius: 24px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 180px 0 0 40px;
+      }
+    }
+    .img7 {
+      background-image: url("../../assets/img/helmet/math_h5.png");
       > button {
         width: 120px;
         height: 48px;

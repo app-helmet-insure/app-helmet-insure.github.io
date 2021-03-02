@@ -851,7 +851,6 @@ export default {
             line-height: 16px;
             display: flex;
             align-items: center;
-            margin-left: 8px;
             cursor: pointer;
             &:hover {
               color: #ff8200;
@@ -870,8 +869,18 @@ export default {
         > div {
           display: flex;
           flex-direction: column;
+          > h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            img {
+              width: 58px;
+              height: 32px;
+            }
+          }
           > div {
             display: flex;
+
             > p {
               display: flex;
               align-items: center;

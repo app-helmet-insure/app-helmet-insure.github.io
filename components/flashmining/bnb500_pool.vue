@@ -501,7 +501,7 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await uniswap("BNB500", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("BNB500POOL"); //数量
       let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);

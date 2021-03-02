@@ -491,7 +491,7 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let WBNBHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let WBNBHELMET = await uniswap("HAUTO", "HELMET"); //Hlemt价格
       let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
       let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
 

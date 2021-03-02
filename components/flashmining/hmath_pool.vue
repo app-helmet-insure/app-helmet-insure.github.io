@@ -145,14 +145,14 @@
           <div class="ContractAddress">
             <span>hAUTO Contract Address：</span>
             <p>
-              0xdD9b5801e8A38ef7A728A42492699521C6A7379b
+              0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xdD9b5801e8A38ef7A728A42492699521C6A7379b'
+                    '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112'
                   )
                 "
               ></i>
@@ -227,14 +227,14 @@
           <div class="ContractAddress">
             <span>hMATH Contract Address：</span>
             <p>
-              0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
+              0xdD9b5801e8A38ef7A728A42492699521C6A7379b
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112'
+                    '0xdD9b5801e8A38ef7A728A42492699521C6A7379b'
                   )
                 "
               ></i>
@@ -413,7 +413,6 @@ export default {
       });
     },
     copyAdress(e, text) {
-      let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
       copys.on("success", function (e) {
         Message({
@@ -485,7 +484,7 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let WBNBHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let WBNBHELMET = await uniswap("HMATH", "HELMET"); //Hlemt价格
       let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
       let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
 

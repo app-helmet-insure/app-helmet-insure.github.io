@@ -236,7 +236,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-hBURGER",
+        name: "HELMET-hBURGER LP",
         dueDate: "2021-03-07 00:00",
         DownTime: "--",
       },

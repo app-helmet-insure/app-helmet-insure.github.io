@@ -313,7 +313,7 @@ export default {
         result.push(hAUTOPolicy);
       }
       if (hMATHPolicy) {
-        result.push(hMATHPolicy);
+        // result.push(hMATHPolicy);
       }
       for (let i = 0; i < list.length; i++) {
         item = list[i];

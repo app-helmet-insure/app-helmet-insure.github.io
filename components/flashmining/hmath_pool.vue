@@ -270,6 +270,7 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import helmetVue from "../../layouts/helmet.vue";
 export default {
   components: {
     countTo,
@@ -484,18 +485,16 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let WBNBHELMET = await uniswap("HMATH", "HELMET"); //Hlemt价格
-      let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
-      let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
-
+      let HMATHHELMET = await uniswap("HMATH", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HMATHPOOL"); //数量
       let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
+      console.log(HMATHHELMET, HctkVolume, LptVolume, HelmetValue);
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(AUTOHELMET, precision.divide(30000, 15), 365),
+            precision.times(HMATHHELMET, precision.divide(30000, 15), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume

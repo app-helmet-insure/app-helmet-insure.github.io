@@ -491,10 +491,7 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let WBNBHELMET = await uniswap("HAUTO", "HELMET"); //Hlemt价格
-      let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
-      let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
-
+      let HAUTOHELMET = await uniswap("HAUTO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
       let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
@@ -502,7 +499,7 @@ export default {
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(AUTOHELMET, precision.divide(10, 14), 365),
+            precision.times(HAUTOHELMET, precision.divide(10, 14), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume

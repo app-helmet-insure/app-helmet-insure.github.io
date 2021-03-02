@@ -599,6 +599,30 @@ export default {
             width: 32px;
             height: 32px;
           }
+          p {
+            height: 16px;
+            background: rgba(255, 150, 0, 0.1);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #ff9600;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 4px;
+            &:hover {
+              color: #ff8200;
+            }
+            i {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-image: url("../../assets/img/helmet/icon_long.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin-right: 3px;
+            }
+          }
         }
         > div {
           display: flex;

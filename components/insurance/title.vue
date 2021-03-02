@@ -1,9 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <!-- <div class="imgbanner img7 swiper-slide">
+      <div class="imgbanner img7 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
-      </div> -->
+      </div>
       <div class="imgbanner img6 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
       </div>

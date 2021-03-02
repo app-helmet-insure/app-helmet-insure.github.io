@@ -283,7 +283,38 @@ export default {
       let currentTime = new Date().getTime();
       let exerciseRes;
       let bidIDArr;
-
+      let cakePolicy = await this.CAKEPolicy();
+      let hcctPolicy = await this.HCCTPolicy();
+      let hctkPolicy = await this.HCTKPolicy();
+      let hburgerPolicy = await this.HBURGERPolicy();
+      let lishiPolicy = await this.LISHIPolicy();
+      let BNB500Policy = await this.BNB500Policy();
+      let hAUTOPolicy = await this.hAUTOPolicy();
+      let hMATHPolicy = await this.hMATHPolicy();
+      if (cakePolicy) {
+        result.push(cakePolicy);
+      }
+      if (hcctPolicy) {
+        result.push(hcctPolicy);
+      }
+      if (hctkPolicy) {
+        result.push(hctkPolicy);
+      }
+      if (hburgerPolicy) {
+        result.push(hburgerPolicy);
+      }
+      if (lishiPolicy) {
+        result.push(lishiPolicy);
+      }
+      if (BNB500Policy) {
+        result.push(BNB500Policy);
+      }
+      if (hAUTOPolicy) {
+        result.push(hAUTOPolicy);
+      }
+      if (hMATHPolicy) {
+        result.push(hMATHPolicy);
+      }
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
@@ -421,34 +452,7 @@ export default {
           result.push(resultItem);
         }
       }
-      let cakePolicy = await this.CAKEPolicy();
-      let hcctPolicy = await this.HCCTPolicy();
-      let hctkPolicy = await this.HCTKPolicy();
-      let hburgerPolicy = await this.HBURGERPolicy();
-      let lishiPolicy = await this.LISHIPolicy();
-      let BNB500Policy = await this.BNB500Policy();
-      let hAUTOPolicy = await this.hAUTOPolicy();
-      if (cakePolicy) {
-        result.push(cakePolicy);
-      }
-      if (hcctPolicy) {
-        result.push(hcctPolicy);
-      }
-      if (hctkPolicy) {
-        result.push(hctkPolicy);
-      }
-      if (hburgerPolicy) {
-        result.push(hburgerPolicy);
-      }
-      if (lishiPolicy) {
-        result.push(lishiPolicy);
-      }
-      if (BNB500Policy) {
-        result.push(BNB500Policy);
-      }
-      if (hAUTOPolicy) {
-        result.push(hAUTOPolicy);
-      }
+
       this.isLoading = false;
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -846,6 +850,56 @@ export default {
           approveAddress1: "FACTORY",
           approveAddress2: "",
           outPrice: fromWei(42000000000000000000, Token),
+          outPriceUnit: "BNB",
+          // showType: "img",
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async hMATHPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xdD9b5801e8A38ef7A728A42492699521C6A7379b"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xdD9b5801e8A38ef7A728A42492699521C6A7379b");
+        let resultItem;
+        resultItem = {
+          id: 7,
+          bidID: 7,
+          buyer: myAddress,
+          price: 1,
+          Rent: volume * 1,
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1616428800),
+          _collateral: "0xf218184af829cf2b0019f8e6f0b2423498a36983",
+          _strikePrice: fromWei(14000000000000000, Token),
+          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _expiry: 1616428800000,
+          transfer: true,
+          longAdress: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
+          type: "call",
+          symbol: "hMATH",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(14000000000000000, Token),
           outPriceUnit: "BNB",
           // showType: "img",
         };

@@ -278,7 +278,7 @@ export default {
     return {
       list: {
         name: "hMATH Pool (By hAUTO-Helmet LPT)",
-        dueDate: "2021-03-09 00:00",
+        dueDate: "2021-03-18 00:00",
         DownTime: "--",
       },
       textList: [
@@ -342,17 +342,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HMATHPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HMATHPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HMATHPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HAUTOPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_HMATHPOOL", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -487,14 +487,14 @@ export default {
       let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
       let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
 
-      let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
-      let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
+      let HctkVolume = await totalSupply("HMATHPOOL"); //数量
+      let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(AUTOHELMET, precision.divide(10, 14), 365),
+            precision.times(AUTOHELMET, precision.divide(30000, 15), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -509,8 +509,8 @@ export default {
       this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "HAUTOPOOL_LPT";
-      let type = "HAUTOPOOL";
+      let helmetType = "HMATHPOOL_LPT";
+      let type = "HMATHPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -527,7 +527,7 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
+      this.textList[0].num = fixD((30000 / 15) * 7, 2) + " hMATH";
     },
     // 抵押
     toDeposite() {
@@ -538,8 +538,8 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HAUTOPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      let type = "HMATHPOOL";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -547,7 +547,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HAUTOPOOL";
+      let type = "HMATHPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -556,7 +556,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HAUTOPOOL";
+      let type = "HMATHPOOL";
       let res = await exitStake(type);
     },
   },

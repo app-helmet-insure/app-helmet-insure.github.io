@@ -131,7 +131,7 @@
     "Active": "请务必确认价格是否匹配，不合适的价格行权可能会造成亏损",
     "SendCoin": "请不要把您的helmet打入合约地址，连接钱包并调至BSC网络，我们会自动读取数据。",
     "RiskWarning": "NOTICE",
-    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 《Paper& Guide》.",
+    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 'Paper& Guide'.",
     "RiskWarnCheck": "I Agree"
   }
 }

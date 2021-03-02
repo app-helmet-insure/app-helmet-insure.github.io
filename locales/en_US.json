@@ -132,7 +132,7 @@
     "Active": "Please double check the price above，Helmet team will not cover your loss on this.",
     "SendCoin": "Please do not transfer your Helmet into this smart contract address, just connect your wallet and change it to BSC net.",
     "RiskWarning": "NOTICE",
-    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 《Paper& Guide》.",
+    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 'Paper& Guide'.",
     "RiskWarnCheck": "I Agree"
   }
 }

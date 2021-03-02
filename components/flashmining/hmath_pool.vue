@@ -145,14 +145,14 @@
           <div class="ContractAddress">
             <span>hAUTO Contract Address：</span>
             <p>
-              0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
+              0xdD9b5801e8A38ef7A728A42492699521C6A7379b
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112'
+                    '0xdD9b5801e8A38ef7A728A42492699521C6A7379b'
                   )
                 "
               ></i>

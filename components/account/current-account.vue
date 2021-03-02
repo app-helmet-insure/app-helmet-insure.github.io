@@ -47,7 +47,7 @@ export default {
       immediate: true,
     },
   },
-  mounted() {},
+  mounted() { },
   methods: {
     copyAdress(e, text) {
       let _this = this;

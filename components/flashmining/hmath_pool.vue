@@ -1,8 +1,7 @@
 <template>
-  <div class="bnb500_pool">
+  <div class="math_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
     <img
       class="circle right"
       src="~/assets/img/helmet/rightCircle.png"
@@ -11,25 +10,13 @@
     <div class="text">
       <div class="coin">
         <h3>
-          <img src="~/assets/img/flashmining/bnb500_logo.png" alt="" />
+          <img src="~/assets/img/flashmining/hauto_logo.png" alt="" />
           <div>
             <span>{{ list.name }}</span>
-            <p @click="showOnepager"><i></i>What is BNB500 token？</p>
+            <p @click="showOnepager"><i></i>What is hMATH token？</p>
           </div>
         </h3>
         <div>
-          <!-- <div>
-            <p>
-              <img src="~/assets/img/helmet/hctkCoin.png" alt="" />
-              50%
-              <span> hCTK </span>
-            </p>
-            <p>
-              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-              50%
-              <span> HELMET </span>
-            </p>
-          </div> -->
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -114,7 +101,6 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
-              style="background: #ccc !important; pointer-events: none"
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -151,22 +137,22 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0x936909e72951A19a5e1d75A109B0D34f06f39838/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/?_gl=1*avpb7w*_ga*MTc1MzEyNTQzNS4xNjA3MzQwODk4*_ga_334KNG3DMQ*MTYxNDY1Njg1My4xNS4wLjE2MTQ2NTY4NTMuMA..#/add/0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get hCTK-HELMET LPT</a
+              >Get hAUTO-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
-            <span>hCTK Contract Address：</span>
+            <span>hAUTO Contract Address：</span>
             <p>
-              0x936909e72951A19a5e1d75A109B0D34f06f39838
+              0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0x936909e72951A19a5e1d75A109B0D34f06f39838'
+                    '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112'
                   )
                 "
               ></i>
@@ -215,7 +201,7 @@
               {{ $t("Table.ClaimRewards") }}
             </button>
             <p>
-              <span>BNB500 {{ $t("Table.HELMETRewards") }}：</span>
+              <span>hMATH {{ $t("Table.HELMETRewards") }}：</span>
               <span>
                 <span>
                   <countTo
@@ -226,30 +212,29 @@
                     :decimals="8"
                   />
                   <span v-else>--</span>
-                  BNB500</span
+                  hMATH</span
                 >
               </span>
             </p>
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
-              style="background: #ccc !important; pointer-events: none"
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
             </button>
           </div>
           <div class="ContractAddress">
-            <span>BNB500 Contract Address：</span>
+            <span>hMATH Contract Address：</span>
             <p>
-              0xe204c4c21c6ed90e37cb06cb94436614f3208d58
+              0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xe204c4c21c6ed90e37cb06cb94436614f3208d58'
+                    '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112'
                   )
                 "
               ></i>
@@ -292,8 +277,8 @@ export default {
   data() {
     return {
       list: {
-        name: "BNB500 Pool (By hCTK-Helmet LPT)",
-        dueDate: "2021-02-29 00:00",
+        name: "hMATH Pool (By hAUTO-Helmet LPT)",
+        dueDate: "2021-03-09 00:00",
         DownTime: "--",
       },
       textList: [
@@ -357,17 +342,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_BNB500POOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HAUTOPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_BNB500POOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HAUTOPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_BNB500POOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HAUTOPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_BNB500POOL", () => {
+    this.$bus.$on("RELOAD_DATA_HAUTOPOOL", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -413,18 +398,15 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $BNB500?",
+        title: "What is $hAUTO?",
         text: [
-          "$BNB500 is BNB cover miss out policy.",
-          "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.insure and 1000 for Flash Mining)",
-          "In this policy, we set a ratio: ",
-          "BNB : BUSD = 1:500 ",
-          "it means that you could swap 500 BUSD+1$BNB500 to 1BNB. It is the reasonable active price, for example, if BNB hit $600, you could active the policy and swap 500 BUSD + 1 $BNB500 to 1 BNB with 100BUSD profit.",
-          "Flash Mining Type: ",
-          "$hCTK-$Helmet LP Mining Pool Notice: $hCTK will be expired on 20th Feb. 0:00 SGT , you could activate it ASAP or take part in $BNB500 Flash Mining.",
-          "Flash Mining Start: 18th Feb. 24:00 SGT",
-          "Flash Mining End: 28th Feb. 24:00 SGT",
-          "Expire date: 20th Mar. 24:00 SGT",
+          "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
+          "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
+          "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
+          "$hAUTO Flash Mining",
+          "Start: Feb. 23rd 20:00 SGT",
+          "End: Mar.9th 24:00",
+          "Policy Expire date: Mar. 24th 24:00 SGT",
         ],
       });
     },
@@ -477,7 +459,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-19 00:00";
+      let dueDate = "2021-02-23 20:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -501,15 +483,18 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("BNB500POOL"); //数量
-      let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
+      let WBNBHELMET = await uniswap("WBNB", "HELMET"); //Hlemt价格
+      let AUTOWBNB = await uniswap("AUTO", "WBNB"); //Hlemt价格
+      let AUTOHELMET = precision.times(WBNBHELMET, AUTOWBNB); //Hlemt价格
+
+      let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
+      let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HCTKHELMET, precision.divide(1000, 10), 365),
+            precision.times(AUTOHELMET, precision.divide(10, 14), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -520,12 +505,12 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = "--";
+      // this.textList[1].num = "Infinity" + "%";
+      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
-      let helmetType = "BNB500POOL_LPT";
-      let type = "BNB500POOL";
+      let helmetType = "HAUTOPOOL_LPT";
+      let type = "HAUTOPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -542,8 +527,7 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      // this.textList[0].num = fixD((1000 / 10) * 7, 2) + " BNB500";
-      this.textList[0].num = "--";
+      this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
     },
     // 抵押
     toDeposite() {
@@ -554,7 +538,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "BNB500POOL";
+      let type = "HAUTOPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
@@ -563,7 +547,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "BNB500POOL";
+      let type = "HAUTOPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -572,7 +556,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "BNB500POOL";
+      let type = "HAUTOPOOL";
       let res = await exitStake(type);
     },
   },
@@ -643,7 +627,7 @@ export default {
       font-size: 14px;
     }
   }
-  .bnb500_pool {
+  .math_pool {
     width: 540px;
     margin-bottom: 20px;
     background: #ffffff;
@@ -663,13 +647,6 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
-    }
-    .finished {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      right: 0;
-      transform: translateY(0);
     }
     .circle {
       width: 102px;
@@ -904,7 +881,7 @@ export default {
       font-size: 12px;
     }
   }
-  .bnb500_pool {
+  .math_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;
@@ -924,13 +901,6 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
-    }
-    .finished {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      right: 0;
-      transform: translateY(0);
     }
     .circle {
       width: 102px;
@@ -970,7 +940,6 @@ export default {
               width: 32px;
               height: 32px;
             }
-
             p {
               margin: 8px 0;
               align-self: flex-start;

@@ -2,7 +2,11 @@
   <div class="hcct_pool">
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
-    <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img
+      class="circle right"
+      src="~/assets/img/helmet/rightCircle.png"
+      alt=""
+    />
     <div class="text">
       <div class="coin">
         <h3>
@@ -515,7 +519,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HCCTPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {

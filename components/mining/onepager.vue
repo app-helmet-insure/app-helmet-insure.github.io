@@ -3,9 +3,13 @@
     <div class="onepager_mask" v-if="showFlag">
       <div class="onepager_wrapper">
         <div class="title">
-          <span>{{ this.title }}</span>
           <i @click="closeOnepager"></i>
         </div>
+        <h3>
+          <span>
+            {{ this.title }}
+          </span>
+        </h3>
         <div class="content">
           <div>
             <p v-for="(item, index) in text" :key="index">{{ item }}</p>
@@ -18,6 +22,7 @@
 
 <script>
 export default {
+
   data() {
     return {
       showFlag: false,
@@ -80,17 +85,12 @@ export default {
     transform: translate(-50%, -50%);
     border-radius: 3px;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
     .title {
-      margin-bottom: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      span {
-        font-size: 20px;
-        font-weight: 500;
-        color: #121212;
-        line-height: 28px;
-      }
+      justify-content: flex-end;
       i {
         width: 24px;
         height: 24px;
@@ -101,7 +101,27 @@ export default {
         cursor: pointer;
       }
     }
+    h3 {
+      text-align: center;
+      height: 24px;
+      background: linear-gradient(180deg, #ffffff 0%, #ffcb82 150%);
+      align-self: center;
+      transform: translateY(10px);
+      padding: 0 10px;
+      min-width: 196px;
+      span {
+        display: inline-block;
+        transform: translateY(-5px);
+      }
+    }
     .content {
+      border: 1px solid #f96001;
+      border-radius: 50px;
+      padding: 30px 20px;
+      background-image: url("../../assets/img/flashmining/pagerlogo.png");
+      background-repeat: no-repeat;
+      background-size: 160px 120px;
+      background-position: 95% 92%;
       p {
         margin: 10px 0;
         font-size: 14px;

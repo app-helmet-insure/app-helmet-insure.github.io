@@ -3,8 +3,6 @@
   <div class="wallet-select-mask mask">
     <div class="wallet-select-block">
       <i class="close" @click="closeDialog"></i>
-      <!-- <h3 class="title">Select a Wallet</h3> -->
-      <!-- <p class="sub-title">Please select a wallet to connect to this dapp</p> -->
       <ul>
         <li
           :class="

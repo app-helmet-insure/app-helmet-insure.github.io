@@ -1,5 +1,5 @@
 <template>
-  <div class="mining_container">
+  <!-- <div class="mining_container">
     <div class="pool_wrap">
       <HmathPool></HmathPool>
       <HautoPool></HautoPool>
@@ -9,6 +9,18 @@
       <HctkPool></HctkPool>
     </div>
     <div class="pool_wrap">
+      <HcctPool></HcctPool>
+    </div>
+    <Onepager></Onepager>
+  </div> -->
+  <div class="mining_container">
+    <div class="pool_wrap">
+      <!-- <HmathPool></HmathPool> -->
+      <HautoPool></HautoPool>
+      <Bnb500Pool></Bnb500Pool>
+    </div>
+    <div class="pool_wrap">
+      <HctkPool></HctkPool>
       <HcctPool></HcctPool>
     </div>
     <Onepager></Onepager>

@@ -173,6 +173,8 @@ export default {
     });
     if (window.chainID == 56) {
       this.getBannerData();
+      this.getBalance();
+      this.getIndexPirce();
     }
     // 刷新所有数据
     this.$bus.$on("REFRESH_ALL_DATA", (data) => {
@@ -181,10 +183,7 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-    setTimeout(() => {
-      this.getBalance();
-      this.getIndexPirce();
-    }, 1000);
+
   },
   methods: {
     closeNetWorkTip() {
@@ -291,7 +290,7 @@ export default {
         ethereum.on("networkChanged", (chainID) => {
           window.chainID = chainID;
           this.$store.commit('SET_CHAINID', (chainID))
-          this.$bus.$emit("REFRESH_ALL_DATA");
+          window.location.reload()
         });
       } else {
         if (this.times < 10) {
@@ -308,10 +307,11 @@ export default {
           let userInfo = await mateMaskInfo(account[0], "MetaMask");
           this.$store.dispatch("setUserInfo", userInfo);
           setTimeout(() => {
-            this.$bus.$emit("REFRESH_ALL_DATA");
-            this.$bus.$emit("REFRESH_MINING");
+            this.getBannerData();
             this.getBalance()
             this.getIndexPirce()
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
           }, 200);
 
         });

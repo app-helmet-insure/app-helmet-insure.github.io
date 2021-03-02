@@ -5,11 +5,13 @@
       <div class="coin">
         <h3>
           {{ list.name }}
-          Earn：
-          <img src="~/assets/img/flashmining/helmetlogo.png" alt="" />
-          +
-          <img src="~/assets/img/flashmining/cakelogo.png" alt="" />
         </h3>
+        <div>
+          <h4>
+            Earn：
+            <img src="~/assets/img/icon/helmetcake.png" alt="" />
+          </h4>
+        </div>
       </div>
       <div class="index">
         <p v-for="(item, index) in textList" :key="index" v-if="index != 0">
@@ -201,7 +203,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-BNB",
+        name: "HELMET-BNB LP",
       },
       textList: [
         {
@@ -495,6 +497,15 @@ export default {
         }
         > div {
           display: flex;
+          > h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            img {
+              width: 58px;
+              height: 32px;
+            }
+          }
           > p {
             display: flex;
             align-items: center;
@@ -507,7 +518,6 @@ export default {
               margin-right: 4px;
             }
             span {
-              margin-left: 4px;
               color: #919aa6;
             }
           }

@@ -24,7 +24,6 @@ import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import MiningList from "~/components/mining/mining-list.vue";
-import Protect from "~/components/mining/protect.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Withdraw from "~/components/mining/withdraw-dialog.vue";
 import Onepager from "~/components/mining/onepager.vue";
@@ -37,7 +36,6 @@ export default {
     HelmetBurgerPool,
     HelmetBnbPool,
     MiningList,
-    Protect,
     Deposite,
     Withdraw,
     Onepager,

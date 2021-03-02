@@ -189,10 +189,8 @@ import {
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import moment from "moment";
-import Protect from "./protect";
 export default {
   name: "mining-list",
-  components: { Protect },
   data() {
     return {
       miningList: [
@@ -314,7 +312,7 @@ export default {
         );
         let second = Math.floor(
           (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) /
-            1000
+          1000
         );
         let template = `${day}${this.$t("Content.Day")}${hour}${this.$t(
           "Content.Hour"

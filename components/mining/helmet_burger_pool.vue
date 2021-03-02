@@ -10,6 +10,12 @@
           <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
+          <h4>
+            Earn：
+            <img src="~/assets/img/icon/helmetburger.png" alt="" />
+          </h4>
+        </div>
+        <div>
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -593,56 +599,32 @@ export default {
             width: 32px;
             height: 32px;
           }
-          p {
-            height: 16px;
-            background: rgba(255, 150, 0, 0.1);
-            border-radius: 8px;
-            font-size: 12px;
-            color: #ff9600;
-            line-height: 16px;
-            display: flex;
-            align-items: center;
-            margin-left: 8px;
-            cursor: pointer;
-            &:hover {
-              color: #ff8200;
-            }
-            i {
-              display: inline-block;
-              width: 16px;
-              height: 16px;
-              background-image: url("../../assets/img/helmet/icon_long.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 3px;
-            }
-          }
         }
         > div {
           display: flex;
-          align-items: center;
-          > div {
+          > h4 {
             display: flex;
-            > p {
-              display: flex;
-              align-items: center;
-              color: #121212;
-              font-size: 14px;
-              margin-right: 14px;
-              img {
-                width: 32px;
-                height: 32px;
-                margin-right: 4px;
-              }
-              span {
-                margin-left: 4px;
-                color: #919aa6;
-              }
+            align-items: center;
+            margin-bottom: 8px;
+            img {
+              width: 58px;
+              height: 32px;
             }
           }
-          p {
-            color: #919aa6;
+          > p {
+            display: flex;
+            align-items: center;
+            color: #121212;
             font-size: 14px;
+            margin-right: 14px;
+            img {
+              width: 32px;
+              height: 32px;
+              margin-right: 4px;
+            }
+            span {
+              color: #919aa6;
+            }
           }
         }
       }

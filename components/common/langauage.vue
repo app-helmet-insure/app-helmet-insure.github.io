@@ -11,8 +11,6 @@
             :key="item.key"
             @click="switchLang(item.key)"
           >
-            <!-- <img src="~/assets/img/icon/radio1.png" v-if="item.key == lang" /> -->
-            <!-- <img src="~/assets/img/icon/radio2.png" v-else /> -->
             {{ item.name }}
           </li>
         </ul>

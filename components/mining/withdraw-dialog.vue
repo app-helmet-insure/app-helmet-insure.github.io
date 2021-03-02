@@ -16,8 +16,8 @@
       ></PInput>
     </div>
     <p class="total-token">
-      <span>{{ available }} {{ $t('Table.Available') }}</span
-      ><a @click="all">{{ $t('Table.ALL') }}</a>
+      <span>{{ available }} {{ $t("Table.Available") }}</span
+      ><a @click="all">{{ $t("Table.ALL") }}</a>
     </p>
     <div class="checkPer">
       <span
@@ -30,18 +30,18 @@
     </div>
     <div class="check" v-if="!hiddenGlobal">
       <img
-        src="~/assets/img/icon/checked1.png"
+        src="~/assets/img/helmet/checked1.png"
         alt=""
         v-if="checked"
         @click="withdrawCheck"
       />
       <img
-        src="~/assets/img/icon/checked2.png"
+        src="~/assets/img/helmet/checked2.png"
         alt=""
         v-else
         @click="withdrawCheck"
       />
-      <p>{{ $t('Table.InfiniteApproval') }}</p>
+      <p>{{ $t("Table.InfiniteApproval") }}</p>
     </div>
   </PDialog>
 </template>
@@ -105,14 +105,14 @@ export default {
     submitWithdraw() {
       let flag = this.hiddenGlobal || this.checked;
       let type = this.current.replace('-', '_');
-      toWithdraw(type, { amount: this.WithdrawNum }, flag, (status) => {});
+      toWithdraw(type, { amount: this.WithdrawNum }, flag, (status) => { });
     },
   },
 };
 </script>
 
 <style lang='scss' scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .withdrawInput {
     margin-top: 44px;

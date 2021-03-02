@@ -398,15 +398,17 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $hAUTO?",
+        title: "What is $hMATH?",
         text: [
-          "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
-          "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
-          "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
-          "$hAUTO Flash Mining",
-          "Start: Feb. 23rd 20:00 SGT",
-          "End: Mar.9th 24:00",
-          "Policy Expire date: Mar. 24th 24:00 SGT",
+          "MATH cover miss out policy. (It performs more like a call option of MATH)",
+          "In this policy, the ratio of MATH & BNB is",
+          "1MATH =0.014BNB",
+          "It is the reasonable activate price, meaning that you could swap 0.014BNB+1$hMATH to 1MATH before the expire date.",
+          "For example, if $MATH hit 0.015BNB, you could activate the policy and swap 0.014BNB + 1$hMATH to 1 $MATH on Tradingview tab, and get 0.001BNB as profit.",
+          "$hMATH Flash Mining Start: Mar. 2nd 24:00 SGT",
+          "End: Mar.17th 24:00 SGT",
+          "Policy Expire date: Mar. 22nd 24:00 SGT",
+          "Total supply: 30,000",
         ],
       });
     },

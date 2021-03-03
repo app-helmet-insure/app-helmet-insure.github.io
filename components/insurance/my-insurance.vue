@@ -139,7 +139,7 @@
           </button>
         </section>
       </div>
-      <div class="loading" v-if="isLoading && !isLogin">
+      <div class="loading" v-if="isLoading">
         <img src="~/assets/img/loading.gif" />
       </div>
     </div>
@@ -409,7 +409,7 @@ export default {
     // 撤销
     handleClickCancel(data) {
       // this.$bus.$emit("OPEN_REPRICE", data);
-      onCancel(data.id, (status) => {});
+      onCancel(data.id, (status) => { });
       // RePrice(data)
     },
     handleClickChagePage(index) {

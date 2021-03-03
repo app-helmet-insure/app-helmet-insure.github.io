@@ -171,7 +171,7 @@
           </button>
         </section>
       </div>
-      <div class="loading" v-if="isLoading && !isLogin">
+      <div class="loading" v-if="isLoading">
         <img src="~/assets/img/loading.gif" />
       </div>
     </div>

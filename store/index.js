@@ -13,6 +13,7 @@ import {
   getBuyList,
   getRePriceList,
   getMintList,
+  getLongValues,
 } from "~/interface/event.js";
 import { getProgress } from "~/interface/price.js";
 import {
@@ -583,10 +584,9 @@ export const actions = {
     let totalHelmetsBorrowedVolume = 0; // 保险交易过的资金量  （保单数量累加， vol 用抵押物处理）
     const createTime = new Date("2020-10-16").getTime() / 1000;
     let _col;
-
+    let longArray = [];
     for (let key in buyMap) {
       item = buyMap[key];
-
       sellInfo = sellObj[item.askID];
       // 过滤垃圾数据
       // 过滤未创建settleable 之前的数据
@@ -597,6 +597,7 @@ export const actions = {
         if (sellInfo.longInfo && sellInfo.longInfo._expiry.length === 10) {
           // totalHelmetsBorrowedVolume
           _col = newGetSymbol(sellInfo.longInfo._collateral, window.chainID);
+          longArray.push(sellInfo.longInfo.long);
           totalHelmetsBorrowedVolume += Number(fromWei(item.vol, _col));
         }
         if (
@@ -656,7 +657,7 @@ export const actions = {
         }
       }
     }
-
+    let longValue = getLongValues(longArray);
     commit("SET_ABOUT_INFO_BUY", {
       aboutInfoBuy,
       myAboutInfoBuy,

@@ -495,7 +495,6 @@ export default {
       let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
       let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
-      console.log(HAUTOHELMET, HctkVolume, LptVolume, HelmetValue);
       // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
@@ -545,7 +544,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HAUTOPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {

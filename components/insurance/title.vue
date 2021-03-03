@@ -140,6 +140,9 @@ export default {
         font-weight: 600;
         color: #ffffff;
         margin: 148px 0 0 157px;
+        &:hover {
+          background: #2c2c2c;
+        }
       }
     }
     .img7 {
@@ -153,6 +156,9 @@ export default {
         font-weight: 600;
         color: #ffffff;
         margin: 148px 0 0 157px;
+        &:hover {
+          background: #2c2c2c;
+        }
       }
     }
     .imgbanner {
@@ -194,6 +200,9 @@ export default {
         font-weight: 600;
         color: #ffffff;
         margin: 180px 0 0 40px;
+        &:hover {
+          background: #2c2c2c;
+        }
       }
     }
     .img7 {
@@ -206,7 +215,10 @@ export default {
         font-size: 20px;
         font-weight: 600;
         color: #ffffff;
-        margin: 180px 0 0 40px;
+        margin: 210px 0 0 40px;
+        &:hover {
+          background: #2c2c2c;
+        }
       }
     }
     .imgbanner {

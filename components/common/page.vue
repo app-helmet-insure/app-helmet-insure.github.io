@@ -60,7 +60,6 @@ export default {
   watch: {
     // 监听页码变化 -> 页码列表更新
     page(val) {
-      console.log(this.pageList);
       if (val <= 3) {
         this.pageList = [];
         var i = 1;
@@ -84,7 +83,6 @@ export default {
   },
   methods: {
     prevChange() {
-      console.log(1, this.page);
       if (this.page - 1 < 1) {
         this.pageChange(1);
       } else {
@@ -92,7 +90,6 @@ export default {
       }
     },
     nextChange() {
-      console.log(2, this.page);
       if (this.page + 1 > this.pageMax) {
         this.pageChange(this.pageMax);
       } else {

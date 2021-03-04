@@ -3,6 +3,7 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetBnbPool></HelmetBnbPool>
+    <HelmetForPool></HelmetForPool>
     <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetHelmetPool></HelmetHelmetPool>
     <Onepager></Onepager>
@@ -21,6 +22,7 @@
 <script>
 import Banner from "~/components/mining/banner.vue";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import MiningList from "~/components/mining/mining-list.vue";
@@ -34,6 +36,7 @@ export default {
     Banner,
     HelmetHelmetPool,
     HelmetBurgerPool,
+    HelmetForPool,
     HelmetBnbPool,
     MiningList,
     Deposite,

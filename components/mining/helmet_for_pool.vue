@@ -1,6 +1,6 @@
 <template>
-  <div class="helmet_for_pool">
-    <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
+  <div class="helmetfor_pool">
+    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -382,7 +382,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-10 15:00";
+      let dueDate = "2021-03-05 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -466,7 +466,8 @@ export default {
 
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
-      this.textList[1].num = this.apy + "%";
+      // this.textList[1].num = this.apy + "%";
+      this.textList[1].num = 'Infinity' + "%";
     },
     async getBalance() {
       let helmetType = "FORHELMET_LPT";
@@ -567,11 +568,12 @@ export default {
     transform: translateX(-50%);
     font-size: 20px;
   }
-  .helmet_for_pool {
+  .helmetfor_pool {
     height: 536px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
+    position: relative;
     > .combo {
       width: 148px;
       transform: translateY(-8px);
@@ -808,11 +810,12 @@ export default {
     top: 0px;
     font-size: 14px;
   }
-  .helmet_for_pool {
+  .helmetfor_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;
     padding: 40px 16px;
+    position: relative;
     > .combo {
       width: 148px;
       transform: translateY(-8px);

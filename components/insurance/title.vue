@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img3 swiper-slide"></div>
       <div class="imgbanner img7 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
       </div>
@@ -9,7 +10,6 @@
       </div>
       <div class="imgbanner img5 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
-      <div class="imgbanner img3 swiper-slide"></div>
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next"></div>
@@ -121,7 +121,7 @@ export default {
     }
 
     .img3 {
-      background-image: url("../../assets/img/helmet/hCTK.png");
+      background-image: url("../../assets/img/helmet/fortub.png");
     }
     .img4 {
       background-image: url("../../assets/img/helmet/burger.png");
@@ -181,7 +181,7 @@ export default {
     }
 
     .img3 {
-      background-image: url("../../assets/img/helmet/hctk_h5.png");
+      background-image: url("../../assets/img/helmet/fortub_h5.png");
     }
     .img4 {
       background-image: url("../../assets/img/helmet/burger_h5.png");

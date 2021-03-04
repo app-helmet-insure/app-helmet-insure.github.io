@@ -657,7 +657,7 @@ export const actions = {
         }
       }
     }
-    let longValue = getLongValues(longArray);
+    // let longValue = getLongValues(longArray);
     commit("SET_ABOUT_INFO_BUY", {
       aboutInfoBuy,
       myAboutInfoBuy,

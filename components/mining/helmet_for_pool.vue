@@ -1,6 +1,6 @@
 <template>
   <div class="helmetfor_pool">
-    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
+    <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <div class="text">
       <div class="coin">
@@ -357,8 +357,9 @@ export default {
           "It is $FOR cover miss out insurance policy (like the call option of $FOR). The reasonable activate price: 1 $FOR=0.25 HELMET.",
           "For example, if $FOR hit 0.3 HELMET, you could swap only 0.25HELMET+1$hFOR to 1 $FOR, and get 0.05HELMET profit.",
           "COMBO Mining period: 15days, from Mar.4th 24:00 SGT to Mar.19th 24:00 SGT (snapshot and Airdrop will be finished before Mar.4th 24:00 SGT)",
-          "Expire date: April 4th, 2021", "if $hFOR expired, it could be a souvenir token",
-          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR"
+          "Expire date: April 4th, 2021",
+          "if $hFOR expired, it could be a souvenir token",
+          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
         ],
       });
     },
@@ -466,8 +467,8 @@ export default {
 
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = 'Infinity' + "%";
+      this.textList[1].num = this.apy + "%";
+      // this.textList[1].num = "Infinity" + "%";
     },
     async getBalance() {
       let helmetType = "FORHELMET_LPT";
@@ -503,7 +504,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "FORHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {

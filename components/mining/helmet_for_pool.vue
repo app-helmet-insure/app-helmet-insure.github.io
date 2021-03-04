@@ -104,7 +104,7 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
               >Get HELMET-hFOR LPT</a
             >
@@ -113,12 +113,12 @@
         <div class="ContractAddress">
           <span>hFOR Contract Address：</span>
           <p>
-            0x9ebbb98f2bc5d5d8e49579995c5efac487303bea
+            0xb779F208f8d662558dF8E2b6bFE3b6305CC13389
             <i
               class="copy"
               id="copy_default"
               @click="
-                copyAdress($event, '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea')
+                copyAdress($event, '0xb779F208f8d662558dF8E2b6bFE3b6305CC13389')
               "
             ></i>
           </p>
@@ -426,7 +426,7 @@ export default {
       }
     },
     async getAPY() {
-      // BURGER的helmet价值
+      // FOR的helmet价值
       let lptBnbValue = await uniswap("FOR", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
       let FORHELMET = lptBnbValue * lptHelmetValue;
@@ -440,7 +440,7 @@ export default {
       let burgerApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(allVolume, 25), 365),
+            precision.times(precision.divide(allVolume, 15), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -453,7 +453,7 @@ export default {
       let helmetApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(10000, 25), 365),
+            precision.times(precision.divide(10000, 15), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume

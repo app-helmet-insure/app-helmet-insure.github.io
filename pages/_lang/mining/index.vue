@@ -3,7 +3,7 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetBnbPool></HelmetBnbPool>
-    <HelmetForPool></HelmetForPool>
+    <!-- <HelmetForPool></HelmetForPool> -->
     <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetHelmetPool></HelmetHelmetPool>
     <Onepager></Onepager>

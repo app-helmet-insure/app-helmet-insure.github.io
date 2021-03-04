@@ -299,10 +299,18 @@ export default {
     }
   }
 }
+// @media screen and (min-width: 1360px) {
+//   .header-container {
+//     > div {
+//       padding: 0 80px;
+//     }
+//   }
+// }
 @media screen and (min-width: 750px) {
   .header-container {
     > div {
       width: 1200px;
+      // min-width: 1200px;
       .logo {
         img {
           height: 40px;

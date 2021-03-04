@@ -113,9 +113,9 @@ export default {
       return this.$store.state.policyUndArray;
     },
     ChainID() {
-      let chainID = this.$store.state.chainID
-      return chainID
-    }
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -129,9 +129,9 @@ export default {
     ChainID(newValue) {
       if (newValue == 56) {
         this.getBannerData();
-        this.closeNetWorkTip()
+        this.closeNetWorkTip();
       } else {
-        this.showNetWorkTip()
+        this.showNetWorkTip();
       }
     },
   },
@@ -144,7 +144,7 @@ export default {
     window.WEB3 = await web3();
     window.chainID = await getID();
     this.showWallet();
-    this.$store.commit('SET_CHAINID', window.chainID)
+    this.$store.commit("SET_CHAINID", window.chainID);
 
     this.getUserInfo();
     // 获取映射
@@ -183,7 +183,6 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-
   },
   methods: {
     closeNetWorkTip() {
@@ -289,8 +288,8 @@ export default {
       if (window.ethereum) {
         ethereum.on("networkChanged", (chainID) => {
           window.chainID = chainID;
-          this.$store.commit('SET_CHAINID', (chainID))
-          window.location.reload()
+          this.$store.commit("SET_CHAINID", chainID);
+          window.location.reload();
         });
       } else {
         if (this.times < 10) {
@@ -308,12 +307,11 @@ export default {
           this.$store.dispatch("setUserInfo", userInfo);
           setTimeout(() => {
             this.getBannerData();
-            this.getBalance()
-            this.getIndexPirce()
+            this.getBalance();
+            this.getIndexPirce();
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
           }, 200);
-
         });
       }
     },
@@ -417,6 +415,7 @@ export default {
       let burgerHelmet =
         callIndexPirce["BURGER"] / callIndexPirce["HELMET"] || 0;
       let wbnbHelmet = callIndexPirce["WBNB"] / callIndexPirce["HELMET"] || 0;
+      let mathHelmet = callIndexPirce["MATH"] / callIndexPirce["HELMET"] || 0;
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -426,6 +425,7 @@ export default {
         ETH: ethHelmet,
         BURGER: burgerHelmet,
         WBNB: wbnbHelmet,
+        MATH: mathHelmet,
       };
       let Helmetbnb = putIndexPirce["HELMET"] || 0;
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
@@ -435,6 +435,7 @@ export default {
       let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
       let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
       let Helmetwbnb = putIndexPirce["WBNB"] / putIndexPirce["HELMET"] || 0;
+      let Helmetmath = putIndexPirce["MATH"] / putIndexPirce["HELMET"] || 0;
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
@@ -444,6 +445,7 @@ export default {
         ETH: Helmeteth,
         BURGER: Helmetburger,
         WBNB: Helmetwbnb,
+        MATH: Helmetmath,
       };
       arr1.push(HelmetPirce);
       arr1.push(CoinPirce);
@@ -455,8 +457,8 @@ export default {
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
       this.$store.commit("SET_HELMET_BUSD", helmetbusd);
-
       this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
+      console.log(arr, arr1);
     },
   },
 };

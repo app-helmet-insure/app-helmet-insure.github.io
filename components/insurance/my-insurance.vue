@@ -351,24 +351,30 @@ export default {
           resultItem;
         } else {
           resultItem["status"] = "Unborrowed";
-          resultItem["sort"] = 2;
+          resultItem["sort"] = 0;
         }
         if (parseInt(resultItem._expiry) < currentTime) {
           resultItem["status"] = "Expired";
-          resultItem["sort"] = 0;
+          resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         }
         if (parseInt(resultItem._expiry + 5184000000) < currentTime) {
           resultItem["status"] = "Hidden";
-          resultItem["sort"] = 4;
+          resultItem["sort"] = 3;
         }
         resultItem["remain"] = askRes;
-        if (resultItem.remain != 0 || resultItem.sort != 4) {
+        if (resultItem.remain != 0 || resultItem.sort != 3) {
           result.push(resultItem);
         }
       }
+      result = result.sort(function (a, b) {
+        return b.id - a.id;
+      });
+      result = result.sort(function (a, b) {
+        return a.sort - b.sort;
+      });
       this.isLoading = false;
-      result = result.reverse();
+
       this.insuranceList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
@@ -409,7 +415,7 @@ export default {
     // 撤销
     handleClickCancel(data) {
       // this.$bus.$emit("OPEN_REPRICE", data);
-      onCancel(data.id, (status) => { });
+      onCancel(data.id, (status) => {});
       // RePrice(data)
     },
     handleClickChagePage(index) {

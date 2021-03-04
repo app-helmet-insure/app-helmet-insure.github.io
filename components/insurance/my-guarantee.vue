@@ -283,42 +283,7 @@ export default {
       let currentTime = new Date().getTime();
       let exerciseRes;
       let bidIDArr;
-      let cakePolicy = await this.CAKEPolicy();
-      let hcctPolicy = await this.HCCTPolicy();
-      let hctkPolicy = await this.HCTKPolicy();
-      let hburgerPolicy = await this.HBURGERPolicy();
-      let lishiPolicy = await this.LISHIPolicy();
-      let BNB500Policy = await this.BNB500Policy();
-      let hAUTOPolicy = await this.hAUTOPolicy();
-      let hMATHPolicy = await this.hMATHPolicy();
-      let hFORPolicy = await this.hFORPolicy();
-      if (cakePolicy) {
-        result.push(cakePolicy);
-      }
-      if (hcctPolicy) {
-        result.push(hcctPolicy);
-      }
-      if (hctkPolicy) {
-        result.push(hctkPolicy);
-      }
-      if (hburgerPolicy) {
-        result.push(hburgerPolicy);
-      }
-      if (lishiPolicy) {
-        result.push(lishiPolicy);
-      }
-      if (BNB500Policy) {
-        result.push(BNB500Policy);
-      }
-      if (hAUTOPolicy) {
-        result.push(hAUTOPolicy);
-      }
-      if (hMATHPolicy) {
-        result.push(hMATHPolicy);
-      }
-      if (hFORPolicy) {
-        result.push(hFORPolicy);
-      }
+
       for (let i = 0; i < list.length; i++) {
         item = list[i];
         let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
@@ -398,6 +363,7 @@ export default {
             type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
+            showVolume: fromWei(item.vol, Token),
           };
         } else {
           resultItem = {
@@ -430,6 +396,7 @@ export default {
             type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
+            showVolume: fromWei(item.vol, TokenFlag),
           };
         }
         exerciseRes = await getExercise(resultItem.buyer);
@@ -457,10 +424,49 @@ export default {
         }
       }
 
-      this.isLoading = false;
+      result = result.sort(function (a, b) {
+        return b.id - a.id;
+      });
+      let cakePolicy = await this.CAKEPolicy();
+      let hcctPolicy = await this.HCCTPolicy();
+      let hctkPolicy = await this.HCTKPolicy();
+      let hburgerPolicy = await this.HBURGERPolicy();
+      let lishiPolicy = await this.LISHIPolicy();
+      let BNB500Policy = await this.BNB500Policy();
+      let hAUTOPolicy = await this.hAUTOPolicy();
+      let hMATHPolicy = await this.hMATHPolicy();
+      let hFORPolicy = await this.hFORPolicy();
+      if (cakePolicy) {
+        result.push(cakePolicy);
+      }
+      if (hcctPolicy) {
+        result.push(hcctPolicy);
+      }
+      if (hctkPolicy) {
+        result.push(hctkPolicy);
+      }
+      if (hburgerPolicy) {
+        result.push(hburgerPolicy);
+      }
+      if (lishiPolicy) {
+        result.push(lishiPolicy);
+      }
+      if (BNB500Policy) {
+        result.push(BNB500Policy);
+      }
+      if (hAUTOPolicy) {
+        result.push(hAUTOPolicy);
+      }
+      if (hMATHPolicy) {
+        result.push(hMATHPolicy);
+      }
+      if (hFORPolicy) {
+        result.push(hFORPolicy);
+      }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
       });
+      this.isLoading = false;
       this.guaranteeList = result;
       this.showList = result.slice(this.page * this.limit, this.limit);
     },
@@ -506,6 +512,7 @@ export default {
           approveAddress1: item.approveAddress1,
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
+          showVolume: item.showVolume,
         };
       } else {
         data = {
@@ -519,6 +526,7 @@ export default {
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
+          showVolume: item.showVolume,
         };
       }
       onExercise(data, data.flag);
@@ -556,6 +564,7 @@ export default {
           outPrice: fromWei(30000000000000000, Token),
           outPriceUnit: "BNB",
           type: "call",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -606,6 +615,7 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(10000000000000000000, Token),
           outPriceUnit: "HELMET",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -657,6 +667,7 @@ export default {
           outPrice: fromWei(2500000000000000000, Token),
           outPriceUnit: "HELMET",
           unit: 6,
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -706,6 +717,7 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(70000000000000000, Token),
           outPriceUnit: "BNB",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -756,6 +768,7 @@ export default {
           outPrice: fromWei(100000000000000000, Token),
           outPriceUnit: "BUSD",
           showType: "img",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -806,6 +819,7 @@ export default {
           outPrice: fromWei(500000000000000000000, Token),
           outPriceUnit: "BUSD",
           // showType: "img",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -856,6 +870,7 @@ export default {
           outPrice: fromWei(42000000000000000000, Token),
           outPriceUnit: "BNB",
           // showType: "img",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -906,6 +921,7 @@ export default {
           outPrice: fromWei(14000000000000000, Token),
           outPriceUnit: "BNB",
           // showType: "img",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -956,6 +972,7 @@ export default {
           outPrice: fromWei(250000000000000000, Token),
           outPriceUnit: "HELMET",
           // showType: "img",
+          showVolume: volume,
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

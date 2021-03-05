@@ -51,7 +51,7 @@
               <img :src="require(`~/assets/img/helmet/${item.Rent}`)" alt="" />
             </template>
             <template v-else>
-              {{ fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4) }}
+              {{ fixD(item.Rent, 8) == "--" ? item.Rent : fixD(item.Rent, 8) }}
             </template>
           </td>
           <!-- Position -->
@@ -136,7 +136,7 @@
               </template>
               <template v-else>
                 {{
-                  fixD(item.Rent, 4) == "--" ? item.Rent : fixD(item.Rent, 4)
+                  fixD(item.Rent, 8) == "--" ? item.Rent : fixD(item.Rent, 8)
                 }}
               </template>
             </span>
@@ -332,7 +332,7 @@ export default {
           item.type = "put";
           item.outPriceUnit = "BUSD";
         }
-        Rent = precision.times(amount, InsurancePrice);
+        Rent = precision.times(fromWei(item.vol, Token), InsurancePrice);
         //倒计时
         downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
         if (item.type == "call") {

@@ -2,6 +2,7 @@
   <div class="burger_pool">
     <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
+    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -66,6 +67,7 @@
           <button
             @click="toDeposite"
             :class="stakeLoading ? 'disable b_button' : 'b_button'"
+            style="background: #ccc !important; pointer-events: none"
           >
             <i :class="stakeLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmDeposit") }}
@@ -194,6 +196,7 @@
           <button
             @click="toClaim"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
+            style="background: #ccc !important; pointer-events: none"
           >
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
@@ -375,9 +378,17 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-        "Content.HourD"
-      )}`;
+      let template;
+
+      if (dueDate > now) {
+        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
+          "Content.HourD"
+        )}`;
+      } else {
+        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
+          "Content.HourD"
+        )}`;
+      }
       this.list.DownTime = template;
     },
     getMiningTime() {
@@ -395,7 +406,9 @@ export default {
       );
       let template;
       if (dueDate < now) {
-        template = ``;
+        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
+          "Content.MinD"
+        )} ${0}${this.$t("Content.SecondD")}`;
       } else {
         template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
           "Content.MinD"
@@ -502,7 +515,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BURGERHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -572,10 +585,19 @@ export default {
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
+    position: relative;
     > .combo {
       width: 148px;
       transform: translateY(-8px);
       height: 28px;
+    }
+    .finished {
+      position: absolute;
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     > h3 {
       text-align: center;
@@ -813,10 +835,19 @@ export default {
     margin-top: 10px;
     margin-bottom: 20px;
     padding: 40px 16px;
+    position: relative;
     > .combo {
       width: 148px;
       transform: translateY(-8px);
       height: 28px;
+    }
+    .finished {
+      position: absolute;
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     > h3 {
       text-align: center;

@@ -4,8 +4,8 @@
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetBnbPool></HelmetBnbPool>
     <HelmetForPool></HelmetForPool>
-    <HelmetBurgerPool></HelmetBurgerPool>
     <HelmetHelmetPool></HelmetHelmetPool>
+    <HelmetBurgerPool></HelmetBurgerPool>
     <Onepager></Onepager>
     <!-- <MiningList></MiningList> -->
     <!-- <Protect :styleClass="'mining-home'"></Protect> -->

@@ -2,6 +2,12 @@
   <div class="hauto_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
+    <img
+      class="finished"
+      src="~/assets/img/helmet/finished.png"
+      alt=""
+      v-if="expired"
+    />
     <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
@@ -673,6 +679,13 @@ export default {
       top: 0;
       transform: translateY(-5px);
     }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
+    }
     .circle {
       width: 102px;
       height: 102px;
@@ -926,6 +939,13 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
+    }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     .circle {
       width: 102px;

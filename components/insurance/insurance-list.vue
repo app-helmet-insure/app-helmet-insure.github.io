@@ -294,7 +294,7 @@ export default {
             resultItem["status"] = "dated";
             resultItem["sort"] = 0;
           }
-          if (time + 2592000000 > now) {
+          if (time + 2592000000 > now && resultItem.seller != '0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca') {
             buyResult.push(resultItem);
           }
         } else {
@@ -341,7 +341,7 @@ export default {
             resultItem["status"] = "dated";
             resultItem["sort"] = 0;
           }
-          if (time + 2592000000 > now) {
+          if (time + 2592000000 > now && resultItem.seller != '0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca') {
             sellResult.push(resultItem);
           }
         }

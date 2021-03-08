@@ -109,6 +109,11 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -227,6 +232,11 @@
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
@@ -340,6 +350,7 @@ export default {
       actionType: "deposit",
       fixD,
       isLogin: false,
+      expired: false
     };
   },
   mounted() {
@@ -462,6 +473,7 @@ export default {
         template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
           "Content.HourD"
         )}`;
+        this.expired = true
       }
       this.list.DownTime = template;
     },
@@ -511,7 +523,11 @@ export default {
       );
       this.apy = apy ? apy : 0;
       // this.textList[1].num = "Infinity" + "%";
-      this.textList[1].num = this.apy + "%";
+      if (this.expired) {
+        this.textList[1].num = '--';
+      } else {
+        this.textList[1].num = this.apy + "%";
+      }
     },
     async getBalance() {
       let helmetType = "HAUTOPOOL_LPT";
@@ -532,7 +548,11 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
+      if (this.expired) {
+        this.textList[0].num = '--';
+      } else {
+        this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
+      }
     },
     // 抵押
     toDeposite() {

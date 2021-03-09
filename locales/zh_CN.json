@@ -3,6 +3,7 @@
     "Trade": "交易",
     "Mining": "挖矿",
     "FlashMining": "闪电挖矿",
+    "BruningBox": "Burning box",
     "Plan": "私募",
     "Govern": "治理",
     "GuideBook": "使用指南",
@@ -123,7 +124,10 @@
     "CurrentlyStaked": "已抵押",
     "text1": " 如果在行权日之前，价格没有达到{num}，您将获得无风险收益。",
     "Cont": "张",
-    "Tips": "1保单保护1{type}"
+    "Tips": "1保单保护1{type}",
+    "Bonus": "Bonus",
+    "FireProcess": "燃烧进度",
+    "Burn": "Burn"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",

@@ -8,7 +8,11 @@
       alt=""
       v-if="expired"
     />
-    <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
+    <img
+      class="circle right"
+      src="~/assets/img/helmet/rightCircle.png"
+      alt=""
+    />
     <div class="text">
       <div class="coin">
         <h3>
@@ -19,18 +23,6 @@
           </div>
         </h3>
         <div>
-          <!-- <div>
-            <p>
-              <img src="~/assets/img/helmet/hctkCoin.png" alt="" />
-              50%
-              <span> hCTK </span>
-            </p>
-            <p>
-              <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-              50%
-              <span> HELMET </span>
-            </p>
-          </div> -->
           <p>
             <span>
               {{ $t("Table.SurplusTime") }}：
@@ -528,7 +520,6 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = "Infinity" + "%";
       if (this.expired) {
         this.textList[1].num = '--';
       } else {

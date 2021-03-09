@@ -2,12 +2,13 @@
   <div class="bnb500_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
-    <img class="finished" src="~/assets/img/helmet/finished.png" alt="" />
     <img
-      class="circle right"
-      src="~/assets/img/helmet/rightCircle.png"
+      class="finished"
+      src="~/assets/img/helmet/finished.png"
       alt=""
+      v-if="expired"
     />
+    <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>
@@ -114,7 +115,11 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
-              style="background: #ccc !important; pointer-events: none"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -233,7 +238,11 @@
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
-              style="background: #ccc !important; pointer-events: none"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
@@ -347,6 +356,7 @@ export default {
       actionType: "deposit",
       fixD,
       isLogin: false,
+      expired: false
     };
   },
   mounted() {
@@ -472,6 +482,7 @@ export default {
         template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
           "Content.HourD"
         )}`;
+        this.expired = true
       }
       this.list.DownTime = template;
     },
@@ -520,8 +531,11 @@ export default {
         2
       );
       this.apy = apy ? apy : 0;
-      // this.textList[1].num = this.apy + "%";
-      this.textList[1].num = "--";
+      if (this.expired) {
+        this.textList[1].num = '--';
+      } else {
+        this.textList[1].num = this.apy + "%";
+      }
     },
     async getBalance() {
       let helmetType = "BNB500POOL_LPT";
@@ -542,8 +556,11 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      // this.textList[0].num = fixD((1000 / 10) * 7, 2) + " BNB500";
-      this.textList[0].num = "--";
+      if (this.expired) {
+        this.textList[0].num = '--';
+      } else {
+        this.textList[0].num = fixD((1000 / 10) * 7, 2) + " BNB500";
+      }
     },
     // 抵押
     toDeposite() {
@@ -555,7 +572,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BNB500POOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {

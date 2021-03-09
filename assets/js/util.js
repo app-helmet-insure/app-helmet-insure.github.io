@@ -51,14 +51,13 @@ export const autoprefixer = function(style) {
 };
 
 // 精度计算E+处理方法
-const fixDEAdd = (num, precision, autoFix = true) => {
+export const fixDEAdd = (num, precision, autoFix = true) => {
   if (`${num}` === "0") {
     // if (!window.parseFloat(precision) || !autoFix) return 0;
     if (!parseFloat(precision) || !autoFix) return 0;
     return "0.".padEnd(precision + 2, "0");
   }
   if (!num) return "--";
-
   const number = parseFloat(num);
   const strN = num.toString();
   const flag = number < 0;
@@ -70,7 +69,6 @@ const fixDEAdd = (num, precision, autoFix = true) => {
     const nr = n[2]; // 小数点右边
     const type = n[3]; //  + / -
     const floatN = n[4]; // 科学计数法的位数
-
     let params = "";
     let pr = nr ? nr.substr(floatN) : "";
 

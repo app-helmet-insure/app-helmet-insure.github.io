@@ -1,14 +1,15 @@
 <template>
   <div class="mining_container">
     <div class="pool_wrap">
+      <HdodoPool></HdodoPool>
       <HmathPool></HmathPool>
+    </div>
+    <div class="pool_wrap">
       <HautoPool></HautoPool>
-    </div>
-    <div class="pool_wrap">
       <Bnb500Pool></Bnb500Pool>
-      <HctkPool></HctkPool>
     </div>
     <div class="pool_wrap">
+      <HctkPool></HctkPool>
       <HcctPool></HcctPool>
     </div>
     <Onepager></Onepager>
@@ -21,6 +22,7 @@ import HctkPool from "~/components/flashmining/hctk_pool.vue";
 import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
 import HautoPool from "~/components/flashmining/hauto_pool.vue";
 import HmathPool from "~/components/flashmining/hmath_pool.vue";
+import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
 import Onepager from "~/components/mining/onepager.vue";
 export default {
   layout: "default",
@@ -31,6 +33,7 @@ export default {
     Bnb500Pool,
     HautoPool,
     HmathPool,
+    HdodoPool
   },
   data() {
     return {

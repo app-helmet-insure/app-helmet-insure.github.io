@@ -14,12 +14,14 @@
         <p>
           <label>{{ $t("Banner.LongValue") }}</label>
           <span v-if="isLogin">
-            <countTo
-              :startVal="Number(0)"
-              :endVal="Number(totalHelmetsBorrowedVolume)"
-              :duration="2000"
-              :decimals="4"
-            />
+            <template>
+              <countTo
+                :startVal="Number(0)"
+                :endVal="Number(totalHelmetsBorrowedVolume)"
+                :duration="2000"
+                :decimals="2"
+              />$
+            </template>
           </span>
           <span v-else>--</span>
         </p>

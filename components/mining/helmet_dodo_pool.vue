@@ -1,5 +1,5 @@
 <template>
-  <div class="burger_pool">
+  <div class="helmetfor_pool">
     <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <img
@@ -12,13 +12,13 @@
       <div class="coin">
         <h3>
           <span> {{ list.name }}</span>
-          <p @click="showOnepager"><i></i>What is hBURGER token？</p>
+          <p @click="showOnepager"><i></i>What is hDODO token？</p>
           <!-- <img src="~/assets/img/helmet/3x.png" alt="" /> -->
         </h3>
         <div>
           <h4>
             Earn：
-            <img src="~/assets/img/icon/helmetburger.png" alt="" />
+            <img src="~/assets/img/icon/helmetdodo.png" alt="" />
           </h4>
         </div>
         <div>
@@ -113,21 +113,21 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get HELMET-hBURGER LPT</a
+              >Get HELMET-hFOR LPT</a
             >
           </section>
         </div>
         <div class="ContractAddress">
-          <span>hBURGER Contract Address：</span>
+          <span>hFOR Contract Address：</span>
           <p>
-            0x9ebbb98f2bc5d5d8e49579995c5efac487303bea
+            0xb779F208f8d662558dF8E2b6bFE3b6305CC13389
             <i
               class="copy"
               id="copy_default"
               @click="
-                copyAdress($event, '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea')
+                copyAdress($event, '0xb779F208f8d662558dF8E2b6bFE3b6305CC13389')
               "
             ></i>
           </p>
@@ -185,7 +185,7 @@
                   :decimals="8"
                 />
                 <span v-else>--</span>
-                BURGER</span
+                FOR</span
               >
               <span>
                 <countTo
@@ -248,8 +248,8 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-hBURGER LP",
-        dueDate: "2021-03-07 00:00",
+        name: "HELMET-hDODO LP",
+        dueDate: "2021-03-20 00:00",
         DownTime: "--",
       },
       textList: [
@@ -312,17 +312,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_BURGERHELMET", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_FORHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_BURGERHELMET", (data) => {
+    this.$bus.$on("CLAIM_LOADING_FORHELMET", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_BURGERHELMET", (data) => {
+    this.$bus.$on("EXIT_LOADING_FORHELMET", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_BURGERHELMET", () => {
+    this.$bus.$on("RELOAD_DATA_FORHELMET", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -365,13 +365,14 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $hBurger?",
+        title: "What is $hFOR?",
         text: [
-          "A total of $450,000 $hBurger was given away to LPT Miners on helmet.insure (including Helmet-BNB, Helmet-LONG, Helmet-HCCT LPT Pool, PancakeSwap Helmet-BNB Farm) ",
-          "Groundbreaking design of Policy Mining for Real Token!!! $60,000 COMBO Mining Bonus of $Helmet & $Burger !",
-          "It is $Burger cover miss out policy. The reasonable activate price: 1 $Burger=0.07 BNB. For example, if $Burger hit 0.08 BNB, you could swap 0.07BNB+1$hBurger to 1 $Burger, and get 0.01BNB profit.",
-          "Expire date: March, 9th, 2021",
-          "More details in our Medium.",
+          "It is $FOR cover miss out insurance policy (like the call option of $FOR). The reasonable activate price: 1 $FOR=0.25 HELMET.",
+          "For example, if $FOR hit 0.3 HELMET, you could swap only 0.25HELMET+1$hFOR to 1 $FOR, and get 0.05HELMET profit.",
+          "COMBO Mining period: 15days, from Mar.4th 24:00 SGT to Mar.19th 24:00 SGT (snapshot and Airdrop will be finished before Mar.4th 24:00 SGT)",
+          "Expire date: April 4th, 2021",
+          "if $hFOR expired, it could be a souvenir token",
+          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
         ],
       });
     },
@@ -404,7 +405,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-10 15:00";
+      let dueDate = "2021-03-05 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -417,9 +418,7 @@ export default {
       );
       let template;
       if (dueDate < now) {
-        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
-          "Content.MinD"
-        )} ${0}${this.$t("Content.SecondD")}`;
+        template = ``;
       } else {
         template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
           "Content.MinD"
@@ -450,21 +449,21 @@ export default {
       }
     },
     async getAPY() {
-      // BURGER的helmet价值
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
-      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allVolume = burgerHelmet * 15000;
+      // FOR的helmet价值
+      let lptBnbValue = await uniswap("FOR", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let FORHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = FORHELMET * 182010;
       //总抵押
-      let supplyVolume = await totalSupply("BURGERHELMET"); //数量
+      let supplyVolume = await totalSupply("FORHELMET"); //数量
       // 总发行
-      let stakeVolue = await totalSupply("BURGERHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply("FORHELMET_LPT"); //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
+      let stakeValue = await balanceOf("HELMET", "FORHELMET_LPT", true);
       let burgerApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(allVolume, 25), 365),
+            precision.times(precision.divide(allVolume, 15), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -477,7 +476,7 @@ export default {
       let helmetApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(75000, 25), 365),
+            precision.times(precision.divide(10000, 15), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -497,8 +496,8 @@ export default {
       }
     },
     async getBalance() {
-      let helmetType = "BURGERHELMET_LPT";
-      let type = "BURGERHELMET";
+      let helmetType = "FORHELMET_LPT";
+      let type = "FORHELMET";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -517,14 +516,13 @@ export default {
       this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-      this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
+
       if (this.expired) {
         this.textList[0].num = '--';
         this.textList[0].num1 = '--';
       } else {
-        this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
+        this.textList[0].num = fixD((10000 / 25) * 7, 2) + " HELMET";
+        this.textList[0].num1 = fixD((182010 / 25) * 7, 2) + " FOR";
       }
     },
     // 抵押
@@ -536,7 +534,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "BURGERHELMET";
+      let type = "FORHELMET";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
@@ -545,7 +543,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "BURGERHELMET";
+      let type = "FORHELMET";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -554,7 +552,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "BURGERHELMET";
+      let type = "FORHELMET";
       let res = await exitStake(type);
     },
   },
@@ -602,7 +600,7 @@ export default {
     transform: translateX(-50%);
     font-size: 20px;
   }
-  .burger_pool {
+  .helmetfor_pool {
     height: 536px;
     background: #ffffff;
     padding: 40px;
@@ -852,7 +850,7 @@ export default {
     top: 0px;
     font-size: 14px;
   }
-  .burger_pool {
+  .helmetfor_pool {
     background: #ffffff;
     margin-top: 10px;
     margin-bottom: 20px;

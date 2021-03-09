@@ -3,6 +3,7 @@
     <!-- <Banner></Banner> -->
     <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
     <HelmetBnbPool></HelmetBnbPool>
+    <!-- <HelmetDodoPool></HelmetDodoPool> -->
     <HelmetForPool></HelmetForPool>
     <HelmetHelmetPool></HelmetHelmetPool>
     <HelmetBurgerPool></HelmetBurgerPool>
@@ -25,6 +26,7 @@ import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
+import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
 import MiningList from "~/components/mining/mining-list.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Withdraw from "~/components/mining/withdraw-dialog.vue";
@@ -38,6 +40,7 @@ export default {
     HelmetBurgerPool,
     HelmetForPool,
     HelmetBnbPool,
+    HelmetDodoPool,
     MiningList,
     Deposite,
     Withdraw,

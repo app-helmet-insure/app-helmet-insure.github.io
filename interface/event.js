@@ -9,6 +9,8 @@ import order_abi from "~/abi/order_abi.json";
 import deposite_abi from "~/abi/deposite_abi.json";
 import token_abi from "~/abi/token_abi.json";
 import helmet_abi from "~/abi/helmet_abi.json";
+import precision from "~/assets/js/precision.js";
+import { fixDEAdd } from "~/assets/js/util.js";
 export const decodeLogs = function(event, log) {
   return window.WEB3.eth.abi.decodeLog(
     event.inputs,
@@ -17,33 +19,28 @@ export const decodeLogs = function(event, log) {
   );
 };
 export const getLongValues = async function(addressArray) {
-  let newAddressArray = [...new Set(addressArray)];
-  let newAddressArray2 = new Array(newAddressArray.length);
-  for (var t = 0; t < newAddressArray2.length; t++) {
-    newAddressArray2[t] = 0;
-  }
-  for (var p = 0; p < newAddressArray.length; p++) {
-    for (var j = 0; j < addressArray.length; j++) {
-      if (newAddressArray[p] == addressArray[j]) {
-        newAddressArray2[p]++;
-      }
+  let newArr = [],
+    obj = {};
+
+  addressArray.forEach((item) => {
+    for (let key in item) {
+      let value = item[key];
+      key in obj ? (obj[key] += value) : (obj[key] = Number(value));
     }
+  });
+  for (let i in obj) {
+    let o = {};
+    o[i] = obj[i];
+    newArr.push(o);
   }
-  newAddressArray.forEach((item) => {
-    console.log(item);
-    Axios({
-      method: "get",
-      url: "https://api.helmet.insure/api/getLongValue",
-      params: {
-        long: item,
-      },
-      headers: {
-        Authorization: "Bearer e5fa8358-42f3-4fa1-918d-2a972f4c5de0",
-      },
-    }).then((res) => {
-      console.log(res);
-      return res;
-    });
+  return Axios({
+    method: "post",
+    url: "https://api.helmet.insure/api/getTokenValueArray/",
+    data: JSON.stringify(newArr),
+    headers: {
+      "Content-type": "application/json;charset=utf-8",
+      // Authorization: "Bearer e5fa8358-42f3-4fa1-918d-2a972f4c5de0",
+    },
   });
 };
 // 获取long, Sell, Buy映射

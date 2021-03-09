@@ -14,12 +14,9 @@
           >{{ $t("Header.Mining") }}
           <p class="new"></p>
         </nuxt-link>
-        <nuxt-link to="/flashmining"
-          >{{ $t("Header.FlashMining") }}
-          <p class="fire"></p>
-        </nuxt-link>
+        <nuxt-link to="/flashmining">{{ $t("Header.FlashMining") }} </nuxt-link>
         <nuxt-link to="/burnmining"
-          >燃烧挖矿
+          >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
         </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
@@ -78,7 +75,7 @@ import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
-import { getID } from '~/assets/utils/address-pool.js'
+import { getID } from "~/assets/utils/address-pool.js";
 export default {
   name: "p-header",
   components: {
@@ -108,9 +105,9 @@ export default {
       return obj;
     },
     ChainID() {
-      let chainID = this.$store.state.chainID
-      return chainID
-    }
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
   },
   watch: {
     userInfo: {
@@ -118,12 +115,10 @@ export default {
       immediate: true,
     },
     ChainID(newValue) {
-      this.chainID = newValue
+      this.chainID = newValue;
     },
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     openChangeWallet() {
       this.showChangeWallet = true;

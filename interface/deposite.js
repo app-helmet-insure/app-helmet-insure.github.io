@@ -124,6 +124,7 @@ export const balanceOf = async (type, currcy, flag = false) => {
         });
 };
 export const toDeposite = async (type, data, flag, callBack) => {
+    console.log();
     const charID = window.chainID;
     const address = window.CURRENTADDRESS;
     let amount = data.amount;
@@ -138,6 +139,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
     if (!adress || !adressLPT || !address) {
         return;
     }
+    console.log(amount, adressLPT, adress);
     let result;
     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: true });
     try {

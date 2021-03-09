@@ -14,17 +14,21 @@
       </p>
       <p>
         <span>{{ $t("Table.Bonus") }}</span>
-        <span>{{ list.bonusValue }}</span>
+        <span>{{ list.bonusValue }}hHELMET</span>
       </p>
     </div>
     <div class="process">
       <div class="name">
         <span>{{ $t("Table.FireProcess") }}</span>
-        <span>2000/3000</span>
+        <span style="display: flex">
+          <span>{{ isLogin ? list.rewards : "--" }}</span>
+          /
+          <span>{{ isLogin ? list.allRewards : "--" }}</span>
+        </span>
       </div>
       <div class="control">
         <div class="control_wrap">
-          <div class="control_real">
+          <div class="control_real" :style="`width:${list.process}%`">
             <i class="fire"></i>
           </div>
         </div>
@@ -42,65 +46,243 @@
         :class="actionType == 'claim' ? 'active burn' : 'burn'"
         @click="actionType = 'claim'"
       >
-        Claim
+        {{ $t("Table.Claim") }}
       </button>
     </div>
     <div class="burn_wrap" v-if="actionType == 'burn'">
       <p>
         <span>{{ $t("Table.AmountDeposit") }}</span>
-        <span>{{ $t("Table.DAvailable") }}: 0 LONG </span>
+        <span>
+          {{ $t("Table.DAvailable") }}:
+          <countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Deposite)"
+            :duration="2000"
+            :decimals="8"
+          />
+          <span v-else>--</span>
+          LONG
+        </span>
       </p>
       <div class="input">
-        <input type="text" />
-        <p><span>LONG</span>|<i>Max</i></p>
+        <input
+          type="text"
+          v-model="DepositeNum"
+          :style="
+            DepositeNum == balance.Deposite
+              ? 'border: 1px solid #FF9600 !important'
+              : ''
+          "
+        />
+        <p>
+          <span>LONG</span>|<i @click="DepositeNum = balance.Deposite">Max</i>
+        </p>
       </div>
       <div class="text">
-        <p><span>My Burn/Total Burn</span> <span>0 LONG/3.663 LONG </span></p>
-        <p class="bigsize"><span>My Pool Share </span> <span> 0 % </span></p>
+        <p>
+          <span>My Burn/Total Burn</span>
+          <span style="display: flex">
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Withdraw)"
+              :duration="2000"
+              :decimals="8"
+            />
+            <span v-else>--</span>
+            /
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.TotalLPT)"
+              :duration="2000"
+              :decimals="8"
+            />
+            <span v-else>--</span>
+            LONG
+          </span>
+        </p>
+        <p class="bigsize">
+          <span>My Pool Share </span>
+          <span> {{ isLogin ? balance.Share : "--" }} % </span>
+        </p>
       </div>
-      <button class="submit_burn">Burn</button>
+      <button class="submit_burn" @click="toDeposite">
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i>Burn
+      </button>
     </div>
     <div class="claim_wrap" v-if="actionType == 'claim'">
       <!-- <p><span>Amount to deposit</span> <span>Available: 0 LONG </span></p> -->
       <div class="input">
-        <input type="text" />
-        <p><span>hHELMET</span>|<i>Max</i></p>
+        <input
+          v-if="isLogin"
+          type="text"
+          v-model="balance.Earn"
+          disabled
+          style="border: 1px solid #ff9600 !important"
+        />
+        <input
+          v-else
+          type="text"
+          disabled
+          style="border: 1px solid #ff9600 !important"
+        />
+        <p>
+          <span>hHELMET</span>|<i
+            @click="WithdrawNum = balance.Earn"
+            style="background: rgba(255, 150, 0, 0.1)"
+            >Max</i
+          >
+        </p>
       </div>
       <div class="text">
-        <p><span>hHELMET Rewards</span> <span>0 hHELMET</span></p>
+        <p>
+          <span>hHELMET {{ $t("Table.ClaimRewards") }}</span>
+          <span
+            ><countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Earn)"
+              :duration="2000"
+              :decimals="8"
+            />
+            hHELMET</span
+          >
+        </p>
       </div>
-      <button class="submit_burn">Burn</button>
+      <button class="submit_burn" @click="toClaim">
+        <i :class="claimLoading ? 'loading_pic' : ''"></i
+        >{{ $t("Table.Claim") }}
+      </button>
     </div>
   </div>
 </template>
 
 <script>
+import {
+  totalSupply,
+  balanceOf,
+  getLPTOKEN,
+  CangetPAYA,
+  CangetUNI,
+  getPAYA,
+  exitStake,
+  getLastTime,
+  approveStatus,
+  getBalance,
+  toDeposite,
+  getMined,
+  WithdrawAvailable,
+  getAllHelmet,
+  Rewards,
+} from "~/interface/deposite";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import precision from "~/assets/js/precision.js";
+import countTo from "vue-count-to";
 export default {
+  components: {
+    countTo,
+  },
   data() {
     return {
       list: {
-        name: 'LONG BURN Pool',
-        dueDate: "2021-03-11 00:00",
-        bonusValue: 100,
+        name: "LONG BURN Pool",
+        endTime: "2021-03-11 00:00",
+        startTime: "2021-03-10 00:00",
+        bonusValue: 1,
         DownTime: "--",
+        rewards: 0,
+        allRewards: 1,
+        process: 0,
       },
-      actionType: 'burn'
-    }
+      balance: {
+        Deposite: 0,
+        Withdraw: 0,
+        Earn: 0,
+        TotalLPT: 0,
+        Share: 0,
+      },
+      DepositeNum: "",
+      stakeLoading: false,
+      claimLoading: false,
+      exitLoading: false,
+      actionType: "burn",
+      isLogin: false,
+    };
+  },
+  watch: {
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
   },
   mounted() {
+    this.$bus.$on("DEPOSITE_LOADING_BURNLONG", (data) => {
+      this.stakeLoading = data.status;
+      this.DepositeNum = "";
+    });
+    this.$bus.$on("CLAIM_LOADING_BURNLONG", (data) => {
+      this.claimLoading = false;
+    });
+    this.$bus.$on("RELOAD_DATA_BURNLONG", () => {
+      this.getBalance();
+    });
     setInterval(() => {
       setTimeout(() => {
         this.getDownTime();
       });
       clearTimeout();
     }, 1000);
+    setTimeout(() => {
+      this.getBalance();
+      this.getProcess();
+    }, 1000);
+    setInterval(() => {
+      setTimeout(() => {
+        this.getProcess();
+      });
+    }, 20000);
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
   },
   methods: {
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
+    async getBalance() {
+      let helmetType = "BURNLONG_LPT";
+      let type = "BURNLONG";
+      // 可抵押数量
+      let Deposite = await getBalance(helmetType);
+      // 可赎回数量
+      let Withdraw = await getLPTOKEN(type);
+      // 总抵押
+      let TotalLPT = await totalSupply(type);
+      // 可领取Helmet
+      let Helmet = await CangetPAYA(type);
+      // 总Helmet
+      // let LptVolume = await totalSupply(helmetType); //发行
+      console.log(Deposite, Withdraw, TotalLPT, Helmet);
+      this.balance.Deposite = fixD(Deposite, 8);
+      this.balance.Withdraw = fixD(Withdraw, 8);
+      this.balance.Earn = fixD(Helmet, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 8);
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+    },
     //   获取矿池结束倒计时
     getDownTime() {
       let now = new Date() * 1;
-      let dueDate = this.list.dueDate;
-      dueDate = new Date(dueDate);
+      let dueDate = this.list.endTime;
+      dueDate = new Date(dueDate) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -119,18 +301,55 @@ export default {
         template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
           "Content.HourD"
         )}`;
-        this.expired = true
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
-  }
-}
+    getProcess() {
+      let now = new Date() * 1;
+      let startTime = new Date(this.list.startTime) * 1;
+      let endTime = new Date(this.list.endTime) * 1;
+      let process = precision.divide(now - startTime, endTime - startTime);
+      this.list.process = fixD(process * 100, 2);
+      this.list.rewards = fixD(process * 1, 4);
+    },
+    // 抵押
+    toDeposite() {
+      if (!this.DepositeNum) {
+        return;
+      }
+      if (this.stakeLoading) {
+        return;
+      }
+      this.stakeLoading = true;
+      let type = "BURNLONG";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+    },
+    // 结算Paya
+    async toClaim() {
+      if (this.claimLoading) {
+        return;
+      }
+      this.claimLoading = true;
+      let type = "BURNLONG";
+      let res = await getPAYA(type);
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>
+.loading_pic {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
 .long_burn {
   width: 560px;
-  height: 593px;
   background-image: url("../../assets/img/burnmining/burnbg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -174,7 +393,7 @@ export default {
       &:last-child {
         text-align: right;
       }
-      span {
+      > span {
         &:nth-of-type(1) {
           font-size: 12px;
           color: #9b9b9b;
@@ -213,11 +432,10 @@ export default {
       .control_wrap {
         margin-top: 10px;
         width: 100%;
-        height: 12px;
+        height: 14px;
         border-radius: 6px;
         background: #fff;
         .control_real {
-          width: 10%;
           height: 100%;
           border-radius: 6px;
           background: #ff6400;
@@ -250,7 +468,7 @@ export default {
       flex: 1;
       height: 34px;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 600;
       background: #fff7ec;
       color: #121212;
@@ -321,7 +539,7 @@ export default {
         &:last-child {
           text-align: right;
         }
-        span {
+        > span {
           &:nth-of-type(1) {
             font-size: 12px;
             color: #9b9b9b;
@@ -344,6 +562,9 @@ export default {
       font-weight: 600;
       color: #ffffff;
       margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       &:hover {
         background: #2c2c2c;
       }
@@ -406,7 +627,7 @@ export default {
       > p {
         display: flex;
         flex-direction: column;
-        span {
+        > span {
           &:nth-of-type(1) {
             font-size: 12px;
             color: #9b9b9b;
@@ -429,6 +650,9 @@ export default {
       font-weight: 600;
       color: #ffffff;
       margin-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       &:hover {
         background: #2c2c2c;
       }

@@ -14,9 +14,7 @@
       <span>{{ $t("Tip.SendCoin") }}</span>
     </p>
     <PHeader></PHeader>
-    <div class="main-container">
-      <nuxt />
-    </div>
+    <nuxt />
     <PFooter :padding="200"></PFooter>
     <!-- <MyPayaso></MyPayaso> -->
     <PMask></PMask>
@@ -502,11 +500,6 @@ export default {
           margin-left: 4px;
         }
       }
-    }
-    .main-container {
-      width: 1200px;
-      margin: 20px auto 0;
-      flex: 1;
     }
   }
 }

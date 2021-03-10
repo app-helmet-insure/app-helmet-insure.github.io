@@ -1,22 +1,20 @@
 <template>
-  <div class="mining_container">
-    <!-- <Banner></Banner> -->
-    <!-- <p class="mining-list-title">Select Your Mining Pool</p> -->
-    <HelmetBnbPool></HelmetBnbPool>
-    <!-- <HelmetDodoPool></HelmetDodoPool> -->
-    <HelmetForPool></HelmetForPool>
-    <HelmetHelmetPool></HelmetHelmetPool>
-    <HelmetBurgerPool></HelmetBurgerPool>
-    <Onepager></Onepager>
-    <!-- <MiningList></MiningList> -->
-    <!-- <Protect :styleClass="'mining-home'"></Protect> -->
-    <Compound></Compound>
-    <Deposite
-      :current="current"
-      :TradeType="TradeType"
-      @close="closeDeposite"
-      v-if="showDeposite"
-    ></Deposite>
+  <div class="main_container">
+    <div class="mining_container">
+      <HelmetBnbPool></HelmetBnbPool>
+      <!-- <HelmetDodoPool></HelmetDodoPool> -->
+      <HelmetForPool></HelmetForPool>
+      <HelmetHelmetPool></HelmetHelmetPool>
+      <HelmetBurgerPool></HelmetBurgerPool>
+      <Onepager></Onepager>
+      <Compound></Compound>
+      <Deposite
+        :current="current"
+        :TradeType="TradeType"
+        @close="closeDeposite"
+        v-if="showDeposite"
+      ></Deposite>
+    </div>
   </div>
 </template>
 
@@ -84,22 +82,17 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
-.mining_container {
+.main_container {
   background: #f7f7fa;
 }
 @media screen and (min-width: 750px) {
-  .mining-list-title {
-    height: 60px;
-    line-height: 60px;
+  .main_container {
+    > .mining_container {
+      width: 1200px;
+      margin: 20px auto 0;
+    }
   }
 }
 @media screen and (max-width: 750px) {
-  .mining-list-title {
-    font-size: 16px;
-    color: $text-t;
-    height: 60px;
-    line-height: 60px;
-    padding-left: 16px;
-  }
 }
 </style>

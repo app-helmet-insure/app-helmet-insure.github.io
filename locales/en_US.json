@@ -127,8 +127,11 @@
     "Cont": "cont",
     "Tips": "1 Policy for 1 {type}",
     "Bonus": "Bonus",
-    "FireProcess": "燃烧进度",
-    "Burn": "Burn"
+    "FireProcess": "Burning progress",
+    "Burn": "Burn",
+    "MyBurn": "My Burn",
+    "TotalBurn": "Total Burn",
+    "Get": "Get"
   },
   "Tip": {
     "Dpr": "daily percentage of yield, DPR= daily yield / staking volume",

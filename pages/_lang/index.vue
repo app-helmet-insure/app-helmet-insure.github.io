@@ -1,9 +1,11 @@
 <template>
-  <div class="home-container">
-    <Title></Title>
-    <Banner></Banner>
-    <InsuranceCenter></InsuranceCenter>
-    <InsuranceBottom></InsuranceBottom>
+  <div class="main_container">
+    <div class="home_container">
+      <Title></Title>
+      <Banner></Banner>
+      <InsuranceCenter></InsuranceCenter>
+      <InsuranceBottom></InsuranceBottom>
+    </div>
   </div>
 </template>
 <script>
@@ -23,4 +25,15 @@ export default {
 };
 </script>
 <style lang="scss">
+.main_container {
+  background: #f7f7fa;
+}
+@media screen and (min-width: 750px) {
+  .main_container {
+    > .home_container {
+      width: 1200px;
+      margin: 20px auto 0;
+    }
+  }
+}
 </style>

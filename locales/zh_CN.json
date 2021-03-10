@@ -3,7 +3,7 @@
     "Trade": "交易",
     "Mining": "挖矿",
     "FlashMining": "闪电挖矿",
-    "BruningBox": "Burning box",
+    "BruningBox": "燃烧盒子",
     "Plan": "私募",
     "Govern": "治理",
     "GuideBook": "使用指南",
@@ -103,6 +103,7 @@
     "WAvailable": "在抵押",
     "AmountDeposit": "输入抵押量",
     "MyDeposit": "我的抵押",
+    "MyPoolShare": "我的份额",
     "GotoPancakePool": "去往Pancake获得LPT",
     "Withdraw": "取回",
     "AmountWithdraw": "输入取回量",
@@ -125,9 +126,12 @@
     "text1": " 如果在行权日之前，价格没有达到{num}，您将获得无风险收益。",
     "Cont": "张",
     "Tips": "1保单保护1{type}",
-    "Bonus": "Bonus",
+    "Bonus": "奖励",
     "FireProcess": "燃烧进度",
-    "Burn": "Burn"
+    "Burn": "燃烧",
+    "MyBurn": "我的燃烧",
+    "TotalBurn": "总燃烧量",
+    "Get": "去获得"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",

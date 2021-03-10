@@ -1,18 +1,20 @@
 <template>
-  <div class="mining_container">
-    <div class="pool_wrap">
-      <HdodoPool></HdodoPool>
-      <HmathPool></HmathPool>
+  <div class="main_container">
+    <div class="flashmining_container">
+      <div class="pool_wrap">
+        <HdodoPool></HdodoPool>
+        <HmathPool></HmathPool>
+      </div>
+      <div class="pool_wrap">
+        <HautoPool></HautoPool>
+        <Bnb500Pool></Bnb500Pool>
+      </div>
+      <div class="pool_wrap">
+        <HctkPool></HctkPool>
+        <HcctPool></HcctPool>
+      </div>
+      <Onepager></Onepager>
     </div>
-    <div class="pool_wrap">
-      <HautoPool></HautoPool>
-      <Bnb500Pool></Bnb500Pool>
-    </div>
-    <div class="pool_wrap">
-      <HctkPool></HctkPool>
-      <HcctPool></HcctPool>
-    </div>
-    <Onepager></Onepager>
   </div>
 </template>
 
@@ -72,14 +74,16 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
-.mining_container {
+
+.main_container {
   background: #f7f7fa;
 }
-
 @media screen and (min-width: 750px) {
-  .mining-list-title {
-    height: 60px;
-    line-height: 60px;
+  .main_container {
+    > .flashmining_container {
+      width: 1200px;
+      margin: 20px auto 0;
+    }
   }
   .pool_wrap {
     display: flex;
@@ -87,13 +91,7 @@ export default {
     padding: 0 40px;
   }
 }
+
 @media screen and (max-width: 750px) {
-  .mining-list-title {
-    font-size: 16px;
-    color: $text-t;
-    height: 60px;
-    line-height: 60px;
-    padding-left: 16px;
-  }
 }
 </style>

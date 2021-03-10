@@ -85,7 +85,7 @@
             >
           </p>
           <p>
-            <span>My Pool Share：</span>
+            <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ balance.Share }} %</span>
           </p>
         </div>
@@ -348,7 +348,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HELMETPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 复投
     toCompound() {

@@ -39,7 +39,7 @@
         :class="actionType == 'burn' ? 'active burn' : 'burn'"
         @click="actionType = 'burn'"
       >
-        Burn
+        {{ $t("Table.Burn") }}
       </button>
       <button
         class="claim"
@@ -81,7 +81,7 @@
       </div>
       <div class="text">
         <p>
-          <span>My Burn/Total Burn</span>
+          <span>{{ $t("Table.MyBurn") }}/{{ $t("Table.TotalBurn") }}</span>
           <span style="display: flex">
             <countTo
               v-if="isLogin"
@@ -104,7 +104,7 @@
           </span>
         </p>
         <p class="bigsize">
-          <span>My Pool Share </span>
+          <span>{{ $t("Table.MyPoolShare") }} </span>
           <span> {{ isLogin ? balance.Share : "--" }} % </span>
         </p>
       </div>
@@ -138,7 +138,7 @@
       </div>
       <div class="text">
         <p>
-          <span>hHELMET {{ $t("Table.ClaimRewards") }}</span>
+          <span>hHELMET {{ $t("Table.HELMETRewards") }}</span>
           <span
             ><countTo
               v-if="isLogin"
@@ -323,7 +323,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BURNLONG";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {
@@ -350,6 +350,7 @@ export default {
 }
 .long_burn {
   width: 560px;
+  height: 600px;
   background-image: url("../../assets/img/burnmining/burnbg.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;

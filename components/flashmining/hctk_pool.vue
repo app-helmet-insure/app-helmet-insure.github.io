@@ -156,7 +156,7 @@
               >
             </p>
             <p>
-              <span>My Pool Share：</span>
+              <span>{{ $t("Table.MyPoolShare") }}：</span>
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a

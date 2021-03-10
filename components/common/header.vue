@@ -15,7 +15,7 @@
           <p class="new"></p>
         </nuxt-link>
         <nuxt-link to="/flashmining">{{ $t("Header.FlashMining") }} </nuxt-link>
-        <nuxt-link to="/burnmining"
+        <nuxt-link to="/burnbox"
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
         </nuxt-link>

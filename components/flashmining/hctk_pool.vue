@@ -8,11 +8,7 @@
       alt=""
       v-if="expired"
     />
-    <img
-      class="circle right"
-      src="~/assets/img/helmet/rightCircle.png"
-      alt=""
-    />
+    <img class="circle left" src="~/assets/img/helmet/leftCircle.png" alt="" />
     <div class="text">
       <div class="coin">
         <h3>

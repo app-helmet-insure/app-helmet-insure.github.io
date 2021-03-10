@@ -15,10 +15,10 @@
           <p class="new"></p>
         </nuxt-link>
         <nuxt-link to="/flashmining">{{ $t("Header.FlashMining") }} </nuxt-link>
-        <nuxt-link to="/burnmining"
+        <!-- <nuxt-link to="/burnmining"
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
-        </nuxt-link>
+        </nuxt-link> -->
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>

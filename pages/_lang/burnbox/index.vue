@@ -1,18 +1,18 @@
 <template>
   <div class="burn_container">
     <div class="burn_wrap">
-      <LongBurn></LongBurn>
+      <HCCTBURN></HCCTBURN>
     </div>
   </div>
 </template>
 
 <script>
-import LongBurn from '~/components/burnmining/long_burn.vue'
+import HCCTBURN from "~/components/burnmining/hcct_burn.vue";
 export default {
   components: {
-    LongBurn
-  }
-}
+    HCCTBURN,
+  },
+};
 </script>
 
 <style lang='scss' scoped>

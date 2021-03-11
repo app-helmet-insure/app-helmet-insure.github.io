@@ -118,7 +118,7 @@ export default {
       this.chainID = newValue;
     },
   },
-  mounted() {},
+  mounted() { },
   methods: {
     openChangeWallet() {
       this.showChangeWallet = true;

@@ -1,6 +1,6 @@
 <template>
   <transition name="onepager">
-    <div class="onepager_mask" v-if="showFlag">
+    <div class="onepager_mask" v-if="showFlag" @touchmove.prevent>
       <div class="onepager_wrapper">
         <div class="title">
           <i @click="closeOnepager"></i>

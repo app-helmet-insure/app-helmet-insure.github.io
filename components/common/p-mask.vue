@@ -1,5 +1,5 @@
 <template>
-  <div class="p-mask" v-if="showMask">
+  <div class="p-mask" v-if="showMask" @touchmove.prevent>
     <div class="p-mask-title">
       <a href="/">
         <img src="~/assets/img/helmet/home_logo.png" alt="" />

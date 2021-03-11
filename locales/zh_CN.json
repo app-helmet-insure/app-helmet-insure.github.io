@@ -141,6 +141,8 @@
     "SendCoin": "请不要把您的helmet打入合约地址，连接钱包并调至BSC网络，我们会自动读取数据。",
     "RiskWarning": "NOTICE",
     "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 'Paper& Guide'.",
-    "RiskWarnCheck": "I Agree"
+    "RiskWarnCheck": "I Agree",
+    "BurnTip1": "燃烧旧的保单得到新的保单",
+    "BurnTip2": "你可以在池子有效期内任何时刻前来燃烧,得到保单的数量取决于你占燃烧池的比例"
   }
 }

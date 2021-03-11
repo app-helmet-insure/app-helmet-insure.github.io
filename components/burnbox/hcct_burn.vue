@@ -3,7 +3,7 @@
     <img class="coin" src="~/assets/img/burnmining/hcctCoin.png" alt="" />
     <div class="title">
       <div class="pool_detail">
-        <h3 class="pool_name">{{ list.name }}</h3>
+        <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
         <span class="earn">
           Earn: <span>HCCTII</span>
           <!-- <img src="~/assets/img/burnmining/miniHelmet.png" alt="" /> -->
@@ -200,8 +200,8 @@ export default {
   data() {
     return {
       list: {
-        name: "HCCT BURN Pool",
-        endTime: "2021-04-12 00:00",
+        name: "HCCT Burning Box",
+        endTime: "2021-03-19 00:00",
         startTime: "2021-03-12 00:00",
         bonusValue: 100000,
         DownTime: "--",
@@ -277,6 +277,19 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
+    },
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is $HCCTII?",
+        text: [
+          "HCCTII is the call option of HELMET.",
+          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
+          "Reasonable activate price: 1 HELMET = 0.1CAKE",
+          "Expire date: Apr. 8th 24:00 SGT",
+          "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
+        ],
+      });
     },
     async getBalance() {
       let helmetType = "BURNHCCT_LPT";
@@ -361,6 +374,7 @@ export default {
       let startTime = new Date(this.list.startTime) * 1;
       let endTime = new Date(this.list.endTime) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
+      console.log(process)
       this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
       this.list.rewards = process > 0 ? fixD(process * 1, 4) : 0;
     },
@@ -374,7 +388,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BURNHCCT";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
     },
     // 结算Paya
     async toClaim() {
@@ -427,6 +441,18 @@ export default {
           font-size: 20px;
           color: #121212;
           line-height: 25px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url("../../assets/img/helmet/icon_long.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-left: 3px;
+            cursor: pointer;
+          }
         }
         > span {
           font-size: 14px;
@@ -463,6 +489,8 @@ export default {
           justify-content: flex-end;
           margin-top: 4px;
           i {
+            min-width: 16px;
+            min-height: 18px;
             display: inline-block;
             padding: 2px 1px;
             background: #ffe3bb;
@@ -471,7 +499,8 @@ export default {
             color: #22292f;
           }
           b {
-            margin: 0 2px;
+            font-size: 12px;
+            margin: 0 4px;
             font-weight: 600;
           }
         }
@@ -756,13 +785,13 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .long_burn {
-    background-image: url("../../assets/img/burnmining/burnbg.png");
+    background-image: url("../../assets/img/burnmining/burn_h5bg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin-bottom: 50px;
     margin-top: 30px;
     position: relative;
-    padding: 20% 20% 20px 16px;
+    padding: 14% 14% 20px 20px;
     min-width: 320px;
     min-height: 470px;
     > .coin {
@@ -770,7 +799,7 @@ export default {
       height: 64px;
       position: absolute;
       left: 50%;
-      top: -30px;
+      top: -45px;
       transform: translateX(-50%);
     }
     > .title {
@@ -782,6 +811,18 @@ export default {
           font-size: 18px;
           color: #121212;
           line-height: 25px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-image: url("../../assets/img/helmet/icon_long.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-left: 3px;
+            cursor: pointer;
+          }
         }
         > span {
           font-size: 14px;

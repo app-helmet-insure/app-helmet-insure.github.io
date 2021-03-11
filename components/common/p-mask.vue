@@ -96,8 +96,9 @@ export default {
     locale: {
       handler: "watchLocale",
       immediate: true,
-    }, ChainID(newValue) {
-      this.chainID = newValue
+    },
+    ChainID(newValue) {
+      this.chainID = newValue;
     },
   },
   mounted() {
@@ -105,8 +106,8 @@ export default {
   },
   computed: {
     ChainID() {
-      let chainID = this.$store.state.chainID
-      return chainID
+      let chainID = this.$store.state.chainID;
+      return chainID;
     },
     showMask() {
       return this.$store.state.showDialog.showMask;
@@ -147,6 +148,11 @@ export default {
           url: "/flashmining",
           link: false,
           text: this.$t("Header.FlashMining"),
+        },
+        {
+          url: "/burnbox",
+          link: false,
+          text: this.$t("Header.BruningBox"),
           logo: "fire",
         },
         // {

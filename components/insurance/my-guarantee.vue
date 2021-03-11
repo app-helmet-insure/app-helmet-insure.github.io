@@ -436,6 +436,8 @@ export default {
       let hAUTOPolicy = await this.hAUTOPolicy();
       let hMATHPolicy = await this.hMATHPolicy();
       let hFORPolicy = await this.hFORPolicy();
+      let HCCTIIPolicy = await this.HCCTIIPolicy();
+
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -462,6 +464,9 @@ export default {
       }
       if (hFORPolicy) {
         result.push(hFORPolicy);
+      }
+      if (HCCTIIPolicy) {
+        result.push(HCCTIIPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -944,11 +949,11 @@ export default {
         this.$store.state.userInfo.data.account &&
         this.$store.state.userInfo.data.account.toLowerCase();
       let volume = await getBalance(
-        "0xb779f208f8d662558df8e2b6bfe3b6305cc13389"
+        "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522"
       );
       let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xb779f208f8d662558df8e2b6bfe3b6305cc13389");
+        let Token = getTokenName("0x9065fcbb5f73B908aC4B05BdB81601Eec2065522");
         let resultItem;
         resultItem = {
           id: 8,
@@ -964,13 +969,64 @@ export default {
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1617465600000,
           transfer: true,
-          longAdress: "0xb779f208f8d662558df8e2b6bfe3b6305cc13389",
+          longAdress: "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522",
           type: "call",
           symbol: "hFOR",
           approveAddress1: "FACTORY",
           approveAddress2: "",
           outPrice: fromWei(250000000000000000, Token),
           outPriceUnit: "HELMET",
+          // showType: "img",
+          showVolume: volume,
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async HCCTIIPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x9065fcbb5f73B908aC4B05BdB81601Eec2065522");
+        let resultItem;
+        resultItem = {
+          id: 9,
+          bidID: 9,
+          buyer: myAddress,
+          price: '--',
+          Rent: '--',
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1617897600),
+          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _strikePrice: fromWei(100000000000000000, Token),
+          _underlying: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+          _expiry: 1617897600000,
+          transfer: true,
+          longAdress: "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522",
+          type: "call",
+          symbol: "HCCTII",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(100000000000000000, Token),
+          outPriceUnit: "CAKE",
           // showType: "img",
           showVolume: volume,
         };

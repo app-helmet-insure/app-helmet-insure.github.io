@@ -15,10 +15,10 @@
           <p class="new"></p>
         </nuxt-link>
         <nuxt-link to="/flashmining">{{ $t("Header.FlashMining") }} </nuxt-link>
-        <!-- <nuxt-link to="/burnmining"
+        <nuxt-link to="/burnbox"
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
-        </nuxt-link> -->
+        </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>
@@ -299,18 +299,18 @@ export default {
     }
   }
 }
-// @media screen and (min-width: 1360px) {
-//   .header-container {
-//     > div {
-//       padding: 0 80px;
-//     }
-//   }
-// }
+@media screen and (min-width: 1360px) {
+  .header-container {
+    > div {
+      padding: 0 80px;
+    }
+  }
+}
 @media screen and (min-width: 750px) {
   .header-container {
     > div {
-      width: 1200px;
-      // min-width: 1200px;
+      // width: 1200px;
+      min-width: 1200px;
       .logo {
         img {
           height: 40px;

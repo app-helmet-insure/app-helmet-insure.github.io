@@ -349,7 +349,6 @@ export default {
       let Helmet = await CangetPAYA(type);
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
-      console.log(Deposite, Withdraw, TotalLPT, Helmet);
       this.balance.Deposite = fixD(Deposite, 8);
       this.balance.Withdraw = fixD(Withdraw, 8);
       this.balance.Earn = fixD(Helmet, 8);
@@ -419,7 +418,6 @@ export default {
       let startTime = new Date(this.list.startTime) * 1;
       let endTime = new Date(this.list.endTime) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-      console.log(process, "########");
       this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
       this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
     },

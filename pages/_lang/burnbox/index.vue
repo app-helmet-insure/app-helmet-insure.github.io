@@ -27,6 +27,7 @@ export default {
   .burn_container {
     background: #fff;
     width: 1200px;
+    margin: 0 auto;
   }
   .burn_text {
     text-align: center;

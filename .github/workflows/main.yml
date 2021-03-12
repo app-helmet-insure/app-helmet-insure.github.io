@@ -37,5 +37,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         email: helmetapp@pm.me
-        build_dir: build
+        build_dir: docs
         branch: gh-pages

@@ -16,7 +16,8 @@ import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
 import Onepager from "~/components/mining/onepager.vue";
 export default {
   components: {
-    HCCTBURN, Onepager
+    HCCTBURN,
+    Onepager,
   },
 };
 </script>
@@ -26,7 +27,6 @@ export default {
   .burn_container {
     background: #fff;
     width: 1200px;
-    margin: 20px auto 0;
   }
   .burn_text {
     text-align: center;

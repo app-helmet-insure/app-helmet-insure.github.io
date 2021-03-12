@@ -171,8 +171,10 @@ export default {
     });
     if (window.chainID == 56) {
       this.getBannerData();
-      this.getBalance();
       this.getIndexPirce();
+      setTimeout(() => {
+        this.getBalance();
+      }, 500);
     }
     // 刷新所有数据
     this.$bus.$on("REFRESH_ALL_DATA", (data) => {
@@ -353,7 +355,6 @@ export default {
       for (let i = 0; i < coinList.length; i++) {
         let balance = await getBalance(coinList[i]);
         let key = coinList[i];
-
         BalanceArray[key] = fixD(balance, 4);
       }
       if (window.CURRENTADDRESS) {

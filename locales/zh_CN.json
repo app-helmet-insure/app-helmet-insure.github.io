@@ -143,6 +143,10 @@
     "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 'Paper& Guide'.",
     "RiskWarnCheck": "I Agree",
     "BurnTip1": "燃烧旧的保单得到新的保单",
-    "BurnTip2": "你可以在池子有效期内任何时刻前来燃烧,得到保单的数量取决于你占燃烧池的比例"
+    "BurnTip2": "你可以在池子有效期内任何时刻前来燃烧,得到保单的数量取决于你占燃烧池的比例",
+    "FlashTip1": "闪电挖矿是一系列短期保单挖矿活动",
+    "FlashTip2": "你可以挖出不同品种的保单，请注意每一个保单品种的到期日",
+    "MiningTip1": "挖矿是token奖励挖矿活动",
+    "MiningTip2": "你可以通过不同的LPT挖出多重token奖励，请注意池子的到期日提示"
   }
 }

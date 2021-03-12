@@ -101,7 +101,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="8"
+              :decimals="4"
             />
             <span v-else>--</span>
             /
@@ -110,7 +110,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.TotalLPT)"
               :duration="2000"
-              :decimals="8"
+              :decimals="4"
             />
             <span v-else>--</span>
             HCCT
@@ -124,6 +124,19 @@
       <button class="submit_burn" @click="toDeposite">
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
+      <div class="ContractAddress">
+        <span>HCCT Contract Address：</span>
+        <p>
+          0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
     <div class="claim_wrap" v-if="actionType == 'claim'">
       <!-- <p><span>Amount to deposit</span> <span>Available: 0 LONG </span></p> -->
@@ -168,6 +181,19 @@
         <i :class="claimLoading ? 'loading_pic' : ''"></i
         >{{ $t("Table.Claim") }}
       </button>
+      <div class="ContractAddress">
+        <span>HCCTII Contract Address：</span>
+        <p>
+          0x9065fcbb5f73b908ac4b05bdb81601eec2065522
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x9065fcbb5f73b908ac4b05bdb81601eec2065522')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -193,6 +219,8 @@ import {
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import countTo from "vue-count-to";
+import ClipboardJS from "clipboard";
+import Message from "~/components/common/Message";
 export default {
   components: {
     countTo,
@@ -273,6 +301,23 @@ export default {
     });
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -374,7 +419,7 @@ export default {
       let startTime = new Date(this.list.startTime) * 1;
       let endTime = new Date(this.list.endTime) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-      console.log(process, '########')
+      console.log(process, "########");
       this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
       this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
     },
@@ -388,7 +433,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "BURNHCCT";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -413,10 +458,34 @@ export default {
   background-size: cover;
   animation: loading 2s 0s linear infinite;
 }
+.ContractAddress {
+  font-size: 14px;
+  color: #ff9600;
+  margin-top: 8px;
+  span {
+    color: #121212;
+  }
+  p {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    font-weight: 550;
+  }
+  i {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+}
 @media screen and (min-width: 750px) {
   .long_burn {
     width: 560px;
-    height: 600px;
+    height: 610px;
     background-image: url("../../assets/img/burnmining/burnbg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -784,6 +853,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .ContractAddress {
+    font-size: 12px;
+  }
   .long_burn {
     background-image: url("../../assets/img/burnmining/burn_h5bg.png");
     background-repeat: no-repeat;
@@ -1061,7 +1133,7 @@ export default {
       }
     }
     .claim_wrap {
-      margin-top: 30px;
+      margin-top: 28px;
       > p {
         display: flex;
         justify-content: space-between;

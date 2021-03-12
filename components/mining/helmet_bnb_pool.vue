@@ -404,7 +404,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HELMETBNB";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -672,7 +672,6 @@ export default {
 @media screen and (max-width: 750px) {
   .helmetbnb_pool {
     background: #ffffff;
-    margin-top: 10px;
     margin-bottom: 20px;
     padding: 40px 16px;
     > .combo {

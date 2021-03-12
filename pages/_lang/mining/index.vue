@@ -1,5 +1,9 @@
 <template>
   <div class="main_container">
+    <div class="Mining_text">
+      <h3>{{ $t("Tip.MiningTip1") }}</h3>
+      <p>{{ $t("Tip.MiningTip2") }}</p>
+    </div>
     <div class="mining_container">
       <HelmetBnbPool></HelmetBnbPool>
       <!-- <HelmetDodoPool></HelmetDodoPool> -->
@@ -91,8 +95,41 @@ export default {
       width: 1200px;
       margin: 20px auto 0;
     }
+    .Mining_text {
+      text-align: center;
+      margin-top: 60px;
+      h3 {
+        font-size: 34px;
+        font-weight: bold;
+        color: #121212;
+      }
+      p {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #787878;
+      }
+    }
   }
 }
 @media screen and (max-width: 750px) {
+  .Mining_text {
+    padding-left: 24px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    background: #fff;
+    h3 {
+      font-size: 24px;
+      width: 267px;
+      font-weight: bold;
+      color: #121212;
+      margin-bottom: 10px;
+    }
+    p {
+      width: 309px;
+      font-size: 14px;
+      color: #787878;
+      line-height: 22px;
+    }
+  }
 }
 </style>

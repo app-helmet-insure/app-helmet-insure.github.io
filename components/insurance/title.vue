@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
       <div class="imgbanner img7 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
@@ -9,7 +10,6 @@
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
       </div>
       <div class="imgbanner img5 swiper-slide"></div>
-      <div class="imgbanner img4 swiper-slide"></div>
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next"></div>
@@ -124,7 +124,7 @@ export default {
       background-image: url("../../assets/img/helmet/fortub.png");
     }
     .img4 {
-      background-image: url("../../assets/img/helmet/burger.png");
+      background-image: url("../../assets/img/helmet/HCCT.png");
     }
     .img5 {
       background-image: url("../../assets/img/helmet/BNB500.png");
@@ -184,7 +184,7 @@ export default {
       background-image: url("../../assets/img/helmet/fortub_h5.png");
     }
     .img4 {
-      background-image: url("../../assets/img/helmet/burger_h5.png");
+      background-image: url("../../assets/img/helmet/HCCT_H5.png");
     }
     .img5 {
       background-image: url("../../assets/img/helmet/BNB500_h5.png");

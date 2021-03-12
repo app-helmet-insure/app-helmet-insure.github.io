@@ -374,9 +374,9 @@ export default {
       let startTime = new Date(this.list.startTime) * 1;
       let endTime = new Date(this.list.endTime) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-      console.log(process)
+      console.log(process, '########')
       this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
-      this.list.rewards = process > 0 ? fixD(process * 1, 4) : 0;
+      this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
     },
     // 抵押
     toDeposite() {

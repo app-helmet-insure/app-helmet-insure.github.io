@@ -578,7 +578,11 @@ export default {
       if (this.expired) {
         this.textList[1].num = "--";
       } else {
-        this.textList[1].num = this.apy + "%";
+        if (this.openMining) {
+          this.textList[1].num = this.apy + "%";
+        } else {
+          this.textList[1].num = "Infinity" + "%";
+        }
       }
     },
     async getBalance() {

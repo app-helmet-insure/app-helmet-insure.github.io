@@ -24,7 +24,7 @@ jobs:
       run: npm -v
       
     - name: build
-      run: yarn && yarn build
+      run: yarn && yarn generate
       env: 
         CI: false
       

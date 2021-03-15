@@ -5,7 +5,7 @@
       <div class="pool_detail">
         <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
         <span class="earn">
-          Earn: <span>HCCTII</span>
+          Earn: <span>hDODO</span>
           <!-- <img src="~/assets/img/burnmining/miniHelmet.png" alt="" /> -->
         </span>
       </div>
@@ -27,7 +27,7 @@
       </p>
       <p>
         <span>{{ $t("Table.Bonus") }}</span>
-        <span>{{ list.bonusValue }} HCCTII</span>
+        <span>{{ list.bonusValue }} hDODO</span>
       </p>
     </div>
     <div class="process">
@@ -75,7 +75,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          HCCT
+          hCTK
         </span>
       </p>
       <div class="input">
@@ -89,7 +89,7 @@
           "
         />
         <p>
-          <span>HCCT</span>|<i @click="DepositeNum = balance.Deposite">Max</i>
+          <span>hCTK</span>|<i @click="DepositeNum = balance.Deposite">Max</i>
         </p>
       </div>
       <div class="text">
@@ -113,7 +113,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            HCCT
+            hCTK
           </span>
         </p>
         <p class="bigsize">
@@ -125,14 +125,14 @@
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
       <div class="ContractAddress">
-        <span>HCCT Contract Address：</span>
+        <span>hCTK Contract Address：</span>
         <p>
-          0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
+          0x936909e72951A19a5e1d75A109B0D34f06f39838
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5')
+              copyAdress($event, '0x936909e72951A19a5e1d75A109B0D34f06f39838')
             "
           ></i>
         </p>
@@ -155,7 +155,7 @@
           style="border: 1px solid #ff9600 !important"
         />
         <p>
-          <span>HCCTII</span>|<i
+          <span>hDODO</span>|<i
             @click="WithdrawNum = balance.Earn"
             style="background: rgba(255, 150, 0, 0.1)"
             >Max</i
@@ -164,7 +164,7 @@
       </div>
       <div class="text">
         <p>
-          <span>HCCTII {{ $t("Table.HELMETRewards") }}</span>
+          <span>hDODO {{ $t("Table.HELMETRewards") }}</span>
           <span
             ><countTo
               v-if="isLogin"
@@ -173,7 +173,7 @@
               :duration="2000"
               :decimals="8"
             />
-            HCCTII</span
+            hDODO</span
           >
         </p>
       </div>
@@ -182,14 +182,14 @@
         >{{ $t("Table.Claim") }}
       </button>
       <div class="ContractAddress">
-        <span>HCCTII Contract Address：</span>
+        <span>hDODO Contract Address：</span>
         <p>
-          0x9065fcbb5f73b908ac4b05bdb81601eec2065522
+          0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x9065fcbb5f73b908ac4b05bdb81601eec2065522')
+              copyAdress($event, '0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3')
             "
           ></i>
         </p>
@@ -228,10 +228,10 @@ export default {
   data() {
     return {
       list: {
-        name: "HCCT Burning Box",
-        endTime: "2021-03-19 00:00",
-        startTime: "2021-03-12 00:00",
-        bonusValue: 100000,
+        name: "hCTK Burning Box",
+        endTime: "2021-03-23 00:00",
+        startTime: "2021-03-16 00:00",
+        bonusValue: 10000,
         DownTime: "--",
         rewards: 0,
         process: 0,
@@ -270,14 +270,14 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_BURNHCCT", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_BURNHCTK", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_BURNHCCT", (data) => {
+    this.$bus.$on("CLAIM_LOADING_BURNHCTK", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
+    this.$bus.$on("RELOAD_DATA_BURNHCTK", () => {
       this.getBalance();
     });
     setInterval(() => {
@@ -326,19 +326,20 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $HCCTII?",
+        title: "What is $hDODO?",
         text: [
-          "HCCTII is the call option of HELMET.",
-          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
-          "Reasonable activate price: 1 HELMET = 0.1CAKE",
-          "Expire date: Apr. 8th 24:00 SGT",
-          "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
+          "hDODO is the call option of DODO.",
+          "Total Supply: 75,000 (22,000 for DODO Vip users, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
+          "Expire date: Apr. 14th 24:00 SGT",
+          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
+          "If hDODO get expired, it could be souvenir token",
+          "Please do not trade heavily on hDODO.",
         ],
       });
     },
     async getBalance() {
-      let helmetType = "BURNHCCT_LPT";
-      let type = "BURNHCCT";
+      let helmetType = "BURNHCTK_LPT";
+      let type = "BURNHCTK";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -384,7 +385,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-12 00:00";
+      let dueDate = "2021-03-16 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -430,7 +431,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "BURNHCCT";
+      let type = "BURNHCTK";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -439,7 +440,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "BURNHCCT";
+      let type = "BURNHCTK";
       let res = await getPAYA(type);
     },
   },

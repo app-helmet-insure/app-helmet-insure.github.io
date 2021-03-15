@@ -5,6 +5,7 @@
       <p>{{ $t("Tip.BurnTip2") }}</p>
     </div>
     <div class="burn_wrap">
+      <HCTKBURN></HCTKBURN>
       <HCCTBURN></HCCTBURN>
     </div>
     <Onepager></Onepager>
@@ -13,10 +14,12 @@
 
 <script>
 import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
+import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 import Onepager from "~/components/mining/onepager.vue";
 export default {
   components: {
     HCCTBURN,
+    HCTKBURN,
     Onepager,
   },
 };

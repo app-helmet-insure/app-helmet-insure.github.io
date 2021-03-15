@@ -1,7 +1,13 @@
 <template>
-  <div class="math_pool">
+  <div class="bnb500_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
+    <img
+      class="finished"
+      src="~/assets/img/helmet/finished.png"
+      alt=""
+      v-if="expired"
+    />
     <img
       class="circle right"
       src="~/assets/img/helmet/rightCircle.png"
@@ -13,19 +19,56 @@
           <img src="~/assets/img/flashmining/hdodo_logo.png" alt="" />
           <div>
             <span>{{ list.name }}</span>
-            <p @click="showOnepager"><i></i>What is hDODO token？</p>
+            <div>
+              <p @click="showOnepager" class="onepager">
+                <i></i>What is hDODO token？
+              </p>
+              <p class="starttime">
+                <span
+                  ><i></i>
+                  {{
+                    openMining
+                      ? $t("Table.SurplusTime")
+                      : $t("Table.WillStartIn")
+                  }}：
+                </span>
+                <span v-if="!openMining">
+                  {{ list.DownTime.hour }}h
+                  <i>/</i>
+                  {{ list.DownTime.minute }}m
+                  <i>/</i>
+                  {{ list.DownTime.second }}s
+                </span>
+                <span v-else>
+                  {{ list.DownTime.day }}d
+                  <i>/</i>
+                  {{ list.DownTime.hour }}h
+                </span>
+              </p>
+            </div>
           </div>
         </h3>
-        <div>
-          <p>
-            <span>
-              {{ $t("Table.SurplusTime") }}：
-              <span>
-                {{ isLogin ? list.DownTime : "--" }}
-              </span>
-            </span>
-          </p>
-        </div>
+        <p class="starttime">
+          <span
+            ><i></i>
+            {{
+              openMining ? $t("Table.SurplusTime") : $t("Table.WillStartIn")
+            }}：
+          </span>
+          <span v-if="!openMining">
+            {{ list.DownTime.hour }}h
+            <i>/</i>
+            {{ list.DownTime.minute }}m
+            <i>/</i>
+            {{ list.DownTime.second }}s
+          </span>
+          <span v-else>
+            {{ list.DownTime.day }}d
+            <i>/</i>
+            {{ list.DownTime.hour }}h
+          </span>
+        </p>
+        <div></div>
       </div>
       <div class="index">
         <p v-for="(item, index) in textList" :key="index">
@@ -101,6 +144,11 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -137,13 +185,13 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*avpb7w*_ga*MTc1MzEyNTQzNS4xNjA3MzQwODk4*_ga_334KNG3DMQ*MTYxNDY1Njg1My4xNS4wLjE2MTQ2NTY4NTMuMA..#/add/0xdD9b5801e8A38ef7A728A42492699521C6A7379b/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0xdD9b5801e8A38ef7A728A42492699521C6A7379b/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
               >Get hMATH-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
-            <span>hDODO Contract Address：</span>
+            <span>hMATH Contract Address：</span>
             <p>
               0xdD9b5801e8A38ef7A728A42492699521C6A7379b
               <i
@@ -201,7 +249,7 @@
               {{ $t("Table.ClaimRewards") }}
             </button>
             <p>
-              <span>hMATH {{ $t("Table.HELMETRewards") }}：</span>
+              <span>hDODO {{ $t("Table.HELMETRewards") }}：</span>
               <span>
                 <span>
                   <countTo
@@ -212,29 +260,34 @@
                     :decimals="8"
                   />
                   <span v-else>--</span>
-                  hMATH</span
+                  hDODO</span
                 >
               </span>
             </p>
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
             </button>
           </div>
           <div class="ContractAddress">
-            <span>hMATH Contract Address：</span>
+            <span>hDODO Contract Address：</span>
             <p>
-              0xdD9b5801e8A38ef7A728A42492699521C6A7379b
+              0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3
               <i
                 class="copy"
                 id="copy_default"
                 @click="
                   copyAdress(
                     $event,
-                    '0xdD9b5801e8A38ef7A728A42492699521C6A7379b'
+                    '0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3'
                   )
                 "
               ></i>
@@ -270,6 +323,7 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { template } from "@antv/g2plot/lib/utils";
 import helmetVue from "../../layouts/helmet.vue";
 export default {
   components: {
@@ -279,8 +333,13 @@ export default {
     return {
       list: {
         name: "hDODO Pool (By hMATH-Helmet LPT)",
-        dueDate: "2021-03-18 00:00",
-        DownTime: "--",
+        dueDate: "2021-03-31 12:00",
+        DownTime: {
+          day: "00",
+          hour: "00",
+          minute: "00",
+          second: "00",
+        },
       },
       textList: [
         {
@@ -333,6 +392,8 @@ export default {
       actionType: "deposit",
       fixD,
       isLogin: false,
+      expired: false,
+      openMining: false,
     };
   },
   mounted() {
@@ -343,17 +404,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HMATHPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HDODOPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HMATHPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HDODOPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HMATHPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HDODOPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HMATHPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_HDODOPOOL", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -399,21 +460,19 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $hMATH?",
+        title: "What is $hDODO?",
         text: [
-          "MATH cover miss out policy. (It performs more like a call option of MATH)",
-          "In this policy, the ratio of MATH & BNB is",
-          "1MATH =0.014BNB",
-          "It is the reasonable activate price, meaning that you could swap 0.014BNB+1$hMATH to 1MATH before the expire date.",
-          "For example, if $MATH hit 0.015BNB, you could activate the policy and swap 0.014BNB + 1$hMATH to 1 $MATH on Tradingview tab, and get 0.001BNB as profit.",
-          "$hMATH Flash Mining Start: Mar. 2nd 24:00 SGT",
-          "End: Mar.17th 24:00 SGT",
-          "Policy Expire date: Mar. 22nd 24:00 SGT",
-          "Total supply: 30,000",
+          "hDODO is the call option of DODO.",
+          "Total Supply: 75,000 (22,000 for DODO Vip users, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
+          "Expire date: Apr. 14th 24:00 SGT",
+          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
+          "If hDODO get expired, it could be souvenir token",
+          "Please do not trade heavily on hDODO.",
         ],
       });
     },
     copyAdress(e, text) {
+      let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
       copys.on("success", function (e) {
         Message({
@@ -435,6 +494,9 @@ export default {
       }
     },
     getDownTime() {
+      if (!this.openMining) {
+        return;
+      }
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;
       dueDate = new Date(dueDate);
@@ -447,21 +509,24 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template;
+      let template = {};
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-23 20:00";
+      let dueDate = "2021-03-16 12:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -472,28 +537,34 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template;
+      hour = hour + day * 24;
+      let template = {};
       if (dueDate < now) {
-        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
-          "Content.MinD"
-        )} ${0}${this.$t("Content.SecondD")}`;
+        template = {
+          hour: "00",
+          minute: "00",
+          second: "00",
+        };
+        this.openMining = true;
       } else {
-        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
-          "Content.MinD"
-        )} ${second}${this.$t("Content.SecondD")}`;
+        template = {
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+          second: second > 9 ? second : "0" + second,
+        };
       }
-      this.MingTime = template;
+      this.list.DownTime = template;
     },
     async getAPY() {
-      let HMATHHELMET = await uniswap("HMATH", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HMATHPOOL"); //数量
-      let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
+      let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格
+      let HctkVolume = await totalSupply("HDODOPOOL"); //数量
+      let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HMATHHELMET, precision.divide(30000, 15), 365),
+            precision.times(HCTKHELMET, precision.divide(40000, 15), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -503,13 +574,20 @@ export default {
         ),
         2
       );
-      this.apy = apy ? apy : 0;
-      // this.textList[1].num = "Infinity" + "%";
-      this.textList[1].num = this.apy + "%";
+      this.apy = apy;
+      if (this.expired) {
+        this.textList[1].num = "--";
+      } else {
+        if (this.openMining) {
+          this.textList[1].num = this.apy + "%";
+        } else {
+          this.textList[1].num = "Infinity" + "%";
+        }
+      }
     },
     async getBalance() {
-      let helmetType = "HMATHPOOL_LPT";
-      let type = "HMATHPOOL";
+      let helmetType = "HDODOPOOL_LPT";
+      let type = "HDODOPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -526,7 +604,11 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((30000 / 15) * 7, 2) + " hMATH";
+      if (this.expired) {
+        this.textList[0].num = "--";
+      } else {
+        this.textList[0].num = fixD((40000 / 15) * 7, 2) + " hDODO";
+      }
     },
     // 抵押
     toDeposite() {
@@ -537,8 +619,8 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HMATHPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      let type = "HDODOPOOL";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -546,7 +628,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HMATHPOOL";
+      let type = "HDODOPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -555,7 +637,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HMATHPOOL";
+      let type = "HDODOPOOL";
       let res = await exitStake(type);
     },
   },
@@ -626,7 +708,7 @@ export default {
       font-size: 14px;
     }
   }
-  .math_pool {
+  .bnb500_pool {
     width: 540px;
     margin-bottom: 20px;
     background: #ffffff;
@@ -646,6 +728,13 @@ export default {
       height: 36px;
       top: 0;
       transform: translateY(-5px);
+    }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
     }
     .circle {
       width: 102px;
@@ -679,39 +768,79 @@ export default {
             line-height: 32px;
             flex-direction: column;
             margin-bottom: 10px;
+            flex: 1;
             img {
               margin-left: 4px;
               width: 32px;
               height: 32px;
             }
-            p {
-              height: 16px;
-              background: rgba(255, 150, 0, 0.1);
-              border-radius: 8px;
-              font-size: 12px;
-              color: #ff9600;
-              line-height: 16px;
+            > div {
               display: flex;
               align-items: center;
-              cursor: pointer;
-              margin-top: 3px;
-              align-self: flex-start;
-              &:hover {
-                color: #ff8200;
-              }
-              i {
-                display: inline-block;
-                width: 16px;
+              justify-content: space-between;
+              .onepager {
                 height: 16px;
-                background-image: url("../../assets/img/helmet/icon_long.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
+                background: rgba(255, 150, 0, 0.1);
+                border-radius: 8px;
+                font-size: 12px;
+                color: #ff9600;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                margin-top: 3px;
+                align-self: flex-start;
+                &:hover {
+                  color: #ff8200;
+                }
+                i {
+                  display: inline-block;
+                  width: 16px;
+                  height: 16px;
+                  background-image: url("../../assets/img/helmet/icon_long.png");
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 3px;
+                }
+              }
+              .starttime {
+                font-size: 12px;
+                color: #9b9b9b;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                span {
+                  &:nth-of-type(1) {
+                    display: flex;
+                    align-items: center;
+                    i {
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background-image: url("../../assets/img/flashmining/miningtime.png");
+                      background-repeat: no-repeat;
+                      background-size: 100% 100%;
+                      margin-right: 3px;
+                    }
+                    color: #9b9b9b;
+                  }
+                  &:nth-of-type(2) {
+                    padding: 1px 3px;
+                    background: #f7f7fa;
+                    border-radius: 3px;
+                    color: #121212;
+                    i {
+                      color: #cfcfd2;
+                    }
+                  }
+                }
               }
             }
           }
         }
-
+        > .starttime {
+          display: none;
+        }
         > div {
           display: flex;
           flex-direction: column;
@@ -744,6 +873,7 @@ export default {
       .index {
         display: flex;
         justify-content: space-between;
+        margin-top: 25px;
         > p {
           display: flex;
           flex-direction: column;
@@ -880,7 +1010,7 @@ export default {
       font-size: 12px;
     }
   }
-  .math_pool {
+  .bnb500_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;
@@ -901,11 +1031,17 @@ export default {
       top: 0;
       transform: translateY(-5px);
     }
+    .finished {
+      width: 102px;
+      height: 102px;
+      top: 0;
+      right: 0;
+      transform: translateY(0);
+    }
     .circle {
       width: 102px;
       height: 102px;
       top: 0;
-
       transform: translateY(0);
     }
     .right {
@@ -939,34 +1075,75 @@ export default {
               width: 32px;
               height: 32px;
             }
-            p {
-              margin: 8px 0;
-              align-self: flex-start;
-              height: 16px;
-              background: rgba(255, 150, 0, 0.1);
-              border-radius: 8px;
-              font-size: 12px;
-              color: #ff9600;
-              line-height: 16px;
+            span {
+              padding-right: 60px;
+            }
+            > div {
               display: flex;
-              align-items: center;
-              cursor: pointer;
-              &:hover {
-                color: #ff8200;
-              }
-              i {
-                display: inline-block;
-                width: 16px;
+              .onepager {
+                margin: 8px 0;
+                align-self: flex-start;
                 height: 16px;
-                background-image: url("../../assets/img/helmet/icon_long.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
+                background: rgba(255, 150, 0, 0.1);
+                border-radius: 8px;
+                font-size: 12px;
+                color: #ff9600;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                &:hover {
+                  color: #ff8200;
+                }
+                i {
+                  display: inline-block;
+                  width: 16px;
+                  height: 16px;
+                  background-image: url("../../assets/img/helmet/icon_long.png");
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 3px;
+                }
+              }
+              > .starttime {
+                display: none;
               }
             }
           }
         }
-
+        > .starttime {
+          font-size: 14px;
+          color: #9b9b9b;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 4px;
+          span {
+            &:nth-of-type(1) {
+              display: flex;
+              align-items: center;
+              i {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              color: #9b9b9b;
+            }
+            &:nth-of-type(2) {
+              padding: 1px 3px;
+              background: #f7f7fa;
+              border-radius: 3px;
+              color: #121212;
+              i {
+                color: #cfcfd2;
+              }
+            }
+          }
+        }
         > div {
           display: flex;
           flex-direction: column;

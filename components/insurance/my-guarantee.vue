@@ -437,6 +437,7 @@ export default {
       let hMATHPolicy = await this.hMATHPolicy();
       let hFORPolicy = await this.hFORPolicy();
       let HCCTIIPolicy = await this.HCCTIIPolicy();
+      let hDODOPolicy = await this.hDODOPolicy();
 
       if (cakePolicy) {
         result.push(cakePolicy);
@@ -467,6 +468,9 @@ export default {
       }
       if (HCCTIIPolicy) {
         result.push(HCCTIIPolicy);
+      }
+      if (hDODOPolicy) {
+        result.push(hDODOPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1010,8 +1014,8 @@ export default {
           id: 9,
           bidID: 9,
           buyer: myAddress,
-          price: '--',
-          Rent: '--',
+          price: "--",
+          Rent: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1617897600),
@@ -1027,6 +1031,57 @@ export default {
           approveAddress2: "",
           outPrice: fromWei(100000000000000000, Token),
           outPriceUnit: "CAKE",
+          // showType: "img",
+          showVolume: volume,
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async hDODOPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3");
+        let resultItem;
+        resultItem = {
+          id: 10,
+          bidID: 10,
+          buyer: myAddress,
+          price: 1,
+          Rent: volume * 1,
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: this.getDownTime(1618416000),
+          _collateral: "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
+          _strikePrice: fromWei(10000000000000000000, Token),
+          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _expiry: 1618416000000,
+          transfer: true,
+          longAdress: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+          type: "call",
+          symbol: "hDODO",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(10000000000000000000, Token),
+          outPriceUnit: "HELMET",
           // showType: "img",
           showVolume: volume,
         };

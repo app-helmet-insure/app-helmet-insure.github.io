@@ -3,6 +3,12 @@
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img
+      class="finished"
+      src="~/assets/img/helmet/finished.png"
+      alt=""
+      v-if="expired"
+    />
+    <img
       class="circle right"
       src="~/assets/img/helmet/rightCircle.png"
       alt=""
@@ -13,19 +19,29 @@
           <img src="~/assets/img/flashmining/hmath_logo.png" alt="" />
           <div>
             <span>{{ list.name }}</span>
-            <p @click="showOnepager"><i></i>What is hMATH token？</p>
+            <div>
+              <p @click="showOnepager" class="onepager">
+                <i></i>What is hMATH token？
+              </p>
+              <p class="starttime">
+                <span><i></i> {{ $t("Table.SurplusTime") }}： </span>
+                <span>
+                  {{ list.DownTime.day }}d
+                  <i>/</i>
+                  {{ list.DownTime.hour }}h
+                </span>
+              </p>
+            </div>
           </div>
         </h3>
-        <div>
-          <p>
-            <span>
-              {{ $t("Table.SurplusTime") }}：
-              <span>
-                {{ isLogin ? list.DownTime : "--" }}
-              </span>
-            </span>
-          </p>
-        </div>
+        <p class="starttime">
+          <span><i></i> {{ $t("Table.SurplusTime") }}： </span>
+          <span>
+            {{ list.DownTime.day }}d
+            <i>/</i>
+            {{ list.DownTime.hour }}h
+          </span>
+        </p>
       </div>
       <div class="index">
         <p v-for="(item, index) in textList" :key="index">
@@ -101,6 +117,11 @@
             <button
               @click="toDeposite"
               :class="stakeLoading ? 'disable b_button' : 'b_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="stakeLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ConfirmDeposit") }}
@@ -219,6 +240,11 @@
             <button
               @click="toClaim"
               :class="claimLoading ? 'disable o_button' : 'o_button'"
+              :style="
+                expired
+                  ? 'background: #ccc !important; pointer-events: none'
+                  : ''
+              "
             >
               <i :class="claimLoading ? 'loading_pic' : ''"></i
               >{{ $t("Table.ClaimAllRewards") }}
@@ -280,7 +306,10 @@ export default {
       list: {
         name: "hMATH Pool (By hAUTO-Helmet LPT)",
         dueDate: "2021-03-18 00:00",
-        DownTime: "--",
+        DownTime: {
+          day: 0,
+          hour: 0,
+        },
       },
       textList: [
         {
@@ -333,6 +362,7 @@ export default {
       actionType: "deposit",
       fixD,
       isLogin: false,
+      expired: false,
     };
   },
   mounted() {
@@ -449,13 +479,16 @@ export default {
       );
       let template;
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day,
+          hour: hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: 0,
+          hour: 0,
+        };
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
@@ -505,7 +538,11 @@ export default {
       );
       this.apy = apy ? apy : 0;
       // this.textList[1].num = "Infinity" + "%";
-      this.textList[1].num = this.apy + "%";
+      if (this.expired) {
+        this.textList[1].num = "--";
+      } else {
+        this.textList[1].num = this.apy + "%";
+      }
     },
     async getBalance() {
       let helmetType = "HMATHPOOL_LPT";
@@ -526,7 +563,11 @@ export default {
       this.balance.hCTK = fixD(Helmet, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((30000 / 15) * 7, 2) + " hMATH";
+      if (this.expired) {
+        this.textList[0].num = "--";
+      } else {
+        this.textList[0].num = fixD((30000 / 15) * 7, 2) + " hMATH";
+      }
     },
     // 抵押
     toDeposite() {
@@ -538,7 +579,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HMATHPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -679,39 +720,79 @@ export default {
             line-height: 32px;
             flex-direction: column;
             margin-bottom: 10px;
+            flex: 1;
             img {
               margin-left: 4px;
               width: 32px;
               height: 32px;
             }
-            p {
-              height: 16px;
-              background: rgba(255, 150, 0, 0.1);
-              border-radius: 8px;
-              font-size: 12px;
-              color: #ff9600;
-              line-height: 16px;
+            > div {
               display: flex;
               align-items: center;
-              cursor: pointer;
-              margin-top: 3px;
-              align-self: flex-start;
-              &:hover {
-                color: #ff8200;
-              }
-              i {
-                display: inline-block;
-                width: 16px;
+              justify-content: space-between;
+              .onepager {
                 height: 16px;
-                background-image: url("../../assets/img/helmet/icon_long.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
+                background: rgba(255, 150, 0, 0.1);
+                border-radius: 8px;
+                font-size: 12px;
+                color: #ff9600;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                margin-top: 3px;
+                align-self: flex-start;
+                &:hover {
+                  color: #ff8200;
+                }
+                i {
+                  display: inline-block;
+                  width: 16px;
+                  height: 16px;
+                  background-image: url("../../assets/img/helmet/icon_long.png");
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 3px;
+                }
+              }
+              .starttime {
+                font-size: 12px;
+                color: #9b9b9b;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                span {
+                  &:nth-of-type(1) {
+                    display: flex;
+                    align-items: center;
+                    i {
+                      display: inline-block;
+                      width: 12px;
+                      height: 12px;
+                      background-image: url("../../assets/img/flashmining/miningtime.png");
+                      background-repeat: no-repeat;
+                      background-size: 100% 100%;
+                      margin-right: 3px;
+                    }
+                    color: #9b9b9b;
+                  }
+                  &:nth-of-type(2) {
+                    padding: 1px 3px;
+                    background: #f7f7fa;
+                    border-radius: 3px;
+                    color: #121212;
+                    i {
+                      color: #cfcfd2;
+                    }
+                  }
+                }
               }
             }
           }
         }
-
+        > .starttime {
+          display: none;
+        }
         > div {
           display: flex;
           flex-direction: column;
@@ -744,6 +825,7 @@ export default {
       .index {
         display: flex;
         justify-content: space-between;
+        margin-top: 25px;
         > p {
           display: flex;
           flex-direction: column;
@@ -939,34 +1021,75 @@ export default {
               width: 32px;
               height: 32px;
             }
-            p {
-              margin: 8px 0;
-              align-self: flex-start;
-              height: 16px;
-              background: rgba(255, 150, 0, 0.1);
-              border-radius: 8px;
-              font-size: 12px;
-              color: #ff9600;
-              line-height: 16px;
+            span {
+              padding-right: 60px;
+            }
+            > div {
               display: flex;
-              align-items: center;
-              cursor: pointer;
-              &:hover {
-                color: #ff8200;
-              }
-              i {
-                display: inline-block;
-                width: 16px;
+              .onepager {
+                margin: 8px 0;
+                align-self: flex-start;
                 height: 16px;
-                background-image: url("../../assets/img/helmet/icon_long.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
+                background: rgba(255, 150, 0, 0.1);
+                border-radius: 8px;
+                font-size: 12px;
+                color: #ff9600;
+                line-height: 16px;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                &:hover {
+                  color: #ff8200;
+                }
+                i {
+                  display: inline-block;
+                  width: 16px;
+                  height: 16px;
+                  background-image: url("../../assets/img/helmet/icon_long.png");
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 3px;
+                }
+              }
+              > .starttime {
+                display: none;
               }
             }
           }
         }
-
+        > .starttime {
+          font-size: 14px;
+          color: #9b9b9b;
+          line-height: 16px;
+          display: flex;
+          align-items: center;
+          margin-bottom: 4px;
+          span {
+            &:nth-of-type(1) {
+              display: flex;
+              align-items: center;
+              i {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              color: #9b9b9b;
+            }
+            &:nth-of-type(2) {
+              padding: 1px 3px;
+              background: #f7f7fa;
+              border-radius: 3px;
+              color: #121212;
+              i {
+                color: #cfcfd2;
+              }
+            }
+          }
+        }
         > div {
           display: flex;
           flex-direction: column;

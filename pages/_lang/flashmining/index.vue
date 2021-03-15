@@ -6,15 +6,15 @@
     </div>
     <div class="flashmining_container">
       <div class="pool_wrap">
-        <!-- <HdodoPool></HdodoPool> -->
+        <HdodoPool></HdodoPool>
         <HmathPool></HmathPool>
+      </div>
+      <div class="pool_wrap">
         <HautoPool></HautoPool>
-      </div>
-      <div class="pool_wrap">
         <Bnb500Pool></Bnb500Pool>
-        <HctkPool></HctkPool>
       </div>
       <div class="pool_wrap">
+        <HctkPool></HctkPool>
         <HcctPool></HcctPool>
       </div>
       <Onepager></Onepager>

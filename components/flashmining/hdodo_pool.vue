@@ -24,7 +24,14 @@
                 <i></i>What is hDODO token？
               </p>
               <p class="starttime">
-                <span><i></i> {{ $t("Table.SurplusTime") }}： </span>
+                <span
+                  ><i></i>
+                  {{
+                    openMining
+                      ? $t("Table.SurplusTime")
+                      : $t("Table.WillStartIn")
+                  }}：
+                </span>
                 <span v-if="!openMining">
                   {{ list.DownTime.hour }}h
                   <i>/</i>
@@ -42,7 +49,12 @@
           </div>
         </h3>
         <p class="starttime">
-          <span><i></i> {{ $t("Table.SurplusTime") }}： </span>
+          <span
+            ><i></i>
+            {{
+              openMining ? $t("Table.SurplusTime") : $t("Table.WillStartIn")
+            }}：
+          </span>
           <span v-if="!openMining">
             {{ list.DownTime.hour }}h
             <i>/</i>

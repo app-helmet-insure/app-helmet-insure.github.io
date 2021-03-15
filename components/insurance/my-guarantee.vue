@@ -1057,23 +1057,22 @@ export default {
       let volume = await getBalance(
         "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3"
       );
-      console.log(volume);
       let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3");
         let resultItem;
         resultItem = {
-          id: 8,
-          bidID: 8,
+          id: 10,
+          bidID: 10,
           buyer: myAddress,
           price: 1,
           Rent: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: this.getDownTime(1618416000),
-          _collateral: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
-          _strikePrice: fromWei(100000000000000000, Token),
-          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          _collateral: "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
+          _strikePrice: fromWei(10000000000000000000, Token),
+          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1618416000000,
           transfer: true,
           longAdress: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",

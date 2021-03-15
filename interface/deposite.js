@@ -77,7 +77,7 @@ export const compound = async (address, type) => {
             });
     } catch {}
 };
-export const totalSupply = async (address) => {
+export const totalSupply = async (address, currcy) => {
     const charID = window.chainID;
     let adress = address;
     if (address.indexOf('0x') === -1) {
@@ -91,7 +91,8 @@ export const totalSupply = async (address) => {
         .totalSupply()
         .call()
         .then((res) => {
-            let tocurrcy = adress;
+            let tocurrcy = currcy ? currcy : address;
+
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
@@ -129,7 +130,9 @@ export const toDeposite = async (type, data, flag, callBack) => {
     const address = window.CURRENTADDRESS;
     let amount = data.amount;
     let num = data.amount;
-    amount = toWei(amount, type);
+    let cwei = getWei(type);
+    let fix = cwei === 'lovelace' ? 6 : 18;
+    amount = window.WEB3.utils.toWei(fixD(String(amount), fix), cwei);
     let adress = type;
     let adressLPT = type;
     if (type.indexOf('0x') === -1) {
@@ -216,7 +219,9 @@ export const toWithdraw = async (type, data, flag, callBack) => {
     const address = window.CURRENTADDRESS;
     let amount = data.amount;
     let num = data.amount;
-    amount = toWei(amount);
+    let cwei = getWei(type);
+    let fix = cwei === 'lovelace' ? 6 : 18;
+    amount = window.WEB3.utils.toWei(fixD(String(amount), fix), cwei);
     let adress = type;
     let adressLPT = type;
     if (type.indexOf('0x') === -1) {

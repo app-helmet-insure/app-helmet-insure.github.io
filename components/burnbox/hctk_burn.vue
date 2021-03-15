@@ -1,6 +1,6 @@
 <template>
   <div class="long_burn">
-    <img class="coin" src="~/assets/img/burnmining/hcctCoin.png" alt="" />
+    <img class="coin" src="~/assets/img/burnmining/hctkCoin.png" alt="" />
     <div class="title">
       <div class="pool_detail">
         <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
@@ -341,11 +341,11 @@ export default {
       let helmetType = "BURNHCTK_LPT";
       let type = "BURNHCTK";
       // 可抵押数量
-      let Deposite = await getBalance(helmetType);
+      let Deposite = await getBalance(helmetType, "BURNHCTK_LPT");
       // 可赎回数量
       let Withdraw = await getLPTOKEN(type);
       // 总抵押
-      let TotalLPT = await totalSupply(type);
+      let TotalLPT = await totalSupply(type, "BURNHCTK_LPT");
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
       // 总Helmet

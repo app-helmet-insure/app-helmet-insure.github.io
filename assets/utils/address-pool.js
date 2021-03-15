@@ -47,7 +47,7 @@ export const getContract = (name, charID = 56) => {
     const network = selectNetwork(charID);
     let contract = addressList[`${network}_CONTRACT_${name}`];
     if (contract) {
-        return contract;
+        return contract.toLowerCase();
     } else {
         return null;
     }
@@ -63,9 +63,13 @@ export const getSymbol = (address, char_id) => {
         'HCCT',
         'ETH',
         'CTK',
+        'BURNHCTK_LPT',
     ];
     const symbol = symbol_list.filter((item) => {
-        return getAddress(item, charID) === address.toLowerCase();
+        return (
+            getAddress(item, charID) === address.toLowerCase() ||
+            getContract(item, charID) === address.toLowerCase()
+        );
     });
     if (symbol) {
         return symbol;
@@ -106,6 +110,10 @@ export const getWei = (token) => {
         token = getSymbol(token)[0];
     }
     switch (token) {
+        case 'BURNHCTK_LPT':
+            return 'lovelace'; // 6
+        case 'BURNHCTK':
+            return 'lovelace'; // 6
         case 'HCTK':
             return 'lovelace'; // 6
         case 'BNB_CTK_LPT':

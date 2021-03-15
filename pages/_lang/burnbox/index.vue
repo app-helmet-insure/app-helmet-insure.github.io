@@ -58,6 +58,7 @@ export default {
   .burn_text {
     padding-left: 24px;
     margin-top: 30px;
+
     h3 {
       font-size: 24px;
       width: 267px;
@@ -75,6 +76,7 @@ export default {
   .burn_wrap {
     display: flex;
     align-items: center;
+    flex-direction: column;
     .long_burn {
       margin-top: 56px;
     }

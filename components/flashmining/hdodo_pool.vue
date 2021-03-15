@@ -574,7 +574,6 @@ export default {
         ),
         2
       );
-      console.log(apy);
       this.apy = apy;
       if (this.expired) {
         this.textList[1].num = "--";

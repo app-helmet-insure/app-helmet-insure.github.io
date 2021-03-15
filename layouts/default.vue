@@ -457,7 +457,6 @@ export default {
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
       this.$store.commit("SET_HELMET_BUSD", helmetbusd);
       this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
-      console.log(arr, arr1);
     },
   },
 };

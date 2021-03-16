@@ -55,21 +55,21 @@
 </template>
 <script>
 const typeMap = {
-  success: 'success',
-  info: 'info',
-  warning: 'warning',
-  error: 'error',
+  success: "success",
+  info: "info",
+  warning: "warning",
+  error: "error",
 };
 export default {
-  name: 'ex-message',
+  name: "ex-message",
   data() {
     return {
       visible: false,
-      message: '',
+      message: "",
       duration: 3000,
-      type: 'info',
-      iconClass: '',
-      customClass: '',
+      type: "info",
+      iconClass: "",
+      customClass: "",
       onClose: null,
       showClose: false,
       closed: false,
@@ -83,7 +83,7 @@ export default {
     typeClass() {
       return this.type && !this.iconClass
         ? `ex-message-icon el-icon-${typeMap[this.type]}`
-        : '';
+        : "";
     },
     positionStyle() {
       return {
@@ -105,7 +105,7 @@ export default {
     },
     close() {
       this.closed = true;
-      if (typeof this.onClose === 'function') {
+      if (typeof this.onClose === "function") {
         this.onClose(this);
       }
     },
@@ -132,15 +132,15 @@ export default {
   },
   mounted() {
     this.startTimer();
-    document.addEventListener('keydown', this.keydown);
+    document.addEventListener("keydown", this.keydown);
   },
   beforeDestroy() {
-    document.removeEventListener('keydown', this.keydown);
+    document.removeEventListener("keydown", this.keydown);
   },
 };
 </script>
 <style lang="scss">
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .ex-message {
     width: 640px;
@@ -247,10 +247,10 @@ export default {
       /* @include themeify {
       background: rgba(themed('color-success'), 0.08);
     } */
-      background: #1d2c24;
+      background: #e5f8e5;
     }
     &.ex-message-error {
-      background: #471111;
+      background: #ffefe5;
       /* @include themeify {
       background: rgba(themed('color-error'), 0.08);
     } */

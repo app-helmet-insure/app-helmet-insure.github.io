@@ -474,13 +474,13 @@ export default {
       let template;
       if (dueDate > now) {
         template = {
-          day: day,
-          hour: hour,
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
         };
       } else {
         template = {
-          day: 0,
-          hour: 0,
+          day: "00",
+          hour: "00",
         };
         this.expired = true;
       }
@@ -778,6 +778,7 @@ export default {
                   }
                   &:nth-of-type(2) {
                     padding: 1px 3px;
+                    font-weight: normal;
                     background: #f7f7fa;
                     border-radius: 3px;
                     color: #121212;

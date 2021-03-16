@@ -47,7 +47,7 @@ export default {
       immediate: true,
     },
   },
-  mounted() { },
+  mounted() {},
   methods: {
     copyAdress(e, text) {
       let _this = this;
@@ -74,9 +74,7 @@ export default {
       if (account) {
         this.accountText =
           account.substr(0, 1) +
-          " " +
-          account.substr(1, 1) +
-          " " +
+          account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
           "..." +
           account.substr(-5);

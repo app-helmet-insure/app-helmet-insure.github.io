@@ -118,7 +118,7 @@ export default {
       this.chainID = newValue;
     },
   },
-  mounted() { },
+  mounted() {},
   methods: {
     openChangeWallet() {
       this.showChangeWallet = true;
@@ -138,9 +138,7 @@ export default {
         account = account.toUpperCase();
         this.accountText =
           account.substr(0, 1) +
-          " " +
-          account.substr(1, 1) +
-          " " +
+          account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
           "..." +
           account.substr(-5);

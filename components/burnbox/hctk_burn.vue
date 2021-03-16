@@ -22,8 +22,8 @@
     </div>
     <div class="text">
       <p>
-        <span>{{ $t("Table.SurplusTime") }}：</span>
-        <span>{{ list.DownTime }}</span>
+        <span><i></i>{{ $t("Table.SurplusTime") }}：</span>
+        <span>{{ list.DownTime.day }}d / {{ list.DownTime.hour }}h</span>
       </p>
       <p>
         <span>{{ $t("Table.Bonus") }}</span>
@@ -232,7 +232,10 @@ export default {
         endTime: "2021-03-23 00:00",
         startTime: "2021-03-16 00:00",
         bonusValue: 10000,
-        DownTime: "--",
+        DownTime: {
+          day: "00",
+          hour: "00",
+        },
         rewards: 0,
         process: 0,
       },
@@ -370,15 +373,17 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      let template;
+      let template = {};
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: "00",
+          hour: "00",
+        };
         this.expired = true;
       }
       this.list.DownTime = template;
@@ -581,6 +586,31 @@ export default {
       > p {
         display: flex;
         flex-direction: column;
+        &:first-child {
+          span {
+            &:nth-of-type(1) {
+              display: flex;
+              align-items: center;
+              i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+            }
+            &:nth-of-type(2) {
+              padding: 1px 4px;
+              background: #ffe3bb;
+              border-radius: 3px;
+              color: #121212;
+              display: flex;
+              align-self: baseline;
+            }
+          }
+        }
         &:last-child {
           text-align: right;
         }
@@ -951,6 +981,31 @@ export default {
       > p {
         display: flex;
         flex-direction: column;
+        &:first-child {
+          span {
+            &:nth-of-type(1) {
+              display: flex;
+              align-items: center;
+              i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+            }
+            &:nth-of-type(2) {
+              padding: 1px 4px;
+              background: #ffe3bb;
+              border-radius: 3px;
+              color: #121212;
+              display: flex;
+              align-self: baseline;
+            }
+          }
+        }
         &:last-child {
           text-align: right;
         }

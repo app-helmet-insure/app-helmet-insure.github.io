@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img8 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
       <div class="imgbanner img7 swiper-slide">
@@ -161,6 +162,9 @@ export default {
         }
       }
     }
+    .img8 {
+      background-image: url("../../assets/img/helmet/DODO.png");
+    }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
@@ -220,6 +224,9 @@ export default {
           background: #2c2c2c;
         }
       }
+    }
+    .img8 {
+      background-image: url("../../assets/img/helmet/DODO_h5.png");
     }
     .imgbanner {
       background-size: 100% 100%;

@@ -484,13 +484,13 @@ export default {
       let template = {};
       if (dueDate > now) {
         template = {
-          day: day,
-          hour: hour,
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
         };
       } else {
         template = {
-          day: 0,
-          hour: 0,
+          day: "00",
+          hour: "00",
         };
         this.expired = true;
       }
@@ -512,15 +512,15 @@ export default {
       let template = {};
       if (dueDate < now) {
         template = {
-          houer: 0,
-          minute: 0,
-          second: 0,
+          hour: "00",
+          minute: "00",
+          second: "00",
         };
       } else {
         template = {
-          houer: hour,
-          minute: minute,
-          second: second,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+          second: second > 9 ? second : "0" + second,
         };
       }
       this.MingTime = template;
@@ -792,6 +792,7 @@ export default {
                   }
                   &:nth-of-type(2) {
                     padding: 1px 3px;
+                    font-weight: normal;
                     background: #f7f7fa;
                     border-radius: 3px;
                     color: #121212;

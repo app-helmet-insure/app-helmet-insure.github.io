@@ -474,13 +474,13 @@ export default {
       let template;
       if (dueDate > now) {
         template = {
-          day: day,
-          hour: hour,
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
         };
       } else {
         template = {
-          day: 0,
-          hour: 0,
+          day: "00",
+          hour: "00",
         };
         this.expired = true;
       }

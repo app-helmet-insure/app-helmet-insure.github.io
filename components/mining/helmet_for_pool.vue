@@ -24,10 +24,11 @@
         <div>
           <p>
             <span>
-              {{ $t("Table.SurplusTime") }}：
-              <span>
-                {{ isLogin ? list.DownTime : "--" }}
+              <i></i>{{ $t("Table.SurplusTime") }}：
+              <span v-if="isLogin">
+                {{ list.DownTime.day }}<i>/</i>{{ list.DownTime.hour }}
               </span>
+              <span v-else> -- </span>
             </span>
           </p>
         </div>
@@ -250,7 +251,12 @@ export default {
       list: {
         name: "HELMET-hFOR LP",
         dueDate: "2021-03-20 00:00",
-        DownTime: "--",
+        DownTime: {
+          day: "00",
+          hour: "00",
+          minute: "00",
+          second: "00",
+        },
       },
       textList: [
         {
@@ -301,7 +307,7 @@ export default {
       helmetPrice: 0,
       MingTime: "",
       isLogin: false,
-      expired: false
+      expired: false,
     };
   },
   mounted() {
@@ -392,14 +398,16 @@ export default {
       let template;
 
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
-        this.expired = true
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
@@ -490,7 +498,7 @@ export default {
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
       if (this.expired) {
-        this.textList[1].num = '--';
+        this.textList[1].num = "--";
       } else {
         this.textList[1].num = this.apy + "%";
       }
@@ -518,8 +526,8 @@ export default {
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
 
       if (this.expired) {
-        this.textList[0].num = '--';
-        this.textList[0].num1 = '--';
+        this.textList[0].num = "--";
+        this.textList[0].num1 = "--";
       } else {
         this.textList[0].num = fixD((10000 / 25) * 7, 2) + " HELMET";
         this.textList[0].num1 = fixD((182010 / 25) * 7, 2) + " FOR";
@@ -535,7 +543,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "FORHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -688,7 +696,28 @@ export default {
               height: 32px;
               margin-right: 4px;
             }
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
             }
           }
@@ -943,6 +972,7 @@ export default {
                 height: 32px;
                 margin-right: 4px;
               }
+
               span {
                 margin-left: 4px;
                 color: #919aa6;
@@ -951,10 +981,29 @@ export default {
           }
           > p {
             margin-top: 5px;
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
-              font-size: 14px;
-              margin-left: 0 !important;
             }
           }
         }

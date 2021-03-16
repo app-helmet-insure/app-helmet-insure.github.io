@@ -183,6 +183,7 @@ export default {
       ];
     },
   },
+
   methods: {
     openChangeWallet() {
       this.showChangeWallet = true;
@@ -222,6 +223,7 @@ export default {
     },
     openWallectSelect() {
       this.showWallectSelect = true;
+      this.closeMask();
     },
     closeMask() {
       this.$store.dispatch("setMaskDialog", false);

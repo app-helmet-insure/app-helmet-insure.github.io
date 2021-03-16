@@ -267,16 +267,42 @@ export default {
           display: flex;
           flex-direction: column;
           text-align: left;
+          position: relative;
           span {
             margin-top: 8px;
             font-size: 20px;
             font-weight: bold;
             color: #121212;
           }
+          label {
+            color: #919aa6;
+            span {
+              display: flex;
+              font-weight: normal;
+              color: #919aa6;
+              &:nth-of-type(1) {
+                font-size: 16px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                margin-top: 0;
+              }
+              > a {
+                font-size: 14px;
+                color: #ff9600;
+                font-weight: 600;
+                position: relative;
+                z-index: 1;
+              }
+            }
+          }
         }
         img {
           width: 120px;
           height: 80px;
+          position: absolute;
+          right: 16px;
+          z-index: 0;
         }
       }
       li:nth-of-type(1) {

@@ -26,7 +26,7 @@
             <span>
               <i></i>{{ $t("Table.SurplusTime") }}：
               <span v-if="isLogin">
-                {{ list.DownTime.day }}<i>/</i>{{ list.DownTime.hour }}
+                {{ list.DownTime.day }}d<i>/</i>{{ list.DownTime.hour }}h
               </span>
               <span v-else> -- </span>
             </span>

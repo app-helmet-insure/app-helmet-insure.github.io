@@ -160,7 +160,6 @@ export default {
     p {
       font-size: 26px;
       color: #dbdbdb;
-      padding-top: 12px;
     }
   }
 }
@@ -268,6 +267,7 @@ export default {
           flex-direction: column;
           text-align: left;
           position: relative;
+          justify-content: center;
           span {
             margin-top: 8px;
             font-size: 20px;

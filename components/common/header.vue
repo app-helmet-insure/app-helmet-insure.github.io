@@ -55,9 +55,7 @@
         @close="closeWallectSelect"
       ></WallectSelect>
       <!-- <Langauage></Langauage> -->
-      <div class="more" @click="handleShowMask">
-        <div></div>
-      </div>
+      <div class="more" @click="handleShowMask"></div>
 
       <CurrentAccount
         v-if="showCurrentAccount"
@@ -140,9 +138,7 @@ export default {
         account = account.toUpperCase();
         this.accountText =
           account.substr(0, 1) +
-          " " +
-          account.substr(1, 1) +
-          " " +
+          account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
           "..." +
           account.substr(-5);
@@ -156,9 +152,6 @@ export default {
     },
     handleShowMask() {
       this.$store.dispatch("setMaskDialog", true);
-    },
-    handleCloseMask() {
-      this.$store.dispatch("setMaskDialog", false);
     },
   },
 };
@@ -387,10 +380,10 @@ export default {
   .header-container {
     justify-content: space-between;
     > div {
+      padding: 0 16px;
       justify-content: space-between;
       width: 100%;
       .logo {
-        margin-left: 16px;
         img {
           height: 40px;
         }
@@ -408,19 +401,11 @@ export default {
         display: none;
       }
       .more {
-        width: 100px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        > div {
-          width: 24px;
-          height: 24px;
-          background-image: url("../../assets/img/helmet/caidan@2x.png");
-          background-repeat: no-repeat;
-          background-size: cover;
-          margin-right: 16px;
-        }
+        width: 24px;
+        height: 24px;
+        background-image: url("../../assets/img/helmet/caidan@2x.png");
+        background-repeat: no-repeat;
+        background-size: cover;
       }
     }
   }

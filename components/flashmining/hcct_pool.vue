@@ -735,6 +735,7 @@ export default {
                   }
                   &:nth-of-type(2) {
                     padding: 1px 3px;
+                    font-weight: normal;
                     background: #f7f7fa;
                     border-radius: 3px;
                     color: #121212;

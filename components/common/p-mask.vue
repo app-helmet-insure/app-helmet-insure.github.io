@@ -213,9 +213,7 @@ export default {
         account = account.toUpperCase();
         this.accountText =
           account.substr(0, 1) +
-          " " +
-          account.substr(1, 1) +
-          " " +
+          account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
           "..." +
           account.substr(-5);
@@ -285,7 +283,7 @@ export default {
     flex-direction: column;
     li {
       cursor: pointer;
-      margin-top: 30px;
+      padding: 15px 0;
       text-align: left;
       font-size: 14px;
       font-weight: 400;

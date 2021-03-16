@@ -122,6 +122,7 @@ export default {
           height: 24px;
         }
         span {
+          display: none;
           margin-top: 4px;
           font-size: 14px;
           color: #787878;

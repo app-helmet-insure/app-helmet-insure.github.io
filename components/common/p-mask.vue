@@ -7,17 +7,28 @@
       <span @click="closeMask"></span>
     </div>
     <ul class="navList">
-      <li v-for="item in this.renderList" :key="item.url" @click="closeMask">
-        <a v-if="item.link" :href="item.url">{{ item.text }}</a>
-        <span v-else @click="toPath(item)">
+      <li
+        v-for="item in this.renderList"
+        :key="item.url"
+        @click="toPath(item)"
+        v-if="!item.link"
+      >
+        <span>
           {{ item.text }}
           <i :class="item.logo" v-if="item.logo"></i>
         </span>
       </li>
+      <li v-else>
+        <a v-if="item.link" :href="item.url">{{ item.text }}</a>
+      </li>
     </ul>
     <ul class="navList">
-      <li v-for="item in this.localeList" :key="item.key">
-        <span @click="switchLang(item.key)">{{ item.name }}</span>
+      <li
+        v-for="item in this.localeList"
+        :key="item.key"
+        @click="switchLang(item.key)"
+      >
+        <span>{{ item.name }}</span>
       </li>
     </ul>
     <a
@@ -155,16 +166,6 @@ export default {
           text: this.$t("Header.BruningBox"),
           logo: "fire",
         },
-        // {
-        //   url: '/plan',
-        //   link: false,
-        //   text: this.$t('Header.MySupply'),
-        // },
-        // {
-        //   url: '/mining',
-        //   link: false,
-        //   text: this.$t('Header.LPMining'),
-        // },
         {
           url: "https://helmet-insure.gitbook.io/helmet/",
           link: true,
@@ -175,11 +176,6 @@ export default {
           link: true,
           text: this.$t("Header.Medium"),
         },
-        // {
-        //   type: 'PAYASO',
-        //   link: false,
-        //   text: this.$t('Assets.My') + ' ' + 'PAYA',
-        // },
       ];
     },
   },
@@ -283,15 +279,20 @@ export default {
     flex-direction: column;
     li {
       cursor: pointer;
-      padding: 15px 0;
-      text-align: left;
+      height: 45px;
+      display: flex;
       font-size: 14px;
       font-weight: 400;
       color: #ffffff;
       line-height: 14px;
       letter-spacing: 1px;
+      align-items: center;
       a {
         color: #ffffff;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        line-height: 45px;
       }
       span {
         position: relative;

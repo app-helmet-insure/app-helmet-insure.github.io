@@ -54,6 +54,7 @@
     <div class="pool">
       <div class="pool_tab">
         <button
+          :style="expired ? 'pointer-events: none' : ''"
           :class="
             actionType == 'deposit'
               ? 'deposit_btn deposit_active'
@@ -493,6 +494,7 @@ export default {
           hour: "00",
         };
         this.expired = true;
+        this.actionType = "withdraw";
       }
       this.list.DownTime = template;
     },

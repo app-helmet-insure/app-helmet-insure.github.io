@@ -385,6 +385,7 @@ export default {
           hour: "00",
         };
         this.expired = true;
+        this.actionType = "withdraw";
       }
       this.list.DownTime = template;
     },

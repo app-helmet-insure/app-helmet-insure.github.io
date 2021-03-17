@@ -645,7 +645,7 @@ export default {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.owerCase();
+        this.$store.state.userInfo.data.account.toLowerCase();
       let volume = await getBalance(
         "0x936909e72951a19a5e1d75a109b0d34f06f39838",
         "CTK"

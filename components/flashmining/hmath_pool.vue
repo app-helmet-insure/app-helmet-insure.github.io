@@ -297,7 +297,6 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import helmetVue from "../../layouts/helmet.vue";
 export default {
   components: {
     countTo,

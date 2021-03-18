@@ -19,6 +19,10 @@
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
         </nuxt-link>
+        <nuxt-link to="/iiO"
+          >iiO
+          <!-- <p class="fire"></p> -->
+        </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>
@@ -162,19 +166,19 @@ export default {
   width: 100%;
   height: 80px;
   background: #fff;
-  border-bottom: 1px solid #f7f7fa;
   > div {
-    height: 100%;
+    height: 80px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     text-align: center;
+    border-bottom: 1px solid #f7f7fa;
     .nav-list {
       flex: 1;
       display: flex;
       a {
         display: inline-block;
-        margin-left: 40px;
+        margin-left: 35px;
         position: relative;
         color: #121212;
         font-weight: bold;

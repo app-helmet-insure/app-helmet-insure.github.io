@@ -325,7 +325,6 @@ import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
 import { template } from "@antv/g2plot/lib/utils";
-import helmetVue from "../../layouts/helmet.vue";
 export default {
   components: {
     countTo,

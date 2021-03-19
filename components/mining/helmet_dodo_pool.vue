@@ -1,6 +1,6 @@
 <template>
   <div class="helmetfor_pool">
-    <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
+    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <img
       class="finished"
@@ -55,7 +55,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            LPT
+            DLPT
             {{ $t("Table.DAvailable") }}
           </p>
         </div>
@@ -103,7 +103,7 @@
                 :decimals="4"
               />
               <span v-else>--</span>
-              LPT</span
+              DLPT</span
             >
           </p>
 
@@ -113,7 +113,7 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://app.dodoex.io/liquidity?poolAddress=0x7f6ea24c10e32c8a5fd1c9b2c1239340671460cc"
               target="_blank"
               >From <i class="dodo"></i>Get HELMET-hDODO DLP</a
             >
@@ -146,7 +146,7 @@
             />
             <span v-else>--</span>
 
-            LPT {{ $t("Table.WAvailable") }}
+            DLPT {{ $t("Table.WAvailable") }}
           </p>
         </div>
         <div class="content">
@@ -185,7 +185,7 @@
                   :decimals="8"
                 />
                 <span v-else>--</span>
-                FOR</span
+                DODO</span
               >
               <span>
                 <countTo
@@ -248,8 +248,8 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-hDODO LP",
-        dueDate: "2021-03-20 00:00",
+        name: "HELMET-hDODO DLP",
+        dueDate: "2021-04-10 00:00",
         DownTime: "--",
       },
       textList: [
@@ -312,17 +312,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_DODOHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("CLAIM_LOADING_DODOHELMET", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("EXIT_LOADING_DODOHELMET", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_FORHELMET", () => {
+    this.$bus.$on("RELOAD_DATA_DODOHELMET", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -405,7 +405,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-05 00:00";
+      let dueDate = "2021-03-20 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -450,20 +450,20 @@ export default {
     },
     async getAPY() {
       // FOR的helmet价值
-      let lptBnbValue = await uniswap("FOR", "WBNB");
+      let lptBnbValue = await uniswap("DODO", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let FORHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = FORHELMET * 182010;
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 10000;
       //总抵押
-      let supplyVolume = await totalSupply("FORHELMET"); //数量
+      let supplyVolume = await totalSupply("DODOHELMET"); //数量
       // 总发行
-      let stakeVolue = await totalSupply("FORHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply("DODOHELMET_LPT"); //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "FORHELMET_LPT", true);
+      let stakeValue = await balanceOf("HELMET", "DODOHELMET_LPT", true);
       let burgerApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(allVolume, 15), 365),
+            precision.times(precision.divide(allVolume, 21), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -476,7 +476,7 @@ export default {
       let helmetApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(10000, 15), 365),
+            precision.times(precision.divide(25000, 21), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -496,8 +496,8 @@ export default {
       }
     },
     async getBalance() {
-      let helmetType = "FORHELMET_LPT";
-      let type = "FORHELMET";
+      let helmetType = "DODOHELMET_LPT";
+      let type = "DODOHELMET";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -521,8 +521,8 @@ export default {
         this.textList[0].num = "--";
         this.textList[0].num1 = "--";
       } else {
-        this.textList[0].num = fixD((10000 / 25) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((182010 / 25) * 7, 2) + " FOR";
+        this.textList[0].num = fixD((25000 / 21) * 7, 2) + " HELMET";
+        this.textList[0].num1 = fixD((10000 / 21) * 7, 2) + " DODO";
       }
     },
     // 抵押
@@ -534,7 +534,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "FORHELMET";
+      let type = "DODOHELMET";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -543,7 +543,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "FORHELMET";
+      let type = "DODOHELMET";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -552,7 +552,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "FORHELMET";
+      let type = "DODOHELMET";
       let res = await exitStake(type);
     },
   },

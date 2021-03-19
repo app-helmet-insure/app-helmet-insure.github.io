@@ -1,12 +1,17 @@
 <template>
   <div class="long_burn" :class="expired ? 'expiredBg' : 'activeBg'">
-    <!-- <img
+    <img
       v-if="expired"
       class="coin"
       src="~/assets/img/burnmining/expired_hcctCoin.png"
       alt=""
-    /> -->
-    <img class="coin" src="~/assets/img/burnmining/hctkCoin.png" alt="" />
+    />
+    <img
+      v-else
+      class="coin"
+      src="~/assets/img/burnmining/hctkCoin.png"
+      alt=""
+    />
     <div class="title">
       <div class="pool_detail">
         <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
@@ -129,10 +134,13 @@
           <span> {{ isLogin ? balance.Share : "--" }} % </span>
         </p>
       </div>
-      <button class="submit_burn" @click="toDeposite">
-        <!-- :style="
+      <button
+        class="submit_burn"
+        @click="toDeposite"
+        :style="
           expired ? 'background: #ccc !important; pointer-events: none' : ''
-        " -->
+        "
+      >
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
       <div class="ContractAddress">
@@ -240,8 +248,8 @@ export default {
     return {
       list: {
         name: "hCTK Burning Box",
-        endTime: "2021-03-23 00:00",
-        startTime: "2021-03-16 00:00",
+        endTime: "2021/03/23 00:00",
+        startTime: "2021/03/16 00:00",
         bonusValue: 10000,
         DownTime: {
           day: "00",
@@ -406,7 +414,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-16 00:00";
+      let dueDate = "2021/03/16 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

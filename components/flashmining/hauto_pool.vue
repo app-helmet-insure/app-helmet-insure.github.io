@@ -300,7 +300,7 @@ export default {
     return {
       list: {
         name: "hAUTO Pool (By BNB500-Helmet LPT)",
-        dueDate: "2021-03-09 00:00",
+        dueDate: "2021/03/09 00:00",
         DownTime: {
           day: 0,
           hour: 0,
@@ -488,7 +488,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-23 20:00";
+      let dueDate = "2021/02/23 20:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

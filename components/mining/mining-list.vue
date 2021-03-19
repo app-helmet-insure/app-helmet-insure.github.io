@@ -202,7 +202,7 @@ export default {
           putMined: 0,
           callSpToken: 0,
           putSpToken: 0,
-          dueDate: "2021-02-08 00:00",
+          dueDate: "2021/02/08 00:00",
           downTime: "",
         },
         {
@@ -213,7 +213,7 @@ export default {
           putMined: 0,
           callSpToken: 0,
           putSpToken: 0,
-          dueDate: "2021-02-08 00:00",
+          dueDate: "2021/02/08 00:00",
           downTime: "",
         },
         {
@@ -224,7 +224,7 @@ export default {
           putMined: 0,
           callSpToken: 0,
           putSpToken: 0,
-          dueDate: "2021-02-08 00:00",
+          dueDate: "2021/02/08 00:00",
           downTime: "",
         },
         {
@@ -235,7 +235,7 @@ export default {
           putMined: 0,
           callSpToken: 0,
           putSpToken: 0,
-          dueDate: "2021-02-08 00:00",
+          dueDate: "2021/02/08 00:00",
           downTime: "",
         },
       ],

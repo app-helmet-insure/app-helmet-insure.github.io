@@ -1021,7 +1021,7 @@ export default {
       font-size: 12px;
     }
   }
-  .bnb500_pool {
+  .hdodo_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;

@@ -1,17 +1,12 @@
 <template>
   <div class="long_burn" :class="expired ? 'expiredBg' : 'activeBg'">
-    <img
+    <!-- <img
       v-if="expired"
       class="coin"
       src="~/assets/img/burnmining/expired_hcctCoin.png"
       alt=""
-    />
-    <img
-      v-else
-      class="coin"
-      src="~/assets/img/burnmining/hctkCoin.png"
-      alt=""
-    />
+    /> -->
+    <img class="coin" src="~/assets/img/burnmining/hctkCoin.png" alt="" />
     <div class="title">
       <div class="pool_detail">
         <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
@@ -62,8 +57,9 @@
       <button
         :class="actionType == 'burn' ? 'active burn' : 'burn'"
         @click="actionType = 'burn'"
-        :style="expired ? 'pointer-events: none' : ''"
       >
+        <!-- :style="expired ? 'pointer-events: none' : ''" -->
+
         {{ $t("Table.Burn") }}
       </button>
       <button
@@ -133,13 +129,10 @@
           <span> {{ isLogin ? balance.Share : "--" }} % </span>
         </p>
       </div>
-      <button
-        class="submit_burn"
-        @click="toDeposite"
-        :style="
+      <button class="submit_burn" @click="toDeposite">
+        <!-- :style="
           expired ? 'background: #ccc !important; pointer-events: none' : ''
-        "
-      >
+        " -->
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
       <div class="ContractAddress">

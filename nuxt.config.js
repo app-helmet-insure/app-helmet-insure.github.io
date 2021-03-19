@@ -18,7 +18,14 @@ module.exports = {
             {
                 hid: 'description',
                 name: 'description',
-                content: process.env.npm_package_description || '',
+                content:
+                    'Helmet.insure is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.',
+            },
+            {
+                hid: 'keywords',
+                name: 'keywords',
+                content:
+                    'bsc binance smart chain defi crypto yieldfarm binance insurance helmet BSC',
             },
         ],
         link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],

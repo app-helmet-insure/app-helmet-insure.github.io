@@ -116,7 +116,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get HELMET-hBURGER LPT</a
+              >From <i class="pancake"></i>Get HELMET-hBURGER LPT</a
             >
           </section>
         </div>
@@ -803,7 +803,17 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           .column {
@@ -1078,7 +1088,7 @@ export default {
         }
       }
       .deposit {
-        height: 343px;
+        height: 363px;
         border-top: 2px solid #00b900;
         background: rgba(0, 185, 0, 0.04);
         .title {
@@ -1089,14 +1099,25 @@ export default {
         .button {
           section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
             a {
               font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              margin-top: 8px;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           p {

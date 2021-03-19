@@ -6,7 +6,7 @@
     </div>
     <div class="mining_container">
       <HelmetBnbPool></HelmetBnbPool>
-      <!-- <HelmetDodoPool></HelmetDodoPool> -->
+      <HelmetDodoPool></HelmetDodoPool>
       <HelmetForPool></HelmetForPool>
       <HelmetHelmetPool></HelmetHelmetPool>
       <HelmetBurgerPool></HelmetBurgerPool>

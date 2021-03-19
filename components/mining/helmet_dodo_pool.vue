@@ -115,19 +115,19 @@
             <a
               href="https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get HELMET-hFOR LPT</a
+              >From <i class="dodo"></i>Get HELMET-hDODO DLP</a
             >
           </section>
         </div>
         <div class="ContractAddress">
-          <span>hFOR Contract Address：</span>
+          <span>hDODO Contract Address：</span>
           <p>
-            0xb779F208f8d662558dF8E2b6bFE3b6305CC13389
+            0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3
             <i
               class="copy"
               id="copy_default"
               @click="
-                copyAdress($event, '0xb779F208f8d662558dF8E2b6bFE3b6305CC13389')
+                copyAdress($event, '0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3')
               "
             ></i>
           </p>
@@ -301,7 +301,7 @@ export default {
       helmetPrice: 0,
       MingTime: "",
       isLogin: false,
-      expired: false
+      expired: false,
     };
   },
   mounted() {
@@ -367,12 +367,12 @@ export default {
         showFlag: true,
         title: "What is $hFOR?",
         text: [
-          "It is $FOR cover miss out insurance policy (like the call option of $FOR). The reasonable activate price: 1 $FOR=0.25 HELMET.",
-          "For example, if $FOR hit 0.3 HELMET, you could swap only 0.25HELMET+1$hFOR to 1 $FOR, and get 0.05HELMET profit.",
-          "COMBO Mining period: 15days, from Mar.4th 24:00 SGT to Mar.19th 24:00 SGT (snapshot and Airdrop will be finished before Mar.4th 24:00 SGT)",
-          "Expire date: April 4th, 2021",
-          "if $hFOR expired, it could be a souvenir token",
-          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
+          "hDODO is the call option of DODO.",
+          "Total Supply: 75,000 (22,000 for vDODO holders, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
+          "Expire date: Apr. 14th 24:00 SGT",
+          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
+          "If hDODO get expired, it could be souvenir token",
+          "Please do not trade heavily on hDODO.",
         ],
       });
     },
@@ -399,7 +399,7 @@ export default {
         template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
           "Content.HourD"
         )}`;
-        this.expired = true
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
@@ -490,7 +490,7 @@ export default {
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
       if (this.expired) {
-        this.textList[1].num = '--';
+        this.textList[1].num = "--";
       } else {
         this.textList[1].num = this.apy + "%";
       }
@@ -518,8 +518,8 @@ export default {
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
 
       if (this.expired) {
-        this.textList[0].num = '--';
-        this.textList[0].num1 = '--';
+        this.textList[0].num = "--";
+        this.textList[0].num1 = "--";
       } else {
         this.textList[0].num = fixD((10000 / 25) * 7, 2) + " HELMET";
         this.textList[0].num1 = fixD((182010 / 25) * 7, 2) + " FOR";
@@ -535,7 +535,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "FORHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -772,7 +772,17 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/dodo@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           .column {
@@ -1028,7 +1038,7 @@ export default {
         }
       }
       .deposit {
-        height: 343px;
+        height: 363px;
         border-top: 2px solid #00b900;
         background: rgba(0, 185, 0, 0.04);
         .title {
@@ -1039,14 +1049,25 @@ export default {
         .button {
           section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
             a {
               font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              margin-top: 8px;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/dodo@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           p {

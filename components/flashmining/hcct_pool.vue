@@ -160,7 +160,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x17934fef9fC93128858e9945261524ab0581612e"
               target="_blank"
-              >Get LONG-HELMET LPT</a
+              >From <i class="pancake"></i>Get LONG-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
@@ -923,7 +923,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }
@@ -1231,7 +1241,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }

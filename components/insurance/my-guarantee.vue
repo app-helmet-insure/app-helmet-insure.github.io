@@ -953,11 +953,11 @@ export default {
         this.$store.state.userInfo.data.account &&
         this.$store.state.userInfo.data.account.toLowerCase();
       let volume = await getBalance(
-        "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522"
+        "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389"
       );
       let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x9065fcbb5f73B908aC4B05BdB81601Eec2065522");
+        let Token = getTokenName("0xb779F208f8d662558dF8E2b6bFE3b6305CC13389");
         let resultItem;
         resultItem = {
           id: 8,
@@ -973,7 +973,7 @@ export default {
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1617465600000,
           transfer: true,
-          longAdress: "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522",
+          longAdress: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
           type: "call",
           symbol: "hFOR",
           approveAddress1: "FACTORY",

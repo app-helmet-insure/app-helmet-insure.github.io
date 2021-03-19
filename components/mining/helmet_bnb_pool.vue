@@ -90,7 +90,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get HELMET-BNB LPT</a
+              >From <i class="pancake"></i>Get HELMET-BNB LPT</a
             >
           </section>
         </div>
@@ -592,13 +592,22 @@ export default {
         .button {
           section {
             a {
-              display: block;
               margin-top: 4px;
               font-size: 14px;
-              text-decoration: underline;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           .column {
@@ -754,7 +763,7 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
+        height: 320px;
         padding: 30px 16px;
         .title {
           display: flex;
@@ -808,14 +817,25 @@ export default {
         .button {
           section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
             a {
               font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              margin-top: 8px;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           p {

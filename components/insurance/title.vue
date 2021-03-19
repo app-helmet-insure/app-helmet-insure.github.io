@@ -1,16 +1,16 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="imgbanner img5 swiper-slide"></div>
       <div class="imgbanner img8 swiper-slide"></div>
       <div class="imgbanner img4 swiper-slide"></div>
       <div class="imgbanner img3 swiper-slide"></div>
-      <div class="imgbanner img7 swiper-slide">
+      <!-- <div class="imgbanner img7 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
       </div>
       <div class="imgbanner img6 swiper-slide">
         <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
-      </div>
-      <div class="imgbanner img5 swiper-slide"></div>
+      </div> -->
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-next"></div>
@@ -128,7 +128,7 @@ export default {
       background-image: url("../../assets/img/helmet/HCCT.png");
     }
     .img5 {
-      background-image: url("../../assets/img/helmet/BNB500.png");
+      background-image: url("../../assets/img/helmet/combo_dodo_web.png");
     }
     .img6 {
       background-image: url("../../assets/img/helmet/hauto.png");
@@ -191,7 +191,7 @@ export default {
       background-image: url("../../assets/img/helmet/HCCT_H5.png");
     }
     .img5 {
-      background-image: url("../../assets/img/helmet/BNB500_h5.png");
+      background-image: url("../../assets/img/helmet/combo_dodo_h5.png");
     }
     .img6 {
       background-image: url("../../assets/img/helmet/hauto_h5.png");

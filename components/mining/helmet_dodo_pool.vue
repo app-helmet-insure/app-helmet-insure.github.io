@@ -1,15 +1,15 @@
 <template>
   <div class="helmetfor_pool">
-    <span class="miningTime" v-if="MingTime">
+    <!-- <span class="miningTime" v-if="MingTime">
       {{ MingTime }} until COMBO Mining Start</span
-    >
+    > -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
-    <img
+    <!-- <img
       class="finished"
       src="~/assets/img/helmet/finished.png"
       alt=""
       v-if="expired"
-    />
+    /> -->
     <div class="text">
       <div class="coin">
         <h3>
@@ -75,10 +75,9 @@
           <button
             @click="toDeposite"
             :class="stakeLoading ? 'disable b_button' : 'b_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style=" expired ? 'background: #ccc !important; pointer-events:
+            none' : '' " -->
             <i :class="stakeLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmDeposit") }}
           </button>
@@ -206,10 +205,10 @@
           <button
             @click="toClaim"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style="
+              expired ? 'background: #ccc !important; pointer-events: none' : ''
+            " -->
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
           </button>

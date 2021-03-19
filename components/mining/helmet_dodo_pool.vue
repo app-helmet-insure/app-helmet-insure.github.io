@@ -1,6 +1,8 @@
 <template>
   <div class="helmetfor_pool">
-    <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span>
+    <span class="miningTime" v-if="MingTime">
+      {{ MingTime }} until COMBO Mining Start</span
+    >
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
     <img
       class="finished"
@@ -24,10 +26,11 @@
         <div>
           <p>
             <span>
-              {{ $t("Table.SurplusTime") }}：
-              <span>
-                {{ isLogin ? list.DownTime : "--" }}
+              <i></i>{{ $t("Table.SurplusTime") }}：
+              <span v-if="isLogin">
+                {{ list.DownTime.day }}d<i>/</i>{{ list.DownTime.hour }}h
               </span>
+              <span v-else> -- </span>
             </span>
           </p>
         </div>
@@ -55,7 +58,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            DLPT
+            DLP
             {{ $t("Table.DAvailable") }}
           </p>
         </div>
@@ -103,7 +106,7 @@
                 :decimals="4"
               />
               <span v-else>--</span>
-              DLPT</span
+              DLP</span
             >
           </p>
 
@@ -146,7 +149,7 @@
             />
             <span v-else>--</span>
 
-            DLPT {{ $t("Table.WAvailable") }}
+            DLP {{ $t("Table.WAvailable") }}
           </p>
         </div>
         <div class="content">
@@ -250,7 +253,12 @@ export default {
       list: {
         name: "HELMET-hDODO DLP",
         dueDate: "2021-04-10 00:00",
-        DownTime: "--",
+        DownTime: {
+          day: "00",
+          hour: "00",
+          minute: "00",
+          second: "00",
+        },
       },
       textList: [
         {
@@ -365,7 +373,7 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $hFOR?",
+        title: "What is $hDODO?",
         text: [
           "hDODO is the call option of DODO.",
           "Total Supply: 75,000 (22,000 for vDODO holders, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
@@ -392,13 +400,15 @@ export default {
       let template;
 
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: "00",
+          hour: "00",
+        };
         this.expired = true;
       }
       this.list.DownTime = template;
@@ -688,7 +698,28 @@ export default {
               height: 32px;
               margin-right: 4px;
             }
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
             }
           }
@@ -943,18 +974,29 @@ export default {
             display: flex;
 
             > p {
-              display: flex;
-              align-items: center;
-              color: #121212;
-              font-size: 14px;
-              margin-right: 14px;
-              img {
-                width: 32px;
-                height: 32px;
-                margin-right: 4px;
-              }
-              span {
-                margin-left: 4px;
+              margin-top: 5px;
+              > span {
+                display: flex;
+                align-items: center;
+                > i {
+                  display: inline-block;
+                  width: 12px;
+                  height: 12px;
+                  background-image: url("../../assets/img/flashmining/miningtime.png");
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin-right: 3px;
+                }
+                > span {
+                  padding: 1px 3px;
+                  background: #f7f7fa;
+                  border-radius: 3px;
+                  color: #121212;
+                  > i {
+                    margin: 0 3px;
+                    color: #cfcfd2;
+                  }
+                }
                 color: #919aa6;
               }
             }

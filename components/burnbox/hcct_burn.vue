@@ -251,8 +251,8 @@ export default {
     return {
       list: {
         name: "HCCT Burning Box",
-        endTime: "2021-03-19 00:00",
-        startTime: "2021-03-12 00:00",
+        endTime: "2021/03/19 00:00",
+        startTime: "2021/03/12 00:00",
         bonusValue: 100000,
         DownTime: {
           day: "00",
@@ -416,7 +416,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-12 00:00";
+      let dueDate = "2021/03/12 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

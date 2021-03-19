@@ -62,8 +62,9 @@
       <button
         :class="actionType == 'burn' ? 'active burn' : 'burn'"
         @click="actionType = 'burn'"
-        :style="expired ? 'pointer-events: none' : ''"
       >
+        <!-- :style="expired ? 'pointer-events: none' : ''" -->
+
         {{ $t("Table.Burn") }}
       </button>
       <button
@@ -247,8 +248,8 @@ export default {
     return {
       list: {
         name: "hCTK Burning Box",
-        endTime: "2021-03-23 00:00",
-        startTime: "2021-03-16 00:00",
+        endTime: "2021/03/23 00:00",
+        startTime: "2021/03/16 00:00",
         bonusValue: 10000,
         DownTime: {
           day: "00",
@@ -413,7 +414,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-16 00:00";
+      let dueDate = "2021/03/16 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

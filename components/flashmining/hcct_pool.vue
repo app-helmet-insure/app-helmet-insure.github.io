@@ -302,7 +302,7 @@ export default {
     return {
       list: {
         name: "HCCT Pool (By LONG-Helmet LPT)",
-        dueDate: "2021-02-13 00:00",
+        dueDate: "2021/02/13 00:00",
         DownTime: {
           day: 0,
           hour: 0,

@@ -250,7 +250,7 @@ export default {
     return {
       list: {
         name: "HELMET-hBURGER LP",
-        dueDate: "2021-03-07 00:00",
+        dueDate: "2021/03/07 00:00",
         DownTime: {
           day: "00",
           hour: "00",
@@ -412,7 +412,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-10 15:00";
+      let dueDate = "2021/02/10 15:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

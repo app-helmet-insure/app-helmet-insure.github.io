@@ -301,7 +301,7 @@ export default {
     return {
       list: {
         name: "hCTK Pool (By HCCT-Helmet LPT)",
-        dueDate: "2021-02-28 00:00",
+        dueDate: "2021/02/28 00:00",
         DownTime: {
           day: 0,
           hour: 0,
@@ -491,7 +491,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-06 00:00";
+      let dueDate = "2021/02/06 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));

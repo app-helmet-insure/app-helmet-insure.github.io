@@ -1,15 +1,15 @@
 <template>
   <div class="helmetfor_pool">
-    <span class="miningTime" v-if="MingTime">
+    <!-- <span class="miningTime" v-if="MingTime">
       {{ MingTime }} until COMBO Mining Start</span
-    >
+    > -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
-    <img
+    <!-- <img
       class="finished"
       src="~/assets/img/helmet/finished.png"
       alt=""
       v-if="expired"
-    />
+    /> -->
     <div class="text">
       <div class="coin">
         <h3>
@@ -75,10 +75,9 @@
           <button
             @click="toDeposite"
             :class="stakeLoading ? 'disable b_button' : 'b_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style=" expired ? 'background: #ccc !important; pointer-events:
+            none' : '' " -->
             <i :class="stakeLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmDeposit") }}
           </button>
@@ -206,10 +205,10 @@
           <button
             @click="toClaim"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style="
+              expired ? 'background: #ccc !important; pointer-events: none' : ''
+            " -->
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
@@ -974,39 +973,48 @@ export default {
             display: flex;
 
             > p {
-              margin-top: 5px;
-              > span {
-                display: flex;
-                align-items: center;
-                > i {
-                  display: inline-block;
-                  width: 12px;
-                  height: 12px;
-                  background-image: url("../../assets/img/flashmining/miningtime.png");
-                  background-repeat: no-repeat;
-                  background-size: 100% 100%;
-                  margin-right: 3px;
-                }
-                > span {
-                  padding: 1px 3px;
-                  background: #f7f7fa;
-                  border-radius: 3px;
-                  color: #121212;
-                  > i {
-                    margin: 0 3px;
-                    color: #cfcfd2;
-                  }
-                }
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+
+              span {
+                margin-left: 4px;
                 color: #919aa6;
               }
             }
           }
           > p {
             margin-top: 5px;
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
-              font-size: 14px;
-              margin-left: 0 !important;
             }
           }
         }

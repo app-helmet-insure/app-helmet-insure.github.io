@@ -974,39 +974,48 @@ export default {
             display: flex;
 
             > p {
-              margin-top: 5px;
-              > span {
-                display: flex;
-                align-items: center;
-                > i {
-                  display: inline-block;
-                  width: 12px;
-                  height: 12px;
-                  background-image: url("../../assets/img/flashmining/miningtime.png");
-                  background-repeat: no-repeat;
-                  background-size: 100% 100%;
-                  margin-right: 3px;
-                }
-                > span {
-                  padding: 1px 3px;
-                  background: #f7f7fa;
-                  border-radius: 3px;
-                  color: #121212;
-                  > i {
-                    margin: 0 3px;
-                    color: #cfcfd2;
-                  }
-                }
+              display: flex;
+              align-items: center;
+              color: #121212;
+              font-size: 14px;
+              margin-right: 14px;
+              img {
+                width: 32px;
+                height: 32px;
+                margin-right: 4px;
+              }
+
+              span {
+                margin-left: 4px;
                 color: #919aa6;
               }
             }
           }
           > p {
             margin-top: 5px;
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
-              font-size: 14px;
-              margin-left: 0 !important;
             }
           }
         }

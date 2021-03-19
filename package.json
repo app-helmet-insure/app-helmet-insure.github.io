@@ -33,6 +33,7 @@
     "bignumber.js": "^9.0.1",
     "clipboard": "^2.0.6",
     "cross-env": "^5.2.0",
+    "highcharts": "^9.0.1",
     "koa": "^2.6.2",
     "moment": "^2.29.0",
     "nuxt": "^2.0.0",

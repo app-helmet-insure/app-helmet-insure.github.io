@@ -105,4 +105,82 @@ export default {};
     }
   }
 }
+@media screen and (max-width: 750px) {
+  .stepTwo {
+    width: 100%;
+    .step_title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #121212;
+    }
+    .step_action {
+      > .step_buy {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+        span {
+          font-size: 14px;
+          font-weight: 600;
+          color: #121212;
+        }
+        a {
+          font-size: 14px;
+          font-weight: 600;
+          color: #ff9600;
+        }
+      }
+      > label {
+        > p {
+          margin: 12px 0 10px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          span {
+            font-size: 12px;
+            color: #9b9b9b;
+          }
+        }
+        .input {
+          width: 100%;
+          height: 40px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          input {
+            width: 100%;
+            height: 100%;
+            border-radius: 5px;
+            border: 1px solid #cfcfd2;
+            padding-left: 12px;
+          }
+          span {
+            position: absolute;
+            font-size: 14px;
+            color: #9b9b9b;
+            right: 15px;
+          }
+        }
+      }
+      > button {
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        background: #121212;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        &:hover {
+          background: #2c2c2c;
+        }
+      }
+      .text {
+        margin-top: 4px;
+        font-size: 14px;
+        color: #9b9b9b;
+      }
+    }
+  }
+}
 </style>

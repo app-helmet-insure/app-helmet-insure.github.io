@@ -1,5 +1,5 @@
 <template>
-  <div class="bnb500_pool">
+  <div class="hdodo_pool">
     <!-- <span class="miningTime"> {{ MingTime }}</span> -->
     <img src="~/assets/img/helmet/star.png" alt="" />
     <img
@@ -188,7 +188,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0xdD9b5801e8A38ef7A728A42492699521C6A7379b/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get hMATH-HELMET LPT</a
+              >From <i class="pancake"></i>Get hMATH-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
@@ -333,7 +333,7 @@ export default {
     return {
       list: {
         name: "hDODO Pool (By hMATH-Helmet LPT)",
-        dueDate: "2021-03-31 12:00",
+        dueDate: "2021/03/31 12:00",
         DownTime: {
           day: "00",
           hour: "00",
@@ -527,7 +527,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-16 12:00";
+      let dueDate = "2021/03/16 12:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -709,7 +709,7 @@ export default {
       font-size: 14px;
     }
   }
-  .bnb500_pool {
+  .hdodo_pool {
     width: 540px;
     margin-bottom: 20px;
     background: #ffffff;
@@ -998,7 +998,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }
@@ -1012,7 +1022,7 @@ export default {
       font-size: 12px;
     }
   }
-  .bnb500_pool {
+  .hdodo_pool {
     width: 100%;
     margin-bottom: 20px;
     background: #ffffff;
@@ -1299,7 +1309,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }

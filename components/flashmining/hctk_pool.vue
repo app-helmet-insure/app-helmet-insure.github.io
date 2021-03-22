@@ -157,7 +157,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*1dr4rcd*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMTgxMTMzMi42Ny4wLjE2MTE4MTEzMzIuMA..#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0xf1BE411556e638790DcdEcd5b0f8F6d778f2Dfd5"
               target="_blank"
-              >Get HCCT-HELMET LPT</a
+              >From <i class="pancake"></i>Get HCCT-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
@@ -301,7 +301,7 @@ export default {
     return {
       list: {
         name: "hCTK Pool (By HCCT-Helmet LPT)",
-        dueDate: "2021-02-28 00:00",
+        dueDate: "2021/02/28 00:00",
         DownTime: {
           day: 0,
           hour: 0,
@@ -491,7 +491,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-06 00:00";
+      let dueDate = "2021/02/06 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -951,7 +951,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }
@@ -1252,7 +1262,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }

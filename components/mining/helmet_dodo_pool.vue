@@ -1,13 +1,15 @@
 <template>
   <div class="helmetfor_pool">
-    <!-- <span class="miningTime"> {{ MingTime }} until COMBO Mining Start</span> -->
+    <!-- <span class="miningTime" v-if="MingTime">
+      {{ MingTime }} until COMBO Mining Start</span
+    > -->
     <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
-    <img
+    <!-- <img
       class="finished"
       src="~/assets/img/helmet/finished.png"
       alt=""
       v-if="expired"
-    />
+    /> -->
     <div class="text">
       <div class="coin">
         <h3>
@@ -24,10 +26,11 @@
         <div>
           <p>
             <span>
-              {{ $t("Table.SurplusTime") }}：
-              <span>
-                {{ isLogin ? list.DownTime : "--" }}
+              <i></i>{{ $t("Table.SurplusTime") }}：
+              <span v-if="isLogin">
+                {{ list.DownTime.day }}d<i>/</i>{{ list.DownTime.hour }}h
               </span>
+              <span v-else> -- </span>
             </span>
           </p>
         </div>
@@ -55,7 +58,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            LPT
+            DLP
             {{ $t("Table.DAvailable") }}
           </p>
         </div>
@@ -72,10 +75,9 @@
           <button
             @click="toDeposite"
             :class="stakeLoading ? 'disable b_button' : 'b_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style=" expired ? 'background: #ccc !important; pointer-events:
+            none' : '' " -->
             <i :class="stakeLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ConfirmDeposit") }}
           </button>
@@ -103,7 +105,7 @@
                 :decimals="4"
               />
               <span v-else>--</span>
-              LPT</span
+              DLP</span
             >
           </p>
 
@@ -113,21 +115,21 @@
               <span> {{ isLogin ? balance.Share : "--" }} %</span>
             </p>
             <a
-              href="https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+              href="https://app.dodoex.io/liquidity?poolAddress=0x7f6ea24c10e32c8a5fd1c9b2c1239340671460cc"
               target="_blank"
-              >Get HELMET-hFOR LPT</a
+              >From <i class="dodo"></i>Get HELMET-hDODO DLP</a
             >
           </section>
         </div>
         <div class="ContractAddress">
-          <span>hFOR Contract Address：</span>
+          <span>hDODO Contract Address：</span>
           <p>
-            0xb779F208f8d662558dF8E2b6bFE3b6305CC13389
+            0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3
             <i
               class="copy"
               id="copy_default"
               @click="
-                copyAdress($event, '0xb779F208f8d662558dF8E2b6bFE3b6305CC13389')
+                copyAdress($event, '0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3')
               "
             ></i>
           </p>
@@ -146,7 +148,7 @@
             />
             <span v-else>--</span>
 
-            LPT {{ $t("Table.WAvailable") }}
+            DLP {{ $t("Table.WAvailable") }}
           </p>
         </div>
         <div class="content">
@@ -185,7 +187,7 @@
                   :decimals="8"
                 />
                 <span v-else>--</span>
-                FOR</span
+                DODO</span
               >
               <span>
                 <countTo
@@ -203,10 +205,10 @@
           <button
             @click="toClaim"
             :class="claimLoading ? 'disable o_button' : 'o_button'"
-            :style="
-              expired ? 'background: #ccc !important; pointer-events: none' : ''
-            "
           >
+            <!-- :style="
+              expired ? 'background: #ccc !important; pointer-events: none' : ''
+            " -->
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.ClaimAllRewards") }}
           </button>
@@ -248,9 +250,14 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-hDODO LP",
-        dueDate: "2021-03-20 00:00",
-        DownTime: "--",
+        name: "HELMET-hDODO DLP",
+        dueDate: "2021/04/10 00:00",
+        DownTime: {
+          day: "00",
+          hour: "00",
+          minute: "00",
+          second: "00",
+        },
       },
       textList: [
         {
@@ -301,7 +308,7 @@ export default {
       helmetPrice: 0,
       MingTime: "",
       isLogin: false,
-      expired: false
+      expired: false,
     };
   },
   mounted() {
@@ -312,17 +319,17 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_DODOHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("CLAIM_LOADING_DODOHELMET", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_FORHELMET", (data) => {
+    this.$bus.$on("EXIT_LOADING_DODOHELMET", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_FORHELMET", () => {
+    this.$bus.$on("RELOAD_DATA_DODOHELMET", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -365,14 +372,14 @@ export default {
     showOnepager() {
       this.$bus.$emit("OPEN_ONEPAGER", {
         showFlag: true,
-        title: "What is $hFOR?",
+        title: "What is $hDODO?",
         text: [
-          "It is $FOR cover miss out insurance policy (like the call option of $FOR). The reasonable activate price: 1 $FOR=0.25 HELMET.",
-          "For example, if $FOR hit 0.3 HELMET, you could swap only 0.25HELMET+1$hFOR to 1 $FOR, and get 0.05HELMET profit.",
-          "COMBO Mining period: 15days, from Mar.4th 24:00 SGT to Mar.19th 24:00 SGT (snapshot and Airdrop will be finished before Mar.4th 24:00 SGT)",
-          "Expire date: April 4th, 2021",
-          "if $hFOR expired, it could be a souvenir token",
-          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
+          "hDODO is the call option of DODO.",
+          "Total Supply: 75,000 (22,000 for vDODO holders, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
+          "Expire date: Apr. 14th 24:00 SGT",
+          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
+          "If hDODO get expired, it could be souvenir token",
+          "Please do not trade heavily on hDODO.",
         ],
       });
     },
@@ -392,20 +399,22 @@ export default {
       let template;
 
       if (dueDate > now) {
-        template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-          "Content.HourD"
-        )}`;
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
       } else {
-        template = `${0}${this.$t("Content.DayD")} ${0}${this.$t(
-          "Content.HourD"
-        )}`;
-        this.expired = true
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
       }
       this.list.DownTime = template;
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-05 00:00";
+      let dueDate = "2021/03/20 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -450,20 +459,20 @@ export default {
     },
     async getAPY() {
       // FOR的helmet价值
-      let lptBnbValue = await uniswap("FOR", "WBNB");
+      let lptBnbValue = await uniswap("DODO", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let FORHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = FORHELMET * 182010;
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 10000;
       //总抵押
-      let supplyVolume = await totalSupply("FORHELMET"); //数量
+      let supplyVolume = await totalSupply("DODOHELMET"); //数量
       // 总发行
-      let stakeVolue = await totalSupply("FORHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply("DODOHELMET_LPT"); //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "FORHELMET_LPT", true);
+      let stakeValue = await balanceOf("HELMET", "DODOHELMET_LPT", true);
       let burgerApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(allVolume, 15), 365),
+            precision.times(precision.divide(allVolume, 21), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -476,7 +485,7 @@ export default {
       let helmetApy = fixD(
         precision.times(
           precision.divide(
-            precision.times(precision.divide(10000, 15), 365),
+            precision.times(precision.divide(25000, 21), 365),
             precision.times(
               precision.divide(precision.times(stakeValue, 2), stakeVolue),
               supplyVolume
@@ -490,14 +499,14 @@ export default {
       let apy = precision.plus(burgerApy, helmetApy);
       this.apy = apy ? apy : 0;
       if (this.expired) {
-        this.textList[1].num = '--';
+        this.textList[1].num = "--";
       } else {
         this.textList[1].num = this.apy + "%";
       }
     },
     async getBalance() {
-      let helmetType = "FORHELMET_LPT";
-      let type = "FORHELMET";
+      let helmetType = "DODOHELMET_LPT";
+      let type = "DODOHELMET";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -518,11 +527,11 @@ export default {
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
 
       if (this.expired) {
-        this.textList[0].num = '--';
-        this.textList[0].num1 = '--';
+        this.textList[0].num = "--";
+        this.textList[0].num1 = "--";
       } else {
-        this.textList[0].num = fixD((10000 / 25) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((182010 / 25) * 7, 2) + " FOR";
+        this.textList[0].num = fixD((25000 / 21) * 7, 2) + " HELMET";
+        this.textList[0].num1 = fixD((10000 / 21) * 7, 2) + " DODO";
       }
     },
     // 抵押
@@ -534,8 +543,8 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "FORHELMET";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      let type = "DODOHELMET";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
     async toClaim() {
@@ -543,7 +552,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "FORHELMET";
+      let type = "DODOHELMET";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -552,7 +561,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "FORHELMET";
+      let type = "DODOHELMET";
       let res = await exitStake(type);
     },
   },
@@ -688,7 +697,28 @@ export default {
               height: 32px;
               margin-right: 4px;
             }
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
             }
           }
@@ -772,7 +802,17 @@ export default {
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/dodo@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           .column {
@@ -943,6 +983,7 @@ export default {
                 height: 32px;
                 margin-right: 4px;
               }
+
               span {
                 margin-left: 4px;
                 color: #919aa6;
@@ -951,10 +992,29 @@ export default {
           }
           > p {
             margin-top: 5px;
-            span {
+            > span {
+              display: flex;
+              align-items: center;
+              > i {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin-right: 3px;
+              }
+              > span {
+                padding: 1px 3px;
+                background: #f7f7fa;
+                border-radius: 3px;
+                color: #121212;
+                > i {
+                  margin: 0 3px;
+                  color: #cfcfd2;
+                }
+              }
               color: #919aa6;
-              font-size: 14px;
-              margin-left: 0 !important;
             }
           }
         }
@@ -1028,7 +1088,7 @@ export default {
         }
       }
       .deposit {
-        height: 343px;
+        height: 363px;
         border-top: 2px solid #00b900;
         background: rgba(0, 185, 0, 0.04);
         .title {
@@ -1039,14 +1099,25 @@ export default {
         .button {
           section {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: space-between;
             a {
               font-size: 14px;
               font-weight: 500;
               color: #ff9600;
               line-height: 20px;
-              text-decoration: underline;
+              display: flex;
+              align-items: center;
+              margin-top: 8px;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/dodo@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
           p {

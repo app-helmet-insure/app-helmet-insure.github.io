@@ -161,7 +161,7 @@
             <a
               href="https://exchange.pancakeswap.finance/?_gl=1*avpb7w*_ga*MTc1MzEyNTQzNS4xNjA3MzQwODk4*_ga_334KNG3DMQ*MTYxNDY1Njg1My4xNS4wLjE2MTQ2NTY4NTMuMA..#/add/0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
               target="_blank"
-              >Get hAUTO-HELMET LPT</a
+              >From <i class="pancake"></i>Get hAUTO-HELMET LPT</a
             >
           </div>
           <div class="ContractAddress">
@@ -305,7 +305,7 @@ export default {
     return {
       list: {
         name: "hMATH Pool (By hAUTO-Helmet LPT)",
-        dueDate: "2021-03-17 00:00",
+        dueDate: "2021/03/18 00:00",
         DownTime: {
           day: 0,
           hour: 0,
@@ -495,7 +495,7 @@ export default {
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-02-23 20:00";
+      let dueDate = "2021/02/23 20:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -957,7 +957,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }
@@ -1259,7 +1269,17 @@ export default {
               font-weight: 550;
               color: #ff9600;
               margin-top: 8px;
-              display: block;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                margin: 0 2px;
+              }
             }
           }
         }

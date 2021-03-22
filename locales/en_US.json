@@ -13,7 +13,7 @@
   },
   "Banner": {
     "ClosedPolicy": "Policy Category",
-    "LongValue": "Policy Be Created",
+    "LongValue": "Policy Creation",
     "HelmetTransfer": "HELMET In Circulation",
     "Title": "HELMET Initial Farm Offering coming soon to PancakeSwap",
     "Text": "HELMET Trading will start after IFO",
@@ -140,13 +140,13 @@
     "Active": "Please double check the price above，Helmet team will not cover your loss on this.",
     "SendCoin": "Please do not transfer your Helmet into this smart contract address, just connect your wallet and change it to BSC net.",
     "RiskWarning": "NOTICE",
-    "RiskWarningContent": "If you are a new Helmeter, please do not trade policy before getting clear about the trading risk and option trading logic. Please read the 'Paper& Guide'.",
+    "RiskWarningContent": "If you are a new Helmet Insure user, please do not trade any policies before getting a clear understanding about the trading risks and option trading logic. We recommend you read the 'Paper & Guide' section before proceeding.",
     "RiskWarnCheck": "I Agree",
     "BurnTip1": "Burning Expired Policy for New Gems. ",
     "BurnTip2": "You could get new gems based on your pool share in the burning period. ",
     "FlashTip1": "Flash Mining is a short-term policy mining campaign.",
     "FlashTip2": "You could farm different policy with the notice of expiration date.",
-    "MiningTip1": "Mining is a token mining campaign.",
-    "MiningTip2": "You could farm COMBO rewards by staking different LPT with the notice of pool expiration date."
+    "MiningTip1": "Helmet Mining Campaigns.",
+    "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs)."
   }
 }

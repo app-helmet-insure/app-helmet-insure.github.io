@@ -1,6 +1,18 @@
 <template>
-  <div class="long_burn">
-    <img class="coin" src="~/assets/img/burnmining/hcctCoin.png" alt="" />
+  <div class="long_burn" :class="expired ? 'expiredBg' : 'activeBg'">
+    <img
+      v-if="expired"
+      class="coin"
+      src="~/assets/img/burnmining/expired_hcctCoin.png"
+      alt=""
+    />
+    <img
+      v-else
+      class="coin"
+      src="~/assets/img/burnmining/hcctCoin.png"
+      alt=""
+    />
+
     <div class="title">
       <div class="pool_detail">
         <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
@@ -41,7 +53,10 @@
       </div>
       <div class="control">
         <div class="control_wrap">
-          <div class="control_real" :style="`width:${list.process}%`">
+          <div
+            class="control_real"
+            :style="`width:${list.process}%;max-width:100%`"
+          >
             <i class="fire" v-if="list.process != 0"></i>
           </div>
         </div>
@@ -51,12 +66,13 @@
       <button
         :class="actionType == 'burn' ? 'active burn' : 'burn'"
         @click="actionType = 'burn'"
+        :style="expired ? 'pointer-events: none' : ''"
       >
         {{ $t("Table.Burn") }}
       </button>
       <button
         class="claim"
-        :class="actionType == 'claim' ? 'active burn' : 'burn'"
+        :class="actionType == 'claim' ? 'active claim' : 'claim'"
         @click="actionType = 'claim'"
       >
         {{ $t("Table.Claim") }}
@@ -121,7 +137,13 @@
           <span> {{ isLogin ? balance.Share : "--" }} % </span>
         </p>
       </div>
-      <button class="submit_burn" @click="toDeposite">
+      <button
+        class="submit_burn"
+        @click="toDeposite"
+        :style="
+          expired ? 'background: #ccc !important; pointer-events: none' : ''
+        "
+      >
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
       <div class="ContractAddress">
@@ -229,8 +251,8 @@ export default {
     return {
       list: {
         name: "HCCT Burning Box",
-        endTime: "2021-03-19 00:00",
-        startTime: "2021-03-12 00:00",
+        endTime: "2021/03/19 00:00",
+        startTime: "2021/03/12 00:00",
         bonusValue: 100000,
         DownTime: {
           day: "00",
@@ -283,22 +305,26 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
       this.getBalance();
     });
-    setInterval(() => {
-      setTimeout(() => {
-        this.getDownTime();
-        this.getMiningTime();
-      });
-      clearTimeout();
-    }, 1000);
     setTimeout(() => {
+      this.getDownTime();
+      this.getMiningTime();
       this.getBalance();
       this.getProcess();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getProcess();
-      });
-    }, 20000);
+    if (!this.expired) {
+      setInterval(() => {
+        setTimeout(() => {
+          this.getDownTime();
+          this.getMiningTime();
+        });
+        clearTimeout();
+      }, 1000);
+      setInterval(() => {
+        setTimeout(() => {
+          this.getProcess();
+        });
+      }, 20000);
+    }
     this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
     });
@@ -384,12 +410,13 @@ export default {
           hour: "00",
         };
         this.expired = true;
+        this.actionType = "claim";
       }
       this.list.DownTime = template;
     },
     getMiningTime() {
       let now = new Date() * 1;
-      let dueDate = "2021-03-12 00:00";
+      let dueDate = "2021/03/12 00:00";
       dueDate = new Date(dueDate);
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
@@ -423,8 +450,13 @@ export default {
       let startTime = new Date(this.list.startTime) * 1;
       let endTime = new Date(this.list.endTime) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-      this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
-      this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
+      if (this.expired) {
+        this.list.process = 100;
+        this.list.rewards = this.list.bonusValue;
+      } else {
+        this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
+        this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
+      }
     },
     // 抵押
     toDeposite() {
@@ -486,10 +518,15 @@ export default {
   }
 }
 @media screen and (min-width: 750px) {
+  .expiredBg {
+    background-image: url("../../assets/img/burnmining/expired_bg.png");
+  }
+  .activeBg {
+    background-image: url("../../assets/img/burnmining/burnbg.png");
+  }
   .long_burn {
     width: 560px;
     height: 610px;
-    background-image: url("../../assets/img/burnmining/burnbg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin-bottom: 100px;
@@ -881,19 +918,23 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .expiredBg {
+    background-image: url("../../assets/img/burnmining/expired_h5_bg.png");
+  }
+  .activeBg {
+    background-image: url("../../assets/img/burnmining/burn_h5bg.png");
+  }
   .ContractAddress {
     font-size: 12px;
   }
   .long_burn {
-    background-image: url("../../assets/img/burnmining/burn_h5bg.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin-bottom: 50px;
-    margin-top: 30px;
     position: relative;
     padding: 14% 14% 20px 20px;
-    min-width: 320px;
     min-height: 470px;
+    width: 100%;
     > .coin {
       width: 64px;
       height: 64px;

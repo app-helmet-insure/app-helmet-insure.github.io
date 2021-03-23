@@ -206,7 +206,7 @@ export default {
         price: this.strikePriceArray[this.currentType - 1][this.currentCoin],
         volume: this.volume, //
         settleToken: "HELMET",
-        showType: this.currentCoin == "WBNB" ? "BUSD" : "HELMET",
+        showType: this.currentCoin == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
       };
       if (data.category == "WBNB" && data.currency == "BUSD") {

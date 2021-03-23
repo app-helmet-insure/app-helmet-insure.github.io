@@ -25,7 +25,69 @@
 </template>
 
 <script>
-export default {};
+import {
+  totalSupply,
+  balanceOf,
+  getLPTOKEN,
+  CangetPAYA,
+  CangetUNI,
+  getDoubleReward,
+  exitStake,
+  getLastTime,
+  approveStatus,
+  getBalance,
+  toDeposite,
+  getMined,
+  WithdrawAvailable,
+  getAllHelmet,
+  Rewards,
+  RewardsDuration,
+} from "~/interface/deposite";
+export default {
+  data() {
+    return {
+      showMsg: {
+        DepositeVolume: 0,
+        DepositeTotal: 0,
+      },
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.getBalance();
+    }, 1000);
+  },
+  methods: {
+    async getBalance() {
+      let lpt_name = "IIO_HELMETBNB_LPT";
+      let pool_name = "IIO_HELMETBNB";
+      // 可抵押数量
+      let Deposite = await getBalance(lpt_name);
+      // 可赎回数量
+      let Withdraw = await getLPTOKEN(type);
+      // 总抵押
+      let TotalLPT = await totalSupply(pool_name);
+      // 可领取Helmet
+      let Helmet = await CangetPAYA(type);
+      //  可领取Cake
+      let Cake = await CangetUNI(type);
+      // 总Helmet
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let helmetReward = await Rewards("HELMETBNB", "0");
+      this.balance.Deposite = fixD(Deposite, 4);
+      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.Cake = fixD(Cake, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.textList[0].num =
+        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
+        " HELMET";
+      // this.textList[3].num = addCommom(Deposite, 4)
+      // this.textList[4].num = addCommom(Helmet, 4)
+    },
+  },
+};
 </script>
 
 <style lang='scss' scped>

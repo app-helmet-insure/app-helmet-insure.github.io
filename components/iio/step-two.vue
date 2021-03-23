@@ -7,22 +7,54 @@
         <a>获得 HELMET</a>
       </p>
       <label>
-        <p><span>通用份额</span><span>可用余额: 1212.12323122 HELMET</span></p>
+        <p>
+          <span>通用份额</span><span>可用余额: {{ Balance }} HELMET</span>
+        </p>
         <div class="input">
-          <input type="text" readonly />
+          <input type="text" readonly :value="PassportPrice" />
           <span>HELMET</span>
         </div>
       </label>
       <p class="text">
-        <span>每张资格通证: 5 HELMET</span>
+        <span>每张资格通证: {{ PassportPrice }} HELMET</span>
       </p>
-      <button>购买 XXX 资格通证</button>
+      <button @click="BuyPassport">购买 XXX 资格通证</button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import { ticketVol3, applyReward3 } from "~/interface/iio";
+import { getBalance } from "~/interface/deposite";
+export default {
+  data() {
+    return {
+      PassportPrice: 0,
+      Balance: 0,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.getPassPortPrice();
+    }, 1000);
+  },
+  methods: {
+    async getPassPortPrice() {
+      let ContractAdress = "IIO_HELMETBNB_POOL";
+      let TicketAddress = "IIO_HELMETBNB_TICKET";
+      let price = await ticketVol3(ContractAdress, TicketAddress);
+      let balance = await getBalance(TicketAddress);
+      console.log(balance);
+      this.PassportPrice = price;
+      this.Balance = balance;
+    },
+    async BuyPassport() {
+      let ContractAdress = "IIO_HELMETBNB_POOL";
+      let TicketAddress = "IIO_HELMETBNB_TICKET";
+      let res = await applyReward3(ContractAdress, TicketAddress, () => {});
+    },
+  },
+};
 </script>
 
 <style lang='scss' scped>

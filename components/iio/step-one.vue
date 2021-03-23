@@ -2,24 +2,43 @@
   <div class="stepOne">
     <div class="step_title">使用 LPT 在 HELMET-BNB LP 池中进行挖矿</div>
     <div class="step_action">
-      <span>抵押</span>
+      <span>{{ $t("Table.Deposit") }}</span>
       <label>
-        <p><span>输入抵押量</span><span>0.00 LPT 可抵押</span></p>
+        <p>
+          <span>{{ $t("Table.AmountDeposit") }}</span>
+          <span>
+            {{ showMsg.DepositeVolume }} LPT {{ $t("Table.DAvailable") }}
+          </span>
+        </p>
         <div class="input">
-          <input type="text" />
-          <span>最大</span>
+          <input type="text" v-model="DepositeNum" />
+          <span @click="DepositeNum = showMsg.DepositeVolume">
+            {{ $t("Table.Max") }}
+          </span>
         </div>
       </label>
-      <button>质押挖矿</button>
+      <button @click="toDeposite" :class="stakeLoading ? 'disable ' : ''">
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i>
+        {{ $t("Table.ConfirmDeposit") }}
+      </button>
     </div>
     <div class="step_details">
       <p class="text">
-        <span>我的抵押/总抵押量：</span><span> 0 LPT/3.663 LPT</span>
+        <span>
+          {{ $t("Table.MyDeposits") }}/{{ $t("Table.TotalDeposited") }}：
+        </span>
+        <span>
+          {{ showMsg.DepositedVolume }}/{{ showMsg.DepositeTotal }} LPT
+        </span>
       </p>
       <p class="text">
-        <span>我的抵押/总抵押量：</span><span> 0 LPT/3.663 LPT</span>
+        <span>{{ $t("Table.MyPoolShare") }}： </span>
+        <span> {{ showMsg.MyPoolShare }}%</span>
       </p>
-      <a>Get HELMET-BNB LPT</a>
+      <a
+        href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        >Get HELMET-BNB LPT</a
+      >
     </div>
   </div>
 </template>
@@ -27,32 +46,43 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
-  CangetPAYA,
-  CangetUNI,
-  getDoubleReward,
-  exitStake,
-  getLastTime,
-  approveStatus,
   getBalance,
   toDeposite,
-  getMined,
-  WithdrawAvailable,
-  getAllHelmet,
-  Rewards,
-  RewardsDuration,
 } from "~/interface/deposite";
+import { fixD } from "~/assets/js/util.js";
 export default {
   data() {
     return {
       showMsg: {
-        DepositeVolume: 0,
-        DepositeTotal: 0,
+        DepositeVolume: 0, //可抵押
+        DepositedVolume: 0, //已抵押
+        DepositeTotal: 0, //总抵押
+        MyPoolShare: 0, //我的池子份额
       },
+      DepositeNum: "",
+      stakeLoading: false,
+      claimLoading: false,
+      exitLoading: false,
     };
   },
   mounted() {
+    this.$bus.$on("DEPOSITE_LOADING_IIO_HELMETBNB", (data) => {
+      this.stakeLoading = data.status;
+      this.DepositeNum = "";
+    });
+    this.$bus.$on("CLAIM_LOADING_IIO_HELMETBNB", (data) => {
+      this.claimLoading = false;
+    });
+    this.$bus.$on("EXIT_LOADING_IIO_HELMETBNB", (data) => {
+      this.exitLoading = false;
+    });
+    this.$bus.$on("RELOAD_DATA_IIO_HELMETBNB", () => {
+      this.getBalance();
+    });
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
     }, 1000);
@@ -62,35 +92,49 @@ export default {
       let lpt_name = "IIO_HELMETBNB_LPT";
       let pool_name = "IIO_HELMETBNB";
       // 可抵押数量
-      let Deposite = await getBalance(lpt_name);
-      // 可赎回数量
-      let Withdraw = await getLPTOKEN(type);
+      let DepositeVolume = await getBalance(lpt_name);
+      // 已抵押数量
+      let DepositedVolume = await getLPTOKEN(pool_name);
       // 总抵押
-      let TotalLPT = await totalSupply(pool_name);
-      // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
-      //  可领取Cake
-      let Cake = await CangetUNI(type);
-      // 总Helmet
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num =
-        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
-        " HELMET";
-      // this.textList[3].num = addCommom(Deposite, 4)
-      // this.textList[4].num = addCommom(Helmet, 4)
+      let DepositeTotal = await totalSupply(pool_name);
+
+      this.showMsg.DepositeVolume = fixD(DepositeVolume, 4);
+      this.showMsg.DepositedVolume = fixD(DepositedVolume, 4);
+      this.showMsg.DepositeTotal = fixD(DepositeTotal, 4);
+      this.showMsg.MyPoolShare = fixD(
+        (DepositedVolume / DepositeTotal) * 100,
+        2
+      );
+    },
+    // 抵押
+    toDeposite() {
+      if (!this.DepositeNum) {
+        return;
+      }
+      if (this.stakeLoading) {
+        return;
+      }
+      this.stakeLoading = true;
+      let type = "IIO_HELMETBNB";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
   },
 };
 </script>
 
 <style lang='scss' scped>
+.disable {
+  pointer-events: none;
+}
+.loading_pic {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
 @media screen and (min-width: 750px) {
   .stepOne {
     width: 420px;
@@ -155,6 +199,9 @@ export default {
         font-size: 14px;
         font-weight: 600;
         color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
           background: #2c2c2c;
         }
@@ -253,6 +300,9 @@ export default {
         font-size: 14px;
         font-weight: 600;
         color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &:hover {
           background: #2c2c2c;
         }

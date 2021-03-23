@@ -3,7 +3,7 @@
     <img
       v-if="expired"
       class="coin"
-      src="~/assets/img/burnmining/expired_hcctCoin.png"
+      src="~/assets/img/burnmining/expired_hctkCoin.png"
       alt=""
     />
     <img
@@ -62,9 +62,8 @@
       <button
         :class="actionType == 'burn' ? 'active burn' : 'burn'"
         @click="actionType = 'burn'"
+        :style="expired ? 'pointer-events: none' : ''"
       >
-        <!-- :style="expired ? 'pointer-events: none' : ''" -->
-
         {{ $t("Table.Burn") }}
       </button>
       <button

@@ -248,7 +248,12 @@ export default {
               day
             );
           }
-          console.log(DPR, this.HelmetPrice[1][this.currentCoin], num, day);
+          console.log(
+            DPR,
+            num,
+            day,
+            Math.min(precision.minus(strikePrice, indexPx), 0)
+          );
           premium = precision.minus(
             number,
             Math.min(precision.minus(strikePrice, indexPx), 0)
@@ -257,7 +262,6 @@ export default {
         } else {
           if (this.currentCoin == "WBNB") {
             number = precision.times(DPR, this.HELMET_BUSD * num, day);
-            console.log(DPR, this.HELMET_BUSD, num, day);
           } else {
             number = precision.times(
               DPR,
@@ -290,17 +294,17 @@ export default {
       }
       if (type == 1) {
         px = list[1][coin];
-        exPx = list[1][coin] * 2;
+        exPx = this.strikePriceArray[0][coin];
         this.unit = coin;
         if (this.currentCoin == "HELMET") {
-          this.strikePrice = addCommom(0.2 / this.BNB_BUSD, 4);
+          this.strikePrice = this.strikePriceArray[0][this.currentCoin];
         }
       } else {
         px = list[1][coin];
-        exPx = list[1][coin] * 0.5;
+        exPx = this.strikePriceArray[1][coin];
         this.unit = this.currentCoin == "WBNB" ? "BUSD" : "BNB";
         if (this.currentCoin == "HELMET") {
-          this.strikePrice = addCommom(0.12 / this.BNB_BUSD, 4);
+          this.strikePrice = this.strikePriceArray[1][this.currentCoin];
         }
       }
       if (this.currentCoin == "HELMET") {

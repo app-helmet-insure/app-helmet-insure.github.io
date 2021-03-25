@@ -65,7 +65,7 @@ export default {
       window.localStorage.setItem("lang", this.lang);
       this.$store.dispatch("setLanguage", this.lang);
       this.$i18n.locale = this.lang;
-      window.location.reload();
+      // window.location.reload();
     },
   },
 };

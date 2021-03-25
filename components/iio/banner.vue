@@ -14,20 +14,34 @@
       </div>
       <span class="ioo_tips">这是兑换池合约地址，请不要向合约地址直接转币</span>
       <div class="ioo_details">
-        <p>
-          <span>参与人数</span>
-          <span>1000 人</span>
-        </p>
-        <i></i>
-        <p>
-          <span>总认筹金额</span>
-          <span>100000 XXX</span>
-        </p>
-        <i></i>
-        <p>
-          <span>总质押金额</span>
-          <span>121212 LPT</span>
-        </p>
+        <div class="wrap">
+          <p>
+            <span>参与人数</span>
+            <span>1000 人</span>
+          </p>
+          <i></i>
+          <p>
+            <span>总发行量</span>
+            <span>100000 MATTER</span>
+          </p>
+          <i></i>
+        </div>
+        <div class="tip">
+          <i></i>你尚未购买门票，<span @click="toStep1"
+            >购买门票激活份额 ></span
+          >
+        </div>
+        <div class="wrap">
+          <p>
+            <span>总质押金额</span>
+            <span>{{ showMsg.DepositeValue }} USD</span>
+          </p>
+          <i></i>
+          <p>
+            <span>我的抵押</span>
+            <span>{{ showMsg.DepositedVolume }} LPT</span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -36,11 +50,45 @@
 <script>
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+import { totalSupply, getLPTOKEN } from "~/interface/deposite";
+import { fixD, addCommom } from "~/assets/js/util.js";
+import { getLongValue } from "~/interface/event.js";
+import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 export default {
   data() {
-    return {};
+    return {
+      showMsg: {
+        DepositedVolume: 0,
+        DepositeValue: 0,
+      },
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.getBalance();
+    }, 1000);
   },
   methods: {
+    toStep1() {
+      this.$bus.$emit("JUMP_STEP", { step: 1 });
+    },
+    async getBalance() {
+      let lpt_name = "IIO_HELMETBNB_LPT";
+      let pool_name = "IIO_HELMETBNB_POOL";
+      // 已抵押数量
+      let DepositedVolume = await getLPTOKEN(pool_name);
+      // 总抵押
+      let DepositeTotal = await totalSupply(pool_name);
+      let obj = [
+        { "0x6411310c07d8c48730172146fd6f31fa84034a8b": toWei(DepositeTotal) },
+      ];
+      getLongValue(obj).then((res) => {
+        let DepositeValue =
+          res.data[0]["0x6411310c07d8c48730172146fd6f31fa84034a8b"];
+        this.showMsg.DepositeValue = addCommom(DepositeValue, 2);
+      });
+      this.showMsg.DepositedVolume = addCommom(DepositedVolume, 2);
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -116,8 +164,48 @@ export default {
   .ioo_details {
     display: flex;
     margin-top: 100px;
+    position: relative;
+    right: 0;
+    .tip {
+      position: absolute;
+      right: 0;
+      top: -45px;
+      padding: 0px 10px;
+      height: 24px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #787878;
+      border-radius: 16px;
+      border: 1px solid #ff9600;
+      display: flex;
+      align-items: center;
+      span {
+        color: #ff9600;
+        cursor: pointer;
+      }
+      > i {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url("../../assets/img/iio/information.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
+      }
+    }
+    .wrap {
+      display: flex;
+      align-items: center;
+      > i {
+        display: block;
+        width: 1px;
+        height: 54px;
+        background: #cfcfd2;
+      }
+    }
     p {
-      width: 260px;
+      width: 200px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -134,12 +222,6 @@ export default {
           margin-top: 10px;
         }
       }
-    }
-    i {
-      display: block;
-      width: 1px;
-      height: 54px;
-      background: #cfcfd2;
     }
   }
 }
@@ -180,6 +262,7 @@ export default {
     margin-top: 30px;
     background: rgba(255, 150, 0, 0.1);
     border-radius: 26px;
+    justify-content: center;
     i {
       display: block;
       width: 12px;
@@ -193,37 +276,65 @@ export default {
   }
   .ioo_details {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin-top: 30px;
-    p {
+    .tip {
+      padding: 0px 10px;
+      height: 24px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #787878;
+      border-radius: 16px;
+      border: 1px solid #ff9600;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      &:first-child {
-        align-items: flex-start;
-      }
-      &:last-child {
-        align-items: flex-end;
-      }
+      align-self: flex-end;
+      margin-bottom: 6px;
       span {
-        &:nth-of-type(1) {
-          font-size: 12px;
-          color: #787878;
-          line-height: 20px;
-        }
-        &:nth-of-type(2) {
-          font-size: 14px;
-          font-weight: bold;
-          color: #121212;
-          line-height: 20px;
-        }
+        color: #ff9600;
+        cursor: pointer;
+      }
+      > i {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url("../../assets/img/iio/information.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
       }
     }
-    i {
-      display: block;
-      width: 1px;
-      height: 36px;
-      background: #cfcfd2;
+    .wrap {
+      display: flex;
+      justify-content: space-between;
+      p {
+        display: flex;
+        flex-direction: column;
+        &:nth-of-type(1) {
+          align-items: flex-start;
+        }
+        &:nth-of-type(2) {
+          align-items: flex-end;
+        }
+        span {
+          &:nth-of-type(1) {
+            font-size: 12px;
+            color: #787878;
+            line-height: 20px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-weight: bold;
+            color: #121212;
+            line-height: 20px;
+          }
+        }
+      }
+      > i {
+        display: none;
+      }
     }
   }
 }

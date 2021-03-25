@@ -1,151 +1,130 @@
 <template>
   <div class="stepThree">
-    <div class="text h5_text">
-      <p>
-        <span><i></i>可兑换总量</span>
-        <span>100000.00 HELMET</span>
-      </p>
-      <p>
-        <span><i></i>预计可获得</span>
-        <span>2323.232 HELMET</span>
-      </p>
-    </div>
-    <PieEchart></PieEchart>
-    <div class="right">
-      <div class="text pc_text">
+    <div class="step_title">兑换TOKEN</div>
+    <p>
+      你可在<span>2021-04-12 00:00</span>前在此兑换 Matter, 也可以在<i
+        @click="toHome"
+        >我的保单</i
+      >页面兑换
+    </p>
+    <div class="step_action">
+      <div class="step_myaccount">
         <p>
-          <span><i></i>可兑换总量</span>
-          <span>100000.00 HELMET</span>
+          <span>待兑换</span>
+          <span>{{ AvailableVolume }} HELMET</span>
         </p>
         <p>
-          <span><i></i>预计可获得</span>
-          <span>2323.232 HELMET</span>
+          <span>余额</span>
+          <span>11</span>
         </p>
       </div>
-      <div class="share">
-        <p><i></i><span>我的抵押</span><span>1233.12 LPT</span></p>
-        <p><i></i><span>总抵押量</span><span>11233.12 LPT</span></p>
-      </div>
+      <button @click="getReward">兑换</button>
+      <p>兑换Token 需要使用 <span>12312</span></p>
     </div>
   </div>
 </template>
 
 <script>
-import PieEchart from "./pie-echart";
+import { getReward3, earned3 } from "~/interface/iio.js";
+import { fixD } from "~/assets/js/util.js";
 export default {
-  components: {
-    PieEchart,
+  data() {
+    return {
+      AvailableVolume: 0,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.getBalance();
+    }, 1000);
+  },
+  methods: {
+    toHome() {
+      this.$router.push("/");
+    },
+    async getBalance() {
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let AvailableVolume = await earned3(pool_name);
+      this.AvailableVolume = fixD(AvailableVolume, 4);
+    },
+    async getReward() {
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let res = await getReward3(pool_name);
+    },
   },
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' scped>
 @media screen and (min-width: 750px) {
   .stepThree {
-    padding: 0 180px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .right {
-    width: 450px;
-  }
-  .text {
-    display: flex;
-    justify-content: space-between;
-    p {
-      &:nth-of-type(1) {
-        span {
-          &:nth-of-type(1) {
-            display: flex;
-            align-items: center;
-            i {
-              display: block;
-              width: 24px;
-              height: 24px;
-              background-image: url("../../assets/img/iio/coin-line@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 4px;
-            }
-            font-size: 14px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 16px;
-            font-weight: bold;
-            color: #121212;
-            margin-top: 6px;
-            display: block;
-          }
-        }
+    width: 420px;
+    margin: 0 auto;
+    .step_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #121212;
+    }
+    > p {
+      width: 466px;
+      font-size: 14px;
+      color: #9b9b9b;
+      margin-top: 20px;
+      span {
+        color: #121212;
+        margin: 0 3px;
       }
-      &:nth-of-type(2) {
-        span {
-          &:nth-of-type(1) {
-            display: flex;
-            align-items: center;
-            i {
-              display: block;
-              width: 24px;
-              height: 24px;
-              background-image: url("../../assets/img/iio/hand-coin-line@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 4px;
-            }
-            font-size: 14px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 16px;
-            font-weight: bold;
-            color: #121212;
-            margin-top: 6px;
-            display: block;
-          }
-        }
+      i {
+        color: #ff9600;
+        cursor: pointer;
       }
     }
-  }
-  .h5_text {
-    display: none;
-  }
-  .share {
-    margin-top: 40px;
-    p {
-      display: flex;
-      align-items: center;
-      i {
-        display: block;
-        width: 8px;
-        height: 8px;
-        margin-right: 6px;
-      }
-      span {
-        &:nth-of-type(1) {
-          font-size: 14px;
-          color: #9b9b9b;
-          margin-right: 20px;
+    .step_action {
+      .step_myaccount {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        p {
+          display: flex;
+          flex-direction: column;
+          &:last-child {
+            text-align: right;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              color: #9b9b9b;
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              margin-top: 8px;
+              font-size: 16px;
+              font-weight: bold;
+              color: #121212;
+              line-height: 18px;
+            }
+          }
         }
-        &:nth-of-type(2) {
-          font-size: 14px;
+      }
+      > button {
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        background: #121212;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        &:hover {
+          background: #2c2c2c;
+        }
+      }
+      > p {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #9b9b9b;
+        span {
           color: #121212;
-        }
-      }
-      &:nth-of-type(1) {
-        margin-bottom: 15px;
-        i {
-          background: #ffdfb2;
-          box-shadow: 0px 4px 8px 0px rgba(255, 150, 0, 0.2);
-          border-radius: 50%;
-        }
-      }
-      &:nth-of-type(2) {
-        i {
-          background: #ff9600;
-          box-shadow: 0px 4px 8px 0px rgba(255, 150, 0, 0.6);
-          border-radius: 50%;
         }
       }
     }
@@ -153,112 +132,73 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .stepThree {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .right {
     width: 100%;
-  }
-  .text {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    p {
-      &:nth-of-type(1) {
-        text-align: left;
-        span {
-          &:nth-of-type(1) {
-            display: flex;
-            align-items: center;
-            i {
-              display: block;
-              width: 24px;
-              height: 24px;
-              background-image: url("../../assets/img/iio/coin-line@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 4px;
-            }
-            font-size: 14px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 14px;
-            font-weight: bold;
-            color: #121212;
-            margin-top: 6px;
-            display: block;
-          }
-        }
+    .step_title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #121212;
+    }
+    > p {
+      width: 100%;
+      font-size: 12px;
+      color: #9b9b9b;
+      margin-top: 20px;
+      line-height: 20px;
+      span {
+        color: #121212;
+        margin: 0 3px;
       }
-      &:nth-of-type(2) {
-        span {
-          &:nth-of-type(1) {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            i {
-              display: block;
-              width: 24px;
-              height: 24px;
-              background-image: url("../../assets/img/iio/hand-coin-line@2x.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              margin-right: 4px;
-            }
-            font-size: 14px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 14px;
-            font-weight: bold;
-            color: #121212;
-            margin-top: 6px;
-            display: block;
-          }
-        }
+      i {
+        color: #ff9600;
+        cursor: pointer;
       }
     }
-  }
-  .pc_text {
-    display: none;
-  }
-  .share {
-    margin-top: 40px;
-    p {
-      display: flex;
-      align-items: center;
-      i {
-        display: block;
-        width: 8px;
-        height: 8px;
-        margin-right: 6px;
-      }
-      span {
-        &:nth-of-type(1) {
-          font-size: 14px;
-          color: #9b9b9b;
-          margin-right: 20px;
+    .step_action {
+      .step_myaccount {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        p {
+          display: flex;
+          flex-direction: column;
+          &:last-child {
+            text-align: right;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 12px;
+              color: #9b9b9b;
+              line-height: 16px;
+            }
+            &:nth-of-type(2) {
+              margin-top: 8px;
+              font-size: 14px;
+              font-weight: bold;
+              color: #121212;
+              line-height: 14px;
+            }
+          }
         }
-        &:nth-of-type(2) {
-          font-size: 14px;
+      }
+      > button {
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        background: #121212;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        &:hover {
+          background: #2c2c2c;
+        }
+      }
+      > p {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #9b9b9b;
+        span {
           color: #121212;
-        }
-      }
-      &:nth-of-type(1) {
-        margin-bottom: 15px;
-        i {
-          background: #ffdfb2;
-          box-shadow: 0px 4px 8px 0px rgba(255, 150, 0, 0.2);
-          border-radius: 50%;
-        }
-      }
-      &:nth-of-type(2) {
-        i {
-          background: #ff9600;
-          box-shadow: 0px 4px 8px 0px rgba(255, 150, 0, 0.6);
-          border-radius: 50%;
         }
       }
     }

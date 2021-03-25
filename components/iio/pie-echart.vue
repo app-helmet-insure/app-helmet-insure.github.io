@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <div ref="container" id="chartWrap"></div>
-  </div>
+  <div ref="container" id="chartWrap"></div>
 </template>
 
 <script>
@@ -9,7 +7,8 @@ import Highcharts from "highcharts/highstock";
 import HighchartsMore from "highcharts/highcharts-more";
 import HighchartsDrilldown from "highcharts/modules/drilldown";
 import Highcharts3D from "highcharts/highcharts-3d";
-
+import { totalSupply, getLPTOKEN } from "~/interface/deposite";
+import { fixD } from "~/assets/js/util.js";
 export default {
   data() {
     return {
@@ -26,18 +25,27 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     this.windowWidth = document.body.clientWidth;
     this.onResize();
-    this.initChart();
+    let pool_name = "IIO_HELMETBNB_POOL";
+    let DepositedVolume = await getLPTOKEN(pool_name);
+    let DepositeTotal = await totalSupply(pool_name);
+    // 总抵押
+    this.initChart(DepositedVolume, DepositeTotal);
+    setTimeout(() => {
+      this.getBalance();
+    }, 1000);
   },
+
   methods: {
-    initChart() {
-      HighchartsMore(Highcharts);
-      HighchartsDrilldown(Highcharts);
-      Highcharts3D(Highcharts);
-      let dom = this.$refs.container;
-      var chart = Highcharts.chart(dom, {
+    async getBalance() {
+      let pool_name = "IIO_HELMETBNB_POOL";
+      // 已抵押数量
+      let DepositedVolume = await getLPTOKEN(pool_name);
+      // 总抵押
+      let DepositeTotal = await totalSupply(pool_name);
+      let data = {
         title: {
           text: null,
         },
@@ -55,7 +63,7 @@ export default {
         },
         plotOptions: {
           pie: {
-            depth: this.showDom ? 3 : 12,
+            depth: this.showDom ? 10 : 8,
             dataLabels: {
               enabled: false,
               format: "{point.name}",
@@ -70,17 +78,25 @@ export default {
         },
         series: [
           {
-            size: "100%",
+            size: this.showDom ? "120%" : "150%",
             type: "pie",
             name: "份额占比",
             data: [
-              ["Firefox", 96],
-              ["我的份额", 4],
+              ["其他份额", Number(DepositeTotal)],
+              ["我的份额", Number(DepositedVolume)],
             ],
             colors: ["#FF9600", "#FFDFB2"],
           },
         ],
-      });
+      };
+      let dom = this.$refs.container;
+      Highcharts.chart(dom, data);
+    },
+    initChart() {
+      HighchartsMore(Highcharts);
+      HighchartsDrilldown(Highcharts);
+      Highcharts3D(Highcharts);
+      // 已抵押数量
     },
     onResize() {
       window.onresize = () => {
@@ -104,9 +120,11 @@ export default {
 }
 @media screen and (max-width: 750px) {
   #chartWrap {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     pointer-events: none;
+    transform: translateY(20px);
+    margin-right: 100px;
   }
 }
 </style>

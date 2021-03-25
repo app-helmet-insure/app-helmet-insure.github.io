@@ -1,22 +1,17 @@
 <template>
   <div class="action_wrap">
-    <span>参与流程</span>
-    <p>
-      此次回馈兑换 XXX 仅面向 HELMET-BNB LP 池用户, 参与时请确保您抵押在池中的
-      LPT
-    </p>
     <div class="action_step">
       <div class="action_step_wrap">
-        <!-- step1 -->
+        <!-- step1 ---------------------------------------------------------------->
         <div
           class="action_step_item"
           :class="active_step == 1 ? 'active_step' : ''"
           @click="active_step = 1"
         >
           <svg class="icon" aria-hidden="true">
-            <use href="#icon-mining"></use>
+            <use href="#icon-buy"></use>
           </svg>
-          <span>挖矿</span>
+          <span>1. 购买 Matter 门票</span>
         </div>
         <div class="step_own" v-show="active_step == 1">
           <StepOne></StepOne>
@@ -24,16 +19,16 @@
         <svg class="icon" aria-hidden="true">
           <use href="#icon-right1"></use>
         </svg>
-        <!-- step2 -->
+        <!-- step2 ----------------------------------------------------------------->
         <div
           class="action_step_item"
           :class="active_step == 2 ? 'active_step' : ''"
           @click="active_step = 2"
         >
           <svg class="icon" aria-hidden="true">
-            <use href="#icon-buy"></use>
+            <use href="#icon-share"></use>
           </svg>
-          <span>购买 XXX 资格通证</span>
+          <span>2. 抵押 LPT 获得奖励</span>
         </div>
         <div class="step_own" v-show="active_step == 2">
           <StepTwo></StepTwo>
@@ -41,36 +36,19 @@
         <svg class="icon" aria-hidden="true">
           <use href="#icon-right1"></use>
         </svg>
-        <!-- step3 -->
+        <!-- step3  ---------------------------------------------------------------->
         <div
           class="action_step_item"
           :class="active_step == 3 ? 'active_step' : ''"
           @click="active_step = 3"
         >
           <svg class="icon" aria-hidden="true">
-            <use href="#icon-share"></use>
-          </svg>
-          <span>实时份额</span>
-        </div>
-        <div class="step_own" v-show="active_step == 3">
-          <StepThree v-show="active_step == 3"></StepThree>
-        </div>
-        <svg class="icon" aria-hidden="true">
-          <use href="#icon-right1"></use>
-        </svg>
-        <!-- step4 -->
-        <div
-          class="action_step_item"
-          :class="active_step == 4 ? 'active_step' : ''"
-          @click="active_step = 4"
-        >
-          <svg class="icon" aria-hidden="true">
             <use href="#icon-earn"></use>
           </svg>
-          <span>领取奖励</span>
+          <span>3.兑换 Token</span>
         </div>
-        <div class="step_own" v-show="active_step == 4">
-          <StepFour></StepFour>
+        <div class="step_own" v-show="active_step == 3">
+          <StepThree></StepThree>
         </div>
       </div>
     </div>
@@ -78,7 +56,6 @@
       <StepOne v-show="active_step == 1"></StepOne>
       <StepTwo v-show="active_step == 2"></StepTwo>
       <StepThree v-show="active_step == 3"></StepThree>
-      <StepFour v-show="active_step == 4"></StepFour>
     </div>
   </div>
 </template>
@@ -87,20 +64,22 @@
 import StepOne from "./step-one";
 import StepTwo from "./step-two";
 import StepThree from "./step-three";
-import StepFour from "./step-four";
 export default {
   components: {
     StepOne,
     StepTwo,
     StepThree,
-    StepFour,
   },
   data() {
     return {
       active_step: 1,
     };
   },
-  computed: {},
+  mounted() {
+    this.$bus.$on("JUMP_STEP", (res) => {
+      this.active_step = res.step;
+    });
+  },
 };
 </script>
 
@@ -127,13 +106,15 @@ export default {
   .action_step {
     margin-top: 40px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     &_wrap {
       display: flex;
       align-items: center;
       > .icon {
         width: 24px;
         height: 24px;
-        margin: 0 10px;
+        margin: 0 50px;
       }
     }
     &_item {
@@ -263,7 +244,7 @@ export default {
   .step_own {
     margin-top: 28px;
     width: 100%;
-    padding: 20px 12px;
+    padding: 20px 12px 30px;
     background: #f7f7fa;
     border-radius: 3px;
   }

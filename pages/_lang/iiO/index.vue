@@ -1,6 +1,8 @@
 <template>
   <div class="iiO">
-    <div class="banner"></div>
+    <div class="banner">
+      <div class="banner_center"></div>
+    </div>
     <div class="content_h5">
       <h3>
         <img src="~/assets/img/iio/helmet_logo.png" alt="" /> Coming soon…
@@ -54,9 +56,18 @@ export default {};
     > .banner {
       width: 100%;
       height: 380px;
-      background-image: url("../../../assets/img/iio/fireBanner.png");
+      background-image: url("../../../assets/img/iio/banner_bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
+      .banner_center {
+        width: 1200px;
+        height: 380px;
+        margin: 0 auto;
+        background-image: url("../../../assets/img/iio/banner_center.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+      }
     }
     .action_step_wrap {
       display: flex;

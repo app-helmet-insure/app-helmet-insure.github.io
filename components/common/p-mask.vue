@@ -167,7 +167,7 @@ export default {
           logo: "fire",
         },
         {
-          url: "/iiO",
+          url: "/IIO",
           link: false,
           text: this.$t("Header.IIO"),
         },

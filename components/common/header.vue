@@ -19,7 +19,7 @@
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
         </nuxt-link>
-        <nuxt-link to="/iiO"
+        <nuxt-link to="/IIO"
           >{{ this.$t("Header.IIO") }}
           <!-- <p class="fire"></p> -->
         </nuxt-link>

@@ -49,7 +49,9 @@
         </tr>
       </tbody>
       <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.gif" />
+        <img src="~/assets/img/loading.png" />
+        <div class="shadow"></div>
+        <p>loading the wallet data</p>
       </div>
     </table>
     <!-- H5 -->
@@ -91,7 +93,9 @@
         </div>
       </section>
       <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.gif" />
+        <img src="~/assets/img/loading.png" />
+        <div class="shadow"></div>
+        <p>loading the wallet data</p>
       </div>
     </div>
     <section
@@ -294,7 +298,10 @@ export default {
             resultItem["status"] = "dated";
             resultItem["sort"] = 0;
           }
-          if (time + 2592000000 > now && resultItem.seller != '0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca') {
+          if (
+            time + 2592000000 > now &&
+            resultItem.seller != "0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca"
+          ) {
             buyResult.push(resultItem);
           }
         } else {
@@ -341,7 +348,10 @@ export default {
             resultItem["status"] = "dated";
             resultItem["sort"] = 0;
           }
-          if (time + 2592000000 > now && resultItem.seller != '0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca') {
+          if (
+            time + 2592000000 > now &&
+            resultItem.seller != "0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca"
+          ) {
             sellResult.push(resultItem);
           }
         }
@@ -444,15 +454,15 @@ export default {
             data.buyNum == data.remain
               ? precision.times(data.relVol, num)
               : fixD(
-                precision.divide(
-                  data.buyNum,
                   precision.divide(
-                    1,
-                    this.strikePriceArray[1][getTokenName(data._underlying)]
-                  )
+                    data.buyNum,
+                    precision.divide(
+                      1,
+                      this.strikePriceArray[1][getTokenName(data._underlying)]
+                    )
+                  ),
+                  8
                 ),
-                8
-              ),
           price: data.price,
           settleToken: "HELMET",
           _strikePrice: data._strikePrice,
@@ -464,10 +474,10 @@ export default {
         this.listType = 2;
         this.listCoin = data._underlying;
       }
-      buyInsuranceBuy(datas, (status) => { });
+      buyInsuranceBuy(datas, (status) => {});
     },
     // 计算数量
-    setNum() { },
+    setNum() {},
   },
 };
 </script>

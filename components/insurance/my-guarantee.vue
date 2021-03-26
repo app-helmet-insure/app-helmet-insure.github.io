@@ -72,8 +72,10 @@
           </td>
         </tr>
       </tbody>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.gif" />
+       <div class="loading" v-if="isLoading">
+        <img src="~/assets/img/loading.png" />
+        <div class="shadow"></div>
+        <p>loading the wallet data</p>
       </div>
     </table>
     <!-- h5 -->
@@ -171,8 +173,10 @@
           </button>
         </section>
       </div>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.gif" />
+       <div class="loading" v-if="isLoading">
+        <img src="~/assets/img/loading.png" />
+        <div class="shadow"></div>
+        <p>loading the wallet data</p>
       </div>
     </div>
     <section

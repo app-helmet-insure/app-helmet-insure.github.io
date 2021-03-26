@@ -178,7 +178,7 @@ export default {
       display: flex;
       a {
         display: inline-block;
-        margin-left: 40px;
+        margin-left: 35px;
         position: relative;
         color: #121212;
         font-weight: bold;

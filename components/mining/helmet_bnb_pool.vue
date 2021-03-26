@@ -94,6 +94,18 @@
             >
           </section>
         </div>
+        <div class="iio_pool">
+          <button class="o_button" @click="toIIO">
+            <i></i>LPT限时福利，获取iiO资格
+          </button>
+          <div class="link">
+            <a href="">什么是iio? </a>
+            <p>
+              IIO ( initial Insure Offering) : 在 Helmet 平台通过保单的形式完成
+              Token 的首次公开发行
+            </p>
+          </div>
+        </div>
       </div>
       <div class="withdraw">
         <div class="title">
@@ -312,13 +324,15 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
     userInfo() {
       return this.$store.state.userInfo;
     },
   },
   methods: {
+    toIIO() {
+      this.$router.push("/iiO");
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -463,8 +477,59 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
+  .iio_pool {
+    > button {
+      display: flex;
+      align-items: center;
+      i {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-image: url("../../assets/img/iio/liwu.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
+      }
+    }
+    .link {
+      a {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ff9600;
+        line-height: 20px;
+        position: relative;
+      }
+      a:hover + p {
+        display: block;
+      }
+      p {
+        display: none;
+        padding: 11px 8px;
+        background: #121212;
+        position: absolute;
+        width: 340px;
+        color: #f7f7fa;
+        font-size: 14px;
+        border-radius: 5px;
+        transform: translateY(-86px);
+        &::after {
+          content: "";
+          display: inline-block;
+          border-top: 5px solid #121212;
+          border-bottom: 5px solid transparent;
+          border-left: 5px solid transparent;
+          border-right: 5px solid transparent;
+          position: absolute;
+          left: 20px;
+          bottom: 0;
+          transform: translate(100%, 100%);
+        }
+      }
+    }
+  }
   .helmetbnb_pool {
-    height: 506px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
@@ -547,7 +612,6 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 293px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -763,7 +827,6 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 320px;
         padding: 30px 16px;
         .title {
           display: flex;

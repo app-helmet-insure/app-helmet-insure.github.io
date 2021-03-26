@@ -7,6 +7,25 @@ import {
 } from '~/assets/utils/address-pool.js';
 import bus from '~/assets/js/bus';
 import Message from '~/components/common/Message';
+// 是否购买门票
+export const applied3 = async (ContractAdress, RewardAdress) => {
+    const charID = window.chainID;
+    const account = window.CURRENTADDRESS;
+    if (ContractAdress.indexOf('0x') === -1) {
+        ContractAdress = getContract(ContractAdress, charID);
+    }
+    if (RewardAdress.indexOf('0x') === -1) {
+        RewardAdress = getContract(RewardAdress, charID);
+    }
+    const IIOContract = await IIO(ContractAdress);
+    return IIOContract.methods
+        .applied3(RewardAdress, account)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+// 门票价格
 export const ticketVol3 = async (ContractAdress, TicketAddress) => {
     const charID = window.chainID;
     if (ContractAdress.indexOf('0x') === -1) {
@@ -24,6 +43,7 @@ export const ticketVol3 = async (ContractAdress, TicketAddress) => {
             return window.WEB3.utils.fromWei(res, getWei(unit));
         });
 };
+// 可领取数量
 export const earned3 = async (ContractAdress) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
@@ -39,11 +59,13 @@ export const earned3 = async (ContractAdress) => {
             return window.WEB3.utils.fromWei(res, getWei(unit));
         });
 };
-export const getReward3 = async (ContractAdress) => {
+// 领取奖励
+export const getReward3 = async (type) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
-    if (ContractAdress.indexOf('0x') === -1) {
-        ContractAdress = getContract(ContractAdress, charID);
+    let ContractAdress;
+    if (type.indexOf('0x') === -1) {
+        ContractAdress = getContract(type, charID);
     }
     const IIOContract = await IIO(ContractAdress);
     try {

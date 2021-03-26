@@ -348,7 +348,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "HELMETPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => { });
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 复投
     toCompound() {
@@ -445,7 +445,6 @@ export default {
 @media screen and (min-width: 750px) {
   .helmet_pool {
     margin-bottom: 20px;
-    height: 476px;
     background: #ffffff;
     padding: 40px;
     position: relative;
@@ -523,7 +522,6 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 313px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -731,7 +729,6 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 340px;
         padding: 30px 16px;
         .title {
           display: flex;

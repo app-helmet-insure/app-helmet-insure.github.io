@@ -26,7 +26,7 @@
           </p>
           <i></i>
         </div>
-        <div class="tip">
+        <div class="tip" v-if="!ticketFlag">
           <i></i>你尚未购买门票，<span @click="toStep1"
             >购买门票激活份额 ></span
           >
@@ -54,6 +54,7 @@ import { totalSupply, getLPTOKEN } from "~/interface/deposite";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import { getLongValue } from "~/interface/event.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import { applied3 } from "~/interface/iio.js";
 export default {
   data() {
     return {
@@ -61,16 +62,24 @@ export default {
         DepositedVolume: 0,
         DepositeValue: 0,
       },
+      ticketFlag: false,
     };
   },
   mounted() {
     setTimeout(() => {
       this.getBalance();
+      this.buyAppliedFlag();
     }, 1000);
   },
   methods: {
     toStep1() {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
+    },
+    async buyAppliedFlag() {
+      let reward_name = "IIO_HELMETBNB_REWARD";
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let res = await applied3(pool_name, reward_name);
+      this.ticketFlag = res;
     },
     async getBalance() {
       let lpt_name = "IIO_HELMETBNB_LPT";

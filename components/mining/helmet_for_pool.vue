@@ -609,7 +609,6 @@ export default {
     font-size: 20px;
   }
   .helmetfor_pool {
-    height: 536px;
     background: #ffffff;
     padding: 40px;
     margin-bottom: 20px;
@@ -750,7 +749,6 @@ export default {
       margin-top: 30px;
       > div {
         width: 540px;
-        height: 323px;
         padding: 30px 40px;
         .title {
           display: flex;
@@ -1043,7 +1041,6 @@ export default {
       flex-direction: column;
       margin-top: 30px;
       > div {
-        height: 293px;
         padding: 30px 16px;
         .title {
           display: flex;

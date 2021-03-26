@@ -41,11 +41,13 @@
       <i></i>
       <p class="text">
         <span>预计可获得： </span>
-        <span> 100 iTOKEN </span>
+        <span> 100 iTOKEN <i class="question"></i> </span>
       </p>
       <a>什么是 iTOKEN ？</a>
     </div>
-    <button class="getReward">领取奖励</button>
+    <button class="getReward" @click="getReward">
+      <i :class="claimLoading ? 'loading_pic' : ''"></i>领取奖励
+    </button>
   </div>
 </template>
 
@@ -57,6 +59,7 @@ import {
   toDeposite,
 } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
+import { getReward3 } from "~/interface/iio.js";
 export default {
   data() {
     return {
@@ -111,6 +114,18 @@ export default {
         (DepositedVolume / DepositeTotal) * 100,
         2
       );
+      if (DepositeVolume) {
+        this.DepositeNum = DepositeVolume;
+      }
+    },
+    // 领取奖励
+    async getReward() {
+      if (this.claimLoading) {
+        return;
+      }
+      this.claimLoading = true;
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let res = await getReward3(pool_name);
     },
     // 抵押
     toDeposite() {
@@ -223,6 +238,8 @@ export default {
             font-size: 14px;
             color: #121212;
             line-height: 20px;
+            display: flex;
+            align-items: center;
           }
         }
       }

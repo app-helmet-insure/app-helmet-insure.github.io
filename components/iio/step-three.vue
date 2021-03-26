@@ -18,8 +18,16 @@
           <span>11</span>
         </p>
       </div>
+      <div class="rewardDetail">
+        <i></i>
+        <p>
+          <span
+            >当前待兑换 <i>100 iMatter</i>, 共可兑换 <i>100 Matter</i>
+          </span>
+          <span>需要支付 <i>12.33333 BNB</i></span>
+        </p>
+      </div>
       <button @click="getReward">兑换</button>
-      <p>兑换Token 需要使用 <span>12312</span></p>
     </div>
   </div>
 </template>
@@ -106,6 +114,38 @@ export default {
           }
         }
       }
+      .rewardDetail {
+        width: 100%;
+        background: #ededf0;
+        margin-top: 16px;
+        padding: 12px 10px;
+        display: flex;
+        align-items: flex-start;
+        > i {
+          display: block;
+          width: 16px;
+          height: 16px;
+          background-image: url("../../assets/img/iio/information.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          cursor: pointer;
+        }
+        p {
+          margin-left: 4px;
+          span {
+            display: block;
+            font-size: 14px;
+            color: #9b9b9b;
+            line-height: 16px;
+            i {
+              color: #121212;
+            }
+            &:nth-of-type(2) {
+              margin-top: 8px;
+            }
+          }
+        }
+      }
       > button {
         margin-top: 20px;
         width: 100%;
@@ -117,14 +157,6 @@ export default {
         color: #ffffff;
         &:hover {
           background: #2c2c2c;
-        }
-      }
-      > p {
-        margin-top: 8px;
-        font-size: 14px;
-        color: #9b9b9b;
-        span {
-          color: #121212;
         }
       }
     }
@@ -180,6 +212,38 @@ export default {
           }
         }
       }
+      .rewardDetail {
+        width: 100%;
+        background: #ededf0;
+        margin-top: 16px;
+        padding: 12px 10px;
+        display: flex;
+        align-items: flex-start;
+        > i {
+          display: block;
+          width: 14px;
+          height: 14px;
+          background-image: url("../../assets/img/iio/information.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          cursor: pointer;
+        }
+        p {
+          margin-left: 4px;
+          span {
+            display: block;
+            font-size: 12px;
+            color: #9b9b9b;
+            line-height: 14px;
+            i {
+              color: #121212;
+            }
+            &:nth-of-type(2) {
+              margin-top: 8px;
+            }
+          }
+        }
+      }
       > button {
         margin-top: 20px;
         width: 100%;
@@ -191,14 +255,6 @@ export default {
         color: #ffffff;
         &:hover {
           background: #2c2c2c;
-        }
-      }
-      > p {
-        margin-top: 8px;
-        font-size: 12px;
-        color: #9b9b9b;
-        span {
-          color: #121212;
         }
       }
     }

@@ -5,7 +5,7 @@
       <h3>
         <img src="~/assets/img/iio/helmet_logo.png" alt="" /> Coming soon…
       </h3>
-      <p>Your OPTION to redifine initial offering</p>
+      <p>Your OPTION to redefine Initial Offering</p>
     </div>
     <div class="action">
       <div class="action_step_wrap">
@@ -39,7 +39,7 @@
       <h3>
         <img src="~/assets/img/iio/helmet_logo.png" alt="" /> Coming soon…
       </h3>
-      <p>Your OPTION to redifine initial offering</p>
+      <p>Your OPTION to redefine Initial Offering</p>
     </div>
   </div>
 </template>

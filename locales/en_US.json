@@ -136,9 +136,9 @@
     "WillStartIn": "Will start in"
   },
   "IIO": {
-    "BuyTokenTicket": "1. BUY TOKEN TICKET",
-    "DepositLptReward": "2. Stake LPT to get itoken",
-    "SwapToken": "3.Activate your itoken"
+    "BuyTokenTicket": "1. BUY TICKET",
+    "DepositLptReward": "2. Stake LPT to get iToken",
+    "SwapToken": "3. Activate your iToken"
   },
   "Tip": {
     "Dpr": "daily percentage of yield, DPR= daily yield / staking volume",

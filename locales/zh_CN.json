@@ -138,7 +138,7 @@
   "IIO": {
     "BuyTokenTicket": "1. 购买 TOKEN 门票",
     "DepositLptReward": "2. 抵押 LPT 获得奖励",
-    "SwapToken": "3.兑换 Token"
+    "SwapToken": "3. 兑换 Token"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",

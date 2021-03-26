@@ -4,6 +4,7 @@
     "Mining": "挖矿",
     "FlashMining": "闪电挖矿",
     "BruningBox": "燃烧盒子",
+    "IIO": "iiO",
     "Plan": "私募",
     "Govern": "治理",
     "GuideBook": "使用指南",
@@ -133,6 +134,11 @@
     "TotalBurn": "总燃烧量",
     "Get": "去获得",
     "WillStartIn": "距正式开启"
+  },
+  "IIO": {
+    "BuyTokenTicket": "1. 购买 TOKEN 门票",
+    "DepositLptReward": "2. 抵押 LPT 获得奖励",
+    "SwapToken": "3.兑换 Token"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",

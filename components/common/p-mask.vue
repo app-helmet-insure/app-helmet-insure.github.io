@@ -167,6 +167,11 @@ export default {
           logo: "fire",
         },
         {
+          url: "/iiO",
+          link: false,
+          text: this.$t("Header.IIO"),
+        },
+        {
           url: "https://helmet-insure.gitbook.io/helmet/",
           link: true,
           text: this.$t("Header.GuideBook"),

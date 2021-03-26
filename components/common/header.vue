@@ -19,6 +19,10 @@
           >{{ $t("Header.BruningBox") }}
           <p class="fire"></p>
         </nuxt-link>
+        <nuxt-link to="/iiO"
+          >{{ this.$t("Header.IIO") }}
+          <!-- <p class="fire"></p> -->
+        </nuxt-link>
         <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
           $t("Header.GuideBook")
         }}</a>

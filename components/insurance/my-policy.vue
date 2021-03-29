@@ -1,183 +1,52 @@
 <template>
-  <div class="my_guarantee">
-    <!-- pc -->
-    <table v-if="isLogin">
-      <thead>
-        <tr>
-          <td>{{ $t("Table.ID") }}</td>
-          <td>{{ $t("Table.Type") }}</td>
-          <td>
-            {{ $t("Table.PolicyPrice")
-            }}<span style="font-size: 12px">(HELMET)</span>
-          </td>
-          <td>
-            {{ $t("Table.Premium")
-            }}<span style="font-size: 12px">(HELMET)</span>
-          </td>
-          <td>{{ $t("Table.Position") }}</td>
-          <td>{{ $t("Table.CountDonm") }}</td>
-          <td>{{ $t("Table.Rate") }}</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(item, index) in showList"
-          :key="index"
-          :class="item.type == 'call' ? 'call_style' : 'put_style'"
-        >
-          <!-- Id -->
-          <td>{{ item.id }}</td>
-          <!-- Type -->
-          <td :class="item.type == 'call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }}
-            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
-          </td>
-          <!-- PolicyPrice -->
-          <td>
-            <template v-if="item.showType">
-              <img :src="require(`~/assets/img/helmet/${item.price}`)" alt="" />
-            </template>
-            <template v-else>
-              {{
-                fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
-              }}
-            </template>
-          </td>
-          <!-- Premium -->
-          <td>
-            <template v-if="item.showType">
-              <img :src="require(`~/assets/img/helmet/${item.Rent}`)" alt="" />
-            </template>
-            <template v-else>
-              {{ fixD(item.Rent, 8) == "--" ? item.Rent : fixD(item.Rent, 8) }}
-            </template>
-          </td>
-          <!-- Position -->
-          <td>{{ fixD(item.volume, 8) }}</td>
-          <!-- CountDonm -->
-          <td>{{ item.dueDate }}</td>
-          <!-- Rate -->
-          <td>{{ item.outPrice }} {{ item.outPriceUnit }}</td>
-          <!-- Active -->
-          <td>
-            <button
-              class="b_b_button"
-              @click="toActive(item)"
-              v-if="item.dueDate != 'Expired'"
-            >
-              {{ $t("Table.outSure") }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-       <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
-    </table>
-    <!-- h5 -->
-    <div v-if="isLogin">
-      <div
-        class="item_box"
-        v-for="(item, index) in showList"
-        :key="index"
-        :class="item.type == 'call' ? 'call_style' : 'put_style'"
-      >
+  <div class="my_poilcy">
+    <div class="policy_item" v-for="item in showList" :key="item.id">
+      <section>
         <p>
-          <span>{{ $t("Table.ID") }}</span>
-          <span>{{ item.id }}</span>
+          <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+          <span>{{ item.dueDate }}</span>
         </p>
-        <div>
-          <p>
-            <span>{{ $t("Table.Type") }}</span>
-            <span :class="item.type == 'call' ? 'call_text' : 'put_text'">
-              {{
-                item.type == "call"
-                  ? getTokenName(item._collateral)
-                  : getTokenName(item._underlying)
-              }}
-              {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
-            </span>
-          </p>
-          <p>
-            <span
-              >{{ $t("Table.PolicyPrice")
-              }}<span style="font-size: 12px">(HELMET)</span></span
-            >
-            <span>
-              <template v-if="item.showType">
-                <img
-                  :src="require(`~/assets/img/helmet/${item.price}`)"
-                  alt=""
-                />
-              </template>
-              <template v-else>
-                {{
-                  fixD(item.price, 4) == "--" ? item.price : fixD(item.price, 4)
-                }}
-              </template>
-            </span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span
-              >{{ $t("Table.Premium")
-              }}<span style="font-size: 12px">(HELMET)</span></span
-            >
-            <span>
-              <template v-if="item.showType">
-                <img
-                  :src="require(`~/assets/img/helmet/${item.Rent}`)"
-                  alt=""
-                />
-              </template>
-              <template v-else>
-                {{
-                  fixD(item.Rent, 8) == "--" ? item.Rent : fixD(item.Rent, 8)
-                }}
-              </template>
-            </span>
-          </p>
-          <p>
-            <span>{{ $t("Table.Position") }}</span>
-            <span>{{ fixD(item.volume, 8) }}</span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>{{ $t("Table.Rate") }}</span>
-            <span> {{ item.outPrice }} {{ item.outPriceUnit }} </span>
-          </p>
-          <p>
-            <span>{{ $t("Table.CountDonm") }}</span>
-            <span>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-time"></use>
-              </svg>
-              {{ item.dueDate }}
-            </span>
-          </p>
-        </div>
-        <section>
-          <button
-            class="b_b_button"
-            @click="toActive(item)"
-            v-if="item.dueDate != 'Expired'"
-          >
-            {{ $t("Table.outSure") }}
-          </button>
-        </section>
-      </div>
-       <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
+        <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+          {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+          {{ item.outPriceUnit }}
+          {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+          <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+        </span>
+      </section>
+      <section>
+        <p>
+          <span>出险价: </span>
+          <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+        </p>
+        <p>
+          <span>{{ $t("Table.Position") }}: </span>
+          <span>{{ fixD(item.volume, 8) }}</span>
+        </p>
+      </section>
+      <section>
+        <p>
+          <span>单价: </span>
+          <span>{{ fixD(item.price, 8) }} HELMET</span>
+        </p>
+        <p>
+          <span>{{ $t("Table.Position") }}: </span>
+          <span>{{ fixD(item.Rent, 8) }} HELMET</span>
+        </p>
+      </section>
+      <section>
+        <button
+          :style="item.status == 'Expired' ? 'pointer-events: none;' : ''"
+          @click="toActive(item)"
+        >
+          {{ item.status == "Expired" ? "已到期" : "出险" }}
+          <i class="selectDown"></i>
+        </button>
+      </section>
+    </div>
+    <div class="loading" v-if="isLoading">
+      <img src="~/assets/img/loading.png" />
+      <div class="shadow"></div>
+      <p>loading the wallet data</p>
     </div>
     <section
       class="noData"
@@ -188,7 +57,7 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="guaranteeList.length > 5 && isLogin">
+    <section class="pages" v-if="guaranteeList.length > 10 && isLogin">
       <Page
         :total="guaranteeList.length"
         :limit="limit"
@@ -214,7 +83,7 @@ import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 import { balanceOf, getBalance } from "~/interface/deposite";
-
+import moment from "moment";
 export default {
   components: {
     Page,
@@ -230,7 +99,7 @@ export default {
       getTokenName,
       fixD,
       page: 0,
-      limit: 5,
+      limit: 10,
       isLoading: true,
       isLogin: false,
     };
@@ -274,7 +143,7 @@ export default {
     myAboutInfoBuyWatch(newValue, old) {
       if (newValue) {
         this.page = 0;
-        this.limit = 5;
+        this.limit = 10;
         this.setSettlementList(newValue);
       }
     },
@@ -319,27 +188,29 @@ export default {
         // 保费
         if (TokenFlag == "WBNB") {
           item.TypeCoin = Token;
-          item.type = "call";
+          item.type = "Call";
           item.outPriceUnit = "BNB";
         } else {
           item.TypeCoin = TokenFlag;
-          item.type = "put";
+          item.type = "Put";
           item.outPriceUnit = "BNB";
         }
         if (TokenFlag == "BUSD" && Token == "WBNB") {
           item.TypeCoin = Token;
-          item.type = "call";
+          item.type = "Call";
           item.outPriceUnit = "BUSD";
         }
         if (Token == "BUSD" && TokenFlag == "WBNB") {
           item.TypeCoin = TokenFlag;
-          item.type = "put";
+          item.type = "Put";
           item.outPriceUnit = "BUSD";
         }
         Rent = precision.times(fromWei(item.vol, Token), InsurancePrice);
         //倒计时
-        downTime = this.getDownTime(item.sellInfo.longInfo._expiry);
-        if (item.type == "call") {
+        downTime = new Date(item.sellInfo.longInfo._expiry * 1000);
+        downTime = moment(downTime).format("YYYY/MM/DD HH:mm:ss");
+
+        if (item.type == "Call") {
           resultItem = {
             id: item.bidID,
             bidID: item.bidID,
@@ -564,7 +435,9 @@ export default {
           Rent: "Airdrop",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1613404800),
+          dueDate: moment(new Date(1613404800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
           _strikePrice: fromWei(30000000000000000, Token),
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
@@ -578,6 +451,7 @@ export default {
           outPriceUnit: "BNB",
           type: "call",
           showVolume: volume,
+          TypeCoin: getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -615,20 +489,23 @@ export default {
           Rent: volume * 10,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1613404800),
+          dueDate: moment(new Date(1613404800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
           _strikePrice: fromWei(10000000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1613404800000,
           transfer: true,
           longAdress: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
-          type: "call",
+          type: "Call",
           symbol: "HCCT",
           approveAddress1: "FACTORY",
           approveAddress2: "",
           outPrice: fromWei(10000000000000000000, Token),
           outPriceUnit: "HELMET",
           showVolume: volume,
+          TypeCoin: getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -666,7 +543,9 @@ export default {
           Rent: volume * 1.8343,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1613750400),
+          dueDate: moment(new Date(1613750400000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929",
           _strikePrice: fromWei(2500000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
@@ -681,6 +560,7 @@ export default {
           outPriceUnit: "HELMET",
           unit: 6,
           showVolume: volume,
+          TypeCoin: getTokenName("0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -717,20 +597,23 @@ export default {
           Rent: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1615226400),
+          dueDate: moment(new Date(1615226400000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0xae9269f27437f0fcbc232d39ec814844a51d6b8f",
           _strikePrice: fromWei(70000000000000000, Token),
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1615226400000,
           transfer: true,
           longAdress: "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa",
-          type: "call",
+          type: "Call",
           symbol: "hBURGER",
           approveAddress1: "FACTORY",
           approveAddress2: "",
           outPrice: fromWei(70000000000000000, Token),
           outPriceUnit: "BNB",
           showVolume: volume,
+          TypeCoin: getTokenName("0xae9269f27437f0fcbc232d39ec814844a51d6b8f"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -767,14 +650,16 @@ export default {
           Rent: "redbag.png",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1613577600),
+          dueDate: moment(new Date(1613577600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           _strikePrice: fromWei(100000000000000000, Token),
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1613577600000,
           transfer: true,
           longAdress: "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417",
-          type: "call",
+          type: "Call",
           symbol: "LiShi",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -782,6 +667,7 @@ export default {
           outPriceUnit: "BUSD",
           showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -818,14 +704,16 @@ export default {
           Rent: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1616256000),
+          dueDate: moment(new Date(1616256000000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _strikePrice: fromWei(500000000000000000000, Token),
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1616256000000,
           transfer: true,
           longAdress: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
-          type: "call",
+          type: "Call",
           symbol: "BNB500",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -833,6 +721,7 @@ export default {
           outPriceUnit: "BUSD",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -869,14 +758,16 @@ export default {
           Rent: volume * 1000,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1616601600),
+          dueDate: moment(new Date(1616428800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0xa184088a740c695e156f91f5cc086a06bb78b827",
           _strikePrice: fromWei(42000000000000000000, Token),
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1616601600000,
           transfer: true,
           longAdress: "0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112",
-          type: "call",
+          type: "Call",
           symbol: "hAUTO",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -884,6 +775,7 @@ export default {
           outPriceUnit: "BNB",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0xa184088a740c695e156f91f5cc086a06bb78b827"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -920,14 +812,16 @@ export default {
           Rent: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1616428800),
+          dueDate: moment(new Date(1616428800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0xf218184af829cf2b0019f8e6f0b2423498a36983",
           _strikePrice: fromWei(14000000000000000, Token),
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1616428800000,
           transfer: true,
           longAdress: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
-          type: "call",
+          type: "Call",
           symbol: "hMATH",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -935,6 +829,7 @@ export default {
           outPriceUnit: "BNB",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0xf218184af829cf2b0019f8e6f0b2423498a36983"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -971,14 +866,16 @@ export default {
           Rent: volume * 0.1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1617465600),
+          dueDate: moment(new Date(1617465600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x658a109c5900bc6d2357c87549b651670e5b0539",
           _strikePrice: fromWei(250000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1617465600000,
           transfer: true,
           longAdress: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
-          type: "call",
+          type: "Call",
           symbol: "hFOR",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -986,6 +883,7 @@ export default {
           outPriceUnit: "HELMET",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0x658a109c5900bc6d2357c87549b651670e5b0539"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -1022,14 +920,16 @@ export default {
           Rent: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1617897600),
+          dueDate: moment(new Date(1617897600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _strikePrice: fromWei(100000000000000000, Token),
           _underlying: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
           _expiry: 1617897600000,
           transfer: true,
           longAdress: "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522",
-          type: "call",
+          type: "Call",
           symbol: "HCCTII",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -1037,6 +937,7 @@ export default {
           outPriceUnit: "CAKE",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -1073,14 +974,16 @@ export default {
           Rent: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: this.getDownTime(1618416000),
+          dueDate: moment(new Date(1618416000000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
           _collateral: "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
           _strikePrice: fromWei(10000000000000000000, Token),
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1618416000000,
           transfer: true,
           longAdress: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
-          type: "call",
+          type: "Call",
           symbol: "hDODO",
           approveAddress1: "FACTORY",
           approveAddress2: "",
@@ -1088,6 +991,7 @@ export default {
           outPriceUnit: "HELMET",
           // showType: "img",
           showVolume: volume,
+          TypeCoin: getTokenName("0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
@@ -1158,75 +1062,57 @@ export default {
   color: #00b900 !important;
 }
 .put_text {
-  color: #ff6400 !important;
+  color: #dc3545 !important;
 }
 @media screen and (min-width: 750px) {
-  .my_guarantee {
+  .my_poilcy {
     position: relative;
-    > div {
-      display: none;
-      .loading {
-        display: none;
-      }
-    }
-    table {
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .loading {
       width: 100%;
+    }
+    .pages {
+      width: 100%;
+    }
+    .policy_item {
+      width: 100%;
+      height: 90px;
+      margin-top: 10px;
       display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-
-      tr {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-        align-items: center;
-        td {
-          width: 100px;
-          white-space: nowrap;
-        }
-      }
-      .option {
-        text-align: right;
-        width: 265px;
-      }
-      thead {
-        width: 100%;
-        background: #f7f7fa;
-        tr {
-          height: 40px;
-          color: #919aa6;
-          td {
-            line-height: 40px;
-            font-size: 14px;
+      background: #ffffff;
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      align-items: center;
+      padding: 0 20px;
+      section {
+        &:nth-of-type(1) {
+          flex: 5;
+          > p {
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #787878;
+              line-height: 14px;
+              &:nth-of-type(1) {
+                width: 90px;
+                display: block;
+              }
+              &:nth-of-type(2) {
+                margin-left: 52px;
+              }
+            }
           }
-          td:first-child {
-            width: 50px;
-          }
-          td:nth-of-type(2) {
-            width: 110px;
-          }
-          td:nth-of-type(3) {
-            width: 100px;
-          }
-        }
-      }
-      tbody {
-        width: 100%;
-        tr {
-          position: relative;
-          width: 100%;
-          box-sizing: border-box;
-          border-bottom: 1px solid #ededf0;
-          td {
-            white-space: nowrap;
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 14px;
+          > span {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
             font-weight: bold;
-            color: #121212;
+            line-height: 24px;
             display: flex;
             align-items: center;
             i {
@@ -1244,25 +1130,81 @@ export default {
               background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
-          td:first-child {
-            width: 50px;
+          > .call_text {
+            color: #00b900;
           }
-          td:nth-of-type(2) {
-            width: 110px;
+          > .put_text {
+            color: #dc3545;
           }
-          td:nth-of-type(3) {
-            width: 100px;
+        }
+        &:nth-of-type(2) {
+          flex: 4;
+          display: flex;
+          flex-direction: column;
+          p {
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+              }
+            }
           }
-          td:last-child {
-            transform: translateX(20px);
+        }
+        &:nth-of-type(3) {
+          flex: 4;
+          display: flex;
+          flex-direction: column;
+          p {
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+        &:nth-of-type(4) {
+          flex: 3;
+          display: flex;
+          justify-content: flex-end;
+          button {
+            padding: 0px 10px;
+            height: 36px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e8e8eb;
+            margin-left: 20px;
+            font-size: 14px;
+            font-family: HelveticaNeue;
+            color: #17173a;
+            line-height: 24px;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-          }
-          .option {
-            display: flex;
-            align-items: center;
-            transform: translateX(20px);
+            justify-content: center;
+            min-width: 92px;
           }
         }
       }

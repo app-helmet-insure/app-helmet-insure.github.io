@@ -33,7 +33,7 @@
           <i></i>
           <p>
             <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>d</b> >/</i>{{ item.dueDate.hour
+              {{ item.dueDate.day }}<b>d</b> <i>/</i>{{ item.dueDate.hour
               }}<b>h</b>
             </span>
             <span v-else>

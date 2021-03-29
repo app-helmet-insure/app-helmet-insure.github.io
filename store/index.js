@@ -55,7 +55,7 @@ export const state = () => ({
         // },
         {
             key: 'zh_CN',
-            name: '简体中文',
+            name: '中文',
         },
     ],
     // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],

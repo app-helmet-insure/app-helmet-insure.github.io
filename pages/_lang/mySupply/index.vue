@@ -1,14 +1,14 @@
 <template>
   <div class="main_container">
-    <MyPolicy></MyPolicy>
+    <MySupply></MySupply>
   </div>
 </template>
 
 <script>
-import MyPolicy from "~/components/insurance/my-policy.vue";
+import MySupply from "~/components/insurance/my-supply.vue";
 export default {
   components: {
-    MyPolicy,
+    MySupply,
   },
 };
 </script>

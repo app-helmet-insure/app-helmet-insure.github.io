@@ -513,6 +513,8 @@ export default {
     .content {
       display: flex;
       .content_wrap {
+        display: flex;
+        flex-direction: column;
         overflow-y: scroll;
         flex: 1;
         height: calc(100vh - 50px);

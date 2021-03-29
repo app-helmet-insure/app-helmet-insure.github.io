@@ -1,153 +1,61 @@
 <template>
-  <div class="my_insurance">
+  <div class="my_supply">
     <!-- pc -->
-    <table v-if="isLogin">
-      <thead>
-        <tr>
-          <td>{{ $t("Table.ID") }}</td>
-          <td>{{ $t("Table.Type") }}</td>
-          <td>
-            {{ $t("Table.PolicyPrice")
-            }}<span style="font-size: 12px">(HELMET)</span>
-          </td>
-          <td>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}</td>
-          <td>{{ $t("Table.CanCollateral") }}</td>
-          <td>{{ $t("Table.DueTime") }}</td>
-          <td>{{ $t("Table.Rate") }}</td>
-          <td class="option"></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(item, index) in showList"
-          :key="index"
-          :class="item.type == 'call' ? 'call_style' : 'put_style'"
-        >
-          <template>
-            <!-- ID -->
-            <td>{{ item.id }}</td>
-            <!-- Type -->
-            <td :class="item.type == 'call' ? 'call_text' : 'put_text'">
-              {{ item.TypeCoin }}
-              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
-            </td>
-            <!-- PolicyPrice -->
-            <td>
-              {{ fixD(item.price, 4), }}
-              <span
-                class="cancel"
-                @click="handleClickCancel(item)"
-                v-if="item.remain != 0"
-              >
-                {{ $t("Table.Cancel") }}
-              </span>
-            </td>
-            <!-- beSold/unsold -->
-            <td>
-              {{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }}/{{
-                item.remain == "0"
-                  ? 0
-                  : fixD(item.unSold, 8),
-              }}
-            </td>
-            <!-- shortToken -->
-            <td>{{ fixD(item.shortBalance, 4) }}</td>
-            <!-- duetime -->
-            <td>{{ item.dueDate }}</td>
-            <!-- Rate -->
-            <td>{{ item.outPrice }} {{ item.outPriceUnit }}</td>
-            <td class="option">
-              <button
-                class="b_button"
-                style="background: #ccc"
-                @click="toMining"
-              >
-                {{ $t("Table.Stakeing") }}
-              </button>
-            </td>
-          </template>
-        </tr>
-      </tbody>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
-    </table>
-    <!-- H5 -->
-    <div v-if="isLogin">
-      <div
-        v-for="(item, index) in showList"
-        :key="index"
-        :class="
-          item.type == 'call' ? 'call_style item_box' : 'put_style item_box'
-        "
-      >
+    <div class="supply_item" v-for="item in showList" :key="item.id">
+      <section>
         <p>
-          <span>{{ $t("Table.ID") }}</span
-          ><span>{{ item.id }}</span>
+          <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+          <span>{{ item.dueDate }}</span>
         </p>
-        <div>
-          <p>
-            <span>{{ $t("Table.Type") }}</span>
-            <span :class="item.type == 'call' ? 'call_text' : 'put_text'">
-              {{ item.TypeCoin }}
-              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"> </i>
-            </span>
-          </p>
-          <p>
-            <span
-              >{{ $t("Table.PolicyPrice")
-              }}<span style="font-size: 12px">(HELMET)</span></span
-            ><span>{{ fixD(item.price, 4) }}</span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}</span>
-            <span>
-              {{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }}/{{
+        <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+          {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+          {{ item.outPriceUnit }}
+          {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+          <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+        </span>
+      </section>
+      <section>
+        <p>
+          <span>出险价: </span>
+          <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+        </p>
+        <p>
+          <span>单价: </span>
+          <span>{{ fixD(item.price, 8) }} HELMET</span>
+        </p>
+      </section>
+      <section>
+        <p>
+          <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}:</span>
+          <span
+            >{{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }}/{{
                 item.remain == "0"
                   ? 0
                   : fixD(item.unSold, 8),
-              }}
-            </span>
-          </p>
-          <p>
-            <span>{{ $t("Table.CanCollateral") }}</span>
-            <span>{{ fixD(item.shortBalance, 4) }}</span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>{{ $t("Table.DueTime") }}</span
-            ><span>{{ item.dueDate }}</span>
-          </p>
-          <p>
-            <span>{{ $t("Table.Rate") }}</span>
-            <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
-          </p>
-        </div>
-        <section>
-          <button
-            class="o_button"
-            @click="handleClickCancel(item)"
-            v-if="item.remain != 0"
-          >
-            {{ $t("Table.Cancel") }}
-          </button>
-          <button class="b_button" @click="toMining" style="background: #ccc">
-            {{ $t("Table.Stakeing") }}
-          </button>
-        </section>
-      </div>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
+            }}
+          </span>
+        </p>
+        <p>
+          <span>可抵押: </span>
+          <span>{{ fixD(item.shortBalance, 8) }} Short Token</span>
+        </p>
+      </section>
+      <section>
+        <button
+          :style="item.remain == '0' ? 'pointer-events: none;' : ''"
+          @click="toActive(item)"
+        >
+          {{ item.remain == 0 ? "已全部成交" : "撤单" }}
+        </button>
+        <button>抵押挖矿</button>
+      </section>
     </div>
 
+    <div class="loading" v-if="isLoading">
+      <img src="~/assets/img/loading.png" />
+      <div class="shadow"></div>
+      <p>loading the wallet data</p>
+    </div>
     <section
       class="noData"
       v-if="(showList.length < 1 && !isLoading) || !isLogin"
@@ -175,6 +83,7 @@ import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onCancel, getBalance, asks, RePrice } from "~/interface/order.js";
 import Page from "~/components/common/page.vue";
+import moment from "moment";
 export default {
   components: {
     Page,
@@ -190,7 +99,7 @@ export default {
       getTokenName,
       fixD,
       page: 0,
-      limit: 5,
+      limit: 10,
       isLoading: true,
       isLogin: false,
     };
@@ -232,7 +141,7 @@ export default {
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
         this.page = 0;
-        this.limit = 5;
+        this.limit = 10;
         this.setSettlementList(newValue);
       }
     },
@@ -276,28 +185,28 @@ export default {
         }
         if (TokenFlag == "WBNB") {
           item.TypeCoin = getTokenName(item.longInfo._collateral);
-          item.type = "call";
+          item.type = "Call";
           item.outPriceUnit = "BNB";
         } else {
           item.TypeCoin = getTokenName(item.longInfo._underlying);
-          item.type = "put";
+          item.type = "Put";
           item.outPriceUnit = "BNB";
         }
         if (TokenFlag == "BUSD" && Token == "WBNB") {
           item.TypeCoin = getTokenName(item.longInfo._collateral);
-          item.type = "call";
+          item.type = "Call";
           item.outPriceUnit = "BUSD";
         }
         if (Token == "BUSD" && TokenFlag == "WBNB") {
           item.TypeCoin = getTokenName(item.longInfo._underlying);
-          item.type = "put";
+          item.type = "Put";
           item.outPriceUnit = "BUSD";
         }
         // 保单价格
         InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
         //倒计时
-        downTime = new Date(item.longInfo._expiry * 1000).toLocaleDateString();
-
+        downTime = new Date(item.longInfo._expiry * 1000);
+        downTime = moment(downTime).format("YYYY/MM/DD HH:mm:ss");
         //已出售
         // beSold = fromWei(this.getBeSold(item.askID), Token);
         // unSold = precision.minus(amount, beSold);
@@ -494,83 +403,60 @@ export default {
   color: #00b900 !important;
 }
 .put_text {
-  color: #ff6400 !important;
+  color: #dc3545 !important;
 }
 @media screen and (min-width: 750px) {
   .o_button {
     margin-right: 12px;
   }
-  .my_insurance {
+  .my_supply {
     position: relative;
-    > div {
-      display: none;
-      .loading {
-        display: none;
-      }
-    }
-    table {
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .loading {
       width: 100%;
+    }
+    .pages {
+      width: 100%;
+    }
+    .supply_item {
+      width: 100%;
+      height: 90px;
+      margin-top: 10px;
       display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-      tr {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-        align-items: center;
-        td {
-          width: 100px;
-          white-space: nowrap;
-        }
-      }
-      .option {
-        text-align: right;
-        width: 100px;
-      }
-      thead {
-        width: 100%;
-        background: #f7f7fa;
-        tr {
-          height: 40px;
-          color: #919aa6;
-          td {
-            line-height: 40px;
-            font-size: 14px;
+      background: #ffffff;
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      align-items: center;
+      padding: 0 20px;
+      section {
+        &:nth-of-type(1) {
+          flex: 5;
+          > p {
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #787878;
+              line-height: 14px;
+              &:nth-of-type(1) {
+                width: 90px;
+                display: block;
+              }
+              &:nth-of-type(2) {
+                margin-left: 52px;
+              }
+            }
           }
-          td:first-child {
-            width: 70px;
-          }
-          td:nth-of-type(5) {
-            width: 150px;
-          }
-          td:nth-of-type(3) {
-            width: 150px;
-          }
-          td:nth-of-type(4) {
-            width: 180px;
-          }
-          td:nth-of-type(6) {
-            width: 150px;
-          }
-        }
-      }
-      tbody {
-        width: 100%;
-        tr {
-          width: 100%;
-          border-bottom: 1px solid #ededf0;
-          box-sizing: border-box;
-          position: relative;
-          td {
-            white-space: nowrap;
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 14px;
+          > span {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
             font-weight: bold;
-            color: #121212;
+            line-height: 24px;
             display: flex;
             align-items: center;
             i {
@@ -588,32 +474,86 @@ export default {
               background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
-          td:nth-of-type(5) {
-            width: 150px;
+          > .call_text {
+            color: #00b900;
+          }
+          > .put_text {
+            color: #dc3545;
+          }
+        }
+        &:nth-of-type(2) {
+          flex: 4;
+          display: flex;
+          flex-direction: column;
+          p {
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+        &:nth-of-type(3) {
+          flex: 4;
+          display: flex;
+          flex-direction: column;
+          p {
+            &:nth-of-type(2) {
+              margin-top: 12px;
+            }
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+        &:nth-of-type(4) {
+          flex: 3;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          button {
+            width: 100px;
+            padding: 0px 10px;
+            height: 36px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e8e8eb;
+            margin-left: 20px;
+            font-size: 14px;
+            font-family: HelveticaNeue;
+            color: #17173a;
+            line-height: 24px;
+            font-weight: 500;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-          }
-          td:first-child {
-            width: 70px;
-          }
-          td:nth-of-type(3) {
-            width: 150px;
-          }
-          td:nth-of-type(4) {
-            width: 180px;
-          }
-          td:nth-of-type(6) {
-            width: 150px;
-          }
-          td:last-child {
-            transform: translateX(20px);
-          }
-          .option {
-            display: flex;
-            align-items: center;
-            transform: translateX(20px);
-            justify-content: flex-end;
+            justify-content: center;
+            min-width: 92px;
+            &:nth-of-type(2) {
+              margin-top: 6px;
+            }
           }
         }
       }

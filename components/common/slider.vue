@@ -2,60 +2,152 @@
   <div class="slider">
     <a href="" class="logo"></a>
     <ul class="menu">
-      <li>
-        <nuxt-link to="/" :class="routeObj.name === '/' ? 'active' : ''">
-          首页
-        </nuxt-link>
-      </li>
-      <li>
-        <nuxt-link
-          to="/tradingView"
-          :class="routeObj.name === '/tradingView' ? 'active' : ''"
-        >
+      <li class="menu_group menu_item">
+        <nuxt-link to="/" :class="routeObj.name === 'index' ? 'active' : ''">
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-insurance"></use>
+          </svg>
           保险
+          <svg class="icon svg-icon right" aria-hidden="true">
+            <use xlink:href="#icon-right1"></use>
+          </svg>
         </nuxt-link>
+        <ul
+          class="child_menu"
+          v-if="
+            routeObj.name == 'index' ||
+            routeObj.name == 'myPolicy' ||
+            routeObj.name == 'mySupply' ||
+            routeObj.name == 'myClaim'
+          "
+        >
+          <li class="child_menu_item">
+            <nuxt-link
+              to="/myPolicy"
+              :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
+            >
+              我的保单
+            </nuxt-link>
+          </li>
+          <li class="child_menu_item">
+            <nuxt-link
+              to="/mySupply"
+              :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
+            >
+              我发布的保险
+            </nuxt-link>
+          </li>
+          <li class="child_menu_item">
+            <nuxt-link
+              to="/myClaim"
+              :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
+            >
+              我的结算
+            </nuxt-link>
+          </li>
+        </ul>
       </li>
-      <li>
-        <nuxt-link to="/mining" :class="routeObj.name === '/' ? 'active' : ''">
+      <li class="menu_item">
+        <nuxt-link
+          to="/mining"
+          :class="routeObj.name === 'mining' ? 'active' : ''"
+        >
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-mining1"></use>
+          </svg>
           挖矿
         </nuxt-link>
       </li>
-      <li>
+      <li class="menu_item">
         <nuxt-link
           to="/flashmining"
-          :class="routeObj.name === '/' ? 'active' : ''"
+          :class="routeObj.name === 'flashmining' ? 'active' : ''"
         >
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-flashmining"></use>
+          </svg>
           闪电挖矿
         </nuxt-link>
       </li>
-      <li>
-        <nuxt-link to="/burnbox" :class="routeObj.name === '/' ? 'active' : ''">
+      <li class="menu_item">
+        <nuxt-link
+          to="/burnbox"
+          :class="routeObj.name === 'burnbox' ? 'active' : ''"
+        >
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-burnbox"></use>
+          </svg>
           燃烧挖矿
         </nuxt-link>
       </li>
-      <li>
-        <nuxt-link to="/IIO" :class="routeObj.name === '/' ? 'active' : ''">
+      <li class="menu_item">
+        <nuxt-link to="/IIO" :class="routeObj.name === 'IIO' ? 'active' : ''">
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-iio"></use>
+          </svg>
           IIO
         </nuxt-link>
       </li>
-      <li>
-        <nuxt-link to="/" :class="routeObj.name === '/' ? 'active' : ''">
+      <li class="menu_item">
+        <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-papar"></use>
+          </svg>
           使用指南
-        </nuxt-link>
+        </a>
       </li>
-      <li>
-        <nuxt-link to="/" :class="routeObj.name === '/' ? 'active' : ''">
-          博客
-        </nuxt-link>
+      <li class="menu_item">
+        <a href="https://helmetinsure.medium.com/" target="_blank">
+          <svg class="icon svg-icon" aria-hidden="true">
+            <use xlink:href="#icon-medium"></use>
+          </svg>
+          博客</a
+        >
       </li>
     </ul>
+    <div class="footer">
+      <div class="footer_top">
+        <a href="https://twitter.com/Helmet_insure" target="_blank">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-Twitter"></use>
+          </svg>
+        </a>
+        <a href="https://t.me/helmet_insure" target="_blank">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-Telegram"></use>
+          </svg>
+        </a>
+        <a href="https://discord.gg/QtTJZEVds5" target="_blank">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-Discord"></use>
+          </svg>
+        </a>
+        <!-- <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-medium"></use>
+        </svg>
+      </a> -->
+        <a href="https://certik.foundation/projects/helmet" target="_blank">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-audit"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="footer_bottom">
+        <Langauage class="langauage" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Langauage from "~/components/common/langauage.vue";
 export default {
+  components: { Langauage },
+
   computed: {
     routeObj() {
+      console.log(this.$route);
       return this.$route;
     },
   },
@@ -64,13 +156,19 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
   .slider {
     width: 260px;
     height: calc(100vh - 50px);
     background-image: url("../../assets/img/slider/slider_logo_bg.png");
     background-repeat: no-repeat;
     background-size: 100% 135px;
-    padding: 30px 20px 40px;
+    padding: 30px 20px 0;
+    display: flex;
+    flex-direction: column;
   }
   .logo {
     display: block;
@@ -82,17 +180,103 @@ export default {
   }
   .menu {
     margin-top: 40px;
-    li {
+    flex: 1;
+    &_group {
+      height: auto;
+      position: relative;
+    }
+    .right {
+      position: absolute;
+      right: 20px;
+    }
+    &_item {
       width: 100%;
-      height: 50px;
       font-size: 16px;
       font-family: HelveticaNeue-Medium, HelveticaNeue;
       font-weight: 600;
-      a {
-        color: rgba(23, 23, 58, 0.7);
-      }
       line-height: 50px;
       cursor: pointer;
+      > a {
+        color: rgba(23, 23, 58, 0.7);
+        display: block;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        > .icon {
+          width: 24px;
+          height: 24px;
+          margin-right: 16px;
+          display: block;
+          fill: opacify($color: #17173a, $amount: 0.7);
+        }
+      }
+      .child_menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &_item {
+          height: 40px;
+          width: 180px;
+          display: flex;
+          align-items: center;
+          > a {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-family: HelveticaNeue;
+            color: rgba(23, 23, 58, 0.8);
+            line-height: 40px;
+            font-weight: normal;
+          }
+          .child_active {
+            width: 180px;
+            height: 40px;
+            background: #fd7e14;
+            border-radius: 5px;
+            color: #ffffff;
+          }
+        }
+      }
+    }
+    .active {
+      width: 100%;
+      height: 50px;
+      background: #fd7e14;
+      border-radius: 5px;
+      color: #ffffff;
+      .icon {
+        fill: #fff;
+      }
+      .right {
+        transform: rotate(90deg);
+      }
+    }
+  }
+  .footer {
+    height: 128px;
+    padding: 0 20px;
+    .footer_top {
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      border-bottom: 1px solid #e8e8eb;
+      a {
+        .icon {
+          &:hover {
+            fill: #ff9600;
+          }
+        }
+      }
+    }
+    .footer_bottom {
+      height: 64px;
+      display: flex;
+      align-items: center;
     }
   }
 }

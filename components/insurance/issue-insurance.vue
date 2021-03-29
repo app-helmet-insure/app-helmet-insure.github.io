@@ -298,7 +298,7 @@ export default {
       let data;
       data = {
         private: false, //
-        annual: this.dpr,
+        annual: type == 1 ? this.callDpr : this.putDpr,
         category: this.policyUndArray[type - 1][this.activeInsurance], //标的物
         currency: this.policyColArray[type - 1][this.activeInsurance], //抵押物
         expire: this.getTime(this.activeInsurance), //
@@ -309,6 +309,7 @@ export default {
         showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
       };
+      console.log(data);
       if (data.category == "WBNB" && data.currency == "BUSD") {
         data["divide"] = true;
       }

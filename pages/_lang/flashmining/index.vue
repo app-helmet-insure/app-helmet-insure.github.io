@@ -82,9 +82,6 @@ export default {
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
 
-.main_container {
-  background: #f7f7fa;
-}
 @media screen and (min-width: 750px) {
   .main_container {
     > .flashmining_container {

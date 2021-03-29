@@ -1,116 +1,49 @@
 <template>
   <div class="my_claim">
-    <!-- pc -->
-    <table v-if="isLogin">
-      <thead>
-        <tr>
-          <td>{{ $t("Table.Type") }}</td>
-          <td>{{ $t("Table.DenAssets") }}</td>
-          <td>{{ $t("Table.BaseAssets") }}</td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="(item, index) in showList"
-          :key="index"
-          :class="
-            getTokenName(item._underlying) == 'WBNB'
-              ? 'call_style'
-              : 'put_style'
-          "
-        >
-          <template>
-            <td :class="item.type == 'call' ? 'green' : 'orange'">
-              {{ item.TypeCoin }}
-              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"></i>
-            </td>
-            <td v-if="item.type == 'call'">
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-              {{ item._collateral }}
-            </td>
-            <td v-else>
-              {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
-            </td>
-            <td v-if="item.type == 'call'">
-              {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
-            </td>
-            <td v-else>
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-              {{ item._collateral }}
-            </td>
-            <td class="option">
-              <button class="b_b_button" @click="toClaim(item)">
-                {{ $t("Table.GetBack") }}
-              </button>
-            </td>
-          </template>
-        </tr>
-      </tbody>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
-    </table>
-    <!-- h5 -->
-    <div v-if="isLogin">
-      <div
-        v-for="(item, index) in showList"
-        :key="index"
-        :class="
-          getTokenName(item._underlying) == 'WBNB'
-            ? 'call_style item_box'
-            : 'put_style item_box'
-        "
-      >
-        <div>
-          <p>
-            <span>{{ $t("Table.Type") }}</span
-            ><span :class="item.type == 'call' ? 'green' : 'orange'">
-              {{
-                item._underlying == "WBNB" ? item._collateral : item._underlying
-              }}
-              <i :class="item.type == 'call' ? 'call_icon' : 'put_icon'"></i
-            ></span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>{{ $t("Table.DenAssets") }}</span>
-            <span v-if="item.type == 'call'">
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-              {{ item._collateral }}
-            </span>
-            <span v-else>
-              {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
-            </span>
-          </p>
-          <p>
-            <span>{{ $t("Table.BaseAssets") }}</span>
-            <span v-if="item.type == 'call'">
-              {{ fixD(item.und, 8) }} {{ item._underlying }}
-            </span>
-            <span v-else>
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-              {{ item._collateral }}
-            </span>
-          </p>
-        </div>
-        <section>
-          <button class="b_b_button" @click="toClaim(item)">
-            {{ $t("Table.GetBack") }}
-          </button>
-        </section>
-      </div>
-      <div class="loading" v-if="isLoading">
-        <img src="~/assets/img/loading.png" />
-        <div class="shadow"></div>
-        <p>loading the wallet data</p>
-      </div>
+    <div class="claim_title">
+      <h3>结算</h3>
+    </div>
+    <div class="claim_text">
+      <span>{{ $t("Table.Type") }}</span>
+      <span>{{ $t("Table.DenAssets") }}</span>
+      <span>{{ $t("Table.BaseAssets") }}</span>
+      <span></span>
+    </div>
+    <div class="claim_item" v-for="(item, index) in showList" :key="index">
+      <section>
+        <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+          {{ item.TypeCoin }}
+          <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+        </span>
+      </section>
+      <section>
+        <span v-if="item.type == 'call'">
+          {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+          {{ item._collateral }}
+        </span>
+        <span v-else>
+          {{ fixD(item.und, 8) }}
+          {{ item._underlying }}
+        </span>
+      </section>
+      <section>
+        <span v-if="item.type == 'call'">
+          {{ fixD(item.und, 8) }}
+          {{ item._underlying }}
+        </span>
+        <span v-else>
+          {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+          {{ item._collateral }}
+        </span>
+      </section>
+      <section>
+        <button @click="toClaim(item)">取回</button>
+      </section>
+    </div>
+    <div class="loading" v-if="isLoading">
+      <img src="~/assets/img/loading.png" />
+      <div class="shadow"></div>
+      <p>loading the wallet data</p>
     </div>
     <section
       class="noData"
@@ -121,14 +54,14 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="claimList.length > 5 && !isLogin">
+    <!-- <section class="pages" v-if="claimList.length > 10 && !isLogin">
       <Page
         :total="claimList.length"
         :limit="limit"
         :page="page + 1"
         @page-change="handleClickChagePage"
       />
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -160,7 +93,7 @@ export default {
       getTokenName,
       fixD,
       page: 0,
-      limit: 5,
+      limit: 10,
       isLoading: true,
       isLogin: false,
     };
@@ -193,7 +126,7 @@ export default {
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
         this.page = 0;
-        this.limit = 5;
+        this.limit = 10;
         this.setSettlementList(newValue);
       }
     },
@@ -222,18 +155,18 @@ export default {
         let Token = _underlying == "WBNB" ? _underlying : _collateral;
         if (_underlying == "WBNB") {
           item.TypeCoin = _collateral;
-          item.type = "call";
+          item.type = "Call";
         } else {
           item.TypeCoin = _underlying;
-          item.type = "put";
+          item.type = "Put";
         }
         if (_underlying == "BUSD" && _collateral == "WBNB") {
           item.TypeCoin = _collateral;
-          item.type = "call";
+          item.type = "Call";
         }
         if (_collateral == "BUSD" && _underlying == "WBNB") {
           item.TypeCoin = _underlying;
-          item.type = "put";
+          item.type = "Put";
         }
         if (Number(shortBalance) > 0 && Number(longBalance) > 0) {
           result.push({
@@ -290,7 +223,8 @@ export default {
       });
       this.isLoading = false;
       this.claimList = newArr;
-      this.showList = newArr.slice(this.page * this.limit, this.limit);
+      this.showList = newArr;
+      // this.showList = newArr.slice(this.page * this.limit, this.limit);
     },
     getDownTime(time) {
       let now = new Date() * 1;
@@ -380,58 +314,62 @@ export default {
 @media screen and (min-width: 750px) {
   .my_claim {
     position: relative;
-    > div {
-      display: none;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .loading {
+      width: 100%;
     }
-    table {
+    .pages {
+      width: 100%;
+    }
+    .claim_title {
+      width: 100%;
+    }
+    .claim_text {
       width: 100%;
       display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-
-      tr {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-        align-items: center;
-        td {
-          width: 100px;
-          white-space: nowrap;
+      span {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: rgba(23, 23, 58, 0.5);
+        line-height: 14px;
+        margin-top: 16px;
+        &:nth-of-type(1) {
+          flex: 2;
+        }
+        &:nth-of-type(2) {
+          flex: 2;
+        }
+        &:nth-of-type(3) {
+          flex: 2;
+        }
+        &:nth-of-type(4) {
+          flex: 1;
         }
       }
-      .option {
-        text-align: right;
-        width: 100px;
-      }
-      thead {
-        width: 100%;
-        background: #f7f7fa;
-        tr {
-          height: 40px;
-          color: #919aa6;
-          td {
-            line-height: 40px;
-            font-size: 14px;
-          }
-        }
-      }
-      tbody {
-        width: 100%;
-        tr {
-          position: relative;
-          width: 100%;
-          box-sizing: border-box;
-          border-bottom: 1px solid #ededf0;
-          td {
-            white-space: nowrap;
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 14px;
+    }
+    .claim_item {
+      width: 100%;
+      height: 90px;
+      margin-top: 10px;
+      display: flex;
+      background: #ffffff;
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      align-items: center;
+      padding: 0 20px;
+      section {
+        &:nth-of-type(1) {
+          flex: 2;
+          > span {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
             font-weight: bold;
-            color: #121212;
+            line-height: 24px;
             display: flex;
             align-items: center;
             i {
@@ -449,14 +387,34 @@ export default {
               background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
-
-          td:last-child {
-            transform: translateX(20px);
+          > .call_text {
+            color: #00b900;
           }
-          .option {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+          > .put_text {
+            color: #dc3545;
+          }
+        }
+        &:nth-of-type(2),
+        &:nth-of-type(3) {
+          flex: 2;
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            color: #17173a;
+            line-height: 14px;
+          }
+        }
+        &:nth-of-type(4) {
+          flex: 1;
+          display: flex;
+          justify-content: flex-end;
+          button {
+            padding: 0 20px;
+            height: 32px;
+            background: #17173a;
+            border-radius: 3px;
+            color: #fff;
           }
         }
       }
@@ -474,7 +432,6 @@ export default {
         width: 100%;
         height: 208px;
         padding: 20px 10px;
-        // background: #f7f7fa;
         p {
           display: flex;
           span:nth-of-type(1) {

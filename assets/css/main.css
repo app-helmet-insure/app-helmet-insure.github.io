@@ -2,7 +2,8 @@
 * {
   margin: 0px;
   padding: 0px;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, "微软雅黑", Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, '微软雅黑', Arial, sans-serif;
 }
 
 html,
@@ -61,7 +62,14 @@ body ::-webkit-scrollbar {
 html ::-webkit-scrollbar-thumb,
 body ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, #ff9600), color-stop(0.72, #ff9600), color-stop(0.86, #ff9600));
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, #ff9600),
+    color-stop(0.72, #ff9600),
+    color-stop(0.86, #ff9600)
+  );
 }
 
 a {
@@ -84,13 +92,13 @@ select {
   outline: none;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -333,28 +341,28 @@ button:disabled {
 .o_button {
   padding: 0 16px;
   height: 40px;
-  background: #ff9600;
+  background: #fd7e14;
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
 }
 
 .o_button:hover {
-  background: #ffa000;
+  background: #fd8a2b;
 }
 
 .b_button {
   min-width: 88px;
   padding: 0 16px;
   height: 40px;
-  background: #121212;
+  background: #17173a;
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
 }
 
 .b_button:hover {
-  background: #2c2c2c;
+  background: #2d2d4d;
 }
 
 .b_b_button {

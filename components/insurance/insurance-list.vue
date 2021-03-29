@@ -82,7 +82,7 @@
                   : 'issueInsurance'
               "
             >
-              {{$t('Insurance.Insurance_text8')}}
+              {{ $t('Insurance.Insurance_text8') }}
               <i class="selectDown"></i>
             </button>
           </section>
@@ -385,6 +385,9 @@ export default {
             padding: 0px 9px;
             color: #fd7e14;
             i {
+              border-right: 5px solid transparent;
+              border-top: 6px solid #fd7e14;
+              border-left: 5px solid transparent;
               transform: rotate(180deg);
             }
           }
@@ -403,14 +406,33 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            box-sizing: border-box;
+            &:hover {
+              padding: 0px 9px;
+              height: 35px;
+              border: 2px solid #fd7e14;
+              color: #fd7e14;
+              i {
+                border-right: 5px solid transparent;
+                border-top: 6px solid #fd7e14;
+                border-left: 5px solid transparent;
+              }
+            }
 
             i {
-              display: block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-image: url('../../assets/img/insurancelist/select_down.png');
-              background-size: 100%;
+              position: relative;
+              border-right: 5px solid transparent;
+              border-top: 6px solid rgba(23, 23, 58, 0.6);
+              border-left: 5px solid transparent;
+              &::after {
+                content: '';
+                position: absolute;
+                top: -6px;
+                left: -3px;
+                border-right: 3px solid transparent;
+                border-top: 4px solid #f8f9fa;
+                border-left: 3px solid transparent;
+              }
             }
           }
         }

@@ -376,9 +376,15 @@ export default {
       }
       .call {
         background: #28a745;
+        &:hover {
+          background: #3daf57;
+        }
       }
       .put {
         background: #dc3545;
+        &:hover {
+          background: #df4857;
+        }
       }
     }
     .dpr {

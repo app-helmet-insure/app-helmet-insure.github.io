@@ -21,24 +21,27 @@
         <!--  对应替换数据即可  -->
         <div class="progress_bar_left" style="width: 33.3%">
           <p style="right: 0">
-            {{ $t('Insurance.Insurance_text19') }} <span>0.11</span>
+            {{ $t("Insurance.Insurance_text19") }}
+            <span>{{ putStrikePrice[activeInsurance] }}</span>
           </p>
         </div>
         <div class="progress_bar_center" style="width: 33.3%">
-          <i style="left: 50%"></i>
+          <i :style="`left: ${positionLeft}%`"></i>
           <p style="left: 50%">
-            {{ $t('Insurance.Insurance_text20') }} <span>0.22</span>
+            {{ $t("Insurance.Insurance_text20") }}
+            <span>{{ toRounding(indexPrice[activeInsurance], 4) }}</span>
           </p>
         </div>
         <div class="progress_bar_right" style="width: 33.3%">
           <p style="left: 0">
-            {{ $t('Insurance.Insurance_text21') }} <span>0.44</span>
+            {{ $t("Insurance.Insurance_text21") }}
+            <span>{{ callStrikePrice[activeInsurance] }}</span>
           </p>
         </div>
       </div>
     </div>
     <div class="myBalance">
-      <span>{{ $t('Content.UsableBalance') }}</span>
+      <span>{{ $t("Content.UsableBalance") }}</span>
       <p>
         <span>
           <img src="~/assets/img/insurancelist/bnbCoin.png" alt="" />
@@ -56,10 +59,24 @@
 </template>
 
 <script>
+import {
+  fixD,
+  addCommom,
+  autoRounding,
+  toRounding,
+  fixDEAdd,
+} from "~/assets/js/util.js";
 export default {
   props: ["activeInsurance", "activeType"],
   data() {
-    return {};
+    return {
+      fixD,
+      addCommom,
+      autoRounding,
+      toRounding,
+      fixDEAdd,
+      positionLeft: 50,
+    };
   },
   computed: {
     putStrikePrice() {
@@ -74,11 +91,27 @@ export default {
     callStrikeUnit() {
       return this.$store.state.policyUndArray[0];
     },
+    indexPrice() {
+      return this.$store.state.allIndexPrice[1];
+    },
     BalanceArray() {
       return this.$store.state.BalanceArray;
     },
   },
-  mounted() {},
+  mounted() {
+    setTimeout(() => {
+      this.initEchart();
+    }, 1000);
+  },
+  methods: {
+    initEchart() {
+      let callPrice = this.callStrikePrice[this.activeInsurance];
+      let putPrice = this.putStrikePrice[this.activeInsurance];
+      let curPrice = this.indexPrice[this.activeInsurance];
+      let number = (curPrice - putPrice) / (callPrice - putPrice);
+      this.positionLeft = number * 100;
+    },
+  },
 };
 </script>
 
@@ -111,7 +144,7 @@ export default {
       }
     }
     .echartPrice {
-      width: 240px;
+      width: 300px;
       margin-left: 60px;
       .bg_progress_bar {
         position: relative;
@@ -129,7 +162,7 @@ export default {
         border-radius: 3px 0 0 3px;
         background: linear-gradient(180deg, #f0657b 0%, #dc3545 100%);
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: -2px;
           right: 0;
@@ -146,6 +179,7 @@ export default {
           font-weight: 400;
           color: rgba(23, 23, 58, 0.45);
           line-height: 12px;
+          text-align: center;
           span {
             font-size: 12px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -164,7 +198,7 @@ export default {
         border-radius: 0 3px 3px 0;
         background: linear-gradient(180deg, #51d37b 0%, #28a745 100%);
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: -2px;
           left: 0;
@@ -181,6 +215,7 @@ export default {
           font-weight: 400;
           color: rgba(23, 23, 58, 0.45);
           line-height: 12px;
+          text-align: center;
           span {
             font-size: 12px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -217,8 +252,9 @@ export default {
           color: rgba(23, 23, 58, 0.45);
           line-height: 12px;
           background: #f8f9fa;
+          text-align: center;
           &:after {
-            content: '';
+            content: "";
             position: absolute;
             left: 50%;
             bottom: -4px;

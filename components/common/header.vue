@@ -1,36 +1,6 @@
 <template>
   <div class="header-container">
     <div>
-      <a class="logo" href="https://www.helmet.insure" target="_self">
-        <img src="~/assets/img/helmet/trade_logo.png" />
-      </a>
-      <div class="nav-list">
-        <nuxt-link
-          to="/"
-          :class="routeObj.name === 'product-id' ? 'active' : ''"
-          >{{ $t("Header.Trade") }}</nuxt-link
-        >
-        <nuxt-link to="/mining"
-          >{{ $t("Header.Mining") }}
-          <p class="new"></p>
-        </nuxt-link>
-        <nuxt-link to="/flashmining">{{ $t("Header.FlashMining") }} </nuxt-link>
-        <nuxt-link to="/burnbox"
-          >{{ $t("Header.BruningBox") }}
-          <p class="fire"></p>
-        </nuxt-link>
-        <nuxt-link to="/IIO"
-          >{{ this.$t("Header.IIO") }}
-          <!-- <p class="fire"></p> -->
-        </nuxt-link>
-        <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">{{
-          $t("Header.GuideBook")
-        }}</a>
-        <a href="https://helmetinsure.medium.com/" target="_blank">{{
-          $t("Header.Medium")
-        }}</a>
-      </div>
-      <!-- 分割线 -->
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -53,7 +23,6 @@
           </div>
         </template>
       </div>
-
       <WallectSelect
         v-if="showWallectSelect"
         @close="closeWallectSelect"
@@ -143,9 +112,9 @@ export default {
         this.accountText =
           account.substr(0, 1) +
           account.substr(1, 1).toLowerCase() +
-          account.substr(2, 4) +
+          account.substr(2, 3) +
           "..." +
-          account.substr(-5);
+          account.substr(-4);
       }
     },
     openWallectSelect() {
@@ -164,63 +133,16 @@ export default {
 @import "~/assets/css/base.scss";
 .header-container {
   width: 100%;
-  height: 80px;
-  background: #fff;
-  border-bottom: 1px solid #f7f7fa;
+  height: 40px;
+  margin: 20px 0;
+  background: #f8f9fa;
   > div {
     height: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     text-align: center;
-    .nav-list {
-      flex: 1;
-      display: flex;
-      a {
-        display: inline-block;
-        margin-left: 35px;
-        position: relative;
-        color: #121212;
-        font-weight: bold;
-        p {
-          position: absolute;
-        }
-        .new {
-          background: url("../../assets/img/helmet/new.png") no-repeat;
-          width: 18px;
-          height: 18px;
-          top: 15px;
-          right: 0;
-          background-size: cover;
-          transform: translateX(80%);
-        }
-        .fire {
-          background: url("../../assets/img/helmet/fire.png") no-repeat;
-          width: 21px;
-          height: 26px;
-          top: 10px;
-          right: 0;
-          background-size: cover;
-          transform: translateX(75%);
-        }
-        &::after {
-          display: none;
-          content: "";
-          position: absolute;
-          left: 0px;
-          bottom: 0px;
-          width: 100%;
-          height: 2px;
-          background: #ff9600;
-        }
-        &.active,
-        &.nuxt-link-exact-active {
-          &::after {
-            display: block;
-          }
-        }
-      }
-    }
     .wrong {
       min-width: 171px;
       height: 36px;
@@ -242,77 +164,75 @@ export default {
       }
     }
     .address-wrap {
-      border-radius: 20px;
+      border-radius: 5px;
       display: flex;
-      height: 36px;
+      height: 40px;
       align-items: center;
       overflow: hidden;
     }
     .balance-wrap {
-      height: 100%;
+      min-width: 138px;
       height: 100%;
       display: flex;
       align-items: center;
-      background: rgba(255, 150, 0, 0.1);
-      padding: 0 12px 0 4px;
+      background: #fd7e14;
+      padding: 0 10px;
       img {
         width: 30px;
         height: 30px;
-        margin-right: 4px;
-        text-align: center;
+        margin-right: 1px;
       }
       span {
-        min-width: 80px;
+        font-family: Helvetica;
         height: 20px;
-        font-size: 14px;
-        font-family: PingFangSC-Medium, PingFang SC;
+        font-size: 16px;
         font-weight: 600;
-        color: #ff9600;
+        color: #ffffff;
         line-height: 20px;
+        font-family: Helvetica;
       }
     }
     .wallet-address {
-      padding: 0px 12px;
+      min-width: 116px;
+      background: #17173a;
+      padding: 0px 10px;
       height: 100%;
       display: flex;
       align-items: center;
-      background: #121212;
       color: #ffffff;
       cursor: pointer;
+      font-weight: 600;
+      font-family: Helvetica;
       i {
         display: inline-block;
         width: 12px;
         height: 12px;
         border-radius: 50%;
         background-color: #14b465;
-        margin-left: 8px;
-        border: 1px solid #fff;
+        margin-left: 4px;
+        border: 2px solid #fff;
       }
     }
     .connect-wallet-btn {
+      min-width: 140px;
+      height: 40px;
+      background: #17173a;
+      border-radius: 5px;
       display: block;
-      background: #121212;
-      padding: 0px 18px;
+      padding: 0px 10px;
       color: #ffffff;
-      border-radius: 20px;
       &:hover {
         background: #2c2c2c;
       }
     }
   }
 }
-@media screen and (min-width: 1360px) {
-  .header-container {
-    > div {
-      padding: 0 80px;
-    }
-  }
-}
+
 @media screen and (min-width: 750px) {
   .header-container {
+    width: 100%;
     > div {
       // width: 1200px;
-      min-width: 1200px;
       .logo {
         img {
           height: 40px;

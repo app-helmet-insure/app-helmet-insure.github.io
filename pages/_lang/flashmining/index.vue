@@ -5,7 +5,8 @@
       <p>{{ $t("Tip.FlashTip2") }}</p>
     </div>
     <div class="flashmining_container">
-      <div class="pool_wrap">
+      <FlashMiningList></FlashMiningList>
+      <!-- <div class="pool_wrap">
         <HdodoPool></HdodoPool>
         <HmathPool></HmathPool>
       </div>
@@ -16,13 +17,14 @@
       <div class="pool_wrap">
         <HctkPool></HctkPool>
         <HcctPool></HcctPool>
-      </div>
+      </div> -->
       <Onepager></Onepager>
     </div>
   </div>
 </template>
 
 <script>
+import FlashMiningList from "~/components/flashmining/flashmining_list.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
 import HctkPool from "~/components/flashmining/hctk_pool.vue";
 import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
@@ -33,6 +35,7 @@ import Onepager from "~/components/mining/onepager.vue";
 export default {
   layout: "default",
   components: {
+    FlashMiningList,
     HcctPool,
     HctkPool,
     Onepager,

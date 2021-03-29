@@ -1,20 +1,10 @@
 <template>
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="imgbanner img5 swiper-slide"></div>
-      <div class="imgbanner img8 swiper-slide"></div>
-      <div class="imgbanner img4 swiper-slide"></div>
-      <div class="imgbanner img3 swiper-slide"></div>
-      <!-- <div class="imgbanner img7 swiper-slide">
-        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
-      </div>
-      <div class="imgbanner img6 swiper-slide">
-        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
-      </div> -->
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+  <div class="banner_title">
+    <div class="imgbanner img5 swiper-slide"></div>
+    <div class="imgbanner img8 swiper-slide"></div>
+    <div class="imgbanner img4 swiper-slide"></div>
+    <!-- <div class="imgbanner img4 swiper-slide"></div> -->
+    <!-- <div class="imgbanner img4 swiper-slide"></div> -->
   </div>
 </template>
 
@@ -79,95 +69,32 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-.swiper-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.swiper-container-horizontal {
-  > .swiper-pagination-bullets > .swiper-pagination-bullet {
-    width: 24px;
-    height: 2px;
-    border-radius: 0;
-    background: #ededf0;
-    opacity: 1;
-  }
-
-  /* 分页器选中 */
-  .swiper-pagination-bullet-active {
-    background-color: #ff9600 !important;
-  }
-  .swiper-button-next {
-    color: #ff9600;
-  }
-  .swiper-button-prev {
-    color: #ff9600;
-  }
-}
-</style>
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
-  .swiper-container {
+  .banner_title {
     width: 100%;
-    height: 220px;
-    background: #ffffff;
-    margin-bottom: 15px;
-
-    .swiper-wrapper {
-      height: 100%;
-    }
-    .swiper-slide {
-      display: flex;
-    }
-
-    .img3 {
-      background-image: url("../../assets/img/helmet/fortub.png");
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div {
+      width: 328px;
+      height: 160px;
+      border-radius: 5px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      &:nth-of-type(2) {
+        margin: 0 20px;
+      }
     }
     .img4 {
-      background-image: url("../../assets/img/helmet/HCCT.png");
+      background-image: url("../../assets/img/helmet/BNB500.png");
     }
     .img5 {
       background-image: url("../../assets/img/helmet/combo_dodo_web.png");
     }
-    .img6 {
-      background-image: url("../../assets/img/helmet/hauto.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 148px 0 0 157px;
-        &:hover {
-          background: #2c2c2c;
-        }
-      }
-    }
-    .img7 {
-      background-image: url("../../assets/img/helmet/math.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 148px 0 0 157px;
-        &:hover {
-          background: #2c2c2c;
-        }
-      }
-    }
     .img8 {
       background-image: url("../../assets/img/helmet/DODO.png");
-    }
-    .imgbanner {
-      background-size: 100% 100%;
-      background-repeat: no-repeat;
     }
   }
 }

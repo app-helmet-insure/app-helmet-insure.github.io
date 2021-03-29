@@ -2,8 +2,6 @@
 * {
     margin: 0px;
     padding: 0px;
-    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-        Microsoft YaHei, '微软雅黑', Arial, sans-serif;
 }
 html,
 body,
@@ -280,6 +278,7 @@ $td-gap: 16px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    padding-bottom: 30px;
     .page_item {
         display: inline-block;
         width: 28px;

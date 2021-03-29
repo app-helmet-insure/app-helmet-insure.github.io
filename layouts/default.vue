@@ -1,21 +1,23 @@
 <template>
   <div class="layout-container">
     <p>
-      <span> {{ $t("Banner.HELMETAdress") }}</span>
       <span>
-        0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
-        <i
-          id="copy_default"
-          data-clipboard-text="0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-        ></i>
+        HELMET is now on pancakeswap. Token Contract Address
+        :0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
       </span>
     </p>
-    <p>
+    <!-- <p>
       <span>{{ $t("Tip.SendCoin") }}</span>
-    </p>
-    <PHeader></PHeader>
-    <nuxt />
-    <PFooter :padding="200"></PFooter>
+    </p> -->
+    <!-- <PHeader></PHeader> -->
+    <div class="content">
+      <PSlider></PSlider>
+      <div class="content_wrap">
+        <PHeader></PHeader>
+        <nuxt />
+      </div>
+    </div>
+    <!-- <PFooter :padding="200"></PFooter> -->
     <!-- <MyPayaso></MyPayaso> -->
     <PMask></PMask>
     <RiskWarning
@@ -36,6 +38,7 @@
 <script>
 import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
+import PSlider from "~/components/common/slider.vue";
 import { web3 } from "~/assets/utils/web3-obj.js";
 import {
   getOptionCreatedLog,
@@ -59,6 +62,7 @@ export default {
   name: "default",
   components: {
     PHeader,
+    PSlider,
     PFooter,
     RiskWarning,
     StatusDialog,
@@ -171,10 +175,12 @@ export default {
     });
     if (window.chainID == 56) {
       this.getBannerData();
-      this.getIndexPirce();
       setTimeout(() => {
         this.getBalance();
       }, 500);
+    }
+    if (window.chainID == 56) {
+      this.getIndexPirce();
     }
     // 刷新所有数据
     this.$bus.$on("REFRESH_ALL_DATA", (data) => {
@@ -478,17 +484,20 @@ export default {
     > p {
       width: 100%;
       min-width: 1200px;
-      height: 24px;
-      background: rgba(255, 150, 0, 0.2);
-      font-size: 12px;
-      color: #ff9600;
+      height: 50px;
+      background: #ffffff;
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 14px;
+      font-family: Helvetica;
+      color: #17173a;
+      font-weight: 600;
       span {
         display: flex;
         align-items: center;
+        font-family: Helvetica;
         i {
           display: inline-block;
           width: 12px;
@@ -499,6 +508,16 @@ export default {
           cursor: pointer;
           margin-left: 4px;
         }
+      }
+    }
+    .content {
+      display: flex;
+      .content_wrap {
+        overflow-y: scroll;
+        flex: 1;
+        height: calc(100vh - 50px);
+        padding: 0 8%;
+        background: #f8f9fa;
       }
     }
   }

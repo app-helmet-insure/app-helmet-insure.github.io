@@ -1,174 +1,154 @@
 <template>
-  <div class="helmetbnb_pool">
-    <img src="~/assets/img/helmet/Combo.png" alt="" class="combo" />
-    <div class="text">
-      <div class="coin">
-        <h3>
-          {{ list.name }}
-        </h3>
-        <div>
-          <h4>
-            Earn：
-            <img src="~/assets/img/icon/helmetcake.png" alt="" />
-          </h4>
-        </div>
-      </div>
-      <div class="index">
-        <p v-for="(item, index) in textList" :key="index" v-if="index != 0">
-          <span>{{ item.text }}</span>
-          <span :style="`color:${item.color}`">{{ item.num }} </span>
+  <div class="mining_pool">
+    <div class="deposit">
+      <div class="title">
+        <span>{{ $t("Table.DAvailable") }}：</span>
+        <p>
+          <countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Deposite)"
+            :duration="2000"
+            :decimals="8"
+          />
+          <span v-else>--</span>
+          LPT
         </p>
       </div>
-    </div>
-    <div class="pool">
-      <div class="deposit">
-        <div class="title">
-          <span>{{ $t("Table.Deposit") }}</span>
-          <p>
-            <countTo
-              v-if="isLogin"
-              :startVal="Number(0)"
-              :endVal="Number(balance.Deposite)"
-              :duration="2000"
-              :decimals="8"
-            />
-            <span v-else>--</span>
-            LPT
-            {{ $t("Table.DAvailable") }}
-          </p>
-        </div>
-        <div class="content">
-          <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
-          <div class="input">
-            <input name="deposit" type="text" v-model="DepositeNum" />
-            <span @click="DepositeNum = balance.Deposite">{{
-              $t("Table.Max")
-            }}</span>
-          </div>
-        </div>
-        <div class="button">
-          <button
-            @click="toDeposite"
-            :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          >
-            <i :class="stakeLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ConfirmDeposit") }}
-          </button>
-          <p>
-            <span
-              >{{ $t("Table.MyDeposits") }}/{{
-                $t("Table.TotalDeposited")
-              }}：</span
-            >
-            <span style="display: flex; align-self: flex-start">
-              <countTo
-                v-if="isLogin"
-                :startVal="Number(0)"
-                :endVal="Number(balance.Withdraw)"
-                :duration="2000"
-                :decimals="4"
-              />
-              <span v-else>--</span>
-              /
-              <countTo
-                v-if="isLogin"
-                :startVal="Number(0)"
-                :endVal="Number(balance.TotalLPT)"
-                :duration="2000"
-                :decimals="4"
-              />
-              <span v-else>--</span>
-              LPT</span
-            >
-          </p>
-
-          <section>
-            <p>
-              <span>{{ $t("Table.MyPoolShare") }}：</span>
-              <span> {{ isLogin ? balance.Share : "--" }} %</span>
-            </p>
-            <a
-              href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-              target="_blank"
-              >From <i class="pancake"></i>Get HELMET-BNB LPT</a
-            >
-          </section>
+      <div class="content">
+        <div class="input">
+          <input
+            name="deposit"
+            type="text"
+            v-model="DepositeNum"
+            :class="activeType == 'STAKE' ? 'activeInput' : ''"
+          />
+          <span @click="DepositeNum = balance.Deposite">最大量</span>
         </div>
       </div>
-      <div class="withdraw">
-        <div class="title">
-          <span>{{ $t("Table.Withdraw") }}</span>
-          <p>
+      <div class="button">
+        <button
+          @click="toDeposite"
+          :class="stakeLoading ? 'disable b_button' : 'b_button'"
+        >
+          <i :class="stakeLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.ConfirmDeposit") }}
+        </button>
+        <p>
+          <span>{{ $t("Table.MyDeposits") }}</span>
+          <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
+              :decimals="4"
+            />
+            <span v-else>--</span>
+            &nbsp;LPT</span
+          >
+        </p>
+        <p>
+          <span>{{ $t("Table.TotalDeposited") }}</span>
+          <span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.TotalLPT)"
+              :duration="2000"
+              :decimals="4"
+            />
+            <span v-else>--</span>
+            &nbsp;LPT</span
+          >
+        </p>
+        <section>
+          <p>
+            <span>{{ $t("Table.MyPoolShare") }}：</span>
+            <span> {{ isLogin ? balance.Share : "--" }} %</span>
+          </p>
+          <a
+            href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+            target="_blank"
+            >From <i class="pancake"></i>Get HELMET-BNB LPT</a
+          >
+        </section>
+      </div>
+    </div>
+    <i></i>
+    <div class="withdraw">
+      <div class="title">
+        <span>可赎回抵押：</span>
+        <p>
+          <countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Withdraw)"
+            :duration="2000"
+            :decimals="8"
+          />
+          <span v-else>--</span>
+          LPT
+        </p>
+      </div>
+      <div class="content">
+        <div class="input">
+          <input
+            name="withdraw"
+            type="text"
+            v-model="balance.Withdraw"
+            disabled
+            :class="activeType == 'CLAIM' ? 'activeInput' : ''"
+          />
+          <span @click="WithdrawNum = balance.Withdraw">最大量</span>
+        </div>
+      </div>
+      <div class="button">
+        <button
+          @click="toExit"
+          :class="exitLoading ? 'disable b_button' : 'b_button'"
+        >
+          <i :class="exitLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.ConfirmWithdraw") }} &
+          {{ $t("Table.ClaimRewards") }}
+        </button>
+        <p>
+          <span>CAKE {{ $t("Table.HELMETRewards") }}：</span>
+          <span>
+            <span>
+              <countTo
+                v-if="isLogin"
+                :startVal="Number(0)"
+                :endVal="Number(balance.Cake)"
+                :duration="2000"
+                :decimals="8"
+              />
+              <span v-else>--</span>
+              CAKE</span
+            >
+          </span>
+        </p>
+        <p>
+          <span>HELMET {{ $t("Table.HELMETRewards") }}：</span>
+          <span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Helmet)"
+              :duration="2000"
               :decimals="8"
             />
             <span v-else>--</span>
-            LPT {{ $t("Table.WAvailable") }}
-          </p>
-        </div>
-        <div class="content">
-          <label for="withdraw">{{ $t("Table.AmountWithdraw") }}</label>
-          <div class="input">
-            <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
-            <input
-              name="withdraw"
-              type="text"
-              v-model="balance.Withdraw"
-              disabled
-            />
-            <span @click="WithdrawNum = balance.Withdraw">{{
-              $t("Table.Max")
-            }}</span>
-          </div>
-        </div>
-        <div class="button">
-          <button
-            @click="toExit"
-            :class="exitLoading ? 'disable b_button' : 'b_button'"
+            HELMET</span
           >
-            <i :class="exitLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ConfirmWithdraw") }} &
-            {{ $t("Table.ClaimRewards") }}
-          </button>
-          <p>
-            <span>TOKEN {{ $t("Table.HELMETRewards") }}：</span>
-            <span>
-              <span>
-                <countTo
-                  v-if="isLogin"
-                  :startVal="Number(0)"
-                  :endVal="Number(balance.Cake)"
-                  :duration="2000"
-                  :decimals="8"
-                />
-                <span v-else>--</span>
-                CAKE</span
-              >
-              <span>
-                <countTo
-                  v-if="isLogin"
-                  :startVal="Number(0)"
-                  :endVal="Number(balance.Helmet)"
-                  :duration="2000"
-                  :decimals="8"
-                />
-                <span v-else>--</span>
-                HELMET</span
-              >
-            </span>
-          </p>
-          <button
-            @click="toClaim"
-            :class="claimLoading ? 'disable o_button' : 'o_button'"
-          >
-            <i :class="claimLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.ClaimAllRewards") }}
-          </button>
-        </div>
+        </p>
+        <button
+          @click="toClaim"
+          :class="claimLoading ? 'disable o_button' : 'o_button'"
+        >
+          <i :class="claimLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.ClaimAllRewards") }}
+        </button>
       </div>
     </div>
   </div>
@@ -183,12 +163,8 @@ import {
   CangetUNI,
   getDoubleReward,
   exitStake,
-  getLastTime,
-  approveStatus,
   getBalance,
   toDeposite,
-  getMined,
-  WithdrawAvailable,
   getAllHelmet,
   Rewards,
   RewardsDuration,
@@ -197,6 +173,7 @@ import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
 export default {
+  props: ["activeType"],
   components: {
     countTo,
   },
@@ -437,6 +414,7 @@ export default {
   overflow: hidden;
 }
 .b_button {
+  border-radius: 5px;
   width: 100%;
   margin-top: 11px;
   display: flex;
@@ -449,6 +427,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
 }
 .loading_pic {
   display: block;
@@ -463,223 +442,147 @@ export default {
   pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-  .helmetbnb_pool {
-    height: 506px;
-    background: #ffffff;
-    padding: 40px;
-    margin-bottom: 20px;
-    > .combo {
-      width: 148px;
-      transform: translateY(-8px);
+  .mining_pool {
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-evenly;
+    > i {
+      display: block;
+      width: 1px;
+      height: auto;
+      background: #e8e8eb;
     }
-    > h3 {
-      text-align: center;
-    }
-    .text {
-      display: flex;
-      // padding: 0 140px;
-      justify-content: space-between;
-      .coin {
+    > div {
+      width: 420px;
+      .title {
         display: flex;
-        flex-direction: column;
-        h3 {
-          height: 32px;
+        justify-content: space-between;
+        font-weight: 500;
+        line-height: 16px;
+        > span {
+          font-size: 14px;
+          font-weight: 500;
+          color: rgba(23, 23, 58, 0.75);
+          line-height: 14px;
+        }
+        p {
+          font-size: 14px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          color: #17173a;
+          line-height: 14px;
+        }
+      }
+      .content {
+        margin-top: 20px;
+        input {
+          width: 100%;
+          height: 40px;
+          background: transparent;
+          padding: 0 100px 0 12px;
+          color: #121212;
+          border-radius: 5px;
+          border: 1px solid #e8e8eb;
+        }
+        .input {
+          margin-top: 4px;
+          position: relative;
           display: flex;
-          margin-bottom: 8px;
-          font-size: 24px;
-          line-height: 32px;
           align-items: center;
-          img {
-            margin-left: 4px;
-            width: 32px;
-            height: 32px;
-          }
-        }
-        > div {
-          display: flex;
-          > h4 {
+          span {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            img {
-              width: 58px;
-              height: 32px;
-            }
-          }
-          > p {
-            display: flex;
-            align-items: center;
-            color: #121212;
-            font-size: 14px;
-            margin-right: 14px;
-            img {
-              width: 32px;
-              height: 32px;
-              margin-right: 4px;
-            }
-            span {
-              color: #919aa6;
-            }
+            padding: 0 8px;
+            height: 24px;
+            position: absolute;
+            right: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #17173a;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e8e8eb;
           }
         }
       }
-      .index {
-        display: flex;
-        > p {
-          display: flex;
-          flex-direction: column;
-          margin-left: 100px;
-          span {
-            &:nth-of-type(1) {
-              font-size: 14px;
-              color: #919aa6;
-            }
-            &:nth-of-type(2) {
-              margin-top: 12px;
+      .button {
+        section {
+          a {
+            margin-top: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ff9600;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            i {
+              display: block;
+              width: 20px;
+              height: 20px;
+              background-image: url("../../assets/img/icon/pancake@2x.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              margin: 0 2px;
             }
           }
         }
       }
     }
-    .pool {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 30px;
-      > div {
-        width: 540px;
-        height: 293px;
-        padding: 30px 40px;
-        .title {
+    .deposit {
+      .button {
+        p {
+          margin-top: 11px;
           display: flex;
           justify-content: space-between;
-          font-weight: 500;
-          line-height: 16px;
-          p {
-            color: #919aa6;
-            font-size: 14px;
-            line-height: 16px;
-          }
-        }
-        .content {
-          margin-top: 20px;
-          label {
-            font-size: 14px;
-            color: #919aa6;
-            line-height: 20px;
-          }
-          input {
-            width: 100%;
-            height: 40px;
-            border: 1px solid #cfcfd2;
-            background: transparent;
-            padding: 0 100px 0 12px;
-            color: #121212;
-          }
-          .input {
-            margin-top: 4px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            span {
-              position: absolute;
-              right: 15px;
-              font-size: 14px;
-              color: #121212;
-              cursor: pointer;
-            }
-          }
-        }
-        .button {
-          section {
-            a {
-              margin-top: 4px;
-              font-size: 14px;
-              font-weight: 500;
-              color: #ff9600;
-              line-height: 20px;
-              display: flex;
-              align-items: center;
-              i {
-                display: block;
-                width: 20px;
-                height: 20px;
-                background-image: url("../../assets/img/icon/pancake@2x.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin: 0 2px;
-              }
-            }
-          }
-          .column {
-            flex-direction: column;
-          }
-        }
-      }
-      .deposit {
-        border-top: 2px solid #00b900;
-        background: rgba(0, 185, 0, 0.04);
-        .title {
+          align-items: center;
           > span {
-            color: #00b900;
-          }
-        }
-        .button {
-          p {
-            margin-top: 11px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            > span:first-child {
-              color: #919aa6;
-            }
-            > span:last-child {
-              color: #121212;
-            }
-            > span {
+            &:nth-of-type(1) {
               font-size: 14px;
-              span {
-                display: flex;
-                color: #121212;
-              }
+              font-family: PingFangSC-Regular, PingFang SC;
+              color: rgba(23, 23, 58, 0.7);
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              display: flex;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
             }
           }
         }
       }
-      .withdraw {
-        border-top: 2px solid #ff6400;
-        background: rgba(255, 100, 0, 0.04);
-        .title {
+    }
+    .withdraw {
+      .button {
+        p {
+          margin-top: 11px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
           > span {
-            color: #ff6400;
-          }
-        }
-        .button {
-          p {
-            margin-top: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            &:nth-of-type(1) span {
+            &:nth-of-type(1) {
               font-size: 14px;
+              color: rgba(23, 23, 58, 0.7);
+              line-height: 14px;
             }
-            > span {
+            &:nth-of-type(2) {
               font-size: 14px;
-              color: #919aa6;
-              display: flex;
-              span {
-                display: flex;
-                color: #121212;
-                margin-left: 2px;
-              }
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
             }
           }
         }
       }
     }
   }
+  .activeInput {
+    border: 1px solid #ff9600 !important;
+  }
 }
 @media screen and (max-width: 750px) {
-  .helmetbnb_pool {
+  .mining_pool {
     background: #ffffff;
     margin-bottom: 20px;
     padding: 40px 16px;

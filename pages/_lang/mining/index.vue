@@ -5,11 +5,7 @@
       <p>{{ $t("Tip.MiningTip2") }}</p>
     </div>
     <div class="mining_container">
-      <HelmetBnbPool></HelmetBnbPool>
-      <HelmetDodoPool></HelmetDodoPool>
-      <HelmetHelmetPool></HelmetHelmetPool>
-      <HelmetForPool></HelmetForPool>
-      <HelmetBurgerPool></HelmetBurgerPool>
+      <MiningList></MiningList>
       <Onepager></Onepager>
       <Compound></Compound>
       <Deposite
@@ -23,13 +19,12 @@
 </template>
 
 <script>
-import Banner from "~/components/mining/banner.vue";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
-import MiningList from "~/components/mining/mining-list.vue";
+import MiningList from "~/components/mining/mining_list.vue";
 import Deposite from "~/components/mining/deposite-dialog.vue";
 import Withdraw from "~/components/mining/withdraw-dialog.vue";
 import Onepager from "~/components/mining/onepager.vue";
@@ -37,7 +32,6 @@ import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "default",
   components: {
-    Banner,
     HelmetHelmetPool,
     HelmetBurgerPool,
     HelmetForPool,

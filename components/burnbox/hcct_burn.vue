@@ -1,88 +1,29 @@
 <template>
-  <div class="long_burn" :class="expired ? 'expiredBg' : 'activeBg'">
-    <img
-      v-if="expired"
-      class="coin"
-      src="~/assets/img/burnmining/expired_hcctCoin.png"
-      alt=""
-    />
-    <img
-      v-else
-      class="coin"
-      src="~/assets/img/burnmining/hcctCoin.png"
-      alt=""
-    />
-
-    <div class="title">
-      <div class="pool_detail">
-        <h3 class="pool_name">{{ list.name }}<i @click="showOnepager"></i></h3>
-        <span class="earn">
-          Earn: <span>HCCTII</span>
-          <!-- <img src="~/assets/img/burnmining/miniHelmet.png" alt="" /> -->
-        </span>
-      </div>
-      <div class="pool_time" v-if="!openMining">
-        <h3>{{ $t("Table.WillStartIn") }}</h3>
-        <span>
-          <i>{{ MingTime.hour }}</i>
-          <b>:</b>
-          <i>{{ MingTime.minute }}</i>
-          <b>:</b>
-          <i>{{ MingTime.second }}</i></span
-        >
-      </div>
-    </div>
-    <div class="text">
-      <p>
-        <span><i></i>{{ $t("Table.SurplusTime") }}：</span>
-        <span>{{ list.DownTime.day }}d / {{ list.DownTime.hour }}h</span>
-      </p>
-      <p>
-        <span>{{ $t("Table.Bonus") }}</span>
-        <span>{{ list.bonusValue }} HCCTII</span>
-      </p>
-    </div>
-    <div class="process">
-      <div class="name">
-        <span>{{ $t("Table.FireProcess") }}</span>
-        <span style="display: flex">
-          <span>{{ isLogin ? list.rewards : "--" }}</span>
-          /
-          <span>{{ isLogin ? list.bonusValue : "--" }}</span>
-        </span>
-      </div>
-      <div class="control">
-        <div class="control_wrap">
-          <div
-            class="control_real"
-            :style="`width:${list.process}%;max-width:100%`"
-          >
-            <i class="fire" v-if="list.process != 0"></i>
+  <div class="burnbox">
+    <div class="burn_wrap">
+      <div class="process">
+        <div class="name">
+          <span>{{ $t("Table.FireProcess") }}</span>
+          <span style="display: flex">
+            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            /
+            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+          </span>
+        </div>
+        <div class="control">
+          <div class="control_wrap">
+            <div
+              class="control_real"
+              :style="`width:${list.process}%;max-width:100%`"
+            >
+              <i class="fire" v-if="list.process != 0"></i>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="button_wrap">
-      <button
-        :class="actionType == 'burn' ? 'active burn' : 'burn'"
-        @click="actionType = 'burn'"
-        :style="expired ? 'pointer-events: none' : ''"
-      >
-        {{ $t("Table.Burn") }}
-      </button>
-      <button
-        class="claim"
-        :class="actionType == 'claim' ? 'active claim' : 'claim'"
-        @click="actionType = 'claim'"
-      >
-        {{ $t("Table.Claim") }}
-      </button>
-    </div>
-    <div class="burn_wrap" v-if="actionType == 'burn'">
       <p>
-        <span>{{ $t("Table.AmountDeposit") }}</span>
+        <span>{{ $t("Table.DAvailable") }}</span>
         <span>
-          {{ $t("Table.DAvailable") }}:
           <countTo
             v-if="isLogin"
             :startVal="Number(0)"
@@ -110,8 +51,8 @@
       </div>
       <div class="text">
         <p>
-          <span>{{ $t("Table.MyBurn") }}/{{ $t("Table.TotalBurn") }}</span>
-          <span style="display: flex">
+          <span>{{ $t("Table.MyBurn") }}</span>
+          <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
@@ -120,7 +61,12 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            /
+            &nbsp;hCTK</span
+          >
+        </p>
+        <p>
+          <span>{{ $t("Table.TotalBurn") }}</span>
+          <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
@@ -129,8 +75,8 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            HCCT
-          </span>
+            &nbsp;hCTK</span
+          >
         </p>
         <p class="bigsize">
           <span>{{ $t("Table.MyPoolShare") }} </span>
@@ -160,8 +106,21 @@
         </p>
       </div>
     </div>
-    <div class="claim_wrap" v-if="actionType == 'claim'">
-      <!-- <p><span>Amount to deposit</span> <span>Available: 0 LONG </span></p> -->
+    <div class="claim_wrap">
+      <div class="process"></div>
+      <p>
+        <span>HCCTII {{ $t("Table.HELMETRewards") }}</span>
+        <span
+          ><countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Earn)"
+            :duration="2000"
+            :decimals="8"
+          />
+          HCCTII</span
+        >
+      </p>
       <div class="input">
         <input
           v-if="isLogin"
@@ -184,21 +143,7 @@
           >
         </p>
       </div>
-      <div class="text">
-        <p>
-          <span>HCCTII {{ $t("Table.HELMETRewards") }}</span>
-          <span
-            ><countTo
-              v-if="isLogin"
-              :startVal="Number(0)"
-              :endVal="Number(balance.Earn)"
-              :duration="2000"
-              :decimals="8"
-            />
-            HCCTII</span
-          >
-        </p>
-      </div>
+
       <button class="submit_burn" @click="toClaim">
         <i :class="claimLoading ? 'loading_pic' : ''"></i
         >{{ $t("Table.Claim") }}
@@ -304,6 +249,9 @@ export default {
     });
     this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
       this.getBalance();
+    });
+    this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
+      this.showOnepager();
     });
     setTimeout(() => {
       this.getDownTime();
@@ -518,233 +466,84 @@ export default {
   }
 }
 @media screen and (min-width: 750px) {
-  .expiredBg {
-    background-image: url("../../assets/img/burnmining/expired_bg.png");
-  }
-  .activeBg {
-    background-image: url("../../assets/img/burnmining/burnbg.png");
-  }
-  .long_burn {
-    width: 560px;
-    height: 610px;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin-bottom: 100px;
-    margin-top: 60px;
-    position: relative;
-    padding: 90px 110px 40px 30px;
-    > .coin {
-      width: 64px;
-      height: 64px;
-      position: absolute;
-      left: 50%;
-      top: -30px;
-      transform: translateX(-50%);
-    }
-    > .title {
-      height: 50px;
-      display: flex;
-      justify-content: space-between;
-      > .pool_detail {
-        h3 {
-          font-size: 20px;
-          color: #121212;
-          line-height: 25px;
-          display: flex;
-          align-items: center;
-          i {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background-image: url("../../assets/img/helmet/icon_long.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            margin-left: 3px;
-            cursor: pointer;
-          }
-        }
-        > span {
-          font-size: 14px;
-          color: #9b9b9b;
-          display: flex;
-          align-items: center;
-          margin-top: 4px;
-          span {
-            font-size: 14px;
-            font-weight: bold;
-            color: #121212;
-          }
-          img {
-            width: 24px;
-            height: 24px;
-            margin-left: 4px;
-          }
-        }
-      }
-      > .pool_time {
-        padding-top: 8px;
-        text-align: right;
-        > h3 {
-          font-size: 12px;
-          color: #ffffff;
-          padding: 2px 5px;
-          background: #ff9600;
-          border-radius: 3px;
-          font-weight: normal;
-        }
-        span {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          margin-top: 4px;
-          i {
-            min-width: 16px;
-            min-height: 18px;
-            display: inline-block;
-            padding: 2px 1px;
-            background: #ffe3bb;
-            font-size: 12px;
-            font-weight: 600;
-            color: #22292f;
-          }
-          b {
-            font-size: 12px;
-            margin: 0 4px;
-            font-weight: 600;
-          }
-        }
-      }
-    }
-    > .text {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-      > p {
-        display: flex;
-        flex-direction: column;
-        &:first-child {
-          span {
-            &:nth-of-type(1) {
-              display: flex;
-              align-items: center;
-              i {
-                display: inline-block;
-                width: 12px;
-                height: 12px;
-                background-image: url("../../assets/img/flashmining/miningtime.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
-              }
-            }
-            &:nth-of-type(2) {
-              padding: 1px 4px;
-              background: #ffe3bb;
-              border-radius: 3px;
-              color: #121212;
-              display: flex;
-              align-self: baseline;
-            }
-          }
-        }
-        &:last-child {
-          text-align: right;
-        }
-        > span {
-          &:nth-of-type(1) {
-            font-size: 12px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 14px;
-            font-weight: bold;
-            color: #121212;
-            margin-top: 4px;
-          }
-        }
-      }
-    }
-    > .process {
-      display: flex;
-      flex-direction: column;
-      margin-top: 30px;
-      > .name {
-        padding: 0 4px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        > span {
-          &:nth-of-type(1) {
-            font-size: 12px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 12px;
-            color: #000000;
-          }
-        }
-      }
-      > .control {
-        width: 100%;
-        .control_wrap {
-          margin-top: 10px;
-          width: 100%;
-          height: 14px;
-          border-radius: 6px;
-          background: #fff;
-          .control_real {
-            height: 100%;
-            border-radius: 6px;
-            background: #ff6400;
-            position: relative;
-            .fire {
-              display: block;
-              width: 20px;
-              height: 20px;
-              background-image: url("../../assets/img/burnmining/fire.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              position: absolute;
-              top: 100%;
-              right: 0;
-            }
-          }
-        }
-      }
-    }
-    .button_wrap {
-      width: 100%;
-      height: 40px;
-      display: flex;
-      background: #fff7ec;
-      border-radius: 10px;
-      align-items: center;
-      padding: 0 3px;
-      margin-top: 42px;
-      button {
-        flex: 1;
-        height: 34px;
-        border-radius: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        background: #fff7ec;
-        color: #121212;
-      }
-      .active {
-        background: #ff9600;
-        color: #fff;
-      }
+  .burnbox {
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-evenly;
+    .process {
+      height: 70px;
     }
     .burn_wrap {
-      margin-top: 20px;
+      > .process {
+        display: flex;
+        flex-direction: column;
+        > .name {
+          padding: 0 4px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 12px;
+              color: #9b9b9b;
+            }
+            &:nth-of-type(2) {
+              font-size: 12px;
+              color: #000000;
+            }
+          }
+        }
+        > .control {
+          width: 100%;
+          .control_wrap {
+            margin-top: 10px;
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: #fff;
+            .control_real {
+              height: 100%;
+              border-radius: 6px;
+              background: #ff9600;
+              position: relative;
+              .fire {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/burnmining/fire.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                position: absolute;
+                top: 100%;
+                right: 0;
+              }
+            }
+          }
+        }
+      }
       > p {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
         color: #9b9b9b;
+        > span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            color: rgba(23, 23, 58, 0.7);
+            line-height: 14px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            color: #17173a;
+            line-height: 14px;
+          }
+        }
       }
       > .input {
-        margin-top: 8px;
+        margin-top: 20px;
         width: 100%;
         height: 40px;
         position: relative;
@@ -757,8 +556,8 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #121212;
           border-radius: 6px;
+          border: 1px solid #e8e8eb;
           &:focus {
             border: 1px solid #ff9600;
           }
@@ -788,24 +587,30 @@ export default {
       }
       .text {
         display: flex;
-        justify-content: space-between;
-        margin-top: 14px;
+        align-items: center;
+        flex-direction: column;
         > p {
           display: flex;
-          flex-direction: column;
+          margin-top: 14px;
+          justify-content: space-between;
+          width: 100%;
+          align-items: center;
           &:last-child {
             text-align: right;
           }
           > span {
             &:nth-of-type(1) {
-              font-size: 12px;
-              color: #9b9b9b;
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              color: rgba(23, 23, 58, 0.7);
+              line-height: 14px;
             }
             &:nth-of-type(2) {
               font-size: 14px;
-              font-weight: bold;
-              color: #121212;
-              margin-top: 10px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
+              font-weight: 500;
             }
           }
         }
@@ -818,7 +623,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #ffffff;
-        margin-top: 15px;
+        margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -828,14 +633,29 @@ export default {
       }
     }
     .claim_wrap {
-      margin-top: 42px;
       > p {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
         color: #9b9b9b;
+        > span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            color: rgba(23, 23, 58, 0.7);
+            line-height: 14px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            color: #17173a;
+            line-height: 14px;
+          }
+        }
       }
       > .input {
+        margin-top: 20px;
         width: 100%;
         height: 40px;
         position: relative;
@@ -848,7 +668,7 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #121212;
+          border: 1px solid #e8e8eb;
           border-radius: 6px;
           &:focus {
             border: 1px solid #ff9600;
@@ -906,7 +726,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #ffffff;
-        margin-top: 15px;
+        margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -927,7 +747,7 @@ export default {
   .ContractAddress {
     font-size: 12px;
   }
-  .long_burn {
+  .burnbox {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin-bottom: 50px;

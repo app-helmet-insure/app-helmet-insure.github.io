@@ -231,6 +231,9 @@ export default {
             color: rgba(23, 23, 58, 0.8);
             line-height: 40px;
             font-weight: normal;
+            &:hover {
+              color: #17173a;
+            }
           }
           .child_active {
             width: 180px;
@@ -238,6 +241,9 @@ export default {
             background: #fd7e14;
             border-radius: 5px;
             color: #ffffff;
+            &:hover {
+              color: #fff;
+            }
           }
         }
       }

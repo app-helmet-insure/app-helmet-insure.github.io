@@ -27,46 +27,11 @@
       "unicode_decimal": 58883
     },
     {
-      "icon_id": "18561555",
-      "name": "Helmet",
-      "font_class": "Helmet",
-      "unicode": "e604",
-      "unicode_decimal": 58884
-    },
-    {
-      "icon_id": "18561556",
-      "name": "time",
-      "font_class": "time",
-      "unicode": "e605",
-      "unicode_decimal": 58885
-    },
-    {
-      "icon_id": "18561557",
-      "name": "BNB",
-      "font_class": "BNB",
-      "unicode": "e606",
-      "unicode_decimal": 58886
-    },
-    {
       "icon_id": "19280939",
       "name": "medium",
       "font_class": "medium",
       "unicode": "e60b",
       "unicode_decimal": 58891
-    },
-    {
-      "icon_id": "19839306",
-      "name": "left",
-      "font_class": "left",
-      "unicode": "e60c",
-      "unicode_decimal": 58892
-    },
-    {
-      "icon_id": "19839307",
-      "name": "right",
-      "font_class": "right",
-      "unicode": "e60d",
-      "unicode_decimal": 58893
     },
     {
       "icon_id": "19865585",
@@ -85,7 +50,7 @@
     {
       "icon_id": "20470855",
       "name": "right",
-      "font_class": "right1",
+      "font_class": "right",
       "unicode": "e614",
       "unicode_decimal": 58900
     },
@@ -111,130 +76,123 @@
       "unicode_decimal": 58903
     },
     {
-      "icon_id": "20636095",
-      "name": "right",
-      "font_class": "zuojiantoubeifen",
-      "unicode": "e618",
-      "unicode_decimal": 58904
-    },
-    {
-      "icon_id": "20636096",
-      "name": "colorRight",
-      "font_class": "zuojiantoubeifen1",
-      "unicode": "e619",
-      "unicode_decimal": 58905
-    },
-    {
       "icon_id": "20636404",
       "name": "OrangeRight",
       "font_class": "OrangeRight",
-      "unicode": "e61a",
-      "unicode_decimal": 58906
+      "unicode": "e618",
+      "unicode_decimal": 58904
     },
     {
       "icon_id": "20636421",
       "name": "WhiteRight",
       "font_class": "WhiteRight",
-      "unicode": "e61b",
-      "unicode_decimal": 58907
+      "unicode": "e619",
+      "unicode_decimal": 58905
     },
     {
       "icon_id": "20663068",
       "name": "close",
       "font_class": "close",
-      "unicode": "e61c",
-      "unicode_decimal": 58908
+      "unicode": "e61a",
+      "unicode_decimal": 58906
     },
     {
       "icon_id": "20663069",
       "name": "burnbox",
       "font_class": "burnbox",
-      "unicode": "e61d",
-      "unicode_decimal": 58909
+      "unicode": "e61b",
+      "unicode_decimal": 58907
     },
     {
       "icon_id": "20663070",
       "name": "home",
       "font_class": "home",
-      "unicode": "e61e",
-      "unicode_decimal": 58910
+      "unicode": "e61c",
+      "unicode_decimal": 58908
     },
     {
       "icon_id": "20663071",
       "name": "moon",
       "font_class": "moon",
-      "unicode": "e61f",
-      "unicode_decimal": 58911
+      "unicode": "e61d",
+      "unicode_decimal": 58909
     },
     {
       "icon_id": "20663072",
       "name": "mining",
       "font_class": "mining1",
-      "unicode": "e620",
-      "unicode_decimal": 58912
+      "unicode": "e61e",
+      "unicode_decimal": 58910
     },
     {
       "icon_id": "20663073",
       "name": "insurance",
       "font_class": "insurance",
-      "unicode": "e621",
-      "unicode_decimal": 58913
+      "unicode": "e61f",
+      "unicode_decimal": 58911
     },
     {
       "icon_id": "20663074",
       "name": "medium",
       "font_class": "medium1",
-      "unicode": "e622",
-      "unicode_decimal": 58914
+      "unicode": "e620",
+      "unicode_decimal": 58912
     },
     {
       "icon_id": "20663075",
       "name": "iio",
       "font_class": "iio",
-      "unicode": "e623",
-      "unicode_decimal": 58915
+      "unicode": "e621",
+      "unicode_decimal": 58913
     },
     {
       "icon_id": "20663076",
       "name": "wrongnetwork",
       "font_class": "wrongnetwork",
-      "unicode": "e624",
-      "unicode_decimal": 58916
+      "unicode": "e622",
+      "unicode_decimal": 58914
     },
     {
       "icon_id": "20663077",
       "name": "telegram",
       "font_class": "telegram",
-      "unicode": "e625",
-      "unicode_decimal": 58917
+      "unicode": "e623",
+      "unicode_decimal": 58915
     },
     {
       "icon_id": "20663078",
       "name": "papar",
       "font_class": "papar",
-      "unicode": "e626",
-      "unicode_decimal": 58918
+      "unicode": "e624",
+      "unicode_decimal": 58916
     },
     {
       "icon_id": "20663079",
       "name": "discord",
       "font_class": "discord",
-      "unicode": "e627",
-      "unicode_decimal": 58919
+      "unicode": "e625",
+      "unicode_decimal": 58917
     },
     {
       "icon_id": "20663080",
       "name": "flashmining",
       "font_class": "flashmining",
-      "unicode": "e628",
-      "unicode_decimal": 58920
+      "unicode": "e626",
+      "unicode_decimal": 58918
     },
     {
       "icon_id": "20663081",
       "name": "sun",
       "font_class": "sun",
-      "unicode": "e629",
-      "unicode_decimal": 58921
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "20679300",
+      "name": "siderRight",
+      "font_class": "siderRight",
+      "unicode": "e628",
+      "unicode_decimal": 58920
     }
   ]
 }

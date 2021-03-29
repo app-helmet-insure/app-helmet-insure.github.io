@@ -22,7 +22,8 @@ export default {};
     border-radius: 5px;
     margin-bottom: 20px;
     &_wrap {
-      width: 100%;
+      margin: 0 auto;
+      width: 1200px;
       height: 100%;
       background-image: url("../../assets/img/flashmining/flashmining_titlebg.png");
       background-repeat: no-repeat;

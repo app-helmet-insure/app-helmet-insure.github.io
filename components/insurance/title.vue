@@ -117,7 +117,8 @@ export default {
       width: 100%;
       height: 180px;
       > div {
-        width: 100%;
+        margin: 0 auto;
+        width: 1200px;
         height: 100%;
         background-repeat: no-repeat;
         background-size: 1026px 180px;
@@ -148,7 +149,7 @@ export default {
     .dodogroup {
       background: #000000;
       > div {
-        background-image: url("../../assets/img/banner/dodo_grounp_web.png");
+        background-image: url("../../assets/img/banner/dodo_group_web.png");
       }
     }
   }

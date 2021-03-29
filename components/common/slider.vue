@@ -1,15 +1,26 @@
 <template>
   <div class="slider">
-    <a href="" class="logo"></a>
+    <a href="https://helmet.insure" class="logo"></a>
     <ul class="menu">
       <li class="menu_group menu_item">
-        <nuxt-link to="/" :class="routeObj.name === 'index' ? 'active' : ''">
+        <nuxt-link
+          to="/"
+          :class="
+            routeObj.name === 'index'
+              ? 'active'
+              : routeObj.name == 'myPolicy' ||
+                routeObj.name == 'mySupply' ||
+                routeObj.name == 'myClaim'
+              ? 'active_child_one'
+              : ''
+          "
+        >
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-insurance"></use>
           </svg>
           {{ $t("Table.safe") }}
           <svg class="icon svg-icon right" aria-hidden="true">
-            <use xlink:href="#icon-right1"></use>
+            <use xlink:href="#icon-right"></use>
           </svg>
         </nuxt-link>
         <ul
@@ -259,6 +270,16 @@ export default {
       }
       .right {
         transform: rotate(90deg);
+      }
+    }
+    .active_child_one {
+      color: #fd7e14;
+      .icon {
+        fill: #fd7e14;
+      }
+      .right {
+        transform: rotate(90deg);
+        fill: #fd7e14 !important;
       }
     }
   }

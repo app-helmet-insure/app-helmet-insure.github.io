@@ -1,8 +1,10 @@
 <template>
-  <div class="burn_container">
+  <div class="main_container">
     <BURNTITLE></BURNTITLE>
-    <BURNLIST></BURNLIST>
-    <Onepager></Onepager>
+    <div class="burn_container">
+      <BURNLIST></BURNLIST>
+      <Onepager></Onepager>
+    </div>
   </div>
 </template>
 
@@ -21,29 +23,31 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
-  .burn_container {
-    width: 1200px;
-    margin: 0 auto 30px;
-  }
-  .burn_text {
-    text-align: center;
-    margin-top: 60px;
-    h3 {
-      font-size: 34px;
-      font-weight: bold;
-      color: #121212;
+  .main_container {
+    .burn_container {
+      width: 1200px;
+      margin: 0 auto 30px;
     }
-    p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #787878;
+    .burn_text {
+      text-align: center;
+      margin-top: 60px;
+      h3 {
+        font-size: 34px;
+        font-weight: bold;
+        color: #121212;
+      }
+      p {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #787878;
+      }
     }
-  }
-  .burn_wrap {
-    display: flex;
-    align-items: center;
-    .long_burn {
-      margin: 60px auto 100px;
+    .burn_wrap {
+      display: flex;
+      align-items: center;
+      .long_burn {
+        margin: 60px auto 100px;
+      }
     }
   }
 }

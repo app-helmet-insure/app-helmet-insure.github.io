@@ -32,7 +32,7 @@
           <span>{{ fixD(item.price, 8) }} HELMET</span>
         </p>
         <p>
-          <span>{{ $t("Table.Position") }}: </span>
+          <span>{{ $t("Table.Premium") }}: </span>
           <span>{{ fixD(item.Rent, 8) }} HELMET</span>
         </p>
       </section>
@@ -1101,6 +1101,7 @@ export default {
       section {
         &:nth-of-type(1) {
           flex: 5;
+          min-width: 300px;
           > p {
             display: flex;
             align-items: center;
@@ -1152,6 +1153,7 @@ export default {
           flex: 4;
           display: flex;
           flex-direction: column;
+          min-width: 150px;
           p {
             &:nth-of-type(2) {
               margin-top: 12px;
@@ -1176,6 +1178,7 @@ export default {
           flex: 4;
           display: flex;
           flex-direction: column;
+          min-width: 200px;
           p {
             &:nth-of-type(2) {
               margin-top: 12px;
@@ -1200,6 +1203,7 @@ export default {
           flex: 3;
           display: flex;
           justify-content: flex-end;
+          min-width: 120px;
           button {
             padding: 0px 10px;
             height: 36px;

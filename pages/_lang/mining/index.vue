@@ -1,15 +1,17 @@
 <template>
   <div class="main_container">
     <MiningTitle></MiningTitle>
-    <MiningList></MiningList>
-    <Onepager></Onepager>
-    <Compound></Compound>
-    <Deposite
-      :current="current"
-      :TradeType="TradeType"
-      @close="closeDeposite"
-      v-if="showDeposite"
-    ></Deposite>
+    <div class="mining_container">
+      <MiningList></MiningList>
+      <Onepager></Onepager>
+      <Compound></Compound>
+      <Deposite
+        :current="current"
+        :TradeType="TradeType"
+        @close="closeDeposite"
+        v-if="showDeposite"
+      ></Deposite>
+    </div>
   </div>
 </template>
 
@@ -70,8 +72,10 @@ export default {
 
 @media screen and (min-width: 750px) {
   .main_container {
-    width: 1200px;
-    margin: 0 auto 30px;
+    .mining_container {
+      width: 1200px;
+      margin: 0 auto 30px;
+    }
   }
 }
 @media screen and (max-width: 750px) {

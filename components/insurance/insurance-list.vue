@@ -312,6 +312,7 @@ export default {
           display: flex;
           align-items: center;
           flex: 3;
+          min-width: 150px;
           img {
             width: 32px;
             height: 32px;
@@ -329,6 +330,7 @@ export default {
           flex: 3;
           display: flex;
           flex-direction: column;
+          min-width: 120px;
           span {
             &:nth-of-type(1) {
               font-size: 14px;
@@ -348,6 +350,7 @@ export default {
         }
         &:nth-of-type(3) {
           flex: 3;
+          min-width: 200px;
           > div {
             display: flex;
             align-items: center;
@@ -386,11 +389,15 @@ export default {
           flex: 4;
           display: flex;
           justify-content: flex-end;
+          min-width: 370px;
           .activeButton {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
             color: #fd7e14;
             i {
+              border-right: 5px solid transparent;
+              border-top: 6px solid #fd7e14;
+              border-left: 5px solid transparent;
               transform: rotate(180deg);
             }
           }
@@ -409,16 +416,34 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            &:nth-of-type(1) {
-              margin: 0;
+            box-sizing: border-box;
+            &:hover {
+              padding: 0px 9px;
+              height: 36px;
+              border: 2px solid #fd7e14;
+              color: #fd7e14;
+              i {
+                border-right: 5px solid transparent;
+                border-top: 6px solid #fd7e14;
+                border-left: 5px solid transparent;
+              }
             }
+
             i {
-              display: block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-image: url("../../assets/img/insurancelist/select_down.png");
-              background-size: 100%;
+              position: relative;
+              margin-left: 6px;
+              border-right: 5px solid transparent;
+              border-top: 6px solid rgba(23, 23, 58, 0.6);
+              border-left: 5px solid transparent;
+              &::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -3px;
+                border-right: 3px solid transparent;
+                border-top: 4px solid #f8f9fa;
+                border-left: 3px solid transparent;
+              }
             }
           }
         }

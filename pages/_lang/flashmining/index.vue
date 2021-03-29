@@ -1,8 +1,10 @@
 <template>
   <div class="main_container">
     <FlashMiningTitle></FlashMiningTitle>
-    <FlashMiningList></FlashMiningList>
-    <Onepager></Onepager>
+    <div class="flashmining_container">
+      <FlashMiningList></FlashMiningList>
+      <Onepager></Onepager>
+    </div>
   </div>
 </template>
 
@@ -53,27 +55,10 @@ export default {
 
 @media screen and (min-width: 750px) {
   .main_container {
-    width: 1200px;
-    margin: 0 auto 30px;
-  }
-  .flash_text {
-    text-align: center;
-    margin-top: 60px;
-    h3 {
-      font-size: 34px;
-      font-weight: bold;
-      color: #121212;
+    .flashmining_container {
+      width: 1200px;
+      margin: 0 auto 30px;
     }
-    p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #787878;
-    }
-  }
-  .pool_wrap {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
   }
 }
 

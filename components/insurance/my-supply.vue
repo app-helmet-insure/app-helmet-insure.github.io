@@ -46,7 +46,7 @@
       <section>
         <button
           :style="item.remain == '0' ? 'pointer-events: none;' : ''"
-          @click="toActive(item)"
+          @click="handleClickCancel(item)"
         >
           {{
             item.remain == 0

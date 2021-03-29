@@ -6,7 +6,7 @@
       style="transform: rotate(180deg)"
     >
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-right1"></use>
+        <use xlink:href="#icon-right"></use>
       </svg>
     </span>
     <span v-if="pageList[2] - 2 > 1" class="page_com">···</span>
@@ -21,7 +21,7 @@
     <span v-if="pageMax > 4 && pageMax - page > 1" class="page_com">···</span>
     <span class="page_side" @click="nextChange()">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-right1"></use>
+        <use xlink:href="#icon-right"></use>
       </svg>
     </span>
   </div>

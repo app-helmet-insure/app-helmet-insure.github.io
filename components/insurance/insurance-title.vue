@@ -8,9 +8,29 @@
         {{ putStrikeUnit[activeInsurance] }}</span
       >
     </div>
-    <div class="echartPrice"></div>
+    <div class="echartPrice">
+      <div class="bg_progress_bar">
+        <!--  对应替换数据即可  -->
+        <div class="progress_bar_left" style="width: 33.3%">
+          <p style="right: 0">
+            {{ $t('Insurance.Insurance_text19') }} <span>0.11</span>
+          </p>
+        </div>
+        <div class="progress_bar_center" style="width: 33.3%">
+          <i style="left: 50%"></i>
+          <p style="left: 50%">
+            {{ $t('Insurance.Insurance_text20') }} <span>0.22</span>
+          </p>
+        </div>
+        <div class="progress_bar_right" style="width: 33.3%">
+          <p style="left: 0">
+            {{ $t('Insurance.Insurance_text21') }} <span>0.44</span>
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="myBalance">
-      <span>{{$('Content.UsableBalance')}}</span>
+      <span>{{ $t('Content.UsableBalance') }}</span>
       <p>
         <span>{{ BalanceArray['BNB'] }} BNB</span>
         <span>{{ BalanceArray[activeInsurance] }} {{ activeInsurance }}</span>
@@ -69,10 +89,131 @@ export default {
       }
     }
     .echartPrice {
-      width: 246px;
-      height: 40px;
-      background: #fcc;
+      width: 240px;
       margin-left: 60px;
+      .bg_progress_bar {
+        position: relative;
+        width: 100%;
+        height: 6px;
+        background: #e8e8eb;
+        border-radius: 3px;
+      }
+      .progress_bar_left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 33%;
+        height: 100%;
+        border-radius: 3px 0 0 3px;
+        background: linear-gradient(180deg, #f0657b 0%, #dc3545 100%);
+        &:after {
+          content: '';
+          position: absolute;
+          top: -2px;
+          right: 0;
+          width: 1px;
+          height: 10px;
+          background: linear-gradient(180deg, #f0657b 0%, #dc3545 100%);
+        }
+        p {
+          position: absolute;
+          top: 14px;
+          right: 0;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(23, 23, 58, 0.45);
+          line-height: 12px;
+          span {
+            font-size: 12px;
+            font-family: IBMPlexSans-Medium, IBMPlexSans;
+            font-weight: 500;
+            color: #dc3545;
+            line-height: 12px;
+          }
+        }
+      }
+      .progress_bar_right {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 33%;
+        height: 100%;
+        border-radius: 0 3px 3px 0;
+        background: linear-gradient(180deg, #51d37b 0%, #28a745 100%);
+        &:after {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: 0;
+          width: 1px;
+          height: 10px;
+          background: linear-gradient(180deg, #51d37b 0%, #28a745 100%);
+        }
+        p {
+          position: absolute;
+          top: 14px;
+          left: 0;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(23, 23, 58, 0.45);
+          line-height: 12px;
+          span {
+            font-size: 12px;
+            font-family: IBMPlexSans-Medium, IBMPlexSans;
+            font-weight: 500;
+            color: #28a745;
+            line-height: 12px;
+          }
+        }
+      }
+      .progress_bar_center {
+        position: absolute;
+        left: 33%;
+        top: 0;
+        width: 33%;
+        height: 100%;
+        i {
+          position: absolute;
+          top: -2px;
+          left: 45%;
+          width: 1px;
+          height: 10px;
+          background: #e8e8eb;
+        }
+        p {
+          position: absolute;
+          bottom: 14px;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 8px 6px;
+          width: 100%;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(23, 23, 58, 0.45);
+          line-height: 12px;
+          background: #f8f9fa;
+          &:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -4px;
+            transform: translateX(-50%);
+            border-right: 4px solid transparent;
+            border-top: 5px solid #f8f9fa;
+            border-left: 4px solid transparent;
+          }
+          span {
+            font-size: 12px;
+            font-family: IBMPlexSans-Medium, IBMPlexSans;
+            font-weight: 500;
+            color: #fd7e14;
+            line-height: 12px;
+          }
+        }
+      }
     }
     .myBalance {
       margin-left: 60px;

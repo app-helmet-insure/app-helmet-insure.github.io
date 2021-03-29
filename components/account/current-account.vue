@@ -2,11 +2,13 @@
   <div class="current-account">
     <div class="mask" @click="closeDialog"></div>
     <div class="current-account-block">
-      <h3 class="title">Account</h3>
+      <h3 class="title">{{ $t('Account.Account') }}</h3>
       <span class="close" @click="closeDialog"></span>
       <div class="account-box">
         <div class="left">
-          <span>Connected with {{ userInfo.data.name }}</span>
+          <span
+            >{{ $t('Account.ConnectedWith') }} {{ userInfo.data.name }}</span
+          >
           <div class="address">
             <span class="circle"></span>
             <span class="address-text">{{ accountText }}</span>
@@ -18,91 +20,91 @@
           </div>
         </div>
         <div class="right">
-          <a @click="changeAccount">Change</a>
-          <a @click="SignoutAccount">SignOut</a>
+          <a @click="changeAccount">{{ $t('Account.Change') }}</a>
+          <a @click="SignoutAccount">{{ $t('Account.SignOut') }}</a>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import Message from "~/components/common/Message";
-import ClipboardJS from "clipboard";
+import Message from '~/components/common/Message'
+import ClipboardJS from 'clipboard'
 export default {
-  name: "current-account",
+  name: 'current-account',
   data() {
     return {
-      accountText: "",
-      account: "",
-    };
+      accountText: '',
+      account: '',
+    }
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   watch: {
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
   },
   mounted() {},
   methods: {
     copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", {
+      let _this = this
+      let copys = new ClipboardJS('.copy', {
         text: () => text,
-      });
-      copys.on("success", function (e) {
+      })
+      copys.on('success', function(e) {
         Message({
-          message: "Successfully copied",
-          type: "success",
+          message: 'Successfully copied',
+          type: 'success',
           // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
+        })
+        copys.destroy()
+      })
+      copys.on('error', function(e) {
+        console.error('Action:', e.action)
+        console.error('Trigger:', e.trigger)
+        copys.destroy()
+      })
     },
     userInfoWatch(newValue) {
-      let account = newValue.data.account;
-      this.account = newValue.data.account;
+      let account = newValue.data.account
+      this.account = newValue.data.account
       if (account) {
         this.accountText =
           account.substr(0, 1) +
           account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
-          "..." +
-          account.substr(-5);
+          '...' +
+          account.substr(-5)
       }
     },
     closeDialog() {
-      this.$emit("close");
+      this.$emit('close')
     },
     changeAccount() {
-      this.$emit("change");
-      this.closeDialog();
+      this.$emit('change')
+      this.closeDialog()
     },
     SignoutAccount() {
-      this.$store.dispatch("setUserInfo", {
+      this.$store.dispatch('setUserInfo', {
         data: {
           isLogin: false,
           account: null,
-          balace: "--",
+          balace: '--',
         },
         status: 0,
-      });
-      this.closeDialog();
+      })
+      this.closeDialog()
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 .current-account {
   position: fixed;
   left: 0px;
@@ -132,7 +134,7 @@ export default {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url("../../assets/img/icon/guanbi.png");
+      background-image: url('../../assets/img/icon/guanbi.png');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;

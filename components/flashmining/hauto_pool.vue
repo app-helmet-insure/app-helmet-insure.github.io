@@ -2,7 +2,7 @@
   <div class="flash_pool">
     <div class="deposit">
       <div class="title">
-        <span>{{ $t("Table.DAvailable") }}：</span>
+        <span>{{ $t('Table.DAvailable') }}：</span>
         <p>
           <countTo
             v-if="isLogin"
@@ -16,7 +16,7 @@
         </p>
       </div>
       <div class="content">
-        <label for="deposit">{{ $t("Table.AmountDeposit") }}</label>
+        <label for="deposit">{{ $t('Table.AmountDeposit') }}</label>
         <div class="input">
           <input
             name="deposit"
@@ -35,7 +35,7 @@
                 ? 'background: rgba(255, 150, 0, 0.1);'
                 : ''
             "
-            >{{ $t("Table.Max") }}</span
+            >{{ $t('Table.Max') }}</span
           >
         </div>
       </div>
@@ -48,10 +48,10 @@
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmDeposit") }}
+          >{{ $t('Table.ConfirmDeposit') }}
         </button>
         <p>
-          <span>{{ $t("Table.MyDeposits") }}</span>
+          <span>{{ $t('Table.MyDeposits') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -65,7 +65,7 @@
           >
         </p>
         <p>
-          <span>{{ $t("Table.TotalDeposited") }}</span>
+          <span>{{ $t('Table.TotalDeposited') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -79,8 +79,8 @@
           >
         </p>
         <p>
-          <span>{{ $t("Table.MyPoolShare") }}：</span>
-          <span> {{ isLogin ? balance.Share : "--" }} %</span>
+          <span>{{ $t('Table.MyPoolShare') }}：</span>
+          <span> {{ isLogin ? balance.Share : '--' }} %</span>
         </p>
         <a
           href="https://exchange.pancakeswap.finance/?_gl=1*12xhdmm*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxNDAxNjA5MS41NC4xLjE2MTQwMTYxNjQuMA..#/add/0xe204c4C21c6eD90E37cB06cB94436614f3208D58/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -89,7 +89,7 @@
         >
       </div>
       <div class="ContractAddress">
-        <span>BNB500 Contract Address：</span>
+        <span>BNB500 {{ $t('Table.ContractAddress') }}</span>
         <p>
           0xe204c4c21c6ed90e37cb06cb94436614f3208d58
           <i
@@ -105,7 +105,7 @@
     <i></i>
     <div class="withdraw">
       <div class="title">
-        <span>可赎回抵押：</span>
+        <span>{{ $t('Table.CallableMortgage') }}</span>
         <p>
           <countTo
             v-if="isLogin"
@@ -130,7 +130,7 @@
           <span
             @click="WithdrawNum = balance.Withdraw"
             style="background: rgba(255, 150, 0, 0.1)"
-            >{{ $t("Table.Max") }}</span
+            >{{ $t('Table.Max') }}</span
           >
         </div>
       </div>
@@ -140,11 +140,11 @@
           :class="exitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="exitLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          >{{ $t('Table.ConfirmWithdraw') }} &
+          {{ $t('Table.ClaimRewards') }}
         </button>
         <p>
-          <span>hAUTO {{ $t("Table.HELMETRewards") }}：</span>
+          <span>hAUTO {{ $t('Table.HELMETRewards') }}：</span>
           <span>
             <span>
               <countTo
@@ -167,11 +167,11 @@
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ClaimAllRewards") }}
+          >{{ $t('Table.ClaimAllRewards') }}
         </button>
       </div>
       <div class="ContractAddress">
-        <span>hAUTO Contract Address：</span>
+        <span>hAUTO {{ $t('Table.ContractAddress') }}</span>
         <p>
           0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
           <i
@@ -197,13 +197,13 @@ import {
   exitStake,
   getBalance,
   toDeposite,
-} from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
-import Message from "~/components/common/Message";
-import ClipboardJS from "clipboard";
-import countTo from "vue-count-to";
+} from '~/interface/deposite'
+import precision from '~/assets/js/precision.js'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import { uniswap } from '~/assets/utils/address-pool.js'
+import Message from '~/components/common/Message'
+import ClipboardJS from 'clipboard'
+import countTo from 'vue-count-to'
 export default {
   components: {
     countTo,
@@ -211,8 +211,8 @@ export default {
   data() {
     return {
       list: {
-        name: "hAUTO Pool (By BNB500-Helmet LPT)",
-        dueDate: "2021/03/09 00:00",
+        name: 'hAUTO Pool (By BNB500-Helmet LPT)',
+        dueDate: '2021/03/09 00:00',
         DownTime: {
           day: 0,
           hour: 0,
@@ -220,16 +220,16 @@ export default {
       },
       textList: [
         {
-          text: this.$t("Table.RewardsDistribution") + "（weekly）",
+          text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: "#00B900",
-          unit: "",
+          color: '#00B900',
+          unit: '',
         },
         {
-          text: this.$t("Table.PoolAPR"),
+          text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: "#00B900",
-          unit: "",
+          color: '#00B900',
+          unit: '',
         },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
@@ -258,177 +258,177 @@ export default {
         TotalLPT: 0,
         Share: 0,
       },
-      DepositeNum: "",
-      WithdrawNum: "",
+      DepositeNum: '',
+      WithdrawNum: '',
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
       apy: 0,
       MingTime: 0,
-      actionType: "deposit",
+      actionType: 'deposit',
       fixD,
       isLogin: false,
       expired: false,
-    };
+    }
   },
   mounted() {
     setInterval(() => {
       setTimeout(() => {
-        this.getMiningTime();
-        this.getDownTime();
-      });
-      clearTimeout();
-    }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HAUTOPOOL", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
-    this.$bus.$on("CLAIM_LOADING_HAUTOPOOL", (data) => {
-      this.claimLoading = false;
-    });
-    this.$bus.$on("EXIT_LOADING_HAUTOPOOL", (data) => {
-      this.exitLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_HAUTOPOOL", () => {
-      this.getBalance();
-    });
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
+        this.getMiningTime()
+        this.getDownTime()
+      })
+      clearTimeout()
+    }, 1000)
+    this.$bus.$on('DEPOSITE_LOADING_HAUTOPOOL', (data) => {
+      this.stakeLoading = data.status
+      this.DepositeNum = ''
+    })
+    this.$bus.$on('CLAIM_LOADING_HAUTOPOOL', (data) => {
+      this.claimLoading = false
+    })
+    this.$bus.$on('EXIT_LOADING_HAUTOPOOL', (data) => {
+      this.exitLoading = false
+    })
+    this.$bus.$on('RELOAD_DATA_HAUTOPOOL', () => {
+      this.getBalance()
+    })
+    this.$bus.$on('REFRESH_MINING', (data) => {
+      this.getBalance()
+    })
     setTimeout(() => {
-      this.getBalance();
-      this.getAPY();
-    }, 1000);
+      this.getBalance()
+      this.getAPY()
+    }, 1000)
     setInterval(() => {
       setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
+        this.getAPY()
+      })
+    }, 20000)
   },
   watch: {
     indexArray: {
-      handler: "WatchIndexArray",
+      handler: 'WatchIndexArray',
       immediate: true,
     },
     apy(newValue, value) {
-      this.apy = newValue;
+      this.apy = newValue
     },
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
   },
   computed: {
     indexArray() {
-      return this.$store.state.allIndexPrice;
+      return this.$store.state.allIndexPrice
     },
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.data.isLogin
       }
     },
     showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
+      this.$bus.$emit('OPEN_ONEPAGER', {
         showFlag: true,
-        title: "What is $hAUTO?",
+        title: 'What is $hAUTO?',
         text: [
-          "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
-          "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
-          "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
-          "$hAUTO Flash Mining",
-          "Start: Feb. 23rd 20:00 SGT",
-          "End: Mar.9th 24:00",
-          "Policy Expire date: Mar. 24th 24:00 SGT",
+          'AUTO cover miss out policy. (It performs more like a call option of AUTO)',
+          'The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.',
+          'For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.',
+          '$hAUTO Flash Mining',
+          'Start: Feb. 23rd 20:00 SGT',
+          'End: Mar.9th 24:00',
+          'Policy Expire date: Mar. 24th 24:00 SGT',
         ],
-      });
+      })
     },
     copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
+      let _this = this
+      let copys = new ClipboardJS('.copy', { text: () => text })
+      copys.on('success', function(e) {
         Message({
-          message: "Successfully copied",
-          type: "success",
+          message: 'Successfully copied',
+          type: 'success',
           // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
+        })
+        copys.destroy()
+      })
+      copys.on('error', function(e) {
+        console.error('Action:', e.action)
+        console.error('Trigger:', e.trigger)
+        copys.destroy()
+      })
     },
     WatchIndexArray(newValue, value) {
       if (newValue) {
-        this.getAPY();
+        this.getAPY()
       }
     },
     getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.dueDate;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = this.list.dueDate
+      dueDate = new Date(dueDate)
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
+      )
+      let template
       if (dueDate > now) {
         template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
+          day: day > 9 ? day : '0' + day,
+          hour: hour > 9 ? hour : '0' + hour,
+        }
       } else {
         template = {
-          day: "00",
-          hour: "00",
-        };
-        this.expired = true;
-        this.actionType = "withdraw";
+          day: '00',
+          hour: '00',
+        }
+        this.expired = true
+        this.actionType = 'withdraw'
       }
-      this.list.DownTime = template;
+      this.list.DownTime = template
     },
     getMiningTime() {
-      let now = new Date() * 1;
-      let dueDate = "2021/02/23 20:00";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = '2021/02/23 20:00'
+      dueDate = new Date(dueDate)
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
+      )
+      let template
       if (dueDate < now) {
-        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
-          "Content.MinD"
-        )} ${0}${this.$t("Content.SecondD")}`;
+        template = `${0}${this.$t('Content.HourD')} ${0}${this.$t(
+          'Content.MinD'
+        )} ${0}${this.$t('Content.SecondD')}`
       } else {
-        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
-          "Content.MinD"
-        )} ${second}${this.$t("Content.SecondD")}`;
+        template = `${hour}${this.$t('Content.HourD')} ${minute}${this.$t(
+          'Content.MinD'
+        )} ${second}${this.$t('Content.SecondD')}`
       }
-      this.MingTime = template;
+      this.MingTime = template
     },
     async getAPY() {
-      let HAUTOHELMET = await uniswap("HAUTO", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
-      let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
+      let HAUTOHELMET = await uniswap('HAUTO', 'HELMET') //Hlemt价格
+      let HctkVolume = await totalSupply('HAUTOPOOL') //数量
+      let LptVolume = await totalSupply('HAUTOPOOL_LPT') //发行
+      let HelmetValue = await balanceOf('HELMET', 'HAUTOPOOL_LPT', true)
       // APY = 年产量*helmet价格/抵押价值
       let apy = fixD(
         precision.times(
@@ -442,74 +442,74 @@ export default {
           100
         ),
         2
-      );
-      this.apy = apy ? apy : 0;
+      )
+      this.apy = apy ? apy : 0
       if (this.expired) {
-        this.textList[1].num = "--";
+        this.textList[1].num = '--'
       } else {
-        this.textList[1].num = this.apy + "%";
+        this.textList[1].num = this.apy + '%'
       }
     },
     async getBalance() {
-      let helmetType = "HAUTOPOOL_LPT";
-      let type = "HAUTOPOOL";
+      let helmetType = 'HAUTOPOOL_LPT'
+      let type = 'HAUTOPOOL'
       // 可抵押数量
-      let Deposite = await getBalance(helmetType);
+      let Deposite = await getBalance(helmetType)
       // 可赎回数量
-      let Withdraw = await getLPTOKEN(type);
+      let Withdraw = await getLPTOKEN(type)
       // 总抵押
-      let TotalLPT = await totalSupply(type);
+      let TotalLPT = await totalSupply(type)
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type)
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
-      this.balance.Deposite = fixD(Deposite, 8);
-      this.balance.Withdraw = fixD(Withdraw, 8);
-      this.balance.hCTK = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 8);
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.balance.Deposite = fixD(Deposite, 8)
+      this.balance.Withdraw = fixD(Withdraw, 8)
+      this.balance.hCTK = fixD(Helmet, 8)
+      this.balance.TotalLPT = fixD(TotalLPT, 8)
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2)
       if (this.expired) {
-        this.textList[0].num = "--";
+        this.textList[0].num = '--'
       } else {
-        this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
+        this.textList[0].num = fixD((10 / 14) * 7, 2) + ' hAUTO'
       }
     },
     // 抵押
     toDeposite() {
       if (!this.DepositeNum) {
-        return;
+        return
       }
       if (this.stakeLoading) {
-        return;
+        return
       }
-      this.stakeLoading = true;
-      let type = "HAUTOPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      this.stakeLoading = true
+      let type = 'HAUTOPOOL'
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {})
     },
     // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
-        return;
+        return
       }
-      this.claimLoading = true;
-      let type = "HAUTOPOOL";
-      let res = await getPAYA(type);
+      this.claimLoading = true
+      let type = 'HAUTOPOOL'
+      let res = await getPAYA(type)
     },
     // 退出
     async toExit() {
       if (this.exitLoading) {
-        return;
+        return
       }
-      this.exitLoading = true;
-      let type = "HAUTOPOOL"; 
-      let res = await exitStake(type);
+      this.exitLoading = true
+      let type = 'HAUTOPOOL'
+      let res = await exitStake(type)
     },
   },
-};
+}
 </script>
 
-<style lang='scss' soped>
+<style lang="scss" soped>
 .ContractAddress {
   font-size: 14px;
   color: #ff9600;
@@ -527,7 +527,7 @@ export default {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url("../../assets/img/helmet/copy.png");
+    background-image: url('../../assets/img/helmet/copy.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
@@ -559,7 +559,7 @@ export default {
   display: block;
   width: 24px;
   height: 24px;
-  background-image: url("../../assets/img/helmet/loading.png");
+  background-image: url('../../assets/img/helmet/loading.png');
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
@@ -670,7 +670,7 @@ export default {
             display: block;
             width: 20px;
             height: 20px;
-            background-image: url("../../assets/img/icon/pancake@2x.png");
+            background-image: url('../../assets/img/icon/pancake@2x.png');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin: 0 2px;
@@ -776,7 +776,7 @@ export default {
                   display: inline-block;
                   width: 16px;
                   height: 16px;
-                  background-image: url("../../assets/img/helmet/icon_long.png");
+                  background-image: url('../../assets/img/helmet/icon_long.png');
                   background-repeat: no-repeat;
                   background-size: 100% 100%;
                   margin-right: 3px;
@@ -803,7 +803,7 @@ export default {
                 display: inline-block;
                 width: 14px;
                 height: 14px;
-                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-image: url('../../assets/img/flashmining/miningtime.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 margin-right: 3px;
@@ -980,7 +980,7 @@ export default {
                 display: block;
                 width: 20px;
                 height: 20px;
-                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-image: url('../../assets/img/icon/pancake@2x.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 margin: 0 2px;

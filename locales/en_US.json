@@ -133,12 +133,25 @@
     "MyBurn": "My Burn",
     "TotalBurn": "Total Burn",
     "Get": "Get",
-    "WillStartIn": "Will start in"
+    "WillStartIn": "Will start in",
+    "BurnMining": "燃烧挖矿",
+    "EarnList": "Earn",
+    "MIningCutdown": "MIning Cutdown",
+    "ReceiveAward": "领取奖励",
+    "ContractAddress": "Contract Address：",
+    "safe": "保险",
+    "CallableMortgage": "可赎回抵押：",
+    "RedemptionReward": "赎回领取奖励",
+    "NumberSubscriptions": "请输入认购张数",
+    "Subscribe": "认购",
+    "LoadingWallet": "loading the wallet data"
   },
   "IIO": {
     "BuyTokenTicket": "1. BUY TICKET",
     "DepositLptReward": "2. Stake LPT to get iToken",
-    "SwapToken": "3. Activate your iToken"
+    "SwapToken": "3. Activate your iToken",
+    "ComingSoon": "Coming soon…",
+    "InitialOffering": "Your OPTION to redefine Initial Offering"
   },
   "Tip": {
     "Dpr": "daily percentage of yield, DPR= daily yield / staking volume",
@@ -154,5 +167,40 @@
     "FlashTip2": "You could farm different policy with the notice of expiration date.",
     "MiningTip1": "Helmet Mining Campaigns.",
     "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs)."
+  },
+  "Account": {
+    "Account": "Account",
+    "ConnectedWith": "Connected with",
+    "Change": "Change",
+    "SignOut": "SignOut"
+  },
+  "Wallet": {
+    "SelectWallet": "Select a wallet",
+    "NeedInstall": "You'll need to install",
+    "Install": "tocontinue.once you have it installed,go ahead and",
+    "Refresh": "refresh the page",
+    "InstallMetaMask": "Install MetaMask",
+    "Back": "Back",
+    "ConnectWallet": "Connect to your {item} Wallet"
+  },
+  "Insurance": {
+    "Insurance_text1": "保险交易",
+    "Insurance_text2": "保险品种",
+    "Insurance_text3": "最新价",
+    "Insurance_text4": "保期",
+    "Insurance_text5": "操作",
+    "Insurance_text6": "购买腰斩险",
+    "Insurance_text7": "购买翻倍险",
+    "Insurance_text8": "发行保险",
+    "Insurance_text9": "立即创建翻倍险",
+    "Insurance_text10": "立即创建腰斩险",
+    "Insurance_text11": "出险价",
+    "Insurance_text12": "单价",
+    "Insurance_text13": "已到期",
+    "Insurance_text14": "已全部成交",
+    "Insurance_text15": "撤单",
+    "Insurance_text16": "Connect to a wallet",
+    "Insurance_text17": "Token",
+    "Insurance_text18": "最大量"
   }
 }

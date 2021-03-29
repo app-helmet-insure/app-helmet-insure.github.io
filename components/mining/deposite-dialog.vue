@@ -8,11 +8,11 @@
   >
     <div class="depositeInput">
       <input type="number" v-model="DepositeNum" />
-      <span>Token</span>
+      <span>{{ $t('Insurance.Insurance_text17') }}</span>
     </div>
     <p class="total-token">
       <span>{{ current }} SHORT Token：{{ lptBalance }}</span
-      ><a @click="addAll">{{ $t("Table.ALL") }}</a>
+      ><a @click="addAll">{{ $t('Table.ALL') }}</a>
     </p>
     <!-- <a
       v-if="current"
@@ -36,18 +36,18 @@
         v-else
         @click="depositeCheck"
       />
-      <p>{{ $t("Table.InfiniteApproval") }}</p>
+      <p>{{ $t('Table.InfiniteApproval') }}</p>
     </div>
   </PDialog>
 </template>
 
 <script>
-import PDialog from '~/components/common/p-dialog.vue';
-import PInput from '~/components/common/p-input.vue';
-import { toDeposite, getMined, getLPTOKEN } from '~/interface/deposite';
-import { getBalance } from '~/interface/deposite.js';
-import { fixD, addCommom } from '~/assets/js/util.js';
-import { getAddress } from '~/assets/utils/address-pool.js';
+import PDialog from '~/components/common/p-dialog.vue'
+import PInput from '~/components/common/p-input.vue'
+import { toDeposite, getMined, getLPTOKEN } from '~/interface/deposite'
+import { getBalance } from '~/interface/deposite.js'
+import { fixD, addCommom } from '~/assets/js/util.js'
+import { getAddress } from '~/assets/utils/address-pool.js'
 
 export default {
   props: ['current', 'TradeType'],
@@ -62,7 +62,7 @@ export default {
       getAddress: getAddress,
       lptBalance: 0,
       hiddenGlobal: false,
-    };
+    }
   },
   watch: {
     current: {
@@ -71,50 +71,50 @@ export default {
     },
   },
   mounted() {
-    this.filterApporve();
-    this.getBalance();
+    this.filterApporve()
+    this.getBalance()
   },
   methods: {
     filterApporve() {
-      let list = this.$store.state.approveList;
-      this.hiddenGlobal = list[this.current];
+      let list = this.$store.state.approveList
+      this.hiddenGlobal = list[this.current]
     },
     depositeCheck() {
-      this.checked = !this.checked;
+      this.checked = !this.checked
     },
     closeDeposite() {
-      this.$emit('close');
+      this.$emit('close')
     },
     submitDeposite() {
       if (this.DepositeNum == '') {
-        return;
+        return
       }
-      let flag = this.hiddenGlobal || this.checked;
-      let type = this.current;
-      toDeposite(type, { amount: this.DepositeNum }, flag, (status) => { });
-      this.$bus.$emit('DEPOSITE_LOADING', { status: true });
+      let flag = this.hiddenGlobal || this.checked
+      let type = this.current
+      toDeposite(type, { amount: this.DepositeNum }, flag, (status) => {})
+      this.$bus.$emit('DEPOSITE_LOADING', { status: true })
     },
     // 获取余额
     getBalance() {
-      let coin = this.current.replace('-', '_') + '_LPT';
+      let coin = this.current.replace('-', '_') + '_LPT'
       getBalance(coin).then((res) => {
-        this.lptBalance = addCommom(res, 8);
-      });
+        this.lptBalance = addCommom(res, 8)
+      })
     },
     currentWatch(newValue) {
       if (newValue) {
-        this.getBalance(newValue);
+        this.getBalance(newValue)
       }
     },
     addAll() {
-      this.DepositeNum = this.lptBalance;
+      this.DepositeNum = this.lptBalance
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+<style lang="scss" scoped>
+@import '~/assets/css/base.scss';
 @media screen and (min-width: 750px) {
   .depositeInput {
     margin-top: 44px;

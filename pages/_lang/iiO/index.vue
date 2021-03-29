@@ -5,9 +5,10 @@
     </div>
     <div class="content_h5">
       <h3>
-        <img src="~/assets/img/iio/helmet_logo.png" alt="" /> Coming soon…
+        <img src="~/assets/img/iio/helmet_logo.png" alt="" />
+        {{ $t('IIO.ComingSoon') }}
       </h3>
-      <p>Your OPTION to redefine Initial Offering</p>
+      <p>{{ $t('IIO.InitialOffering') }}</p>
     </div>
     <div class="action">
       <div class="action_step_wrap">
@@ -15,7 +16,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-buy"></use>
           </svg>
-          <span>{{ $t("IIO.BuyTokenTicket") }}</span>
+          <span>{{ $t('IIO.BuyTokenTicket') }}</span>
         </div>
         <svg class="icon" aria-hidden="true">
           <use href="#icon-WhiteRight"></use>
@@ -24,7 +25,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-share"></use>
           </svg>
-          <span>{{ $t("IIO.DepositLptReward") }}</span>
+          <span>{{ $t('IIO.DepositLptReward') }}</span>
         </div>
         <svg class="icon" aria-hidden="true">
           <use href="#icon-WhiteRight"></use>
@@ -33,37 +34,38 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-earn"></use>
           </svg>
-          <span>{{ $t("IIO.SwapToken") }}</span>
+          <span>{{ $t('IIO.SwapToken') }}</span>
         </div>
       </div>
     </div>
     <div class="content_pc">
       <h3>
-        <img src="~/assets/img/iio/helmet_logo.png" alt="" /> Coming soon…
+        <img src="~/assets/img/iio/helmet_logo.png" alt="" />
+        {{ $t('IIO.ComingSoon') }}
       </h3>
-      <p>Your OPTION to redefine Initial Offering</p>
+      <p><p>{{ $t('IIO.InitialOffering') }}</p></p>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @media screen and (min-width: 750px) {
   .iiO {
     > .banner {
       width: 100%;
       height: 380px;
-      background-image: url("../../../assets/img/iio/banner_bg.png");
+      background-image: url('../../../assets/img/iio/banner_bg.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
       .banner_center {
         width: 1200px;
         height: 380px;
         margin: 0 auto;
-        background-image: url("../../../assets/img/iio/banner_center.png");
+        background-image: url('../../../assets/img/iio/banner_center.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
@@ -137,7 +139,7 @@ export default {};
     > .banner {
       width: 100%;
       height: 164px;
-      background-image: url("../../../assets/img/iio/fireBanner_H5.png");
+      background-image: url('../../../assets/img/iio/fireBanner_H5.png');
       background-repeat: no-repeat;
       background-size: 100% 100%;
     }

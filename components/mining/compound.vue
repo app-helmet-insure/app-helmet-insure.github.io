@@ -10,8 +10,10 @@
           <p>{{ number }}</p>
         </div>
         <div class="button">
-          <button class="orange" @click="closeCompound">Cancel</button>
-          <button class="black" @click="confirm">Confirm</button>
+          <button class="orange" @click="closeCompound">
+            {{ $t('Table.Cancel') }}
+          </button>
+          <button class="black" @click="confirm">{{$t('Table.Confirm')}}</button>
         </div>
       </div>
     </div>
@@ -19,39 +21,39 @@
 </template>
 
 <script>
-import { compound } from "~/interface/deposite";
+import { compound } from '~/interface/deposite'
 export default {
   data() {
     return {
       showFlag: false,
-      title: "Compound HELMET Earned",
+      title: 'Compound HELMET Earned',
       number: 0,
-      pool: "",
-    };
+      pool: '',
+    }
   },
   mounted() {
-    this.$bus.$on("OPEN_COMPOUND", (data) => {
-      this.showFlag = true;
-      this.title = data.title;
-      this.number = data.number;
-      this.pool = data.pool;
-    });
-    this.$bus.$on("CLOSE_COMPOUND", () => {
-      this.showFlag = false;
-    });
+    this.$bus.$on('OPEN_COMPOUND', (data) => {
+      this.showFlag = true
+      this.title = data.title
+      this.number = data.number
+      this.pool = data.pool
+    })
+    this.$bus.$on('CLOSE_COMPOUND', () => {
+      this.showFlag = false
+    })
   },
   methods: {
     closeCompound() {
-      this.$bus.$emit("CLOSE_COMPOUND");
+      this.$bus.$emit('CLOSE_COMPOUND')
     },
     async confirm() {
-      await compound(this.pool, this.pool);
+      await compound(this.pool, this.pool)
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .compound_mask {
   width: 100%;
   height: 100%;
@@ -103,7 +105,7 @@ export default {
         height: 24px;
         display: inline-block;
         background-repeat: no-repeat;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         cursor: pointer;
       }
@@ -169,7 +171,7 @@ export default {
         height: 24px;
         display: inline-block;
         background-repeat: no-repeat;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         cursor: pointer;
       }

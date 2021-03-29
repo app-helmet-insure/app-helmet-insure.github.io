@@ -3,11 +3,11 @@
     <div class="burn_wrap">
       <div class="process">
         <div class="name">
-          <span>{{ $t("Table.FireProcess") }}</span>
+          <span>{{ $t('Table.FireProcess') }}</span>
           <span style="display: flex">
-            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            <span>{{ isLogin ? list.rewards : '--' }}</span>
             /
-            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+            <span>{{ isLogin ? list.bonusValue : '--' }}</span>
           </span>
         </div>
         <div class="control">
@@ -22,7 +22,7 @@
         </div>
       </div>
       <p>
-        <span>{{ $t("Table.DAvailable") }}</span>
+        <span>{{ $t('Table.DAvailable') }}</span>
         <span>
           <countTo
             v-if="isLogin"
@@ -46,12 +46,14 @@
           "
         />
         <p>
-          <span>HCCT</span>|<i @click="DepositeNum = balance.Deposite">Max</i>
+          <span>HCCT</span>|<i @click="DepositeNum = balance.Deposite">{{
+            $t('Table.Max')
+          }}</i>
         </p>
       </div>
       <div class="text">
         <p>
-          <span>{{ $t("Table.MyBurn") }}</span>
+          <span>{{ $t('Table.MyBurn') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -65,7 +67,7 @@
           >
         </p>
         <p>
-          <span>{{ $t("Table.TotalBurn") }}</span>
+          <span>{{ $t('Table.TotalBurn') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -79,8 +81,8 @@
           >
         </p>
         <p class="bigsize">
-          <span>{{ $t("Table.MyPoolShare") }} </span>
-          <span> {{ isLogin ? balance.Share : "--" }} % </span>
+          <span>{{ $t('Table.MyPoolShare') }} </span>
+          <span> {{ isLogin ? balance.Share : '--' }} % </span>
         </p>
       </div>
       <button
@@ -90,10 +92,10 @@
           expired ? 'background: #ccc !important; pointer-events: none' : ''
         "
       >
-        <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t('Table.Burn') }}
       </button>
       <div class="ContractAddress">
-        <span>HCCT Contract Address：</span>
+        <span>HCCT {{ $t('Table.ContractAddress') }}</span>
         <p>
           0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5
           <i
@@ -109,7 +111,7 @@
     <div class="claim_wrap">
       <div class="process"></div>
       <p>
-        <span>HCCTII {{ $t("Table.HELMETRewards") }}</span>
+        <span>HCCTII {{ $t('Table.HELMETRewards') }}</span>
         <span
           ><countTo
             v-if="isLogin"
@@ -139,17 +141,17 @@
           <span>HCCTII</span>|<i
             @click="WithdrawNum = balance.Earn"
             style="background: rgba(255, 150, 0, 0.1)"
-            >Max</i
+            >{{ $t('Table.Max') }}</i
           >
         </p>
       </div>
 
       <button class="submit_burn" @click="toClaim">
         <i :class="claimLoading ? 'loading_pic' : ''"></i
-        >{{ $t("Table.Claim") }}
+        >{{ $t('Table.Claim') }}
       </button>
       <div class="ContractAddress">
-        <span>HCCTII Contract Address：</span>
+        <span>HCCTII {{ $t('Table.ContractAddress') }}</span>
         <p>
           0x9065fcbb5f73b908ac4b05bdb81601eec2065522
           <i
@@ -182,12 +184,12 @@ import {
   WithdrawAvailable,
   getAllHelmet,
   Rewards,
-} from "~/interface/deposite";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import precision from "~/assets/js/precision.js";
-import countTo from "vue-count-to";
-import ClipboardJS from "clipboard";
-import Message from "~/components/common/Message";
+} from '~/interface/deposite'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import precision from '~/assets/js/precision.js'
+import countTo from 'vue-count-to'
+import ClipboardJS from 'clipboard'
+import Message from '~/components/common/Message'
 export default {
   components: {
     countTo,
@@ -195,13 +197,13 @@ export default {
   data() {
     return {
       list: {
-        name: "HCCT Burning Box",
-        endTime: "2021/03/19 00:00",
-        startTime: "2021/03/12 00:00",
+        name: 'HCCT Burning Box',
+        endTime: '2021/03/19 00:00',
+        startTime: '2021/03/12 00:00',
         bonusValue: 100000,
         DownTime: {
-          day: "00",
-          hour: "00",
+          day: '00',
+          hour: '00',
         },
         rewards: 0,
         process: 0,
@@ -213,230 +215,230 @@ export default {
         TotalLPT: 0,
         Share: 0,
       },
-      DepositeNum: "",
+      DepositeNum: '',
       MingTime: {
-        hour: "00",
-        minute: "00",
-        second: "00",
+        hour: '00',
+        minute: '00',
+        second: '00',
       },
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
-      actionType: "burn",
+      actionType: 'burn',
       isLogin: false,
       expired: false,
       openMining: false,
-    };
+    }
   },
   watch: {
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_BURNHCCT", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
-    this.$bus.$on("CLAIM_LOADING_BURNHCCT", (data) => {
-      this.claimLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
-      this.getBalance();
-    });
-    this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
-      this.showOnepager();
-    });
+    this.$bus.$on('DEPOSITE_LOADING_BURNHCCT', (data) => {
+      this.stakeLoading = data.status
+      this.DepositeNum = ''
+    })
+    this.$bus.$on('CLAIM_LOADING_BURNHCCT', (data) => {
+      this.claimLoading = false
+    })
+    this.$bus.$on('RELOAD_DATA_BURNHCCT', () => {
+      this.getBalance()
+    })
+    this.$bus.$on('SHOW_HCCT_BURN_ONEPAGER', () => {
+      this.showOnepager()
+    })
     setTimeout(() => {
-      this.getDownTime();
-      this.getMiningTime();
-      this.getBalance();
-      this.getProcess();
-    }, 1000);
+      this.getDownTime()
+      this.getMiningTime()
+      this.getBalance()
+      this.getProcess()
+    }, 1000)
     if (!this.expired) {
       setInterval(() => {
         setTimeout(() => {
-          this.getDownTime();
-          this.getMiningTime();
-        });
-        clearTimeout();
-      }, 1000);
+          this.getDownTime()
+          this.getMiningTime()
+        })
+        clearTimeout()
+      }, 1000)
       setInterval(() => {
         setTimeout(() => {
-          this.getProcess();
-        });
-      }, 20000);
+          this.getProcess()
+        })
+      }, 20000)
     }
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
+    this.$bus.$on('REFRESH_MINING', (data) => {
+      this.getBalance()
+    })
   },
   methods: {
     copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
+      let _this = this
+      let copys = new ClipboardJS('.copy', { text: () => text })
+      copys.on('success', function(e) {
         Message({
-          message: "Successfully copied",
-          type: "success",
+          message: 'Successfully copied',
+          type: 'success',
           // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
+        })
+        copys.destroy()
+      })
+      copys.on('error', function(e) {
+        console.error('Action:', e.action)
+        console.error('Trigger:', e.trigger)
+        copys.destroy()
+      })
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.data.isLogin
       }
     },
     showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
+      this.$bus.$emit('OPEN_ONEPAGER', {
         showFlag: true,
-        title: "What is $HCCTII?",
+        title: 'What is $HCCTII?',
         text: [
-          "HCCTII is the call option of HELMET.",
-          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
-          "Reasonable activate price: 1 HELMET = 0.1CAKE",
-          "Expire date: Apr. 8th 24:00 SGT",
+          'HCCTII is the call option of HELMET.',
+          'Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ',
+          'Reasonable activate price: 1 HELMET = 0.1CAKE',
+          'Expire date: Apr. 8th 24:00 SGT',
           "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
         ],
-      });
+      })
     },
     async getBalance() {
-      let helmetType = "BURNHCCT_LPT";
-      let type = "BURNHCCT";
+      let helmetType = 'BURNHCCT_LPT'
+      let type = 'BURNHCCT'
       // 可抵押数量
-      let Deposite = await getBalance(helmetType);
+      let Deposite = await getBalance(helmetType)
       // 可赎回数量
-      let Withdraw = await getLPTOKEN(type);
+      let Withdraw = await getLPTOKEN(type)
       // 总抵押
-      let TotalLPT = await totalSupply(type);
+      let TotalLPT = await totalSupply(type)
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type)
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
-      this.balance.Deposite = fixD(Deposite, 8);
-      this.balance.Withdraw = fixD(Withdraw, 8);
-      this.balance.Earn = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 8);
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.balance.Deposite = fixD(Deposite, 8)
+      this.balance.Withdraw = fixD(Withdraw, 8)
+      this.balance.Earn = fixD(Helmet, 8)
+      this.balance.TotalLPT = fixD(TotalLPT, 8)
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2)
     },
     //   获取矿池结束倒计时
     getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.endTime;
-      dueDate = new Date(dueDate) * 1;
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = this.list.endTime
+      dueDate = new Date(dueDate) * 1
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
+      )
+      let template
       if (dueDate > now) {
         template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
+          day: day > 9 ? day : '0' + day,
+          hour: hour > 9 ? hour : '0' + hour,
+        }
       } else {
         template = {
-          day: "00",
-          hour: "00",
-        };
-        this.expired = true;
-        this.actionType = "claim";
+          day: '00',
+          hour: '00',
+        }
+        this.expired = true
+        this.actionType = 'claim'
       }
-      this.list.DownTime = template;
+      this.list.DownTime = template
     },
     getMiningTime() {
-      let now = new Date() * 1;
-      let dueDate = "2021/03/12 00:00";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = '2021/03/12 00:00'
+      dueDate = new Date(dueDate)
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      hour = hour + day * 24;
-      let template = {};
+      )
+      hour = hour + day * 24
+      let template = {}
       if (dueDate < now) {
         template = {
-          hour: "00",
-          minute: "00",
-          second: "00",
-        };
-        this.openMining = true;
+          hour: '00',
+          minute: '00',
+          second: '00',
+        }
+        this.openMining = true
       } else {
         template = {
-          hour: hour > 9 ? hour : "0" + hour,
-          minute: minute > 9 ? minute : "0" + minute,
-          second: second > 9 ? second : "0" + second,
-        };
+          hour: hour > 9 ? hour : '0' + hour,
+          minute: minute > 9 ? minute : '0' + minute,
+          second: second > 9 ? second : '0' + second,
+        }
       }
-      this.MingTime = template;
+      this.MingTime = template
     },
     getProcess() {
-      let now = new Date() * 1;
-      let startTime = new Date(this.list.startTime) * 1;
-      let endTime = new Date(this.list.endTime) * 1;
-      let process = precision.divide(now - startTime, endTime - startTime);
+      let now = new Date() * 1
+      let startTime = new Date(this.list.startTime) * 1
+      let endTime = new Date(this.list.endTime) * 1
+      let process = precision.divide(now - startTime, endTime - startTime)
       if (this.expired) {
-        this.list.process = 100;
-        this.list.rewards = this.list.bonusValue;
+        this.list.process = 100
+        this.list.rewards = this.list.bonusValue
       } else {
-        this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
-        this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
+        this.list.process = process > 0 ? fixD(process * 100, 2) : 0
+        this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0
       }
     },
     // 抵押
     toDeposite() {
       if (!this.DepositeNum) {
-        return;
+        return
       }
       if (this.stakeLoading) {
-        return;
+        return
       }
-      this.stakeLoading = true;
-      let type = "BURNHCCT";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      this.stakeLoading = true
+      let type = 'BURNHCCT'
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {})
     },
     // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
-        return;
+        return
       }
-      this.claimLoading = true;
-      let type = "BURNHCCT";
-      let res = await getPAYA(type);
+      this.claimLoading = true
+      let type = 'BURNHCCT'
+      let res = await getPAYA(type)
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .loading_pic {
   display: block;
   width: 24px;
   height: 24px;
-  background-image: url("../../assets/img/helmet/loading.png");
+  background-image: url('../../assets/img/helmet/loading.png');
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
@@ -458,7 +460,7 @@ export default {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background-image: url("../../assets/img/helmet/copy.png");
+    background-image: url('../../assets/img/helmet/copy.png');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     cursor: pointer;
@@ -510,7 +512,7 @@ export default {
                 display: block;
                 width: 20px;
                 height: 20px;
-                background-image: url("../../assets/img/burnmining/fire.png");
+                background-image: url('../../assets/img/burnmining/fire.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 position: absolute;
@@ -739,10 +741,10 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .expiredBg {
-    background-image: url("../../assets/img/burnmining/expired_h5_bg.png");
+    background-image: url('../../assets/img/burnmining/expired_h5_bg.png');
   }
   .activeBg {
-    background-image: url("../../assets/img/burnmining/burn_h5bg.png");
+    background-image: url('../../assets/img/burnmining/burn_h5bg.png');
   }
   .ContractAddress {
     font-size: 12px;
@@ -778,7 +780,7 @@ export default {
             display: inline-block;
             width: 16px;
             height: 16px;
-            background-image: url("../../assets/img/helmet/icon_long.png");
+            background-image: url('../../assets/img/helmet/icon_long.png');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin-left: 3px;
@@ -851,7 +853,7 @@ export default {
                 display: inline-block;
                 width: 12px;
                 height: 12px;
-                background-image: url("../../assets/img/flashmining/miningtime.png");
+                background-image: url('../../assets/img/flashmining/miningtime.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 margin-right: 3px;
@@ -921,7 +923,7 @@ export default {
               display: block;
               width: 20px;
               height: 20px;
-              background-image: url("../../assets/img/burnmining/fire.png");
+              background-image: url('../../assets/img/burnmining/fire.png');
               background-repeat: no-repeat;
               background-size: 100% 100%;
               position: absolute;

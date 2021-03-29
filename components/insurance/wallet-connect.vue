@@ -1,6 +1,6 @@
 <template>
   <div class="wallet-connect" v-if="!userInfo.data.isLogin">
-    <a @click="toConnect">Connect to a wallet</a>
+    <a @click="toConnect">{{ $t('Insurance.Insurance_text16') }}</a>
   </div>
 </template>
 
@@ -8,19 +8,19 @@
 export default {
   computed: {
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   methods: {
     toConnect() {
-      this.$store.dispatch("setMaskDialog", true);
+      this.$store.dispatch('setMaskDialog', true)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 @media screen and(min-width: 750px) {
   .wallet-connect {
     display: none;

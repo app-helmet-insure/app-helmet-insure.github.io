@@ -1,7 +1,7 @@
 .<template>
   <div class="insurance_title">
     <div class="strikePrice">
-      <span>出险价格</span>
+      <span>{{ $t('Content.InsurancePrice') }}</span>
       <span>
         {{ activeInsurance }}:
         {{ putStrikePrice[activeInsurance] }}
@@ -10,9 +10,9 @@
     </div>
     <div class="echartPrice"></div>
     <div class="myBalance">
-      <span>可用余额</span>
+      <span>{{$('Content.UsableBalance')}}</span>
       <p>
-        <span>{{ BalanceArray["BNB"] }} BNB</span>
+        <span>{{ BalanceArray['BNB'] }} BNB</span>
         <span>{{ BalanceArray[activeInsurance] }} {{ activeInsurance }}</span>
       </p>
     </div>
@@ -21,26 +21,26 @@
 
 <script>
 export default {
-  props: ["activeInsurance"],
+  props: ['activeInsurance'],
   data() {
-    return {};
+    return {}
   },
   computed: {
     putStrikePrice() {
-      return this.$store.state.strikePriceArray[1];
+      return this.$store.state.strikePriceArray[1]
     },
     putStrikeUnit() {
-      return this.$store.state.policyColArray[1];
+      return this.$store.state.policyColArray[1]
     },
     BalanceArray() {
-      return this.$store.state.BalanceArray;
+      return this.$store.state.BalanceArray
     },
   },
   mounted() {},
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @media screen and (min-width: 750px) {
   .insurance_title {
     width: 100%;

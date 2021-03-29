@@ -2,7 +2,7 @@
   <div class="mining_pool">
     <div class="deposit">
       <div class="title">
-        <span>{{ $t("Table.DAvailable") }}：</span>
+        <span>{{ $t('Table.DAvailable') }}：</span>
         <p>
           <countTo
             v-if="isLogin"
@@ -23,7 +23,9 @@
             v-model="DepositeNum"
             :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
-          <span @click="DepositeNum = balance.Deposite">最大量</span>
+          <span @click="DepositeNum = balance.Deposite">{{
+            $t('Insurance.Insurance_text18')
+          }}</span>
         </div>
       </div>
       <div class="button">
@@ -32,10 +34,10 @@
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmDeposit") }}
+          >{{ $t('Table.ConfirmDeposit') }}
         </button>
         <p>
-          <span>{{ $t("Table.MyDeposits") }}</span>
+          <span>{{ $t('Table.MyDeposits') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -49,7 +51,7 @@
           >
         </p>
         <p>
-          <span>{{ $t("Table.TotalDeposited") }}</span>
+          <span>{{ $t('Table.TotalDeposited') }}</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -64,8 +66,8 @@
         </p>
         <section>
           <p>
-            <span>{{ $t("Table.MyPoolShare") }}：</span>
-            <span> {{ isLogin ? balance.Share : "--" }} %</span>
+            <span>{{ $t('Table.MyPoolShare') }}：</span>
+            <span> {{ isLogin ? balance.Share : '--' }} %</span>
           </p>
           <a
             href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -78,7 +80,7 @@
     <i></i>
     <div class="withdraw">
       <div class="title">
-        <span>可赎回抵押：</span>
+        <span>{{ $t('Table.CallableMortgage') }}</span>
         <p>
           <countTo
             v-if="isLogin"
@@ -100,7 +102,7 @@
             disabled
             :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <span @click="WithdrawNum = balance.Withdraw">最大量</span>
+          <span @click="WithdrawNum = balance.Withdraw">{{$t('Insurance.Insurance_text18')}}</span>
         </div>
       </div>
       <div class="button">
@@ -109,11 +111,11 @@
           :class="exitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="exitLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          >{{ $t('Table.ConfirmWithdraw') }} &
+          {{ $t('Table.ClaimRewards') }}
         </button>
         <p>
-          <span>CAKE {{ $t("Table.HELMETRewards") }}：</span>
+          <span>CAKE {{ $t('Table.HELMETRewards') }}：</span>
           <span>
             <span>
               <countTo
@@ -129,7 +131,7 @@
           </span>
         </p>
         <p>
-          <span>HELMET {{ $t("Table.HELMETRewards") }}：</span>
+          <span>HELMET {{ $t('Table.HELMETRewards') }}：</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -147,7 +149,7 @@
           :class="claimLoading ? 'disable o_button' : 'o_button'"
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ClaimAllRewards") }}
+          >{{ $t('Table.ClaimAllRewards') }}
         </button>
       </div>
     </div>
@@ -168,32 +170,32 @@ import {
   getAllHelmet,
   Rewards,
   RewardsDuration,
-} from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import countTo from "vue-count-to";
+} from '~/interface/deposite'
+import precision from '~/assets/js/precision.js'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import countTo from 'vue-count-to'
 export default {
-  props: ["activeType"],
+  props: ['activeType'],
   components: {
     countTo,
   },
   data() {
     return {
       list: {
-        name: "HELMET-BNB LP",
+        name: 'HELMET-BNB LP',
       },
       textList: [
         {
-          text: this.$t("Table.RewardsDistribution") + "（weekly）",
+          text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: "#00B900",
-          unit: "（weekly）",
+          color: '#00B900',
+          unit: '（weekly）',
         },
         {
-          text: this.$t("Table.PoolAPR"),
+          text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: "#00B900",
-          unit: "",
+          color: '#00B900',
+          unit: '',
         },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
@@ -222,8 +224,8 @@ export default {
         TotalLPT: 0,
         Share: 0,
       },
-      DepositeNum: "",
-      WithdrawNum: "",
+      DepositeNum: '',
+      WithdrawNum: '',
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
@@ -231,49 +233,49 @@ export default {
       helmetapy: 0,
       cakeapy: 0,
       isLogin: false,
-    };
+    }
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_HELMETBNB", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
-    this.$bus.$on("CLAIM_LOADING_HELMETBNB", (data) => {
-      this.claimLoading = false;
-    });
-    this.$bus.$on("EXIT_LOADING_HELMETBNB", (data) => {
-      this.exitLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_HELMETBNB", () => {
-      this.getBalance();
-    });
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
+    this.$bus.$on('DEPOSITE_LOADING_HELMETBNB', (data) => {
+      this.stakeLoading = data.status
+      this.DepositeNum = ''
+    })
+    this.$bus.$on('CLAIM_LOADING_HELMETBNB', (data) => {
+      this.claimLoading = false
+    })
+    this.$bus.$on('EXIT_LOADING_HELMETBNB', (data) => {
+      this.exitLoading = false
+    })
+    this.$bus.$on('RELOAD_DATA_HELMETBNB', () => {
+      this.getBalance()
+    })
+    this.$bus.$on('REFRESH_MINING', (data) => {
+      this.getBalance()
+    })
     setTimeout(() => {
-      this.getBalance();
-      this.getAPY();
-    }, 1000);
+      this.getBalance()
+      this.getAPY()
+    }, 1000)
     setInterval(() => {
       setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
+        this.getAPY()
+      })
+    }, 20000)
   },
   watch: {
     indexArray: {
-      handler: "WatchIndexArray",
+      handler: 'WatchIndexArray',
       immediate: true,
     },
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
     helmetapy(newValue, value) {
       if (newValue) {
         this.textList[1].num =
           precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
-          "%";
+          '%'
       }
     },
     cakeapy(newValue, value) {
@@ -282,44 +284,44 @@ export default {
           precision.plus(
             fixD(this.helmetapy * 100, 2),
             fixD(newValue * 100, 2)
-          ) + "%";
+          ) + '%'
       }
     },
   },
   computed: {
     indexArray() {
-      return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
+      return this.$store.state.allIndexPrice
+      this.textList[1].num = this.apy + '%'
     },
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.data.isLogin
       }
     },
     WatchIndexArray(newValue, value) {
       if (newValue) {
-        this.getAPY();
+        this.getAPY()
       }
     },
     async getAPY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
+      this.helmetPrice = this.indexArray[1]['HELMET']
+      let cakePrice = this.$store.state.CAKE_BUSD
+      let bnbPrice = this.$store.state.BNB_BUSD
       // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let totalHelmet = await totalSupply('HELMETBNB_LPT')
+      let HelmetAllowance = await getAllHelmet('HELMET', 'FARM', 'HELMETBNB')
+      let helmetReward = await Rewards('HELMETBNB', '0')
       // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      let bnbValue = (await balanceOf('WBNB', 'HELMETBNB_LPT')) * 2
       // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
-      let dayHelmet = totalHelmet;
+      let cakeValue = await balanceOf('HELMETBNB_LPT', 'CAKEHELMET', true)
+      let miningTime = (await RewardsDuration('HELMETBNB')) / 86400
+      let dayHelmet = totalHelmet
       // (helmetPrice*(HelmetAllowance-helmetReward)*365)/(100*bnbValue)
       let helmetapy = precision.divide(
         precision.times(
@@ -328,7 +330,7 @@ export default {
           365
         ),
         precision.times(miningTime, bnbValue)
-      );
+      )
       let cakeapy = precision.divide(
         precision.times(cakePrice, 1480000),
         precision.times(
@@ -336,76 +338,76 @@ export default {
           cakeValue,
           bnbPrice
         )
-      );
+      )
 
-      this.helmetapy = helmetapy;
-      this.cakeapy = cakeapy;
+      this.helmetapy = helmetapy
+      this.cakeapy = cakeapy
       this.textList[1].num =
-        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
+        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + '%'
     },
     async getBalance() {
-      let helmetType = "HELMETBNB_LPT";
-      let type = "HELMETBNB";
+      let helmetType = 'HELMETBNB_LPT'
+      let type = 'HELMETBNB'
       // 可抵押数量
-      let Deposite = await getBalance(helmetType);
+      let Deposite = await getBalance(helmetType)
       // 可赎回数量
-      let Withdraw = await getLPTOKEN(type);
+      let Withdraw = await getLPTOKEN(type)
       // 总抵押
-      let TotalLPT = await totalSupply(type);
+      let TotalLPT = await totalSupply(type)
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type)
       //  可领取Cake
-      let Cake = await CangetUNI(type);
+      let Cake = await CangetUNI(type)
       // 总Helmet
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      let HelmetAllowance = await getAllHelmet('HELMET', 'FARM', 'HELMETBNB')
+      let helmetReward = await Rewards('HELMETBNB', '0')
+      this.balance.Deposite = fixD(Deposite, 4)
+      this.balance.Withdraw = fixD(Withdraw, 4)
+      this.balance.Helmet = fixD(Helmet, 8)
+      this.balance.Cake = fixD(Cake, 8)
+      this.balance.TotalLPT = fixD(TotalLPT, 4)
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2)
       this.textList[0].num =
         fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
-        " HELMET";
+        ' HELMET'
       // this.textList[3].num = addCommom(Deposite, 4)
       // this.textList[4].num = addCommom(Helmet, 4)
     },
     // 抵押
     toDeposite() {
       if (!this.DepositeNum) {
-        return;
+        return
       }
       if (this.stakeLoading) {
-        return;
+        return
       }
-      this.stakeLoading = true;
-      let type = "HELMETBNB";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      this.stakeLoading = true
+      let type = 'HELMETBNB'
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {})
     },
     // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
-        return;
+        return
       }
-      this.claimLoading = true;
-      let type = "HELMETBNB";
-      let res = await getDoubleReward(type);
+      this.claimLoading = true
+      let type = 'HELMETBNB'
+      let res = await getDoubleReward(type)
     },
     // 退出
     async toExit() {
       if (this.exitLoading) {
-        return;
+        return
       }
-      this.exitLoading = true;
-      let type = "HELMETBNB";
-      let res = await exitStake(type);
+      this.exitLoading = true
+      let type = 'HELMETBNB'
+      let res = await exitStake(type)
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .icon {
   width: 24px;
   height: 24px;
@@ -433,7 +435,7 @@ export default {
   display: block;
   width: 24px;
   height: 24px;
-  background-image: url("../../assets/img/helmet/loading.png");
+  background-image: url('../../assets/img/helmet/loading.png');
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
@@ -519,7 +521,7 @@ export default {
               display: block;
               width: 20px;
               height: 20px;
-              background-image: url("../../assets/img/icon/pancake@2x.png");
+              background-image: url('../../assets/img/icon/pancake@2x.png');
               background-repeat: no-repeat;
               background-size: 100% 100%;
               margin: 0 2px;
@@ -734,7 +736,7 @@ export default {
                 display: block;
                 width: 20px;
                 height: 20px;
-                background-image: url("../../assets/img/icon/pancake@2x.png");
+                background-image: url('../../assets/img/icon/pancake@2x.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
                 margin: 0 2px;

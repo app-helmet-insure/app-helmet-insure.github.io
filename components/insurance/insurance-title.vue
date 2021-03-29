@@ -1,19 +1,35 @@
 .<template>
   <div class="insurance_title">
     <div class="strikePrice">
-      <span>{{ $t('Content.InsurancePrice') }}</span>
+      <span>{{ $t("Content.InsurancePrice") }}</span>
       <span>
         {{ activeInsurance }}:
-        {{ putStrikePrice[activeInsurance] }}
-        {{ putStrikeUnit[activeInsurance] }}</span
+        {{
+          activeType == "CALL"
+            ? callStrikePrice[activeInsurance]
+            : putStrikePrice[activeInsurance]
+        }}
+        {{
+          activeType == "CALL"
+            ? callStrikeUnit[activeInsurance]
+            : putStrikeUnit[activeInsurance]
+        }}</span
       >
     </div>
     <div class="echartPrice"></div>
     <div class="myBalance">
-      <span>{{$('Content.UsableBalance')}}</span>
+      <span>{{ $t("Content.UsableBalance") }}</span>
       <p>
-        <span>{{ BalanceArray['BNB'] }} BNB</span>
-        <span>{{ BalanceArray[activeInsurance] }} {{ activeInsurance }}</span>
+        <span>
+          <img src="~/assets/img/insurancelist/bnbCoin.png" alt="" />
+          <i>{{ BalanceArray["BNB"] ? BalanceArray["BNB"] : 0 }} BNB</i>
+        </span>
+        <span>
+          <img src="~/assets/img/insurancelist/helmetCoin.png" alt="" />
+          <i
+            >{{ BalanceArray["HELMET"] ? BalanceArray["HELMET"] : 0 }} HELMET</i
+          ></span
+        >
       </p>
     </div>
   </div>
@@ -21,23 +37,29 @@
 
 <script>
 export default {
-  props: ['activeInsurance'],
+  props: ["activeInsurance", "activeType"],
   data() {
-    return {}
+    return {};
   },
   computed: {
     putStrikePrice() {
-      return this.$store.state.strikePriceArray[1]
+      return this.$store.state.strikePriceArray[1];
     },
     putStrikeUnit() {
-      return this.$store.state.policyColArray[1]
+      return this.$store.state.policyColArray[1];
+    },
+    callStrikePrice() {
+      return this.$store.state.strikePriceArray[0];
+    },
+    callStrikeUnit() {
+      return this.$store.state.policyUndArray[0];
     },
     BalanceArray() {
-      return this.$store.state.BalanceArray
+      return this.$store.state.BalanceArray;
     },
   },
   mounted() {},
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -86,12 +108,26 @@ export default {
       }
       p {
         margin-top: 13px;
+        display: flex;
+        align-items: center;
         span {
-          font-size: 16px;
-          font-family: Helvetica;
-          color: #17173a;
-          line-height: 16px;
-          font-weight: 600;
+          display: flex;
+          align-items: center;
+          &:nth-of-type(1) {
+            margin-right: 20px;
+          }
+          img {
+            width: 18px;
+            height: 18px;
+            margin-right: 4px;
+          }
+          i {
+            font-size: 16px;
+            font-family: Helvetica;
+            color: #17173a;
+            line-height: 16px;
+            font-weight: 600;
+          }
         }
       }
     }

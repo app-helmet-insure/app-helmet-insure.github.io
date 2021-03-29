@@ -7,7 +7,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-insurance"></use>
           </svg>
-          {{ $t('Table.safe') }}
+          {{ $t("Table.safe") }}
           <svg class="icon svg-icon right" aria-hidden="true">
             <use xlink:href="#icon-right1"></use>
           </svg>
@@ -16,9 +16,9 @@
           class="child_menu"
           v-if="
             routeObj.name == 'index' ||
-              routeObj.name == 'myPolicy' ||
-              routeObj.name == 'mySupply' ||
-              routeObj.name == 'myClaim'
+            routeObj.name == 'myPolicy' ||
+            routeObj.name == 'mySupply' ||
+            routeObj.name == 'myClaim'
           "
         >
           <li class="child_menu_item">
@@ -26,7 +26,7 @@
               to="/myPolicy"
               :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
             >
-              {{ $t('Type.MyGuarantee') }}
+              {{ $t("Type.MyGuarantee") }}
             </nuxt-link>
           </li>
           <li class="child_menu_item">
@@ -34,7 +34,7 @@
               to="/mySupply"
               :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
             >
-              {{ $t('Type.IssueInsurance') }}
+              {{ $t("Type.IssueInsurance") }}
             </nuxt-link>
           </li>
           <li class="child_menu_item">
@@ -42,7 +42,7 @@
               to="/myClaim"
               :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
             >
-              {{ $t('Type.Claim') }}
+              {{ $t("Type.Claim") }}
             </nuxt-link>
           </li>
         </ul>
@@ -55,7 +55,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-mining1"></use>
           </svg>
-          {{ $t('Header.Mining') }}
+          {{ $t("Header.Mining") }}
         </nuxt-link>
       </li>
       <li class="menu_item">
@@ -66,7 +66,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-flashmining"></use>
           </svg>
-          {{ $t('Header.FlashMining') }}
+          {{ $t("Header.FlashMining") }}
         </nuxt-link>
       </li>
       <li class="menu_item">
@@ -77,7 +77,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-burnbox"></use>
           </svg>
-          {{ $t('Table.BurnMining') }}
+          {{ $t("Table.BurnMining") }}
         </nuxt-link>
       </li>
       <li class="menu_item">
@@ -85,7 +85,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-iio"></use>
           </svg>
-          {{ $t('Header.IIO') }}
+          {{ $t("Header.IIO") }}
         </nuxt-link>
       </li>
       <li class="menu_item">
@@ -93,7 +93,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-papar"></use>
           </svg>
-          {{ $t('Header.GuideBook') }}
+          {{ $t("Header.GuideBook") }}
         </a>
       </li>
       <li class="menu_item">
@@ -101,7 +101,7 @@
           <svg class="icon svg-icon" aria-hidden="true">
             <use xlink:href="#icon-medium"></use>
           </svg>
-          {{ $t('Header.Medium') }}</a
+          {{ $t("Header.Medium") }}</a
         >
       </li>
     </ul>
@@ -141,17 +141,17 @@
 </template>
 
 <script>
-import Langauage from '~/components/common/langauage.vue'
+import Langauage from "~/components/common/langauage.vue";
 export default {
   components: { Langauage },
 
   computed: {
     routeObj() {
-      console.log(this.$route)
-      return this.$route
+      console.log(this.$route);
+      return this.$route;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -163,7 +163,7 @@ export default {
   .slider {
     width: 260px;
     height: calc(100vh - 50px);
-    background-image: url('../../assets/img/slider/slider_logo_bg.png');
+    background-image: url("../../assets/img/slider/slider_logo_bg.png");
     background-repeat: no-repeat;
     background-size: 100% 135px;
     padding: 30px 20px 0;
@@ -174,7 +174,7 @@ export default {
     display: block;
     width: 150px;
     height: 40px;
-    background-image: url('../../assets/img/slider/slider_logo.png');
+    background-image: url("../../assets/img/slider/slider_logo.png");
     background-repeat: no-repeat;
     background-size: 150px 40px;
   }
@@ -222,10 +222,10 @@ export default {
           display: flex;
           align-items: center;
           > a {
+            padding-left: 40px;
             width: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
             font-size: 14px;
             font-family: HelveticaNeue;
             color: rgba(23, 23, 58, 0.8);

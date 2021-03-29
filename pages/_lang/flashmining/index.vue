@@ -1,49 +1,18 @@
 <template>
   <div class="main_container">
-    <div class="flash_text">
-      <h3>{{ $t("Tip.FlashTip1") }}</h3>
-      <p>{{ $t("Tip.FlashTip2") }}</p>
-    </div>
-    <div class="flashmining_container">
-      <FlashMiningList></FlashMiningList>
-      <!-- <div class="pool_wrap">
-        <HdodoPool></HdodoPool>
-        <HmathPool></HmathPool>
-      </div>
-      <div class="pool_wrap">
-        <HautoPool></HautoPool>
-        <Bnb500Pool></Bnb500Pool>
-      </div>
-      <div class="pool_wrap">
-        <HctkPool></HctkPool>
-        <HcctPool></HcctPool>
-      </div> -->
-      <Onepager></Onepager>
-    </div>
+    <FlashMiningTitle></FlashMiningTitle>
+    <FlashMiningList></FlashMiningList>
+    <Onepager></Onepager>
   </div>
 </template>
 
 <script>
 import FlashMiningList from "~/components/flashmining/flashmining_list.vue";
-import HcctPool from "~/components/flashmining/hcct_pool.vue";
-import HctkPool from "~/components/flashmining/hctk_pool.vue";
-import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
-import HautoPool from "~/components/flashmining/hauto_pool.vue";
-import HmathPool from "~/components/flashmining/hmath_pool.vue";
-import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
+import FlashMiningTitle from "~/components/flashmining/flashmining_title.vue";
 import Onepager from "~/components/mining/onepager.vue";
 export default {
   layout: "default",
-  components: {
-    FlashMiningList,
-    HcctPool,
-    HctkPool,
-    Onepager,
-    Bnb500Pool,
-    HautoPool,
-    HmathPool,
-    HdodoPool,
-  },
+  components: { FlashMiningTitle, FlashMiningList, Onepager },
   data() {
     return {
       showDeposite: false,
@@ -84,10 +53,8 @@ export default {
 
 @media screen and (min-width: 750px) {
   .main_container {
-    > .flashmining_container {
-      width: 1200px;
-      margin: 20px auto 0;
-    }
+    width: 1200px;
+    margin: 0 auto 30px;
   }
   .flash_text {
     text-align: center;

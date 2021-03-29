@@ -1,8 +1,7 @@
 <template>
   <div class="burn_list">
     <div class="burn_title">
-      <h3>{{ $t('Table.BurnMining') }}</h3>
-      <span>···</span>
+      <h3>{{ $t("Table.BurnMining") }}</h3>
     </div>
     <div class="burn_item" v-for="item in burnList" :key="item.earn">
       <div
@@ -27,7 +26,7 @@
         </section>
         <section>
           <p>
-            {{ $t('Table.EarnList') }} <span>{{ item.earn }} </span>
+            {{ $t("Table.EarnList") }} <span>{{ item.earn }} </span>
           </p>
         </section>
         <section>
@@ -35,17 +34,17 @@
           <p>
             <span v-if="typeof item.dueDate == 'object'">
               {{ item.dueDate.day }}<b>d</b> <i>/</i>{{ item.dueDate.hour
-              }}<b>{{ $t('Content.HourM') }}</b>
+              }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
               {{ item.dueDate }}
             </span>
-            <span>{{ $t('Table.MIningCutdown') }}</span>
+            <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </section>
         <section>
-          <span>{{ item.bonus + ' ' + item.earn }}</span>
-          <span>{{ $t('Table.Bonus') }}</span>
+          <span>{{ item.bonus + " " + item.earn }}</span>
+          <span>{{ $t("Table.Bonus") }}</span>
         </section>
         <section>
           <button
@@ -56,7 +55,7 @@
                 : 'stakeFlash'
             "
           >
-            {{ $t('Table.Burn') }}
+            {{ $t("Table.Burn") }}
             <i class="selectDown"></i>
           </button>
           <button
@@ -67,7 +66,7 @@
                 : 'claimFlash'
             "
           >
-            {{ $t('Table.ReceiveAward') }}
+            {{ $t("Table.ReceiveAward") }}
             <i class="selectDown"></i>
           </button>
         </section>
@@ -90,8 +89,8 @@
 </template>
 
 <script>
-import HCCTBURN from '~/components/burnbox/hcct_burn.vue'
-import HCTKBURN from '~/components/burnbox/hctk_burn.vue'
+import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
+import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 export default {
   components: {
     HCCTBURN,
@@ -101,75 +100,75 @@ export default {
     return {
       burnList: [],
       showActiveBurn: false,
-      activeBurn: '',
-      activeType: '',
-    }
+      activeBurn: "",
+      activeType: "",
+    };
   },
   mounted() {
-    this.initBurnBox()
+    this.initBurnBox();
   },
   methods: {
     StakeMining(MiningType) {
-      console.log(MiningType)
-      this.activeType = 'STAKE'
-      this.showActiveBurn = true
-      this.activeBurn = MiningType
+      console.log(MiningType);
+      this.activeType = "STAKE";
+      this.showActiveBurn = true;
+      this.activeBurn = MiningType;
     },
     ClaimMining(MiningType) {
-      this.activeType = 'CLAIM'
-      this.showActiveBurn = true
-      this.activeBurn = MiningType
+      this.activeType = "CLAIM";
+      this.showActiveBurn = true;
+      this.activeBurn = MiningType;
     },
     initBurnBox() {
       let arr = [
         {
-          burnName: 'hCTK Burning Box',
-          earn: 'hDODO',
+          burnName: "hCTK Burning Box",
+          earn: "hDODO",
           bonus: 10000,
-          dueDate: this.getRemainTime('2021/03/23 00:00'),
-          icon: 'hCTK',
+          dueDate: this.getRemainTime("2021/03/23 00:00"),
+          icon: "hCTK",
         },
         {
-          burnName: 'HCCT Burning Box',
-          earn: 'HCCTII',
+          burnName: "HCCT Burning Box",
+          earn: "HCCTII",
           bonus: 100000,
-          dueDate: this.getRemainTime('2021/03/19 00:00'),
-          icon: 'HCCT',
+          dueDate: this.getRemainTime("2021/03/19 00:00"),
+          icon: "HCCT",
         },
-      ]
-      this.burnList = arr
+      ];
+      this.burnList = arr;
     },
     getRemainTime(time) {
-      let now = new Date() * 1
-      let dueDate = time
-      dueDate = new Date(dueDate)
-      let DonwTime = dueDate - now
-      let day = Math.floor(DonwTime / (24 * 3600000))
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      )
+      );
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      )
-      let template
+      );
+      let template;
 
       if (dueDate > now) {
         template = {
-          day: day > 9 ? day : '0' + day,
-          hour: hour > 9 ? hour : '0' + hour,
-        }
-        return template
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
+        return template;
       } else {
         template = {
-          day: '00',
-          hour: '00',
-        }
-        return 'Expired'
+          day: "00",
+          hour: "00",
+        };
+        return "Expired";
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -231,7 +230,7 @@ export default {
               display: block;
               width: 20px;
               height: 20px;
-              background-image: url('../../assets/img/helmet/info.png');
+              background-image: url("../../assets/img/helmet/info.png");
               background-repeat: no-repeat;
               background-size: 100% 100%;
               left: 42px;
@@ -274,7 +273,7 @@ export default {
             display: block;
             width: 30px;
             height: 30px;
-            background-image: url('../../assets/img/insurancelist/insuranceTime.png');
+            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin-right: 8px;
@@ -372,7 +371,7 @@ export default {
               width: 16px;
               height: 16px;
               background-repeat: no-repeat;
-              background-image: url('../../assets/img/insurancelist/select_down.png');
+              background-image: url("../../assets/img/insurancelist/select_down.png");
               background-size: 100%;
             }
           }

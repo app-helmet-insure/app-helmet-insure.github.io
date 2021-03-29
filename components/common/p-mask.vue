@@ -39,7 +39,9 @@
     >
     <div v-else class="address-wrap">
       <div v-if="ChainID != 56" class="wrong">
-        <img src="~/assets/img/helmet/wrongnetwork.png" alt="" />
+        <svg class="wrongnetwork" aria-hidden="true">
+          <use xlink:href="#icon-wrongnetwork"></use>
+        </svg>
         <span>{{ $t("Header.ConnectWrong") }}</span>
       </div>
       <template v-else>
@@ -301,30 +303,6 @@ export default {
       }
       span {
         position: relative;
-      }
-      .fire {
-        display: block;
-        width: 21px;
-        height: 26px;
-        background-image: url("../../assets/img/helmet/fire.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        position: absolute;
-        right: 0;
-        top: -100%;
-        transform: translateX(90%);
-      }
-      .new {
-        display: block;
-        width: 18px;
-        height: 18px;
-        background-image: url("../../assets/img/helmet/new.png");
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        position: absolute;
-        right: 0;
-        top: -90%;
-        transform: translateX(90%);
       }
     }
   }

@@ -421,6 +421,7 @@ export default {
 
             i {
               position: relative;
+              margin-left: 6px;
               border-right: 5px solid transparent;
               border-top: 6px solid rgba(23, 23, 58, 0.6);
               border-left: 5px solid transparent;

@@ -16,7 +16,7 @@ export default {};
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
   .flashmining_title {
-    width: 100%;
+    width: 100%;    min-width: 1200px;
     height: 140px;
     background: #b948ea;
     border-radius: 5px;

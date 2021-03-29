@@ -158,7 +158,6 @@ export default {
 
   computed: {
     routeObj() {
-      console.log(this.$route);
       return this.$route;
     },
   },
@@ -180,6 +179,7 @@ export default {
     padding: 30px 20px 0;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
   }
   .logo {
     display: block;

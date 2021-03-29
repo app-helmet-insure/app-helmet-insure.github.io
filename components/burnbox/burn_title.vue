@@ -17,6 +17,7 @@ export default {};
 @media screen and (min-width: 750px) {
   .burn_title {
     width: 100%;
+    min-width: 1200px;
     height: 140px;
     background: #ff5600;
     border-radius: 5px;

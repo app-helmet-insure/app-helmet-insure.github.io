@@ -553,11 +553,15 @@ export default {
         overflow-y: scroll;
         flex: 1;
         height: calc(100vh - 50px);
-        padding: 0 8%;
         background: #f8f9fa;
         min-width: 1200px;
       }
     }
+  }
+}
+@media screen and(min-width:1560px) {
+  .content_wrap {
+    padding: 0 8%;
   }
 }
 @media screen and (max-width: 750px) {

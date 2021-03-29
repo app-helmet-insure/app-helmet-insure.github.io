@@ -109,6 +109,7 @@ export default {
     background: #ffffff;
     border-radius: 10px;
     overflow: hidden;
+    min-width: 1200px;
     .swiper-wrapper {
       height: 100%;
     }

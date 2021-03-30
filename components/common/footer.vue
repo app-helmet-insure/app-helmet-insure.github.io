@@ -155,13 +155,16 @@ export default {
   width: 24px;
   height: 24px;
   vertical-align: -0.15em;
-  fill: rgba(23, 23, 58, 0.7);
+  fill: rgba(23, 23, 58, 0.7) !important;
   overflow: hidden;
+  &:hover {
+    fill: #17173a !important;
+  }
 }
 .footer_top {
   a:hover {
     .icon {
-      fill: #17173a;
+      fill: #17173a !important;
     }
     span {
       color: #fd7e14 !important;

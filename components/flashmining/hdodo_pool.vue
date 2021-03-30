@@ -560,8 +560,11 @@ export default {
   width: 24px;
   height: 24px;
   vertical-align: -0.15em;
-  fill: #787878;
+  fill: rgba(23, 23, 58, 0.7) !important;
   overflow: hidden;
+  &:hover {
+    fill: #17173a !important;
+  }
 }
 .b_button {
   width: 100%;

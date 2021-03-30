@@ -9,38 +9,40 @@
       <span>{{ $t("Table.BaseAssets") }}</span>
       <span></span>
     </div>
-    <div class="claim_item" v-for="(item, index) in showList" :key="index">
-      <section>
-        <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-          {{ item.TypeCoin }}
-          <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
-        </span>
-      </section>
-      <section>
-        <span v-if="item.type == 'call'">
-          {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-          {{ item._collateral }}
-        </span>
-        <span v-else>
-          {{ fixD(item.und, 8) }}
-          {{ item._underlying }}
-        </span>
-      </section>
-      <section>
-        <span v-if="item.type == 'call'">
-          {{ fixD(item.und, 8) }}
-          {{ item._underlying }}
-        </span>
-        <span v-else>
-          {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
-          {{ item._collateral }}
-        </span>
-      </section>
-      <section>
-        <button @click="toClaim(item)">{{ $t("Table.GetBack") }}</button>
-      </section>
-    </div>
-    <div class="loading" v-if="isLoading">
+    <template v-if="isLogin">
+      <div class="claim_item" v-for="(item, index) in showList" :key="index">
+        <section>
+          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.TypeCoin }}
+            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+          </span>
+        </section>
+        <section>
+          <span v-if="item.type == 'call'">
+            {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+            {{ item._collateral }}
+          </span>
+          <span v-else>
+            {{ fixD(item.und, 8) }}
+            {{ item._underlying }}
+          </span>
+        </section>
+        <section>
+          <span v-if="item.type == 'call'">
+            {{ fixD(item.und, 8) }}
+            {{ item._underlying }}
+          </span>
+          <span v-else>
+            {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+            {{ item._collateral }}
+          </span>
+        </section>
+        <section>
+          <button @click="toClaim(item)">{{ $t("Table.GetBack") }}</button>
+        </section>
+      </div>
+    </template>
+    <div class="loading" v-if="isLoading && isLogin">
       <img src="~/assets/img/loading.png" />
       <div class="shadow"></div>
       <p>{{ $t("Table.LoadingWallet") }}</p>

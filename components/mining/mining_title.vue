@@ -17,7 +17,7 @@ export default {};
 @media screen and (min-width: 750px) {
   .mining_title {
     width: 100%;
-    min-width: 1200px;
+    min-width: 1026px;
     height: 140px;
     background: #fe9f00;
     border-radius: 5px;

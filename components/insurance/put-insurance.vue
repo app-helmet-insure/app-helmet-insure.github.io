@@ -4,7 +4,7 @@
       :activeInsurance="activeInsurance"
       :activeType="'PUT'"
     ></InsuranceTitle>
-    <div class="insurance_list">
+    <div class="insurance_list" v-if="isLogin">
       <table>
         <thead>
           <tr>
@@ -58,7 +58,7 @@
             </td>
           </tr>
         </tbody>
-        <div class="loading" v-if="isLoading">
+        <div class="loading" v-if="isLoading && isLogin">
           <img src="~/assets/img/loading.png" />
           <div class="shadow"></div>
           <p>{{ $t("Table.LoadingWallet") }}</p>
@@ -146,13 +146,15 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-    console.log(11111111111);
-  },
   methods: {
     userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+      let isLogin = newValue.data.isLogin;
+      this.isLogin = isLogin;
+      if (isLogin) {
+        this.isLoading = true;
+        this.setList(this.aboutInfoSell);
+      } else {
+        this.isLoading = false;
       }
     },
     aboutInfoSellWatch(newValue) {

@@ -21,7 +21,7 @@
         </section>
         <section>
           <p>
-            {{ $t('Table.EarnList') }}
+            {{ $t("Table.EarnList") }}
             <span
               >{{ item.earn }}
               <i
@@ -206,7 +206,7 @@ export default {
           miningName: "hDODO Pool",
           desc: "By hMATH-Helmet LPT",
           earn: "hDODO",
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
+          dueDate: this.getRemainTime("2021/03/31 12:00"),
           weekly: fixD((40000 / 15) * 7, 2) + " hDODO",
           yearEarn: apyArray["hDODO"] || "--",
         },
@@ -699,7 +699,7 @@ export default {
               border-top: 6px solid rgba(23, 23, 58, 0.6);
               border-left: 5px solid transparent;
               &::after {
-                content: '';
+                content: "";
                 position: absolute;
                 top: -6px;
                 left: -3px;

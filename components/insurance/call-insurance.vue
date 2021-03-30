@@ -4,7 +4,7 @@
       :activeInsurance="activeInsurance"
       :activeType="'CALL'"
     ></InsuranceTitle>
-    <div class="insurance_list">
+    <div class="insurance_list" v-if="isLogin">
       <table>
         <thead>
           <tr>
@@ -57,7 +57,7 @@
             </td>
           </tr>
         </tbody>
-        <div class="loading" v-if="isLoading">
+        <div class="loading" v-if="isLoading && isLogin">
           <img src="~/assets/img/loading.png" />
           <div class="shadow"></div>
           <p>{{ $t("Table.LoadingWallet") }}</p>
@@ -145,23 +145,26 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-    console.log(222222222);
-  },
+
   methods: {
     userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+      let isLogin = newValue.data.isLogin;
+      this.isLogin = isLogin;
+      if (isLogin) {
+        this.isLoading = true;
+        this.setList(this.aboutInfoSell);
+      } else {
+        this.isLoading = false;
       }
     },
     aboutInfoSellWatch(newValue) {
       if (newValue) {
         this.page = 0;
         this.limit = 10;
-        this.setList(newValue, this.currentCoin, this.currentType);
+        this.setList(newValue);
       }
     },
-    async setList(sell, coin, type) {
+    async setList(sell) {
       this.isLoading = true;
       let item, resultItem;
       let resultList = [];

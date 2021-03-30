@@ -363,7 +363,7 @@ export default {
     // 获取余额
     async getBalance() {
       let BalanceArray = {};
-      let coinList = this.$store.state.coinList;
+      let coinList = this.$store.state.balanceCoin;
       for (let i = 0; i < coinList.length; i++) {
         let balance = await getBalance(coinList[i]);
         let key = coinList[i];
@@ -491,7 +491,7 @@ export default {
   .layout-container {
     > p {
       width: 100%;
-      min-width: 1200px;
+      min-width: 1026px;
       height: 50px;
       background: #ffffff;
       text-align: center;
@@ -554,14 +554,20 @@ export default {
         flex: 1;
         height: calc(100vh - 50px);
         background: #f8f9fa;
-        min-width: 1200px;
+        min-width: 1026px;
+        // padding: 0 12%;
       }
     }
   }
 }
-@media screen and(min-width:1560px) {
+@media screen and(min-width:1386px) {
   .content_wrap {
-    padding: 0 8%;
+    padding: 0 12%;
+  }
+}
+@media screen and(max-width:1386px) {
+  .content_wrap {
+    padding: 0 40px;
   }
 }
 @media screen and (max-width: 750px) {

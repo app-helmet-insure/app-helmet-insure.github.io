@@ -109,7 +109,7 @@ export default {
     background: #ffffff;
     border-radius: 10px;
     overflow: hidden;
-    min-width: 1200px;
+    min-width: 1026px;
     .swiper-wrapper {
       height: 100%;
     }
@@ -119,7 +119,7 @@ export default {
       height: 180px;
       > div {
         margin: 0 auto;
-        width: 1200px;
+        width: 1026px;
         height: 100%;
         background-repeat: no-repeat;
         background-size: 1026px 180px;

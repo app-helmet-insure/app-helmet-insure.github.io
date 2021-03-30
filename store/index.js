@@ -271,7 +271,17 @@ export const state = () => ({
             MATH: 0,
         },
     ],
-
+    balanceCoin: [
+        'HELMET',
+        'ETH',
+        'BTCB',
+        'CAKE',
+        'CTK',
+        'BURGER',
+        'WBNB',
+        'MATH',
+        'BUSD',
+    ],
     BalanceArray: {
         HELMET: 0,
         BNB: 0,
@@ -282,6 +292,7 @@ export const state = () => ({
         CKT: 0,
         BURGER: 0,
         MATH: 0,
+        BUSD: 0,
     },
     transferMap: [],
 });

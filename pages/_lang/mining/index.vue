@@ -72,8 +72,10 @@ export default {
 
 @media screen and (min-width: 750px) {
   .main_container {
+    width: 100%;
     .mining_container {
-      width: 1200px;
+      width: 100%;
+      min-width: 1026px;
       margin: 0 auto 30px;
     }
   }

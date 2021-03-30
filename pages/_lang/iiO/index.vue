@@ -69,12 +69,13 @@ export default {};
 
     > .banner {
       width: 100%;
+      min-width: 1026px;
       height: 380px;
       background-image: url("../../../assets/img/iio/banner_bg.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       .banner_center {
-        width: 1200px;
+        width: 1026px;
         height: 380px;
         margin: 0 auto;
         background-image: url("../../../assets/img/iio/banner_center.png");

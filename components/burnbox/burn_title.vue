@@ -17,14 +17,14 @@ export default {};
 @media screen and (min-width: 750px) {
   .burn_title {
     width: 100%;
-    min-width: 1200px;
+    min-width: 1026px;
     height: 140px;
     background: #ff5600;
     border-radius: 5px;
     margin-bottom: 20px;
     &_wrap {
       margin: 0 auto;
-      width: 1200px;
+      width: 100%;
       height: 100%;
       background-image: url("../../assets/img/burnmining/burnbox_titlebg.png");
       background-repeat: no-repeat;

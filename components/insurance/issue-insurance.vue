@@ -142,8 +142,8 @@ export default {
     return {
       dprList: [
         { num: 0.14, warn: false, show: "0.14%" },
-        { num: 0.28, warn: true, show: "0.28%" },
-        { num: 0.56, warn: false, show: "0.56%" },
+        { num: 0.28, warn: false, show: "0.28%" },
+        { num: 0.56, warn: true, show: "0.56%" },
       ],
       precision,
       callDpr: 0.14,

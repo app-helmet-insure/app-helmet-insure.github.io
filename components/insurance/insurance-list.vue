@@ -40,7 +40,7 @@
               <i class="insureTime"></i>
               <p>
                 <span>{{ item.InsuranceDate }}</span>
-                <span>{{ item.InsuranceDay }}天</span>
+                <span>{{ item.InsuranceDay }}{{ $t("Content.Day") }}</span>
               </p>
             </div>
           </section>

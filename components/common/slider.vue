@@ -27,7 +27,7 @@
             "
             aria-hidden="true"
           >
-            <use xlink:href="#icon-right"></use>
+            <use xlink:href="#icon-rightSelect"></use>
           </svg>
         </a>
         <ul

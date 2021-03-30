@@ -193,6 +193,13 @@
       "font_class": "siderRight",
       "unicode": "e628",
       "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "20705469",
+      "name": "rightSelect",
+      "font_class": "rightSelect",
+      "unicode": "e629",
+      "unicode_decimal": 58921
     }
   ]
 }

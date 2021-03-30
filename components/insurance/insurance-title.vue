@@ -1,16 +1,16 @@
 .<template>
   <div class="insurance_title">
     <div class="strikePrice">
-      <span>{{ $t('Content.InsurancePrice') }}</span>
+      <span>{{ $t("Content.InsurancePrice") }}</span>
       <span>
         {{ activeInsurance }} :
         {{
-          activeType == 'CALL'
+          activeType == "CALL"
             ? callStrikePrice[activeInsurance]
             : putStrikePrice[activeInsurance]
         }}
         {{
-          activeType == 'CALL'
+          activeType == "CALL"
             ? callStrikeUnit[activeInsurance]
             : putStrikeUnit[activeInsurance]
         }}</span
@@ -21,36 +21,40 @@
         <!--  对应替换数据即可  -->
         <div class="progress_bar_left" style="width: 33.3%">
           <p style="right: 0">
-            {{ $t('Insurance.Insurance_text19') }}
+            {{ $t("Insurance.Insurance_text19") }}
             <span>{{ putStrikePrice[activeInsurance] }}</span>
           </p>
         </div>
         <div class="progress_bar_center" style="width: 33.3%">
           <i :style="`left: ${positionLeft}%`"></i>
           <p style="left: 50%">
-            {{ $t('Insurance.Insurance_text20') }}
-            <span>{{ toRounding(indexPrice[activeInsurance], 4) }}</span>
+            {{ $t("Insurance.Insurance_text20") }}
+            <span>{{
+              activeInsurance == "WBNB"
+                ? toRounding(indexPrice[activeInsurance] * BNB_BUSD, 4)
+                : toRounding(indexPrice[activeInsurance], 4)
+            }}</span>
           </p>
         </div>
         <div class="progress_bar_right" style="width: 33.3%">
           <p style="left: 0">
-            {{ $t('Insurance.Insurance_text21') }}
+            {{ $t("Insurance.Insurance_text21") }}
             <span>{{ callStrikePrice[activeInsurance] }}</span>
           </p>
         </div>
       </div>
     </div>
     <div class="myBalance">
-      <span>{{ $t('Content.UsableBalance') }}</span>
+      <span>{{ $t("Content.UsableBalance") }}</span>
       <p>
         <span>
           <img src="~/assets/img/insurancelist/bnbCoin.png" alt="" />
-          <i>{{ BalanceArray['BNB'] ? BalanceArray['BNB'] : 0 }} BNB</i>
+          <i>{{ BalanceArray["BNB"] ? BalanceArray["BNB"] : 0 }} BNB</i>
         </span>
         <span>
           <img src="~/assets/img/insurancelist/helmetCoin.png" alt="" />
           <i
-            >{{ BalanceArray['HELMET'] ? BalanceArray['HELMET'] : 0 }} HELMET</i
+            >{{ BalanceArray["HELMET"] ? BalanceArray["HELMET"] : 0 }} HELMET</i
           ></span
         >
       </p>
@@ -65,9 +69,9 @@ import {
   autoRounding,
   toRounding,
   fixDEAdd,
-} from '~/assets/js/util.js'
+} from "~/assets/js/util.js";
 export default {
-  props: ['activeInsurance', 'activeType'],
+  props: ["activeInsurance", "activeType"],
   data() {
     return {
       fixD,
@@ -76,43 +80,50 @@ export default {
       toRounding,
       fixDEAdd,
       positionLeft: 50,
-    }
+    };
   },
   computed: {
     putStrikePrice() {
-      return this.$store.state.strikePriceArray[1]
+      return this.$store.state.strikePriceArray[1];
     },
     putStrikeUnit() {
-      return this.$store.state.policyColArray[1]
+      return this.$store.state.policyColArray[1];
     },
     callStrikePrice() {
-      return this.$store.state.strikePriceArray[0]
+      return this.$store.state.strikePriceArray[0];
     },
     callStrikeUnit() {
-      return this.$store.state.policyUndArray[0]
+      return this.$store.state.policyUndArray[0];
     },
     indexPrice() {
-      return this.$store.state.allIndexPrice[1]
+      return this.$store.state.allIndexPrice[1];
     },
     BalanceArray() {
-      return this.$store.state.BalanceArray
+      return this.$store.state.BalanceArray;
+    },
+    BNB_BUSD() {
+      return this.$store.state.BNB_BUSD;
     },
   },
   mounted() {
     setTimeout(() => {
-      this.initEchart()
-    }, 1000)
+      this.initEchart();
+    }, 1000);
   },
   methods: {
     initEchart() {
-      let callPrice = this.callStrikePrice[this.activeInsurance]
-      let putPrice = this.putStrikePrice[this.activeInsurance]
-      let curPrice = this.indexPrice[this.activeInsurance]
-      let number = (curPrice - putPrice) / (callPrice - putPrice)
-      this.positionLeft = number * 100
+      let callPrice = this.callStrikePrice[this.activeInsurance];
+      let putPrice = this.putStrikePrice[this.activeInsurance];
+
+      let curPrice =
+        activeInsurance == "WBNB"
+          ? this.indexPrice[activeInsurance] * this.BNB_BUSD
+          : this.indexPrice[this.activeInsurance];
+      let number = (curPrice - putPrice) / (callPrice - putPrice);
+      this.positionLeft = number * 100;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -144,8 +155,8 @@ export default {
       }
     }
     .echartPrice {
-      width: 300px;
-      margin-left: 60px;
+      width: 450px;
+      margin-left: 40px;
       .bg_progress_bar {
         position: relative;
         width: 100%;
@@ -162,7 +173,7 @@ export default {
         border-radius: 3px 0 0 3px;
         background: linear-gradient(180deg, #f0657b 0%, #dc3545 100%);
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: -2px;
           right: 0;
@@ -198,7 +209,7 @@ export default {
         border-radius: 0 3px 3px 0;
         background: linear-gradient(180deg, #51d37b 0%, #28a745 100%);
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: -2px;
           left: 0;
@@ -254,7 +265,7 @@ export default {
           background: #f8f9fa;
           text-align: center;
           &:after {
-            content: '';
+            content: "";
             position: absolute;
             left: 50%;
             bottom: -4px;
@@ -274,7 +285,7 @@ export default {
       }
     }
     .myBalance {
-      margin-left: 60px;
+      margin-left: 40px;
       display: flex;
       flex-direction: column;
       > span {

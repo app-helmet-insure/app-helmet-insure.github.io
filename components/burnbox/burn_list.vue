@@ -93,10 +93,10 @@
           </button>
         </section>
       </div>
-      <div
-        class="flash_detail"
-        v-if="showActiveBurn && activeBurn == item.icon"
-      >
+      <div class="burn_detail" v-if="showActiveBurn && activeBurn == item.icon">
+        <svg class="close" aria-hidden="true" @click="showActiveBurn = false">
+          <use xlink:href="#icon-close"></use>
+        </svg>
         <HCTKBURN
           v-if="activeBurn == 'hCTK' && showActiveBurn"
           :activeType="activeType"
@@ -430,6 +430,18 @@ export default {
           }
         }
       }
+    }
+  }
+  .burn_detail {
+    position: relative;
+    .close {
+      position: absolute;
+      right: 20px;
+      width: 24px;
+      height: 24px;
+      top: 20px;
+      fill: #ccc;
+      cursor: pointer;
     }
   }
 }

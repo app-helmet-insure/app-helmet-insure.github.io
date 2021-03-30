@@ -47,7 +47,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;HELMET</span
           >
         </p>
         <p>
@@ -61,7 +61,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;HELMET</span
           >
         </p>
         <p>

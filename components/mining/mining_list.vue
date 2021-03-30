@@ -100,6 +100,9 @@
         class="mining_detail"
         v-if="showActiveMining && activeMining == item.earn"
       >
+        <svg class="close" aria-hidden="true" @click="showActiveMining = false">
+          <use xlink:href="#icon-close"></use>
+        </svg>
         <HelmetBnbPool
           v-if="activeMining == 'helmet_cake' && showActiveMining"
           :activeType="activeType"
@@ -666,6 +669,18 @@ export default {
           }
         }
       }
+    }
+  }
+  .mining_detail {
+    position: relative;
+    .close {
+      position: absolute;
+      right: 20px;
+      width: 24px;
+      height: 24px;
+      top: 20px;
+      fill: #ccc;
+      cursor: pointer;
     }
   }
 }

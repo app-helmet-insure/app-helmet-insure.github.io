@@ -174,7 +174,7 @@ export default {};
         align-items: center;
         font-size: 60px;
         font-weight: bold;
-        color: #ff9600;
+        color: #fd7e14;
         line-height: 74px;
         justify-content: center;
         display: flex;
@@ -182,7 +182,7 @@ export default {};
       }
       p {
         font-size: 20px;
-        color: #121212;
+        color: #17173a;
         line-height: 28px;
         margin-top: 16px;
       }
@@ -251,7 +251,7 @@ export default {};
         align-items: center;
         font-size: 30px;
         font-weight: bold;
-        color: #ff9600;
+        color: #fd7e14;
         line-height: 36px;
         justify-content: center;
         display: flex;
@@ -261,7 +261,7 @@ export default {};
         }
       }
       p {
-        color: #121212;
+        color: #17173a;
         font-size: 14px;
         line-height: 28px;
       }

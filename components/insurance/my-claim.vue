@@ -1,12 +1,12 @@
 <template>
   <div class="my_claim">
     <div class="claim_title">
-      <h3>{{ $t("Type.Claim") }}</h3>
+      <h3>{{ $t('Type.Claim') }}</h3>
     </div>
     <div class="claim_text" v-if="showList.length">
-      <span>{{ $t("Table.Type") }}</span>
-      <span>{{ $t("Table.DenAssets") }}</span>
-      <span>{{ $t("Table.BaseAssets") }}</span>
+      <span>{{ $t('Table.Type') }}</span>
+      <span>{{ $t('Table.DenAssets') }}</span>
+      <span>{{ $t('Table.BaseAssets') }}</span>
       <span></span>
     </div>
     <template v-if="isLogin">
@@ -45,7 +45,7 @@
     <div class="loading" v-if="isLoading && isLogin">
       <img src="~/assets/img/loading.png" />
       <div class="shadow"></div>
-      <p>{{ $t("Table.LoadingWallet") }}</p>
+      <p>{{ $t('Table.LoadingWallet') }}</p>
     </div>
     <section
       class="noData"
@@ -53,7 +53,7 @@
     >
       <div>
         <img src="~/assets/img/helmet/nodata.png" alt="" />
-        <p>{{ $t("Table.NoData") }}</p>
+        <p>{{ $t('Table.NoData') }}</p>
       </div>
     </section>
     <!-- <section class="pages" v-if="claimList.length > 10 && !isLogin">
@@ -68,18 +68,18 @@
 </template>
 
 <script>
-import "~/assets/svg/iconfont.js";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { getBalance } from "~/interface/order.js";
+import '~/assets/svg/iconfont.js'
+import precision from '~/assets/js/precision.js'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import { getBalance } from '~/interface/order.js'
 import {
   newGetSymbol,
   getWei,
   getTokenName,
-} from "~/assets/utils/address-pool.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
-import { settleable, burn, settle } from "~/interface/factory.js";
-import Page from "~/components/common/page.vue";
+} from '~/assets/utils/address-pool.js'
+import { toWei, fromWei } from '~/assets/utils/web3-fun.js'
+import { settleable, burn, settle } from '~/interface/factory.js'
+import Page from '~/components/common/page.vue'
 export default {
   components: {
     Page,
@@ -98,23 +98,23 @@ export default {
       limit: 10,
       isLoading: true,
       isLogin: false,
-    };
+    }
   },
   computed: {
     myAboutInfoSell() {
-      return this.$store.state.myAboutInfoSell;
+      return this.$store.state.myAboutInfoSell
     },
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   watch: {
     myAboutInfoSell: {
-      handler: "myAboutInfoSellWatch",
+      handler: 'myAboutInfoSellWatch',
       immediate: true,
     },
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
   },
@@ -122,23 +122,23 @@ export default {
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.data.isLogin
       }
     },
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
-        this.page = 0;
-        this.limit = 10;
-        this.setSettlementList(newValue);
+        this.page = 0
+        this.limit = 10
+        this.setSettlementList(newValue)
       }
     },
     // 倒计时
     async setSettlementList(list) {
-      this.isLoading = true;
-      this.showList = [];
-      const result = [];
-      let mapArray = [];
-      let obj = {};
+      this.isLoading = true
+      this.showList = []
+      const result = []
+      let mapArray = []
+      let obj = {}
       let item,
         longBalance,
         shortBalance,
@@ -147,28 +147,28 @@ export default {
         number,
         volume,
         id,
-        und;
+        und
       for (let i = 0; i < list.length; i++) {
-        item = list[i];
-        _collateral = getTokenName(item.longInfo._collateral, window.chainID);
-        longBalance = await getBalance(item.longInfo.long, _collateral);
-        _underlying = getTokenName(item.longInfo._underlying, window.chainID);
-        shortBalance = await getBalance(item.longInfo.short, _collateral);
-        let Token = _underlying == "WBNB" ? _underlying : _collateral;
-        if (_underlying == "WBNB") {
-          item.TypeCoin = _collateral;
-          item.type = "Call";
+        item = list[i]
+        _collateral = getTokenName(item.longInfo._collateral, window.chainID)
+        longBalance = await getBalance(item.longInfo.long, _collateral)
+        _underlying = getTokenName(item.longInfo._underlying, window.chainID)
+        shortBalance = await getBalance(item.longInfo.short, _collateral)
+        let Token = _underlying == 'WBNB' ? _underlying : _collateral
+        if (_underlying == 'WBNB') {
+          item.TypeCoin = _collateral
+          item.type = 'Call'
         } else {
-          item.TypeCoin = _underlying;
-          item.type = "Put";
+          item.TypeCoin = _underlying
+          item.type = 'Put'
         }
-        if (_underlying == "BUSD" && _collateral == "WBNB") {
-          item.TypeCoin = _collateral;
-          item.type = "Call";
+        if (_underlying == 'BUSD' && _collateral == 'WBNB') {
+          item.TypeCoin = _collateral
+          item.type = 'Call'
         }
-        if (_collateral == "BUSD" && _underlying == "WBNB") {
-          item.TypeCoin = _underlying;
-          item.type = "Put";
+        if (_collateral == 'BUSD' && _underlying == 'WBNB') {
+          item.TypeCoin = _underlying
+          item.type = 'Put'
         }
         if (Number(shortBalance) > 0 && Number(longBalance) > 0) {
           result.push({
@@ -186,15 +186,15 @@ export default {
                 : shortBalance,
             type: item.type,
             TypeCoin: item.TypeCoin,
-          });
+          })
         }
-        number = precision.minus(shortBalance, longBalance);
+        number = precision.minus(shortBalance, longBalance)
         if (Number(number) > 0) {
           try {
-            volume = toWei(number, _collateral);
-            const settle = await settleable(item.longInfo.short, volume);
+            volume = toWei(number, _collateral)
+            const settle = await settleable(item.longInfo.short, volume)
 
-            if (settle.col !== "0" || settle.und !== "0") {
+            if (settle.col !== '0' || settle.und !== '0') {
               result.push({
                 creator: item.seller,
                 _collateral,
@@ -208,41 +208,41 @@ export default {
                 longBalance: 0,
                 type: item.type,
                 TypeCoin: item.TypeCoin,
-              });
+              })
             }
           } catch (err) {
-            console.log("setSettlementList##err###", err);
+            console.log('setSettlementList##err###', err)
           }
         }
       }
-      var newobj = {};
-      var newArr = [];
+      var newobj = {}
+      var newArr = []
       result.forEach((item) => {
         if (!newobj[item._collateral + item._underlying + item.short]) {
-          newobj[item._collateral + item._underlying + item.short] = 1;
-          newArr.push(item);
+          newobj[item._collateral + item._underlying + item.short] = 1
+          newArr.push(item)
         }
-      });
-      this.isLoading = false;
-      this.claimList = newArr;
-      this.showList = newArr;
+      })
+      this.isLoading = false
+      this.claimList = newArr
+      this.showList = newArr
       // this.showList = newArr.slice(this.page * this.limit, this.limit);
     },
     getDownTime(time) {
-      let now = new Date() * 1;
-      let dueDate = time * 1000;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = time * 1000
+      dueDate = new Date(dueDate)
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template = `${day}天${hour}时${minute}分${second}秒`;
-      return template;
+      )
+      let template = `${day}天${hour}时${minute}分${second}秒`
+      return template
     },
     // 行权
     toClaim(item) {
@@ -252,46 +252,46 @@ export default {
           item.longBalance,
           { _collateral: item._collateral },
           item
-        );
+        )
       } else {
-        settle(item.short, item);
+        settle(item.short, item)
       }
     },
     handleClickChagePage(index) {
-      index = index - 1;
-      this.page = index;
-      let page = index;
+      index = index - 1
+      this.page = index
+      let page = index
       let list = this.claimList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
-      );
-      this.showList = list;
+      )
+      this.showList = list
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 .green {
-  color: #00b900 !important;
+  color: #28a745 !important;
 }
 .orange {
-  color: #ff6400 !important;
+  color: #dc3545 !important;
 }
 .call_style {
   background: rgba(0, 185, 0, 0.04);
   &:hover {
     td {
       &:first-child:before {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
         width: 0px;
-        border-left: 2px solid#00b900;
+        border-left: 2px solid#28a745;
       }
     }
   }
@@ -301,14 +301,14 @@ export default {
   &:hover {
     td {
       &:first-child:before {
-        content: "";
+        content: '';
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         height: 100%;
         width: 0px;
-        border-left: 2px solid#ff9600;
+        border-left: 2px solid#fd7e14;
       }
     }
   }
@@ -383,14 +383,14 @@ export default {
               margin-left: 4px;
             }
             .call_icon {
-              background-image: url("../../assets/img/helmet/tablecall.png");
+              background-image: url('../../assets/img/helmet/tablecall.png');
             }
             .put_icon {
-              background-image: url("../../assets/img/helmet/tableput.png");
+              background-image: url('../../assets/img/helmet/tableput.png');
             }
           }
           > .call_text {
-            color: #00b900;
+            color: #28a745;
           }
           > .put_text {
             color: #dc3545;
@@ -438,11 +438,11 @@ export default {
           display: flex;
           span:nth-of-type(1) {
             font-size: 12px;
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
           }
           span:nth-of-type(2) {
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
           }
           i {
             display: inline-block;
@@ -453,10 +453,10 @@ export default {
             margin-left: 4px;
           }
           .call_icon {
-            background-image: url("../../assets/img/helmet/tablecall.png");
+            background-image: url('../../assets/img/helmet/tablecall.png');
           }
           .put_icon {
-            background-image: url("../../assets/img/helmet/tableput.png");
+            background-image: url('../../assets/img/helmet/tableput.png');
           }
         }
         > p {

@@ -114,7 +114,7 @@ export default {
           cursor: pointer;
           background: #fff;
           span {
-            color: #ff9600;
+            color: #fd7e14;
           }
         }
 
@@ -170,7 +170,7 @@ export default {
         }
         span {
           font-size: 14px;
-          color: #121212;
+          color: #17173a;
           margin-top: 20px;
         }
       }

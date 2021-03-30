@@ -268,7 +268,13 @@ export default {
           height: 24px;
           margin-right: 16px;
           display: block;
-          fill: opacify($color: #17173a, $amount: 0.7);
+          fill: rgba(23, 23, 58, 0.7);
+        }
+        &:hover {
+          color: #17173a;
+          > .icon {
+            fill: #17173a;
+          }
         }
         .right {
           position: absolute;
@@ -324,6 +330,12 @@ export default {
       .right {
         transform: rotate(90deg);
       }
+      &:hover {
+        color: #ffffff;
+        .icon {
+          fill: #fff;
+        }
+      }
     }
     .active_child {
       color: #fd7e14;
@@ -350,7 +362,7 @@ export default {
       a {
         .icon {
           &:hover {
-            fill: #ff9600;
+            fill: #fd7e14;
           }
         }
       }

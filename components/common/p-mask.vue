@@ -42,12 +42,12 @@
         <svg class="wrongnetwork" aria-hidden="true">
           <use xlink:href="#icon-wrongnetwork"></use>
         </svg>
-        <span>{{ $t("Header.ConnectWrong") }}</span>
+        <span>{{ $t('Header.ConnectWrong') }}</span>
       </div>
       <template v-else>
         <div class="balance-wrap">
           <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-          <span>{{ BalanceArray["HELMET"] }}</span>
+          <span>{{ BalanceArray['HELMET'] }}</span>
         </div>
         <div class="wallet-address" @click="openCurrentAccount">
           <span>{{ accountText }}</span>
@@ -74,11 +74,11 @@
 </template>
 
 <script>
-import WallectSelect from "./wallet-select";
-import CurrentAccount from "~/components/account/current-account.vue";
-import ChangeAccount from "~/components/account/change-account.vue";
+import WallectSelect from './wallet-select'
+import CurrentAccount from '~/components/account/current-account.vue'
+import ChangeAccount from '~/components/account/change-account.vue'
 export default {
-  name: "p-mask",
+  name: 'p-mask',
   components: {
     WallectSelect,
     CurrentAccount,
@@ -87,170 +87,170 @@ export default {
   data() {
     return {
       MaskFlag: false,
-      accountText: "",
+      accountText: '',
       showWallectSelect: false,
-      lang: "",
-      langName: "",
+      lang: '',
+      langName: '',
       showChangeWallet: false,
       showCurrentAccount: false, // 显示当前账户信息
-    };
+    }
   },
   watch: {
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
     lang(newVol) {
-      this.switchLang(newVol);
+      this.switchLang(newVol)
       this.langName = this.localeList.filter(
         (item) => item.key == newVol
-      )[0].name;
+      )[0].name
     },
     locale: {
-      handler: "watchLocale",
+      handler: 'watchLocale',
       immediate: true,
     },
     ChainID(newValue) {
-      this.chainID = newValue;
+      this.chainID = newValue
     },
   },
   mounted() {
-    this.lang = window.localStorage.getItem("lang") || this.locale;
+    this.lang = window.localStorage.getItem('lang') || this.locale
   },
   computed: {
     ChainID() {
-      let chainID = this.$store.state.chainID;
-      return chainID;
+      let chainID = this.$store.state.chainID
+      return chainID
     },
     showMask() {
-      return this.$store.state.showDialog.showMask;
+      return this.$store.state.showDialog.showMask
     },
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
     routeObj() {
-      return this.$route;
+      return this.$route
     },
     locales() {
-      return this.$store.state.locales;
+      return this.$store.state.locales
     },
     locale() {
-      return this.$store.state.locale;
+      return this.$store.state.locale
     },
     localeList() {
-      return this.$store.state.localeList;
+      return this.$store.state.localeList
     },
     BalanceArray() {
-      let obj = this.$store.state.BalanceArray;
-      return obj;
+      let obj = this.$store.state.BalanceArray
+      return obj
     },
     renderList() {
       return [
         {
-          url: "/",
+          url: '/',
           link: false,
-          text: this.$t("Header.Trade"),
+          text: this.$t('Header.Trade'),
         },
         {
-          url: "/mining",
+          url: '/mining',
           link: false,
-          text: this.$t("Header.Mining"),
-          logo: "new",
+          text: this.$t('Header.Mining'),
+          logo: 'new',
         },
         {
-          url: "/flashmining",
+          url: '/flashmining',
           link: false,
-          text: this.$t("Header.FlashMining"),
+          text: this.$t('Header.FlashMining'),
         },
         {
-          url: "/burnbox",
+          url: '/burnbox',
           link: false,
-          text: this.$t("Header.BruningBox"),
-          logo: "fire",
+          text: this.$t('Header.BruningBox'),
+          logo: 'fire',
         },
         {
-          url: "/IIO",
+          url: '/IIO',
           link: false,
-          text: this.$t("Header.IIO"),
+          text: this.$t('Header.IIO'),
         },
         {
-          url: "https://helmet-insure.gitbook.io/helmet/",
+          url: 'https://helmet-insure.gitbook.io/helmet/',
           link: true,
-          text: this.$t("Header.GuideBook"),
+          text: this.$t('Header.GuideBook'),
         },
         {
-          url: "https://helmetinsure.medium.com/",
+          url: 'https://helmetinsure.medium.com/',
           link: true,
-          text: this.$t("Header.Medium"),
+          text: this.$t('Header.Medium'),
         },
-      ];
+      ]
     },
   },
 
   methods: {
     openChangeWallet() {
-      this.showChangeWallet = true;
+      this.showChangeWallet = true
     },
     closeChangeWallet() {
-      this.showChangeWallet = false;
+      this.showChangeWallet = false
     },
     openCurrentAccount() {
-      this.showCurrentAccount = true;
+      this.showCurrentAccount = true
     },
     closeCurrentAccount() {
-      this.showCurrentAccount = false;
+      this.showCurrentAccount = false
     },
     watchLocale(newVol) {
-      this.lang = newVol;
+      this.lang = newVol
     },
     switchLang(lang) {
-      this.lang = lang;
-      window.localStorage.setItem("lang", this.lang);
-      this.$store.dispatch("setLanguage", this.lang);
-      this.$i18n.locale = this.lang;
-      this.$store.dispatch("setMaskDialog", false);
+      this.lang = lang
+      window.localStorage.setItem('lang', this.lang)
+      this.$store.dispatch('setLanguage', this.lang)
+      this.$i18n.locale = this.lang
+      this.$store.dispatch('setMaskDialog', false)
     },
     userInfoWatch(newValue) {
       if (newValue.data && newValue.data.account) {
-        let account = newValue.data.account;
-        account = account.toUpperCase();
+        let account = newValue.data.account
+        account = account.toUpperCase()
         this.accountText =
           account.substr(0, 1) +
           account.substr(1, 1).toLowerCase() +
           account.substr(2, 4) +
-          "..." +
-          account.substr(-5);
+          '...' +
+          account.substr(-5)
       }
     },
     openWallectSelect() {
-      this.showWallectSelect = true;
-      this.closeMask();
+      this.showWallectSelect = true
+      this.closeMask()
     },
     closeMask() {
-      this.$store.dispatch("setMaskDialog", false);
+      this.$store.dispatch('setMaskDialog', false)
     },
     toPath(options) {
       if (options.url) {
-        this.$store.dispatch("setPayasoDialog", false);
-        this.$store.dispatch("setMaskDialog", false);
-        this.$router.push(options.url);
+        this.$store.dispatch('setPayasoDialog', false)
+        this.$store.dispatch('setMaskDialog', false)
+        this.$router.push(options.url)
       } else {
         if (options.type) {
-          this.$store.dispatch("setPayasoDialog", true);
+          this.$store.dispatch('setPayasoDialog', true)
         } else {
-          this.$store.dispatch("setMaskDialog", false);
+          this.$store.dispatch('setMaskDialog', false)
         }
       }
     },
     closeWallectSelect() {
-      this.showWallectSelect = false;
-      this.closeMask();
+      this.showWallectSelect = false
+      this.closeMask()
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .p-mask {
   background-color: rgba(0, 0, 0, 0.9);
   z-index: 101;
@@ -275,7 +275,7 @@ export default {
       display: block;
       width: 24px;
       height: 24px;
-      background-image: url("../../assets/img/icon/guanbi.png");
+      background-image: url('../../assets/img/icon/guanbi.png');
       background-repeat: no-repeat;
       background-size: cover;
       cursor: pointer;
@@ -352,7 +352,7 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 600;
-      color: #ff9600;
+      color: #fd7e14;
       line-height: 20px;
       text-align: center;
     }
@@ -366,7 +366,7 @@ export default {
     background: transparent;
     padding: 0px 18px;
     border-radius: 20px;
-    background: #ff9600;
+    background: #fd7e14;
     font-weight: 500;
     color: #ffffff;
     font-size: 16px;
@@ -374,7 +374,7 @@ export default {
   }
   .wallet-address {
     display: flex;
-    background: #ff9600;
+    background: #fd7e14;
     height: 36px;
     line-height: 36px;
     padding: 0px 12px;

@@ -39,21 +39,21 @@
   </div>
 </template>
 <script>
-import Langauage from "~/components/common/langauage.vue";
-import "~/assets/svg/iconfont.js";
+import Langauage from '~/components/common/langauage.vue'
+import '~/assets/svg/iconfont.js'
 export default {
-  props: ["padding"],
-  name: "p-footer",
+  props: ['padding'],
+  name: 'p-footer',
   components: { Langauage },
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 @media screen and (min-width: 750px) {
   .footer-container {
     width: 100%;
     height: 240px;
-    background: #121212;
+    background: #17173a;
     display: flex;
     flex-direction: column;
     min-width: 1200px;
@@ -104,7 +104,7 @@ export default {
   .footer-container {
     width: 100%;
     height: 218px;
-    background: #121212;
+    background: #17173a;
     display: flex;
     flex-direction: column;
     .footer_top {
@@ -155,16 +155,19 @@ export default {
   width: 24px;
   height: 24px;
   vertical-align: -0.15em;
-  fill: #787878;
+  fill: rgba(23, 23, 58, 0.7) !important;
   overflow: hidden;
+  &:hover {
+    fill: #17173a !important;
+  }
 }
 .footer_top {
   a:hover {
     .icon {
-      fill: #ff9600;
+      fill: #17173a !important;
     }
     span {
-      color: #ff9600 !important;
+      color: #fd7e14 !important;
     }
   }
 }

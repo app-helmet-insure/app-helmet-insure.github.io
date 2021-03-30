@@ -102,7 +102,9 @@
             disabled
             :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <span @click="WithdrawNum = balance.Withdraw">{{$t('Insurance.Insurance_text18')}}</span>
+          <span @click="WithdrawNum = balance.Withdraw">{{
+            $t('Insurance.Insurance_text18')
+          }}</span>
         </div>
       </div>
       <div class="button">
@@ -188,31 +190,31 @@ export default {
         {
           text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '（weekly）',
         },
         {
           text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
         //   num: 0,
-        //   color: '#121212',
+        //   color: '#17173a',
         //   unit: ''
         // },
         //  {
         //   text: this.$t('Table.MyDeposits'),
         //   num: 0,
-        //   color: '#121212',
+        //   color: '#17173a',
         //   unit: ''
         // },
         // {
         //   text: this.$t('Table.MyRewards'),
         //   num: 0,
-        //   color: '#00B900',
+        //   color: '#28a745',
         //   unit: ''
         // }
       ],
@@ -482,7 +484,7 @@ export default {
           height: 40px;
           background: transparent;
           padding: 0 100px 0 12px;
-          color: #121212;
+          color: #17173a;
           border-radius: 5px;
           border: 1px solid #e8e8eb;
         }
@@ -513,7 +515,7 @@ export default {
             margin-top: 4px;
             font-size: 14px;
             font-weight: 500;
-            color: #ff9600;
+            color: #fd7e14;
             line-height: 20px;
             display: flex;
             align-items: center;
@@ -580,7 +582,7 @@ export default {
     }
   }
   .activeInput {
-    border: 1px solid #ff9600 !important;
+    border: 1px solid #fd7e14 !important;
   }
 }
 @media screen and (max-width: 750px) {
@@ -628,7 +630,7 @@ export default {
           > p {
             display: flex;
             align-items: center;
-            color: #121212;
+            color: #17173a;
             font-size: 14px;
             margin-right: 14px;
             img {
@@ -638,7 +640,7 @@ export default {
             }
             span {
               margin-left: 4px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
             }
           }
         }
@@ -653,7 +655,7 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 14px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
             }
             &:nth-of-type(2) {
               margin-top: 12px;
@@ -676,7 +678,7 @@ export default {
           font-weight: 500;
           line-height: 16px;
           p {
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
             font-size: 14px;
             line-height: 16px;
           }
@@ -685,7 +687,7 @@ export default {
           margin-top: 20px;
           label {
             font-size: 14px;
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
             line-height: 20px;
           }
           input {
@@ -694,7 +696,7 @@ export default {
             border: 1px solid #cfcfd2;
             background: transparent;
             padding: 0 100px 0 12px;
-            color: #121212;
+            color: #17173a;
           }
           .input {
             margin-top: 4px;
@@ -705,18 +707,18 @@ export default {
               position: absolute;
               right: 15px;
               font-size: 14px;
-              color: #121212;
+              color: #17173a;
               cursor: pointer;
             }
           }
         }
       }
       .deposit {
-        border-top: 2px solid #00b900;
+        border-top: 2px solid #28a745;
         background: rgba(0, 185, 0, 0.04);
         .title {
           > span {
-            color: #00b900;
+            color: #28a745;
           }
         }
         .button {
@@ -727,7 +729,7 @@ export default {
             a {
               font-size: 14px;
               font-weight: 500;
-              color: #ff9600;
+              color: #fd7e14;
               line-height: 20px;
               margin-top: 8px;
               display: flex;
@@ -748,28 +750,28 @@ export default {
             display: flex;
             flex-direction: column;
             > span:first-child {
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
             }
             > span:last-child {
-              color: #121212;
+              color: #17173a;
             }
             > span {
               font-size: 14px;
               span {
                 display: flex;
                 flex-direction: column;
-                color: #121212;
+                color: #17173a;
               }
             }
           }
         }
       }
       .withdraw {
-        border-top: 2px solid #ff6400;
+        border-top: 2px solid #dc3545;
         background: rgba(255, 100, 0, 0.04);
         .title {
           > span {
-            color: #ff6400;
+            color: #dc3545;
           }
         }
         .button {
@@ -783,10 +785,10 @@ export default {
             }
             > span {
               font-size: 14px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
               span {
                 display: flex;
-                color: #121212;
+                color: #17173a;
               }
             }
           }

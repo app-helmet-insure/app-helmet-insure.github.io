@@ -23,7 +23,7 @@
             v-model="DepositeNum"
             :style="
               DepositeNum == balance.Deposite
-                ? 'border: 1px solid #FF9600 !important'
+                ? 'border: 1px solid #fd7e14 !important'
                 : ''
             "
           />
@@ -124,7 +124,7 @@
             type="text"
             v-model="balance.Withdraw"
             disabled
-            style="border: 1px solid #ff9600 !important"
+            style="border: 1px solid #fd7e14 !important"
           />
           <span
             @click="WithdrawNum = balance.Withdraw"
@@ -231,31 +231,31 @@ export default {
         {
           text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         {
           text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         //  {
         //   text: this.$t('Table.TotalDeposited'),
         //   num: 0,
-        //   color: '#121212',
+        //   color: '#17173a',
         //   unit: ''
         // },
         //  {
         //   text: this.$t('Table.MyDeposits'),
         //   num: 0,
-        //   color: '#121212',
+        //   color: '#17173a',
         //   unit: ''
         // },
         // {
         //   text: this.$t('Table.MyRewards'),
         //   num: 0,
-        //   color: '#00B900',
+        //   color: '#28a745',
         //   unit: ''
         // }
       ],
@@ -534,10 +534,10 @@ export default {
 <style lang="scss" soped>
 .ContractAddress {
   font-size: 14px;
-  color: #ff9600;
+  color: #fd7e14;
   margin-top: 8px;
   span {
-    color: #121212;
+    color: #17173a;
   }
   p {
     display: flex;
@@ -560,8 +560,11 @@ export default {
   width: 24px;
   height: 24px;
   vertical-align: -0.15em;
-  fill: #787878;
+  fill: rgba(23, 23, 58, 0.7) !important;
   overflow: hidden;
+  &:hover {
+    fill: #17173a !important;
+  }
 }
 .b_button {
   width: 100%;
@@ -642,20 +645,20 @@ export default {
             border-radius: 6px;
             padding: 0 100px 0 12px;
             font-size: 14px;
-            color: #121212;
+            color: #17173a;
           }
           input:focus {
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
           }
           span {
             position: absolute;
             display: block;
             right: 12px;
             padding: 6px 8px;
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
             border-radius: 6px;
             font-size: 12px;
-            color: #ff9600;
+            color: #fd7e14;
             cursor: pointer;
             &:hover {
               color: #ff8200;
@@ -674,17 +677,17 @@ export default {
           justify-content: space-between;
           align-items: center;
           font-size: 14px;
-          color: #919aa6;
+          color: rgba(23, 23, 58, 0.4);
           margin-top: 8px;
           span:nth-of-type(2) {
-            color: #121212;
+            color: #17173a;
             font-weight: 550;
           }
         }
         > a {
           font-size: 14px;
           font-weight: 550;
-          color: #ff9600;
+          color: #fd7e14;
           margin-top: 8px;
           display: flex;
           align-items: center;
@@ -786,7 +789,7 @@ export default {
                 background: rgba(255, 150, 0, 0.1);
                 border-radius: 8px;
                 font-size: 12px;
-                color: #ff9600;
+                color: #fd7e14;
                 line-height: 16px;
                 display: flex;
                 align-items: center;
@@ -836,7 +839,7 @@ export default {
               padding: 1px 3px;
               background: #f7f7fa;
               border-radius: 3px;
-              color: #121212;
+              color: #17173a;
               i {
                 color: #cfcfd2;
               }
@@ -851,7 +854,7 @@ export default {
             p {
               display: flex;
               align-items: center;
-              color: #121212;
+              color: #17173a;
               font-size: 14px;
               margin-right: 14px;
               img {
@@ -861,12 +864,12 @@ export default {
               }
               span {
                 margin-left: 4px;
-                color: #919aa6;
+                color: rgba(23, 23, 58, 0.4);
               }
             }
           }
           > p {
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
             font-size: 14px;
             margin: 5px 0;
           }
@@ -881,7 +884,7 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 14px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
             }
             &:nth-of-type(2) {
               margin-top: 8px;
@@ -911,18 +914,18 @@ export default {
           margin: 0 4px;
         }
         .deposit_btn {
-          color: #00b900;
+          color: #28a745;
         }
         .withdraw_btn {
-          color: #ff6400;
+          color: #dc3545;
         }
         .deposit_active {
           color: #ffffff;
-          background: #00b900;
+          background: #28a745;
         }
         .withdraw_active {
           color: #ffffff;
-          background: #ff6400;
+          background: #dc3545;
         }
       }
       .pool_content {
@@ -937,7 +940,7 @@ export default {
           > .content {
             label {
               font-size: 14px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
             }
             .input {
               width: 100%;
@@ -953,20 +956,20 @@ export default {
                 border-radius: 6px;
                 padding: 0 100px 0 12px;
                 font-size: 14px;
-                color: #121212;
+                color: #17173a;
               }
               input:focus {
-                border: 1px solid #ff9600;
+                border: 1px solid #fd7e14;
               }
               span {
                 position: absolute;
                 display: block;
                 right: 12px;
                 padding: 6px 8px;
-                border: 1px solid #ff9600;
+                border: 1px solid #fd7e14;
                 border-radius: 6px;
                 font-size: 12px;
-                color: #ff9600;
+                color: #fd7e14;
                 cursor: pointer;
                 &:hover {
                   color: #ff8200;
@@ -984,17 +987,17 @@ export default {
               justify-content: space-between;
               align-items: center;
               font-size: 13px;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
               margin-top: 8px;
               span:nth-of-type(2) {
-                color: #121212;
+                color: #17173a;
                 font-weight: 550;
               }
             }
             > a {
               font-size: 13px;
               font-weight: 550;
-              color: #ff9600;
+              color: #fd7e14;
               margin-top: 8px;
               display: flex;
               align-items: center;

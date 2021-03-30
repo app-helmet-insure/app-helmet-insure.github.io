@@ -9,49 +9,49 @@
 </template>
 
 <script>
-import FlashMiningList from "~/components/flashmining/flashmining_list.vue";
-import FlashMiningTitle from "~/components/flashmining/flashmining_title.vue";
-import Onepager from "~/components/mining/onepager.vue";
+import FlashMiningList from '~/components/flashmining/flashmining_list.vue'
+import FlashMiningTitle from '~/components/flashmining/flashmining_title.vue'
+import Onepager from '~/components/mining/onepager.vue'
 export default {
-  layout: "default",
+  layout: 'default',
   components: { FlashMiningTitle, FlashMiningList, Onepager },
   data() {
     return {
       showDeposite: false,
       showWithdraw: false,
-      current: "",
-      TradeType: "",
-    };
+      current: '',
+      TradeType: '',
+    }
   },
   mounted() {
-    this.$bus.$on("OPEN_DEPOSITE", (data) => {
-      this.current = data.current;
-      this.TradeType = data.TradeType;
-      this.showDeposite = true;
-    });
-    this.$bus.$on("CLOSE_DEPOSITE", (data) => {
-      this.showDeposite = false;
-    });
+    this.$bus.$on('OPEN_DEPOSITE', (data) => {
+      this.current = data.current
+      this.TradeType = data.TradeType
+      this.showDeposite = true
+    })
+    this.$bus.$on('CLOSE_DEPOSITE', (data) => {
+      this.showDeposite = false
+    })
   },
   methods: {
     closeDeposite() {
-      this.showDeposite = false;
+      this.showDeposite = false
     },
     openDeposite() {
-      this.showDeposite = true;
+      this.showDeposite = true
     },
     closeWithdraw() {
-      this.showWithdraw = false;
+      this.showWithdraw = false
     },
     openWithdraw() {
-      this.showWithdraw = true;
+      this.showWithdraw = true
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+<style lang="scss" scoped>
+@import '~/assets/css/base.scss';
 
 @media screen and (min-width: 750px) {
   .main_container {
@@ -74,7 +74,7 @@ export default {
       font-size: 24px;
       width: 267px;
       font-weight: bold;
-      color: #121212;
+      color: #17173a;
       margin-bottom: 10px;
     }
     p {

@@ -42,30 +42,30 @@
   </div>
 </template>
 <script>
-import PHeader from "~/components/common/header.vue";
-import PFooter from "~/components/common/footer.vue";
-import PSlider from "~/components/common/slider.vue";
-import { web3 } from "~/assets/utils/web3-obj.js";
+import PHeader from '~/components/common/header.vue'
+import PFooter from '~/components/common/footer.vue'
+import PSlider from '~/components/common/slider.vue'
+import { web3 } from '~/assets/utils/web3-obj.js'
 import {
   getOptionCreatedLog,
   getSellLog,
   getBuyLog,
-} from "~/interface/order.js";
-import { getID } from "~/assets/utils/address-pool.js";
-import { mateMaskInfo } from "~/assets/utils/matemask.js";
-import RiskWarning from "~/components/common/risk-warning.vue";
-import StatusDialog from "~/components/common/status-dialog.vue";
+} from '~/interface/order.js'
+import { getID } from '~/assets/utils/address-pool.js'
+import { mateMaskInfo } from '~/assets/utils/matemask.js'
+import RiskWarning from '~/components/common/risk-warning.vue'
+import StatusDialog from '~/components/common/status-dialog.vue'
 // import MyPayaso from "~/components/common/my-payaso.vue";
-import PMask from "~/components/common/p-mask.vue";
-import WallectDownLoad from "~/components/common/wallet-download.vue";
-import { uniswap } from "~/assets/utils/address-pool.js";
-import { getBalance } from "~/interface/order.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
-import Message from "~/components/common/Message";
-import ClipboardJS from "clipboard";
+import PMask from '~/components/common/p-mask.vue'
+import WallectDownLoad from '~/components/common/wallet-download.vue'
+import { uniswap } from '~/assets/utils/address-pool.js'
+import { getBalance } from '~/interface/order.js'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import { toWei, fromWei } from '~/assets/utils/web3-fun.js'
+import Message from '~/components/common/Message'
+import ClipboardJS from 'clipboard'
 export default {
-  name: "default",
+  name: 'default',
   components: {
     PHeader,
     PSlider,
@@ -81,86 +81,86 @@ export default {
       times: 0,
       showRiskWarning: false,
       statusData: {
-        type: "",
-        title: "",
-        conTit: "",
-        conText: "",
-        btnText: "",
+        type: '',
+        title: '',
+        conTit: '',
+        conText: '',
+        btnText: '',
       },
       showStatusDialog: false,
-    };
+    }
   },
   computed: {
     longMap() {
-      return this.$store.state.longMap;
+      return this.$store.state.longMap
     },
     sellMap() {
-      return this.$store.state.sellMap;
+      return this.$store.state.sellMap
     },
     buyMap() {
-      return this.$store.state.buyMap;
+      return this.$store.state.buyMap
     },
     longMapAndSellMap() {
       if (this.longMap && this.sellMap) {
         return {
           longMap: this.longMap,
           sellMap: this.sellMap,
-        };
+        }
       }
-      return null;
+      return null
     },
     aboutInfoSell() {
-      return this.$store.state.aboutInfoSell;
+      return this.$store.state.aboutInfoSell
     },
     // 抵押物
     policyColArray() {
-      return this.$store.state.policyColArray;
+      return this.$store.state.policyColArray
     },
     // 标的物
     policyUndArray() {
-      return this.$store.state.policyUndArray;
+      return this.$store.state.policyUndArray
     },
     ChainID() {
-      let chainID = this.$store.state.chainID;
-      return chainID;
+      let chainID = this.$store.state.chainID
+      return chainID
     },
   },
   watch: {
     longMapAndSellMap: {
-      handler: "longMapAndSellMapWatch",
+      handler: 'longMapAndSellMapWatch',
       immediate: true,
     },
     aboutInfoSell: {
-      handler: "aboutInfoSellWatch",
+      handler: 'aboutInfoSellWatch',
       immediate: true,
     },
     ChainID(newValue) {
       if (newValue == 56) {
-        this.getBannerData();
-        this.closeNetWorkTip();
+        this.getBannerData()
+        this.closeNetWorkTip()
       } else {
-        this.showNetWorkTip();
+        this.showNetWorkTip()
       }
     },
   },
   async mounted() {
     // 是否阅读过【风险提示】
-    if (!window.localStorage.getItem("readRisk")) {
-      this.showRiskWarning = true;
+    if (!window.localStorage.getItem('readRisk')) {
+      this.showRiskWarning = true
     }
-    this.copy();
-    window.WEB3 = await web3();
-    window.chainID = await getID();
-    this.showWallet();
-    this.$store.commit("SET_CHAINID", window.chainID);
+    this.copy()
+    window.WEB3 = await web3()
+    window.chainID = await getID()
+    this.showWallet()
+    this.$store.commit('SET_CHAINID', window.chainID)
 
-    this.getUserInfo();
+    this.getUserInfo()
     // 获取映射
-    this.$store.dispatch("setAllMap");
-    this.monitorNetWorkChange();
-    this.mointorAccountChange();
+    this.$store.dispatch('setAllMap')
+    this.monitorNetWorkChange()
+    this.mointorAccountChange()
     // 显示状态弹框
-    this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
+    this.$bus.$on('OPEN_STATUS_DIALOG', (data) => {
       const result = {
         type: data.type,
         title: data.title || this.getStatusTitle(data.type),
@@ -168,265 +168,265 @@ export default {
         conText: data.conText,
         btnText: data.btnText || this.getBtnTit(data.type),
         activeTip: data.activeTip,
-      };
-      this.statusData = result;
-      this.openStatusDialog();
-      window.statusDialog = true;
-    });
+      }
+      this.statusData = result
+      this.openStatusDialog()
+      window.statusDialog = true
+    })
 
     // 关闭状态弹框
-    this.$bus.$on("CLOSE_STATUS_DIALOG", (data) => {
-      this.closeStatusDialog();
-      window.statusDialog = false;
-    });
+    this.$bus.$on('CLOSE_STATUS_DIALOG', (data) => {
+      this.closeStatusDialog()
+      window.statusDialog = false
+    })
     if (window.chainID == 56) {
-      this.getBannerData();
+      this.getBannerData()
       setTimeout(() => {
-        this.getBalance();
-      }, 500);
+        this.getBalance()
+      }, 500)
     }
     if (window.chainID == 56) {
-      this.getIndexPirce();
+      this.getIndexPirce()
     }
     // 刷新所有数据
-    this.$bus.$on("REFRESH_ALL_DATA", (data) => {
-      this.refreshAllData();
-    });
-    this.$bus.$on("REFRESH_BALANCE", () => {
-      this.getBalance();
-    });
+    this.$bus.$on('REFRESH_ALL_DATA', (data) => {
+      this.refreshAllData()
+    })
+    this.$bus.$on('REFRESH_BALANCE', () => {
+      this.getBalance()
+    })
   },
   methods: {
     closeNetWorkTip() {
-      this.$bus.$emit("CLOSE_STATUS_DIALOG", (data) => {
-        this.closeStatusDialog();
-        window.statusDialog = false;
-      });
+      this.$bus.$emit('CLOSE_STATUS_DIALOG', (data) => {
+        this.closeStatusDialog()
+        window.statusDialog = false
+      })
     },
     showNetWorkTip() {
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        type: "warning",
-        conText: "请连接到Binance Smart Chain网络",
-      });
+      this.$bus.$emit('OPEN_STATUS_DIALOG', {
+        type: 'warning',
+        conText: '请连接到Binance Smart Chain网络',
+      })
     },
     copy() {
-      let copy = new ClipboardJS("#copy_default");
-      copy.on("success", function (e) {
+      let copy = new ClipboardJS('#copy_default')
+      copy.on('success', function(e) {
         Message({
-          message: "Successfully copied",
-          type: "success",
+          message: 'Successfully copied',
+          type: 'success',
           // duration: 0,
-        });
-        copy.destroy();
-      });
-      copy.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copy.destroy();
-      });
+        })
+        copy.destroy()
+      })
+      copy.on('error', function(e) {
+        console.error('Action:', e.action)
+        console.error('Trigger:', e.trigger)
+        copy.destroy()
+      })
     },
     closeDialog() {
-      this.$emit("close");
+      this.$emit('close')
     },
     async getBannerData() {
       setTimeout(() => {
-        this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
-        this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
-        this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
-        this.$store.dispatch("getValidBorrowing"); //获取 有效成交
-      }, 2000);
+        this.$store.dispatch('getTotalHelmet') //获取 Helmet 总量
+        this.$store.dispatch('getBalanceMine') //获取 Helmet 矿山余额
+        this.$store.dispatch('getClaimAbleHelmet') //获取 所有待结算 Helmet
+        this.$store.dispatch('getValidBorrowing') //获取 有效成交
+      }, 2000)
     },
     getStatusTitle(type) {
       switch (type) {
-        case "warning":
-          return "Warning";
-        case "pending":
-          return "Waiting for confirmation";
-        case "submit":
-          return "Transaction submitted";
+        case 'warning':
+          return 'Warning'
+        case 'pending':
+          return 'Waiting for confirmation'
+        case 'submit':
+          return 'Transaction submitted'
         default:
-          return "Tips";
+          return 'Tips'
       }
     },
     getConTit(type) {
       switch (type) {
-        case "warning":
-          return "Please connect to the Binance Smart Chain network";
-        case "pending":
-          return "Please confirm the transaction in the wallet";
-        case "submit":
-          return "Transaction submitted";
+        case 'warning':
+          return 'Please connect to the Binance Smart Chain network'
+        case 'pending':
+          return 'Please confirm the transaction in the wallet'
+        case 'submit':
+          return 'Transaction submitted'
         default:
-          return "Tips";
+          return 'Tips'
       }
     },
     getBtnTit(type) {
       switch (type) {
-        case "warning":
-          return "OK";
-        case "pending":
-          return "Approve";
-        case "submit":
-          return "Confirm";
+        case 'warning':
+          return 'OK'
+        case 'pending':
+          return 'Approve'
+        case 'submit':
+          return 'Confirm'
         default:
-          return "Tips";
+          return 'Tips'
       }
     },
     openStatusDialog() {
-      this.showStatusDialog = true;
+      this.showStatusDialog = true
     },
     closeStatusDialog() {
-      window.statusDialog = false;
-      this.showStatusDialog = false;
+      window.statusDialog = false
+      this.showStatusDialog = false
     },
     openRiskWarning() {
-      this.showRiskWarning = true;
+      this.showRiskWarning = true
     },
     closeRiskWarning() {
-      this.showRiskWarning = false;
+      this.showRiskWarning = false
     },
     longMapAndSellMapWatch(newValue) {
       if (newValue) {
-        this.$store.dispatch("mapAbountInfoSell");
+        this.$store.dispatch('mapAbountInfoSell')
       }
     },
     aboutInfoSellWatch(newValue) {
       if (newValue) {
-        this.$store.dispatch("mapAboutInfoBuy");
-        this.$store.dispatch("getCountByType");
+        this.$store.dispatch('mapAboutInfoBuy')
+        this.$store.dispatch('getCountByType')
       }
     },
     monitorNetWorkChange() {
       if (window.ethereum) {
-        ethereum.on("networkChanged", (chainID) => {
-          window.chainID = chainID;
-          this.$store.commit("SET_CHAINID", chainID);
-          window.location.reload();
-        });
+        ethereum.on('networkChanged', (chainID) => {
+          window.chainID = chainID
+          this.$store.commit('SET_CHAINID', chainID)
+          window.location.reload()
+        })
       } else {
         if (this.times < 10) {
-          this.times = this.times + 1;
+          this.times = this.times + 1
           setTimeout(() => {
-            this.monitorNetWorkChange();
-          }, 1000);
+            this.monitorNetWorkChange()
+          }, 1000)
         }
       }
     },
     mointorAccountChange() {
       if (window.ethereum) {
-        ethereum.on("accountsChanged", async (account) => {
-          let userInfo = await mateMaskInfo(account[0], "MetaMask");
-          this.$store.dispatch("setUserInfo", userInfo);
+        ethereum.on('accountsChanged', async (account) => {
+          let userInfo = await mateMaskInfo(account[0], 'MetaMask')
+          this.$store.dispatch('setUserInfo', userInfo)
           setTimeout(() => {
-            this.getBannerData();
-            this.getBalance();
-            this.getIndexPirce();
-            this.$bus.$emit("REFRESH_ALL_DATA");
-            this.$bus.$emit("REFRESH_MINING");
-          }, 200);
-        });
+            this.getBannerData()
+            this.getBalance()
+            this.getIndexPirce()
+            this.$bus.$emit('REFRESH_ALL_DATA')
+            this.$bus.$emit('REFRESH_MINING')
+          }, 200)
+        })
       }
     },
     showWallet() {
       try {
         window.ethereum
-          .request({ method: "eth_requestAccounts" })
+          .request({ method: 'eth_requestAccounts' })
           .then(async (account) => {
-            window.localStorage.setItem("currentType", "MetaMask");
+            window.localStorage.setItem('currentType', 'MetaMask')
             // setTimeout(() => {
             //     window.location.reload()
             // }, 500)
-            let userInfo = await mateMaskInfo(account[0], "MetaMask");
-            this.$store.dispatch("setUserInfo", userInfo);
-            this.$bus.$emit("REFRESH_ALL_DATA");
-            this.$bus.$emit("REFRESH_MINING");
-            this.closeDialog();
-          });
+            let userInfo = await mateMaskInfo(account[0], 'MetaMask')
+            this.$store.dispatch('setUserInfo', userInfo)
+            this.$bus.$emit('REFRESH_ALL_DATA')
+            this.$bus.$emit('REFRESH_MINING')
+            this.closeDialog()
+          })
       } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
+        console.log('MateMask 扩展插件未安装或未启用##', error)
       }
     },
     async getUserInfo() {
-      let res = await mateMaskInfo();
+      let res = await mateMaskInfo()
       try {
         if (res.status === -1) {
-          return;
+          return
         }
-        this.$store.dispatch("setUserInfo", res);
+        this.$store.dispatch('setUserInfo', res)
       } catch (error) {
-        alert(error);
+        alert(error)
       }
     },
     refreshAllData() {
-      this.$store.dispatch("setAllMap");
+      this.$store.dispatch('setAllMap')
     },
     // 获取余额
     async getBalance() {
       let BalanceArray = {};
       let coinList = this.$store.state.balanceCoin;
       for (let i = 0; i < coinList.length; i++) {
-        let balance = await getBalance(coinList[i]);
-        let key = coinList[i];
-        BalanceArray[key] = fixD(balance, 4);
+        let balance = await getBalance(coinList[i])
+        let key = coinList[i]
+        BalanceArray[key] = fixD(balance, 4)
       }
       if (window.CURRENTADDRESS) {
         window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
-          BalanceArray["BNB"] = fixD(fromWei(res), 4);
-        });
+          BalanceArray['BNB'] = fixD(fromWei(res), 4)
+        })
       }
-      this.$store.commit("SET_BALANCE", BalanceArray);
+      this.$store.commit('SET_BALANCE', BalanceArray)
     },
     // 保存指数价格
     async getIndexPirce() {
-      let list = this.$store.state.coinList;
+      let list = this.$store.state.coinList
       // bnb
-      let callIndexPirce = {};
-      let putIndexPirce = {};
-      let echartIndexArray = {};
+      let callIndexPirce = {}
+      let putIndexPirce = {}
+      let echartIndexArray = {}
       // helmet
-      let bnbbusd = await uniswap("WBNB", "BUSD");
-      let cakebusd = await uniswap("CAKE", "BUSD");
-      let helmetbusd = await uniswap("BUSD", "HELMET");
+      let bnbbusd = await uniswap('WBNB', 'BUSD')
+      let cakebusd = await uniswap('CAKE', 'BUSD')
+      let helmetbusd = await uniswap('BUSD', 'HELMET')
       for (let i = 0; i < list.length; i++) {
-        let px;
-        let indexPx;
-        if ("WBNB" != list[i]) {
-          px = await uniswap("WBNB", list[i]);
+        let px
+        let indexPx
+        if ('WBNB' != list[i]) {
+          px = await uniswap('WBNB', list[i])
         } else {
-          px = 1;
+          px = 1
         }
         indexPx = await uniswap(
           this.policyUndArray[1][list[i]],
           this.policyUndArray[0][list[i]]
-        );
+        )
 
-        let key = list[i];
-        callIndexPirce[key] = px;
-        let key1 = list[i];
-        echartIndexArray[key1] = indexPx;
+        let key = list[i]
+        callIndexPirce[key] = px
+        let key1 = list[i]
+        echartIndexArray[key1] = indexPx
       }
       for (let i = 0; i < list.length; i++) {
-        let px;
-        if ("WBNB" != list[i]) {
-          px = await uniswap(list[i], "WBNB");
+        let px
+        if ('WBNB' != list[i]) {
+          px = await uniswap(list[i], 'WBNB')
         } else {
-          px = 1;
+          px = 1
         }
-        const key = list[i];
-        putIndexPirce[key] = px;
+        const key = list[i]
+        putIndexPirce[key] = px
       }
-      let arr = [];
-      let arr1 = [];
-      let bnbHelmet = callIndexPirce["HELMET"] || 0;
-      let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"] || 0;
-      let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"] || 0;
+      let arr = []
+      let arr1 = []
+      let bnbHelmet = callIndexPirce['HELMET'] || 0
+      let cakeHelmet = callIndexPirce['CAKE'] / callIndexPirce['HELMET'] || 0
+      let ctkHelmet = callIndexPirce['CTK'] / callIndexPirce['HELMET'] || 0
       // let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"] || 0;
-      let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"] || 0;
-      let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"] || 0;
+      let btcHelmet = callIndexPirce['BTCB'] / callIndexPirce['HELMET'] || 0
+      let ethHelmet = callIndexPirce['ETH'] / callIndexPirce['HELMET'] || 0
       let burgerHelmet =
-        callIndexPirce["BURGER"] / callIndexPirce["HELMET"] || 0;
-      let wbnbHelmet = callIndexPirce["WBNB"] / callIndexPirce["HELMET"] || 0;
-      let mathHelmet = callIndexPirce["MATH"] / callIndexPirce["HELMET"] || 0;
+        callIndexPirce['BURGER'] / callIndexPirce['HELMET'] || 0
+      let wbnbHelmet = callIndexPirce['WBNB'] / callIndexPirce['HELMET'] || 0
+      let mathHelmet = callIndexPirce['MATH'] / callIndexPirce['HELMET'] || 0
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -437,16 +437,16 @@ export default {
         BURGER: burgerHelmet,
         WBNB: wbnbHelmet,
         MATH: mathHelmet,
-      };
-      let Helmetbnb = putIndexPirce["HELMET"] || 0;
-      let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
-      let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"] || 0;
+      }
+      let Helmetbnb = putIndexPirce['HELMET'] || 0
+      let Helmetcake = putIndexPirce['CAKE'] / putIndexPirce['HELMET'] || 0
+      let Helmetctk = putIndexPirce['CTK'] / putIndexPirce['HELMET'] || 0
       // let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"] || 0;
-      let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"] || 0;
-      let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
-      let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
-      let Helmetwbnb = putIndexPirce["WBNB"] / putIndexPirce["HELMET"] || 0;
-      let Helmetmath = putIndexPirce["MATH"] / putIndexPirce["HELMET"] || 0;
+      let Helmetbtc = putIndexPirce['BTCB'] / putIndexPirce['HELMET'] || 0
+      let Helmeteth = putIndexPirce['ETH'] / putIndexPirce['HELMET'] || 0
+      let Helmetburger = putIndexPirce['BURGER'] / putIndexPirce['HELMET'] || 0
+      let Helmetwbnb = putIndexPirce['WBNB'] / putIndexPirce['HELMET'] || 0
+      let Helmetmath = putIndexPirce['MATH'] / putIndexPirce['HELMET'] || 0
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
@@ -457,21 +457,21 @@ export default {
         BURGER: Helmetburger,
         WBNB: Helmetwbnb,
         MATH: Helmetmath,
-      };
-      arr1.push(HelmetPirce);
-      arr1.push(CoinPirce);
-      this.$store.commit("SET_ALL_HELMET_PRICE", arr1);
-      arr.push(callIndexPirce);
-      arr.push(putIndexPirce);
-      this.$store.commit("SET_ALL_INDEX_PRICE", arr);
-      this.$store.commit("SET_ECHART_INDEX_PRICE", echartIndexArray);
-      this.$store.commit("SET_BNB_BUSD", bnbbusd);
-      this.$store.commit("SET_CAKE_BUSD", cakebusd);
-      this.$store.commit("SET_HELMET_BUSD", helmetbusd);
-      this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
+      }
+      arr1.push(HelmetPirce)
+      arr1.push(CoinPirce)
+      this.$store.commit('SET_ALL_HELMET_PRICE', arr1)
+      arr.push(callIndexPirce)
+      arr.push(putIndexPirce)
+      this.$store.commit('SET_ALL_INDEX_PRICE', arr)
+      this.$store.commit('SET_ECHART_INDEX_PRICE', echartIndexArray)
+      this.$store.commit('SET_BNB_BUSD', bnbbusd)
+      this.$store.commit('SET_CAKE_BUSD', cakebusd)
+      this.$store.commit('SET_HELMET_BUSD', helmetbusd)
+      this.$bus.$emit('DRAW_ECHART', { drawFlag: true })
     },
   },
-};
+}
 </script>
 <style scoped lang="scss">
 .fade-enter-active,
@@ -506,7 +506,7 @@ export default {
         display: block;
         width: 24px;
         height: 24px;
-        background-image: url("../assets/img/helmet/icon_title.png");
+        background-image: url('../assets/img/helmet/icon_title.png');
         background-repeat: no-repeat;
         background-size: 100% 100%;
         margin-right: 4px;
@@ -519,7 +519,7 @@ export default {
           display: inline-block;
           width: 12px;
           height: 12px;
-          background-image: url("../assets/img/helmet/copy.png");
+          background-image: url('../assets/img/helmet/copy.png');
           background-repeat: no-repeat;
           background-size: 100% 100%;
           cursor: pointer;
@@ -569,7 +569,7 @@ export default {
       height: 48px;
       background: rgba(255, 150, 0, 0.2);
       font-size: 12px;
-      color: #ff9600;
+      color: #fd7e14;
       line-height: 20px;
       justify-content: center;
       display: flex;
@@ -581,7 +581,7 @@ export default {
           display: inline-block;
           width: 12px;
           height: 12px;
-          background-image: url("../assets/img/helmet/copy.png");
+          background-image: url('../assets/img/helmet/copy.png');
           background-repeat: no-repeat;
           background-size: 100% 100%;
           cursor: pointer;

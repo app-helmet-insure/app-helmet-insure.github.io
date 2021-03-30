@@ -49,72 +49,72 @@ export default {
   data() {
     return {
       pageList: [1, 2, 3, 4], // 页码列表
-    };
+    }
   },
   computed: {
     // 最大页数
     pageMax() {
-      return Math.ceil(this.total / this.limit);
+      return Math.ceil(this.total / this.limit)
     },
   },
   created() {
     // 我的框架是mpvue，vue用created
-    this.initData();
+    this.initData()
   },
   watch: {
     // 监听页码变化 -> 页码列表更新
     page(val) {
       if (val <= 3) {
-        this.pageList = [];
-        var i = 1;
+        this.pageList = []
+        var i = 1
         do {
-          this.pageList.push(i);
-          i++;
-        } while (i <= this.pageMax);
-        this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); // 最多显示5页
+          this.pageList.push(i)
+          i++
+        } while (i <= this.pageMax)
+        this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)) // 最多显示5页
       } else if (val === this.pageMax) {
-        this.pageList = [val - 3, val - 2, val - 1, val];
+        this.pageList = [val - 3, val - 2, val - 1, val]
       } else if (val === this.pageMax - 1) {
-        this.pageList = [val - 2, val - 1, val, val + 1];
+        this.pageList = [val - 2, val - 1, val, val + 1]
       } else {
-        this.pageList = [val - 1, val, val + 1];
+        this.pageList = [val - 1, val, val + 1]
       }
     },
     // 监听页码变化 -> 总数更新
     total(val) {
-      this.initData();
+      this.initData()
     },
   },
   methods: {
     prevChange() {
       if (this.page - 1 < 1) {
-        this.pageChange(1);
+        this.pageChange(1)
       } else {
-        this.pageChange(this.page - 1);
+        this.pageChange(this.page - 1)
       }
     },
     nextChange() {
       if (this.page + 1 > this.pageMax) {
-        this.pageChange(this.pageMax);
+        this.pageChange(this.pageMax)
       } else {
-        this.pageChange(this.page + 1);
+        this.pageChange(this.page + 1)
       }
     },
     pageChange(page) {
-      this.$emit("page-change", page);
+      this.$emit('page-change', page)
     },
     // 生成pageList页码列表
     initData() {
-      this.pageList = []; // 清空页码
-      var i = 1;
+      this.pageList = [] // 清空页码
+      var i = 1
       do {
-        this.pageList.push(i);
-        i++;
-      } while (i <= this.pageMax);
-      this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); // 最多显示5页
+        this.pageList.push(i)
+        i++
+      } while (i <= this.pageMax)
+      this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)) // 最多显示5页
     },
   },
-};
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -130,7 +130,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 0 5px;
-    color: #121212;
+    color: #17173a;
     font-weight: 500;
     cursor: pointer;
     .page_active {
@@ -146,7 +146,7 @@ export default {
     display: flex;
     align-items: center;
     margin: 0 5px;
-    color: #121212;
+    color: #17173a;
     justify-content: center;
     font-size: 12px;
   }
@@ -162,7 +162,7 @@ export default {
       width: 20px;
       height: 20px;
       &:hover {
-        fill: #121212 !important;
+        fill: #17173a !important;
       }
     }
   }

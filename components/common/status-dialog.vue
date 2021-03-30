@@ -23,7 +23,7 @@
       <!-- 请在钱包中确认进行交易 -->
       <h3 class="con-tit" v-html="data.conTit"></h3>
       <div class="con-text" v-html="data.conText"></div>
-      <div class="activeWarn" v-if="data.activeTip">{{ $t("Tip.Active") }}</div>
+      <div class="activeWarn" v-if="data.activeTip">{{ $t('Tip.Active') }}</div>
       <div class="loading_wrap" v-if="data.type != 'success'">
         <i class="loading_img"></i>
       </div>
@@ -42,7 +42,7 @@
 </template>
 <script>
 export default {
-  name: "status-dialog",
+  name: 'status-dialog',
   props: {
     // type: {
     //     type: String,
@@ -68,26 +68,26 @@ export default {
       type: Object,
       default: () => {
         return {
-          type: "",
-          title: "",
-          conTit: "",
-          conText: "",
-          btnText: "",
+          type: '',
+          title: '',
+          conTit: '',
+          conText: '',
+          btnText: '',
           activeTip: false,
-        };
+        }
       },
     },
   },
   methods: {
     closeDialog() {
-      this.$emit("close");
+      this.$emit('close')
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 .loading_wrap {
   display: flex;
   align-items: center;
@@ -98,7 +98,7 @@ export default {
   display: block;
   width: 36px;
   height: 36px;
-  background-image: url("../../assets/img/helmet/jiazai.png");
+  background-image: url('../../assets/img/helmet/jiazai.png');
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
@@ -152,7 +152,7 @@ export default {
         height: 20px;
         background-repeat: no-repeat;
         background-position: center center;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         position: absolute;
         right: 20px;
@@ -177,10 +177,10 @@ export default {
         font-weight: 500;
         margin-top: 16px;
         span {
-          color: #ff9600;
+          color: #fd7e14;
         }
         a {
-          color: #ff9600;
+          color: #fd7e14;
           text-decoration: underline;
         }
       }
@@ -189,13 +189,13 @@ export default {
         color: $bg-d;
         margin-top: 12px;
         p {
-          color: #ff9600;
+          color: #fd7e14;
         }
         span {
-          color: #ff9600;
+          color: #fd7e14;
         }
         a {
-          color: #ff9600;
+          color: #fd7e14;
           text-decoration: underline;
         }
       }
@@ -206,7 +206,7 @@ export default {
           min-width: 96px;
           height: 32px;
           padding: 0px 12px;
-          background: #ff9600;
+          background: #fd7e14;
           color: $text-m;
           font-size: 14px;
           &:hover {
@@ -266,7 +266,7 @@ export default {
         height: 20px;
         background-repeat: no-repeat;
         background-position: center center;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         position: absolute;
         right: 20px;
@@ -291,10 +291,10 @@ export default {
         font-weight: 500;
         margin-top: 16px;
         span {
-          color: #ff9600;
+          color: #fd7e14;
         }
         a {
-          color: #ff9600;
+          color: #fd7e14;
           text-decoration: underline;
         }
       }
@@ -303,10 +303,10 @@ export default {
         color: $bg-d;
         margin-top: 12px;
         span {
-          color: #ff9600;
+          color: #fd7e14;
         }
         a {
-          color: #ff9600;
+          color: #fd7e14;
           text-decoration: underline;
         }
       }
@@ -317,7 +317,7 @@ export default {
           min-width: 96px;
           height: 32px;
           padding: 0px 12px;
-          background: #ff9600;
+          background: #fd7e14;
           color: $text-m;
           font-size: 14px;
           &:hover {

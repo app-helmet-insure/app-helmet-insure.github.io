@@ -164,7 +164,7 @@ export default {
         justify-content: space-between;
         > a {
           display: inline-block;
-          background: #ff9600;
+          background: #fd7e14;
           padding: 3px 15px;
           cursor: pointer;
           border: none;

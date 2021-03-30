@@ -9,19 +9,19 @@
 </template>
 
 <script>
-import BURNTITLE from "~/components/burnbox/burn_title.vue";
-import BURNLIST from "~/components/burnbox/burn_list.vue";
-import Onepager from "~/components/mining/onepager.vue";
+import BURNTITLE from '~/components/burnbox/burn_title.vue'
+import BURNLIST from '~/components/burnbox/burn_list.vue'
+import Onepager from '~/components/mining/onepager.vue'
 export default {
   components: {
     BURNTITLE,
     BURNLIST,
     Onepager,
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @media screen and (min-width: 750px) {
   .main_container {
     width: 80%;
@@ -36,7 +36,7 @@ export default {
       h3 {
         font-size: 34px;
         font-weight: bold;
-        color: #121212;
+        color: #17173a;
       }
       p {
         margin-top: 20px;
@@ -62,7 +62,7 @@ export default {
       font-size: 24px;
       width: 267px;
       font-weight: bold;
-      color: #121212;
+      color: #17173a;
       margin-bottom: 10px;
     }
     p {

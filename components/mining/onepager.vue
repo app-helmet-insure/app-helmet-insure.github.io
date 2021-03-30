@@ -25,33 +25,32 @@
 
 <script>
 export default {
-
   data() {
     return {
       showFlag: false,
-      title: "",
+      title: '',
       text: [],
-    };
+    }
   },
   mounted() {
-    this.$bus.$on("OPEN_ONEPAGER", (data) => {
-      this.showFlag = data.showFlag;
-      this.title = data.title;
-      this.text = data.text;
-    });
-    this.$bus.$on("CLOSE_ONEPAGER", () => {
-      this.showFlag = false;
-    });
+    this.$bus.$on('OPEN_ONEPAGER', (data) => {
+      this.showFlag = data.showFlag
+      this.title = data.title
+      this.text = data.text
+    })
+    this.$bus.$on('CLOSE_ONEPAGER', () => {
+      this.showFlag = false
+    })
   },
   methods: {
     closeOnepager() {
-      this.$bus.$emit("CLOSE_ONEPAGER");
+      this.$bus.$emit('CLOSE_ONEPAGER')
     },
   },
-};
+}
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .onepager_mask {
   position: fixed;
   left: 0;
@@ -99,7 +98,7 @@ export default {
         height: 24px;
         display: inline-block;
         background-repeat: no-repeat;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         cursor: pointer;
       }
@@ -121,14 +120,14 @@ export default {
       border: 1px solid #f96001;
       border-radius: 50px;
       padding: 30px 20px;
-      background-image: url("../../assets/img/flashmining/pagerlogo.png");
+      background-image: url('../../assets/img/flashmining/pagerlogo.png');
       background-repeat: no-repeat;
       background-size: 160px 120px;
       background-position: 95% 92%;
       p {
         margin: 10px 0;
         font-size: 14px;
-        color: #121212;
+        color: #17173a;
         line-height: 28px;
       }
     }
@@ -157,7 +156,7 @@ export default {
         height: 24px;
         display: inline-block;
         background-repeat: no-repeat;
-        background-image: url("../../assets/img/icon/guanbi.png");
+        background-image: url('../../assets/img/icon/guanbi.png');
         background-size: 100% 100%;
         cursor: pointer;
       }
@@ -187,7 +186,7 @@ export default {
         p {
           margin: 10px 0;
           font-size: 14px;
-          color: #121212;
+          color: #17173a;
           line-height: 28px;
         }
       }
@@ -195,7 +194,7 @@ export default {
       .bg {
         width: 100%;
         height: 70px;
-        background-image: url("../../assets/img/flashmining/pagerlogo.png");
+        background-image: url('../../assets/img/flashmining/pagerlogo.png');
         background-repeat: no-repeat;
         background-size: 96px 70px;
         background-position: right;

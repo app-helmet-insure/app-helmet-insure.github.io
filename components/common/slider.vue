@@ -161,17 +161,21 @@ export default {
     height: 24px;
   }
   .slider {
+    position: relative;
     width: 260px;
     height: calc(100vh - 50px);
     background-image: url('../../assets/img/slider/slider_logo_bg.png');
     background-repeat: no-repeat;
     background-size: 100% 135px;
-    padding: 30px 20px 0;
+    padding: 70px 20px 30px;
     display: flex;
     flex-direction: column;
   }
   .logo {
     display: block;
+    position: absolute;
+    left: 20px;
+    top: 30px;
     width: 150px;
     height: 40px;
     background-image: url('../../assets/img/slider/slider_logo.png');

@@ -291,6 +291,7 @@ export default {
         flex: 4;
         text-align: right;
         margin-right: 20px;
+        min-width: 470px;
       }
     }
   }
@@ -389,7 +390,7 @@ export default {
           flex: 4;
           display: flex;
           justify-content: flex-end;
-          min-width: 370px;
+          min-width: 470px;
           .activeButton {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
@@ -403,7 +404,7 @@ export default {
           }
           button {
             padding: 0px 10px;
-            height: 36px;
+            height: 40px;
             background: #f8f9fa;
             border-radius: 5px;
             border: 1px solid #e8e8eb;
@@ -411,7 +412,7 @@ export default {
             font-size: 14px;
             font-family: HelveticaNeue;
             color: #17173a;
-            line-height: 24px;
+            line-height: 18px;
             font-weight: 500;
             display: flex;
             align-items: center;

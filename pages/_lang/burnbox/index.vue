@@ -24,7 +24,7 @@ export default {
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
   .main_container {
-    width: 100%;
+    width: 80%;
     .burn_container {
       width: 100%;
       min-width: 1026px;

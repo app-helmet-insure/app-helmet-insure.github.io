@@ -55,7 +55,7 @@ export default {
 
 @media screen and (min-width: 750px) {
   .main_container {
-    width: 100%;
+    width: 80%;
     .flashmining_container {
       width: 100%;
       min-width: 1026px;

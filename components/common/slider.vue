@@ -222,9 +222,31 @@ export default {
       height: auto;
       position: relative;
     }
-    .right {
-      position: absolute;
-      right: 20px;
+    .arrow {
+      position: relative;
+      margin: 3px 0 0 6px;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #fff;
+      border-left: 7px solid transparent;
+      &::after {
+        content: "";
+        position: absolute;
+        top: -7px;
+        left: -5px;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #fd7e14;
+        border-left: 5px solid transparent;
+      }
+    }
+    .arrow_white {
+      border-top: 7px solid #17173a;
+      &::after {
+        content: "";
+        border-top: 5px solid #fff;
+      }
+    }
+    .arrow_rotate {
+      transform: rotate(180deg);
     }
     &_item {
       width: 100%;
@@ -240,12 +262,17 @@ export default {
         display: flex;
         align-items: center;
         padding: 0 20px;
+        position: relative;
         > .icon {
           width: 24px;
           height: 24px;
           margin-right: 16px;
           display: block;
           fill: opacify($color: #17173a, $amount: 0.7);
+        }
+        .right {
+          position: absolute;
+          right: 20px;
         }
       }
       .child_menu {

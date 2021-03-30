@@ -169,10 +169,10 @@
     "MiningTip2": "你可以通过不同的LPT挖出多重token奖励，请注意池子的到期日提示"
   },
   "Account": {
-    "Account": "Account",
-    "ConnectedWith": "Connected with",
-    "Change": "Change",
-    "SignOut": "SignOut"
+    "Account": "我的账户",
+    "ConnectedWith": "选择钱包",
+    "Change": "更换钱包",
+    "SignOut": "登出"
   },
   "Insurance": {
     "Insurance_text1": "保险交易",

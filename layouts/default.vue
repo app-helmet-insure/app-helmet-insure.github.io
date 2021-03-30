@@ -556,18 +556,9 @@ export default {
         background: #f8f9fa;
         min-width: 1026px;
         // padding: 0 12%;
+        margin: 0 auto;
       }
     }
-  }
-}
-@media screen and(min-width:1386px) {
-  .content_wrap {
-    padding: 0 12%;
-  }
-}
-@media screen and(max-width:1386px) {
-  .content_wrap {
-    padding: 0 40px;
   }
 }
 @media screen and (max-width: 750px) {

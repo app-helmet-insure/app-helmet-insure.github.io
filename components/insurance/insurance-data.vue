@@ -2,48 +2,54 @@
   <div class="insurance-banner">
     <ul>
       <li>
-        <!-- 已成交保单 -->
-        <p>
-          <label>{{ $t("Banner.ClosedPolicy") }}</label>
-          <span>{{ isLogin ? helmetVarieties : "--" }}</span>
-        </p>
+        <div>
+          <!-- 已成交保单 -->
+          <p>
+            <label>{{ $t("Banner.ClosedPolicy") }}</label>
+            <span>{{ isLogin ? helmetVarieties : "--" }}</span>
+          </p>
+        </div>
       </li>
       <li>
         <!-- LONG当前总价值 -->
-        <p>
-          <label>{{ $t("Banner.LongValue") }}</label>
-          <span v-if="isLogin">
-            <template>
-              <countTo
-                :startVal="Number(0)"
-                :endVal="Number(totalHelmetsBorrowedVolume)"
-                :duration="2000"
-                :decimals="2"
-              />$
-            </template>
-          </span>
-          <span v-else>--</span>
-        </p>
+        <div>
+          <p>
+            <label>{{ $t("Banner.LongValue") }}</label>
+            <span v-if="isLogin">
+              <template>
+                <countTo
+                  :startVal="Number(0)"
+                  :endVal="Number(totalHelmetsBorrowedVolume)"
+                  :duration="2000"
+                  :decimals="2"
+                />$
+              </template>
+            </span>
+            <span v-else>--</span>
+          </p>
+        </div>
       </li>
       <li>
         <!-- Helmet流通量 -->
-        <p>
-          <label>
-            <span>{{ $t("Banner.HelmetPcice") }}</span>
-            <span> {{ isLogin ? helmetPrice : "--" }} USD </span>
-          </label>
-          <span>
-            From:&nbsp;
-            <i></i>
-            &nbsp;
-            <a
-              href="https://exchange.pancakeswap.finance/#/swap"
-              target="_blank"
-            >
-              pancakeswap.finance
-            </a>
-          </span>
-        </p>
+        <div>
+          <p>
+            <label>
+              <span>{{ $t("Banner.HelmetPcice") }}</span>
+              <span> {{ isLogin ? helmetPrice : "--" }} USD </span>
+            </label>
+            <span>
+              From:&nbsp;
+              <i></i>
+              &nbsp;
+              <a
+                href="https://exchange.pancakeswap.finance/#/swap"
+                target="_blank"
+              >
+                pancakeswap.finance
+              </a>
+            </span>
+          </p>
+        </div>
       </li>
     </ul>
   </div>
@@ -175,15 +181,23 @@ export default {
       text-align: center;
       justify-content: space-between;
       li {
-        width: 328px;
+        width: 30%;
+        min-width: 328px;
         height: 120px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        padding: 0 20px;
+        border-radius: 10px;
+        > div {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          padding: 0 20px;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          background-repeat: no-repeat;
+          background-size: 108px 86px;
+          background-position: right bottom;
+          border-radius: 10px;
+        }
         p {
           display: flex;
           flex-direction: column;
@@ -258,13 +272,25 @@ export default {
         }
       }
       li:nth-of-type(1) {
-        background-image: url("../../assets/img/insurancelist/card1@2x.png");
+        background: linear-gradient(227deg, #c48dfe 0%, #8f3fff 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card1@2x.png");
+        }
       }
       li:nth-of-type(2) {
-        background-image: url("../../assets/img/insurancelist/card2@2x.png");
+        background: linear-gradient(222deg, #ffdb57 0%, #f76b1c 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card2@2x.png");
+        }
       }
       li:nth-of-type(3) {
-        background-image: url("../../assets/img/insurancelist/card3@2x.png");
+        background: linear-gradient(222deg, #a0b9ff 0%, #4d7bfe 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card3@2x.png");
+        }
       }
     }
   }

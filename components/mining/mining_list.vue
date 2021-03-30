@@ -48,8 +48,8 @@
           <i></i>
           <p>
             <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>d</b> <i>/</i>{{ item.dueDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b>
+              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
               {{ item.dueDate }}
@@ -423,7 +423,7 @@ export default {
           day: "00",
           hour: "00",
         };
-        return "Expired";
+        return this.$t("Insurance.Insurance_text13");
       }
     },
   },
@@ -631,7 +631,7 @@ export default {
             box-sizing: border-box;
             &:hover {
               padding: 0px 9px;
-              height: 35px;
+              height: 36px;
               border: 2px solid #fd7e14;
               color: #fd7e14;
               i {
@@ -647,7 +647,7 @@ export default {
               border-top: 6px solid rgba(23, 23, 58, 0.6);
               border-left: 5px solid transparent;
               &::after {
-                content: '';
+                content: "";
                 position: absolute;
                 top: -6px;
                 left: -3px;

@@ -134,9 +134,9 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 .header-container {
-  width: 100%;
   height: 80px;
   background: #f8f9fa;
+  min-width: 1026px;
   > div {
     height: 100%;
     margin: 0 auto;
@@ -232,7 +232,8 @@ export default {
 
 @media screen and (min-width: 750px) {
   .header-container {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
     > div {
       // width: 1200px;
       .logo {

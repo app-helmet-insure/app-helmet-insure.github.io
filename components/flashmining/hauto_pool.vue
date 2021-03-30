@@ -534,13 +534,7 @@ export default {
     margin-left: 4px;
   }
 }
-.icon {
-  width: 24px;
-  height: 24px;
-  vertical-align: -0.15em;
-  fill: #787878;
-  overflow: hidden;
-}
+
 .b_button {
   width: 100%;
   margin-top: 16px;

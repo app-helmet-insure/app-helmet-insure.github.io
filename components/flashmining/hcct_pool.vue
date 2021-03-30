@@ -511,13 +511,6 @@ export default {
     margin-left: 4px;
   }
 }
-.icon {
-  width: 24px;
-  height: 24px;
-  vertical-align: -0.15em;
-  fill: #787878;
-  overflow: hidden;
-}
 
 .loading_pic {
   display: block;

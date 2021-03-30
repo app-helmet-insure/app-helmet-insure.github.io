@@ -189,9 +189,9 @@
     "Insurance_text3": "Latest price",
     "Insurance_text4": "Insurance period",
     "Insurance_text5": "Operation",
-    "Insurance_text6": "Buy Cover 50% OFF policy",
-    "Insurance_text7": "Buy Cover Miss Out policy",
-    "Insurance_text8": "Supply Policy",
+    "Insurance_text6": "Cover 50% Off ",
+    "Insurance_text7": "Cover Miss Out ",
+    "Insurance_text8": "Supply",
     "Insurance_text9": "Confirm",
     "Insurance_text10": "Confirm",
     "Insurance_text11": "Activate price",
@@ -201,8 +201,10 @@
     "Insurance_text16": "Connect to a wallet",
     "Insurance_text17": "Token",
     "Insurance_text18": "Max",
-    "Insurance_text19": "50%OFF price",
+    "Insurance_text19": "50% Off price",
     "Insurance_text20": "Real-time price",
-    "Insurance_text21": "Cover Miss Out price"
+    "Insurance_text21": "Cover Miss Out price",
+    "Insurance_text22": "Finished",
+    "Insurance_text23": "Deposit"
   }
 }

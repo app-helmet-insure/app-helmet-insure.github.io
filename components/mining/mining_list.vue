@@ -14,7 +14,7 @@
         <img src="" alt="" />
         <section>
           <span>{{ item.miningName }}</span>
-          <i v-if="item.info"
+          <!-- <i v-if="item.info"
             ><svg
               t="1617039040708"
               class="icon"
@@ -30,7 +30,7 @@
                 p-id="1288"
               ></path>
             </svg>
-          </i>
+          </i> -->
         </section>
         <section>
           <p>
@@ -52,14 +52,18 @@
               >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              {{ item.dueDate }}
+              {{
+                item.dueDate == "Expired"
+                  ? $t("Insurance.Insurance_text22")
+                  : item.dueDate
+              }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </section>
         <section>
           <span>{{
-            item.dueDate == "Expired" ? "Infinity" + "%" : item.yearEarn + "%"
+            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>{{ item.earnName }}</span>
         </section>
@@ -87,7 +91,7 @@
                 : 'claimMining'
             "
           >
-            {{ $t("Table.RedemptionReward") }}
+            {{ $t("Table.Claim") }}
             <i class="selectDown"></i>
           </button>
         </section>
@@ -201,7 +205,7 @@ export default {
           miningName: "HELMET-BNB LP",
           earnNum: "two",
           earn: "helmet_cake",
-          dueDate: "Permanent",
+          dueDate: "--",
           como: true,
           info: true,
           earnName: "APR",
@@ -221,7 +225,7 @@ export default {
           miningName: "HELMET POOL",
           earn: "helmet",
           earnNum: "one",
-          dueDate: "Permanent",
+          dueDate: "--",
           como: false,
           info: true,
           earnName: "APY",
@@ -423,7 +427,7 @@ export default {
           day: "00",
           hour: "00",
         };
-        return this.$t("Insurance.Insurance_text13");
+        return "Expired";
       }
     },
   },
@@ -602,6 +606,7 @@ export default {
           flex: 4;
           display: flex;
           justify-content: flex-end;
+          min-width: 200px;
           .activeButton {
             border: 2px solid #fd7e14;
             padding: 0px 9px;

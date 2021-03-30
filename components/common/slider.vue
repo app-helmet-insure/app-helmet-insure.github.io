@@ -325,7 +325,7 @@ export default {
       border-radius: 5px;
       color: #ffffff;
       .icon {
-        fill: #fff;
+        fill: #fff !important;
       }
       .right {
         transform: rotate(90deg);

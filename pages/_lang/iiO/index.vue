@@ -6,54 +6,57 @@
     <div class="content_h5">
       <h3>
         <img src="~/assets/img/iio/helmet_logo.png" alt="" />
-        {{ $t('IIO.ComingSoon') }}
+        {{ $t("IIO.ComingSoon") }}
       </h3>
-      <p>{{ $t('IIO.InitialOffering') }}</p>
+      <p>{{ $t("IIO.InitialOffering") }}</p>
     </div>
     <div class="apply_iio">
       <div class="left">
         <p>Want to launch your own IIO with Helmet?</p>
-        <button>Apply Now</button>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSduUhQJnmmyukVA1jMGmFwnn4s_B00uq1GmLyd0CKARvJ6w0Q/viewform"
+          target="_blank"
+          >Apply Now</a
+        >
       </div>
       <div class="right"></div>
     </div>
     <div class="action_wrap">
-
-    <div class="action">
-      <div class="action_step_wrap">
-        <div class="action_step_item">
+      <div class="action">
+        <div class="action_step_wrap">
+          <div class="action_step_item">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-buy"></use>
+            </svg>
+            <span>{{ $t("IIO.BuyTokenTicket") }}</span>
+          </div>
           <svg class="icon" aria-hidden="true">
-            <use href="#icon-buy"></use>
+            <use href="#icon-WhiteRight"></use>
           </svg>
-          <span>{{ $t('IIO.BuyTokenTicket') }}</span>
-        </div>
-        <svg class="icon" aria-hidden="true">
-          <use href="#icon-WhiteRight"></use>
-        </svg>
-        <div class="action_step_item">
+          <div class="action_step_item">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-share"></use>
+            </svg>
+            <span>{{ $t("IIO.DepositLptReward") }}</span>
+          </div>
           <svg class="icon" aria-hidden="true">
-            <use href="#icon-share"></use>
+            <use href="#icon-WhiteRight"></use>
           </svg>
-          <span>{{ $t('IIO.DepositLptReward') }}</span>
-        </div>
-        <svg class="icon" aria-hidden="true">
-          <use href="#icon-WhiteRight"></use>
-        </svg>
-        <div class="action_step_item">
-          <svg class="icon" aria-hidden="true">
-            <use href="#icon-earn"></use>
-          </svg>
-          <span>{{ $t('IIO.SwapToken') }}</span>
+          <div class="action_step_item">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-earn"></use>
+            </svg>
+            <span>{{ $t("IIO.SwapToken") }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="content_pc">
-      <h3>
-        <img src="~/assets/img/iio/helmet_logo.png" alt="" />
-        {{ $t('IIO.ComingSoon') }}
-      </h3>
-      <p><p>{{ $t('IIO.InitialOffering') }}</p></p>
-    </div>
+      <div class="content_pc">
+        <h3>
+          <img src="~/assets/img/iio/helmet_logo.png" alt="" />
+          {{ $t("IIO.ComingSoon") }}
+        </h3>
+        <p>{{ $t("IIO.InitialOffering") }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -102,7 +105,8 @@ export default {};
           color: #17173a;
           line-height: 50px;
         }
-        button {
+        a {
+          display: block;
           margin-top: 30px;
           width: 180px;
           height: 40px;

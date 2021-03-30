@@ -291,7 +291,7 @@ export default {
         flex: 4;
         text-align: right;
         margin-right: 20px;
-        min-width: 470px;
+        min-width: 420px;
       }
     }
   }
@@ -390,7 +390,7 @@ export default {
           flex: 4;
           display: flex;
           justify-content: flex-end;
-          min-width: 470px;
+          min-width: 420px;
           .activeButton {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
@@ -419,9 +419,12 @@ export default {
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
+            &:nth-of-type(1) {
+              margin: 0;
+            }
             &:hover {
               padding: 0px 9px;
-              height: 36px;
+              height: 40px;
               border: 2px solid #fd7e14;
               color: #fd7e14;
               background: #fffaf3;

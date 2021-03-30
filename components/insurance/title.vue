@@ -1,9 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide verson">
+      <!-- <div class="swiper-slide verson">
         <div></div>
-      </div>
+      </div> -->
       <div class="swiper-slide combododo">
         <div></div>
       </div>
@@ -18,43 +18,43 @@
 </template>
 
 <script>
-import Swiper from 'swiper/swiper-bundle.min.js'
-import 'swiper/swiper-bundle.min.css'
+import Swiper from "swiper/swiper-bundle.min.js";
+import "swiper/swiper-bundle.min.css";
 export default {
   data() {
     return {
       day: 0,
       hour: 0,
       minute: 0,
-    }
+    };
   },
   mounted() {
-    this.init()
+    this.init();
   },
   watch: {
     day(newVal, val) {
       if (newVal) {
-        this.day = newVal
+        this.day = newVal;
       }
     },
     hour(newVal, val) {
       if (newVal) {
-        this.hour = newVal
+        this.hour = newVal;
       }
     },
     minute(newVal, val) {
       if (newVal) {
-        this.minute = newVal
+        this.minute = newVal;
       }
     },
   },
   methods: {
     toMining() {
-      this.$router.push('/mining')
+      this.$router.push("/mining");
     },
     init() {
       setTimeout(() => {
-        var mySwiper = new Swiper('.swiper-container', {
+        var mySwiper = new Swiper(".swiper-container", {
           loop: true,
           spaceBetween: 0,
           autoplay: {
@@ -66,14 +66,14 @@ export default {
           //   clickable: true,
           // },
           navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
           },
-        })
-      }, 100)
+        });
+      }, 100);
     },
   },
-}
+};
 </script>
 <style lang="scss">
 .swiper-pagination {
@@ -134,13 +134,13 @@ export default {
         #ff9243 100%
       );
       > div {
-        background-image: url('../../assets/img/banner/verson_web.png');
+        background-image: url("../../assets/img/banner/verson_web.png");
       }
     }
     .combododo {
       background: linear-gradient(225deg, #ff9502 0%, #ffc400 100%);
       > div {
-        background-image: url('../../assets/img/banner/combo_dodo_web.png');
+        background-image: url("../../assets/img/banner/combo_dodo_web.png");
       }
     }
     .imgbanner {
@@ -150,7 +150,7 @@ export default {
     .dodogroup {
       background: #000000;
       > div {
-        background-image: url('../../assets/img/banner/dodo_group_web.png');
+        background-image: url("../../assets/img/banner/dodo_group_web.png");
       }
     }
   }

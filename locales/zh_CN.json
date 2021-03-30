@@ -180,8 +180,8 @@
     "Insurance_text3": "最新价",
     "Insurance_text4": "保期",
     "Insurance_text5": "操作",
-    "Insurance_text6": "购买腰斩险",
-    "Insurance_text7": "购买翻倍险",
+    "Insurance_text6": "腰斩险",
+    "Insurance_text7": "翻倍险",
     "Insurance_text8": "发行保险",
     "Insurance_text9": "立即创建翻倍险",
     "Insurance_text10": "立即创建腰斩险",
@@ -194,6 +194,8 @@
     "Insurance_text18": "最大量",
     "Insurance_text19": "腰斩价",
     "Insurance_text20": "当前价",
-    "Insurance_text21": "翻倍价"
+    "Insurance_text21": "翻倍价",
+    "Insurance_text22": "已结束",
+    "Insurance_text23": "质押"
   }
 }

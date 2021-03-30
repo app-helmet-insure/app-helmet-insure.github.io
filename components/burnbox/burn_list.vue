@@ -1,7 +1,7 @@
 <template>
   <div class="burn_list">
     <div class="burn_title">
-      <h3>{{ $t('Table.BurnMining') }}</h3>
+      <h3>{{ $t("Table.BurnMining") }}</h3>
     </div>
     <div class="burn_item" v-for="item in burnList" :key="item.earn">
       <div
@@ -24,7 +24,7 @@
         <section>
           <span
             >{{ item.burnName }}
-            <i @click="onepager(item.icon)"
+            <!-- <i @click="onepager(item.icon)"
               ><svg
                 t="1617039040708"
                 class="icon"
@@ -39,11 +39,12 @@
                   d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
                   p-id="1288"
                 ></path></svg></i
-          ></span>
+          >-->
+          </span>
         </section>
         <section>
           <p>
-            {{ $t('Table.EarnList') }} <span>{{ item.earn }} </span>
+            {{ $t("Table.EarnList") }} <span>{{ item.earn }} </span>
           </p>
         </section>
         <section>
@@ -54,14 +55,18 @@
               >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              {{ item.dueDate }}
+              {{
+                item.dueDate == "Expired"
+                  ? $t("Insurance.Insurance_text22")
+                  : item.dueDate
+              }}
             </span>
-            <span>{{ $t('Table.MIningCutdown') }}</span>
+            <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </section>
         <section>
-          <span>{{ item.bonus + ' ' + item.earn }}</span>
-          <span>{{ $t('Table.Bonus') }}</span>
+          <span>{{ item.bonus + " " + item.earn }}</span>
+          <span>{{ $t("Table.Bonus") }}</span>
         </section>
         <section>
           <button
@@ -72,7 +77,7 @@
                 : 'stakeFlash'
             "
           >
-            {{ $t('Table.Burn') }}
+            {{ $t("Table.Burn") }}
             <i class="selectDown"></i>
           </button>
           <button
@@ -83,7 +88,7 @@
                 : 'claimFlash'
             "
           >
-            {{ $t('Table.ReceiveAward') }}
+            {{ $t("Table.ReceiveAward") }}
             <i class="selectDown"></i>
           </button>
         </section>
@@ -106,8 +111,8 @@
 </template>
 
 <script>
-import HCCTBURN from '~/components/burnbox/hcct_burn.vue'
-import HCTKBURN from '~/components/burnbox/hctk_burn.vue'
+import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
+import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 export default {
   components: {
     HCCTBURN,
@@ -117,75 +122,75 @@ export default {
     return {
       burnList: [],
       showActiveBurn: false,
-      activeBurn: '',
-      activeType: '',
-    }
+      activeBurn: "",
+      activeType: "",
+    };
   },
   mounted() {
-    this.initBurnBox()
+    this.initBurnBox();
   },
   methods: {
     StakeMining(MiningType) {
-      console.log(MiningType)
-      this.activeType = 'STAKE'
-      this.showActiveBurn = true
-      this.activeBurn = MiningType
+      console.log(MiningType);
+      this.activeType = "STAKE";
+      this.showActiveBurn = true;
+      this.activeBurn = MiningType;
     },
     ClaimMining(MiningType) {
-      this.activeType = 'CLAIM'
-      this.showActiveBurn = true
-      this.activeBurn = MiningType
+      this.activeType = "CLAIM";
+      this.showActiveBurn = true;
+      this.activeBurn = MiningType;
     },
     initBurnBox() {
       let arr = [
         {
-          burnName: 'hCTK Burning Box',
-          earn: 'hDODO',
+          burnName: "hCTK Burning Box",
+          earn: "hDODO",
           bonus: 10000,
-          dueDate: this.getRemainTime('2021/03/23 00:00'),
-          icon: 'hCTK',
+          dueDate: this.getRemainTime("2021/03/23 00:00"),
+          icon: "hCTK",
         },
         {
-          burnName: 'HCCT Burning Box',
-          earn: 'HCCTII',
+          burnName: "HCCT Burning Box",
+          earn: "HCCTII",
           bonus: 100000,
-          dueDate: this.getRemainTime('2021/03/19 00:00'),
-          icon: 'HCCT',
+          dueDate: this.getRemainTime("2021/03/19 00:00"),
+          icon: "HCCT",
         },
-      ]
-      this.burnList = arr
+      ];
+      this.burnList = arr;
     },
     getRemainTime(time) {
-      let now = new Date() * 1
-      let dueDate = time
-      dueDate = new Date(dueDate)
-      let DonwTime = dueDate - now
-      let day = Math.floor(DonwTime / (24 * 3600000))
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      )
+      );
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      )
-      let template
+      );
+      let template;
 
       if (dueDate > now) {
         template = {
-          day: day > 9 ? day : '0' + day,
-          hour: hour > 9 ? hour : '0' + hour,
-        }
-        return template
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
+        return template;
       } else {
         template = {
           day: "00",
           hour: "00",
         };
-        return this.$t("Insurance.Insurance_text13");
+        return "Expired";
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -295,7 +300,7 @@ export default {
             display: block;
             width: 30px;
             height: 30px;
-            background-image: url('../../assets/img/insurancelist/insuranceTime.png');
+            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin-right: 8px;

@@ -361,8 +361,9 @@ export default {
       border-bottom: 1px solid #e8e8eb;
       a {
         .icon {
+          fill: rgba(23, 23, 58, 0.7);
           &:hover {
-            fill: #fd7e14;
+            fill: #17173a;
           }
         }
       }

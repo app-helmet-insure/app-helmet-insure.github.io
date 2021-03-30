@@ -228,13 +228,13 @@ export default {
         {
           text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         {
           text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         //  {
@@ -252,7 +252,7 @@ export default {
         // {
         //   text: this.$t('Table.MyRewards'),
         //   num: 0,
-        //   color: '#00B900',
+        //   color: '#28a745',
         //   unit: ''
         // }
       ],
@@ -897,18 +897,18 @@ export default {
           margin: 0 4px;
         }
         .deposit_btn {
-          color: #00b900;
+          color: #28a745;
         }
         .withdraw_btn {
-          color: #ff6400;
+          color: #dc3545;
         }
         .deposit_active {
           color: #ffffff;
-          background: #00b900;
+          background: #28a745;
         }
         .withdraw_active {
           color: #ffffff;
-          background: #ff6400;
+          background: #dc3545;
         }
       }
       .pool_content {

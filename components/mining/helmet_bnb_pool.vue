@@ -190,13 +190,13 @@ export default {
         {
           text: this.$t('Table.RewardsDistribution') + '（weekly）',
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '（weekly）',
         },
         {
           text: this.$t('Table.PoolAPR'),
           num: 0,
-          color: '#00B900',
+          color: '#28a745',
           unit: '',
         },
         //  {
@@ -214,7 +214,7 @@ export default {
         // {
         //   text: this.$t('Table.MyRewards'),
         //   num: 0,
-        //   color: '#00B900',
+        //   color: '#28a745',
         //   unit: ''
         // }
       ],
@@ -714,11 +714,11 @@ export default {
         }
       }
       .deposit {
-        border-top: 2px solid #00b900;
+        border-top: 2px solid #28a745;
         background: rgba(0, 185, 0, 0.04);
         .title {
           > span {
-            color: #00b900;
+            color: #28a745;
           }
         }
         .button {
@@ -767,11 +767,11 @@ export default {
         }
       }
       .withdraw {
-        border-top: 2px solid #ff6400;
+        border-top: 2px solid #dc3545;
         background: rgba(255, 100, 0, 0.04);
         .title {
           > span {
-            color: #ff6400;
+            color: #dc3545;
           }
         }
         .button {

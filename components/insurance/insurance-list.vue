@@ -373,7 +373,7 @@ export default {
                 font-family: IBMPlexSans;
                 color: #17173a;
                 line-height: 14px;
-                font-weight: 600;
+                font-weight: 500;
               }
               &:nth-of-type(2) {
                 margin-top: 4px;
@@ -394,6 +394,7 @@ export default {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
             color: #fd7e14;
+            background: #fffaf3;
             i {
               border-right: 5px solid transparent;
               border-top: 6px solid #fd7e14;
@@ -422,6 +423,7 @@ export default {
               height: 36px;
               border: 2px solid #fd7e14;
               color: #fd7e14;
+              background: #fffaf3;
               i {
                 border-right: 5px solid transparent;
                 border-top: 6px solid #fd7e14;

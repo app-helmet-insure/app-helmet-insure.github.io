@@ -917,7 +917,7 @@ export default {
           .control_real {
             height: 100%;
             border-radius: 6px;
-            background: #ff6400;
+            background: #dc3545;
             position: relative;
             .fire {
               display: block;

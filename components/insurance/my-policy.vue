@@ -1043,7 +1043,7 @@ export default {
         left: 0;
         height: 100%;
         width: 0px;
-        border-left: 2px solid#00b900;
+        border-left: 2px solid#28a745;
       }
     }
   }
@@ -1066,7 +1066,7 @@ export default {
   }
 }
 .call_text {
-  color: #00b900 !important;
+  color: #28a745 !important;
 }
 .put_text {
   color: #dc3545 !important;
@@ -1143,7 +1143,7 @@ export default {
             }
           }
           > .call_text {
-            color: #00b900;
+            color: #28a745;
           }
           > .put_text {
             color: #dc3545;

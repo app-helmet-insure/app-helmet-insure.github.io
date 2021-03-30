@@ -1,7 +1,7 @@
 <template>
   <div class="mining_list">
     <div class="mining_title">
-      <h3>{{ $t("Header.Mining") }}</h3>
+      <h3>{{ $t('Header.Mining') }}</h3>
     </div>
     <div class="mining_item" v-for="item in miningList" :key="item.earn">
       <div
@@ -34,7 +34,7 @@
         </section>
         <section>
           <p>
-            {{ $t("Table.EarnList") }}
+            {{ $t('Table.EarnList') }}
             <span>
               <img
                 :src="require(`~/assets/img/mining/${item.earn}.png`)"
@@ -49,17 +49,17 @@
           <p>
             <span v-if="typeof item.dueDate == 'object'">
               {{ item.dueDate.day }}<b>d</b> <i>/</i>{{ item.dueDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b>
+              }}<b>{{ $t('Content.HourM') }}</b>
             </span>
             <span v-else>
               {{ item.dueDate }}
             </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
+            <span>{{ $t('Table.MIningCutdown') }}</span>
           </p>
         </section>
         <section>
           <span>{{
-            item.dueDate == "Expired" ? "Infinity" + "%" : item.yearEarn + "%"
+            item.dueDate == 'Expired' ? 'Infinity' + '%' : item.yearEarn + '%'
           }}</span>
           <span>{{ item.earnName }}</span>
         </section>
@@ -74,7 +74,7 @@
                 : 'stakeMining'
             "
           >
-            {{ $t("Table.Stakeing") }}
+            {{ $t('Table.Stakeing') }}
             <i class="selectDown"></i>
           </button>
           <button
@@ -87,7 +87,7 @@
                 : 'claimMining'
             "
           >
-            {{ $t("Table.RedemptionReward") }}
+            {{ $t('Table.RedemptionReward') }}
             <i class="selectDown"></i>
           </button>
         </section>
@@ -128,15 +128,15 @@ import {
   getAllHelmet,
   Rewards,
   RewardsDuration,
-} from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
-import { fixD } from "~/assets/js/util.js";
-import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
-import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
-import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
-import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
-import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
+} from '~/interface/deposite'
+import precision from '~/assets/js/precision.js'
+import { uniswap } from '~/assets/utils/address-pool.js'
+import { fixD } from '~/assets/js/util.js'
+import HelmetBnbPool from '~/components/mining/helmet_bnb_pool.vue'
+import HelmetForPool from '~/components/mining/helmet_for_pool.vue'
+import HelmetHelmetPool from '~/components/mining/helmet_helmet_pool.vue'
+import HelmetBurgerPool from '~/components/mining/helmet_burger_pool.vue'
+import HelmetDodoPool from '~/components/mining/helmet_dodo_pool.vue'
 
 export default {
   components: {
@@ -150,128 +150,128 @@ export default {
     return {
       apyArray: {},
       miningList: [],
-      activeType: "",
+      activeType: '',
       showActiveMining: false,
-      activeMining: "",
-    };
+      activeMining: '',
+    }
   },
   mounted() {
-    this.initMiningData();
+    this.initMiningData()
     setTimeout(() => {
-      this.getAPY();
-    }, 1000);
+      this.getAPY()
+    }, 1000)
     setInterval(() => {
       setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
+        this.getAPY()
+      })
+    }, 20000)
   },
   computed: {
     indexArray() {
-      return this.$store.state.allIndexPrice;
+      return this.$store.state.allIndexPrice
     },
   },
   watch: {
     apyArray: {
-      handler: "apyArrayWatch",
+      handler: 'apyArrayWatch',
       immediate: true,
     },
   },
   methods: {
     apyArrayWatch(newValue) {
       if (newValue) {
-        this.initMiningData();
+        this.initMiningData()
       }
     },
     StakeMining(MiningType) {
-      console.log(MiningType);
-      this.activeType = "STAKE";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
+      console.log(MiningType)
+      this.activeType = 'STAKE'
+      this.showActiveMining = true
+      this.activeMining = MiningType
     },
     ClaimMining(MiningType) {
-      this.activeType = "CLAIM";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
+      this.activeType = 'CLAIM'
+      this.showActiveMining = true
+      this.activeMining = MiningType
     },
     initMiningData() {
-      let apyArray = this.apyArray;
+      let apyArray = this.apyArray
       let arr = [
         {
-          miningName: "HELMET-BNB LP",
-          earnNum: "two",
-          earn: "helmet_cake",
-          dueDate: "Permanent",
+          miningName: 'HELMET-BNB LP',
+          earnNum: 'two',
+          earn: 'helmet_cake',
+          dueDate: 'Permanent',
           como: true,
           info: true,
-          earnName: "APR",
-          yearEarn: apyArray["helmet_cake"] || "--",
+          earnName: 'APR',
+          yearEarn: apyArray['helmet_cake'] || '--',
         },
         {
-          miningName: "HELMET-hDODO DLP",
-          earn: "helmet_dodo",
-          earnNum: "two",
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
+          miningName: 'HELMET-hDODO DLP',
+          earn: 'helmet_dodo',
+          earnNum: 'two',
+          dueDate: this.getRemainTime('2021/04/10 00:00'),
           como: true,
           info: true,
-          earnName: "APR",
-          yearEarn: apyArray["helmet_dodo"] || "--",
+          earnName: 'APR',
+          yearEarn: apyArray['helmet_dodo'] || '--',
         },
         {
-          miningName: "HELMET POOL",
-          earn: "helmet",
-          earnNum: "one",
-          dueDate: "Permanent",
+          miningName: 'HELMET POOL',
+          earn: 'helmet',
+          earnNum: 'one',
+          dueDate: 'Permanent',
           como: false,
           info: true,
-          earnName: "APY",
-          yearEarn: apyArray["helmet"] || "--",
+          earnName: 'APY',
+          yearEarn: apyArray['helmet'] || '--',
         },
         {
-          miningName: "HELMET-hFOR LP",
-          earn: "helmet_for",
-          earnNum: "two",
-          dueDate: this.getRemainTime("2021/03/20 00:00"),
+          miningName: 'HELMET-hFOR LP',
+          earn: 'helmet_for',
+          earnNum: 'two',
+          dueDate: this.getRemainTime('2021/03/20 00:00'),
           como: true,
           info: true,
-          earnName: "APR",
-          yearEarn: apyArray["helmet_for"] || "--",
+          earnName: 'APR',
+          yearEarn: apyArray['helmet_for'] || '--',
         },
         {
-          miningName: "HELMET-hBURGER LP",
-          earn: "helmet_burger",
-          earnNum: "two",
-          dueDate: this.getRemainTime("2021/03/07 00:00"),
+          miningName: 'HELMET-hBURGER LP',
+          earn: 'helmet_burger',
+          earnNum: 'two',
+          dueDate: this.getRemainTime('2021/03/07 00:00'),
           como: true,
           info: true,
-          earnName: "APR",
-          yearEarn: apyArray["helmet_burger"] || "--",
+          earnName: 'APR',
+          yearEarn: apyArray['helmet_burger'] || '--',
         },
-      ];
-      this.miningList = arr;
-      this.$forceUpdate();
+      ]
+      this.miningList = arr
+      this.$forceUpdate()
     },
     getAPY() {
-      this.HELMET_BNB_LP_APY();
-      this.HELMET_hDODO_DLP_APY();
-      this.HELMET_POOL_APY();
-      this.HELMET_hFOR_LP_APY();
-      this.HELMET_hBURGER_LP_APY();
+      this.HELMET_BNB_LP_APY()
+      this.HELMET_hDODO_DLP_APY()
+      this.HELMET_POOL_APY()
+      this.HELMET_hFOR_LP_APY()
+      this.HELMET_hBURGER_LP_APY()
     },
     async HELMET_BNB_LP_APY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
+      this.helmetPrice = this.indexArray[1]['HELMET']
+      let cakePrice = this.$store.state.CAKE_BUSD
+      let bnbPrice = this.$store.state.BNB_BUSD
       // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let totalHelmet = await totalSupply('HELMETBNB_LPT')
+      let HelmetAllowance = await getAllHelmet('HELMET', 'FARM', 'HELMETBNB')
+      let helmetReward = await Rewards('HELMETBNB', '0')
       // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      let bnbValue = (await balanceOf('WBNB', 'HELMETBNB_LPT')) * 2
       // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
-      let dayHelmet = totalHelmet;
+      let cakeValue = await balanceOf('HELMETBNB_LPT', 'CAKEHELMET', true)
+      let miningTime = (await RewardsDuration('HELMETBNB')) / 86400
+      let dayHelmet = totalHelmet
       let helmetapy = precision.divide(
         precision.times(
           this.helmetPrice,
@@ -279,7 +279,7 @@ export default {
           365
         ),
         precision.times(miningTime, bnbValue)
-      );
+      )
       let cakeapy = precision.divide(
         precision.times(cakePrice, 1480000),
         precision.times(
@@ -287,103 +287,103 @@ export default {
           cakeValue,
           bnbPrice
         )
-      );
+      )
 
-      let APY = precision.plus(helmetapy, cakeapy) * 100;
-      this.apyArray.helmet_cake = fixD(APY, 2);
-      this.miningList[0].yearEarn = fixD(APY, 2);
+      let APY = precision.plus(helmetapy, cakeapy) * 100
+      this.apyArray.helmet_cake = fixD(APY, 2)
+      this.miningList[0].yearEarn = fixD(APY, 2)
     },
     async HELMET_hDODO_DLP_APY() {
-      let lptBnbValue = await uniswap("DODO", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let DODOHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = DODOHELMET * 10000;
+      let lptBnbValue = await uniswap('DODO', 'WBNB')
+      let lptHelmetValue = await uniswap('WBNB', 'HELMET')
+      let DODOHELMET = lptBnbValue * lptHelmetValue
+      let allVolume = DODOHELMET * 10000
       //总抵押
-      let supplyVolume = await totalSupply("DODOHELMET"); //数量
+      let supplyVolume = await totalSupply('DODOHELMET') //数量
       // 总发行
-      let stakeVolue = await totalSupply("DODOHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply('DODOHELMET_LPT') //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "DODOHELMET_LPT", true);
+      let stakeValue = await balanceOf('HELMET', 'DODOHELMET_LPT', true)
       let burgerApy = precision.divide(
         precision.times(precision.divide(allVolume, 21), 365),
         precision.times(
           precision.divide(precision.times(stakeValue, 2), stakeVolue),
           supplyVolume
         )
-      );
+      )
       let helmetApy = precision.divide(
         precision.times(precision.divide(25000, 21), 365),
         precision.times(
           precision.divide(precision.times(stakeValue, 2), stakeVolue),
           supplyVolume
         )
-      );
+      )
 
-      let APY = precision.plus(burgerApy, helmetApy) * 100;
-      this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
+      let APY = precision.plus(burgerApy, helmetApy) * 100
+      this.apyArray.helmet_dodo = fixD(APY, 2)
+      this.miningList[1].yearEarn = fixD(APY, 2)
     },
     async HELMET_POOL_APY() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
+      let HelmetVolume = await totalSupply('HELMETPOOL')
+      let helmetTime = (await RewardsDuration('HELMETPOOL')) / 86400
       // （1+日产量/总质押量）^365
       let APY =
         Math.pow(
           precision.plus(1, precision.divide(33057.57, HelmetVolume)),
           365
-        ) * 100;
+        ) * 100
 
-      this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[2].yearEarn = fixD(APY, 2);
+      this.apyArray.helmet = fixD(APY, 2)
+      this.miningList[2].yearEarn = fixD(APY, 2)
     },
     async HELMET_hFOR_LP_APY() {
-      let lptBnbValue = await uniswap("FOR", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let FORHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = FORHELMET * 182010;
+      let lptBnbValue = await uniswap('FOR', 'WBNB')
+      let lptHelmetValue = await uniswap('WBNB', 'HELMET')
+      let FORHELMET = lptBnbValue * lptHelmetValue
+      let allVolume = FORHELMET * 182010
       //总抵押
-      let supplyVolume = await totalSupply("FORHELMET"); //数量
+      let supplyVolume = await totalSupply('FORHELMET') //数量
       // 总发行
-      let stakeVolue = await totalSupply("FORHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply('FORHELMET_LPT') //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "FORHELMET_LPT", true);
+      let stakeValue = await balanceOf('HELMET', 'FORHELMET_LPT', true)
       let forApy = precision.divide(
         precision.times(precision.divide(allVolume, 15), 365),
         precision.times(
           precision.divide(precision.times(stakeValue, 2), stakeVolue),
           supplyVolume
         )
-      );
+      )
       let helmetApy = precision.divide(
         precision.times(precision.divide(10000, 15), 365),
         precision.times(
           precision.divide(precision.times(stakeValue, 2), stakeVolue),
           supplyVolume
         )
-      );
+      )
 
-      let APY = precision.plus(forApy, helmetApy) * 100;
-      this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[3].yearEarn = fixD(APY, 2);
+      let APY = precision.plus(forApy, helmetApy) * 100
+      this.apyArray.helmet_for = fixD(APY, 2)
+      this.miningList[3].yearEarn = fixD(APY, 2)
     },
     async HELMET_hBURGER_LP_APY() {
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
-      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allVolume = burgerHelmet * 15000;
+      let burgebnbrValue = await uniswap('BURGER', 'WBNB')
+      let bnbhelmetValue = await uniswap('WBNB', 'HELMET')
+      let burgerHelmet = burgebnbrValue * bnbhelmetValue
+      let allVolume = burgerHelmet * 15000
       //总抵押
-      let supplyVolume = await totalSupply("BURGERHELMET"); //数量
+      let supplyVolume = await totalSupply('BURGERHELMET') //数量
       // 总发行
-      let stakeVolue = await totalSupply("BURGERHELMET_LPT"); //数量
+      let stakeVolue = await totalSupply('BURGERHELMET_LPT') //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
+      let stakeValue = await balanceOf('HELMET', 'BURGERHELMET_LPT', true)
       let burgerApy = precision.divide(
         precision.times(precision.divide(allVolume, 25), 365),
         precision.times(
           precision.divide(precision.times(stakeValue, 2), stakeVolue),
           supplyVolume
         )
-      );
+      )
       let helmetApy = fixD(
         precision.divide(
           precision.times(precision.divide(75000, 25), 365),
@@ -392,42 +392,42 @@ export default {
             supplyVolume
           )
         )
-      );
-      let APY = precision.plus(burgerApy, helmetApy) * 100;
-      this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[4].yearEarn = fixD(APY, 2);
+      )
+      let APY = precision.plus(burgerApy, helmetApy) * 100
+      this.apyArray.helmet_burger = fixD(APY, 2)
+      this.miningList[4].yearEarn = fixD(APY, 2)
     },
     getRemainTime(time) {
-      let now = new Date() * 1;
-      let dueDate = time;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let now = new Date() * 1
+      let dueDate = time
+      dueDate = new Date(dueDate)
+      let DonwTime = dueDate - now
+      let day = Math.floor(DonwTime / (24 * 3600000))
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000)
       let minute = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
+      )
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
+      )
+      let template
 
       if (dueDate > now) {
         template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
-        return template;
+          day: day > 9 ? day : '0' + day,
+          hour: hour > 9 ? hour : '0' + hour,
+        }
+        return template
       } else {
         template = {
-          day: "00",
-          hour: "00",
-        };
-        return "Expired";
+          day: '00',
+          hour: '00',
+        }
+        return 'Expired'
       }
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -535,7 +535,7 @@ export default {
             display: block;
             width: 30px;
             height: 30px;
-            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
+            background-image: url('../../assets/img/insurancelist/insuranceTime.png');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin-right: 8px;
@@ -606,6 +606,7 @@ export default {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
             color: #fd7e14;
+            background: #fffaf3;
             i {
               border-right: 5px solid transparent;
               border-top: 6px solid #fd7e14;
@@ -634,6 +635,7 @@ export default {
               height: 35px;
               border: 2px solid #fd7e14;
               color: #fd7e14;
+              background: #fffaf3;
               i {
                 border-right: 5px solid transparent;
                 border-top: 6px solid #fd7e14;

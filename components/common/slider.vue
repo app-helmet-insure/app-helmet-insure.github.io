@@ -11,9 +11,16 @@
             <use xlink:href="#icon-insurance"></use>
           </svg>
           {{ $t('Table.safe') }}
-          <svg class="icon svg-icon right" aria-hidden="true">
-            <use xlink:href="#icon-right1"></use>
-          </svg>
+          <i
+            :class="[
+              $route.path === '/' ? 'arrow' : 'arrow arrow_white',
+              (sliderFlag ||
+                routeObj.name == 'myPolicy' ||
+                routeObj.name == 'mySupply' ||
+                routeObj.name == 'myClaim') &&
+                'arrow_rotate',
+            ]"
+          ></i>
         </a>
         <ul
           class="child_menu"
@@ -206,9 +213,31 @@ export default {
       height: auto;
       position: relative;
     }
-    .right {
-      position: absolute;
-      right: 20px;
+    .arrow {
+      position: relative;
+      margin: 3px 0 0 6px;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #fff;
+      border-left: 7px solid transparent;
+      &::after {
+        content: '';
+        position: absolute;
+        top: -7px;
+        left: -5px;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #fd7e14;
+        border-left: 5px solid transparent;
+      }
+    }
+    .arrow_white {
+      border-top: 7px solid #17173a;
+      &::after {
+        content: '';
+        border-top: 5px solid #fff;
+      }
+    }
+    .arrow_rotate {
+      transform: rotate(180deg);
     }
     &_item {
       width: 100%;

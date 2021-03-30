@@ -1,14 +1,14 @@
 <template>
   <div class="insurance_list">
     <div class="insurance_title">
-      <h3>{{ $t("Insurance.Insurance_text1") }}</h3>
+      <h3>{{ $t('Insurance.Insurance_text1') }}</h3>
     </div>
     <div class="insurance_type">
       <div class="insurance_text">
-        <span>{{ $t("Insurance.Insurance_text2") }}</span>
-        <span>{{ $t("Insurance.Insurance_text3") }}</span>
-        <span>{{ $t("Insurance.Insurance_text4") }}</span>
-        <span>{{ $t("Insurance.Insurance_text5") }}</span>
+        <span>{{ $t('Insurance.Insurance_text2') }}</span>
+        <span>{{ $t('Insurance.Insurance_text3') }}</span>
+        <span>{{ $t('Insurance.Insurance_text4') }}</span>
+        <span>{{ $t('Insurance.Insurance_text5') }}</span>
       </div>
       <div
         class="insurance_item"
@@ -55,7 +55,7 @@
                   : 'buyPutInsurance'
               "
             >
-              {{ $t("Insurance.Insurance_text6") }}
+              {{ $t('Insurance.Insurance_text6') }}
               <i class="selectDown"></i>
             </button>
             <button
@@ -68,7 +68,7 @@
                   : 'buyCallInsurance'
               "
             >
-              {{ $t("Insurance.Insurance_text7") }}
+              {{ $t('Insurance.Insurance_text7') }}
               <i class="selectDown"></i>
             </button>
             <button
@@ -81,7 +81,7 @@
                   : 'issueInsurance'
               "
             >
-              {{ $t("Insurance.Insurance_text8") }}
+              {{ $t('Insurance.Insurance_text8') }}
               <i class="selectDown"></i>
             </button>
           </section>
@@ -116,10 +116,10 @@
 </template>
 
 <script>
-import { fixD } from "~/assets/js/util.js";
-import PutInsurance from "./put-insurance";
-import CallInsurance from "./call-insurance";
-import IssueInsurance from "./issue-insurance";
+import { fixD } from '~/assets/js/util.js'
+import PutInsurance from './put-insurance'
+import CallInsurance from './call-insurance'
+import IssueInsurance from './issue-insurance'
 export default {
   components: {
     PutInsurance,
@@ -128,121 +128,121 @@ export default {
   },
   data() {
     return {
-      activeInsurance: "",
+      activeInsurance: '',
       showActiveInsurance: false,
-      activeType: "",
-    };
+      activeType: '',
+    }
   },
   computed: {
     InsuranceDate() {
-      return this.$store.state.allDueDate[0];
+      return this.$store.state.allDueDate[0]
     },
     InsurancePriceBNB() {
-      return this.$store.state.allIndexPrice[1];
+      return this.$store.state.allIndexPrice[1]
     },
     WBNB_BUSD_Price() {
-      return this.$store.state.BNB_BUSD;
+      return this.$store.state.BNB_BUSD
     },
   },
   watch: {
     WBNB_BUSD_Price: {
-      handler: "WBNB_BUSD_Price_Watch",
+      handler: 'WBNB_BUSD_Price_Watch',
       immediate: true,
     },
     InsurancePriceBNB: {
-      handler: "InsurancePriceBNB_Watch",
+      handler: 'InsurancePriceBNB_Watch',
       immediate: true,
     },
   },
   mounted() {
     setTimeout(() => {
-      this.InitInsuanceData;
-    }, 2000);
+      this.InitInsuanceData
+    }, 2000)
   },
   methods: {
     WBNB_BUSD_Price_Watch(newValue) {
       if (newValue) {
-        this.InitInsuanceData();
+        this.InitInsuanceData()
       }
     },
     InsurancePriceBNB_Watch(newValue) {
       if (newValue) {
-        this.InitInsuanceData();
+        this.InitInsuanceData()
       }
     },
     async InitInsuanceData() {
       let InsuanceData = [
         {
-          InsuranceType: "HELMET",
+          InsuranceType: 'HELMET',
         },
         {
-          InsuranceType: "ETH",
+          InsuranceType: 'ETH',
         },
         {
-          InsuranceType: "BTCB",
+          InsuranceType: 'BTCB',
         },
         {
-          InsuranceType: "CAKE",
+          InsuranceType: 'CAKE',
         },
         {
-          InsuranceType: "CTK",
+          InsuranceType: 'CTK',
         },
         {
-          InsuranceType: "BURGER",
+          InsuranceType: 'BURGER',
         },
         {
-          InsuranceType: "WBNB",
+          InsuranceType: 'WBNB',
         },
         {
-          InsuranceType: "MATH",
+          InsuranceType: 'MATH',
         },
-      ];
-      let InsuranceDate = this.$store.state.allDueDate[0];
-      let InsurancePriceBNB = this.$store.state.allIndexPrice[1];
-      let WBNB_BUSD_Price = this.$store.state.BNB_BUSD;
-      var reg = new RegExp("/", "g");
-      let nowTime = new Date() * 1;
+      ]
+      let InsuranceDate = this.$store.state.allDueDate[0]
+      let InsurancePriceBNB = this.$store.state.allIndexPrice[1]
+      let WBNB_BUSD_Price = this.$store.state.BNB_BUSD
+      var reg = new RegExp('/', 'g')
+      let nowTime = new Date() * 1
       for (let i = 0; i < InsuanceData.length; i++) {
-        let InsuranceTime = InsuranceDate[InsuanceData[i]["InsuranceType"]];
+        let InsuranceTime = InsuranceDate[InsuanceData[i]['InsuranceType']]
         let InunranceDay = Math.ceil(
           (new Date(InsuranceTime) * 1 - nowTime) / 86400000
-        );
+        )
         // 保险周期
-        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-");
+        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, '-')
         // 保险剩余天数
-        InsuanceData[i].InsuranceDay = InunranceDay;
+        InsuanceData[i].InsuranceDay = InunranceDay
 
         // BNB价格
         InsuanceData[i].InsurancePriceBNB = fixD(
-          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]],
+          InsurancePriceBNB[InsuanceData[i]['InsuranceType']],
           4
-        );
+        )
         // BUSD价格
         InsuanceData[i].InsurancePriceBUSD = fixD(
-          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]] * WBNB_BUSD_Price,
+          InsurancePriceBNB[InsuanceData[i]['InsuranceType']] * WBNB_BUSD_Price,
           2
-        );
+        )
       }
-      this.InsuanceData = InsuanceData;
-      this.$forceUpdate();
+      this.InsuanceData = InsuanceData
+      this.$forceUpdate()
     },
     buyPutInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "PUT";
+      this.activeInsurance = insuranceType
+      this.showActiveInsurance = true
+      this.activeType = 'PUT'
     },
     buyCallInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "CALL";
+      this.activeInsurance = insuranceType
+      this.showActiveInsurance = true
+      this.activeType = 'CALL'
     },
     issueInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "SELL";
+      this.activeInsurance = insuranceType
+      this.showActiveInsurance = true
+      this.activeType = 'SELL'
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -359,7 +359,7 @@ export default {
             display: block;
             width: 30px;
             height: 30px;
-            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
+            background-image: url('../../assets/img/insurancelist/insuranceTime.png');
             background-repeat: no-repeat;
             background-size: 100% 100%;
             margin-right: 8px;
@@ -389,7 +389,7 @@ export default {
           flex: 4;
           display: flex;
           justify-content: flex-end;
-          min-width: 370px;
+          min-width: 470px;
           .activeButton {
             border: 2px solid #fd7e14;
             padding: 0px 9px;
@@ -411,7 +411,7 @@ export default {
             font-size: 14px;
             font-family: HelveticaNeue;
             color: #17173a;
-            line-height: 24px;
+            line-height: 18px;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -436,7 +436,7 @@ export default {
               border-top: 6px solid rgba(23, 23, 58, 0.6);
               border-left: 5px solid transparent;
               &::after {
-                content: "";
+                content: '';
                 position: absolute;
                 top: -6px;
                 left: -3px;

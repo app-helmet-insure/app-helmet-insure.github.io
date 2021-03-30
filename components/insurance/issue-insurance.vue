@@ -2,11 +2,11 @@
   <div class="issue-insurance">
     <div class="issue-call">
       <p>
-        <span>{{ $t('Content.InsurancePrice') }}</span>
+        <span>{{ $t("Content.InsurancePrice") }}</span>
         <span>
           {{ activeInsurance }}:
           {{ strikePriceArray[0][activeInsurance] }}
-          {{ activeInsurance == 'WBNB' ? 'BUSD' : 'BNB' }}
+          {{ activeInsurance == "WBNB" ? "BUSD" : "BNB" }}
         </span>
       </p>
       <div class="dpr">
@@ -30,35 +30,39 @@
         <div class="info">
           <i></i>
           <p>
-            {{ $t('Tip.Dpr') }}
+            {{ $t("Tip.Dpr") }}
             <i></i>
           </p>
         </div>
         <span class="left">DPR</span>
         <span class="right"><i></i></span>
       </div>
-      <span>{{ $t('Content.Earning') }}: {{ callRent }} HELMET</span>
+      <span>{{ $t("Content.Earning") }}: {{ callRent }} HELMET</span>
       <div class="input">
         <input type="text" v-model="callInsuranceNum" />
-        <span class="text">HELMET</span>
-        <span class="max">{{ $t('Table.ALL') }}</span>
+        <span class="text">{{ policyColArray[0][activeInsurance] }}</span>
+        <span
+          class="max"
+          @click="callInsuranceNum = BalanceArray[activeInsurance]"
+          >{{ $t("Table.ALL") }}</span
+        >
       </div>
       <span
-        >{{ $t('Content.UsableBalance') }}:
-        {{ BalanceArray['HELMET'] }} HELMET</span
+        >{{ $t("Content.UsableBalance") }}: {{ BalanceArray[activeInsurance] }}
+        {{ activeInsurance }}</span
       >
       <button class="call" @click="submitSupply(1)">
-        {{ $t('Insurance.Insurance_text9') }}
+        {{ $t("Insurance.Insurance_text9") }}
       </button>
     </div>
     <i></i>
     <div class="issue-put">
       <p>
-        <span>{{ $t('Content.InsurancePrice') }}</span>
+        <span>{{ $t("Content.InsurancePrice") }}</span>
         <span>
           {{ activeInsurance }}:
           {{ strikePriceArray[1][activeInsurance] }}
-          {{ activeInsurance == 'WBNB' ? 'BUSD' : 'BNB' }}
+          {{ activeInsurance == "WBNB" ? "BUSD" : "BNB" }}
         </span>
       </p>
       <div class="dpr">
@@ -97,64 +101,66 @@
               ></path></svg
           ></i>
           <p>
-            {{ $t('Tip.Dpr') }}
+            {{ $t("Tip.Dpr") }}
             <i></i>
           </p>
         </div>
         <span class="left">DPR</span>
         <span class="right"><i></i></span>
       </div>
-      <span>{{ $t('Content.Earning') }}: {{ putRent }} HELMET</span>
+      <span>{{ $t("Content.Earning") }}: {{ putRent }} HELMET</span>
       <div class="input">
         <input type="text" v-model="putInsuranceNum" />
-        <span class="text">HELMET</span>
-        <span class="max">{{ $t('Table.ALL') }}</span>
+        <span class="text">{{
+          policyColArray[1][activeInsurance] == "WBNB"
+            ? "BNB"
+            : policyColArray[1][activeInsurance]
+        }}</span>
+        <span
+          class="max"
+          @click="putInsuranceNum = BalanceArray[activeInsurance]"
+          >{{ $t("Table.ALL") }}</span
+        >
       </div>
       <span
-        >{{ $t('Content.UsableBalance') }}: {{ BalanceArray['BNB'] }} BNB</span
+        >{{ $t("Content.UsableBalance") }}: {{ BalanceArray["BNB"] }} BNB</span
       >
       <button class="put" @click="submitSupply(2)">
-        {{ $t('Insurance.Insurance_text10') }}
+        {{ $t("Insurance.Insurance_text10") }}
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import precision from '~/assets/js/precision.js'
-import { onIssueSell, onIssueSellOnETH } from '~/interface/order.js'
-import {
-  fixD,
-  addCommom,
-  autoRounding,
-  toRounding,
-  fixInput,
-} from '~/assets/js/util.js'
+import precision from "~/assets/js/precision.js";
+import { onIssueSell, onIssueSellOnETH } from "~/interface/order.js";
+import { fixD } from "~/assets/js/util.js";
 export default {
-  props: ['activeInsurance'],
+  props: ["activeInsurance"],
   data() {
     return {
       dprList: [
-        { num: 0.07, warn: false, show: '0.07%' },
-        { num: 0.14, warn: false, show: '0.14%' },
-        { num: 0.28, warn: true, show: '0.28%' },
+        { num: 0.14, warn: false, show: "0.14%" },
+        { num: 0.28, warn: true, show: "0.28%" },
+        { num: 0.56, warn: false, show: "0.56%" },
       ],
       precision,
-      callDpr: 0.07,
-      callDprShow: '0.07%',
+      callDpr: 0.14,
+      callDprShow: "0.14%",
       callRent: 0,
       callOptionFlag: false,
-      putDpr: 0.07,
-      putDprShow: '0.07%',
+      putDpr: 0.14,
+      putDprShow: "0.14%",
       putRent: 0,
       putOptionFlag: false,
-      callInsuranceNum: '',
-      putInsuranceNum: '',
-    }
+      callInsuranceNum: "",
+      putInsuranceNum: "",
+    };
   },
   computed: {
     allDueDate() {
-      return this.$store.state.allDueDate
+      return this.$store.state.allDueDate;
     },
     // 保费参数
     RentGrounp() {
@@ -164,62 +170,65 @@ export default {
         callInsuranceNum: this.callInsuranceNum,
         putInsuranceNum: this.putInsuranceNum,
         _expiry: this.getTime(this.activeInsurance),
-      }
+      };
     },
     IndexPxArray() {
-      return this.$store.state.allIndexPrice
+      return this.$store.state.allIndexPrice;
     },
     BalanceArray() {
-      return this.$store.state.BalanceArray
+      return this.$store.state.BalanceArray;
     },
     strikePriceArray() {
-      return this.$store.state.strikePriceArray
+      return this.$store.state.strikePriceArray;
+    },
+    HelmetPrice() {
+      return this.$store.state.allHelmetPrice;
     },
     HELMET_BUSD() {
-      return this.$store.state.HELMET_BUSD
+      return this.$store.state.HELMET_BUSD;
     }, // 抵押物
     policyColArray() {
-      return this.$store.state.policyColArray
+      return this.$store.state.policyColArray;
     },
     // 标的物
     policyUndArray() {
-      return this.$store.state.policyUndArray
+      return this.$store.state.policyUndArray;
     },
   },
   watch: {
     RentGrounp: {
       handler: {
-        handler: 'watchRent',
+        handler: "watchRent",
         immediate: true,
       },
     },
   },
   methods: {
     handleClickDpr(type) {
-      if (type == 'call') {
-        this.callOptionFlag = !this.callOptionFlag
+      if (type == "call") {
+        this.callOptionFlag = !this.callOptionFlag;
       } else {
-        this.putOptionFlag = !this.putOptionFlag
+        this.putOptionFlag = !this.putOptionFlag;
       }
     },
     checkDpr(item, type) {
-      if (type == 'call') {
-        this.callDpr = item.num
-        this.callDprShow = item.show
-        this.callOptionFlag = false
+      if (type == "call") {
+        this.callDpr = item.num;
+        this.callDprShow = item.show;
+        this.callOptionFlag = false;
       } else {
-        this.putDpr = item.num
-        this.putDprShow = item.show
-        this.putOptionFlag = false
+        this.putDpr = item.num;
+        this.putDprShow = item.show;
+        this.putOptionFlag = false;
       }
     },
     toAll() {
       if (this.currentType == 1) {
         if (this.BalanceArray) {
-          this.volume = this.BalanceArray[this.activeInsurance]
+          this.volume = this.BalanceArray[this.activeInsurance];
         }
       } else {
-        this.volume = this.BalanceArray['BNB']
+        this.volume = this.BalanceArray["BNB"];
       }
     },
     watchRent(newValue) {
@@ -227,8 +236,8 @@ export default {
         (!newValue.callDpr && !newValue.callInsuranceNum) ||
         (!newValue.putDpr && !newValue.putInsuranceNum)
       ) {
-        this.Rent = 0
-        return
+        this.Rent = 0;
+        return;
       }
       let {
         callDpr,
@@ -236,81 +245,84 @@ export default {
         callInsuranceNum,
         putInsuranceNum,
         _expiry,
-      } = newValue
+      } = newValue;
       if (
         (newValue.callDpr && newValue.callInsuranceNum && newValue._expiry) ||
         (newValue.putDpr && newValue.putInsuranceNum && newValue._expiry)
       ) {
         // 翻倍执行价
-        let callStrikePrice = this.strikePriceArray[0][this.activeInsurance]
+        let callStrikePrice = this.strikePriceArray[0][this.activeInsurance];
         // 翻倍指数价
-        let callIndexPx = this.IndexPxArray[0][this.activeInsurance]
+        let callIndexPx = this.IndexPxArray[0][this.activeInsurance];
         // 腰斩执行价
-        let putStrikePrice = this.strikePriceArray[1][this.activeInsurance]
+        let putStrikePrice = this.strikePriceArray[1][this.activeInsurance];
         // 腰斩指数价
-        let putIndexPx = this.IndexPxArray[1][this.activeInsurance]
+        let putIndexPx = this.IndexPxArray[1][this.activeInsurance];
         // 翻倍DPR
-        let callDPR = precision.divide(callDpr, 100)
+        let callDPR = precision.divide(callDpr, 100);
         // 腰斩DPR
-        let putDPR = precision.divide(putDpr, 100)
+        let putDPR = precision.divide(putDpr, 100);
         // 保险到期时间
-        let time1 = new Date(_expiry).getTime()
+        let time1 = new Date(_expiry).getTime();
         // 当前时间
-        let time2 = new Date().getTime()
+        let time2 = new Date().getTime();
         // 剩余天数 不足一天按一天算
-        let day = parseInt((time1 - time2) / (1000 * 60 * 60 * 24)) + 1
-        let premium
-        let earnings
-        let number
+        let day = parseInt((time1 - time2) / (1000 * 60 * 60 * 24)) + 1;
+        let premium;
+        let earnings;
+        let number;
         // call
-        if (callInsuranceNum) {
-          if (this.activeInsurance == 'HELMET') {
-            number = precision.times(callDPR, callInsuranceNum, day)
+        if (callInsuranceNum.length) {
+          if (this.activeInsurance == "HELMET") {
+            number = precision.times(callDPR, callInsuranceNum, day);
           } else {
             number = precision.times(
               callDPR,
-              this.HelmetPrice[1][this.activeInsurance] * callInsuranceNum,
+              this.HelmetPrice[1][this.activeInsurance] *
+                Number(callInsuranceNum),
               day
-            )
+            );
           }
+          console.log(number);
           premium = precision.minus(
             number,
             Math.min(precision.minus(callStrikePrice, callIndexPx), 0)
-          )
-          earnings = -(Math.max(callIndexPx - callStrikePrice, 0) - premium)
-          this.callRent = fixD(earnings < 0 ? 0 : earnings, 8)
+          );
+          console.log(callInsuranceNum);
+          earnings = -(Math.max(callIndexPx - callStrikePrice, 0) - premium);
+          this.callRent = fixD(earnings < 0 ? 0 : earnings, 8);
         } else {
-          this.callRent = 0
+          this.callRent = 0;
         }
         // put
-        if (putInsuranceNum) {
-          if (this.activeInsurance == 'WBNB') {
+        if (putInsuranceNum.length) {
+          if (this.activeInsurance == "WBNB") {
             number = precision.times(
               putDPR,
               this.HELMET_BUSD * putInsuranceNum,
               day
-            )
+            );
           } else {
             number = precision.times(
               putDPR,
-              precision.times(this.IndexPxArray[0]['HELMET'], putInsuranceNum),
+              precision.times(this.IndexPxArray[0]["HELMET"], putInsuranceNum),
               day
-            )
+            );
           }
           premium = precision.minus(
             number,
             Math.min(precision.minus(putIndexPx, putStrikePrice), 0)
-          )
-          earnings = -(Math.max(putStrikePrice - putIndexPx, 0) - premium)
-          this.putRent = fixD(earnings < 0 ? 0 : earnings, 8)
+          );
+          earnings = -(Math.max(putStrikePrice - putIndexPx, 0) - premium);
+          this.putRent = fixD(earnings < 0 ? 0 : earnings, 8);
         } else {
-          this.putRent = 0
+          this.putRent = 0;
         }
       }
     },
     // 获取保险时间
     getTime(coin) {
-      return this.allDueDate[0][coin]
+      return this.allDueDate[0][coin];
     },
     submitSupply(type) {
       // 私有化  不要
@@ -319,7 +331,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      let data
+      let data;
       data = {
         private: false, //
         annual: type == 1 ? this.callDpr : this.putDpr,
@@ -329,22 +341,22 @@ export default {
         premium: type == 1 ? this.callRent : this.putRent,
         price: this.strikePriceArray[type - 1][this.activeInsurance],
         volume: type == 1 ? this.callInsuranceNum : this.putInsuranceNum, //
-        settleToken: 'HELMET',
-        showType: this.activeInsurance == 'WBNB' ? 'BUSD' : 'BNB',
+        settleToken: "HELMET",
+        showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
+      };
+      console.log(data);
+      if (data.category == "WBNB" && data.currency == "BUSD") {
+        data["divide"] = true;
       }
-      console.log(data)
-      if (data.category == 'WBNB' && data.currency == 'BUSD') {
-        data['divide'] = true
-      }
-      if (data.currency == 'WBNB' && data.category != 'BUSD') {
-        onIssueSellOnETH(data, (status) => {})
+      if (data.currency == "WBNB" && data.category != "BUSD") {
+        onIssueSellOnETH(data, (status) => {});
       } else {
-        onIssueSell(data, (status) => {})
+        onIssueSell(data, (status) => {});
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -386,7 +398,7 @@ export default {
       }
       > button {
         display: block;
-        width: 320px;
+        width: 370px;
         height: 40px;
         border-radius: 5px;
         font-size: 14px;
@@ -408,7 +420,7 @@ export default {
     }
     .dpr {
       margin-top: 20px;
-      width: 320px;
+      width: 370px;
       height: 40px;
       border-radius: 5px;
       display: flex;
@@ -420,10 +432,13 @@ export default {
         width: 500px;
         display: flex;
         align-items: center;
+        left: 40px;
         > i {
           margin: 0 4px 0 2px;
           cursor: pointer;
           svg {
+            width: 16px;
+            height: 16px;
             fill: rgba(164, 162, 178, 1);
           }
           &:hover {
@@ -438,11 +453,11 @@ export default {
           background: #1d1d1d;
           min-width: 340px;
           position: absolute;
-          top: -45px;
+          top: -35px;
           font-size: 14px;
           color: #f7f7fa;
           border-radius: 3px;
-          left: 30px;
+          left: -10px;
           z-index: 9;
           i {
             border: 5px solid #1d1d1d;
@@ -477,7 +492,7 @@ export default {
             display: inline-block;
             width: 16px;
             height: 16px;
-            background-image: url('../../assets/img/helmet/wran.png');
+            background-image: url("../../assets/img/helmet/wran.png");
             background-repeat: no-repeat;
             background-size: cover;
             position: absolute;
@@ -513,14 +528,14 @@ export default {
           width: 16px;
           height: 16px;
           background-repeat: no-repeat;
-          background-image: url('../../assets/img/insurancelist/select_down.png');
+          background-image: url("../../assets/img/insurancelist/select_down.png");
           background-size: 100%;
         }
       }
     }
     .input {
       margin-top: 16px;
-      width: 320px;
+      width: 370px;
       height: 40px;
       border-radius: 5px;
       border: 2px solid #e8e8eb;

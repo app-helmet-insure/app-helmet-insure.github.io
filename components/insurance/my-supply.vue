@@ -1,32 +1,35 @@
 <template>
   <div class="my_supply">
+    <div class="supply_title">
+      <h3>{{ $t("Type.IssueInsurance") }}</h3>
+    </div>
     <!-- pc -->
     <div class="supply_item" v-for="item in showList" :key="item.id">
       <section>
         <p>
-          <span>{{ $t('Table.ID') }}:{{ item.id }}</span>
+          <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
           <span>{{ item.dueDate }}</span>
         </p>
         <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
           {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
           {{ item.outPriceUnit }}
-          {{ item.symbol ? '(' + item.symbol + ')' : '' }}
+          {{ item.symbol ? "(" + item.symbol + ")" : "" }}
           <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
         </span>
       </section>
       <section>
         <p>
-          <span>{{ $t('Insurance.Insurance_text11') }}: </span>
+          <span>{{ $t("Insurance.Insurance_text11") }}: </span>
           <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
         </p>
         <p>
-          <span>{{ $t('Insurance.Insurance_text12') }}: </span>
+          <span>{{ $t("Insurance.Insurance_text12") }}: </span>
           <span>{{ fixD(item.price, 8) }} HELMET</span>
         </p>
       </section>
       <section>
         <p>
-          <span>{{ $t('Table.Besold') }}/{{ $t('Table.Unsold') }}:</span>
+          <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}:</span>
           <span
             >{{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }}/{{
                 item.remain == "0"
@@ -36,29 +39,29 @@
           </span>
         </p>
         <p>
-          <span>{{ $t('Table.DAvailable') }}: </span>
+          <span>{{ $t("Table.DAvailable") }}: </span>
           <span>{{ fixD(item.shortBalance, 8) }} Short Token</span>
         </p>
       </section>
       <section>
         <button
           :style="item.remain == '0' ? 'pointer-events: none;' : ''"
-          @click="toActive(item)"
+          @click="handleClickCancel(item)"
         >
           {{
             item.remain == 0
-              ? $t('Insurance.Insurance_text14')
-              : $t('Insurance.Insurance_text15')
+              ? $t("Insurance.Insurance_text14")
+              : $t("Insurance.Insurance_text15")
           }}
         </button>
-        <button>{{ $t('Table.StakeMining') }}</button>
+        <button>{{ $t("Table.StakeMining") }}</button>
       </section>
     </div>
 
     <div class="loading" v-if="isLoading">
       <img src="~/assets/img/loading.png" />
       <div class="shadow"></div>
-      <p>{{$t('Table.LoadingWallet')}}</p>
+      <p>{{ $t("Table.LoadingWallet") }}</p>
     </div>
     <section
       class="noData"
@@ -66,7 +69,7 @@
     >
       <div>
         <img src="~/assets/img/helmet/nodata.png" alt="" />
-        <p>{{ $t('Table.NoData') }}</p>
+        <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
     <section class="pages" v-if="insuranceList.length > 5 && isLogin">
@@ -81,13 +84,13 @@
 </template>
 
 <script>
-import precision from '~/assets/js/precision.js'
-import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js'
-import { getTokenName } from '~/assets/utils/address-pool.js'
-import { onCancel, getBalance, asks, RePrice } from '~/interface/order.js'
-import Page from '~/components/common/page.vue'
-import moment from 'moment'
+import precision from "~/assets/js/precision.js";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import { getTokenName } from "~/assets/utils/address-pool.js";
+import { onCancel, getBalance, asks, RePrice } from "~/interface/order.js";
+import Page from "~/components/common/page.vue";
+import moment from "moment";
 export default {
   components: {
     Page,
@@ -106,32 +109,32 @@ export default {
       limit: 10,
       isLoading: true,
       isLogin: false,
-    }
+    };
   },
   computed: {
     myAboutInfoSell() {
-      return this.$store.state.myAboutInfoSell
+      return this.$store.state.myAboutInfoSell;
     },
     myAboutInfoBuy() {
-      return this.$store.state.aboutInfoBuy
+      return this.$store.state.aboutInfoBuy;
     },
     rePriceMap() {
-      return this.$store.state.repriceMap
+      return this.$store.state.repriceMap;
     },
     strikePriceArray() {
-      return this.$store.state.strikePriceArray
+      return this.$store.state.strikePriceArray;
     },
     userInfo() {
-      return this.$store.state.userInfo
+      return this.$store.state.userInfo;
     },
   },
   watch: {
     myAboutInfoSell: {
-      handler: 'myAboutInfoSellWatch',
+      handler: "myAboutInfoSellWatch",
       immediate: true,
     },
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
@@ -139,21 +142,21 @@ export default {
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin
+        this.isLogin = newValue.data.isLogin;
       }
     },
     myAboutInfoSellWatch(newValue) {
       if (newValue) {
-        this.page = 0
-        this.limit = 10
-        this.setSettlementList(newValue)
+        this.page = 0;
+        this.limit = 10;
+        this.setSettlementList(newValue);
       }
     },
     // 格式化数据
     async setSettlementList(list) {
-      this.isLoading = true
-      this.showList = []
-      let result = []
+      this.isLoading = true;
+      this.showList = [];
+      let result = [];
       let item,
         resultItem,
         amount,
@@ -164,19 +167,19 @@ export default {
         unSold,
         newArray,
         shortBalance,
-        askRes
-      const currentTime = new Date().getTime()
+        askRes;
+      const currentTime = new Date().getTime();
       for (let i = 0; i < list.length; i++) {
-        item = list[i]
+        item = list[i];
         // 数量
-        let Token = getTokenName(item.longInfo._collateral)
-        let TokenFlag = getTokenName(item.longInfo._underlying)
+        let Token = getTokenName(item.longInfo._collateral);
+        let TokenFlag = getTokenName(item.longInfo._underlying);
         if (
-          (TokenFlag == 'WBNB' && Token != 'BUSD') ||
-          (TokenFlag == 'BUSD' && Token == 'WBNB')
+          (TokenFlag == "WBNB" && Token != "BUSD") ||
+          (TokenFlag == "BUSD" && Token == "WBNB")
         ) {
-          amount = fromWei(item.volume, Token)
-          item.flagType = true
+          amount = fromWei(item.volume, Token);
+          item.flagType = true;
         } else {
           amount = fixD(
             precision.divide(
@@ -184,38 +187,38 @@ export default {
               this.strikePriceArray[1][TokenFlag]
             ),
             8
-          )
-          item.flagType = false
+          );
+          item.flagType = false;
         }
-        if (TokenFlag == 'WBNB') {
-          item.TypeCoin = getTokenName(item.longInfo._collateral)
-          item.type = 'Call'
-          item.outPriceUnit = 'BNB'
+        if (TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._collateral);
+          item.type = "Call";
+          item.outPriceUnit = "BNB";
         } else {
-          item.TypeCoin = getTokenName(item.longInfo._underlying)
-          item.type = 'Put'
-          item.outPriceUnit = 'BNB'
+          item.TypeCoin = getTokenName(item.longInfo._underlying);
+          item.type = "Put";
+          item.outPriceUnit = "BNB";
         }
-        if (TokenFlag == 'BUSD' && Token == 'WBNB') {
-          item.TypeCoin = getTokenName(item.longInfo._collateral)
-          item.type = 'Call'
-          item.outPriceUnit = 'BUSD'
+        if (TokenFlag == "BUSD" && Token == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._collateral);
+          item.type = "Call";
+          item.outPriceUnit = "BUSD";
         }
-        if (Token == 'BUSD' && TokenFlag == 'WBNB') {
-          item.TypeCoin = getTokenName(item.longInfo._underlying)
-          item.type = 'Put'
-          item.outPriceUnit = 'BUSD'
+        if (Token == "BUSD" && TokenFlag == "WBNB") {
+          item.TypeCoin = getTokenName(item.longInfo._underlying);
+          item.type = "Put";
+          item.outPriceUnit = "BUSD";
         }
         // 保单价格
-        InsurancePrice = fromWei(item.price, Token == 'CTK' ? 30 : Token)
+        InsurancePrice = fromWei(item.price, Token == "CTK" ? 30 : Token);
         //倒计时
-        downTime = new Date(item.longInfo._expiry * 1000)
-        downTime = moment(downTime).format('YYYY/MM/DD HH:mm:ss')
+        downTime = new Date(item.longInfo._expiry * 1000);
+        downTime = moment(downTime).format("YYYY/MM/DD HH:mm:ss");
         //已出售
         // beSold = fromWei(this.getBeSold(item.askID), Token);
         // unSold = precision.minus(amount, beSold);
 
-        shortBalance = await getBalance(item.longInfo.short, item._collateral)
+        shortBalance = await getBalance(item.longInfo.short, item._collateral);
 
         resultItem = {
           id: item.askID,
@@ -231,130 +234,130 @@ export default {
           TypeCoin: item.TypeCoin,
           type: item.type,
           outPriceUnit: item.outPriceUnit,
-        }
+        };
 
-        newArray = this.getNewPrice(item.askID)
+        newArray = this.getNewPrice(item.askID);
         if (newArray) {
-          resultItem['volume'] = fromWei(newArray.volume, Token)
-          resultItem['price'] = fromWei(
+          resultItem["volume"] = fromWei(newArray.volume, Token);
+          resultItem["price"] = fromWei(
             newArray.newPrice,
-            Token == 'CTK' ? 30 : Token
-          )
-          resultItem['id'] = newArray.newAskID
+            Token == "CTK" ? 30 : Token
+          );
+          resultItem["id"] = newArray.newAskID;
         }
-        askRes = await asks(resultItem.id, 'sync', resultItem._collateral)
+        askRes = await asks(resultItem.id, "sync", resultItem._collateral);
         if (item.flagType) {
-          resultItem['unSold'] = askRes
-          resultItem['beSold'] = precision.minus(amount, resultItem['unSold'])
-          resultItem['outPrice'] = fixD(
-            fromWei(item.longInfo._strikePrice, Token == 'CTK' ? 30 : Token),
+          resultItem["unSold"] = askRes;
+          resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
+          resultItem["outPrice"] = fixD(
+            fromWei(item.longInfo._strikePrice, Token == "CTK" ? 30 : Token),
             4
-          )
+          );
         } else {
-          resultItem['unSold'] = fixD(
+          resultItem["unSold"] = fixD(
             precision.divide(askRes, this.strikePriceArray[1][TokenFlag]),
             8
-          )
-          resultItem['beSold'] = precision.minus(amount, resultItem['unSold'])
-          resultItem['outPrice'] = fixD(
+          );
+          resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
+          resultItem["outPrice"] = fixD(
             precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag)),
             4
-          )
+          );
         }
 
-        if (askRes == '0') {
-          resultItem['status'] = 'Beborrowed'
-          resultItem['sort'] = 1
-          resultItem
+        if (askRes == "0") {
+          resultItem["status"] = "Beborrowed";
+          resultItem["sort"] = 1;
+          resultItem;
         } else {
-          resultItem['status'] = 'Unborrowed'
-          resultItem['sort'] = 0
+          resultItem["status"] = "Unborrowed";
+          resultItem["sort"] = 0;
         }
         if (parseInt(resultItem._expiry) < currentTime) {
-          resultItem['status'] = 'Expired'
-          resultItem['sort'] = 2
-          resultItem['dueDate'] = 'Expired'
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
         }
         if (parseInt(resultItem._expiry + 5184000000) < currentTime) {
-          resultItem['status'] = 'Hidden'
-          resultItem['sort'] = 3
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
         }
-        resultItem['remain'] = askRes
+        resultItem["remain"] = askRes;
         if (resultItem.remain != 0 || resultItem.sort != 3) {
-          result.push(resultItem)
+          result.push(resultItem);
         }
       }
-      result = result.sort(function(a, b) {
-        return b.id - a.id
-      })
-      result = result.sort(function(a, b) {
-        return a.sort - b.sort
-      })
-      this.isLoading = false
+      result = result.sort(function (a, b) {
+        return b.id - a.id;
+      });
+      result = result.sort(function (a, b) {
+        return a.sort - b.sort;
+      });
+      this.isLoading = false;
 
-      this.insuranceList = result
-      this.showList = result.slice(this.page * this.limit, this.limit)
+      this.insuranceList = result;
+      this.showList = result.slice(this.page * this.limit, this.limit);
     },
     //获取已出售
     getBeSold(id) {
-      let list = this.myAboutInfoBuy
+      let list = this.myAboutInfoBuy;
       if (!list) {
-        return
+        return;
       }
-      let array = list.filter((item) => item.askID === id)
-      let num = 0
-      let number = 0
-      let arrayList = JSON.parse(JSON.stringify(array))
+      let array = list.filter((item) => item.askID === id);
+      let num = 0;
+      let number = 0;
+      let arrayList = JSON.parse(JSON.stringify(array));
       if (arrayList.length) {
         arrayList.forEach((item) => {
           if (!isNaN(item.vol)) {
-            number = Number(item.vol)
-            num = num + number
+            number = Number(item.vol);
+            num = num + number;
           }
-        })
-        return num
+        });
+        return num;
       } else {
-        return 0
+        return 0;
       }
     },
     getNewPrice(id, rtArray) {
-      let list = this.rePriceMap
+      let list = this.rePriceMap;
       if (!list) {
-        return
+        return;
       }
-      let array = list.filter((item) => item.askID === id)[0]
+      let array = list.filter((item) => item.askID === id)[0];
       if (array && array.askID) {
-        let arr = this.getNewPrice(array.newAskID, array)
-        return arr
+        let arr = this.getNewPrice(array.newAskID, array);
+        return arr;
       }
-      return rtArray
+      return rtArray;
     },
     // 撤销
     handleClickCancel(data) {
       // this.$bus.$emit("OPEN_REPRICE", data);
-      onCancel(data.id, (status) => {})
+      onCancel(data.id, (status) => {});
       // RePrice(data)
     },
     handleClickChagePage(index) {
-      index = index - 1
-      this.page = index
-      let page = index
+      index = index - 1;
+      this.page = index;
+      let page = index;
       let list = this.insuranceList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
-      )
-      this.showList = list
+      );
+      this.showList = list;
     },
 
     toMining() {
       // this.$router.push("/mining");
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 .cancel {
   display: inline-block;
   padding: 3px 10px;
@@ -373,7 +376,7 @@ export default {
   &:hover {
     td {
       &:first-child:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;
@@ -391,7 +394,7 @@ export default {
   &:hover {
     td {
       &:first-child:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: 0;
@@ -415,14 +418,18 @@ export default {
   }
   .my_supply {
     position: relative;
-    min-height: 800px;
+    min-height: 600px;
     display: flex;
     align-items: center;
     flex-direction: column;
     .loading {
       width: 100%;
+      margin: auto 0;
     }
     .pages {
+      width: 100%;
+    }
+    .supply_title {
       width: 100%;
     }
     .supply_item {
@@ -472,10 +479,10 @@ export default {
               margin-left: 4px;
             }
             .call_icon {
-              background-image: url('../../assets/img/helmet/tablecall.png');
+              background-image: url("../../assets/img/helmet/tablecall.png");
             }
             .put_icon {
-              background-image: url('../../assets/img/helmet/tableput.png');
+              background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
           > .call_text {
@@ -593,10 +600,10 @@ export default {
               margin-left: 4px;
             }
             .call_icon {
-              background-image: url('../../assets/img/helmet/tablecall.png');
+              background-image: url("../../assets/img/helmet/tablecall.png");
             }
             .put_icon {
-              background-image: url('../../assets/img/helmet/tableput.png');
+              background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
           span:nth-of-type(1) {

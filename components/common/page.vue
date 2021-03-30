@@ -1,8 +1,12 @@
 <template>
   <div class="page">
-    <span class="page_side" @click="prevChange()">
+    <span
+      class="page_side"
+      @click="prevChange()"
+      style="transform: rotate(180deg)"
+    >
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-left"></use>
+        <use xlink:href="#icon-right"></use>
       </svg>
     </span>
     <span v-if="pageList[2] - 2 > 1" class="page_com">···</span>
@@ -144,6 +148,7 @@ export default {
     margin: 0 5px;
     color: #121212;
     justify-content: center;
+    font-size: 12px;
   }
   &_side {
     width: 32px;
@@ -156,7 +161,9 @@ export default {
     .icon {
       width: 20px;
       height: 20px;
-      fill: #121212;
+      &:hover {
+        fill: #121212 !important;
+      }
     }
   }
 }

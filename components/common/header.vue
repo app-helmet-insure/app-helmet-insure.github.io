@@ -9,7 +9,9 @@
       >
       <div v-else class="address-wrap">
         <div v-if="ChainID != 56" class="wrong">
-          <img src="~/assets/img/helmet/wrongnetwork.png" alt="" />
+          <svg class="wrongnetwork" aria-hidden="true">
+            <use xlink:href="#icon-wrongnetwork"></use>
+          </svg>
           <span>{{ $t("Header.ConnectWrong") }}</span>
         </div>
         <template v-else>
@@ -133,8 +135,7 @@ export default {
 @import "~/assets/css/base.scss";
 .header-container {
   width: 100%;
-  height: 40px;
-  margin: 20px 0;
+  height: 80px;
   background: #f8f9fa;
   > div {
     height: 100%;
@@ -146,15 +147,16 @@ export default {
     .wrong {
       min-width: 171px;
       height: 36px;
-      background: #ec4711;
-      border-radius: 18px;
+      background: #dc3545;
+      border-radius: 5px;
       display: flex;
       align-items: center;
+      justify-content: center;
       padding: 0 11px;
-      img {
+      .wrongnetwork {
         width: 24px;
         height: 24px;
-        margin-right: 4px;
+        fill: #fff;
       }
       span {
         font-size: 16px;
@@ -327,7 +329,6 @@ export default {
       .more {
         width: 24px;
         height: 24px;
-        background-image: url("../../assets/img/helmet/caidan@2x.png");
         background-repeat: no-repeat;
         background-size: cover;
       }

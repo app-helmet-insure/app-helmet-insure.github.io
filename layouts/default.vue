@@ -1,10 +1,14 @@
 <template>
   <div class="layout-container">
     <p>
+      <i></i>
       <span>
-        HELMET is now on pancakeswap. Token Contract Address
-        :0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
+        HELMET is now on pancakeswap. Token Contract Address:
+        0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
       </span>
+      <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
+        >Exchange now</a
+      >
     </p>
     <!-- <p>
       <span>{{ $t("Tip.SendCoin") }}</span>
@@ -14,7 +18,9 @@
       <PSlider></PSlider>
       <div class="content_wrap">
         <PHeader></PHeader>
-        <nuxt />
+        <transition name="fade">
+          <nuxt />
+        </transition>
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
@@ -468,16 +474,18 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .layout-container {
   min-height: 100vh;
   position: relative;
   display: flex;
   flex-direction: column;
-  // > p {
-  //   color: #ffc819;
-  //   text-align: center;
-  //   margin-top: 8px;
-  // }
 }
 @media screen and (min-width: 750px) {
   .layout-container {
@@ -494,6 +502,15 @@ export default {
       font-family: Helvetica;
       color: #17173a;
       font-weight: 600;
+      i {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background-image: url("../assets/img/helmet/icon_title.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
+      }
       span {
         display: flex;
         align-items: center;
@@ -509,6 +526,24 @@ export default {
           margin-left: 4px;
         }
       }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        background: #17173a;
+        border-radius: 5px;
+        padding: 0 10px;
+        font-size: 14px;
+        font-family: IBMPlexSans;
+        color: #ffffff;
+        line-height: 24px;
+        text-decoration: underline;
+        margin-left: 17px;
+        &:hover {
+          background: #2c2c2c;
+        }
+      }
     }
     .content {
       display: flex;
@@ -518,10 +553,15 @@ export default {
         overflow-y: scroll;
         flex: 1;
         height: calc(100vh - 50px);
-        padding: 0 8%;
         background: #f8f9fa;
+        min-width: 1200px;
       }
     }
+  }
+}
+@media screen and(min-width:1560px) {
+  .content_wrap {
+    padding: 0 8%;
   }
 }
 @media screen and (max-width: 750px) {

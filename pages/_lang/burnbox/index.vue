@@ -1,29 +1,21 @@
 <template>
-  <div class="burn_container">
-    <div class="burn_text">
-      <h3>{{ $t("Tip.BurnTip1") }}</h3>
-      <p>{{ $t("Tip.BurnTip2") }}</p>
+  <div class="main_container">
+    <BURNTITLE></BURNTITLE>
+    <div class="burn_container">
+      <BURNLIST></BURNLIST>
+      <Onepager></Onepager>
     </div>
-    <!-- <div class="burn_wrap">
-      <HCTKBURN></HCTKBURN>
-      <HCCTBURN></HCCTBURN>
-    </div> -->
-    <BURNLIST></BURNLIST>
-
-    <Onepager></Onepager>
   </div>
 </template>
 
 <script>
+import BURNTITLE from "~/components/burnbox/burn_title.vue";
 import BURNLIST from "~/components/burnbox/burn_list.vue";
-import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
-import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 import Onepager from "~/components/mining/onepager.vue";
 export default {
   components: {
+    BURNTITLE,
     BURNLIST,
-    HCCTBURN,
-    HCTKBURN,
     Onepager,
   },
 };
@@ -31,29 +23,31 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
-  .burn_container {
-    width: 1200px;
-    margin: 0 auto;
-  }
-  .burn_text {
-    text-align: center;
-    margin-top: 60px;
-    h3 {
-      font-size: 34px;
-      font-weight: bold;
-      color: #121212;
+  .main_container {
+    .burn_container {
+      width: 1200px;
+      margin: 0 auto 30px;
     }
-    p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #787878;
+    .burn_text {
+      text-align: center;
+      margin-top: 60px;
+      h3 {
+        font-size: 34px;
+        font-weight: bold;
+        color: #121212;
+      }
+      p {
+        margin-top: 20px;
+        font-size: 16px;
+        color: #787878;
+      }
     }
-  }
-  .burn_wrap {
-    display: flex;
-    align-items: center;
-    .long_burn {
-      margin: 60px auto 100px;
+    .burn_wrap {
+      display: flex;
+      align-items: center;
+      .long_burn {
+        margin: 60px auto 100px;
+      }
     }
   }
 }

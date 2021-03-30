@@ -1,20 +1,19 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="imgbanner img5 swiper-slide"></div>
-      <div class="imgbanner img8 swiper-slide"></div>
-      <div class="imgbanner img4 swiper-slide"></div>
-      <div class="imgbanner img3 swiper-slide"></div>
-      <!-- <div class="imgbanner img7 swiper-slide">
-        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
+      <div class="swiper-slide verson">
+        <div></div>
       </div>
-      <div class="imgbanner img6 swiper-slide">
-        <nuxt-link to="/flashmining" tag="button">Start</nuxt-link>
-      </div> -->
+      <div class="swiper-slide combododo">
+        <div></div>
+      </div>
+      <div class="swiper-slide dodogroup">
+        <div></div>
+      </div>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <!-- <div class="swiper-pagination"></div> -->
+    <div class="swiper-button-next swiper-button-black"></div>
+    <div class="swiper-button-prev swiper-button-black"></div>
   </div>
 </template>
 
@@ -54,26 +53,24 @@ export default {
       this.$router.push("/mining");
     },
     init() {
-      var mySwiper = new Swiper(".swiper-container", {
-        // loop: true,
-        effect: "fade",
-        fadeEffect: {
-          crossFade: true,
-        },
-        spaceBetween: 30,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
+      setTimeout(() => {
+        var mySwiper = new Swiper(".swiper-container", {
+          loop: true,
+          spaceBetween: 0,
+          autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+          },
+          // pagination: {
+          //   el: ".swiper-pagination",
+          //   clickable: true,
+          // },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        });
+      }, 100);
     },
   },
 };
@@ -96,11 +93,11 @@ export default {
   .swiper-pagination-bullet-active {
     background-color: #ff9600 !important;
   }
-  .swiper-button-next {
-    color: #ff9600;
-  }
-  .swiper-button-prev {
-    color: #ff9600;
+  .swiper-button-black {
+    &::after {
+      font-size: 20px !important;
+      color: #fff !important;
+    }
   }
 }
 </style>
@@ -108,62 +105,53 @@ export default {
 @media screen and (min-width: 750px) {
   .swiper-container {
     width: 100%;
-    height: 220px;
+    height: 180px;
     background: #ffffff;
-    border-radius: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    min-width: 1200px;
     .swiper-wrapper {
       height: 100%;
     }
     .swiper-slide {
       display: flex;
-    }
-    .img3 {
-      background-image: url("../../assets/img/helmet/fortub.png");
-    }
-    .img4 {
-      background-image: url("../../assets/img/helmet/HCCT.png");
-    }
-    .img5 {
-      background-image: url("../../assets/img/helmet/combo_dodo_web.png");
-    }
-    .img6 {
-      background-image: url("../../assets/img/helmet/hauto.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 148px 0 0 157px;
-        &:hover {
-          background: #2c2c2c;
-        }
+      width: 100%;
+      height: 180px;
+      > div {
+        margin: 0 auto;
+        width: 1200px;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 1026px 180px;
+        background-position: center;
       }
     }
-    .img7 {
-      background-image: url("../../assets/img/helmet/math.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 148px 0 0 157px;
-        &:hover {
-          background: #2c2c2c;
-        }
+    .verson {
+      background: linear-gradient(
+        360deg,
+        #d94107 0%,
+        #e6761c 41%,
+        #ff9243 100%
+      );
+      > div {
+        background-image: url("../../assets/img/banner/verson_web.png");
       }
     }
-    .img8 {
-      background-image: url("../../assets/img/helmet/DODO.png");
+    .combododo {
+      background: linear-gradient(225deg, #ff9502 0%, #ffc400 100%);
+      > div {
+        background-image: url("../../assets/img/banner/combo_dodo_web.png");
+      }
     }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
+    }
+    .dodogroup {
+      background: #000000;
+      > div {
+        background-image: url("../../assets/img/banner/dodo_group_web.png");
+      }
     }
   }
 }
@@ -179,50 +167,7 @@ export default {
     .swiper-slide {
       display: flex;
     }
-    .img3 {
-      background-image: url("../../assets/img/helmet/fortub_h5.png");
-    }
-    .img4 {
-      background-image: url("../../assets/img/helmet/HCCT_H5.png");
-    }
-    .img5 {
-      background-image: url("../../assets/img/helmet/combo_dodo_h5.png");
-    }
-    .img6 {
-      background-image: url("../../assets/img/helmet/hauto_h5.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 180px 0 0 40px;
-        &:hover {
-          background: #2c2c2c;
-        }
-      }
-    }
-    .img7 {
-      background-image: url("../../assets/img/helmet/math_h5.png");
-      > button {
-        width: 120px;
-        height: 48px;
-        background: #121212;
-        border-radius: 24px;
-        font-size: 20px;
-        font-weight: 600;
-        color: #ffffff;
-        margin: 210px 0 0 40px;
-        &:hover {
-          background: #2c2c2c;
-        }
-      }
-    }
-    .img8 {
-      background-image: url("../../assets/img/helmet/DODO_h5.png");
-    }
+
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;

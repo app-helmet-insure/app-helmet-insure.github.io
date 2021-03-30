@@ -31,6 +31,7 @@
         class="icon"
         src="~/assets/img/icon/success-icon.png"
       />
+
       <img
         v-if="type === 'error'"
         class="icon"
@@ -143,9 +144,10 @@ export default {
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .ex-message {
-    width: 640px;
-    padding: 8px 16px;
+    min-width: 640px;
+    height: 56px;
     border-radius: 3px;
+    padding-left: 16px;
     display: flex;
     align-items: center;
     position: fixed;
@@ -153,6 +155,10 @@ export default {
     top: 20px;
     transform: translateX(-50%);
     transition: opacity 0.3s, transform 0.4s, top 0.4s;
+    font-size: 14px;
+    font-family: IBMPlexSans;
+    color: #ffffff;
+    line-height: 28px;
     &.ex-message-info {
       /* @include themeify {
       background: rgba(themed('color-info'), 0.08);
@@ -167,7 +173,7 @@ export default {
       /* @include themeify {
       background: rgba(themed('color-success'), 0.08);
     } */
-      background: #e5f8e5;
+      background: #28a745;
     }
     &.ex-message-error {
       background: #ffefe5;

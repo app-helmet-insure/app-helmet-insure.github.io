@@ -3,13 +3,13 @@
     <div class="banner">
       <div class="banner_center"></div>
     </div>
-    <div class="content_h5">
+    <!-- <div class="content_h5">
       <h3>
         <img src="~/assets/img/iio/helmet_logo.png" alt="" />
         {{ $t("IIO.ComingSoon") }}
       </h3>
       <p>{{ $t("IIO.InitialOffering") }}</p>
-    </div>
+    </div> -->
     <div class="apply_iio">
       <div class="left">
         <p>Want to launch your own IIO with Helmet?</p>
@@ -50,13 +50,13 @@
           </div>
         </div>
       </div>
-      <div class="content_pc">
+      <!-- <div class="content_pc">
         <h3>
           <img src="~/assets/img/iio/helmet_logo.png" alt="" />
           {{ $t("IIO.ComingSoon") }}
         </h3>
         <p>{{ $t("IIO.InitialOffering") }}</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -69,7 +69,9 @@ export default {};
 @media screen and (min-width: 750px) {
   .iiO {
     margin-bottom: 50px;
-
+    width: 80%;
+    margin: 0 auto;
+    min-width: 1200px;
     > .banner {
       width: 100%;
       min-width: 1026px;

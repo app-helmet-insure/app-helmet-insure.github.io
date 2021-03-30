@@ -2,10 +2,18 @@
   <div class="change-account">
     <div class="mask" @click="closeDialog"></div>
     <div class="change-account-block">
-      <span class="back" @click="backDialog"></span>
-      <span class="close" @click="closeDialog"></span>
+      <div class="action">
+        <span class="back" @click="backDialog"></span>
+        <span class="close" @click="closeDialog"></span>
+      </div>
+
       <div class="current-account">
-        <i class="circle"></i>
+        <svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1">
+          <g fill="#FD7E14">
+            <circle fill-opacity="0.2" cx="6" cy="6" r="6"></circle>
+            <circle cx="6" cy="6" r="3"></circle>
+          </g>
+        </svg>
         <span class="address-text">{{ accountText }}</span>
         <img
           :src="
@@ -30,120 +38,118 @@
   </div>
 </template>
 <script>
-import { mateMaskInfo } from '~/assets/utils/matemask.js'
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import Web3 from 'web3'
+import { mateMaskInfo } from "~/assets/utils/matemask.js";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 
 export default {
-  name: 'change-account',
+  name: "change-account",
   data() {
     return {
-      accountText: '',
-    }
+      accountText: "",
+    };
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo
+      return this.$store.state.userInfo;
     },
   },
   watch: {
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
   methods: {
     userInfoWatch(newValue) {
-      let account = newValue.data.account
-      this.accountText = account.substr(0, 6) + '...' + account.substr(-5)
+      let account = newValue.data.account;
+      this.accountText =
+        account.substr(0, 1) +
+        " " +
+        account.substr(1, 1) +
+        " " +
+        account.substr(2, 4) +
+        "..." +
+        account.substr(-5);
       setTimeout(() => {
-        this.$bus.$emit('REFRESH_ALL_DATA')
-        this.$bus.$emit('REFRESH_MINING')
-        this.$bus.$emit('REFRESH_BALANCE')
-      }, 1000)
+        this.$bus.$emit("REFRESH_ALL_DATA");
+        this.$bus.$emit("REFRESH_MINING");
+        this.$bus.$emit("REFRESH_BALANCE");
+      }, 1000);
     },
     closeDialog() {
-      this.$emit('close')
+      this.$emit("close");
     },
     backDialog() {
-      this.$emit('back')
-      this.closeDialog()
+      this.$emit("back");
+      this.closeDialog();
     },
     changeWallet(item) {
-      this.$store.dispatch('setWalletType', item)
-      if (item === 'MetaMask') {
-        this.connectMetaMask()
+      this.$store.dispatch("setWalletType", item);
+      if (item === "MetaMask") {
+        this.connectMetaMask();
       } else {
-        this.connectWallet()
+        this.connectWallet();
       }
     },
     connectMetaMask() {
       try {
         window.ethereum
-          .request({ method: 'eth_requestAccounts' })
+          .request({ method: "eth_requestAccounts" })
           .then(async (account) => {
-            window.localStorage.setItem('currentType', 'MetaMask')
-            let userInfo = await mateMaskInfo(account[0], 'MetaMask')
-            this.$store.dispatch('setUserInfo', userInfo)
-            this.closeDialog()
-            this.$bus.$emit('REFRESH_ALL_DATA')
-            this.$bus.$emit('REFRESH_MINING')
-            this.$bus.$emit('REFRESH_BALANCE')
-            this.$bus.$emit('DRAW_ECHART', { drawFlag: true })
-          })
+            window.localStorage.setItem("currentType", "MetaMask");
+            let userInfo = await mateMaskInfo(account[0], "MetaMask");
+            this.$store.dispatch("setUserInfo", userInfo);
+            this.closeDialog();
+            this.$bus.$emit("REFRESH_ALL_DATA");
+            this.$bus.$emit("REFRESH_MINING");
+            this.$bus.$emit("REFRESH_BALANCE");
+            this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
+          });
       } catch (error) {
-        console.log('MateMask 扩展插件未安装或未启用##', error)
+        console.log("MateMask 扩展插件未安装或未启用##", error);
       }
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
         chainId: 56,
-        bridge: 'https://bridge.walletconnect.org',
+        bridge: "https://bridge.walletconnect.org",
         rpc: {
-          56: 'https://bsc-dataseed1.binance.org/',
+          56: "https://bsc-dataseed1.binance.org/",
         },
         qrcode: true,
         pollingInterval: 10000,
-      })
-      let res = await walletConnectProvider.enable()
-      const web3 = new Web3(walletConnectProvider)
-      const coinbase = walletConnectProvider.wc.accounts[0]
-      window.WEB3 = web3
-      let userInfo = await mateMaskInfo(coinbase, 'WalletConnect')
-      this.$store.dispatch('setUserInfo', userInfo)
-      this.closeDialog()
-      this.$bus.$emit('REFRESH_ALL_DATA')
-      this.$bus.$emit('REFRESH_MINING')
-      this.$bus.$emit('REFRESH_BALANCE')
-      this.$bus.$emit('DRAW_ECHART', { drawFlag: true })
+      });
+      let res = await walletConnectProvider.enable();
+      const web3 = new Web3(walletConnectProvider);
+      const coinbase = walletConnectProvider.wc.accounts[0];
+      window.WEB3 = web3;
+      let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
+      this.$store.dispatch("setUserInfo", userInfo);
+      this.closeDialog();
+      this.$bus.$emit("REFRESH_ALL_DATA");
+      this.$bus.$emit("REFRESH_MINING");
+      this.$bus.$emit("REFRESH_BALANCE");
+      this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .change-account-block {
-    width: 510px;
-    padding: 16px 30px;
-    position: relative;
+    padding: 30px 56px 56px;
     background: #ffffff;
-    position: relative;
     z-index: 102;
-    padding-top: 60px;
-    padding-bottom: 20px;
   }
 }
 @media screen and (max-width: 750px) {
   .change-account-block {
     width: 90%;
     padding: 8px 16px;
-    position: relative;
     background: #ffffff;
-    position: relative;
     z-index: 102;
-    padding-top: 60px;
-    padding-bottom: 20px;
   }
 }
 .change-account {
@@ -161,49 +167,52 @@ export default {
     z-index: 101;
   }
   .change-account-block {
+    border-radius: 8px;
+    .action {
+      width: 100%;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     .back {
       cursor: pointer;
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url('../../assets/img/icon/left2.png');
+      width: 24px;
+      height: 26px;
+      background-image: url("../../assets/img/icon/left2.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;
-      position: absolute;
-      left: 20px;
-      top: 20px;
     }
     .close {
       cursor: pointer;
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      width: 24px;
+      height: 26px;
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-position: center center;
       background-size: 100% 100%;
-      position: absolute;
-      right: 20px;
-      top: 20px;
     }
     .current-account {
+      width: 100%;
+      min-width: 320px;
+      border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;
-      background: rgba($bg-a, 0.1);
-      height: 60px;
+      background: #fff;
+      height: 48px;
       padding: 0px 16px;
-      .circle {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background: #14b465;
-        border-radius: 100%;
-      }
+      margin-top: 30px;
+      border-radius: 5px;
       .address-text {
-        color: $bg-d;
-        font-size: 20px;
+        font-size: 14px;
+        font-family: IBMPlexSans;
+        color: #17173a;
+        line-height: 18px;
         padding-left: 8px;
+        font-weight: 550;
         flex: 1;
         text-align: left;
       }
@@ -214,22 +223,27 @@ export default {
     }
     .wallet-list {
       li {
-        border: 1px solid rgba($bg-a, 0.1);
-        height: 60px;
+        border: 2px solid #e8e8eb;
+        height: 48px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: $bg-d;
-        font-size: 20px;
+        font-size: 14px;
+        font-family: IBMPlexSans;
+        color: #17173a;
+        font-weight: 550;
         margin-top: 16px;
-        padding: 0px 16px;
+        padding: 0px 16px 0 36px;
         cursor: pointer;
+        border-radius: 5px;
+        background: #f8f9fa;
         img {
           width: 30px;
           height: 30px;
         }
         &:hover {
-          border: 1px solid #fd7e14;
+          border: 2px solid rgba(253, 126, 20, 0.3);
+          background: #fff;
         }
       }
     }

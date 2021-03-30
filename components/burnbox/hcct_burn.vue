@@ -41,7 +41,7 @@
           v-model="DepositeNum"
           :style="
             DepositeNum == balance.Deposite
-              ? 'border: 1px solid #FF9600 !important'
+              ? 'border: 1px solid #fd7e14 !important'
               : ''
           "
         />
@@ -129,13 +129,13 @@
           type="text"
           v-model="balance.Earn"
           disabled
-          style="border: 1px solid #ff9600 !important"
+          style="border: 1px solid #fd7e14 !important"
         />
         <input
           v-else
           type="text"
           disabled
-          style="border: 1px solid #ff9600 !important"
+          style="border: 1px solid #fd7e14 !important"
         />
         <p>
           <span>HCCTII</span>|<i
@@ -445,10 +445,10 @@ export default {
 }
 .ContractAddress {
   font-size: 14px;
-  color: #ff9600;
+  color: #fd7e14;
   margin-top: 8px;
   span {
-    color: #121212;
+    color: #17173a;
   }
   p {
     display: flex;
@@ -506,7 +506,7 @@ export default {
             .control_real {
               height: 100%;
               border-radius: 6px;
-              background: #ff9600;
+              background: #fd7e14;
               position: relative;
               .fire {
                 display: block;
@@ -561,7 +561,7 @@ export default {
           border-radius: 6px;
           border: 1px solid #e8e8eb;
           &:focus {
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
           }
         }
         p {
@@ -572,16 +572,16 @@ export default {
           span {
             font-size: 14px;
             font-weight: 600;
-            color: #121212;
+            color: #17173a;
             margin-right: 12px;
           }
           i {
             display: inline-block;
             padding: 6px 8px;
             border-radius: 6px;
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
             font-size: 12px;
-            color: #ff9600;
+            color: #fd7e14;
             margin-left: 12px;
             cursor: pointer;
           }
@@ -620,7 +620,7 @@ export default {
       .submit_burn {
         width: 100%;
         height: 40px;
-        background: #121212;
+        background: #17173a;
         border-radius: 6px;
         font-size: 16px;
         font-weight: 600;
@@ -673,7 +673,7 @@ export default {
           border: 1px solid #e8e8eb;
           border-radius: 6px;
           &:focus {
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
           }
         }
         p {
@@ -684,16 +684,16 @@ export default {
           span {
             font-size: 14px;
             font-weight: 600;
-            color: #121212;
+            color: #17173a;
             margin-right: 12px;
           }
           i {
             display: inline-block;
             padding: 6px 8px;
             border-radius: 6px;
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
             font-size: 12px;
-            color: #ff9600;
+            color: #fd7e14;
             margin-left: 12px;
             cursor: pointer;
           }
@@ -714,7 +714,7 @@ export default {
             &:nth-of-type(2) {
               font-size: 14px;
               font-weight: bold;
-              color: #121212;
+              color: #17173a;
               margin-top: 10px;
             }
           }
@@ -723,7 +723,7 @@ export default {
       .submit_burn {
         width: 100%;
         height: 40px;
-        background: #121212;
+        background: #17173a;
         border-radius: 6px;
         font-size: 16px;
         font-weight: 600;
@@ -772,7 +772,7 @@ export default {
       > .pool_detail {
         h3 {
           font-size: 18px;
-          color: #121212;
+          color: #17173a;
           line-height: 25px;
           display: flex;
           align-items: center;
@@ -796,7 +796,7 @@ export default {
           span {
             font-size: 14px;
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
           }
           img {
             width: 24px;
@@ -812,7 +812,7 @@ export default {
           font-size: 12px;
           color: #ffffff;
           padding: 2px 5px;
-          background: #ff9600;
+          background: #fd7e14;
           border-radius: 3px;
           font-weight: normal;
         }
@@ -863,7 +863,7 @@ export default {
               padding: 1px 4px;
               background: #ffe3bb;
               border-radius: 3px;
-              color: #121212;
+              color: #17173a;
               display: flex;
               align-self: baseline;
             }
@@ -880,7 +880,7 @@ export default {
           &:nth-of-type(2) {
             font-size: 14px;
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
             margin-top: 4px;
           }
         }
@@ -950,10 +950,10 @@ export default {
         font-size: 14px;
         font-weight: 600;
         background: #fff7ec;
-        color: #121212;
+        color: #17173a;
       }
       .active {
-        background: #ff9600;
+        background: #fd7e14;
         color: #fff;
       }
     }
@@ -979,10 +979,10 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #121212;
+          border: 1px solid #17173a;
           border-radius: 6px;
           &:focus {
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
           }
         }
         p {
@@ -993,16 +993,16 @@ export default {
           span {
             font-size: 14px;
             font-weight: 600;
-            color: #121212;
+            color: #17173a;
             margin-right: 12px;
           }
           i {
             display: inline-block;
             padding: 6px 8px;
             border-radius: 6px;
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
             font-size: 12px;
-            color: #ff9600;
+            color: #fd7e14;
             margin-left: 12px;
             cursor: pointer;
           }
@@ -1026,7 +1026,7 @@ export default {
             &:nth-of-type(2) {
               font-size: 14px;
               font-weight: bold;
-              color: #121212;
+              color: #17173a;
               margin-top: 5px;
             }
           }
@@ -1035,7 +1035,7 @@ export default {
       .submit_burn {
         width: 100%;
         height: 40px;
-        background: #121212;
+        background: #17173a;
         border-radius: 6px;
         font-size: 16px;
         font-weight: 600;
@@ -1070,10 +1070,10 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #121212;
+          border: 1px solid #17173a;
           border-radius: 6px;
           &:focus {
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
           }
         }
         p {
@@ -1084,16 +1084,16 @@ export default {
           span {
             font-size: 14px;
             font-weight: 600;
-            color: #121212;
+            color: #17173a;
             margin-right: 12px;
           }
           i {
             display: inline-block;
             padding: 6px 8px;
             border-radius: 6px;
-            border: 1px solid #ff9600;
+            border: 1px solid #fd7e14;
             font-size: 12px;
-            color: #ff9600;
+            color: #fd7e14;
             margin-left: 12px;
             cursor: pointer;
           }
@@ -1114,7 +1114,7 @@ export default {
             &:nth-of-type(2) {
               font-size: 14px;
               font-weight: bold;
-              color: #121212;
+              color: #17173a;
               margin-top: 5px;
             }
           }
@@ -1123,7 +1123,7 @@ export default {
       .submit_burn {
         width: 100%;
         height: 40px;
-        background: #121212;
+        background: #17173a;
         border-radius: 6px;
         font-size: 16px;
         font-weight: 600;

@@ -39,7 +39,7 @@ button {
 
 html,
 body {
-  color: #121212;
+  color: #17173a;
   background: #f7f7fa;
 }
 
@@ -66,9 +66,9 @@ body ::-webkit-scrollbar-thumb {
     linear,
     left bottom,
     left top,
-    color-stop(0.44, #ff9600),
-    color-stop(0.72, #ff9600),
-    color-stop(0.86, #ff9600)
+    color-stop(0.44, #fd7e14),
+    color-stop(0.72, #fd7e14),
+    color-stop(0.86, #fd7e14)
   );
 }
 
@@ -174,7 +174,7 @@ button:disabled {
   align-items: center;
   margin-left: 16px;
   color: #ffffff;
-  background: #ff9600;
+  background: #fd7e14;
   height: 32px;
   line-height: 32px;
   padding: 0px 10px;
@@ -196,7 +196,7 @@ button:disabled {
   align-items: center;
   margin-left: 16px;
   color: #ffffff;
-  background: #ff9600;
+  background: #fd7e14;
   height: 32px;
   line-height: 32px;
   padding: 0px 10px;
@@ -249,7 +249,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   margin: 0 5px;
-  color: #121212;
+  color: #17173a;
   font-weight: 500;
   cursor: pointer;
 }
@@ -279,7 +279,7 @@ button:disabled {
 .pages div p .icon {
   width: 20px;
   height: 20px;
-  fill: #121212;
+  fill: #17173a;
 }
 
 .pages div i {
@@ -309,7 +309,7 @@ button:disabled {
 .noData div p {
   text-align: center;
   font-size: 12px;
-  color: #919aa6;
+  color: rgba(23, 23, 58, 0.4);
 }
 
 @media screen and (max-width: 750px) {
@@ -368,7 +368,7 @@ button:disabled {
 .b_b_button {
   padding: 0 34px;
   height: 40px;
-  background: #121212;
+  background: #17173a;
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;

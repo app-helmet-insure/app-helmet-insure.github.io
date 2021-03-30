@@ -130,7 +130,7 @@ export default {
     span {
       position: absolute;
       right: 12px;
-      color: #919aa6;
+      color: rgba(23, 23, 58, 0.4);
     }
   }
   .total-token {
@@ -141,17 +141,17 @@ export default {
     line-height: 20px;
     span {
       font-size: 12px;
-      color: #121212;
+      color: #17173a;
     }
     a {
       font-size: 12px;
-      color: #ff9600;
+      color: #fd7e14;
     }
   }
   .to-gettoken {
     margin-top: 4px;
     font-size: 12px;
-    color: #ff9600;
+    color: #fd7e14;
   }
   .check {
     margin-top: 26px;
@@ -167,7 +167,7 @@ export default {
     p {
       height: 18px;
       font-size: 12px;
-      color: #121212;
+      color: #17173a;
     }
   }
 }

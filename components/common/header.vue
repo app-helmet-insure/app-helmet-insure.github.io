@@ -5,19 +5,19 @@
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
         @click="openWallectSelect"
-        >{{ $t("Header.ConnectWallet") }}</a
+        >{{ $t('Header.ConnectWallet') }}</a
       >
       <div v-else class="address-wrap">
         <div v-if="ChainID != 56" class="wrong">
           <svg class="wrongnetwork" aria-hidden="true">
             <use xlink:href="#icon-wrongnetwork"></use>
           </svg>
-          <span>{{ $t("Header.ConnectWrong") }}</span>
+          <span>{{ $t('Header.ConnectWrong') }}</span>
         </div>
         <template v-else>
           <div class="balance-wrap">
             <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            <span>{{ BalanceArray["HELMET"] }}</span>
+            <span>{{ BalanceArray['HELMET'] }}</span>
           </div>
           <div class="wallet-address" @click="openCurrentAccount">
             <span>{{ accountText }}</span>
@@ -46,13 +46,13 @@
   </div>
 </template>
 <script>
-import WallectSelect from "./wallet-select";
-import CurrentAccount from "~/components/account/current-account.vue";
-import ChangeAccount from "~/components/account/change-account.vue";
-import Langauage from "~/components/common/langauage.vue";
-import { getID } from "~/assets/utils/address-pool.js";
+import WallectSelect from './wallet-select'
+import CurrentAccount from '~/components/account/current-account.vue'
+import ChangeAccount from '~/components/account/change-account.vue'
+import Langauage from '~/components/common/langauage.vue'
+import { getID } from '~/assets/utils/address-pool.js'
 export default {
-  name: "p-header",
+  name: 'p-header',
   components: {
     WallectSelect,
     CurrentAccount,
@@ -62,77 +62,77 @@ export default {
   data() {
     return {
       showWallectSelect: false,
-      accountText: "",
+      accountText: '',
       showMask: false,
       showCurrentAccount: false, // 显示当前账户信息
       showChangeWallet: false,
-    };
+    }
   },
   computed: {
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
     routeObj() {
-      return this.$route;
+      return this.$route
     },
     BalanceArray() {
-      let obj = this.$store.state.BalanceArray;
-      return obj;
+      let obj = this.$store.state.BalanceArray
+      return obj
     },
     ChainID() {
-      let chainID = this.$store.state.chainID;
-      return chainID;
+      let chainID = this.$store.state.chainID
+      return chainID
     },
   },
   watch: {
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
     ChainID(newValue) {
-      this.chainID = newValue;
+      this.chainID = newValue
     },
   },
   mounted() {},
   methods: {
     openChangeWallet() {
-      this.showChangeWallet = true;
+      this.showChangeWallet = true
     },
     closeChangeWallet() {
-      this.showChangeWallet = false;
+      this.showChangeWallet = false
     },
     openCurrentAccount() {
-      this.showCurrentAccount = true;
+      this.showCurrentAccount = true
     },
     closeCurrentAccount() {
-      this.showCurrentAccount = false;
+      this.showCurrentAccount = false
     },
     userInfoWatch(newValue) {
       if (newValue.data && newValue.data.account) {
-        let account = newValue.data.account;
-        account = account.toUpperCase();
+        let account = newValue.data.account
+        account = account.toUpperCase()
         this.accountText =
           account.substr(0, 1) +
           account.substr(1, 1).toLowerCase() +
           account.substr(2, 3) +
-          "..." +
-          account.substr(-4);
+          '...' +
+          account.substr(-4)
       }
     },
     openWallectSelect() {
-      this.showWallectSelect = true;
+      this.showWallectSelect = true
     },
     closeWallectSelect() {
-      this.showWallectSelect = false;
+      this.showWallectSelect = false
     },
     handleShowMask() {
-      this.$store.dispatch("setMaskDialog", true);
+      this.$store.dispatch('setMaskDialog', true)
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 .header-container {
   width: 100%;
   height: 80px;
@@ -285,7 +285,7 @@ export default {
 //           height: 60px;
 //           line-height: 60px;
 //           position: relative;
-//           color: #121212;
+//           color: #17173a;
 //           font-size: 16px;
 //           font-weight: 500;
 //         }

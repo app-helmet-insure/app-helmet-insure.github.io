@@ -55,17 +55,17 @@ export default {
   },
   methods: {
     closeDialog() {
-      this.$emit('close');
+      this.$emit('close')
     },
     confirmDialog() {
-      this.$emit('confirm');
-      this.closeDialog();
+      this.$emit('confirm')
+      this.closeDialog()
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 @media screen and (min-width: 750px) {
   .p-dialog-content {
     width: 496px;
@@ -99,13 +99,13 @@ export default {
     z-index: 102;
     .title {
       font-size: 16px;
-      color: #121212;
+      color: #17173a;
     }
     .close {
       display: block;
       width: 20px;
       height: 20px;
-      background: url("../../assets/img/icon/guanbi.png") center center
+      background: url('../../assets/img/icon/guanbi.png') center center
         no-repeat;
       background-size: 100% 100%;
       cursor: pointer;

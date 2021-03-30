@@ -362,7 +362,7 @@ export default {
 .cancel {
   display: inline-block;
   padding: 3px 10px;
-  background: #ff9600;
+  background: #fd7e14;
   line-height: 20px;
   font-size: 14px;
   color: #fff;
@@ -402,7 +402,7 @@ export default {
         left: 0;
         height: 100%;
         width: 0px;
-        border-left: 2px solid#ff9600;
+        border-left: 2px solid#fd7e14;
       }
     }
   }
@@ -613,11 +613,11 @@ export default {
           }
           span:nth-of-type(1) {
             font-size: 12px;
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
           }
           span:nth-of-type(2) {
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
           }
         }
         > p {

@@ -1060,7 +1060,7 @@ export default {
         left: 0;
         height: 100%;
         width: 0px;
-        border-left: 2px solid#ff9600;
+        border-left: 2px solid#fd7e14;
       }
     }
   }
@@ -1263,13 +1263,13 @@ export default {
           }
           span:nth-of-type(1) {
             font-size: 12px;
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
           }
           span:nth-of-type(2) {
             display: flex;
             align-items: center;
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
           }
         }
         > p {

@@ -4,14 +4,14 @@
       <li>
         <!-- 已成交保单 -->
         <p>
-          <label>{{ $t("Banner.ClosedPolicy") }}</label>
-          <span>{{ isLogin ? helmetVarieties : "--" }}</span>
+          <label>{{ $t('Banner.ClosedPolicy') }}</label>
+          <span>{{ isLogin ? helmetVarieties : '--' }}</span>
         </p>
       </li>
       <li>
         <!-- LONG当前总价值 -->
         <p>
-          <label>{{ $t("Banner.LongValue") }}</label>
+          <label>{{ $t('Banner.LongValue') }}</label>
           <span v-if="isLogin">
             <template>
               <countTo
@@ -29,8 +29,8 @@
         <!-- Helmet流通量 -->
         <p>
           <label>
-            <span>{{ $t("Banner.HelmetPcice") }}</span>
-            <span> {{ isLogin ? helmetPrice : "--" }} USD </span>
+            <span>{{ $t('Banner.HelmetPcice') }}</span>
+            <span> {{ isLogin ? helmetPrice : '--' }} USD </span>
           </label>
           <span>
             From:&nbsp;
@@ -49,11 +49,11 @@
   </div>
 </template>
 <script>
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import countTo from "vue-count-to";
+import precision from '~/assets/js/precision.js'
+import { fixD, addCommom, autoRounding, toRounding } from '~/assets/js/util.js'
+import countTo from 'vue-count-to'
 export default {
-  name: "insurance-banner",
+  name: 'insurance-banner',
   components: {
     countTo,
   },
@@ -64,90 +64,90 @@ export default {
       addCommom: addCommom,
       helmetPrice: 0,
       isLogin: false,
-    };
+    }
   },
   computed: {
     helmetVarieties() {
       // 已经成交的保险品种的种类
-      return this.$store.state.helmetVarieties;
+      return this.$store.state.helmetVarieties
     },
     totalHelmetsBorrowedVolume() {
       // 保险交易过的资金量
-      return this.$store.state.totalHelmetsBorrowedVolume;
+      return this.$store.state.totalHelmetsBorrowedVolume
     },
     longTokenCreatedVolume() {
       // 24小时Long token 铸造量
-      return this.$store.state.longTokenCreatedVolume;
+      return this.$store.state.longTokenCreatedVolume
     },
     totalHelmet() {
-      return this.$store.state.assets.totalHelmet;
+      return this.$store.state.assets.totalHelmet
     },
     balanceMine() {
-      return this.$store.state.assets.balanceMine;
+      return this.$store.state.assets.balanceMine
     },
     claimAbleHelmet() {
-      return this.$store.state.assets.claimAbleHelmet;
+      return this.$store.state.assets.claimAbleHelmet
     },
     frequency() {
-      return this.$store.state.assets.validBorrowing;
+      return this.$store.state.assets.validBorrowing
     },
     indexArray() {
-      let list = this.$store.state.allIndexPrice;
-      return list;
+      let list = this.$store.state.allIndexPrice
+      return list
     },
     userInfo() {
-      return this.$store.state.userInfo;
+      return this.$store.state.userInfo
     },
   },
   watch: {
     indexArray: {
-      handler: "IndexWacth",
+      handler: 'IndexWacth',
       immediate: true,
     },
     userInfo: {
-      handler: "userInfoWatch",
+      handler: 'userInfoWatch',
       immediate: true,
     },
   },
   mounted() {
     if (window.chainID == 56) {
-      this.getBannerData();
+      this.getBannerData()
     }
   },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.data.isLogin
       }
     },
     async getBannerData() {
       setTimeout(() => {
-        this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
-        this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
-        this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
-        this.$store.dispatch("getValidBorrowing"); //获取 有效成交
-        this.getPrice();
-      }, 2000);
+        this.$store.dispatch('getTotalHelmet') //获取 Helmet 总量
+        this.$store.dispatch('getBalanceMine') //获取 Helmet 矿山余额
+        this.$store.dispatch('getClaimAbleHelmet') //获取 所有待结算 Helmet
+        this.$store.dispatch('getValidBorrowing') //获取 有效成交
+        this.getPrice()
+      }, 2000)
     },
     getPrice() {
       this.helmetPrice = toRounding(
         precision.times(
-          this.indexArray[1]["HELMET"],
+          this.indexArray[1]['HELMET'],
           this.$store.state.BNB_BUSD
         ),
         4
-      );
+      )
     },
     IndexWacth(newValue, val) {
       if (newValue) {
-        this.getPrice();
+        this.getPrice()
       }
     },
   },
-};
+}
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import '~/assets/css/base.scss';
 .insurance-banner {
   ul {
     height: 100%;
@@ -245,7 +245,7 @@ export default {
                 display: block;
                 width: 12px;
                 height: 12px;
-                background-image: url("../../assets/img/insurancelist/share_icon.png");
+                background-image: url('../../assets/img/insurancelist/share_icon.png');
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
               }
@@ -258,13 +258,13 @@ export default {
         }
       }
       li:nth-of-type(1) {
-        background-image: url("../../assets/img/insurancelist/card1@2x.png");
+        background-image: url('../../assets/img/insurancelist/card1@2x.png');
       }
       li:nth-of-type(2) {
-        background-image: url("../../assets/img/insurancelist/card2@2x.png");
+        background-image: url('../../assets/img/insurancelist/card2@2x.png');
       }
       li:nth-of-type(3) {
-        background-image: url("../../assets/img/insurancelist/card3@2x.png");
+        background-image: url('../../assets/img/insurancelist/card3@2x.png');
       }
     }
   }
@@ -292,14 +292,14 @@ export default {
             margin-top: 8px;
             font-size: 20px;
             font-weight: bold;
-            color: #121212;
+            color: #17173a;
           }
           label {
-            color: #919aa6;
+            color: rgba(23, 23, 58, 0.4);
             span {
               display: flex;
               font-weight: normal;
-              color: #919aa6;
+              color: rgba(23, 23, 58, 0.4);
               &:nth-of-type(1) {
                 font-size: 16px;
               }
@@ -309,7 +309,7 @@ export default {
               }
               > a {
                 font-size: 14px;
-                color: #ff9600;
+                color: #fd7e14;
                 font-weight: 600;
                 position: relative;
                 z-index: 1;
@@ -331,7 +331,7 @@ export default {
         border-radius: 3px;
       }
       li:nth-of-type(2) {
-        background: #ff9600;
+        background: #fd7e14;
         margin-bottom: 20px;
         border-radius: 3px;
         p {

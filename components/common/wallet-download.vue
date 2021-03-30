@@ -141,14 +141,14 @@ export default {
       font-weight: 600;
     }
     a {
-      color: #ff9600;
+      color: #fd7e14;
     }
   }
   .wallet-download-button {
     .install {
       width: 142px;
       height: 32px;
-      background: #ff9600;
+      background: #fd7e14;
       font-size: 14px;
       font-weight: 500;
       color: #ffffff;
@@ -158,10 +158,10 @@ export default {
     .back {
       width: 58px;
       height: 32px;
-      border: 1px solid #ff9600;
+      border: 1px solid #fd7e14;
       font-size: 14px;
       font-weight: 500;
-      color: #ff9600;
+      color: #fd7e14;
       line-height: 32px;
       text-align: center;
     }
@@ -209,7 +209,7 @@ export default {
       font-weight: 600;
     }
     a {
-      color: #ff9600;
+      color: #fd7e14;
     }
   }
   .wallet-download-button {
@@ -217,7 +217,7 @@ export default {
     .install {
       width: 142px;
       height: 32px;
-      background: #ff9600;
+      background: #fd7e14;
       font-size: 14px;
       font-weight: 500;
       color: #ffffff;
@@ -227,10 +227,10 @@ export default {
     .back {
       width: 58px;
       height: 32px;
-      border: 1px solid #ff9600;
+      border: 1px solid #fd7e14;
       font-size: 14px;
       font-weight: 500;
-      color: #ff9600;
+      color: #fd7e14;
       line-height: 32px;
       text-align: center;
     }

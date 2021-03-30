@@ -13,7 +13,9 @@
           <button class="orange" @click="closeCompound">
             {{ $t('Table.Cancel') }}
           </button>
-          <button class="black" @click="confirm">{{$t('Table.Confirm')}}</button>
+          <button class="black" @click="confirm">
+            {{ $t('Table.Confirm') }}
+          </button>
         </div>
       </div>
     </div>
@@ -97,7 +99,7 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #121212;
+        color: #17173a;
         line-height: 19px;
       }
       i {
@@ -115,7 +117,7 @@ export default {
       p {
         font-size: 24px;
         font-weight: bold;
-        color: #ff9600;
+        color: #fd7e14;
         line-height: 20px;
         text-align: center;
       }
@@ -129,15 +131,15 @@ export default {
         margin: 0px 6px;
       }
       .orange {
-        border: 1px solid #ff9600;
+        border: 1px solid #fd7e14;
         font-size: 14px;
         font-weight: 500;
-        color: #ff9600;
+        color: #fd7e14;
         background: transparent;
       }
       .black {
-        border: 1px solid #121212;
-        background: #121212;
+        border: 1px solid #17173a;
+        background: #17173a;
         font-size: 14px;
         font-weight: 500;
         color: #ffffff;
@@ -163,7 +165,7 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #121212;
+        color: #17173a;
         line-height: 19px;
       }
       i {
@@ -181,7 +183,7 @@ export default {
       p {
         font-size: 24px;
         font-weight: bold;
-        color: #ff9600;
+        color: #fd7e14;
         line-height: 20px;
         text-align: center;
       }
@@ -195,15 +197,15 @@ export default {
         margin: 0px 6px;
       }
       .orange {
-        border: 1px solid #ff9600;
+        border: 1px solid #fd7e14;
         font-size: 14px;
         font-weight: 500;
-        color: #ff9600;
+        color: #fd7e14;
         background: transparent;
       }
       .black {
-        border: 1px solid #121212;
-        background: #121212;
+        border: 1px solid #17173a;
+        background: #17173a;
         font-size: 14px;
         font-weight: 500;
         color: #ffffff;

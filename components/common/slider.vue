@@ -1,6 +1,11 @@
 <template>
   <div class="slider">
-    <a @click="whirlLogo" :class="['logo', whirlLogoFlag && 'whirl_logo']"></a>
+    <a
+      href="https://www.helmet.insure/"
+      @mouseenter="whirlLogo(true)"
+      @mouseleave="whirlLogo(false)"
+      :class="['logo', whirlLogoFlag && 'whirl_logo']"
+    ></a>
     <ul class="menu">
       <li class="menu_group menu_item">
         <a
@@ -183,9 +188,9 @@ export default {
       this.sliderFlag = !this.sliderFlag
       this.$router.push('/')
     },
-    whirlLogo() {
-      this.whirlLogoFlag = !this.whirlLogoFlag
-      window.location.href = 'https://www.helmet.insure/'
+    whirlLogo(val) {
+      if (this.whirlLogoFlag === val) return
+      this.whirlLogoFlag = val
     },
   },
 }

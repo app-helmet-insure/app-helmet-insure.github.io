@@ -1,15 +1,19 @@
 <template>
   <div class="layout-container">
-    <p>
+    <div class="contractAdress" v-if="TitleTextShow">
       <i></i>
-      <span>
-        HELMET is now on pancakeswap. Token Contract Address:
-        0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8
-      </span>
-      <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
-        >Exchange now</a
-      >
-    </p>
+      <p>
+        <span> HELMET is now on pancakeswap. </span>
+        <span> Token Contract Address: </span>
+        <span> 0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
+        <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
+          >Exchange now</a
+        >
+      </p>
+      <svg class="close" aria-hidden="true" @click="TitleTextShow = false">
+        <use xlink:href="#icon-close"></use>
+      </svg>
+    </div>
     <!-- <p>
       <span>{{ $t("Tip.SendCoin") }}</span>
     </p> -->
@@ -17,15 +21,15 @@
     <div class="content">
       <PSlider></PSlider>
       <div class="content_wrap">
-        <PHeader></PHeader>
-        <transition name="fade">
-          <nuxt />
-        </transition>
+        <PHeader :account="true"></PHeader>
+        <template>
+          <transition name="fade">
+            <nuxt />
+          </transition>
+        </template>
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
-    <!-- <MyPayaso></MyPayaso> -->
-    <!-- <PMask></PMask> -->
     <RiskWarning
       v-if="showRiskWarning"
       @close="closeRiskWarning"
@@ -55,8 +59,6 @@ import { getID } from "~/assets/utils/address-pool.js";
 import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import RiskWarning from "~/components/common/risk-warning.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
-// import MyPayaso from "~/components/common/my-payaso.vue";
-import PMask from "~/components/common/p-mask.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
 import { uniswap } from "~/assets/utils/address-pool.js";
 import { getBalance } from "~/interface/order.js";
@@ -73,7 +75,6 @@ export default {
     RiskWarning,
     StatusDialog,
     // MyPayaso,
-    PMask,
     WallectDownLoad,
   },
   data() {
@@ -88,6 +89,7 @@ export default {
         btnText: "",
       },
       showStatusDialog: false,
+      TitleTextShow: true,
     };
   },
   computed: {
@@ -144,12 +146,12 @@ export default {
     },
   },
   async mounted() {
-    let flag = navigator.userAgent.match(
-      /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-    );
-    if (flag) {
-      window.location.href = "https://m.helmet.insure/";
-    }
+    // let flag = navigator.userAgent.match(
+    //   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    // );
+    // if (flag) {
+    //   window.location.href = "https://m.helmet.insure/";
+    // }
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -495,7 +497,7 @@ export default {
 }
 @media screen and (min-width: 750px) {
   .layout-container {
-    > p {
+    > .contractAdress {
       width: 100%;
       min-width: 1026px;
       height: 50px;
@@ -517,7 +519,7 @@ export default {
         background-size: 100% 100%;
         margin-right: 4px;
       }
-      span {
+      p {
         display: flex;
         align-items: center;
         font-family: Helvetica;
@@ -565,39 +567,69 @@ export default {
         margin: 0 auto;
       }
     }
+    .close {
+      display: none;
+    }
   }
 }
 @media screen and (max-width: 750px) {
   .layout-container {
-    > p {
-      padding-left: 16px;
+    > .contractAdress {
+      padding: 10px 10px 10px 16px;
       width: 100%;
-      height: 48px;
-      background: rgba(255, 150, 0, 0.2);
+      height: 112px;
+      background: #fff;
       font-size: 12px;
       color: #fd7e14;
       line-height: 20px;
-      justify-content: center;
       display: flex;
-      flex-direction: column;
-      span {
+      box-shadow: 0px 1px 0px 0px #e8e8eb;
+      position: relative;
+      i {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background-image: url("../assets/img/helmet/icon_title.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 4px;
+        flex-shrink: 0;
+      }
+      p {
         display: flex;
-        align-items: center;
-        i {
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-          background-image: url("../assets/img/helmet/copy.png");
-          background-repeat: no-repeat;
-          background-size: 100% 100%;
-          cursor: pointer;
-          margin-left: 4px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+        span {
+          font-size: 12px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 600;
+          color: #17173a;
+          line-height: 16px;
+        }
+        a {
+          min-width: 111px;
+          height: 32px;
+          background: #17173a;
+          border-radius: 5px;
+          padding: 0 10px;
+          font-size: 14px;
+          font-family: IBMPlexSans;
+          color: #ffffff;
+          text-align: center;
+          line-height: 32px;
+          text-decoration: underline;
         }
       }
-    }
-    .main-container {
-      width: 100%;
-      overflow: hidden;
+      .close {
+        width: 24px;
+        height: 24px;
+        fill: rgba(23, 23, 58, 0.45);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+      }
     }
   }
 }

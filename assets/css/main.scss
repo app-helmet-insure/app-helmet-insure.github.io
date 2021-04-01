@@ -103,10 +103,7 @@ button {
     align-items: center;
     justify-content: center;
 }
-.main_container {
-    margin: 0 auto;
-    min-width: 1026px;
-}
+
 .mask {
     position: fixed;
     left: 0px;
@@ -356,6 +353,10 @@ $td-gap: 16px;
     .table {
         display: none;
     }
+    .main_container {
+        width: 100%;
+        background: #f8f9fa;
+    }
 }
 @media screen and (min-width: 750px) {
     html,
@@ -367,6 +368,10 @@ $td-gap: 16px;
     }
     .tabs-item-box {
         display: none;
+    }
+    .main_container {
+        margin: 0 auto;
+        min-width: 1026px;
     }
 }
 .o_button {

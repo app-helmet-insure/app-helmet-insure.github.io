@@ -8,13 +8,13 @@
       <table>
         <thead>
           <tr>
-            <td>{{ $t('Table.ID') }}</td>
-            <td>{{ $t('Table.Rent') }}</td>
-            <td>{{ $t('Table.Amount') }}({{ $t('Table.Cont') }})</td>
+            <td>{{ $t("Table.ID") }}</td>
+            <td>{{ $t("Table.Rent") }}</td>
+            <td>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</td>
             <td>
-              {{ $t('Table.Tips', { type: activeInsurance }) }}
+              {{ $t("Table.Tips", { type: activeInsurance }) }}
             </td>
-            <td class="option">{{ $t('Table.Options') }}</td>
+            <td class="option">{{ $t("Table.Options") }}</td>
           </tr>
         </thead>
         <tbody>
@@ -53,17 +53,43 @@
                     : ''
                 "
               >
-                {{ $t('Table.Subscribe') }}
+                {{ $t("Table.Subscribe") }}
               </button>
             </td>
           </tr>
         </tbody>
-        <div class="loading" v-if="isLoading && isLogin">
-          <img src="~/assets/img/loading.png" />
-          <div class="shadow"></div>
-          <p>{{ $t('Table.LoadingWallet') }}</p>
-        </div>
       </table>
+    </div>
+    <div class="insurance_list_h5">
+      <h3>选择保单</h3>
+      <div
+        class="list_item"
+        v-for="(item, index) in showList"
+        :key="index"
+        v-if="item.price.length < 10"
+      >
+        <section>
+          <p>
+            <span>{{ $t("Table.Rent") }}</span>
+            <span>{{ item.price }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</span>
+            <span>{{ item.remain }}</span>
+          </p>
+        </section>
+        <section>
+          <input type="text" />
+          <button @click="handleClickBuy(item)">
+            {{ $t("Table.Subscribe") }}
+          </button>
+        </section>
+      </div>
+    </div>
+    <div class="loading" v-if="isLoading && isLogin">
+      <img src="~/assets/img/loading.png" />
+      <div class="shadow"></div>
+      <p>{{ $t("Table.LoadingWallet") }}</p>
     </div>
     <section
       class="noData"
@@ -71,7 +97,7 @@
     >
       <div>
         <img src="~/assets/img/helmet/nodata.png" alt="" />
-        <p>{{ $t('Table.NoData') }}</p>
+        <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
     <section class="pages" v-if="insuranceList.length > 10 && isLogin">
@@ -86,31 +112,31 @@
 </template>
 
 <script>
-import PInput from '~/components/common/p-input.vue'
-import '~/assets/svg/iconfont.js'
-import precision from '~/assets/js/precision.js'
+import PInput from "~/components/common/p-input.vue";
+import "~/assets/svg/iconfont.js";
+import precision from "~/assets/js/precision.js";
 import {
   fixD,
   addCommom,
   autoRounding,
   toRounding,
   fixDEAdd,
-} from '~/assets/js/util.js'
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js'
-import { buyInsuranceBuy, asks } from '~/interface/order.js'
-import { getTokenName } from '~/assets/utils/address-pool.js'
-import Message from '~/components/common/Message'
-import ClipboardJS from 'clipboard'
-import Page from '~/components/common/page.vue'
-import InsuranceTitle from './insurance-title'
-import { getAddress } from '~/assets/utils/address-pool.js'
+} from "~/assets/js/util.js";
+import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import { buyInsuranceBuy, asks } from "~/interface/order.js";
+import { getTokenName } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
+import Page from "~/components/common/page.vue";
+import InsuranceTitle from "./insurance-title";
+import { getAddress } from "~/assets/utils/address-pool.js";
 export default {
   components: {
     InsuranceTitle,
     PInput,
     Page,
   },
-  props: ['activeInsurance'],
+  props: ["activeInsurance"],
   data() {
     return {
       page: 0,
@@ -118,31 +144,31 @@ export default {
       showList: [],
       insuranceList: [],
       isLoading: true,
-    }
+    };
   },
   computed: {
     aboutInfoSell() {
-      let list = this.$store.state.aboutInfoSell
-      return list
+      let list = this.$store.state.aboutInfoSell;
+      return list;
     },
     strikePriceArray() {
-      return this.$store.state.strikePriceArray
+      return this.$store.state.strikePriceArray;
     },
     indexArray() {
-      let list = this.$store.state.allIndexPrice
-      return list
+      let list = this.$store.state.allIndexPrice;
+      return list;
     },
     userInfo() {
-      return this.$store.state.userInfo
+      return this.$store.state.userInfo;
     },
   },
   watch: {
     aboutInfoSell: {
-      handler: 'aboutInfoSellWatch',
+      handler: "aboutInfoSellWatch",
       immediate: true,
     },
     userInfo: {
-      handler: 'userInfoWatch',
+      handler: "userInfoWatch",
       immediate: true,
     },
   },
@@ -159,49 +185,49 @@ export default {
     },
     aboutInfoSellWatch(newValue) {
       if (newValue) {
-        this.page = 0
-        this.limit = 10
-        this.setList(newValue, this.currentCoin, this.currentType)
+        this.page = 0;
+        this.limit = 10;
+        this.setList(newValue, this.currentCoin, this.currentType);
       }
     },
     async setList(sell, coin, type) {
-      this.isLoading = true
-      let item, resultItem
-      let resultList = []
+      this.isLoading = true;
+      let item, resultItem;
+      let resultList = [];
       // 当前时间
-      let now = new Date() * 1
+      let now = new Date() * 1;
       // 当前保险地址
-      let coinAddress = getAddress(this.activeInsurance)
+      let coinAddress = getAddress(this.activeInsurance);
       // 当前保险的全部保单
       let putInsuranceList = sell.filter(
         (item) => item.longInfo._underlying.toLowerCase() == coinAddress
-      )
+      );
       // 数据处理
       for (let i = 0; i < putInsuranceList.length; i++) {
-        item = putInsuranceList[i]
+        item = putInsuranceList[i];
         // 展示账户ID
         let showID =
           item.seller.substr(0, 2) +
           item.seller.substr(2, 3) +
-          '...' +
-          item.seller.substr(-4).toUpperCase()
+          "..." +
+          item.seller.substr(-4).toUpperCase();
         // 到期时间
-        let time = item.longInfo._expiry * 1000
+        let time = item.longInfo._expiry * 1000;
         // 价格
-        let price = fromWei(item.price, coToken)
+        let price = fromWei(item.price, coToken);
         // 抵押物
-        let coToken = getTokenName(item.longInfo._collateral)
+        let coToken = getTokenName(item.longInfo._collateral);
         // 标的物
-        let unToken = getTokenName(item.longInfo._underlying)
+        let unToken = getTokenName(item.longInfo._underlying);
         // 出险价格
         let exPirce = precision.divide(
           1,
           fromWei(item.longInfo._strikePrice, coToken)
-        )
+        );
         let volume =
-          coToken == 'BUSD'
+          coToken == "BUSD"
             ? fromWei(item.volume, coToken)
-            : (fromWei(item.volume, coToken) * this.indexArray[0][unToken]) / 2
+            : (fromWei(item.volume, coToken) * this.indexArray[0][unToken]) / 2;
         resultItem = {
           seller: item.seller,
           id: item.askID,
@@ -214,56 +240,56 @@ export default {
           _collateral: item.longInfo._collateral,
           remain: 0,
           showID,
-          buyNum: '',
+          buyNum: "",
           sort: 1,
-        }
-        let res = await asks(resultItem['id'], 'sync', coToken)
-        resultItem['relVol'] = res
+        };
+        let res = await asks(resultItem["id"], "sync", coToken);
+        resultItem["relVol"] = res;
         if (this.strikePriceArray[1][unToken]) {
-          resultItem['remain'] = fixD(
+          resultItem["remain"] = fixD(
             precision.divide(res, this.strikePriceArray[1][unToken] || 1),
             8
-          )
+          );
         } else {
-          resultItem['remain'] = fixD(res, 8)
+          resultItem["remain"] = fixD(res, 8);
         }
-        if (resultItem['remain'] == 0 || time < now) {
-          resultItem['status'] = 'dated'
-          resultItem['sort'] = 0
+        if (resultItem["remain"] == 0 || time < now) {
+          resultItem["status"] = "dated";
+          resultItem["sort"] = 0;
         }
         if (
           time + 2592000000 > now &&
-          resultItem.seller != '0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca'
+          resultItem.seller != "0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca"
         ) {
-          resultList.push(resultItem)
+          resultList.push(resultItem);
         }
       }
-      resultList.sort(function(a, b) {
-        return Number(a.price) - Number(b.price)
-      })
-      this.insuranceList = resultList.sort(function(a, b) {
-        return b.sort - a.sort
-      })
-      this.isLoading = false
-      this.showList = resultList.slice(this.page * this.limit, this.limit)
+      resultList.sort(function (a, b) {
+        return Number(a.price) - Number(b.price);
+      });
+      this.insuranceList = resultList.sort(function (a, b) {
+        return b.sort - a.sort;
+      });
+      this.isLoading = false;
+      this.showList = resultList.slice(this.page * this.limit, this.limit);
     },
     handleClickChagePage(index) {
-      index = index - 1
-      this.page = index
-      let page = index
+      index = index - 1;
+      this.page = index;
+      let page = index;
       let list = this.insuranceList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
-      )
-      this.showList = list
+      );
+      this.showList = list;
     },
     handleClickBuy(data) {
       if (!data.buyNum) {
-        return
+        return;
       }
-      let datas
-      let unToken = getTokenName(data._underlying)
-      let num = precision.divide(data.buyNum, data.remain)
+      let datas;
+      let unToken = getTokenName(data._underlying);
+      let num = precision.divide(data.buyNum, data.remain);
       datas = {
         askID: data.id,
         showVolueme: data.buyNum,
@@ -281,19 +307,19 @@ export default {
                 8
               ),
         price: data.price,
-        settleToken: 'HELMET',
+        settleToken: "HELMET",
         _strikePrice: data._strikePrice,
         _underlying: getTokenName(data._underlying),
         _expiry: data._expiry,
         _collateral: getTokenName(data._collateral),
         showType: getTokenName(data._underlying),
-      }
-      this.listType = 2
-      this.listCoin = data._underlying
-      buyInsuranceBuy(datas, (status) => {})
+      };
+      this.listType = 2;
+      this.listCoin = data._underlying;
+      buyInsuranceBuy(datas, (status) => {});
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -374,6 +400,73 @@ export default {
               color: #fff;
               border-radius: 3px;
             }
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .insurance_list {
+    display: none;
+  }
+  .insurance_list_h5 {
+    > h3 {
+      margin: 20px 0;
+    }
+    .list_item {
+      width: 100%;
+      padding: 14px 0;
+      border-bottom: 1px solid #e8e8eb;
+      section {
+        &:nth-of-type(1) {
+          display: flex;
+          align-items: center;
+          p {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            span {
+              &:nth-of-type(1) {
+                font-size: 12px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: rgba(23, 23, 58, 0.5);
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+              }
+            }
+          }
+        }
+        &:nth-of-type(2) {
+          display: flex;
+          align-items: center;
+          margin-top: 16px;
+          input {
+            flex: 1;
+            height: 40px;
+            border-radius: 5px;
+            border: 1px solid #e8e8eb;
+            padding-left: 10px;
+            &::placeholder {
+              font-family: IBMPlexSans;
+              color: rgba(23, 23, 58, 0.4);
+            }
+          }
+          button {
+            margin-left: 13px;
+            height: 40px;
+            padding: 0 16px;
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            color: #ffffff;
+            line-height: 18px;
+
+            border-radius: 5px;
           }
         }
       }

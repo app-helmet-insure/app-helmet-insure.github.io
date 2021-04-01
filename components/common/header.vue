@@ -1,6 +1,19 @@
 <template>
   <div class="header-container">
-    <div>
+    <div class="logo">
+      <img src="~/assets/img/helmet/header_logo.png" alt="" />
+      <div class="more" @click="handleShowMask">
+        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+          <path
+            d="M3,4 L21,4 L21,6 L3,6 L3,4 Z M3,19 L21,19 L21,21 L3,21 L3,19 Z M11,14 L21,14 L21,16 L11,16 L11,14 Z M11,9 L21,9 L21,11 L11,11 L11,9 Z M7,12.5 L3,16 L3,9 L7,12.5 Z"
+            id="形状"
+            fill="#17173A"
+            fill-rule="nonzero"
+          ></path>
+        </svg>
+      </div>
+    </div>
+    <div class="account" v-if="account && routeObj.name == 'index'">
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -29,8 +42,6 @@
         v-if="showWallectSelect"
         @close="closeWallectSelect"
       ></WallectSelect>
-      <!-- <Langauage></Langauage> -->
-      <div class="more" @click="handleShowMask"></div>
 
       <CurrentAccount
         v-if="showCurrentAccount"
@@ -53,6 +64,7 @@ import Langauage from "~/components/common/langauage.vue";
 import { getID } from "~/assets/utils/address-pool.js";
 export default {
   name: "p-header",
+  props: ["account"],
   components: {
     WallectSelect,
     CurrentAccount,
@@ -126,7 +138,7 @@ export default {
       this.showWallectSelect = false;
     },
     handleShowMask() {
-      this.$store.dispatch("setMaskDialog", true);
+      this.$bus.$emit("OPEN_SILDER", true);
     },
   },
 };
@@ -134,15 +146,11 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 .header-container {
-  height: 80px;
-  background: #f8f9fa;
-  min-width: 1026px;
-  > div {
+  > .account {
     height: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     text-align: center;
     .wrong {
       min-width: 171px;
@@ -222,116 +230,50 @@ export default {
       display: block;
       padding: 0px 10px;
       color: #ffffff;
+      line-height: 40px;
       &:hover {
         background: #2c2c2c;
       }
     }
   }
 }
-
 @media screen and (min-width: 750px) {
   .header-container {
     width: 80%;
     margin: 0 auto;
-    > div {
-      // width: 1200px;
-      .logo {
-        img {
-          height: 40px;
-        }
-      }
-      .nav-list {
-        flex: 1;
-        display: flex;
-        a {
-          height: 80px;
-          line-height: 80px;
-          font-size: 16px;
-        }
-      }
-      .wallet-address {
-        height: 40px;
-      }
-      .connect-wallet-btn {
-        height: 40px;
-        line-height: 40px;
-        font-size: 16px;
-      }
+    min-width: 1026px;
+    height: 80px;
+    background: #f8f9fa;
+    .logo {
+      display: none;
+    }
+    .account {
+      justify-content: flex-end;
     }
   }
-  .cut-line {
-    width: 1px;
-    height: 19px;
-    background: #cb7e7e;
-    margin: 0 20px 0 16px;
-  }
 }
-// @media screen and (min-width: 750px) and (max-width: 1280px) {
-//   .header-container {
-//     height: 60px;
-//     > div {
-//       width: 1200px;
-//       .logo {
-//         img {
-//           height: 40px;
-//         }
-//       }
-//       .nav-list {
-//         flex: 1;
-//         display: flex;
-//         a {
-//           display: inline-block;
-//           margin-left: 40px;
-//           height: 60px;
-//           line-height: 60px;
-//           position: relative;
-//           color: #17173a;
-//           font-size: 16px;
-//           font-weight: 500;
-//         }
-//       }
-//       .wallet-address {
-//         height: 40px;
-//       }
-//       .connect-wallet-btn {
-//         height: 40px;
-//         line-height: 40px;
-//         font-size: 14px;
-//       }
-//     }
-//   }
-// }
-
 @media screen and (max-width: 750px) {
   .header-container {
     justify-content: space-between;
-    > div {
-      padding: 0 16px;
+    padding: 12px 10px 20px;
+    background: #fff;
+    .logo {
+      display: flex;
+      align-items: center;
       justify-content: space-between;
-      width: 100%;
-      .logo {
-        img {
-          height: 40px;
-        }
-      }
-      .nav-list {
-        display: none;
-      }
-      .address-wrap {
-        display: none;
-      }
-      .wallet-address {
-        display: none;
-      }
-      .connect-wallet-btn {
-        display: none;
+      img {
+        width: 115px;
+        height: 30px;
       }
       .more {
         width: 24px;
         height: 24px;
-        background-repeat: no-repeat;
-        background-size: cover;
+        cursor: pointer;
       }
+    }
+    .account {
+      margin-top: 15px;
+      justify-content: flex-start;
     }
   }
 }

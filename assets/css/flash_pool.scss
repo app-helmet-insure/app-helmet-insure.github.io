@@ -1,0 +1,285 @@
+.ContractAddress {
+    font-size: 14px;
+    color: #fd7e14;
+    margin-top: 8px;
+    span {
+        color: #17173a;
+    }
+    p {
+        display: flex;
+        margin-top: 4px;
+        align-items: center;
+        font-weight: 550;
+    }
+    i {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url('../../assets/img/helmet/copy.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        cursor: pointer;
+        margin-left: 4px;
+    }
+}
+.b_button {
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.o_button {
+    width: 100%;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.loading_pic {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../assets/img/helmet/loading.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: loading 2s 0s linear infinite;
+}
+.disable {
+    pointer-events: none;
+}
+@media screen and (min-width: 750px) {
+    .ContractAddress {
+        p {
+            font-size: 14px;
+        }
+    }
+    .flash_pool {
+        padding: 40px 0;
+        display: flex;
+        justify-content: space-evenly;
+        > i {
+            display: block;
+            width: 1px;
+            height: auto;
+            background: #e8e8eb;
+        }
+        .deposit,
+        .withdraw {
+            .title {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                line-height: 16px;
+                > span {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: rgba(23, 23, 58, 0.75);
+                    line-height: 14px;
+                }
+                p {
+                    font-size: 14px;
+                    font-family: IBMPlexSans-Bold, IBMPlexSans;
+                    font-weight: bold;
+                    color: #17173a;
+                    line-height: 14px;
+                }
+            }
+            > .content {
+                margin-top: 20px;
+                .input {
+                    width: 100%;
+                    height: 40px;
+                    position: relative;
+                    margin-top: 6px;
+                    display: flex;
+                    align-items: center;
+                    input {
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid #cfcfd2;
+                        border-radius: 6px;
+                        padding: 0 100px 0 12px;
+                        font-size: 14px;
+                        color: #17173a;
+                    }
+                    input:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                    span {
+                        position: absolute;
+                        display: block;
+                        right: 12px;
+                        padding: 6px 8px;
+                        border: 1px solid #fd7e14;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        cursor: pointer;
+                        &:hover {
+                            color: #ff8200;
+                        }
+                    }
+                }
+            }
+            > .button {
+                > button {
+                    font-weight: 550;
+                    border-radius: 6px;
+                }
+
+                > p {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 14px;
+                    color: rgba(23, 23, 58, 0.4);
+                    margin-top: 8px;
+                    span:nth-of-type(2) {
+                        color: #17173a;
+                        font-weight: 550;
+                    }
+                }
+            }
+            > a {
+                font-size: 14px;
+                font-weight: 550;
+                color: #fd7e14;
+                margin-top: 8px;
+                display: flex;
+                align-items: center;
+                i {
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+                    background-image: url('../../assets/img/icon/pancake@2x.png');
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    margin: 0 2px;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 750px) {
+    .ContractAddress {
+        p {
+            font-size: 12px;
+        }
+    }
+    .flash_pool {
+        background: #ffffff;
+        box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+        border-radius: 5px;
+        padding: 20px 16px;
+        display: flex;
+        margin: 0 10px;
+        > i {
+            display: none;
+        }
+        .deposit,
+        .withdraw {
+            width: 100%;
+            .title {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                line-height: 16px;
+                > span {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: rgba(23, 23, 58, 0.75);
+                    line-height: 14px;
+                }
+                p {
+                    font-size: 14px;
+                    font-family: IBMPlexSans-Bold, IBMPlexSans;
+                    font-weight: bold;
+                    color: #17173a;
+                    line-height: 14px;
+                }
+            }
+            > .content {
+                margin-top: 20px;
+                .input {
+                    width: 100%;
+                    height: 40px;
+                    position: relative;
+                    margin-top: 6px;
+                    display: flex;
+                    align-items: center;
+                    input {
+                        width: 100%;
+                        height: 100%;
+                        border: 1px solid #cfcfd2;
+                        border-radius: 6px;
+                        padding: 0 100px 0 12px;
+                        font-size: 14px;
+                        color: #17173a;
+                    }
+                    input:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                    span {
+                        position: absolute;
+                        display: block;
+                        right: 12px;
+                        padding: 6px 8px;
+                        border: 1px solid #fd7e14;
+                        border-radius: 6px;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        cursor: pointer;
+                        &:hover {
+                            color: #ff8200;
+                        }
+                    }
+                }
+            }
+            > .line_b {
+                border-bottom: 1px solid #e8e8e8;
+                padding-bottom: 16px;
+            }
+            > .button {
+                > button {
+                    font-weight: 550;
+                    border-radius: 6px;
+                }
+                > p {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 14px;
+                    color: rgba(23, 23, 58, 0.4);
+                    margin-top: 8px;
+                    span:nth-of-type(2) {
+                        color: #17173a;
+                        font-weight: 550;
+                    }
+                }
+            }
+            > a {
+                font-size: 12px;
+                font-weight: 550;
+                color: #fd7e14;
+                margin-top: 8px;
+                display: flex;
+                align-items: center;
+                i {
+                    display: block;
+                    width: 20px;
+                    height: 20px;
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                    margin: 0 2px;
+                }
+                .pancake {
+                    background-image: url('../../assets/img/icon/pancake@2x.png');
+                }
+                .dodo {
+                    background-image: url('../../assets/img/icon/dodo@2x.png');
+                }
+            }
+        }
+    }
+}

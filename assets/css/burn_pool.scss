@@ -1,0 +1,654 @@
+.loading_pic {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../assets/img/helmet/loading.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: loading 2s 0s linear infinite;
+}
+.ContractAddress {
+    font-size: 14px;
+    color: #fd7e14;
+    margin-top: 8px;
+    span {
+        color: #17173a;
+    }
+    p {
+        display: flex;
+        margin-top: 4px;
+        align-items: center;
+        font-weight: 550;
+    }
+    i {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url('../../assets/img/helmet/copy.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        cursor: pointer;
+        margin-left: 4px;
+        flex-shrink: 0;
+    }
+}
+@media screen and (min-width: 750px) {
+    .burnbox {
+        padding: 40px 0;
+        display: flex;
+        justify-content: space-evenly;
+        > i {
+            display: block;
+            width: 1px;
+            height: auto;
+            background: #e8e8eb;
+        }
+        .process {
+            height: 70px;
+        }
+        .burn_wrap {
+            > .process {
+                display: flex;
+                flex-direction: column;
+                > .name {
+                    padding: 0 4px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 12px;
+                            color: #9b9b9b;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 12px;
+                            color: #000000;
+                        }
+                    }
+                }
+                > .control {
+                    width: 100%;
+                    .control_wrap {
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 6px;
+                        border-radius: 6px;
+                        background: #fff;
+                        .control_real {
+                            height: 100%;
+                            border-radius: 6px;
+                            background: linear-gradient(
+                                180deg,
+                                #fdb514 0%,
+                                #fd7e14 100%
+                            );
+                            position: relative;
+                            .fire {
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                background-image: url('../../assets/img/burnmining/fire.png');
+                                background-repeat: no-repeat;
+                                background-size: 100% 100%;
+                                position: absolute;
+                                top: 100%;
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            > p {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #9b9b9b;
+                > span {
+                    &:nth-of-type(1) {
+                        font-size: 14px;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        color: rgba(23, 23, 58, 0.7);
+                        line-height: 14px;
+                    }
+                    &:nth-of-type(2) {
+                        font-size: 14px;
+                        font-family: IBMPlexSans-Bold, IBMPlexSans;
+                        font-weight: bold;
+                        color: #17173a;
+                        line-height: 14px;
+                    }
+                }
+            }
+            > .input {
+                margin-top: 20px;
+                width: 100%;
+                height: 40px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                input {
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    padding: 0 150px 0 12px;
+                    font-size: 14px;
+                    color: #9b9b9b;
+                    border-radius: 6px;
+                    border: 1px solid #e8e8eb;
+                    &:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                }
+                p {
+                    position: absolute;
+                    right: 12px;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #17173a;
+                        margin-right: 12px;
+                    }
+                    i {
+                        display: inline-block;
+                        padding: 6px 8px;
+                        border-radius: 6px;
+                        border: 1px solid #fd7e14;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        margin-left: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .text {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                > p {
+                    display: flex;
+                    margin-top: 14px;
+                    justify-content: space-between;
+                    width: 100%;
+                    align-items: center;
+                    &:last-child {
+                        text-align: right;
+                    }
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            font-family: PingFangSC-Regular, PingFang SC;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+            .submit_burn {
+                width: 100%;
+                height: 40px;
+                background: #17173a;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #ffffff;
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                    background: #2c2c2c;
+                }
+            }
+        }
+        .claim_wrap {
+            > p {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #9b9b9b;
+                > span {
+                    &:nth-of-type(1) {
+                        font-size: 14px;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        color: rgba(23, 23, 58, 0.7);
+                        line-height: 14px;
+                    }
+                    &:nth-of-type(2) {
+                        font-size: 14px;
+                        font-family: IBMPlexSans-Bold, IBMPlexSans;
+                        font-weight: bold;
+                        color: #17173a;
+                        line-height: 14px;
+                    }
+                }
+            }
+            > .input {
+                margin-top: 20px;
+                width: 100%;
+                height: 40px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                input {
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    padding: 0 150px 0 12px;
+                    font-size: 14px;
+                    color: #9b9b9b;
+                    border: 1px solid #e8e8eb;
+                    border-radius: 6px;
+                    &:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                }
+                p {
+                    position: absolute;
+                    right: 12px;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #17173a;
+                        margin-right: 12px;
+                    }
+                    i {
+                        display: inline-block;
+                        padding: 6px 8px;
+                        border-radius: 6px;
+                        border: 1px solid #fd7e14;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        margin-left: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .text {
+                display: flex;
+                justify-content: flex-start;
+                margin-top: 14px;
+                > p {
+                    display: flex;
+                    flex-direction: column;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 12px;
+                            color: #9b9b9b;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-weight: bold;
+                            color: #17173a;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+            .submit_burn {
+                width: 100%;
+                height: 40px;
+                background: #17173a;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #ffffff;
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                    background: #2c2c2c;
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width: 750px) {
+    .ContractAddress {
+        margin-top: 16px;
+        p {
+            font-size: 12px;
+        }
+    }
+    .burnbox {
+        margin: 0 10px;
+        border-radius: 5px;
+        background: #ffffff;
+        box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+        .process {
+            height: 70px;
+        }
+        .burn_wrap {
+            padding: 20px 16px;
+            > .process {
+                display: flex;
+                flex-direction: column;
+                > .name {
+                    padding: 0 4px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 12px;
+                            color: #9b9b9b;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 12px;
+                            color: #000000;
+                        }
+                    }
+                }
+                > .control {
+                    width: 100%;
+                    .control_wrap {
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 6px;
+                        border-radius: 6px;
+                        background: #fff;
+                        .control_real {
+                            height: 100%;
+                            border-radius: 6px;
+                            background: linear-gradient(
+                                180deg,
+                                #fdb514 0%,
+                                #fd7e14 100%
+                            );
+                            position: relative;
+                            .fire {
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                background-image: url('../../assets/img/burnmining/fire.png');
+                                background-repeat: no-repeat;
+                                background-size: 100% 100%;
+                                position: absolute;
+                                top: 100%;
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            > p {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #9b9b9b;
+                > span {
+                    &:nth-of-type(1) {
+                        font-size: 14px;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        color: rgba(23, 23, 58, 0.7);
+                        line-height: 14px;
+                    }
+                    &:nth-of-type(2) {
+                        font-size: 14px;
+                        font-family: IBMPlexSans-Bold, IBMPlexSans;
+                        font-weight: bold;
+                        color: #17173a;
+                        line-height: 14px;
+                    }
+                }
+            }
+            > .input {
+                margin-top: 20px;
+                width: 100%;
+                height: 40px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                input {
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    padding: 0 150px 0 12px;
+                    font-size: 14px;
+                    color: #9b9b9b;
+                    border-radius: 6px;
+                    border: 1px solid #e8e8eb;
+                    &:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                }
+                p {
+                    position: absolute;
+                    right: 12px;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #17173a;
+                        margin-right: 12px;
+                    }
+                    i {
+                        display: inline-block;
+                        padding: 6px 8px;
+                        border-radius: 6px;
+                        border: 1px solid #fd7e14;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        margin-left: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .text {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                border-bottom: 1px solid #e8e8eb;
+                padding-bottom: 20px;
+                > p {
+                    display: flex;
+                    margin-top: 14px;
+                    justify-content: space-between;
+                    width: 100%;
+                    align-items: center;
+                    &:last-child {
+                        text-align: right;
+                    }
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            font-family: PingFangSC-Regular, PingFang SC;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+            .submit_burn {
+                width: 100%;
+                height: 40px;
+                background: #17173a;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #ffffff;
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                    background: #2c2c2c;
+                }
+            }
+        }
+        .claim_wrap {
+            padding: 20px 16px;
+            > .process {
+                display: flex;
+                flex-direction: column;
+                > .name {
+                    padding: 0 4px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 12px;
+                            color: #9b9b9b;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 12px;
+                            color: #000000;
+                        }
+                    }
+                }
+                > .control {
+                    width: 100%;
+                    .control_wrap {
+                        margin-top: 10px;
+                        width: 100%;
+                        height: 6px;
+                        border-radius: 6px;
+                        background: #fff;
+                        .control_real {
+                            height: 100%;
+                            border-radius: 6px;
+                            background: linear-gradient(
+                                180deg,
+                                #fdb514 0%,
+                                #fd7e14 100%
+                            );
+                            position: relative;
+                            .fire {
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                background-image: url('../../assets/img/burnmining/fire.png');
+                                background-repeat: no-repeat;
+                                background-size: 100% 100%;
+                                position: absolute;
+                                top: 100%;
+                                right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            > p {
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                color: #9b9b9b;
+                > span {
+                    &:nth-of-type(1) {
+                        font-size: 14px;
+                        font-family: PingFangSC-Regular, PingFang SC;
+                        color: rgba(23, 23, 58, 0.7);
+                        line-height: 14px;
+                    }
+                    &:nth-of-type(2) {
+                        font-size: 14px;
+                        font-family: IBMPlexSans-Bold, IBMPlexSans;
+                        font-weight: bold;
+                        color: #17173a;
+                        line-height: 14px;
+                    }
+                }
+            }
+            > .input {
+                margin-top: 20px;
+                width: 100%;
+                height: 40px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                input {
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                    padding: 0 150px 0 12px;
+                    font-size: 14px;
+                    color: #9b9b9b;
+                    border: 1px solid #e8e8eb;
+                    border-radius: 6px;
+                    &:focus {
+                        border: 1px solid #fd7e14;
+                    }
+                }
+                p {
+                    position: absolute;
+                    right: 12px;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        font-size: 14px;
+                        font-weight: 600;
+                        color: #17173a;
+                        margin-right: 12px;
+                    }
+                    i {
+                        display: inline-block;
+                        padding: 6px 8px;
+                        border-radius: 6px;
+                        border: 1px solid #fd7e14;
+                        font-size: 12px;
+                        color: #fd7e14;
+                        margin-left: 12px;
+                        cursor: pointer;
+                    }
+                }
+            }
+            .text {
+                display: flex;
+                justify-content: flex-start;
+                margin-top: 14px;
+                > p {
+                    display: flex;
+                    flex-direction: column;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 12px;
+                            color: #9b9b9b;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-weight: bold;
+                            color: #17173a;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+            }
+            .submit_burn {
+                width: 100%;
+                height: 40px;
+                background: #17173a;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 600;
+                color: #ffffff;
+                margin-top: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                &:hover {
+                    background: #2c2c2c;
+                }
+            }
+        }
+    }
+}

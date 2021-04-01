@@ -297,78 +297,135 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .insurance-banner {
-    padding: 20px 16px;
+    width: 100%;
+    height: 160px;
     font-size: 16px;
-    color: $text-m;
-    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    ::-webkit-scrollbar {
+      height: 0px !important;
+    }
     ul {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      overflow-y: scroll;
+      width: 100%;
+      margin: 0 10px;
       li {
-        padding: 20px 20px;
-        width: 100%;
+        width: 288px;
         height: 120px;
-        display: flex;
-        justify-content: space-between;
+        border-radius: 10px;
+        flex-shrink: 0;
+        margin-left: 10px;
+        > div {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          padding: 0 20px;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          background-repeat: no-repeat;
+          background-size: 108px 86px;
+          background-position: right bottom;
+          border-radius: 10px;
+        }
         p {
           display: flex;
           flex-direction: column;
           text-align: left;
-          position: relative;
-          justify-content: center;
-          span {
-            margin-top: 8px;
-            font-size: 20px;
-            font-weight: bold;
-            color: #17173a;
-          }
           label {
-            color: rgba(23, 23, 58, 0.4);
-            span {
+            font-size: 16px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            color: #ffffff;
+            line-height: 16px;
+          }
+          span {
+            font-size: 24px;
+            font-family: NotoSansOriya-Bold, NotoSansOriya;
+            font-weight: bold;
+            color: #ffffff;
+            line-height: 24px;
+            margin-top: 16px;
+          }
+        }
+        &:nth-of-type(3) {
+          position: relative;
+          p {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            label {
               display: flex;
-              font-weight: normal;
-              color: rgba(23, 23, 58, 0.4);
-              &:nth-of-type(1) {
-                font-size: 16px;
+              flex-direction: column;
+              text-align: left;
+              > span {
+                &:nth-of-type(1) {
+                  font-size: 16px;
+                  font-family: PingFangSC-Regular, PingFang SC;
+                  color: #ffffff;
+                  line-height: 16px;
+                  margin-top: 0;
+                }
+                &:nth-of-type(2) {
+                  font-size: 24px;
+                  font-family: NotoSansOriya-Bold, NotoSansOriya;
+                  font-weight: bold;
+                  color: #ffffff;
+                  line-height: 24px;
+                  margin-top: 16px;
+                }
               }
-              &:nth-of-type(2) {
-                font-size: 14px;
-                margin-top: 0;
+            }
+            > span {
+              position: absolute;
+              font-size: 12px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #ffffff;
+              line-height: 12px;
+              bottom: 12px;
+              display: flex;
+              align-items: center;
+              i {
+                display: block;
+                width: 12px;
+                height: 12px;
+                background-image: url("../../assets/img/insurancelist/share_icon.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
               }
-              > a {
-                font-size: 14px;
-                color: #fd7e14;
-                font-weight: 600;
-                position: relative;
-                z-index: 1;
+              a {
+                color: #ffffff;
+                text-decoration: underline;
               }
             }
           }
         }
-        img {
-          width: 120px;
-          height: 80px;
-          position: absolute;
-          right: 16px;
-          z-index: 0;
-        }
       }
       li:nth-of-type(1) {
-        background: #f7f7fa;
-        margin-bottom: 20px;
-        border-radius: 3px;
+        margin: 0;
+        background: linear-gradient(227deg, #c48dfe 0%, #8f3fff 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card1@2x.png");
+        }
       }
       li:nth-of-type(2) {
-        background: #fd7e14;
-        margin-bottom: 20px;
-        border-radius: 3px;
-        p {
-          span {
-            color: #fff !important;
-          }
+        background: linear-gradient(222deg, #ffdb57 0%, #f76b1c 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card2@2x.png");
         }
       }
       li:nth-of-type(3) {
-        background: #f7f7fa;
-        border-radius: 3px;
+        background: linear-gradient(222deg, #a0b9ff 0%, #4d7bfe 100%);
+        box-shadow: 0px 1px 8px 0px rgba(155, 155, 155, 0.1);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card3@2x.png");
+        }
       }
     }
   }

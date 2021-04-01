@@ -1,0 +1,355 @@
+.ContractAddress {
+    font-size: 14px;
+    color: #fd7e14;
+    margin-top: 8px;
+    a span {
+        color: #17173a;
+    }
+    p {
+        display: flex;
+        margin-top: 4px;
+        align-items: center;
+        font-weight: 550;
+    }
+    .copy {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        background-image: url('../../assets/img/helmet/copy.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+}
+.icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: -0.15em;
+    fill: #787878;
+    overflow: hidden;
+}
+.b_button {
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.o_button {
+    width: 100%;
+    margin-top: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+.loading_pic {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../../assets/img/helmet/loading.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    animation: loading 2s 0s linear infinite;
+}
+.disable {
+    pointer-events: none;
+}
+@media screen and (min-width: 750px) {
+    .ContractAddress {
+        p {
+            font-size: 14px;
+        }
+    }
+    .mining_pool {
+        padding: 40px 0;
+        display: flex;
+        justify-content: space-evenly;
+        > i {
+            display: block;
+            width: 1px;
+            height: auto;
+            background: #e8e8eb;
+        }
+        > div {
+            width: 420px;
+            .title {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                line-height: 16px;
+                > span {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: rgba(23, 23, 58, 0.75);
+                    line-height: 14px;
+                }
+                p {
+                    font-size: 14px;
+                    font-family: IBMPlexSans-Bold, IBMPlexSans;
+                    font-weight: bold;
+                    color: #17173a;
+                    line-height: 14px;
+                }
+            }
+            .content {
+                margin-top: 20px;
+                input {
+                    width: 100%;
+                    height: 40px;
+                    background: transparent;
+                    padding: 0 100px 0 12px;
+                    color: #17173a;
+                    border-radius: 5px;
+                    border: 1px solid #e8e8eb;
+                }
+                .input {
+                    margin-top: 4px;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        display: flex;
+                        align-items: center;
+                        padding: 0 8px;
+                        height: 24px;
+                        position: absolute;
+                        right: 15px;
+                        font-size: 12px;
+                        cursor: pointer;
+                        color: #17173a;
+                        background: #f8f9fa;
+                        border-radius: 5px;
+                        border: 1px solid #e8e8eb;
+                    }
+                }
+            }
+            .button {
+                section {
+                    a {
+                        margin-top: 4px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #fd7e14;
+                        line-height: 20px;
+                        display: flex;
+                        align-items: center;
+                        i {
+                            display: block;
+                            width: 20px;
+                            height: 20px;
+                            background-image: url('../../assets/img/icon/pancake@2x.png');
+                            background-repeat: no-repeat;
+                            background-size: 100% 100%;
+                            margin: 0 2px;
+                        }
+                    }
+                }
+            }
+        }
+        .deposit {
+            .button {
+                p {
+                    margin-top: 11px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            font-family: PingFangSC-Regular, PingFang SC;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            display: flex;
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+        .withdraw {
+            .button {
+                p {
+                    margin-top: 11px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .activeInput {
+        border: 1px solid #fd7e14 !important;
+    }
+}
+@media screen and (max-width: 750px) {
+    .ContractAddress {
+        p {
+            font-size: 12px;
+        }
+    }
+    .mining_pool {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 0 10px;
+        > i {
+            display: none;
+        }
+        > div {
+            padding: 28px 17px;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+            border-radius: 5px;
+            .title {
+                display: flex;
+                justify-content: space-between;
+                font-weight: 500;
+                line-height: 16px;
+                > span {
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: rgba(23, 23, 58, 0.75);
+                    line-height: 14px;
+                }
+                p {
+                    font-size: 14px;
+                    font-family: IBMPlexSans-Bold, IBMPlexSans;
+                    font-weight: bold;
+                    color: #17173a;
+                    line-height: 14px;
+                }
+            }
+            .content {
+                margin-top: 20px;
+                input {
+                    width: 100%;
+                    height: 40px;
+                    background: transparent;
+                    padding: 0 100px 0 12px;
+                    color: #17173a;
+                    border-radius: 5px;
+                    border: 1px solid #e8e8eb;
+                }
+                .input {
+                    margin-top: 4px;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    span {
+                        display: flex;
+                        align-items: center;
+                        padding: 0 8px;
+                        height: 24px;
+                        position: absolute;
+                        right: 15px;
+                        font-size: 12px;
+                        cursor: pointer;
+                        color: #17173a;
+                        background: #f8f9fa;
+                        border-radius: 5px;
+                        border: 1px solid #e8e8eb;
+                    }
+                }
+            }
+            .button {
+                section {
+                    a {
+                        margin-top: 8px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: #fd7e14;
+                        line-height: 20px;
+                        display: flex;
+                        align-items: center;
+                        i {
+                            display: block;
+                            width: 20px;
+                            height: 20px;
+                            background-repeat: no-repeat;
+                            background-size: 100% 100%;
+                            margin: 0 2px;
+                        }
+                        .pancake {
+                            background-image: url('../../assets/img/icon/pancake@2x.png');
+                        }
+                        .dodo {
+                            background-image: url('../../assets/img/icon/dodo@2x.png');
+                        }
+                    }
+                }
+            }
+        }
+        .deposit {
+            .button {
+                p {
+                    margin-top: 11px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            font-family: PingFangSC-Regular, PingFang SC;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            display: flex;
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+        .withdraw {
+            .button {
+                p {
+                    margin-top: 11px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    > span {
+                        &:nth-of-type(1) {
+                            font-size: 14px;
+                            color: rgba(23, 23, 58, 0.7);
+                            line-height: 14px;
+                        }
+                        &:nth-of-type(2) {
+                            font-size: 14px;
+                            font-family: IBMPlexSans;
+                            color: #17173a;
+                            line-height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .activeInput {
+        border: 1px solid #fd7e14 !important;
+    }
+}

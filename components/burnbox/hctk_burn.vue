@@ -1,6 +1,6 @@
 <template>
   <div class="burnbox">
-    <div class="burn_wrap">
+    <div class="burn_wrap" v-if="TradeType == 'STAKE' || TradeType == 'ALL'">
       <div class="process">
         <div class="name">
           <span>{{ $t("Table.FireProcess") }}</span>
@@ -107,7 +107,7 @@
       </div>
     </div>
     <i></i>
-    <div class="claim_wrap">
+    <div class="claim_wrap" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="process"></div>
       <p>
         <span>hDODO {{ $t("Table.HELMETRewards") }}</span>
@@ -190,6 +190,7 @@ import countTo from "vue-count-to";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 export default {
+  props: ["TradeType"],
   components: {
     countTo,
   },
@@ -464,6 +465,7 @@ export default {
     background-size: 100% 100%;
     cursor: pointer;
     margin-left: 4px;
+    flex-shrink: 0;
   }
 }
 @media screen and (min-width: 750px) {
@@ -471,6 +473,12 @@ export default {
     padding: 40px 0;
     display: flex;
     justify-content: space-evenly;
+    > i {
+      display: block;
+      width: 1px;
+      height: auto;
+      background: #e8e8eb;
+    }
     .process {
       height: 70px;
     }
@@ -505,7 +513,7 @@ export default {
             .control_real {
               height: 100%;
               border-radius: 6px;
-              background: #fd7e14;
+              background: linear-gradient(180deg, #fdb514 0%, #fd7e14 100%);
               position: relative;
               .fire {
                 display: block;
@@ -740,233 +748,91 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .ContractAddress {
-    font-size: 12px;
+    margin-top: 16px;
+    p {
+      font-size: 12px;
+    }
   }
-  .expiredBg {
-    background-image: url("../../assets/img/burnmining/expired_bg.png");
-  }
-  .activeBg {
-    background-image: url("../../assets/img/burnmining/burnbg.png");
-  }
-  .long_burn {
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    margin-bottom: 50px;
-    margin-top: 30px;
-    position: relative;
-    padding: 14% 14% 20px 20px;
-    min-width: 320px;
-    width: 100%;
-    min-height: 470px;
-    > .coin {
-      width: 64px;
-      height: 64px;
-      position: absolute;
-      left: 50%;
-      top: -45px;
-      transform: translateX(-50%);
-    }
-    > .title {
-      height: 50px;
-      display: flex;
-      justify-content: space-between;
-      > .pool_detail {
-        h3 {
-          font-size: 18px;
-          color: #17173a;
-          line-height: 25px;
-          display: flex;
-          align-items: center;
-          i {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background-image: url("../../assets/img/helmet/icon_long.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            margin-left: 3px;
-            cursor: pointer;
-          }
-        }
-        > span {
-          font-size: 14px;
-          color: #9b9b9b;
-          display: flex;
-          align-items: center;
-          margin-top: 4px;
-          span {
-            font-size: 14px;
-            font-weight: bold;
-            color: #17173a;
-          }
-          img {
-            width: 24px;
-            height: 24px;
-            margin-left: 4px;
-          }
-        }
-      }
-      > .pool_time {
-        padding-top: 8px;
-        text-align: right;
-        > h3 {
-          font-size: 12px;
-          color: #ffffff;
-          padding: 2px 5px;
-          background: #fd7e14;
-          border-radius: 3px;
-          font-weight: normal;
-        }
-        span {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          margin-top: 4px;
-          i {
-            display: inline-block;
-            padding: 2px 1px;
-            background: #ffe3bb;
-            font-size: 12px;
-            font-weight: 600;
-            color: #22292f;
-          }
-          b {
-            margin: 0 2px;
-            font-weight: 600;
-          }
-        }
-      }
-    }
-    > .text {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-      > p {
-        display: flex;
-        flex-direction: column;
-        &:first-child {
-          span {
-            &:nth-of-type(1) {
-              display: flex;
-              align-items: center;
-              i {
-                display: inline-block;
-                width: 12px;
-                height: 12px;
-                background-image: url("../../assets/img/flashmining/miningtime.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
-              }
-            }
-            &:nth-of-type(2) {
-              padding: 1px 4px;
-              background: #ffe3bb;
-              border-radius: 3px;
-              color: #17173a;
-              display: flex;
-              align-self: baseline;
-            }
-          }
-        }
-        &:last-child {
-          text-align: right;
-        }
-        > span {
-          &:nth-of-type(1) {
-            font-size: 12px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 14px;
-            font-weight: bold;
-            color: #17173a;
-            margin-top: 4px;
-          }
-        }
-      }
-    }
-    > .process {
-      display: flex;
-      flex-direction: column;
-      margin-top: 15px;
-      > .name {
-        padding: 0 4px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        > span {
-          &:nth-of-type(1) {
-            font-size: 12px;
-            color: #9b9b9b;
-          }
-          &:nth-of-type(2) {
-            font-size: 12px;
-            color: #000000;
-          }
-        }
-      }
-      > .control {
-        width: 100%;
-        .control_wrap {
-          margin-top: 10px;
-          width: 100%;
-          height: 14px;
-          border-radius: 6px;
-          background: #fff;
-          .control_real {
-            height: 100%;
-            border-radius: 6px;
-            background: #dc3545;
-            position: relative;
-            .fire {
-              display: block;
-              width: 20px;
-              height: 20px;
-              background-image: url("../../assets/img/burnmining/fire.png");
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              position: absolute;
-              top: 100%;
-              right: 0;
-            }
-          }
-        }
-      }
-    }
-    .button_wrap {
-      width: 100%;
-      height: 40px;
-      display: flex;
-      background: #fff7ec;
-      border-radius: 10px;
-      align-items: center;
-      padding: 0 3px;
-      margin-top: 20px;
-      button {
-        flex: 1;
-        height: 34px;
-        border-radius: 10px;
-        font-size: 14px;
-        font-weight: 600;
-        background: #fff7ec;
-        color: #17173a;
-      }
-      .active {
-        background: #fd7e14;
-        color: #fff;
-      }
+  .burnbox {
+    margin: 0 10px;
+    border-radius: 5px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+    .process {
+      height: 70px;
     }
     .burn_wrap {
-      margin-top: 10px;
+      padding: 20px 16px;
+      > .process {
+        display: flex;
+        flex-direction: column;
+        > .name {
+          padding: 0 4px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 12px;
+              color: #9b9b9b;
+            }
+            &:nth-of-type(2) {
+              font-size: 12px;
+              color: #000000;
+            }
+          }
+        }
+        > .control {
+          width: 100%;
+          .control_wrap {
+            margin-top: 10px;
+            width: 100%;
+            height: 6px;
+            border-radius: 6px;
+            background: #fff;
+            .control_real {
+              height: 100%;
+              border-radius: 6px;
+              background: linear-gradient(180deg, #fdb514 0%, #fd7e14 100%);
+              position: relative;
+              .fire {
+                display: block;
+                width: 20px;
+                height: 20px;
+                background-image: url("../../assets/img/burnmining/fire.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                position: absolute;
+                top: 100%;
+                right: 0;
+              }
+            }
+          }
+        }
+      }
       > p {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
         color: #9b9b9b;
+        > span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            color: rgba(23, 23, 58, 0.7);
+            line-height: 14px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            color: #17173a;
+            line-height: 14px;
+          }
+        }
       }
       > .input {
-        margin-top: 4px;
+        margin-top: 20px;
         width: 100%;
         height: 40px;
         position: relative;
@@ -979,8 +845,8 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #17173a;
           border-radius: 6px;
+          border: 1px solid #e8e8eb;
           &:focus {
             border: 1px solid #fd7e14;
           }
@@ -1010,24 +876,32 @@ export default {
       }
       .text {
         display: flex;
-        justify-content: space-between;
-        margin-top: 8px;
+        align-items: center;
+        flex-direction: column;
+        border-bottom: 1px solid #e8e8eb;
+        padding-bottom: 20px;
         > p {
           display: flex;
-          flex-direction: column;
+          margin-top: 14px;
+          justify-content: space-between;
+          width: 100%;
+          align-items: center;
           &:last-child {
             text-align: right;
           }
           > span {
             &:nth-of-type(1) {
-              font-size: 12px;
-              color: #9b9b9b;
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              color: rgba(23, 23, 58, 0.7);
+              line-height: 14px;
             }
             &:nth-of-type(2) {
               font-size: 14px;
-              font-weight: bold;
+              font-family: IBMPlexSans;
               color: #17173a;
-              margin-top: 5px;
+              line-height: 14px;
+              font-weight: 500;
             }
           }
         }
@@ -1050,14 +924,29 @@ export default {
       }
     }
     .claim_wrap {
-      margin-top: 28px;
       > p {
         display: flex;
         justify-content: space-between;
         font-size: 12px;
         color: #9b9b9b;
+        > span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            font-family: PingFangSC-Regular, PingFang SC;
+            color: rgba(23, 23, 58, 0.7);
+            line-height: 14px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            color: #17173a;
+            line-height: 14px;
+          }
+        }
       }
       > .input {
+        margin-top: 20px;
         width: 100%;
         height: 40px;
         position: relative;
@@ -1070,7 +959,7 @@ export default {
           padding: 0 150px 0 12px;
           font-size: 14px;
           color: #9b9b9b;
-          border: 1px solid #17173a;
+          border: 1px solid #e8e8eb;
           border-radius: 6px;
           &:focus {
             border: 1px solid #fd7e14;
@@ -1102,7 +991,7 @@ export default {
       .text {
         display: flex;
         justify-content: flex-start;
-        margin-top: 8px;
+        margin-top: 14px;
         > p {
           display: flex;
           flex-direction: column;
@@ -1115,7 +1004,7 @@ export default {
               font-size: 14px;
               font-weight: bold;
               color: #17173a;
-              margin-top: 5px;
+              margin-top: 10px;
             }
           }
         }
@@ -1128,7 +1017,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #ffffff;
-        margin-top: 15px;
+        margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;

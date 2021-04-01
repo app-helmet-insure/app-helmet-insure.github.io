@@ -6,7 +6,7 @@
     <div class="burn_item" v-for="item in burnList" :key="item.earn">
       <div
         :class="
-          activeBurn == item.earn && showActiveBurn
+          activeBurn == item.icon && showActiveBurn
             ? 'activeBurn burn_show'
             : 'burn_show'
         "
@@ -100,21 +100,105 @@
         <HCTKBURN
           v-if="activeBurn == 'hCTK' && showActiveBurn"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HCTKBURN>
         <HCCTBURN
           v-if="activeBurn == 'HCCT' && showActiveBurn"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HCCTBURN>
       </div>
     </div>
+    <div class="burn_item_h5" v-for="item in burnList" :key="item.earn + '1'">
+      <section>
+        <img
+          v-if="item.dueDate == 'Expired'"
+          :src="require(`~/assets/img/burnmining/expired_${item.icon}.png`)"
+          alt=""
+        />
+        <img
+          v-else
+          :src="require(`~/assets/img/burnmining/${item.icon}.png`)"
+          alt=""
+        />
+        <div>
+          <span> {{ item.burnName }}</span>
+          <p>
+            {{ $t("Table.EarnList") }} <span>{{ item.earn }} </span>
+          </p>
+        </div>
+      </section>
+      <section>
+        <p>
+          <span>{{ item.bonus + " " + item.earn }}</span>
+          <span>{{ $t("Table.Bonus") }}</span>
+        </p>
+        <div>
+          <i></i>
+          <p>
+            <span v-if="typeof item.dueDate == 'object'">
+              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            </span>
+            <span v-else>
+              {{
+                item.dueDate == "Expired"
+                  ? $t("Insurance.Insurance_text22")
+                  : item.dueDate
+              }}
+            </span>
+            <span>{{ $t("Table.MIningCutdown") }}</span>
+          </p>
+        </div>
+      </section>
+      <section>
+        <button
+          @click="StakeMiningH5(item.icon)"
+          :class="
+            activeBurn == item.icon && showActiveBurn && activeType == 'STAKE'
+              ? 'activeButton stakeFlash'
+              : 'stakeFlash'
+          "
+        >
+          {{ $t("Table.Burn") }}
+        </button>
+        <button
+          @click="ClaimMiningH5(item.icon)"
+          :class="
+            activeBurn == item.icon && showActiveBurn && activeType == 'CLAIM'
+              ? 'activeButton claimFlash'
+              : 'claimFlash'
+          "
+        >
+          {{ $t("Table.ReceiveAward") }}
+        </button>
+      </section>
+    </div>
+    <Wraper>
+      <h3 class="wraper_title">
+        {{ activeType == "STAKE" ? "燃烧" : "奖励" }}
+      </h3>
+      <HCTKBURN
+        v-if="activeBurn == 'hCTK'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HCTKBURN>
+      <HCCTBURN
+        v-if="activeBurn == 'HCCT'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HCCTBURN>
+    </Wraper>
   </div>
 </template>
 
 <script>
+import Wraper from "~/components/common/wraper.vue";
 import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
 import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 export default {
   components: {
+    Wraper,
     HCCTBURN,
     HCTKBURN,
   },
@@ -124,12 +208,27 @@ export default {
       showActiveBurn: false,
       activeBurn: "",
       activeType: "",
+      TradeType: "",
     };
   },
   mounted() {
     this.initBurnBox();
   },
   methods: {
+    StakeMiningH5(MiningType) {
+      this.activeType = "STAKE";
+      this.showActiveBurn = true;
+      this.Trade = "STAKE";
+      this.activeBurn = MiningType;
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
+    ClaimMiningH5(MiningType) {
+      this.activeType = "CLAIM";
+      this.showActiveBurn = true;
+      this.Trade = "CLAIM";
+      this.activeBurn = MiningType;
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
     StakeMining(MiningType) {
       console.log(MiningType);
       this.activeType = "STAKE";
@@ -202,6 +301,9 @@ export default {
   .burn_list {
     width: 100%;
     margin: 0 auto;
+    .burn_item_h5 {
+      display: none;
+    }
   }
   .burn_title {
     display: flex;
@@ -226,7 +328,7 @@ export default {
     background: #ffffff;
     display: flex;
     flex-direction: column;
-    .activeFlash {
+    .activeBurn {
       border-bottom: 1px solid #e8e8eb;
     }
 
@@ -443,6 +545,314 @@ export default {
       fill: #ccc;
       cursor: pointer;
     }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  .burn_list {
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+    .burn_item {
+      display: none;
+    }
+  }
+  .burn_title {
+    display: none;
+  }
+  .burn_item_h5 {
+    margin: 0 10px;
+    margin-top: 10px;
+    padding: 10px 10px 18px;
+    background: #ffffff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    .activeBurn {
+      border-bottom: 1px solid #e8e8eb;
+    }
+
+    section {
+      &:nth-of-type(1) {
+        display: flex;
+        align-items: center;
+        img {
+          width: 60px;
+          height: 60px;
+        }
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-left: 10px;
+          > span {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-family: IBMPlexSans-Medium, IBMPlexSans;
+            font-weight: 600;
+            color: #17173a;
+            line-height: 16px;
+            > i {
+              margin-left: 2px;
+              cursor: pointer;
+              svg {
+                fill: rgba(164, 162, 178, 1);
+              }
+              &:hover {
+                svg {
+                  fill: #fd8a2b;
+                }
+              }
+            }
+          }
+          p {
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            color: rgba(23, 23, 58, 0.45);
+            line-height: 18px;
+            > span {
+              background: #f8f9fa;
+              border-radius: 5px;
+              display: flex;
+              align-items: center;
+              height: 28px;
+              padding: 0 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
+              margin-left: 4px;
+              min-width: 80px;
+              justify-content: center;
+            }
+          }
+        }
+      }
+      &:nth-of-type(2) {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 8px;
+        p {
+          display: flex;
+          flex-direction: column;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 12px;
+              font-family: IBMPlexSans;
+              color: rgba(23, 23, 58, 0.45);
+              line-height: 12px;
+              margin-top: 4px;
+            }
+          }
+        }
+        div {
+          display: flex;
+          align-items: center;
+          > i {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-right: 8px;
+          }
+          p {
+            display: flex;
+            flex-direction: column;
+            > span {
+              &:nth-of-type(1) {
+                display: flex;
+                align-items: center;
+                align-self: flex-start;
+                background: #f7f7fa;
+                border-radius: 3px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 600;
+                height: 18px;
+                padding: 0 4px;
+                b {
+                  font-size: 10px;
+                }
+                i {
+                  font-size: 12px;
+                  font-family: IBMPlexSans-Bold, IBMPlexSans;
+                  font-weight: bold;
+                  color: #cfcfd2;
+                  margin: 0 2px;
+                }
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 12px;
+                font-family: IBMPlexSans;
+                color: rgba(23, 23, 58, 0.45);
+                line-height: 12px;
+              }
+            }
+          }
+        }
+      }
+      &:nth-of-type(3) {
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        .activeButton {
+          border: 2px solid #fd7e14;
+          padding: 0px 9px;
+          color: #fd7e14;
+          background: #fffaf3;
+          i {
+            border-right: 5px solid transparent;
+            border-top: 6px solid #fd7e14;
+            border-left: 5px solid transparent;
+            transform: rotate(180deg);
+          }
+        }
+        button {
+          min-width: 148px;
+          height: 36px;
+          background: #f8f9fa;
+          border-radius: 5px;
+          border: 1px solid #e8e8eb;
+          margin-left: 20px;
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          color: #17173a;
+          line-height: 24px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          &:nth-of-type(1) {
+            margin: 0;
+          }
+          &:hover {
+            padding: 0px 9px;
+            height: 36px;
+            border: 2px solid #fd7e14;
+            color: #fd7e14;
+            background: #fffaf3;
+            i {
+              border-right: 5px solid transparent;
+              border-top: 6px solid #fd7e14;
+              border-left: 5px solid transparent;
+            }
+          }
+          i {
+            position: relative;
+            margin-left: 6px;
+            border-right: 5px solid transparent;
+            border-top: 6px solid rgba(23, 23, 58, 0.6);
+            border-left: 5px solid transparent;
+            &::after {
+              content: "";
+              position: absolute;
+              top: -6px;
+              left: -3px;
+              border-right: 3px solid transparent;
+              border-top: 4px solid #f8f9fa;
+              border-left: 3px solid transparent;
+            }
+          }
+        }
+      }
+      &:nth-of-type(4) {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+      }
+      &:nth-of-type(5) {
+        flex: 4;
+        display: flex;
+        justify-content: flex-end;
+        min-width: 200px;
+        .activeButton {
+          border: 2px solid #fd7e14;
+          padding: 0px 9px;
+          color: #fd7e14;
+          background: #fffaf3;
+          i {
+            border-right: 5px solid transparent;
+            border-top: 6px solid #fd7e14;
+            border-left: 5px solid transparent;
+            transform: rotate(180deg);
+          }
+        }
+        button {
+          padding: 0px 10px;
+          height: 36px;
+          background: #f8f9fa;
+          border-radius: 5px;
+          border: 1px solid #e8e8eb;
+          margin-left: 20px;
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          color: #17173a;
+          line-height: 24px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          &:nth-of-type(1) {
+            margin: 0;
+          }
+          &:hover {
+            padding: 0px 9px;
+            height: 36px;
+            border: 2px solid #fd7e14;
+            color: #fd7e14;
+            background: #fffaf3;
+            i {
+              border-right: 5px solid transparent;
+              border-top: 6px solid #fd7e14;
+              border-left: 5px solid transparent;
+            }
+          }
+          i {
+            position: relative;
+            margin-left: 6px;
+            border-right: 5px solid transparent;
+            border-top: 6px solid rgba(23, 23, 58, 0.6);
+            border-left: 5px solid transparent;
+            &::after {
+              content: "";
+              position: absolute;
+              top: -6px;
+              left: -3px;
+              border-right: 3px solid transparent;
+              border-top: 4px solid #f8f9fa;
+              border-left: 3px solid transparent;
+            }
+          }
+        }
+      }
+    }
+  }
+  .wraper_title {
+    height: 44px;
+    padding-left: 10px;
+    line-height: 44px;
   }
 }
 </style>

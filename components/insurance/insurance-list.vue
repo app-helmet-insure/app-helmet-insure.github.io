@@ -107,11 +107,74 @@
           ></CallInsurance
           ><IssueInsurance
             :activeInsurance="activeInsurance"
+            :InsureTypeActive="'ALL'"
             v-if="activeType == 'SELL'"
           ></IssueInsurance>
         </div>
       </div>
     </div>
+    <div class="insurance_type_h5">
+      <div class="insurance_text">
+        <span>{{ $t("Insurance.Insurance_text2") }}</span>
+        <span>{{ $t("Insurance.Insurance_text3") }}</span>
+      </div>
+      <div
+        class="insurance_item"
+        v-for="item in InsuanceData"
+        :key="item.InsuranceType"
+      >
+        <section>
+          <div>
+            <img
+              :src="
+                require(`~/assets/img/insurancetype/${item.InsuranceType}.png`)
+              "
+              alt=""
+            />
+            <span>{{ item.InsuranceType }}</span>
+          </div>
+          <p>
+            <span>{{ item.InsurancePriceBNB }} BNB</span>
+            <span>${{ item.InsurancePriceBUSD }}</span>
+          </p>
+        </section>
+        <section>
+          <button @click="buyInsurance_h5(item.InsuranceType)">购买</button>
+          <button @click="issueInsurance_h5(item.InsuranceType)">发行</button>
+        </section>
+      </div>
+    </div>
+    <Wraper>
+      <template>
+        <div class="checkType">
+          <span
+            @click="InsureTypeActive = 'CALL'"
+            :class="InsureTypeActive == 'CALL' ? 'activeAction' : ''"
+            >{{ $t("Insurance.Insurance_text7") }}</span
+          >
+          <span
+            @click="InsureTypeActive = 'PUT'"
+            :class="InsureTypeActive == 'PUT' ? 'activeAction' : ''"
+            >{{ $t("Insurance.Insurance_text6") }}</span
+          >
+        </div>
+        <div class="activePage">
+          <PutInsurance
+            :activeInsurance="activeInsurance"
+            v-if="InsureTypeActive == 'PUT' && TradeType == 'BUY'"
+          ></PutInsurance>
+          <CallInsurance
+            :activeInsurance="activeInsurance"
+            v-if="InsureTypeActive == 'CALL' && TradeType == 'BUY'"
+          ></CallInsurance>
+          <IssueInsurance
+            :activeInsurance="activeInsurance"
+            :InsureTypeActive="InsureTypeActive"
+            v-if="TradeType == 'SELL'"
+          ></IssueInsurance>
+        </div>
+      </template>
+    </Wraper>
   </div>
 </template>
 
@@ -120,17 +183,21 @@ import { fixD } from "~/assets/js/util.js";
 import PutInsurance from "./put-insurance";
 import CallInsurance from "./call-insurance";
 import IssueInsurance from "./issue-insurance";
+import Wraper from "~/components/common/wraper.vue";
 export default {
   components: {
     PutInsurance,
     CallInsurance,
     IssueInsurance,
+    Wraper,
   },
   data() {
     return {
       activeInsurance: "",
       showActiveInsurance: false,
       activeType: "",
+      InsureTypeActive: "CALL",
+      TradeType: "",
     };
   },
   computed: {
@@ -160,6 +227,16 @@ export default {
     }, 2000);
   },
   methods: {
+    buyInsurance_h5(insuranceType) {
+      this.activeInsurance = insuranceType;
+      this.TradeType = "BUY";
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
+    issueInsurance_h5(insuranceType) {
+      this.activeInsurance = insuranceType;
+      this.TradeType = "SELL";
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
     WBNB_BUSD_Price_Watch(newValue) {
       if (newValue) {
         this.InitInsuanceData();
@@ -268,7 +345,8 @@ export default {
       margin-right: 20px;
     }
   }
-  .insurance_text {
+
+  .insurance_type > .insurance_text {
     font-size: 14px;
     font-family: Sathu;
     color: rgba(23, 23, 58, 0.5);
@@ -295,7 +373,7 @@ export default {
       }
     }
   }
-  .insurance_item {
+  .insurance_type > .insurance_item {
     width: 100%;
     margin-top: 10px;
     padding: 0 20px;
@@ -467,6 +545,166 @@ export default {
         cursor: pointer;
       }
     }
+  }
+  .insurance_type_h5 {
+    display: none;
+  }
+}
+@media screen and (max-width: 750px) {
+  .insurance_list {
+    width: 100%;
+    min-height: 320px;
+    background: #f8f9fa;
+    padding: 20px 10px 50px;
+  }
+  .insurance_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 10px;
+    h3 {
+      font-size: 18px;
+      font-family: Helvetica;
+      color: #17173a;
+      line-height: 24px;
+      margin-left: 10px;
+    }
+  }
+  .insurance_type_h5 {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .insurance_type_h5 > .insurance_text {
+    margin-left: 10px;
+    margin-top: 16px;
+    display: flex;
+    span {
+      flex: 1;
+      font-size: 14px;
+      font-family: Sathu;
+      color: rgba(23, 23, 58, 0.5);
+      line-height: 14px;
+      &:nth-of-type(2) {
+        margin-left: -10px;
+      }
+    }
+  }
+  .insurance_type_h5 > .insurance_item {
+    width: 100%;
+    padding: 16px 10px 20px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+    border-radius: 5px;
+    margin-top: 12px;
+    section {
+      &:nth-of-type(1) {
+        display: flex;
+        align-items: center;
+        > div {
+          display: flex;
+          align-items: center;
+          flex: 1;
+          img {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+          }
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans-Medium, IBMPlexSans;
+            font-weight: 600;
+            color: #17173a;
+            line-height: 24px;
+          }
+        }
+        p {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          text-align: left;
+          span {
+            margin-top: 4px;
+            &:nth-of-type(1) {
+              font-size: 12px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 12px;
+            }
+            &:nth-of-type(2) {
+              font-size: 12px;
+              font-family: IBMPlexSans;
+              color: rgba(23, 23, 58, 0.45);
+              line-height: 12px;
+            }
+          }
+        }
+      }
+      &:nth-of-type(2) {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 12px;
+        button {
+          min-width: 138px;
+          height: 32px;
+          background: #f8f9fa;
+          border-radius: 5px;
+          border: 1px solid #e8e8eb;
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: #17173a;
+          line-height: 24px;
+          &:focus {
+            border: 2px solid #fd7e14;
+            background: #fffaf3;
+            color: #fd7e14;
+          }
+        }
+      }
+    }
+  }
+  .insurance_type {
+    display: none;
+  }
+  .checkType {
+    display: flex;
+    height: 32px;
+    margin: 16px 10px;
+    background: #e8e8eb;
+    border-radius: 8px;
+    align-items: center;
+    padding: 0 2px;
+    span {
+      flex: 1;
+      text-align: center;
+      line-height: 32px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.5);
+    }
+    .activeAction {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      background: #ffffff;
+      border-radius: 7px;
+      text-align: center;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      font-size: 14px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: #17173a;
+    }
+  }
+  .activePage {
+    margin: 0 10px;
+    padding: 17px 18px;
+    background: #ffffff;
+    box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+    border-radius: 5px;
   }
 }
 </style>

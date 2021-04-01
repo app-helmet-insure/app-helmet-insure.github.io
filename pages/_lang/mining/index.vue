@@ -81,5 +81,13 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .main_container {
+    width: 100%;
+    .mining_container {
+      width: 100%;
+      padding: 0 10px;
+      background: #f8f9fa;
+    }
+  }
 }
 </style>

@@ -109,33 +109,166 @@
         <HdodoPool
           v-if="activeFlash == 'hDODO' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HdodoPool>
         <HmathPool
           v-if="activeFlash == 'hMATH' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HmathPool>
         <HautoPool
           v-if="activeFlash == 'hAUTO' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HautoPool>
         <Bnb500Pool
           v-if="activeFlash == 'BNB500' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></Bnb500Pool>
         <HctkPool
           v-if="activeFlash == 'hCTK' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HctkPool>
         <HcctPool
           v-if="activeFlash == 'HCCT' && showActiveFlash"
           :activeType="activeType"
+          :TradeType="'ALL'"
         ></HcctPool>
       </div>
     </div>
+    <div
+      class="mining_item_h5"
+      v-for="item in miningList"
+      :key="item.earn + '1'"
+    >
+      <section>
+        <div>
+          <img
+            :src="require(`~/assets/img/flashmining/${item.earn}.png`)"
+            alt=""
+          />
+          <p>
+            <span>{{ item.miningName }}</span>
+            <span>{{ item.desc }}</span>
+          </p>
+        </div>
+        <p>
+          {{ $t("Table.EarnList") }}
+          <span
+            >{{ item.earn }}
+            <!-- <i
+                ><svg
+                  t="1617039040708"
+                  class="icon"
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1287"
+                  width="16"
+                  height="16"
+                >
+                  <path
+                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                    p-id="1288"
+                  ></path></svg
+              ></i> -->
+          </span>
+        </p>
+      </section>
+      <section>
+        <p>
+          <span>{{
+            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
+          }}</span>
+          <span>APR</span>
+        </p>
+        <div>
+          <i></i>
+          <p>
+            <span v-if="typeof item.dueDate == 'object'">
+              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            </span>
+            <span v-else>
+              {{
+                item.dueDate == "Expired"
+                  ? $t("Insurance.Insurance_text22")
+                  : item.dueDate
+              }}
+            </span>
+            <span>{{ $t("Table.MIningCutdown") }}</span>
+          </p>
+        </div>
+      </section>
+      <section>
+        <span>{{ item.weekly }}</span>
+        <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
+      </section>
+      <section>
+        <button
+          @click="StakeMiningH5(item.earn)"
+          :class="
+            activeFlash == item.earn && showActiveFlash && activeType == 'STAKE'
+              ? 'activeButton stakeFlash'
+              : 'stakeFlash'
+          "
+        >
+          {{ $t("Insurance.Insurance_text23") }}
+        </button>
+        <button
+          @click="ClaimMiningH5(item.earn)"
+          :class="
+            activeFlash == item.earn && showActiveFlash && activeType == 'CLAIM'
+              ? 'activeButton claimFlash'
+              : 'claimFlash'
+          "
+        >
+          {{ $t("Table.Claim") }}
+        </button>
+      </section>
+    </div>
+    <Wraper>
+      <h3 class="wraper_title">
+        {{ activeType == "STAKE" ? "抵押" : "结算" }}
+      </h3>
+      <HdodoPool
+        v-if="activeFlash == 'hDODO'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HdodoPool>
+      <HmathPool
+        v-if="activeFlash == 'hMATH'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HmathPool>
+      <HautoPool
+        v-if="activeFlash == 'hAUTO'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HautoPool>
+      <Bnb500Pool
+        v-if="activeFlash == 'BNB500'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></Bnb500Pool>
+      <HctkPool
+        v-if="activeFlash == 'hCTK'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HctkPool>
+      <HcctPool
+        v-if="activeFlash == 'HCCT'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HcctPool>
+    </Wraper>
   </div>
 </template>
 
 <script>
+import Wraper from "~/components/common/wraper.vue";
 import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
@@ -148,6 +281,7 @@ import HmathPool from "~/components/flashmining/hmath_pool.vue";
 import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
 export default {
   components: {
+    Wraper,
     HcctPool,
     HctkPool,
     Bnb500Pool,
@@ -162,6 +296,7 @@ export default {
       activeType: "",
       showActiveFlash: false,
       activeFlash: "",
+      TradeType: "",
     };
   },
   mounted() {
@@ -187,6 +322,21 @@ export default {
     },
   },
   methods: {
+    StakeMiningH5(MiningType) {
+      console.log(MiningType);
+      this.activeType = "STAKE";
+      this.TradeType = "STAKE";
+      this.showActiveFlash = true;
+      this.activeFlash = MiningType;
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
+    ClaimMiningH5(MiningType) {
+      this.activeType = "CLAIM";
+      this.TradeType = "CLAIM";
+      this.showActiveFlash = true;
+      this.activeFlash = MiningType;
+      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+    },
     StakeMining(MiningType) {
       console.log(MiningType);
       this.activeType = "STAKE";
@@ -462,6 +612,9 @@ export default {
   .flashmining_list {
     width: 100%;
     margin: 0 auto;
+    .mining_item_h5 {
+      display: none;
+    }
   }
   .flashmining_title {
     display: flex;
@@ -731,6 +884,252 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+@media screen and (max-width: 750px) {
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  .flashmining_list {
+    margin: 0 10px;
+    padding-bottom: 50px;
+    border-radius: 5px;
+    .mining_item {
+      display: none;
+    }
+  }
+  .flashmining_title {
+    display: none;
+  }
+  .mining_item_h5 {
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px 10px 20px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    .activeFlash {
+      border-bottom: 1px solid #e8e8eb;
+    }
+
+    section {
+      &:nth-of-type(1) {
+        display: flex;
+        justify-content: space-between;
+        > div {
+          display: flex;
+          align-items: center;
+          img {
+            width: 54px;
+            height: 54px;
+          }
+          p {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span {
+              &:nth-of-type(1) {
+                font-size: 16px;
+                font-family: IBMPlexSans-Medium, IBMPlexSans;
+                font-weight: 600;
+                color: #17173a;
+                line-height: 16px;
+              }
+              &:nth-of-type(2) {
+                font-size: 12px;
+                font-family: IBMPlexSans;
+                color: rgba(23, 23, 58, 0.45);
+                line-height: 12px;
+                margin-top: 4px;
+              }
+            }
+          }
+        }
+        > p {
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+          font-family: IBMPlexSans;
+          color: rgba(23, 23, 58, 0.45);
+          line-height: 18px;
+          > span {
+            background: #f8f9fa;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            height: 28px;
+            padding: 0 4px;
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            color: #17173a;
+            line-height: 14px;
+            margin-left: 4px;
+            min-width: 90px;
+            justify-content: center;
+            > i {
+              margin-left: 2px;
+              cursor: pointer;
+              svg {
+                fill: rgba(164, 162, 178, 1);
+              }
+              &:hover {
+                svg {
+                  fill: #fd8a2b;
+                }
+              }
+            }
+          }
+        }
+      }
+      &:nth-of-type(2) {
+        margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        p {
+          display: flex;
+          flex-direction: column;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #17173a;
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 12px;
+              font-family: IBMPlexSans;
+              color: rgba(23, 23, 58, 0.45);
+              line-height: 12px;
+              margin-top: 4px;
+            }
+          }
+        }
+        div {
+          display: flex;
+          align-items: center;
+          > i {
+            display: block;
+            width: 30px;
+            height: 30px;
+            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin-right: 8px;
+          }
+          p {
+            display: flex;
+            flex-direction: column;
+            > span {
+              &:nth-of-type(1) {
+                display: flex;
+                align-items: center;
+                align-self: flex-start;
+                background: #f7f7fa;
+                border-radius: 3px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 600;
+                height: 18px;
+                padding: 0 4px;
+                b {
+                  font-size: 10px;
+                }
+                i {
+                  font-size: 12px;
+                  font-family: IBMPlexSans-Bold, IBMPlexSans;
+                  font-weight: bold;
+                  color: #cfcfd2;
+                  margin: 0 2px;
+                }
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 12px;
+                font-family: IBMPlexSans;
+                color: rgba(23, 23, 58, 0.45);
+                line-height: 12px;
+              }
+            }
+          }
+        }
+      }
+      &:nth-of-type(3) {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            color: #17173a;
+            line-height: 14px;
+          }
+          &:nth-of-type(2) {
+            font-size: 12px;
+            font-family: IBMPlexSans;
+            color: rgba(23, 23, 58, 0.45);
+            line-height: 12px;
+            margin-top: 4px;
+          }
+        }
+      }
+
+      &:nth-of-type(4) {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 16px;
+        .activeButton {
+          border: 2px solid #fd7e14;
+          padding: 0px 9px;
+          color: #fd7e14;
+          background: #fffaf3;
+        }
+        button {
+          min-width: 148px;
+          height: 36px;
+          background: #f8f9fa;
+          border-radius: 5px;
+          border: 1px solid #e8e8eb;
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          color: #17173a;
+          line-height: 18px;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-sizing: border-box;
+          &:hover {
+            padding: 0px 9px;
+            height: 36px;
+            border: 2px solid #fd7e14;
+            color: #fd7e14;
+            background: #fffaf3;
+          }
+        }
+      }
+    }
+    .flash_detail {
+      position: relative;
+      .close {
+        position: absolute;
+        right: 20px;
+        width: 24px;
+        height: 24px;
+        top: 20px;
+        fill: #ccc;
+        cursor: pointer;
+      }
+    }
+  }
+  .wraper_title {
+    height: 44px;
+    padding-left: 10px;
+    line-height: 44px;
   }
 }
 </style>

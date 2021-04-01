@@ -202,12 +202,57 @@ export default {};
 }
 @media screen and (max-width: 750px) {
   .iiO {
+    background: #f8f9fa;
     > .banner {
       width: 100%;
       height: 164px;
       background-image: url("../../../assets/img/iio/fireBanner_H5.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
+    }
+    .apply_iio {
+      width: 100%;
+      margin: 10px 0;
+      padding: 20px 0;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      .left {
+        p {
+          font-size: 14px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 500;
+          color: #17173a;
+          margin-top: 20px;
+        }
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 30px;
+          width: 100%;
+          height: 40px;
+          background: #17173a;
+          border-radius: 5px;
+          font-size: 16px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          color: #ffffff;
+          line-height: 20px;
+          &:hover {
+            background: #2c2c2c;
+          }
+        }
+      }
+      .right {
+        width: 90px;
+        height: 90px;
+        background-image: url("../../../assets/img/iio/apply_iio_web.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
     }
     .action_step_wrap {
       display: flex;
@@ -217,12 +262,14 @@ export default {};
       justify-content: space-between;
       align-items: center;
       margin-bottom: 30px;
+
       .action_step_item {
         width: 90%;
         height: 76px;
         display: flex;
         padding: 0 20px;
-        border: 1px solid #f7f7fa;
+        border: 1px solid #fff;
+        background: #f7f7fa;
         flex-direction: row-reverse;
         align-items: center;
         justify-content: space-between;

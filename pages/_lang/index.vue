@@ -28,4 +28,13 @@ export default {
     }
   }
 }
+@media screen and (max-width: 750px) {
+  .main_container {
+    width: 100%;
+    > .home_container {
+      width: 100%;
+      
+    }
+  }
+}
 </style>

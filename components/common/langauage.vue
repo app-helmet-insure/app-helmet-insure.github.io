@@ -99,7 +99,27 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .langauage {
-    display: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    img {
+      width: 24px;
+      height: 24px;
+      margin-right: 6px;
+    }
+    ul {
+      display: flex;
+      li {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: rgba(23, 23, 58, 0.7);
+        line-height: 20px;
+        cursor: pointer;
+        &:hover {
+          color: #17173a;
+        }
+      }
+    }
   }
 }
 </style>

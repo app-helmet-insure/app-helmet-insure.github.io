@@ -157,20 +157,52 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .swiper-container {
-    width: 100%;
-    height: 475px;
+    width: 96%;
+    height: 160px;
     background: #ffffff;
-    margin-bottom: 15px;
+    border-radius: 10px;
+    min-width: 320px;
     .swiper-wrapper {
       height: 100%;
     }
     .swiper-slide {
       display: flex;
+      width: 100%;
+      width: 100%;
+      > div {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center;
+      }
     }
-
+    .verson {
+      background: linear-gradient(
+        360deg,
+        #d94107 0%,
+        #e6761c 41%,
+        #ff9243 100%
+      );
+      > div {
+        background-image: url("../../assets/img/banner/verson_h5.png");
+      }
+    }
+    .combododo {
+      background: linear-gradient(225deg, #ff9502 0%, #ffc400 100%);
+      > div {
+        background-image: url("../../assets/img/banner/combo_dodo_h5.png");
+      }
+    }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
+    }
+    .dodogroup {
+      background: #000000;
+      > div {
+        background-image: url("../../assets/img/banner/dodo_group_h5.png");
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="flash_pool">
-    <div class="deposit">
+    <div class="deposit" v-if="TradeType == 'STAKE' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.DAvailable") }}：</span>
         <p>
@@ -38,7 +38,7 @@
           >
         </div>
       </div>
-      <div class="button">
+      <div class="button line_b">
         <button
           @click="toDeposite"
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
@@ -81,12 +81,12 @@
           <span>{{ $t("Table.MyPoolShare") }}：</span>
           <span> {{ isLogin ? balance.Share : "--" }} %</span>
         </p>
-        <a
-          href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0xdD9b5801e8A38ef7A728A42492699521C6A7379b/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-          target="_blank"
-          >From <i class="pancake"></i>Get hMATH-HELMET LPT</a
-        >
       </div>
+      <a
+        href="https://exchange.pancakeswap.finance/?_gl=1*1p30wvd*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMzY1MjU0OS40OC4xLjE2MTM2NTI3NzMuMA..#/add/0xdD9b5801e8A38ef7A728A42492699521C6A7379b/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        target="_blank"
+        >From <i class="pancake"></i>Get hMATH-HELMET LPT</a
+      >
       <div class="ContractAddress">
         <span>hMATH {{ $t("Table.ContractAddress") }}</span>
         <p>
@@ -102,7 +102,7 @@
       </div>
     </div>
     <i></i>
-    <div class="withdraw">
+    <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
         <p>
@@ -192,26 +192,19 @@ import {
   balanceOf,
   getLPTOKEN,
   CangetPAYA,
-  CangetUNI,
   getPAYA,
   exitStake,
-  getLastTime,
-  approveStatus,
   getBalance,
   toDeposite,
-  getMined,
-  WithdrawAvailable,
-  getAllHelmet,
-  Rewards,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import { template } from "@antv/g2plot/lib/utils";
 export default {
+  props: ["TradeType"],
   components: {
     countTo,
   },
@@ -532,479 +525,5 @@ export default {
 </script>
 
 <style lang="scss" soped>
-.ContractAddress {
-  font-size: 14px;
-  color: #fd7e14;
-  margin-top: 8px;
-  span {
-    color: #17173a;
-  }
-  p {
-    display: flex;
-    margin-top: 4px;
-    align-items: center;
-    font-weight: 550;
-  }
-  i {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background-image: url("../../assets/img/helmet/copy.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    cursor: pointer;
-    margin-left: 4px;
-  }
-}
-.b_button {
-  width: 100%;
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.o_button {
-  width: 100%;
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.loading_pic {
-  display: block;
-  width: 24px;
-  height: 24px;
-  background-image: url("../../assets/img/helmet/loading.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  animation: loading 2s 0s linear infinite;
-}
-.disable {
-  pointer-events: none;
-}
-@media screen and (min-width: 750px) {
-  .ContractAddress {
-    p {
-      font-size: 14px;
-    }
-  }
-  .flash_pool {
-    padding: 40px 0;
-    display: flex;
-    justify-content: space-evenly;
-    > i {
-      display: block;
-      width: 1px;
-      height: auto;
-      background: #e8e8eb;
-    }
-    .deposit,
-    .withdraw {
-      .title {
-        display: flex;
-        justify-content: space-between;
-        font-weight: 500;
-        line-height: 16px;
-        > span {
-          font-size: 14px;
-          font-weight: 500;
-          color: rgba(23, 23, 58, 0.75);
-          line-height: 14px;
-        }
-        p {
-          font-size: 14px;
-          font-family: IBMPlexSans-Bold, IBMPlexSans;
-          font-weight: bold;
-          color: #17173a;
-          line-height: 14px;
-        }
-      }
-      > .content {
-        margin-top: 20px;
-        .input {
-          width: 100%;
-          height: 40px;
-          position: relative;
-          margin-top: 6px;
-          display: flex;
-          align-items: center;
-          input {
-            width: 100%;
-            height: 100%;
-            border: 1px solid #cfcfd2;
-            border-radius: 6px;
-            padding: 0 100px 0 12px;
-            font-size: 14px;
-            color: #17173a;
-          }
-          input:focus {
-            border: 1px solid #fd7e14;
-          }
-          span {
-            position: absolute;
-            display: block;
-            right: 12px;
-            padding: 6px 8px;
-            border: 1px solid #fd7e14;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #fd7e14;
-            cursor: pointer;
-            &:hover {
-              color: #ff8200;
-            }
-          }
-        }
-      }
-      > .button {
-        > button {
-          font-weight: 550;
-          border-radius: 6px;
-        }
-
-        > p {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 14px;
-          color: rgba(23, 23, 58, 0.4);
-          margin-top: 8px;
-          span:nth-of-type(2) {
-            color: #17173a;
-            font-weight: 550;
-          }
-        }
-        > a {
-          font-size: 14px;
-          font-weight: 550;
-          color: #fd7e14;
-          margin-top: 8px;
-          display: flex;
-          align-items: center;
-          i {
-            display: block;
-            width: 20px;
-            height: 20px;
-            background-image: url("../../assets/img/icon/pancake@2x.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            margin: 0 2px;
-          }
-        }
-      }
-    }
-  }
-}
-@media screen and (max-width: 750px) {
-  .ContractAddress {
-    p {
-      font-size: 12px;
-    }
-  }
-  .hdodo_pool {
-    width: 100%;
-    margin-bottom: 20px;
-    background: #ffffff;
-    padding: 40px 16px;
-    position: relative;
-    border-radius: 10px;
-
-    > .miningTime {
-      position: absolute;
-      left: 75%;
-      top: 10px;
-      font-size: 14px;
-      transform: translateX(5%);
-    }
-    > img {
-      position: absolute;
-      width: 36px;
-      height: 36px;
-      top: 0;
-      transform: translateY(-5px);
-    }
-    .finished {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      right: 0;
-      transform: translateY(0);
-    }
-    .circle {
-      width: 102px;
-      height: 102px;
-      top: 0;
-      transform: translateY(0);
-    }
-    .right {
-      right: 0;
-    }
-    .left {
-      left: 0;
-    }
-    > h3 {
-      text-align: center;
-    }
-    .text {
-      .coin {
-        display: flex;
-        flex-direction: column;
-        h3 {
-          display: flex;
-          align-items: center;
-          img {
-            width: 54px;
-            height: 54px;
-            margin-right: 8px;
-          }
-          > div {
-            display: flex;
-            font-size: 14px;
-            flex-direction: column;
-            width: 80%;
-            img {
-              margin-left: 4px;
-              width: 32px;
-              height: 32px;
-            }
-            span {
-              padding-right: 60px;
-            }
-            > div {
-              display: flex;
-              .onepager {
-                margin: 8px 0;
-                align-self: flex-start;
-                height: 16px;
-                background: rgba(255, 150, 0, 0.1);
-                border-radius: 8px;
-                font-size: 12px;
-                color: #fd7e14;
-                line-height: 16px;
-                display: flex;
-                align-items: center;
-                cursor: pointer;
-                &:hover {
-                  color: #ff8200;
-                }
-                i {
-                  display: inline-block;
-                  width: 16px;
-                  height: 16px;
-                  background-image: url("../../assets/img/helmet/icon_long.png");
-                  background-repeat: no-repeat;
-                  background-size: 100% 100%;
-                  margin-right: 3px;
-                }
-              }
-              > .starttime {
-                display: none;
-              }
-            }
-          }
-        }
-        > .starttime {
-          font-size: 14px;
-          color: #9b9b9b;
-          line-height: 16px;
-          display: flex;
-          align-items: center;
-          margin-bottom: 4px;
-          span {
-            &:nth-of-type(1) {
-              display: flex;
-              align-items: center;
-              i {
-                display: inline-block;
-                width: 14px;
-                height: 14px;
-                background-image: url("../../assets/img/flashmining/miningtime.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin-right: 3px;
-              }
-              color: #9b9b9b;
-            }
-            &:nth-of-type(2) {
-              padding: 1px 3px;
-              background: #f7f7fa;
-              border-radius: 3px;
-              color: #17173a;
-              i {
-                color: #cfcfd2;
-              }
-            }
-          }
-        }
-        > div {
-          display: flex;
-          flex-direction: column;
-          > div {
-            display: flex;
-            p {
-              display: flex;
-              align-items: center;
-              color: #17173a;
-              font-size: 14px;
-              margin-right: 14px;
-              img {
-                width: 32px;
-                height: 32px;
-                margin-right: 4px;
-              }
-              span {
-                margin-left: 4px;
-                color: rgba(23, 23, 58, 0.4);
-              }
-            }
-          }
-          > p {
-            color: rgba(23, 23, 58, 0.4);
-            font-size: 14px;
-            margin: 5px 0;
-          }
-        }
-      }
-      .index {
-        display: flex;
-        justify-content: space-between;
-        > p {
-          display: flex;
-          flex-direction: column;
-          span {
-            &:nth-of-type(1) {
-              font-size: 14px;
-              color: rgba(23, 23, 58, 0.4);
-            }
-            &:nth-of-type(2) {
-              margin-top: 8px;
-            }
-          }
-        }
-      }
-    }
-    .pool {
-      display: flex;
-      flex-direction: column;
-      background: #f7f7fa;
-      border-radius: 10px;
-      margin-top: 20px;
-      padding: 20px 16px;
-      box-sizing: border-box;
-      min-height: 352px;
-      .pool_tab {
-        display: flex;
-        button {
-          min-width: 50%;
-          height: 40px;
-          border-radius: 6px;
-          background: transparent;
-          font-weight: 550;
-          font-size: 16px;
-          margin: 0 4px;
-        }
-        .deposit_btn {
-          color: #28a745;
-        }
-        .withdraw_btn {
-          color: #dc3545;
-        }
-        .deposit_active {
-          color: #ffffff;
-          background: #28a745;
-        }
-        .withdraw_active {
-          color: #ffffff;
-          background: #dc3545;
-        }
-      }
-      .pool_content {
-        .deposit,
-        .withdraw {
-          > .title {
-            p {
-              font-size: 13px;
-              margin: 12px 0 10px 0;
-            }
-          }
-          > .content {
-            label {
-              font-size: 14px;
-              color: rgba(23, 23, 58, 0.4);
-            }
-            .input {
-              width: 100%;
-              height: 40px;
-              position: relative;
-              margin-top: 6px;
-              display: flex;
-              align-items: center;
-              input {
-                width: 100%;
-                height: 100%;
-                border: 1px solid #cfcfd2;
-                border-radius: 6px;
-                padding: 0 100px 0 12px;
-                font-size: 14px;
-                color: #17173a;
-              }
-              input:focus {
-                border: 1px solid #fd7e14;
-              }
-              span {
-                position: absolute;
-                display: block;
-                right: 12px;
-                padding: 6px 8px;
-                border: 1px solid #fd7e14;
-                border-radius: 6px;
-                font-size: 12px;
-                color: #fd7e14;
-                cursor: pointer;
-                &:hover {
-                  color: #ff8200;
-                }
-              }
-            }
-          }
-          > .button {
-            > button {
-              font-weight: 550;
-              border-radius: 6px;
-            }
-            > p {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              font-size: 13px;
-              color: rgba(23, 23, 58, 0.4);
-              margin-top: 8px;
-              span:nth-of-type(2) {
-                color: #17173a;
-                font-weight: 550;
-              }
-            }
-            > a {
-              font-size: 13px;
-              font-weight: 550;
-              color: #fd7e14;
-              margin-top: 8px;
-              display: flex;
-              align-items: center;
-              i {
-                display: block;
-                width: 20px;
-                height: 20px;
-                background-image: url("../../assets/img/icon/pancake@2x.png");
-                background-repeat: no-repeat;
-                background-size: 100% 100%;
-                margin: 0 2px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+@import "../../assets/css/flash_pool.scss";
 </style>

@@ -1,158 +1,164 @@
 <template>
-  <div class="slider">
-    <a href="" class="logo"></a>
-    <ul class="menu">
-      <li class="menu_group menu_item">
-        <a
-          @click="sliderClick"
-          :class="
-            routeObj.name === 'index'
-              ? 'active'
-              : routeObj.name == 'myPolicy' ||
-                routeObj.name == 'mySupply' ||
-                routeObj.name == 'myClaim'
-              ? 'active_child'
-              : ''
-          "
-        >
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-insurance"></use>
-          </svg>
-          {{ $t("Table.safe") }}
-          <svg
+  <div
+    @touchmove.prevent
+    :class="sliderFlag ? 'slider openSlider' : 'slider closeSlider'"
+    v-on:click.self="CloseMask"
+  >
+    <div class="slider_wrap">
+      <a href="" class="logo"></a>
+      <ul class="menu">
+        <li class="menu_group menu_item">
+          <a
+            @click="sliderClick"
             :class="
-              !sliderFlag
-                ? 'retote icon svg-icon right'
-                : ' icon svg-icon right'
+              routeObj.name === 'index'
+                ? 'active'
+                : routeObj.name == 'myPolicy' ||
+                  routeObj.name == 'mySupply' ||
+                  routeObj.name == 'myClaim'
+                ? 'active_child'
+                : ''
             "
-            aria-hidden="true"
           >
-            <use xlink:href="#icon-rightSelect"></use>
-          </svg>
-        </a>
-        <ul
-          class="child_menu"
-          v-if="
-            sliderFlag ||
-            routeObj.name == 'myPolicy' ||
-            routeObj.name == 'mySupply' ||
-            routeObj.name == 'myClaim'
-          "
-        >
-          <li class="child_menu_item">
-            <nuxt-link
-              to="/myPolicy"
-              :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-insurance"></use>
+            </svg>
+            {{ $t("Table.safe") }}
+            <svg
+              :class="
+                !sliderFlag
+                  ? 'retote icon svg-icon right'
+                  : ' icon svg-icon right'
+              "
+              aria-hidden="true"
             >
-              {{ $t("Type.MyGuarantee") }}
-            </nuxt-link>
-          </li>
-          <li class="child_menu_item">
-            <nuxt-link
-              to="/mySupply"
-              :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
-            >
-              {{ $t("Type.IssueInsurance") }}
-            </nuxt-link>
-          </li>
-          <li class="child_menu_item">
-            <nuxt-link
-              to="/myClaim"
-              :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
-            >
-              {{ $t("Type.Claim") }}
-            </nuxt-link>
-          </li>
-        </ul>
-      </li>
-      <li class="menu_item">
-        <nuxt-link
-          to="/mining"
-          :class="routeObj.name === 'mining' ? 'active' : ''"
-        >
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-mining1"></use>
-          </svg>
-          {{ $t("Header.Mining") }}
-        </nuxt-link>
-      </li>
-      <li class="menu_item">
-        <nuxt-link
-          to="/flashmining"
-          :class="routeObj.name === 'flashmining' ? 'active' : ''"
-        >
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-flashmining"></use>
-          </svg>
-          {{ $t("Header.FlashMining") }}
-        </nuxt-link>
-      </li>
-      <li class="menu_item">
-        <nuxt-link
-          to="/burnbox"
-          :class="routeObj.name === 'burnbox' ? 'active' : ''"
-        >
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-burnbox"></use>
-          </svg>
-          {{ $t("Table.BurnMining") }}
-        </nuxt-link>
-      </li>
-      <li class="menu_item">
-        <nuxt-link to="/IIO" :class="routeObj.name === 'IIO' ? 'active' : ''">
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-iio"></use>
-          </svg>
-          {{ $t("Header.IIO") }}
-        </nuxt-link>
-      </li>
-      <li class="menu_item">
-        <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-papar"></use>
-          </svg>
-          {{ $t("Header.GuideBook") }}
-        </a>
-      </li>
-      <li class="menu_item">
-        <a href="https://helmetinsure.medium.com/" target="_blank">
-          <svg class="icon svg-icon" aria-hidden="true">
-            <use xlink:href="#icon-medium"></use>
-          </svg>
-          {{ $t("Header.Medium") }}</a
-        >
-      </li>
-    </ul>
-    <div class="footer">
-      <div class="footer_top">
-        <a href="https://twitter.com/Helmet_insure" target="_blank">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-Twitter"></use>
-          </svg>
-        </a>
-        <a href="https://t.me/helmet_insure" target="_blank">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-Telegram"></use>
-          </svg>
-        </a>
-        <a href="https://discord.gg/QtTJZEVds5" target="_blank">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-Discord"></use>
-          </svg>
-        </a>
-        <!-- <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
+              <use xlink:href="#icon-rightSelect"></use>
+            </svg>
+          </a>
+          <ul
+            class="child_menu"
+            v-if="
+              sliderFlag ||
+              routeObj.name == 'myPolicy' ||
+              routeObj.name == 'mySupply' ||
+              routeObj.name == 'myClaim'
+            "
+          >
+            <li class="child_menu_item">
+              <nuxt-link
+                to="/myPolicy"
+                :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
+              >
+                {{ $t("Type.MyGuarantee") }}
+              </nuxt-link>
+            </li>
+            <li class="child_menu_item">
+              <nuxt-link
+                to="/mySupply"
+                :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
+              >
+                {{ $t("Type.IssueInsurance") }}
+              </nuxt-link>
+            </li>
+            <li class="child_menu_item">
+              <nuxt-link
+                to="/myClaim"
+                :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
+              >
+                {{ $t("Type.Claim") }}
+              </nuxt-link>
+            </li>
+          </ul>
+        </li>
+        <li class="menu_item">
+          <nuxt-link
+            to="/mining"
+            :class="routeObj.name === 'mining' ? 'active' : ''"
+          >
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-mining1"></use>
+            </svg>
+            {{ $t("Header.Mining") }}
+          </nuxt-link>
+        </li>
+        <li class="menu_item">
+          <nuxt-link
+            to="/flashmining"
+            :class="routeObj.name === 'flashmining' ? 'active' : ''"
+          >
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-flashmining"></use>
+            </svg>
+            {{ $t("Header.FlashMining") }}
+          </nuxt-link>
+        </li>
+        <li class="menu_item">
+          <nuxt-link
+            to="/burnbox"
+            :class="routeObj.name === 'burnbox' ? 'active' : ''"
+          >
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-burnbox"></use>
+            </svg>
+            {{ $t("Table.BurnMining") }}
+          </nuxt-link>
+        </li>
+        <li class="menu_item">
+          <nuxt-link to="/IIO" :class="routeObj.name === 'IIO' ? 'active' : ''">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-iio"></use>
+            </svg>
+            {{ $t("Header.IIO") }}
+          </nuxt-link>
+        </li>
+        <li class="menu_item">
+          <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-papar"></use>
+            </svg>
+            {{ $t("Header.GuideBook") }}
+          </a>
+        </li>
+        <li class="menu_item">
+          <a href="https://helmetinsure.medium.com/" target="_blank">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-medium"></use>
+            </svg>
+            {{ $t("Header.Medium") }}</a
+          >
+        </li>
+      </ul>
+      <div class="footer">
+        <div class="footer_top">
+          <a href="https://twitter.com/Helmet_insure" target="_blank">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-Twitter"></use>
+            </svg>
+          </a>
+          <a href="https://t.me/helmet_insure" target="_blank">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-Telegram"></use>
+            </svg>
+          </a>
+          <a href="https://discord.gg/QtTJZEVds5" target="_blank">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-Discord"></use>
+            </svg>
+          </a>
+          <!-- <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-medium"></use>
         </svg>
       </a> -->
-        <a href="https://certik.foundation/projects/helmet" target="_blank">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-audit"></use>
-          </svg>
-        </a>
-      </div>
-      <div class="footer_bottom">
-        <Langauage class="langauage" />
+          <a href="https://certik.foundation/projects/helmet" target="_blank">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-audit"></use>
+            </svg>
+          </a>
+        </div>
+        <div class="footer_bottom">
+          <Langauage class="langauage" />
+        </div>
       </div>
     </div>
   </div>
@@ -172,12 +178,20 @@ export default {
       return this.$route;
     },
   },
+  mounted() {
+    this.$bus.$on("OPEN_SILDER", (res) => {
+      this.sliderFlag = res;
+    });
+  },
   watch: {
     $route() {
       this.$route.path !== "/" && (this.sliderFlag = false);
     },
   },
   methods: {
+    CloseMask() {
+      this.sliderFlag = false;
+    },
     sliderClick() {
       this.sliderFlag = !this.sliderFlag;
       this.$router.push("/");
@@ -188,6 +202,12 @@ export default {
 
 <style lang="scss" scoped>
 @media screen and (min-width: 750px) {
+  .openSlider {
+    display: block;
+  }
+  .closeSlider {
+    display: block;
+  }
   .icon {
     width: 24px;
     height: 24px;
@@ -365,6 +385,218 @@ export default {
           &:hover {
             fill: #17173a;
           }
+        }
+      }
+    }
+    .footer_bottom {
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .openSlider {
+    display: block;
+  }
+  .closeSlider {
+    display: none;
+  }
+  .slider {
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    .slider_wrap {
+      width: 230px;
+      height: 100%;
+      padding: 50px 20px 0;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      background: #ffffff;
+      background-image: url("../../assets/img/slider/slider_logo_bg_h5.png");
+      background-repeat: no-repeat;
+      background-size: 100% 93px;
+      animation: slider 1s forwards;
+    }
+    @keyframes slider {
+      0% {
+        transform: translate(-100%);
+      }
+      100% {
+        transform: translate(0%);
+      }
+    }
+  }
+  .logo {
+    display: block;
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    width: 150px;
+    height: 40px;
+    background-image: url("../../assets/img/slider/slider_logo_h5.png");
+    background-repeat: no-repeat;
+    background-size: 150px 40px;
+  }
+  .menu {
+    margin-top: 40px;
+    flex: 1;
+    &_group {
+      height: auto;
+      position: relative;
+    }
+    .arrow {
+      position: relative;
+      margin: 3px 0 0 6px;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #fff;
+      border-left: 7px solid transparent;
+      &::after {
+        content: "";
+        position: absolute;
+        top: -7px;
+        left: -5px;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #fd7e14;
+        border-left: 5px solid transparent;
+      }
+    }
+    .arrow_white {
+      border-top: 7px solid #17173a;
+      &::after {
+        content: "";
+        border-top: 5px solid #fff;
+      }
+    }
+    .arrow_rotate {
+      transform: rotate(180deg);
+    }
+    &_item {
+      width: 100%;
+      font-size: 14px;
+      font-family: HelveticaNeue-Medium, HelveticaNeue;
+      font-weight: 600;
+      line-height: 40px;
+      cursor: pointer;
+      > a {
+        color: rgba(23, 23, 58, 0.7);
+        display: block;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        position: relative;
+        > .icon {
+          width: 20px;
+          height: 20px;
+          margin-right: 16px;
+          display: block;
+          fill: rgba(23, 23, 58, 0.7);
+        }
+        &:hover {
+          color: #17173a;
+          > .icon {
+            fill: #17173a;
+          }
+        }
+        .right {
+          position: absolute;
+          right: 20px;
+        }
+      }
+      .child_menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &_item {
+          height: 30px;
+          width: 150px;
+          display: flex;
+          align-items: center;
+          > a {
+            padding-left: 25px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            font-family: HelveticaNeue;
+            color: rgba(23, 23, 58, 0.8);
+            line-height: 20px;
+            font-weight: normal;
+            &:hover {
+              color: #17173a;
+            }
+          }
+          .child_active {
+            width: 180px;
+            height: 30px;
+            background: #fd7e14;
+            border-radius: 5px;
+            color: #ffffff;
+            &:hover {
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
+    .active {
+      width: 100%;
+      height: 4 0px;
+      background: #fd7e14;
+      border-radius: 5px;
+      color: #ffffff;
+      .icon {
+        fill: #fff !important;
+      }
+      .right {
+        transform: rotate(90deg);
+      }
+      &:hover {
+        color: #ffffff;
+        .icon {
+          fill: #fff;
+        }
+      }
+    }
+    .active_child {
+      color: #fd7e14;
+      .icon {
+        fill: #fd7e14;
+      }
+      .right {
+        transform: rotate(90deg) !important;
+      }
+    }
+    .retote {
+      transform: rotate(0) !important;
+    }
+  }
+  .footer {
+    padding: 0 10px;
+    .footer_top {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e8e8eb;
+      padding-bottom: 20px;
+      a {
+        margin-right: 20px;
+        .icon {
+          width: 20px;
+          height: 20px;
+          fill: rgba(23, 23, 58, 0.7);
+          &:hover {
+            fill: #17173a;
+          }
+        }
+        &:nth-of-type(4) {
+          margin: 0;
         }
       }
     }

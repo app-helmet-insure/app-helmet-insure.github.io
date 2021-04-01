@@ -52,6 +52,57 @@
         </section>
       </div>
     </template>
+    <template>
+      <div class="policy_item_H5" v-for="item in showList" :key="item.id + '1'">
+        <section>
+          <p>
+            <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+            <span>{{ item.dueDate }}</span>
+          </p>
+        </section>
+        <section>
+          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+            {{ item.outPriceUnit }}
+            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+          </span>
+        </section>
+        <section>
+          <p>
+            <span>{{ $t("Insurance.Insurance_text11") }}: </span>
+            <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.PolicyPrice") }}: </span>
+            <span>{{ fixD(item.price, 8) }} HELMET</span>
+          </p>
+        </section>
+        <section>
+          <p>
+            <span>{{ $t("Table.Position") }}: </span>
+            <span>{{ fixD(item.volume, 8) }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.Premium") }}: </span>
+            <span>{{ fixD(item.Rent, 8) }} HELMET</span>
+          </p>
+        </section>
+        <section>
+          <button
+            :style="item.status == 'Expired' ? 'pointer-events: none;' : ''"
+            @click="toActive(item)"
+          >
+            {{
+              item.status == "Expired"
+                ? $t("Insurance.Insurance_text13")
+                : $t("Table.outSure")
+            }}
+            <i class="selectDown"></i>
+          </button>
+        </section>
+      </div>
+    </template>
     <div class="loading" v-if="isLoading && isLogin">
       <img src="~/assets/img/loading.png" />
       <div class="shadow"></div>
@@ -1033,45 +1084,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
-.call_style {
-  background: rgba(0, 185, 0, 0.04);
-  &:hover {
-    td {
-      &:first-child:before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0px;
-        border-left: 2px solid#28a745;
-      }
-    }
-  }
-}
-.put_style {
-  background: rgba(255, 100, 0, 0.04);
-  &:hover {
-    td {
-      &:first-child:before {
-        content: "";
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 0px;
-        border-left: 2px solid#fd7e14;
-      }
-    }
-  }
-}
-.call_text {
-  color: #28a745 !important;
-}
-.put_text {
-  color: #dc3545 !important;
+.icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: -0.15em;
+  fill: #787878;
+  overflow: hidden;
 }
 @media screen and (min-width: 750px) {
   .my_policy {
@@ -1080,6 +1098,9 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+    .policy_item_H5 {
+      display: none;
+    }
     .loading {
       width: 100%;
       margin: auto 0;
@@ -1145,7 +1166,7 @@ export default {
             }
           }
           > .call_text {
-            color: #28a745;
+            color: #00b900;
           }
           > .put_text {
             color: #dc3545;
@@ -1229,23 +1250,65 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .my_guarantee {
-    table {
+  .my_policy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 10px;
+    min-height: 400px;
+    .policy_item {
       display: none;
-      .loading {
-        display: none;
-      }
     }
-    > div {
-      .item_box {
-        margin-top: 20px;
-        width: 100%;
-        padding: 20px 10px;
-        box-sizing: border-box;
-        p {
+    .loading {
+      width: 100%;
+      margin: auto 0;
+    }
+    .pages {
+      width: 100%;
+    }
+    .policy_title {
+      width: 100%;
+      height: 44px;
+      margin-left: 10px;
+      line-height: 55px;
+    }
+    .policy_item_H5 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+      display: flex;
+      background: #ffffff;
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      padding: 20px 16px;
+      section {
+        &:nth-of-type(1) {
+          > p {
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #787878;
+              line-height: 14px;
+              &:nth-of-type(1) {
+                width: 90px;
+                display: block;
+              }
+            }
+          }
+        }
+        &:nth-of-type(2) {
           display: flex;
-          span {
-            line-height: 20px;
+          flex-direction: column;
+          > span {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            line-height: 24px;
             display: flex;
             align-items: center;
             i {
@@ -1263,46 +1326,86 @@ export default {
               background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
-          span:nth-of-type(1) {
-            font-size: 12px;
-            color: rgba(23, 23, 58, 0.4);
+          > .call_text {
+            color: #00b900;
           }
-          span:nth-of-type(2) {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            color: #17173a;
+          > .put_text {
+            color: #dc3545;
           }
         }
-        > p {
-          align-items: center;
-          span:nth-of-type(1) {
-            margin-right: 4px;
-          }
-        }
-        > div {
-          margin: 12px 0 16px 0;
+        &:nth-of-type(3) {
           display: flex;
+          align-items: center;
+          margin-top: 16px;
           p {
-            flex: 1;
             display: flex;
             flex-direction: column;
+            flex: 1;
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 500;
+              }
+            }
           }
         }
-        > section {
+        &:nth-of-type(4) {
+          display: flex;
+          align-items: center;
+          margin-top: 16px;
+          p {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        &:nth-of-type(5) {
+          display: flex;
+          margin-top: 16px;
           button {
             width: 100%;
+            height: 36px;
+            border-radius: 5px;
+            background: #17173a;
+            font-size: 14px;
+            border: 1px solid #e8e8eb;
+            font-family: HelveticaNeue;
+            line-height: 24px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
           }
         }
       }
     }
   }
-}
-.icon {
-  width: 24px;
-  height: 24px;
-  vertical-align: -0.15em;
-  fill: #787878;
-  overflow: hidden;
 }
 </style>

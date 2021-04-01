@@ -24,24 +24,22 @@
             <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
           </p>
           <p>
-            <span>{{ $t("Table.PolicyPrice") }}: </span>
+            <span>{{ $t("Table.supplyPrice") }}: </span>
             <span>{{ fixD(item.price, 8) }} HELMET</span>
           </p>
         </section>
         <section>
           <p>
-            <span>{{ $t("Table.Besold") }}/{{ $t("Table.Unsold") }}:</span>
-            <span
-              >{{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }}/{{
+            <span>{{ $t("Table.Besold") }}:</span>
+            <span>{{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }} </span>
+          </p>
+          <p>
+            <span>{{ $t("Table.Unsold") }}: </span>
+            <span>{{
                 item.remain == "0"
                   ? 0
                   : fixD(item.unSold, 8),
-              }}
-            </span>
-          </p>
-          <p>
-            <span>{{ $t("Table.DAvailable") }}: </span>
-            <span>{{ fixD(item.shortBalance, 8) }} Short Token</span>
+            }}</span>
           </p>
         </section>
         <section>
@@ -56,7 +54,65 @@
                 : $t("Insurance.Insurance_text15")
             }}
           </button>
-          <button>{{ $t("Table.StakeMining") }}</button>
+          <!-- <button>{{ $t("Table.StakeMining") }}</button> -->
+        </section>
+      </div>
+    </template>
+    <!-- pc -->
+    <template>
+      <div class="supply_item_H5" v-for="item in showList" :key="item.id + '1'">
+        <section>
+          <p>
+            <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+            <span>{{ item.dueDate }}</span>
+          </p>
+        </section>
+        <section>
+          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+            {{ item.outPriceUnit }}
+            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+          </span>
+        </section>
+        <section>
+          <p>
+            <span>{{ $t("Insurance.Insurance_text11") }}: </span>
+            <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.supplyPrice") }}: </span>
+            <span>{{ fixD(item.price, 8) }} HELMET</span>
+          </p>
+        </section>
+        <section>
+          <p>
+            <span>{{ $t("Table.Besold") }}:</span>
+            <span
+              >{{ item.beSold == 0 ? fixD(0, 8) : fixD(item.beSold, 8) }}
+            </span>
+          </p>
+          <p>
+            <span>{{ $t("Table.Unsold") }}: </span>
+            <span>{{
+                item.remain == "0"
+                  ? fixD(0,8)
+                  : fixD(item.unSold, 8),
+            }}</span>
+          </p>
+        </section>
+        <section>
+          <button
+            :class="item.remain - 0 !== 0 && 'active'"
+            :style="item.remain == '0' ? 'pointer-events: none;' : ''"
+            @click="handleClickCancel(item)"
+          >
+            {{
+              item.remain == 0
+                ? $t("Insurance.Insurance_text14")
+                : $t("Insurance.Insurance_text15")
+            }}
+          </button>
         </section>
       </div>
     </template>
@@ -424,6 +480,9 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+    .supply_item_H5 {
+      display: none;
+    }
     .loading {
       width: 100%;
       margin: auto 0;
@@ -578,23 +637,65 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .my_insurance {
-    table {
+  .my_supply {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 10px;
+    min-height: 400px;
+    .supply_item {
       display: none;
-      .loading {
-        display: none;
-      }
     }
-    > div {
-      .item_box {
-        margin-top: 20px;
-        width: 100%;
-        padding: 20px 10px;
-
-        p {
+    .loading {
+      width: 100%;
+      margin: auto 0;
+    }
+    .pages {
+      width: 100%;
+    }
+    .supply_title {
+      width: 100%;
+      height: 44px;
+      margin-left: 10px;
+      line-height: 55px;
+    }
+    .supply_item_H5 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: 10px;
+      display: flex;
+      background: #ffffff;
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      padding: 20px 16px;
+      section {
+        &:nth-of-type(1) {
+          > p {
+            display: flex;
+            align-items: center;
+            span {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              color: #787878;
+              line-height: 14px;
+              &:nth-of-type(1) {
+                width: 90px;
+                display: block;
+              }
+            }
+          }
+        }
+        &:nth-of-type(2) {
           display: flex;
-          span {
-            line-height: 20px;
+          flex-direction: column;
+          > span {
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: IBMPlexSans-Bold, IBMPlexSans;
+            font-weight: bold;
+            line-height: 24px;
             display: flex;
             align-items: center;
             i {
@@ -612,35 +713,82 @@ export default {
               background-image: url("../../assets/img/helmet/tableput.png");
             }
           }
-          span:nth-of-type(1) {
-            font-size: 12px;
-            color: rgba(23, 23, 58, 0.4);
+          > .call_text {
+            color: #00b900;
           }
-          span:nth-of-type(2) {
-            font-weight: bold;
-            color: #17173a;
+          > .put_text {
+            color: #dc3545;
           }
         }
-        > p {
-          align-items: center;
-          span:nth-of-type(1) {
-            margin-right: 4px;
-          }
-        }
-        > div {
-          margin: 12px 0 16px 0;
+        &:nth-of-type(3) {
           display: flex;
+          align-items: center;
+          margin-top: 16px;
           p {
-            flex: 1;
             display: flex;
             flex-direction: column;
+            flex: 1;
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 500;
+              }
+            }
           }
         }
-        > section {
+        &:nth-of-type(4) {
           display: flex;
-          justify-content: space-between;
+          align-items: center;
+          margin-top: 16px;
+          p {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            span {
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: PingFangSC-Regular, PingFang SC;
+                color: #787878;
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                margin-top: 4px;
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: #17173a;
+                line-height: 14px;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+        &:nth-of-type(5) {
+          display: flex;
+          margin-top: 16px;
           button {
-            width: 46%;
+            width: 100%;
+            height: 36px;
+            border-radius: 5px;
+            background: #17173a;
+            font-size: 14px;
+            border: 1px solid #e8e8eb;
+            font-family: HelveticaNeue;
+            line-height: 24px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
           }
         }
       }

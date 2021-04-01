@@ -49,4 +49,40 @@ export default {};
     }
   }
 }
+@media screen and (max-width: 750px) {
+  .mining_title {
+    width: 95%;
+    height: 120px;
+    background: #fe9f00;
+    border-radius: 5px;
+    margin: 0 auto;
+    &_wrap {
+      width: 100%;
+      height: 100%;
+      background-image: url("../../assets/img/mining/mining_titlebg_h5.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+    }
+    &_text {
+      width: 100%;
+      height: 100%;
+      h3 {
+        font-size: 18px;
+        font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+        font-weight: 600;
+        color: #ffffff;
+        padding: 20px 0 0 16px;
+      }
+      p {
+        width: 329px;
+        font-size: 12px;
+        font-family: IBMPlexSans;
+        color: #ffffff;
+        line-height: 20px;
+        margin: 8px 0 0 16px;
+      }
+    }
+  }
+}
 </style>

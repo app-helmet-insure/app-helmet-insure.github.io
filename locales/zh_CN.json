@@ -57,7 +57,7 @@
     "SecondD": "S",
     "LastOne": "最后一次成为流动性商的机会",
     "curPlan": "当前预计APY",
-    "PlanToLp": "立即质押L当前价格P token",
+    "PlanToLp": "立即抵押L当前价格P token",
     "ChartUp": "翻倍险",
     "ChartOff": "腰斩险",
     "ChartPrice": "当前价格",
@@ -82,7 +82,7 @@
     "CanCollateral": "可抵押(Short Token)",
     "DueTime": "到期时间",
     "Cancel": "撤销",
-    "Stakeing": "质押挖矿",
+    "Stakeing": "抵押挖矿",
     "Deposite": "抵押",
     "Confirm": "提交",
     "ALL": "全部",
@@ -108,9 +108,9 @@
     "GotoPancakePool": "去往Pancake获得LPT",
     "Withdraw": "取回",
     "AmountWithdraw": "输入取回量",
-    "ConfirmWithdraw": "赎回质押",
+    "ConfirmWithdraw": "赎回抵押",
     "Compound": "复投",
-    "ConfirmDeposit": "质押挖矿",
+    "ConfirmDeposit": "抵押挖矿",
     "ClaimRewards": "领取奖励",
     "HELMETRewards": "待领取奖励",
     "ClaimAllRewards": "领取奖励",
@@ -196,6 +196,6 @@
     "Insurance_text20": "当前价",
     "Insurance_text21": "翻倍价",
     "Insurance_text22": "已结束",
-    "Insurance_text23": "质押"
+    "Insurance_text23": "抵押"
   }
 }

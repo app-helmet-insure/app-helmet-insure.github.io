@@ -1,11 +1,12 @@
 <template>
-  <div
-    @touchmove.prevent
-    :class="sliderFlag ? 'slider openSlider' : 'slider closeSlider'"
-    v-on:click.self="CloseMask"
-  >
+  <div :class="sliderFlag ? 'openSlider' : 'closeSlider'">
     <div class="slider_wrap">
-      <a href="" class="logo"></a>
+      <a
+        href="https://www.helmet.insure/"
+        @mouseenter="whirlLogo(true)"
+        @mouseleave="whirlLogo(false)"
+        :class="['logo', whirlLogoFlag && 'whirl_logo']"
+      ></a>
       <ul class="menu">
         <li class="menu_group menu_item">
           <a
@@ -26,11 +27,14 @@
             {{ $t("Table.safe") }}
             <svg
               :class="
-                !sliderFlag
-                  ? 'retote icon svg-icon right'
-                  : ' icon svg-icon right'
+                routeObj.name === 'index'
+                  ? 'right active'
+                  : routeObj.name == 'myPolicy' ||
+                    routeObj.name == 'mySupply' ||
+                    routeObj.name == 'myClaim'
+                  ? 'active_child right'
+                  : ''
               "
-              aria-hidden="true"
             >
               <use xlink:href="#icon-rightSelect"></use>
             </svg>
@@ -171,6 +175,7 @@ export default {
   data() {
     return {
       sliderFlag: false,
+      whirlLogoFlag: false,
     };
   },
   computed: {
@@ -196,6 +201,10 @@ export default {
       this.sliderFlag = !this.sliderFlag;
       this.$router.push("/");
     },
+    whirlLogo(val) {
+      if (this.whirlLogoFlag === val) return;
+      this.whirlLogoFlag = val;
+    },
   },
 };
 </script>
@@ -207,10 +216,6 @@ export default {
   }
   .closeSlider {
     display: block;
-  }
-  .icon {
-    width: 24px;
-    height: 24px;
   }
   .slider {
     position: relative;
@@ -224,6 +229,22 @@ export default {
     flex-direction: column;
     flex-shrink: 0;
   }
+  @keyframes rotation_0 {
+    from {
+      -webkit-transform: rotate(180deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes rotation_0 {
+    from {
+      -webkit-transform: rotate(180deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
   .logo {
     display: block;
     position: absolute;
@@ -234,6 +255,36 @@ export default {
     background-image: url("../../assets/img/slider/slider_logo.png");
     background-repeat: no-repeat;
     background-size: 150px 40px;
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    animation: rotation_0 1s linear;
+    -moz-animation: rotation_0 1s linear;
+    -webkit-animation: rotation_0 1s linear;
+    -o-animation: rotation_0 1s linear;
+  }
+  @keyframes rotation_180 {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(180deg);
+    }
+  }
+  @-webkit-keyframes rotation_180 {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(180deg);
+    }
+  }
+  .whirl_logo {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    animation: rotation_180 1s linear;
+    -moz-animation: rotation_180 1s linear;
+    -webkit-animation: rotation_180 1s linear;
+    -o-animation: rotation_180 1s linear;
   }
   .menu {
     margin-top: 40px;
@@ -288,17 +339,23 @@ export default {
           height: 24px;
           margin-right: 16px;
           display: block;
-          fill: rgba(23, 23, 58, 0.7);
+          flex-shrink: 0;
+        }
+        .right {
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          fill: #fff;
+          right: 20px;
         }
         &:hover {
           color: #17173a;
           > .icon {
             fill: #17173a;
           }
-        }
-        .right {
-          position: absolute;
-          right: 20px;
+          > .right {
+            fill: #17173a;
+          }
         }
       }
       .child_menu {
@@ -312,6 +369,7 @@ export default {
           display: flex;
           align-items: center;
           > a {
+            height: 50px;
             padding-left: 40px;
             width: 100%;
             display: flex;
@@ -345,10 +403,13 @@ export default {
       border-radius: 5px;
       color: #ffffff;
       .icon {
+        width: 24px;
+        height: 24px;
         fill: #fff !important;
       }
       .right {
-        transform: rotate(90deg);
+        transform: rotate(90deg) !important;
+        fill: #fff !important;
       }
       &:hover {
         color: #ffffff;
@@ -359,10 +420,12 @@ export default {
     }
     .active_child {
       color: #fd7e14;
+      line-height: 50px;
       .icon {
         fill: #fd7e14;
       }
       .right {
+        fill: #fd7e14;
         transform: rotate(90deg) !important;
       }
     }
@@ -377,10 +440,15 @@ export default {
       height: 64px;
       display: flex;
       align-items: center;
-      justify-content: space-evenly;
       border-bottom: 1px solid #e8e8eb;
       a {
+        margin-right: 20px;
+        &:nth-of-type(4) {
+          margin: 0;
+        }
         .icon {
+          width: 24px;
+          height: 24px;
           fill: rgba(23, 23, 58, 0.7);
           &:hover {
             fill: #17173a;

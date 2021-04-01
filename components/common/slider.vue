@@ -1,5 +1,9 @@
 <template>
-  <div :class="sliderFlag ? 'openSlider' : 'closeSlider'">
+  <div
+    :class="sliderFlag ? 'openSlider slider' : 'closeSlider slider'"
+    @touchmove.prevent
+    @click.self="CloseMask"
+  >
     <div class="slider_wrap">
       <a
         href="https://www.helmet.insure/"
@@ -33,7 +37,7 @@
                     routeObj.name == 'mySupply' ||
                     routeObj.name == 'myClaim'
                   ? 'active_child right'
-                  : ''
+                  : 'right'
               "
             >
               <use xlink:href="#icon-rightSelect"></use>
@@ -293,32 +297,6 @@ export default {
       height: auto;
       position: relative;
     }
-    .arrow {
-      position: relative;
-      margin: 3px 0 0 6px;
-      border-right: 7px solid transparent;
-      border-top: 7px solid #fff;
-      border-left: 7px solid transparent;
-      &::after {
-        content: "";
-        position: absolute;
-        top: -7px;
-        left: -5px;
-        border-right: 5px solid transparent;
-        border-top: 5px solid #fd7e14;
-        border-left: 5px solid transparent;
-      }
-    }
-    .arrow_white {
-      border-top: 7px solid #17173a;
-      &::after {
-        content: "";
-        border-top: 5px solid #fff;
-      }
-    }
-    .arrow_rotate {
-      transform: rotate(180deg);
-    }
     &_item {
       width: 100%;
       font-size: 16px;
@@ -342,10 +320,10 @@ export default {
           flex-shrink: 0;
         }
         .right {
-          width: 25px;
-          height: 25px;
+          width: 24px;
+          height: 24px;
           position: absolute;
-          fill: #fff;
+          fill: #17173a;
           right: 20px;
         }
         &:hover {
@@ -454,6 +432,9 @@ export default {
             fill: #17173a;
           }
         }
+        &:nth-of-type(4) {
+          margin: 0;
+        }
       }
     }
     .footer_bottom {
@@ -482,6 +463,7 @@ export default {
       height: 100%;
       padding: 50px 20px 0;
       display: flex;
+      position: relative;
       flex-direction: column;
       flex-shrink: 0;
       background: #ffffff;
@@ -489,6 +471,9 @@ export default {
       background-repeat: no-repeat;
       background-size: 100% 93px;
       animation: slider 1s forwards;
+      -o-animation: slider 1s forwards;
+      -webkit-animation: slider 1s forwards;
+      -moz-animation: slider 1s forwards;
     }
     @keyframes slider {
       0% {
@@ -517,32 +502,7 @@ export default {
       height: auto;
       position: relative;
     }
-    .arrow {
-      position: relative;
-      margin: 3px 0 0 6px;
-      border-right: 7px solid transparent;
-      border-top: 7px solid #fff;
-      border-left: 7px solid transparent;
-      &::after {
-        content: "";
-        position: absolute;
-        top: -7px;
-        left: -5px;
-        border-right: 5px solid transparent;
-        border-top: 5px solid #fd7e14;
-        border-left: 5px solid transparent;
-      }
-    }
-    .arrow_white {
-      border-top: 7px solid #17173a;
-      &::after {
-        content: "";
-        border-top: 5px solid #fff;
-      }
-    }
-    .arrow_rotate {
-      transform: rotate(180deg);
-    }
+
     &_item {
       width: 100%;
       font-size: 14px;
@@ -565,15 +525,21 @@ export default {
           display: block;
           fill: rgba(23, 23, 58, 0.7);
         }
+        .right {
+          position: absolute;
+          right: 20px;
+          width: 20px;
+          height: 20px;
+          fill: rgba(23, 23, 58, 0.7);
+        }
         &:hover {
           color: #17173a;
           > .icon {
             fill: #17173a;
           }
-        }
-        .right {
-          position: absolute;
-          right: 20px;
+          > .right {
+            fill: #17173a;
+          }
         }
       }
       .child_menu {
@@ -620,10 +586,13 @@ export default {
       border-radius: 5px;
       color: #ffffff;
       .icon {
+        width: 20px;
+        height: 20px;
         fill: #fff !important;
       }
       .right {
         transform: rotate(90deg);
+        fill: #fff !important;
       }
       &:hover {
         color: #ffffff;
@@ -638,6 +607,7 @@ export default {
         fill: #fd7e14;
       }
       .right {
+        fill: #fd7e14;
         transform: rotate(90deg) !important;
       }
     }

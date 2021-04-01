@@ -3,9 +3,9 @@
     <div class="contractAdress" v-if="TitleTextShow">
       <i></i>
       <p>
-        <span> HELMET is now on pancakeswap. </span>
-        <span> Token Contract Address: </span>
-        <span> 0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
+        <span>HELMET is now on pancakeswap.</span>
+        <span>Token Contract Address:</span>
+        <span>0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
         <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
           >Exchange now</a
         >
@@ -575,7 +575,7 @@ export default {
 @media screen and (max-width: 750px) {
   .layout-container {
     > .contractAdress {
-      padding: 10px 10px 10px 16px;
+      padding: 10px;
       width: 100%;
       height: 112px;
       background: #fff;
@@ -592,7 +592,7 @@ export default {
         background-image: url("../assets/img/helmet/icon_title.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
-        margin-right: 4px;
+        margin-right: 2px;
         flex-shrink: 0;
       }
       p {
@@ -600,10 +600,11 @@ export default {
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-between;
+        overflow: hidden;
         span {
           font-size: 12px;
           font-family: IBMPlexSans-Medium, IBMPlexSans;
-          font-weight: 600;
+          font-weight: 550;
           color: #17173a;
           line-height: 16px;
         }

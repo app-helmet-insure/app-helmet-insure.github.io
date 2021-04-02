@@ -57,11 +57,6 @@ export const onIssueSell = async (data_, callBack) => {
     );
     premium = window.WEB3.utils.toWei(String(premium), premiumUnit);
     data.premium = premium;
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.showType}</span></p>`,
-    });
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权
@@ -84,23 +79,27 @@ export const onIssueSell = async (data_, callBack) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
-                    conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.showType}</span></p>`,
                 });
             })
-            // .on('receipt', function(receipt){
-            //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
-            // })
+
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit:
-                                '<div>The rental advertisement is published successfully, you can check it on <a href="/sell" target="blank">my rental advertisement page</a></div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -161,7 +160,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     // price = toWei(price, data_.currency);
     price = window.WEB3.utils.toWei(String(price), getWei(data_.category));
     // window.WEB3.utils.toWei(String(number), unit);
-    console.log(price);
     data.price = price;
 
     bus.$emit('OPEN_STATUS_DIALOG', {
@@ -194,23 +192,30 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
-                    conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<p>Rent <span>${
+                        data_.volume
+                    } ${'BNB'}</span>, the execution price is <span>${
+                        data_.price
+                    } ${'BNB'}</span></p>`,
                 });
             })
-            // .on('receipt', function(receipt){
-            //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
-            // })
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit:
-                                '<div>The rental advertisement is published successfully, you can check it on <a href="/sell" target="blank">my rental advertisement page</a></div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -247,7 +252,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     // USDT/USDT，精度=6-6+18=18  在抵押物和结算物相同时，总是18
     let data = { ..._data };
 
-    // const WEB3 = new web3();
     const charID = window.chainID;
     data.settleToken = getAddress(data.settleToken, charID);
     let cwei = getWei(data._collateral);
@@ -262,33 +266,17 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     );
     payPrice = toWei(payPrice);
     data.payPrice = payPrice;
-    // data.payPrice = window.WEB3.utils.toWei(
-    //   (data.volume / data._strikePrice) * data.price + "",
-    //   getWei(data.settleToken)
-    // );
-    // let volume = fixD(precision.divide(data.volume, data._strikePrice), fix);
+
     let fixVolume = fixD(_data.volume, fix);
     let volume = toWei(fixVolume, _data._collateral);
-    // volume = toWei(volume);
+
     data.volume = volume;
     let pay = precision.times(_data._strikePrice, _data.volume);
 
     data.pay = toWei(pay, _data.settleToken);
-    // data.volume = window.WEB3.utils.toWei(
-    //   data.volume / data._strikePrice + "",
-    //   getWei(data.settleToken)
-    // );
-    // console.log('data.volume####', data.volume);
-    // return;
+
     const Contract = await expERC20(data.settleToken);
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        conText: `<p>Rent <span>${_data.showVolueme} ${_data.showType}
-    </span> policys, the Premium is <span>
-    ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
-    </span></p>`,
-    });
-    // return;
+
     try {
         // 一键判断是否需要授权，给予无限授权
         await oneKeyArrpove(Contract, 'ORDER', data.payPrice, callBack);
@@ -297,31 +285,38 @@ export const buyInsuranceBuy = async (_data, callBack) => {
             .buy(data.askID, data.volume)
             .send({ from: window.CURRENTADDRESS })
             .on('transactionHash', function(hash) {
-                bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
-                    conText: `<a href="https://bscscan.com/tx/tx/${hash}" target="_blank">View on BscScan</a>`,
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<p>Rent <span>${_data.showVolueme} ${
+                        _data.showType
+                    }
+                    </span> policys, the Premium is <span>
+                    ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
+                    </span></p>`,
                 });
             })
-            // .on('receipt', function(receipt){
-            //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
-            // })
+
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit:
-                                '<div>The policy is rented successfully, please check <a href="/buy" target="blank">the policy I rented</a></div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
                             message: 'The policy is rented successfully',
                             type: 'success',
-                            // duration: 0,
                         });
                     }
                     setTimeout(() => {
@@ -660,25 +655,14 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>you will swap<span> ${fixD(data._underlying_vol, 8)} ${
-            data._underlying
-        }</span> to <span> ${fixD(data.showVolume, 8)} ${
-            data._collateral
-        }</span></p>`,
-        activeTip: true,
-    });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
-
-    // const WEB3 = await web3();
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
     let Contract;
     let long;
     let order;
     let value;
+
     if (data.flag) {
         Contract = await expERC20(adress);
         order = await TokenOrder(data.long);
@@ -688,7 +672,6 @@ export const onExercise = async (data, callBack, flag) => {
         } else {
             value = toWei(data.vol, data.token);
         }
-
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -702,7 +685,6 @@ export const onExercise = async (data, callBack, flag) => {
                 }
             );
         }
-
         if (data.approveAddress2) {
             await oneKeyArrpove(long, data.approveAddress2, 100000, (res) => {
                 if (res === 'failed') {
@@ -730,30 +712,37 @@ export const onExercise = async (data, callBack, flag) => {
         .exercise(data.flag ? value : data.bidID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', function(hash) {
-            bus.$emit('CLOSE_STATUS_DIALOG');
             bus.$emit('OPEN_STATUS_DIALOG', {
-                type: 'submit',
-                conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `<p>You will swap<span> ${fixD(
+                    data._underlying_vol,
+                    8
+                )} ${data._underlying}</span> to <span> ${fixD(
+                    data.showVolume,
+                    8
+                )} ${data._collateral}</span></p>`,
             });
         })
-        // .on('receipt', function(receipt){
-        //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
-        // })
         .on('confirmation', function(confirmationNumber, receipt) {
             if (confirmationNumber === 0) {
                 if (window.statusDialog) {
                     bus.$emit('CLOSE_STATUS_DIALOG');
                     bus.$emit('OPEN_STATUS_DIALOG', {
-                        type: 'success',
-                        title: 'Successfully rented',
-                        conTit: '<div>Activated successfully</div>',
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        loading: false,
+                        buttonText: 'Confirm',
                         conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        showDialog: false,
                     });
                 } else {
                     Message({
                         message: 'Activated successfully',
                         type: 'success',
-                        // duration: 0,
                     });
                 }
                 setTimeout(() => {
@@ -763,7 +752,6 @@ export const onExercise = async (data, callBack, flag) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-
             if (error && error.message) {
                 Message({
                     message: error && error.message,
@@ -772,18 +760,6 @@ export const onExercise = async (data, callBack, flag) => {
                 });
             }
         });
-    // .on('transactionHash', (hash) => {
-    //   callBack('approve');
-    //   //onChangeHash(hash);
-    // })
-    // .on('confirmation', (_, receipt) => {
-    //   callBack('success');
-    //   //onReceiptChange(receipt);
-    // })
-    // .on('error', (err, receipt) => {
-    //   callBack('failed');
-    //   //onReceiptChange(receipt);
-    // });
 };
 
 const allowance = async (token_exp, contract_str) => {
@@ -846,7 +822,6 @@ export const onCancel = async (askID, callBack) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {
             callBack('approve');
-            //onChangeHash(hash);
         })
         .on('confirmation', (confirmationNumber, receipt) => {
             if (confirmationNumber === 0) {
@@ -854,11 +829,9 @@ export const onCancel = async (askID, callBack) => {
                     bus.$emit('REFRESH_ALL_DATA');
                 }, 1000);
             }
-            //onReceiptChange(receipt);
         })
         .on('error', (err, receipt) => {
             callBack('failed');
-            //onReceiptChange(receipt);
         });
 };
 

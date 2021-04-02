@@ -59,8 +59,8 @@
         </tbody>
       </table>
     </div>
-    <div class="insurance_list_h5">
-      <h3>选择保单</h3>
+    <div class="insurance_list_H5">
+      <h3>{{ $t("Insurance.Insurance_text1") }}</h3>
       <div
         class="list_item"
         v-for="(item, index) in showList"
@@ -297,9 +297,24 @@ export default {
         _collateral: getTokenName(data._collateral),
         showType: getTokenName(data._collateral),
       };
-      this.listType = 2;
-      this.listCoin = data._collateral;
-      buyInsuranceBuy(datas, (status) => {});
+      this.$bus.$emit("OPEN_STATUS_DIALOG", {
+        title: "WARNING",
+        layout: "layout1",
+        conText: `<p>Rent <span>${datas.showVolueme} ${datas.showType}
+                  </span> policys, the Premium is <span>
+                  ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
+                  </span></p>`,
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+      });
+      this.$bus.$on("PROCESS_ACTION", (res) => {
+        if (res) {
+          buyInsuranceBuy(datas, (status) => {});
+        }
+      });
     },
   },
 };
@@ -387,7 +402,7 @@ export default {
       }
     }
   }
-  .insurance_list_h5 {
+  .insurance_list_H5 {
     display: none;
   }
 }
@@ -395,7 +410,7 @@ export default {
   .insurance_list {
     display: none;
   }
-  .insurance_list_h5 {
+  .insurance_list_H5 {
     > h3 {
       margin: 20px 0;
     }

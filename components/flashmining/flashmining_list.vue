@@ -231,7 +231,11 @@
     </div>
     <Wraper>
       <h3 class="wraper_title">
-        {{ activeType == "STAKE" ? "抵押" : "结算" }}
+        {{
+          activeType == "STAKE"
+            ? $t("Insurance.Insurance_text23")
+            : $t("Table.Claim")
+        }}
       </h3>
       <HdodoPool
         v-if="activeFlash == 'hDODO'"

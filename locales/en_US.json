@@ -156,7 +156,8 @@
   "Tip": {
     "Dpr": "Daily percentage of yield, DPR= daily yield / staking volume",
     "Copy": "Successfully Copied",
-    "Active": "Please double check the price above，Helmet team will not cover your loss on this.",
+    "Active1": "Please double check the price above，",
+    "Active2":"Helmet team will not cover your loss on this.",
     "SendCoin": "Please do not transfer your Helmet into this smart contract address, just connect your wallet and change it to BSC net.",
     "RiskWarning": "NOTICE",
     "RiskWarningContent": "If you are a new Helmet Insure user, please do not trade any policies before getting a clear understanding about the trading risks and option trading logic. We recommend you read the 'Paper & Guide' section before proceeding.",
@@ -197,7 +198,7 @@
     "Insurance_text11": "Activate Price",
     "Insurance_text13": "Expired",
     "Insurance_text14": "Completed",
-    "Insurance_text15": "Cancle",
+    "Insurance_text15": "Cancel",
     "Insurance_text16": "Connect to a wallet",
     "Insurance_text17": "Token",
     "Insurance_text18": "Max",
@@ -205,6 +206,7 @@
     "Insurance_text20": "Real-time price",
     "Insurance_text21": "Cover Miss Out price",
     "Insurance_text22": "Finished",
-    "Insurance_text23": "Deposit"
+    "Insurance_text23": "Deposit",
+    "Insurance_text24": "Buy"
   }
 }

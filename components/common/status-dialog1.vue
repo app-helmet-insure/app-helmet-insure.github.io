@@ -1,39 +1,30 @@
 <template>
   <div class="status-dialog">
     <div class="mask" @click="closeDialog"></div>
-    <div :class="`status-dialog-content ${data.layout}`">
-      <h3 class="layout1_title" v-if="data.layout == 'layout1'">
-        <span>
-          <img
-            v-if="data.activeTip"
-            class="activeBG"
-            src="~/assets/img/helmet/activeWarn.png"
-            alt=""
-          />{{ data.title }}
-        </span>
-        <span class="close" @click="closeDialog"></span>
+    <div class="status-dialog-content">
+      <h3 class="title">
+        <img
+          v-if="data.activeTip"
+          class="activeBG"
+          src="~/assets/img/helmet/activeWarn.png"
+          alt=""
+        />{{ data.title }}
       </h3>
-      <h3 class="layout2_title" v-if="data.layout == 'layout2'">
-        <span>
-          {{ data.title }}
-        </span>
-        <span class="close" @click="closeDialog"></span>
-      </h3>
-      <h3 class="con-tit" v-if="data.conTit" v-html="data.conTit"></h3>
-      <div class="con-text" v-if="data.conText" v-html="data.conText"></div>
-      <div class="activeWarn" v-if="data.activeTip">
-        {{ $t("Tip.Active1") }}
-      </div>
-      <div class="activeWarn" v-if="data.activeTip">
-        {{ $t("Tip.Active2") }}
-      </div>
-      <div class="loading_wrap" v-if="data.loading">
+      <span class="close" @click="closeDialog"></span>
+      <!-- 请在钱包中确认进行交易 -->
+      <h3 class="con-tit" v-html="data.conTit"></h3>
+      <div class="con-text" v-html="data.conText"></div>
+      <div class="activeWarn" v-if="data.activeTip">{{ $t("Tip.Active") }}</div>
+      <div class="loading_wrap" v-if="data.type != 'success'">
         <i class="loading_img"></i>
       </div>
-      <div class="btn-box" v-if="data.button">
+      <div class="btn-box">
         <slot name="footer">
-          <button @click="closeDialog">
-            {{ data.buttonText }}
+          <button
+            @click="closeDialog"
+            :style="data.btnText == 'Approve' ? 'display:none' : ''"
+          >
+            {{ data.btnText }}
           </button>
         </slot>
       </div>
@@ -44,26 +35,42 @@
 export default {
   name: "status-dialog",
   props: {
+    // type: {
+    //     type: String,
+    //     default: 'pending', // warning info success error submit pending
+    // },
+    // title: {
+    //     type: String,
+    //     default: 'Waiting For Confirmation'
+    // },
+    // conTit: {
+    //     type: String,
+    //     default: 'Please confirm the transaction in the wallet'
+    // },
+    // conText: {
+    //     type: String,
+    //     default: ''
+    // },
+    // btnText: {
+    //     type: String,
+    //     default: 'I know'
+    // }
     data: {
       type: Object,
       default: () => {
         return {
+          type: "",
           title: "",
           conTit: "",
           conText: "",
-          layout: "",
+          btnText: "",
           activeTip: false,
-          loading: true,
-          button: false,
-          buttonText: "",
-          showDialog: true,
         };
       },
     },
   },
   methods: {
     closeDialog() {
-      this.$bus.$emit("PROCESS_ACTION", this.data.showDialog);
       this.$emit("close");
     },
   },
@@ -115,63 +122,23 @@ export default {
       background-color: rgba(0, 0, 0, 0.8);
       z-index: 101;
     }
-    > .layout1 {
-      text-align: left;
-    }
-    > .layout2 {
-      text-align: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 400px;
-    }
+
     .status-dialog-content {
       background: #ffffff;
-      padding: 30px;
+      padding: 16px 30px;
       position: relative;
+      text-align: center;
       z-index: 102;
+      width: 500px;
       min-height: 230px;
       border-radius: 8px;
-      .layout1_title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > .close {
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-image: url("../../assets/img/icon/guanbi.png");
-          background-size: 100% 100%;
-          cursor: pointer;
-        }
-      }
-      .layout2_title {
-        height: 50px;
-        line-height: 50px;
-        > .close {
-          position: absolute;
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-image: url("../../assets/img/icon/guanbi.png");
-          background-size: 100% 100%;
-          right: 30px;
-          top: 30px;
-          cursor: pointer;
-        }
-      }
       > .title {
         font-size: 20px;
         color: $bg-d;
         text-align: left;
         padding-bottom: 16px;
       }
-      > .close {
+      .close {
         display: inline-block;
         width: 20px;
         height: 20px;
@@ -203,7 +170,6 @@ export default {
         margin-top: 16px;
         span {
           color: #fd7e14;
-          font-weight: 600;
         }
         a {
           color: #fd7e14;
@@ -211,9 +177,9 @@ export default {
         }
       }
       .con-text {
-        margin-top: 12px;
         font-size: 14px;
         color: $bg-d;
+        margin-top: 12px;
         p {
           color: #fd7e14;
         }
@@ -229,14 +195,11 @@ export default {
         text-align: right;
         padding-top: 20px;
         button {
-          min-width: 141px;
-          height: 40px;
-          background: #17173a;
-          border-radius: 5px;
           min-width: 96px;
           height: 32px;
           padding: 0px 12px;
-          color: #fff;
+          background: #fd7e14;
+          color: $text-m;
           font-size: 14px;
           &:hover {
             background: #ffa000;
@@ -271,71 +234,26 @@ export default {
     align-items: center;
     z-index: 100;
     /* background-color: rgba(0, 0, 0, 0.8); */
-    .activeWarn {
-      margin-top: 10px;
-      font-size: 14px;
-    }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);
       z-index: 101;
     }
-    > .layout1 {
-      text-align: left;
-    }
-    > .layout2 {
-      text-align: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+
     .status-dialog-content {
       background: #ffffff;
       padding: 30px;
       position: relative;
+      text-align: center;
       z-index: 102;
-      min-height: 230px;
-      border-radius: 8px;
       width: 96%;
-      .layout1_title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        > .close {
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-image: url("../../assets/img/icon/guanbi.png");
-          background-size: 100% 100%;
-          cursor: pointer;
-        }
-      }
-      .layout2_title {
-        height: 50px;
-        line-height: 50px;
-        > .close {
-          position: absolute;
-          display: inline-block;
-          width: 20px;
-          height: 20px;
-          background-repeat: no-repeat;
-          background-position: center center;
-          background-image: url("../../assets/img/icon/guanbi.png");
-          background-size: 100% 100%;
-          right: 30px;
-          top: 30px;
-          cursor: pointer;
-        }
-      }
+      border-radius: 8px;
       > .title {
         font-size: 20px;
         color: $bg-d;
         text-align: left;
         padding-bottom: 16px;
       }
-      > .close {
+      .close {
         display: inline-block;
         width: 20px;
         height: 20px;
@@ -367,7 +285,6 @@ export default {
         margin-top: 16px;
         span {
           color: #fd7e14;
-          font-weight: 600;
         }
         a {
           color: #fd7e14;
@@ -375,12 +292,9 @@ export default {
         }
       }
       .con-text {
-        margin-top: 12px;
         font-size: 14px;
         color: $bg-d;
-        p {
-          color: #fd7e14;
-        }
+        margin-top: 12px;
         span {
           color: #fd7e14;
         }
@@ -391,16 +305,13 @@ export default {
       }
       .btn-box {
         text-align: right;
-        padding-top: 20px;
+        padding-top: 35px;
         button {
-          min-width: 141px;
-          height: 40px;
-          background: #17173a;
-          border-radius: 5px;
           min-width: 96px;
           height: 32px;
           padding: 0px 12px;
-          color: #fff;
+          background: #fd7e14;
+          color: $text-m;
           font-size: 14px;
           &:hover {
             background: #ffa000;

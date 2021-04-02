@@ -10,7 +10,11 @@
       <span></span>
     </div>
     <template v-if="isLogin">
-      <div class="claim_item" v-for="(item, index) in showList" :key="index">
+      <div
+        class="claim_item"
+        v-for="(item, index) in showList"
+        :key="index + 'key'"
+      >
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
             {{ item.TypeCoin }}
@@ -287,15 +291,52 @@ export default {
     },
     // 行权
     toClaim(item) {
+      let object = {
+        title: "WARNING",
+        layout: "layout1",
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+      };
+
       if (item.longBalance != 0) {
-        burn(
-          item.short,
-          item.longBalance,
-          { _collateral: item._collateral },
-          item
-        );
+        object.conText = `<p>Settlement ${addCommom(item.longBalance)} ${
+          item._collateral
+        }</p>`;
+        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
+        this.$bus.$on("PROCESS_ACTION", (res) => {
+          if (res) {
+            burn(
+              item.short,
+              item.longBalance,
+              { _collateral: item._collateral },
+              item
+            );
+          }
+        });
       } else {
-        settle(item.short, item);
+        let colValue = addCommom(
+          Number(item.col) + Number(item.longBalance),
+          8
+        );
+        let undValue = addCommom(item.und, 8);
+        if (undValue > 0) {
+          object.conText = `<p>Settlement <span>${
+            colValue > 0 && colValue + item._collateral
+          } ${undValue > 0 && "And" + undValue + item._underlying}</span></p>`;
+        } else {
+          object.conText = `<p>Settlement <span>${
+            colValue > 0 && colValue + item._collateral
+          }</span></p>`;
+        }
+        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
+        this.$bus.$on("PROCESS_ACTION", (res) => {
+          if (res) {
+            settle(item.short, item);
+          }
+        });
       }
     },
     handleClickChagePage(index) {

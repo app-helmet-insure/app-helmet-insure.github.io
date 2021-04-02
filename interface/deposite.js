@@ -142,7 +142,6 @@ export const toDeposite = async (type, data, flag, callBack) => {
     if (!adress || !adressLPT || !address) {
         return;
     }
-    console.log(amount, adressLPT, adress);
     let result;
     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: true });
     try {
@@ -168,7 +167,11 @@ export const toDeposite = async (type, data, flag, callBack) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -180,10 +183,13 @@ export const toDeposite = async (type, data, flag, callBack) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully stake',
-                            conTit: '<div>Stake activated successfully</div>',
-                            conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
+                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -265,7 +271,11 @@ export const toWithdraw = async (type, data, flag, callBack) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -278,10 +288,13 @@ export const toWithdraw = async (type, data, flag, callBack) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully unstake',
-                            conTit: '<div>Unstake activated successfully</div>',
-                            conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>  `,
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
+                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -385,7 +398,11 @@ export const getPAYA = async (type) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -397,10 +414,13 @@ export const getPAYA = async (type) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully claim',
-                            conTit: '<div>Claim activated successfully</div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -449,7 +469,11 @@ export const getDoubleReward = async (type) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -461,10 +485,13 @@ export const getDoubleReward = async (type) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully claim',
-                            conTit: '<div>Claim activated successfully</div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -668,7 +695,11 @@ export const exitStake = async (type) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -680,11 +711,13 @@ export const exitStake = async (type) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully Claim&Unstake',
-                            conTit:
-                                '<div>Claim&Unstake activated successfully</div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({

@@ -428,11 +428,6 @@ export default {
       let second = Math.floor(
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
-      // let template = `${day}${this.$t("Content.DayM")}${hour}${this.$t(
-      //   "Content.HourM"
-      // )}${minute}${this.$t("Content.MinM")}${second}${this.$t(
-      //   "Content.SecondM"
-      // )}`;
       let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
         "Content.HourD"
       )}`;
@@ -473,7 +468,25 @@ export default {
           showVolume: item.showVolume,
         };
       }
-      onExercise(data, data.flag);
+      this.$bus.$emit("OPEN_STATUS_DIALOG", {
+        title: "WARNING",
+        layout: "layout1",
+        conText: `<p>you will swap<span> ${fixD(data._underlying_vol, 8)} ${
+          data._underlying
+        }</span> to <span> ${fixD(data.showVolume, 8)} ${
+          data._collateral
+        }</span></p>`,
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+      });     
+      this.$bus.$on("PROCESS_ACTION", (res) => {
+        if (res) {
+          onExercise(data, data.flag);
+        }
+      });
     },
     async CAKEPolicy() {
       let myAddress =

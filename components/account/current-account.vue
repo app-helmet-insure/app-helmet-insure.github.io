@@ -109,135 +109,271 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
-.current-account {
-  position: fixed;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  .mask {
-    background-color: rgba(0, 0, 0, 0.8);
-    z-index: 101;
-  }
-  .current-account-block {
-    border-radius: 8px;
-    padding: 30px 40px;
-    position: relative;
-    background: #ffffff;
-    z-index: 102;
+@media screen and(min-width:750px) {
+  .current-account {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    .mask {
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 101;
+    }
+    .current-account-block {
+      border-radius: 8px;
+      padding: 30px 40px;
+      position: relative;
+      background: #ffffff;
+      z-index: 102;
 
-    .title {
-      font-size: 20px;
-      color: $bg-d;
-    }
-    .close {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url("../../assets/img/icon/guanbi.png");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: 100% 100%;
-      position: absolute;
-      right: 30px;
-      top: 20px;
-    }
-    .account-box {
-      border-radius: 3px;
-      padding: 16px;
-      padding-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      .left {
-        display: flex;
-        flex-direction: column;
-        > span {
-          font-size: 14px;
-          color: $text-d;
-        }
+      .title {
+        font-size: 20px;
+        color: $bg-d;
       }
-      .right {
+      .close {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("../../assets/img/icon/guanbi.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+        position: absolute;
+        right: 30px;
+        top: 20px;
+      }
+      .account-box {
+        border-radius: 3px;
+        padding: 16px;
+        padding-bottom: 20px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        > a {
-          display: inline-block;
-          background: #fd7e14;
-          padding: 3px 15px;
-          cursor: pointer;
-          border: none;
-          &:hover {
-            background: #ffa000;
+        .left {
+          display: flex;
+          flex-direction: column;
+          > span {
+            font-size: 14px;
+            color: $text-d;
           }
         }
-      }
-      .address {
-        display: flex;
-        align-items: center;
-        .address-text {
+        .right {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          > a {
+            display: inline-block;
+            background: #fd7e14;
+            padding: 3px 15px;
+            cursor: pointer;
+            border: none;
+            &:hover {
+              background: #ffa000;
+            }
+          }
+        }
+        .address {
+          display: flex;
+          align-items: center;
+          .address-text {
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-family: IBMPlexSans;
+            color: #fd7e14;
+            line-height: 16px;
+            font-weight: 550;
+          }
+        }
+        .copyAddress {
+          margin-top: 24px;
           width: 100%;
-          text-align: center;
-          font-size: 16px;
+          min-width: 320px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          background: #f8f9fa;
+          border: 2px solid #e8e8eb;
+          border-radius: 5px;
+          padding-left: 16px;
+          span {
+            margin-left: 16px;
+          }
+          cursor: pointer;
+          &:hover {
+            border: 2px solid rgba(253, 126, 20, 0.3);
+            background: #fff;
+          }
+        }
+        .switchWallet {
+          margin-top: 24px;
+          width: 100%;
+          min-width: 320px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          background: #f8f9fa;
+          border: 2px solid #e8e8eb;
+          border-radius: 5px;
+          padding-left: 16px;
+          span {
+            margin-left: 16px;
+          }
+          cursor: pointer;
+          &:hover {
+            border: 2px solid rgba(253, 126, 20, 0.3);
+            background: #fff;
+          }
+        }
+        > button {
+          margin-top: 30px;
+          width: 100%;
+          height: 42px;
+          background: #17173a;
+          border-radius: 5px;
+          font-size: 14px;
           font-family: IBMPlexSans;
-          color: #fd7e14;
-          line-height: 16px;
-          font-weight: 550;
+          color: #ffffff;
+          line-height: 18px;
         }
       }
-      .copyAddress {
-        margin-top: 24px;
-        width: 100%;
-        min-width: 320px;
-        height: 48px;
+    }
+  }
+}
+@media screen and(max-width:750px) {
+  .current-account {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    .mask {
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 101;
+    }
+    .current-account-block {
+      width: 96%;
+      border-radius: 8px;
+      padding: 30px 20px;
+      position: relative;
+      background: #ffffff;
+      z-index: 102;
+
+      .title {
+        font-size: 20px;
+        color: $bg-d;
+      }
+      .close {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background-image: url("../../assets/img/icon/guanbi.png");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+        position: absolute;
+        right: 30px;
+        top: 20px;
+      }
+      .account-box {
+        border-radius: 3px;
+        padding: 16px;
+        padding-bottom: 20px;
         display: flex;
-        align-items: center;
-        background: #f8f9fa;
-        border: 2px solid #e8e8eb;
-        border-radius: 5px;
-        padding-left: 16px;
-        span {
-          margin-left: 16px;
+        flex-direction: column;
+        .left {
+          display: flex;
+          flex-direction: column;
+          > span {
+            font-size: 14px;
+            color: $text-d;
+          }
         }
-        cursor: pointer;
-        &:hover {
-          border: 2px solid rgba(253, 126, 20, 0.3);
-          background: #fff;
+        .right {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          > a {
+            display: inline-block;
+            background: #fd7e14;
+            padding: 3px 15px;
+            cursor: pointer;
+            border: none;
+            &:hover {
+              background: #ffa000;
+            }
+          }
         }
-      }
-      .switchWallet {
-        margin-top: 24px;
-        width: 100%;
-        min-width: 320px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        background: #f8f9fa;
-        border: 2px solid #e8e8eb;
-        border-radius: 5px;
-        padding-left: 16px;
-        span {
-          margin-left: 16px;
+        .address {
+          display: flex;
+          align-items: center;
+          .address-text {
+            width: 100%;
+            text-align: center;
+            font-size: 16px;
+            font-family: IBMPlexSans;
+            color: #fd7e14;
+            line-height: 16px;
+            font-weight: 550;
+          }
         }
-        cursor: pointer;
-        &:hover {
-          border: 2px solid rgba(253, 126, 20, 0.3);
-          background: #fff;
+        .copyAddress {
+          margin-top: 24px;
+          width: 100%;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          background: #f8f9fa;
+          border: 2px solid #e8e8eb;
+          border-radius: 5px;
+          padding-left: 16px;
+          span {
+            margin-left: 16px;
+          }
+          cursor: pointer;
+          &:hover {
+            border: 2px solid rgba(253, 126, 20, 0.3);
+            background: #fff;
+          }
         }
-      }
-      > button {
-        margin-top: 30px;
-        width: 100%;
-        height: 42px;
-        background: #17173a;
-        border-radius: 5px;
-        font-size: 14px;
-        font-family: IBMPlexSans;
-        color: #ffffff;
-        line-height: 18px;
+        .switchWallet {
+          margin-top: 24px;
+          width: 100%;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          background: #f8f9fa;
+          border: 2px solid #e8e8eb;
+          border-radius: 5px;
+          padding-left: 16px;
+          span {
+            margin-left: 16px;
+          }
+          cursor: pointer;
+          &:hover {
+            border: 2px solid rgba(253, 126, 20, 0.3);
+            background: #fff;
+          }
+        }
+        > button {
+          margin-top: 30px;
+          width: 100%;
+          height: 42px;
+          background: #17173a;
+          border-radius: 5px;
+          font-size: 14px;
+          font-family: IBMPlexSans;
+          color: #ffffff;
+          line-height: 18px;
+        }
       }
     }
   }

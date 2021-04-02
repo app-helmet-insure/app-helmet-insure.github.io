@@ -146,7 +146,7 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .change-account-block {
-    width: 90%;
+    width: 96%;
     padding: 8px 16px;
     background: #ffffff;
     z-index: 102;
@@ -168,6 +168,7 @@ export default {
   }
   .change-account-block {
     border-radius: 8px;
+    padding: 20px 20px 30px;
     .action {
       width: 100%;
       height: 26px;
@@ -197,14 +198,13 @@ export default {
     }
     .current-account {
       width: 100%;
-      min-width: 320px;
       border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;
       background: #fff;
       height: 48px;
       padding: 0px 16px;
-      margin-top: 30px;
+      margin-top: 20px;
       border-radius: 5px;
       .address-text {
         font-size: 14px;

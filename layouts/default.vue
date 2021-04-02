@@ -170,12 +170,15 @@ export default {
     // 显示状态弹框
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       const result = {
-        type: data.type,
-        title: data.title || this.getStatusTitle(data.type),
-        conTit: data.conTit || this.getConTit(data.type),
+        title: data.title,
+        conTit: data.conTit,
         conText: data.conText,
-        btnText: data.btnText || this.getBtnTit(data.type),
         activeTip: data.activeTip,
+        button: data.button,
+        layout: data.layout,
+        loading: data.loading,
+        buttonText: data.buttonText,
+        showDialog: data.showDialog,
       };
       this.statusData = result;
       this.openStatusDialog();
@@ -243,42 +246,6 @@ export default {
         this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
       }, 2000);
-    },
-    getStatusTitle(type) {
-      switch (type) {
-        case "warning":
-          return "Warning";
-        case "pending":
-          return "Waiting for confirmation";
-        case "submit":
-          return "Transaction submitted";
-        default:
-          return "Tips";
-      }
-    },
-    getConTit(type) {
-      switch (type) {
-        case "warning":
-          return "Please connect to the Binance Smart Chain network";
-        case "pending":
-          return "Please confirm the transaction in the wallet";
-        case "submit":
-          return "Transaction submitted";
-        default:
-          return "Tips";
-      }
-    },
-    getBtnTit(type) {
-      switch (type) {
-        case "warning":
-          return "OK";
-        case "pending":
-          return "Approve";
-        case "submit":
-          return "Confirm";
-        default:
-          return "Tips";
-      }
     },
     openStatusDialog() {
       this.showStatusDialog = true;

@@ -113,13 +113,13 @@
         </div>
       </div>
     </div>
-    <div class="insurance_type_h5">
-      <div class="insurance_text">
+    <div class="insurance_type_H5">
+      <div class="insurance_text_H5">
         <span>{{ $t("Insurance.Insurance_text2") }}</span>
         <span>{{ $t("Insurance.Insurance_text3") }}</span>
       </div>
       <div
-        class="insurance_item"
+        class="insurance_item_H5"
         v-for="item in InsuanceData"
         :key="item.InsuranceType"
       >
@@ -139,13 +139,17 @@
           </p>
         </section>
         <section>
-          <button @click="buyInsurance_h5(item.InsuranceType)">购买</button>
-          <button @click="issueInsurance_h5(item.InsuranceType)">发行</button>
+          <button @click="buyInsurance_h5(item.InsuranceType)">
+            {{ $t("Insurance.Insurance_text24") }}
+          </button>
+          <button @click="issueInsurance_h5(item.InsuranceType)">
+            {{ $t("Insurance.Insurance_text8") }}
+          </button>
         </section>
       </div>
     </div>
     <Wraper>
-      <template>
+      <template class="insurance_detail_H5">
         <div class="checkType">
           <span
             @click="InsureTypeActive = 'CALL'"
@@ -196,8 +200,8 @@ export default {
       activeInsurance: "",
       showActiveInsurance: false,
       activeType: "",
-      InsureTypeActive: "CALL",
-      TradeType: "",
+      InsureTypeActive: "CALL", //H5 tab
+      TradeType: "", // h5 action type
     };
   },
   computed: {
@@ -328,7 +332,20 @@ export default {
     width: 100%;
     margin: 0 auto 100px;
     min-height: 300px;
+    .insurance_detail_H5 {
+      display: none;
+    }
+    .insurance_list_H5 {
+      display: none;
+    }
+    .insurance_type_H5 {
+      display: none;
+    }
+    .insurance_item_H5 {
+      display: none;
+    }
   }
+
   .insurance_title {
     display: flex;
     align-items: center;
@@ -546,9 +563,6 @@ export default {
       }
     }
   }
-  .insurance_type_h5 {
-    display: none;
-  }
 }
 @media screen and (max-width: 750px) {
   .insurance_list {
@@ -556,6 +570,18 @@ export default {
     min-height: 320px;
     background: #f8f9fa;
     padding: 20px 10px 50px;
+    .insurance_detail {
+      display: none;
+    }
+    .insurance_list {
+      display: none;
+    }
+    .insurance_type {
+      display: none;
+    }
+    .insurance_item {
+      display: none;
+    }
   }
   .insurance_title {
     display: flex;
@@ -570,11 +596,11 @@ export default {
       margin-left: 10px;
     }
   }
-  .insurance_type_h5 {
+  .insurance_type_H5 {
     width: 100%;
     padding: 0 10px;
   }
-  .insurance_type_h5 > .insurance_text {
+  .insurance_text {
     margin-left: 10px;
     margin-top: 16px;
     display: flex;
@@ -589,7 +615,7 @@ export default {
       }
     }
   }
-  .insurance_type_h5 > .insurance_item {
+  .insurance_item_H5 {
     width: 100%;
     padding: 16px 10px 20px;
     background: #ffffff;
@@ -661,9 +687,6 @@ export default {
         }
       }
     }
-  }
-  .insurance_type {
-    display: none;
   }
   .checkType {
     display: flex;

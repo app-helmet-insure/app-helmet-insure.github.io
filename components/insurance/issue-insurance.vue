@@ -371,14 +371,39 @@ export default {
         showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
       };
-      console.log(data);
+      let object = {
+        title: "WARNING",
+        layout: "layout1",
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+      };
+
       if (data.category == "WBNB" && data.currency == "BUSD") {
         data["divide"] = true;
       }
       if (data.currency == "WBNB" && data.category != "BUSD") {
-        onIssueSellOnETH(data, (status) => {});
+        object.conText = `<p>Rent <span>${
+          data.volume
+        } ${"BNB"}</span>, the execution price is <span>${
+          data.price
+        } ${"BNB"}</span></p>`;
+        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
+        this.$bus.$on("PROCESS_ACTION", (res) => {
+          if (res) {
+            onIssueSellOnETH(data, (status) => {});
+          }
+        });
       } else {
-        onIssueSell(data, (status) => {});
+        object.conText = `<p>Rent <span>${data.volume} ${data.currency}</span>, the execution price is <span>${data.price} ${data.showType}</span></p>`;
+        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
+        this.$bus.$on("PROCESS_ACTION", (res) => {
+          if (res) {
+            onIssueSell(data, (status) => {});
+          }
+        });
       }
     },
   },

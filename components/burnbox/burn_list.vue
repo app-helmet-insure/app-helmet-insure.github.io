@@ -176,7 +176,7 @@
     </div>
     <Wraper>
       <h3 class="wraper_title">
-        {{ activeType == "STAKE" ? "燃烧" : "奖励" }}
+        {{ activeType == "STAKE" ? $t("Table.Burn") : $t("Table.Bonus") }}
       </h3>
       <HCTKBURN
         v-if="activeBurn == 'hCTK'"

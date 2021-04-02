@@ -253,7 +253,7 @@ export default {
       /* @include themeify {
       background: rgba(themed('color-success'), 0.08);
     } */
-      background: #e5f8e5;
+      background: #28a745;
     }
     &.ex-message-error {
       background: #ffefe5;

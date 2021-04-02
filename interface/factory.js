@@ -32,10 +32,6 @@ export const settleable = async (seller, short) => {
 export const burn = async (longOrshort, volume, opt = {}, data) => {
     let colValue = addCommom(data.col + Number(data.longBalance), 8);
     let undValue = addCommom(data.und, 8);
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        conText: `<p>Settlement ${addCommom(volume)} ${data._collateral}</p>`,
-    });
     const factory = await getFactory();
     const wei = await getWei(opt._collateral);
     let fix = wei === 'lovelace' ? 6 : 18;
@@ -49,22 +45,29 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
         .on('transactionHash', (hash) => {
             bus.$emit('CLOSE_STATUS_DIALOG');
             bus.$emit('OPEN_STATUS_DIALOG', {
-                type: 'submit',
-                conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `<p>Settlement ${addCommom(data.longBalance)} ${
+                    data._collateral
+                }</p>`,
             });
         })
         .on('confirmation', (confirmationNumber, receipt) => {
             // callBack('success');
             if (confirmationNumber === 0) {
-                let confirmationTit = `<div>${data._collateral} ${', ' +
-                    data._underlying} settlement is successful, Please check in the <span>wallet</span></div>`;
                 if (window.statusDialog) {
                     bus.$emit('CLOSE_STATUS_DIALOG');
                     bus.$emit('OPEN_STATUS_DIALOG', {
-                        type: 'success',
-                        title: 'Successfully rented',
-                        conTit: confirmationTit,
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
                         conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
                     });
                 } else {
                     Message({
@@ -84,34 +87,21 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            // if (error && error.message) {
-            //     Message({
-            //         message: error && error.message,
-            //         type: 'error',
-            //         // duration: 0,
-            //     });
-            // }
         });
 };
 
 export const settle = async (short, data) => {
     let colValue = addCommom(Number(data.col) + Number(data.longBalance), 8);
     let undValue = addCommom(data.und, 8);
-    let pendingText;
+    let conText;
     if (undValue > 0) {
-        pendingText = `<p>Settlement <span>${colValue > 0 &&
+        conText = `<p>Settlement <span>${colValue > 0 &&
             colValue + data._collateral} ${undValue > 0 &&
             'And' + undValue + data._underlying}</span></p>`;
     } else {
-        pendingText = `<p>Settlement <span>${colValue > 0 &&
+        conText = `<p>Settlement <span>${colValue > 0 &&
             colValue + data._collateral}</span></p>`;
     }
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        //   conText: `<p>Settlement <span>${data_.volume} ${data}.category}</span> </p>`,
-        conText: pendingText,
-    });
-
     const factory = await getFactory();
     // const address = window.CURRENTADDRESS;
     const address = window.CURRENTADDRESS;
@@ -123,24 +113,27 @@ export const settle = async (short, data) => {
             // callBack('approve');
             bus.$emit('CLOSE_STATUS_DIALOG');
             bus.$emit('OPEN_STATUS_DIALOG', {
-                type: 'submit',
-                conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: conText,
             });
         })
         .on('confirmation', (confirmationNumber, receipt) => {
             // callBack('success');
             if (confirmationNumber === 0) {
-                let confirmationTit = `<div>${colValue > 0 &&
-                    data._collateral} ${undValue > 0 &&
-                    ', ' +
-                        data._underlying} settlement is successful, Please check in the <span>wallet</span></div>`;
                 if (window.statusDialog) {
                     bus.$emit('CLOSE_STATUS_DIALOG');
                     bus.$emit('OPEN_STATUS_DIALOG', {
-                        type: 'success',
-                        title: 'Successfully rented',
-                        conTit: confirmationTit,
-                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
                     });
                 } else {
                     Message({
@@ -174,8 +167,10 @@ export const settle = async (short, data) => {
 export const onExercise = async (data, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
+        title: 'WARNING',
+        layout: 'layout1',
         // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>you will swap<span> ${toRounding(
+        conText: `<p>You will swap<span> ${toRounding(
             data._underlying_vol,
             8
         )} ${data._underlying}</span> to <span> ${data.vol} ${

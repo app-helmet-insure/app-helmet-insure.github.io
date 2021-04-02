@@ -232,6 +232,12 @@ export default {
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
+    .slider_wrap {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      height: 100%;
+    }
   }
   @keyframes rotation_0 {
     from {

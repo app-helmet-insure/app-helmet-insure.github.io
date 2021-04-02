@@ -395,10 +395,7 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>Rent <span>${datas.showVolueme} ${datas.showType}
-                  </span> policys, the Premium is <span>
-                  ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
-                  </span></p>`,
+        conText: `Cancel your Policy supplying order.`,
         activeTip: true,
         loading: false,
         button: true,

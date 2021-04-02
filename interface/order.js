@@ -821,10 +821,28 @@ export const onCancel = async (askID, callBack) => {
         .cancel(askID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {
-            callBack('approve');
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `Cancel your Policy supplying order.`,
+            });
         })
         .on('confirmation', (confirmationNumber, receipt) => {
             if (confirmationNumber === 0) {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Transation submitted',
+                    layout: 'layout2',
+                    buttonText: 'Confirm',
+                    conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    button: true,
+                    buttonText: 'Confirm',
+                    showDialog: false,
+                });
                 setTimeout(() => {
                     bus.$emit('REFRESH_ALL_DATA');
                 }, 1000);

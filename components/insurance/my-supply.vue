@@ -655,7 +655,6 @@ export default {
     align-items: center;
     flex-direction: column;
     margin: 0 10px;
-    min-height: 400px;
     .supply_item {
       display: none;
     }

@@ -150,6 +150,15 @@
     </div>
     <Wraper>
       <template class="insurance_detail_H5">
+        <div class="insurance_title_H5">
+          <h3>
+            {{ $t("Insurance.Insurance_text1") }}
+          </h3>
+          <svg class="icon close" aria-hidden="true" @click="close_wraper">
+            <use xlink:href="#icon-close"></use>
+          </svg>
+        </div>
+
         <div class="checkType">
           <span
             @click="InsureTypeActive = 'CALL'"
@@ -250,6 +259,9 @@ export default {
       if (newValue) {
         this.InitInsuanceData();
       }
+    },
+    close_wraper() {
+      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
     async InitInsuanceData() {
       let InsuanceData = [
@@ -567,7 +579,6 @@ export default {
 @media screen and (max-width: 750px) {
   .insurance_list {
     width: 100%;
-    min-height: 320px;
     background: #f8f9fa;
     padding: 20px 10px 50px;
     .insurance_detail {
@@ -582,27 +593,34 @@ export default {
     .insurance_item {
       display: none;
     }
-  }
-  .insurance_title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 10px;
-    h3 {
-      font-size: 18px;
-      font-family: Helvetica;
-      color: #17173a;
-      line-height: 24px;
-      margin-left: 10px;
+    .insurance_title {
+      display: none;
+    }
+    .insurance_text {
+      display: none;
     }
   }
+  .insurance_title_H5 {
+    height: 44px;
+    line-height: 44px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close {
+      width: 24px;
+      height: 24px;
+      fill: #000;
+      cursor: pointer;
+    }
+  }
+
   .insurance_type_H5 {
     width: 100%;
     padding: 0 10px;
   }
-  .insurance_text {
-    margin-left: 10px;
-    margin-top: 16px;
+  .insurance_text_H5 {
+    margin: 16px 10px 0;
     display: flex;
     span {
       flex: 1;
@@ -610,8 +628,11 @@ export default {
       font-family: Sathu;
       color: rgba(23, 23, 58, 0.5);
       line-height: 14px;
+      &:nth-of-type(1) {
+        margin-right: 20px;
+      }
       &:nth-of-type(2) {
-        margin-left: -10px;
+        margin-left: 20px;
       }
     }
   }
@@ -630,6 +651,7 @@ export default {
           display: flex;
           align-items: center;
           flex: 1;
+          margin-right: 20px;
           img {
             width: 32px;
             height: 32px;
@@ -644,6 +666,7 @@ export default {
           }
         }
         p {
+          margin-left: 20px;
           display: flex;
           flex-direction: column;
           flex: 1;
@@ -667,9 +690,10 @@ export default {
       }
       &:nth-of-type(2) {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         margin-top: 12px;
         button {
+          flex: 1;
           min-width: 138px;
           height: 32px;
           background: #f8f9fa;
@@ -683,6 +707,12 @@ export default {
             border: 2px solid #fd7e14;
             background: #fffaf3;
             color: #fd7e14;
+          }
+          &:nth-of-type(1) {
+            margin-right: 20px;
+          }
+          &:nth-of-type(2) {
+            margin-left: 20px;
           }
         }
       }

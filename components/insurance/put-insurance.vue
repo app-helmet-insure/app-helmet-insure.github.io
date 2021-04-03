@@ -61,7 +61,6 @@
       </table>
     </div>
     <div class="insurance_list_H5">
-      <h3>{{ $t("Insurance.Insurance_text1") }}</h3>
       <div
         class="list_item"
         v-for="(item, index) in showList"

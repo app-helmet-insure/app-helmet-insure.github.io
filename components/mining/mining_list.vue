@@ -201,13 +201,18 @@
       </section>
     </div>
     <Wraper>
-      <h3 class="wraper_title">
-        {{
-          activeType == "STAKE"
-            ? $t("Insurance.Insurance_text23")
-            : $t("Table.Claim")
-        }}
-      </h3>
+      <div class="wraper_title">
+        <h3>
+          {{
+            activeType == "STAKE"
+              ? $t("Insurance.Insurance_text23")
+              : $t("Table.Claim")
+          }}
+        </h3>
+        <svg class="icon close" aria-hidden="true" @click="close_wraper">
+          <use xlink:href="#icon-close"></use>
+        </svg>
+      </div>
       <HelmetBnbPool
         v-if="activeMining == 'helmet_cake'"
         :activeType="activeType"
@@ -326,6 +331,9 @@ export default {
       this.showActiveMining = true;
       this.activeMining = MiningType;
     },
+    close_wraper() {
+      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
+    },
     initMiningData() {
       let apyArray = this.apyArray;
       let arr = [
@@ -353,7 +361,7 @@ export default {
           miningName: "HELMET POOL",
           earn: "helmet",
           earnNum: "one",
-          dueDate: 'Ongoing',
+          dueDate: "Ongoing",
           como: false,
           info: true,
           earnName: "APY",
@@ -831,9 +839,18 @@ export default {
     display: none;
   }
   .wraper_title {
-    padding-left: 10px;
     height: 44px;
     line-height: 44px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close {
+      width: 24px;
+      height: 24px;
+      fill: #000;
+      cursor: pointer;
+    }
   }
   .mining_item_h5 {
     width: 100%;

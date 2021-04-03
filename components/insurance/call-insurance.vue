@@ -60,7 +60,6 @@
       </table>
     </div>
     <div class="insurance_list_H5">
-      <h3>{{ $t("Insurance.Insurance_text1") }}</h3>
       <div
         class="list_item"
         v-for="(item, index) in showList"
@@ -203,9 +202,12 @@ export default {
       // 当前保险地址
       let coinAddress = getAddress(this.activeInsurance);
       // 当前保险的全部保单
-      let callInsuranceList = sell.filter(
-        (item) => item.longInfo._collateral.toLowerCase() == coinAddress
-      );
+      let callInsuranceList;
+      if (sell) {
+        callInsuranceList = sell.filter(
+          (item) => item.longInfo._collateral.toLowerCase() == coinAddress
+        );
+      }
       // 数据处理
       for (let i = 0; i < callInsuranceList.length; i++) {
         item = callInsuranceList[i];

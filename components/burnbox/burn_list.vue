@@ -175,9 +175,14 @@
       </section>
     </div>
     <Wraper>
-      <h3 class="wraper_title">
-        {{ activeType == "STAKE" ? $t("Table.Burn") : $t("Table.Bonus") }}
-      </h3>
+      <div class="wraper_title">
+        <h3 class="">
+          {{ activeType == "STAKE" ? $t("Table.Burn") : $t("Table.Bonus") }}
+        </h3>
+        <svg class="icon close" aria-hidden="true" @click="close_wraper">
+          <use xlink:href="#icon-close"></use>
+        </svg>
+      </div>
       <HCTKBURN
         v-if="activeBurn == 'hCTK'"
         :activeType="activeType"
@@ -239,6 +244,9 @@ export default {
       this.activeType = "CLAIM";
       this.showActiveBurn = true;
       this.activeBurn = MiningType;
+    },
+    close_wraper() {
+      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
     initBurnBox() {
       let arr = [
@@ -851,8 +859,17 @@ export default {
   }
   .wraper_title {
     height: 44px;
-    padding-left: 10px;
     line-height: 44px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close {
+      width: 24px;
+      height: 24px;
+      fill: #000;
+      cursor: pointer;
+    }
   }
 }
 </style>

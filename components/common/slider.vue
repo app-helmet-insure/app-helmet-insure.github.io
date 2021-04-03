@@ -527,7 +527,7 @@ export default {
         > .icon {
           width: 20px;
           height: 20px;
-          margin-right: 16px;
+          margin-right: 8px;
           display: block;
           fill: rgba(23, 23, 58, 0.7);
         }
@@ -559,7 +559,7 @@ export default {
           display: flex;
           align-items: center;
           > a {
-            padding-left: 25px;
+            padding-left: 30px;
             width: 100%;
             display: flex;
             align-items: center;

@@ -1269,7 +1269,6 @@ export default {
     align-items: center;
     flex-direction: column;
     margin: 0 10px;
-    min-height: 400px;
     .policy_item {
       display: none;
     }

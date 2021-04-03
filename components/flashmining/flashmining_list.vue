@@ -230,13 +230,18 @@
       </section>
     </div>
     <Wraper>
-      <h3 class="wraper_title">
-        {{
-          activeType == "STAKE"
-            ? $t("Insurance.Insurance_text23")
-            : $t("Table.Claim")
-        }}
-      </h3>
+      <div class="wraper_title">
+        <h3>
+          {{
+            activeType == "STAKE"
+              ? $t("Insurance.Insurance_text23")
+              : $t("Table.Claim")
+          }}
+        </h3>
+        <svg class="icon close" aria-hidden="true" @click="close_wraper">
+          <use xlink:href="#icon-close"></use>
+        </svg>
+      </div>
       <HdodoPool
         v-if="activeFlash == 'hDODO'"
         :activeType="activeType"
@@ -351,6 +356,9 @@ export default {
       this.activeType = "CLAIM";
       this.showActiveFlash = true;
       this.activeFlash = MiningType;
+    },
+    close_wraper() {
+      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
     apyArrayWatch(newValue) {
       if (newValue) {
@@ -1132,8 +1140,17 @@ export default {
   }
   .wraper_title {
     height: 44px;
-    padding-left: 10px;
     line-height: 44px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .close {
+      width: 24px;
+      height: 24px;
+      fill: #000;
+      cursor: pointer;
+    }
   }
 }
 </style>

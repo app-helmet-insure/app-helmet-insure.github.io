@@ -93,7 +93,7 @@ export default {};
       width: 100%;
       height: 270px;
       padding: 50px 250px;
-      margin: 10px 0;
+      margin: 20px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;

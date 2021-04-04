@@ -23,6 +23,9 @@ const netObj = {
 };
 // 翻倍
 export const onIssueSell = async (data_, callBack) => {
+    if (JSON.stringify(data_) === '{}') {
+        return false;
+    }
     let data = { ...data_ };
     data.category = getAddress(data.category);
     data.currency = getAddress(data.currency);
@@ -87,7 +90,6 @@ export const onIssueSell = async (data_, callBack) => {
                     conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.showType}</span></p>`,
                 });
             })
-
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
@@ -116,13 +118,14 @@ export const onIssueSell = async (data_, callBack) => {
                 }
             })
             .on('error', function(error, receipt) {
+                bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
+                if (error && error.message) {
+                    Message({
+                        message: error && error.message,
+                        type: 'error',
+                    });
+                }
             });
     } catch (error) {
         console.log('onIssueSell', error);
@@ -130,6 +133,9 @@ export const onIssueSell = async (data_, callBack) => {
 };
 // 腰斩
 export const onIssueSellOnETH = async (data_, callBack) => {
+    if (JSON.stringify(data_) === '{}') {
+        return false;
+    }
     let data = { ...data_ };
     data.category = getAddress(data.category);
     data.currency = getAddress(data.currency);
@@ -161,16 +167,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     price = window.WEB3.utils.toWei(String(price), getWei(data_.category));
     // window.WEB3.utils.toWei(String(number), unit);
     data.price = price;
-
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span>${
-            data_.volume
-        } ${'BNB'}</span>, the execution price is <span>${
-            data_.price
-        } ${'BNB'}</span></p>`,
-    });
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权
@@ -232,13 +228,15 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                 }
             })
             .on('error', function(error, receipt) {
+                bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
+                console.log(1);
+                if (error && error.message) {
+                    Message({
+                        message: error && error.message,
+                        type: 'error',
+                    });
+                }
             });
     } catch (error) {
         console.log('onIssueSellOnETH', error);
@@ -250,6 +248,9 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     // 两个精度的差，可能是负数，因此，再加个18位精度
     // 比如 WETH/DAI，两者精度都是18，那么价格的精度就是18-18+18=18
     // USDT/USDT，精度=6-6+18=18  在抵押物和结算物相同时，总是18
+    if (JSON.stringify(_data) === '{}') {
+        return false;
+    }
     let data = { ..._data };
 
     const charID = window.chainID;
@@ -285,6 +286,7 @@ export const buyInsuranceBuy = async (_data, callBack) => {
             .buy(data.askID, data.volume)
             .send({ from: window.CURRENTADDRESS })
             .on('transactionHash', function(hash) {
+                bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
                     title: 'Waiting For Confirmation',
                     layout: 'layout2',
@@ -299,7 +301,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                     </span></p>`,
                 });
             })
-
             .on('confirmation', function(confirmationNumber, receipt) {
                 if (confirmationNumber === 0) {
                     if (window.statusDialog) {
@@ -326,27 +327,15 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                 }
             })
             .on('error', function(error, receipt) {
+                bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 if (error && error.message) {
                     Message({
                         message: error && error.message,
                         type: 'error',
-                        // duration: 0,
                     });
                 }
             });
-        // .on('transactionHash', hash => {
-        //     callBack('pending')
-        //     //onChangeHash(hash);
-        // })
-        // .on('confirmation', (_, receipt) => {
-        //     callBack('success')
-        //     //onReceiptChange(receipt);
-        // })
-        // .on('error', (err, receipt) => {
-        //     callBack('failed')
-        //     //onReceiptChange(receipt);
-        // })
     } catch (error) {}
 };
 export const getSellLog = async (callback) => {
@@ -655,6 +644,9 @@ export const MyPayaso = async (address1) => {
         });
 };
 export const onExercise = async (data, callBack, flag) => {
+    if (JSON.stringify(data) === '{}') {
+        return false;
+    }
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
@@ -813,6 +805,9 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
 
 export const onCancel = async (askID, callBack) => {
     // const WEB3 = await web3();
+    if (!askID) {
+        return;
+    }
     const order = await Order();
     if (!window.CURRENTADDRESS) {
         return;

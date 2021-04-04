@@ -300,42 +300,44 @@ export default {
         buttonText: "Confirm",
         showDialog: true,
       };
-
-      if (item.longBalance != 0) {
-        object.conText = `<p>Settlement ${addCommom(item.longBalance)} ${
-          item._collateral
+      let data = item;
+      if (data.longBalance != 0) {
+        object.conText = `<p>Settlement ${addCommom(data.longBalance)} ${
+          data._collateral
         }</p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
             burn(
-              item.short,
-              item.longBalance,
-              { _collateral: item._collateral },
-              item
+              data.short,
+              data.longBalance,
+              { _collateral: data._collateral },
+              data
             );
           }
+          data = {};
         });
       } else {
         let colValue = addCommom(
-          Number(item.col) + Number(item.longBalance),
+          Number(data.col) + Number(data.longBalance),
           8
         );
-        let undValue = addCommom(item.und, 8);
+        let undValue = addCommom(data.und, 8);
         if (undValue > 0) {
           object.conText = `<p>Settlement <span>${
-            colValue > 0 && colValue + item._collateral
-          } ${undValue > 0 && "And" + undValue + item._underlying}</span></p>`;
+            colValue > 0 && colValue + data._collateral
+          } ${undValue > 0 && "And" + undValue + data._underlying}</span></p>`;
         } else {
           object.conText = `<p>Settlement <span>${
-            colValue > 0 && colValue + item._collateral
+            colValue > 0 && colValue + data._collateral
           }</span></p>`;
         }
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
-            settle(item.short, item);
+            settle(data.short, data);
           }
+          data = {};
         });
       }
     },

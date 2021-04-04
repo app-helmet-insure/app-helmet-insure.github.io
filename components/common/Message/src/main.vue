@@ -176,7 +176,7 @@ export default {
       background: #28a745;
     }
     &.ex-message-error {
-      background: #ffefe5;
+      background: #dc3545;
       /* @include themeify {
       background: rgba(themed('color-error'), 0.08);
     } */
@@ -256,7 +256,7 @@ export default {
       background: #28a745;
     }
     &.ex-message-error {
-      background: #ffefe5;
+      background: #dc3545;
       /* @include themeify {
       background: rgba(themed('color-error'), 0.08);
     } */

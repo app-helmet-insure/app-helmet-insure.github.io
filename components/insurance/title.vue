@@ -4,6 +4,9 @@
       <!-- <div class="swiper-slide verson">
         <div></div>
       </div> -->
+      <div class="swiper-slide burntpt">
+        <div></div>
+      </div>
       <div class="swiper-slide combododo">
         <div></div>
       </div>
@@ -143,6 +146,12 @@ export default {
         background-image: url("../../assets/img/banner/combo_dodo_web.png");
       }
     }
+    .burntpt {
+      background: linear-gradient(360deg, #f4b690 0%, #ff603a 100%);
+      > div {
+        background-image: url("../../assets/img/banner/burn_tpt_web.png");
+      }
+    }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
@@ -186,6 +195,12 @@ export default {
       );
       > div {
         background-image: url("../../assets/img/banner/verson_h5.png");
+      }
+    }
+    .burntpt {
+      background: linear-gradient(360deg, #f4b690 0%, #ff603a 100%);
+      > div {
+        background-image: url("../../assets/img/banner/burn_tpt_h5.png");
       }
     }
     .combododo {

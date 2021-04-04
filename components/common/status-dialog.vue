@@ -117,6 +117,7 @@ export default {
     }
     > .layout1 {
       text-align: left;
+      min-width: 400px;
     }
     > .layout2 {
       text-align: center;

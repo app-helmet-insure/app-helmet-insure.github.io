@@ -216,8 +216,14 @@ export default {
     },
     showNetWorkTip() {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        type: "warning",
-        conText: "请连接到Binance Smart Chain网络",
+        title: "WARNING",
+        layout: "layout1",
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+        conText: "Please Connect to Binance Smart Chain NetWork",
       });
     },
     copy() {

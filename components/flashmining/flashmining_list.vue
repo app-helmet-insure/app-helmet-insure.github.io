@@ -106,6 +106,11 @@
         <svg class="close" aria-hidden="true" @click="showActiveFlash = false">
           <use xlink:href="#icon-close"></use>
         </svg>
+        <HtptPool
+          v-if="activeFlash == 'hTPT' && showActiveFlash"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></HtptPool>
         <HdodoPool
           v-if="activeFlash == 'hDODO' && showActiveFlash"
           :activeType="activeType"
@@ -242,6 +247,11 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </div>
+      <HtptPool
+        v-if="activeFlash == 'hTPT'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HtptPool>
       <HdodoPool
         v-if="activeFlash == 'hDODO'"
         :activeType="activeType"
@@ -282,6 +292,7 @@ import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
+import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
 import HctkPool from "~/components/flashmining/hctk_pool.vue";
 import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
@@ -291,6 +302,7 @@ import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
 export default {
   components: {
     Wraper,
+    HtptPool,
     HcctPool,
     HctkPool,
     Bnb500Pool,
@@ -368,6 +380,14 @@ export default {
     initFlashMiningData() {
       let apyArray = this.apyArray;
       let arr = [
+        // {
+        //   miningName: "hTPT Pool",
+        //   desc: "By hDODO-Helmet LPT",
+        //   earn: "hTPT",
+        //   dueDate: this.getRemainTime("2021/04/26 00:00"),
+        //   weekly: fixD((2000000 / 15) * 7, 2) + " hTPT",
+        //   yearEarn: apyArray["hTPT"] || "--",
+        // },
         {
           miningName: "hDODO Pool",
           desc: "By hMATH-Helmet LPT",
@@ -455,6 +475,33 @@ export default {
       this.GET_HDODO_POOL_APY();
       this.GET_HMATH_POOL_APY();
       this.GET_HCCT_POOL_APY();
+      this.GET_HTPT_POOL_APY();
+    },
+    async GET_HTPT_POOL_APY() {
+      let HAUTOHELMET = await uniswap("HTPT", "HELMET"); //Hlemt价格
+      let HctkVolume = await totalSupply("HTPTPOOL"); //数量
+      let LptVolume = await totalSupply("HTPTPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HTPTPOOL_LPT", true);
+      // APY = 年产量*helmet价格/抵押价值
+      let APY = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(HAUTOHELMET, precision.divide(2000000, 14), 365),
+            precision.times(
+              precision.divide(precision.times(HelmetValue, 2), LptVolume),
+              HctkVolume
+            )
+          ),
+          100
+        ),
+        2
+      );
+      if (this.expired) {
+        this.miningList[0].yearEarn = "--";
+      } else {
+        this.apyArray.hTPT = fixD(APY, 2);
+        this.miningList[0].yearEarn = fixD(APY, 2);
+      }
     },
     async GET_HDODO_POOL_APY() {
       let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格
@@ -888,10 +935,10 @@ export default {
       position: relative;
       .close {
         position: absolute;
-        right: 20px;
+        right: 0;
         width: 24px;
         height: 24px;
-        top: 20px;
+        top: 10px;
         fill: #ccc;
         cursor: pointer;
       }

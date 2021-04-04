@@ -198,9 +198,12 @@ export default {
       // 当前保险地址
       let coinAddress = getAddress(this.activeInsurance);
       // 当前保险的全部保单
-      let putInsuranceList = sell.filter(
-        (item) => item.longInfo._underlying.toLowerCase() == coinAddress
-      );
+      let putInsuranceList = [];
+      if (sell) {
+        putInsuranceList = sell.filter(
+          (item) => item.longInfo._underlying.toLowerCase() == coinAddress
+        );
+      }
       // 数据处理
       for (let i = 0; i < putInsuranceList.length; i++) {
         item = putInsuranceList[i];
@@ -263,6 +266,7 @@ export default {
           resultList.push(resultItem);
         }
       }
+      console.log(resultList);
       resultList.sort(function (a, b) {
         return Number(a.price) - Number(b.price);
       });
@@ -316,7 +320,10 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: ``,
+        conText: `<p>Rent <span>${datas.showVolueme} ${datas.showType}
+                  </span> policys, the Premium is <span>
+                  ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
+                  </span></p>`,
         activeTip: true,
         loading: false,
         button: true,
@@ -327,6 +334,7 @@ export default {
         if (res) {
           buyInsuranceBuy(datas, (status) => {});
         }
+        datas = {};
       });
     },
   },

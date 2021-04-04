@@ -262,6 +262,7 @@ export default {
           resultList.push(resultItem);
         }
       }
+      console.log(resultList);
       resultList.sort(function (a, b) {
         return Number(a.price) - Number(b.price);
       });
@@ -316,6 +317,7 @@ export default {
         if (res) {
           buyInsuranceBuy(datas, (status) => {});
         }
+        datas = {};
       });
     },
   },

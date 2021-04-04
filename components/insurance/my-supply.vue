@@ -406,6 +406,7 @@ export default {
         if (res) {
           onCancel(data.id, (status) => {});
         }
+        data = {};
       });
     },
     handleClickChagePage(index) {

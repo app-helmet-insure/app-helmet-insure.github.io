@@ -3,7 +3,7 @@
     <div class="burn_title">
       <h3>{{ $t("Table.BurnMining") }}</h3>
     </div>
-    <div class="burn_item" v-for="item in burnList" :key="item.earn">
+    <div class="burn_item" v-for="item in burnList" :key="item.burnName">
       <div
         :class="
           activeBurn == item.icon && showActiveBurn
@@ -44,7 +44,14 @@
         </section>
         <section>
           <p>
-            {{ $t("Table.EarnList") }} <span>{{ item.earn }} </span>
+            {{ $t("Table.EarnList") }}
+            <img
+              alt=""
+              src="~/assets/img/burnmining/egg.png"
+              v-if="item.earn == 'hTPT'"
+              style="width: 50px; height: 50px"
+            />
+            <span v-else>{{ item.earn }} </span>
           </p>
         </section>
         <section>
@@ -97,6 +104,16 @@
         <svg class="close" aria-hidden="true" @click="showActiveBurn = false">
           <use xlink:href="#icon-close"></use>
         </svg>
+        <HAUTOBURN
+          v-if="activeBurn == 'hAUTO' && showActiveBurn"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></HAUTOBURN>
+        <BNB500BURN
+          v-if="activeBurn == 'BNB500' && showActiveBurn"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></BNB500BURN>
         <HCTKBURN
           v-if="activeBurn == 'hCTK' && showActiveBurn"
           :activeType="activeType"
@@ -109,7 +126,11 @@
         ></HCCTBURN>
       </div>
     </div>
-    <div class="burn_item_h5" v-for="item in burnList" :key="item.earn + '1'">
+    <div
+      class="burn_item_h5"
+      v-for="item in burnList"
+      :key="item.burnName + item.icon"
+    >
       <section>
         <img
           v-if="item.dueDate == 'Expired'"
@@ -124,7 +145,14 @@
         <div>
           <span> {{ item.burnName }}</span>
           <p>
-            {{ $t("Table.EarnList") }} <span>{{ item.earn }} </span>
+            {{ $t("Table.EarnList") }}
+            <img
+              alt=""
+              src="~/assets/img/burnmining/egg.png"
+              v-if="item.earn == 'hTPT'"
+              style="width: 50px; height: 50px"
+            />
+            <span v-else>{{ item.earn }} </span>
           </p>
         </div>
       </section>
@@ -183,6 +211,16 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </div>
+      <HAUTOBURN
+        v-if="activeBurn == 'hAUTO'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HAUTOBURN>
+      <BNB500BURN
+        v-if="activeBurn == 'BNB500'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></BNB500BURN>
       <HCTKBURN
         v-if="activeBurn == 'hCTK'"
         :activeType="activeType"
@@ -201,11 +239,15 @@
 import Wraper from "~/components/common/wraper.vue";
 import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
 import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
+import HAUTOBURN from "~/components/burnbox/hauto_burn.vue";
+import BNB500BURN from "~/components/burnbox/bnb500_burn.vue";
 export default {
   components: {
     Wraper,
     HCCTBURN,
     HCTKBURN,
+    HAUTOBURN,
+    BNB500BURN,
   },
   data() {
     return {
@@ -250,6 +292,20 @@ export default {
     },
     initBurnBox() {
       let arr = [
+        {
+          burnName: "hAUTO Burning Box",
+          earn: "hTPT",
+          bonus: 1000000,
+          dueDate: this.getRemainTime("2021/04/12 00:00"),
+          icon: "hAUTO",
+        },
+        {
+          burnName: "BNB500 Burning Box",
+          earn: "hTPT",
+          bonus: 1000000,
+          dueDate: this.getRemainTime("2021/04/12 00:00"),
+          icon: "BNB500",
+        },
         {
           burnName: "hCTK Burning Box",
           earn: "hDODO",
@@ -546,10 +602,10 @@ export default {
     position: relative;
     .close {
       position: absolute;
-      right: 20px;
+      right: 0;
       width: 24px;
       height: 24px;
-      top: 20px;
+      top: 10px;
       fill: #ccc;
       cursor: pointer;
     }

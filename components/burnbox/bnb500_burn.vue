@@ -1,0 +1,458 @@
+<template>
+  <div class="burnbox">
+    <div class="burn_wrap" v-if="TradeType == 'STAKE' || TradeType == 'ALL'">
+      <div class="process">
+        <div class="name">
+          <span>{{ $t("Table.FireProcess") }}</span>
+          <span style="display: flex">
+            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            /
+            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+          </span>
+        </div>
+        <div class="control">
+          <div class="control_wrap">
+            <div
+              class="control_real"
+              :style="`width:${list.process}%;max-width:100%`"
+            >
+              <i class="fire" v-if="list.process != 0"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>
+        <span>{{ $t("Table.DAvailable") }}</span>
+        <span>
+          <countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Deposite)"
+            :duration="2000"
+            :decimals="8"
+          />
+          <span v-else>--</span>
+          BNB500
+        </span>
+      </p>
+      <div class="input">
+        <input
+          type="text"
+          v-model="DepositeNum"
+          :style="
+            DepositeNum == balance.Deposite
+              ? 'border: 1px solid #fd7e14 !important'
+              : ''
+          "
+        />
+        <p>
+          <span>BNB500</span>|<i @click="DepositeNum = balance.Deposite">{{
+            $t("Table.Max")
+          }}</i>
+        </p>
+      </div>
+      <div class="text">
+        <p>
+          <span>{{ $t("Table.MyBurn") }}</span>
+          <span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Withdraw)"
+              :duration="2000"
+              :decimals="4"
+            />
+            <span v-else>--</span>
+            &nbsp;BNB500</span
+          >
+        </p>
+        <p>
+          <span>{{ $t("Table.TotalBurn") }}</span>
+          <span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.TotalLPT)"
+              :duration="2000"
+              :decimals="4"
+            />
+            <span v-else>--</span>
+            &nbsp;BNB500</span
+          >
+        </p>
+        <p class="bigsize">
+          <span>{{ $t("Table.MyPoolShare") }} </span>
+          <span> {{ isLogin ? balance.Share : "--" }} % </span>
+        </p>
+      </div>
+      <button
+        class="submit_burn"
+        @click="toDeposite"
+        :style="
+          expired ? 'background: #ccc !important; pointer-events: none' : ''
+        "
+      >
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
+      </button>
+      <div class="ContractAddress">
+        <span>BNB500 {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0xe204c4c21c6ed90e37cb06cb94436614f3208d58
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0xe204c4c21c6ed90e37cb06cb94436614f3208d58')
+            "
+          ></i>
+        </p>
+      </div>
+    </div>
+    <div class="claim_wrap" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
+      <div class="process">
+        <div class="name">
+          <span>{{ $t("Table.FireProcess") }}</span>
+          <span style="display: flex">
+            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            /
+            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+          </span>
+        </div>
+        <div class="control">
+          <div class="control_wrap">
+            <div
+              class="control_real"
+              :style="`width:${list.process}%;max-width:100%`"
+            >
+              <i class="fire" v-if="list.process != 0"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>
+        <span>hTPT {{ $t("Table.HELMETRewards") }}</span>
+        <span
+          ><countTo
+            v-if="isLogin"
+            :startVal="Number(0)"
+            :endVal="Number(balance.Earn)"
+            :duration="2000"
+            :decimals="8"
+          />
+          hTPT</span
+        >
+      </p>
+      <div class="input">
+        <input
+          v-if="isLogin"
+          type="text"
+          v-model="balance.Earn"
+          disabled
+          style="border: 1px solid #fd7e14 !important"
+        />
+        <input
+          v-else
+          type="text"
+          disabled
+          style="border: 1px solid #fd7e14 !important"
+        />
+        <p>
+          <span>hTPT</span>|<i
+            @click="WithdrawNum = balance.Earn"
+            style="background: rgba(255, 150, 0, 0.1)"
+            >{{ $t("Table.Max") }}</i
+          >
+        </p>
+      </div>
+
+      <button class="submit_burn" @click="toClaim">
+        <i :class="claimLoading ? 'loading_pic' : ''"></i
+        >{{ $t("Table.Claim") }}
+      </button>
+      <div class="ContractAddress">
+        <span>hTPT {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c')
+            "
+          ></i>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import {
+  totalSupply,
+  balanceOf,
+  getLPTOKEN,
+  CangetPAYA,
+  CangetUNI,
+  getPAYA,
+  exitStake,
+  getLastTime,
+  approveStatus,
+  getBalance,
+  toDeposite,
+  getMined,
+  WithdrawAvailable,
+  getAllHelmet,
+  Rewards,
+} from "~/interface/deposite";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import precision from "~/assets/js/precision.js";
+import countTo from "vue-count-to";
+import ClipboardJS from "clipboard";
+import Message from "~/components/common/Message";
+export default {
+  props: ["TradeType"],
+  components: {
+    countTo,
+  },
+  data() {
+    return {
+      list: {
+        name: "HCCT Burning Box",
+        endTime: "2021/04/12 00:00",
+        startTime: "2021/04/05 00:00",
+        bonusValue: 1000000,
+        DownTime: {
+          day: "00",
+          hour: "00",
+        },
+        rewards: 0,
+        process: 0,
+      },
+      balance: {
+        Deposite: 0,
+        Withdraw: 0,
+        Earn: 0,
+        TotalLPT: 0,
+        Share: 0,
+      },
+      DepositeNum: "",
+      MingTime: {
+        hour: "00",
+        minute: "00",
+        second: "00",
+      },
+      stakeLoading: false,
+      claimLoading: false,
+      exitLoading: false,
+      actionType: "burn",
+      isLogin: false,
+      expired: false,
+      openMining: false,
+    };
+  },
+  watch: {
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
+  },
+  computed: {
+    userInfo() {
+      return this.$store.state.userInfo;
+    },
+  },
+  mounted() {
+    this.$bus.$on("DEPOSITE_LOADING_BURNBNB500", (data) => {
+      this.stakeLoading = data.status;
+      this.DepositeNum = "";
+    });
+    this.$bus.$on("CLAIM_LOADING_BURNBNB500", (data) => {
+      this.claimLoading = false;
+    });
+    this.$bus.$on("RELOAD_DATA_BURNBNB500", () => {
+      this.getBalance();
+    });
+    this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
+      this.showOnepager();
+    });
+    setTimeout(() => {
+      this.getDownTime();
+      this.getMiningTime();
+      this.getBalance();
+      this.getProcess();
+    }, 1000);
+    if (!this.expired) {
+      setInterval(() => {
+        setTimeout(() => {
+          this.getDownTime();
+          this.getMiningTime();
+        });
+        clearTimeout();
+      }, 1000);
+      setInterval(() => {
+        setTimeout(() => {
+          this.getProcess();
+        });
+      }, 20000);
+    }
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
+  },
+  methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
+    userInfoWatch(newValue) {
+      if (newValue) {
+        this.isLogin = newValue.data.isLogin;
+      }
+    },
+    showOnepager() {
+      this.$bus.$emit("OPEN_ONEPAGER", {
+        showFlag: true,
+        title: "What is $HCCTII?",
+        text: [
+          "HCCTII is the call option of HELMET.",
+          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
+          "Reasonable activate price: 1 HELMET = 0.1CAKE",
+          "Expire date: Apr. 8th 24:00 SGT",
+          "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
+        ],
+      });
+    },
+    async getBalance() {
+      let helmetType = "BURNBNB500_LPT";
+      let type = "BURNBNB500";
+      // 可抵押数量
+      let Deposite = await getBalance(helmetType);
+      // 可赎回数量
+      let Withdraw = await getLPTOKEN(type);
+      // 总抵押
+      let TotalLPT = await totalSupply(type);
+      // 可领取Helmet
+      let Helmet = await CangetPAYA(type);
+      // 总Helmet
+      // let LptVolume = await totalSupply(helmetType); //发行
+      this.balance.Deposite = fixD(Deposite, 8);
+      this.balance.Withdraw = fixD(Withdraw, 8);
+      this.balance.Earn = fixD(Helmet, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 8);
+      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+    },
+    //   获取矿池结束倒计时
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.endTime;
+      dueDate = new Date(dueDate) * 1;
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
+      } else {
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
+        this.actionType = "claim";
+      }
+      this.list.DownTime = template;
+    },
+    getMiningTime() {
+      let now = new Date() * 1;
+      let dueDate = "2021/03/12 00:00";
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      hour = hour + day * 24;
+      let template = {};
+      if (dueDate < now) {
+        template = {
+          hour: "00",
+          minute: "00",
+          second: "00",
+        };
+        this.openMining = true;
+      } else {
+        template = {
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+          second: second > 9 ? second : "0" + second,
+        };
+      }
+      this.MingTime = template;
+    },
+    getProcess() {
+      let now = new Date() * 1;
+      let startTime = new Date(this.list.startTime) * 1;
+      let endTime = new Date(this.list.endTime) * 1;
+      let process = precision.divide(now - startTime, endTime - startTime);
+      if (this.expired) {
+        this.list.process = 100;
+        this.list.rewards = this.list.bonusValue;
+      } else {
+        this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
+        this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
+      }
+    },
+    // 抵押
+    toDeposite() {
+      if (!this.DepositeNum) {
+        return;
+      }
+      if (this.stakeLoading) {
+        return;
+      }
+      this.stakeLoading = true;
+      let type = "BURNBNB500";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+    },
+    // 结算Paya
+    async toClaim() {
+      if (this.claimLoading) {
+        return;
+      }
+      this.claimLoading = true;
+      let type = "BURNBNB500";
+      let res = await getPAYA(type);
+    },
+  },
+};
+</script>
+
+<style lang='scss' scoped>
+@import "../../assets/css/burn_pool.scss";
+</style>

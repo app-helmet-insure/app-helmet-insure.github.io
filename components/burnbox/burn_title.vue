@@ -19,14 +19,14 @@ export default {};
     width: 100%;
     min-width: 1026px;
     height: 140px;
-    background: #ff5600;
+    background: #0e7140;
     border-radius: 5px;
     margin-bottom: 20px;
     &_wrap {
       margin: 0 auto;
       width: 100%;
       height: 100%;
-      background-image: url("../../assets/img/burnmining/burnbox_titlebg.png");
+      background-image: url("../../assets/img/burnmining/burn_banner_web.png");
       background-repeat: no-repeat;
       background-size: 1026px 100%;
       background-position: center center;
@@ -54,7 +54,7 @@ export default {};
   .burn_title {
     width: 95%;
     height: 120px;
-    background: #ff5600;
+    background: #0e7140;
     border-radius: 5px;
     margin: 0 auto;
     &_wrap {

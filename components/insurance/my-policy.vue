@@ -481,11 +481,12 @@ export default {
         button: true,
         buttonText: "Confirm",
         showDialog: true,
-      });     
+      });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
           onExercise(data, data.flag);
         }
+        data = {};
       });
     },
     async CAKEPolicy() {

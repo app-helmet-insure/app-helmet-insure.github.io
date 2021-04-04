@@ -2,23 +2,23 @@
   <div class="wallet-download-mask" @touchmove.prevent v-if="show">
     <div class="wallet-download">
       <div class="wallet-download-title">
-        <span>{{ $t('Wallet.SelectWallet') }}</span>
+        <span>{{ $t("Wallet.SelectWallet") }}</span>
         <i @click="closeDialog"></i>
       </div>
       <div class="wallet-download-icon">
         <img :src="require(`~/assets/img/wallet-icon/${'MetaMask'}@2x.png`)" />
-        <span>{{ 'MetaMask' }}</span>
+        <span>{{ "MetaMask" }}</span>
       </div>
       <p class="wallet-download-text">
-        {{ $t('Wallet.NeedInstall') }} <span>{{ 'MetaMask' }}</span>
-        {{ $t('Wallet.Install') }}
-        <a @click="refreshPage">{{ $t('Wallet.Refresh') }}</a>
+        {{ $t("Wallet.NeedInstall") }} <span>{{ "MetaMask" }}</span>
+        {{ $t("Wallet.Install") }}
+        <a @click="refreshPage">{{ $t("Wallet.Refresh") }}</a>
       </p>
       <div class="wallet-download-button">
         <a href="https://metamask.io/" target="_blank" class="install">{{
-          $t('Wallet.InstallMetaMask')
+          $t("Wallet.InstallMetaMask")
         }}</a>
-        <a class="back" @click="closeDialog">{{ $t('Wallet.Back') }}</a>
+        <a class="back" @click="closeDialog">{{ $t("Wallet.Back") }}</a>
       </div>
     </div>
   </div>
@@ -26,44 +26,44 @@
 
 <script>
 export default {
-  name: 'WallectDownLoad',
+  name: "WallectDownLoad",
   data() {
     return {
       show: false,
-    }
+    };
   },
   computed: {
     walletType() {
-      return this.$store.state.walletType
+      return this.$store.state.walletType;
     },
   },
   mounted() {
     this.$bus.$on(
-      'OPEN_DOWNLOAD',
-      function(data) {
-        this.show = true
+      "OPEN_DOWNLOAD",
+      function (data) {
+        this.show = true;
       }.bind(this)
-    )
+    );
     this.$bus.$on(
-      'CLOSE_DOWNLOAD',
-      function(data) {
-        this.show = false
+      "CLOSE_DOWNLOAD",
+      function (data) {
+        this.show = false;
       }.bind(this)
-    )
+    );
   },
   methods: {
     refreshPage() {
-      window.location.reload()
+      window.location.reload();
     },
     closeDialog() {
-      this.$bus.$emit('CLOSE_DOWNLOAD')
+      this.$bus.$emit("CLOSE_DOWNLOAD");
     },
   },
-}
+};
 </script>
 
 <style lang="scss" soped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 .wallet-download-mask {
   width: 100%;
   height: 100%;
@@ -117,7 +117,7 @@ export default {
       display: block;
       width: 20px;
       height: 20px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-size: 100%;
       cursor: pointer;
@@ -185,7 +185,7 @@ export default {
       display: block;
       width: 20px;
       height: 20px;
-      background-image: url('../../assets/img/icon/guanbi.png');
+      background-image: url("../../assets/img/icon/guanbi.png");
       background-repeat: no-repeat;
       background-size: 100%;
       cursor: pointer;

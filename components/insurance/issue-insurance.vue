@@ -357,8 +357,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
-      let data;
-      data = {
+      let data = {
         private: false, //
         annual: type == 1 ? this.callDpr : this.putDpr,
         category: this.policyUndArray[type - 1][this.activeInsurance], //标的物
@@ -371,6 +370,7 @@ export default {
         showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
       };
+
       let object = {
         title: "WARNING",
         layout: "layout1",
@@ -380,11 +380,10 @@ export default {
         buttonText: "Confirm",
         showDialog: true,
       };
-
       if (data.category == "WBNB" && data.currency == "BUSD") {
         data["divide"] = true;
       }
-      if (data.currency == "WBNB" && data.category != "BUSD") {
+      if (data.currency == "WBNB" && data.category != "BUSD" && type == 2) {
         object.conText = `<p>Rent <span>${
           data.volume
         } ${"BNB"}</span>, the execution price is <span>${
@@ -393,8 +392,12 @@ export default {
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
-            onIssueSellOnETH(data, (status) => {});
+            onIssueSellOnETH(data, (status) => {
+              data = {};
+            });
           }
+          data = {};
+          return;
         });
       } else {
         object.conText = `<p>Rent <span>${data.volume} ${data.currency}</span>, the execution price is <span>${data.price} ${data.showType}</span></p>`;
@@ -403,6 +406,8 @@ export default {
           if (res) {
             onIssueSell(data, (status) => {});
           }
+          data = {};
+          return;
         });
       }
     },

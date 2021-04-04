@@ -566,10 +566,10 @@ export default {
       position: relative;
       .close {
         position: absolute;
-        right: 20px;
+        right: 0;
         width: 24px;
         height: 24px;
-        top: 20px;
+        top: 10px;
         fill: #ccc;
         cursor: pointer;
       }

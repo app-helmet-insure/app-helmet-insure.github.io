@@ -30,6 +30,9 @@ export const settleable = async (seller, short) => {
 };
 
 export const burn = async (longOrshort, volume, opt = {}, data) => {
+    if (JSON.stringify(data) === '{}') {
+        return false;
+    }
     let colValue = addCommom(data.col + Number(data.longBalance), 8);
     let undValue = addCommom(data.und, 8);
     const factory = await getFactory();
@@ -91,6 +94,9 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
 };
 
 export const settle = async (short, data) => {
+    if (JSON.stringify(data) === '{}') {
+        return false;
+    }
     let colValue = addCommom(Number(data.col) + Number(data.longBalance), 8);
     let undValue = addCommom(data.und, 8);
     let conText;
@@ -153,17 +159,8 @@ export const settle = async (short, data) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            // if (error && error.message) {
-            //     Message({
-            //         message: error && error.message,
-            //         type: 'error',
-            //         // duration: 0,
-            //     });
-            // }
         });
-    // }
 };
-// };
 export const onExercise = async (data, callBack) => {
     bus.$emit('OPEN_STATUS_DIALOG', {
         type: 'pending',
@@ -209,9 +206,6 @@ export const onExercise = async (data, callBack) => {
                 conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
             });
         })
-        // .on('receipt', function(receipt){
-        //     console.log('methods.sell##receipt###', receipt, '###时间###',new Date());
-        // })
         .on('confirmation', function(confirmationNumber, receipt) {
             if (confirmationNumber === 0) {
                 if (window.statusDialog) {
@@ -236,13 +230,5 @@ export const onExercise = async (data, callBack) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-
-            // if (error && error.message) {
-            //     Message({
-            //         message: error && error.message,
-            //         type: 'error',
-            //         // duration: 0,
-            //     });
-            // }
         });
 };

@@ -358,6 +358,7 @@ export const CangetPAYA = async (type, currcy) => {
         .earned(window.CURRENTADDRESS)
         .call()
         .then((res) => {
+            console.log(res);
             let tocurrcy = currcy || 'HELMET';
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });

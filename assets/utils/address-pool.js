@@ -122,6 +122,10 @@ export const getWei = (token) => {
             return 'lovelace'; // 6
         case 'CTK':
             return 'lovelace'; // 6
+        case 'TPT':
+            return 'Kwei'; //4
+        case 'HTPT':
+            return 'Kwei'; //4
         case 30:
             return 'tether';
         default:
@@ -186,7 +190,7 @@ export const getID = async () => {
     } else {
         const walletConnectProvider = new WalletConnectProvider({
             chainId: 56,
-            bridge: 'https://bridge.walletconnect.org',
+
             rpc: {
                 56: 'https://bsc-dataseed1.binance.org/',
             },

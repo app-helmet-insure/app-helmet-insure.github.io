@@ -345,7 +345,7 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type, "HTPT");
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
       this.balance.Deposite = fixD(Deposite, 8);

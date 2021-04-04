@@ -358,9 +358,22 @@ export const CangetPAYA = async (type, currcy) => {
         .earned(window.CURRENTADDRESS)
         .call()
         .then((res) => {
+            if (currcy == 'HTPT') {
+                if (res.length < 5) {
+                    for (let i = 0; i <= 5 - res.length; i++) {
+                        res = '0' + res;
+                    }
+                    return `0.${res}`;
+                } else {
+                    return fixD(res, 4);
+                }
+                // let tocurrcy = fixD(res, 5);
+                // return window.WEB3.utils.fromWei(10000, '1000');
+            } else {
+                let tocurrcy = currcy || 'HELMET';
+                return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
+            }
             console.log(res);
-            let tocurrcy = currcy || 'HELMET';
-            return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
 export const CangetUNI = async (type) => {

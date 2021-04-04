@@ -240,7 +240,7 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #ffa000;
+            background: #2c2c2c;
           }
         }
       }
@@ -404,7 +404,7 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #ffa000;
+            background: #2c2c2c;
           }
         }
       }

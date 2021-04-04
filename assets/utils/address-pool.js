@@ -123,9 +123,9 @@ export const getWei = (token) => {
         case 'CTK':
             return 'lovelace'; // 6
         case 'TPT':
-            return 'Kwei'; //4
+            return 4; //4
         case 'HTPT':
-            return 'Kwei'; //4
+            return 4; //4
         case 30:
             return 'tether';
         default:
@@ -176,6 +176,10 @@ export const getWei_2 = (token) => {
             return 6; // 6
         case 'USDC':
             return 6; // 6
+        case 'TPT':
+            return 4; //4
+        case 'HTPT':
+            return 4; //4
         default:
             return 18; // 18
     }
@@ -301,6 +305,8 @@ export const getTokenName = (address) => {
             return 'MATH';
         case '0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2':
             return 'DODO';
+        case '0xeca41281c24451168a37211f0bc2b8645af45092':
+            return 'TPT';
         default:
             return '--';
     }

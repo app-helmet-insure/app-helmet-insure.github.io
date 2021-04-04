@@ -373,6 +373,7 @@ export default {
       let hFORPolicy = await this.hFORPolicy();
       let HCCTIIPolicy = await this.HCCTIIPolicy();
       let hDODOPolicy = await this.hDODOPolicy();
+      let hTPTPolicy = await this.hTPTPolicy();
 
       if (cakePolicy) {
         result.push(cakePolicy);
@@ -406,6 +407,9 @@ export default {
       }
       if (hDODOPolicy) {
         result.push(hDODOPolicy);
+      }
+      if (hTPTPolicy) {
+        result.push(hTPTPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1066,6 +1070,61 @@ export default {
           // showType: "img",
           showVolume: volume,
           TypeCoin: getTokenName("0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async hTPTPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 5) != 0) {
+        let Token = getTokenName("0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c");
+        let resultItem;
+        resultItem = {
+          id: 11,
+          bidID: 11,
+          buyer: myAddress,
+          price: 0.01,
+          Rent: volume * 0.01,
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1620057600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0xeca41281c24451168a37211f0bc2b8645af45092",
+          _strikePrice: fromWei(6000000000000000000000000000000, Token),
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1620057600000,
+          transfer: true,
+          longAdress: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+          type: "Call",
+          symbol: "hTPT",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: fromWei(6000000000000000000000000000000, Token),
+          outPriceUnit: "HELMET",
+          // showType: "img",
+          unit: 4,
+          showVolume: volume,
+          TypeCoin: getTokenName("0xeca41281c24451168a37211f0bc2b8645af45092"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

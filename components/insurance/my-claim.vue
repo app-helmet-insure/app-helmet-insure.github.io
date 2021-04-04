@@ -323,15 +323,28 @@ export default {
           8
         );
         let undValue = addCommom(data.und, 8);
-        if (undValue > 0) {
+        if (colValue && undValue) {
           object.conText = `<p>Settlement <span>${
-            colValue > 0 && colValue + data._collateral
-          } ${undValue > 0 && "And" + undValue + data._underlying}</span></p>`;
+            colValue + data._collateral
+          } ${"And" + undValue + data._underlying}</span></p>`;
+        } else if (!colValue && undValue) {
+          object.conText = `<p>Settlement <span>${
+            undValue + data._underlying
+          }</span></p>`;
         } else {
           object.conText = `<p>Settlement <span>${
-            colValue > 0 && colValue + data._collateral
+            colValue + data._collateral
           }</span></p>`;
         }
+        // if (undValue > 0) {
+        //   object.conText = `<p>Settlement <span>${
+        //     colValue + data._collateral
+        //   } ${"And" + undValue + data._underlying}</span></p>`;
+        // } else {
+        //   object.conText = `<p>Settlement <span>${
+        //     colValue + data._collateral
+        //   }</span></p>`;
+        // }
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {

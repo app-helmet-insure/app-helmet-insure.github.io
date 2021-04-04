@@ -409,7 +409,7 @@ export default {
         result.push(hDODOPolicy);
       }
       if (hTPTPolicy) {
-        result.push(hTPTPolicy);
+        // result.push(hTPTPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;

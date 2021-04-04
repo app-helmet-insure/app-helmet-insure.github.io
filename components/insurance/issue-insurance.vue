@@ -384,9 +384,9 @@ export default {
         data["divide"] = true;
       }
       if (data.currency == "WBNB" && data.category != "BUSD" && type == 2) {
-        object.conText = `<p>Rent <span>${
+        object.conText = `<p>Supply <span>${
           data.volume
-        } ${"BNB"}</span>, the execution price is <span>${
+        } ${"BNB"}</span> Policys, with the strike price of <span>${
           data.price
         } ${"BNB"}</span></p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
@@ -400,7 +400,7 @@ export default {
           return;
         });
       } else {
-        object.conText = `<p>Rent <span>${data.volume} ${data.currency}</span>, the execution price is <span>${data.price} ${data.showType}</span></p>`;
+        object.conText = `<p>Supply <span>${data.volume} ${data.currency}</span> Policys , with the strike price of <span>${data.price} ${data.showType}</span></p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {

@@ -87,7 +87,7 @@ export const onIssueSell = async (data_, callBack) => {
                     loading: true,
                     buttonText: 'Confirm',
                     conTit: 'Please Confirm the transaction in your wallet',
-                    conText: `<p>Rent <span>${data_.volume} ${data_.currency}</span>, the execution price is <span>${data_.price} ${data_.showType}</span></p>`,
+                    conText: `<p>Supply <span>${data_.volume} ${data_.currency}</span> Policys, with the strike price of <span>${data_.price} ${data_.showType}</span></p>`,
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
@@ -193,10 +193,10 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                     loading: true,
                     buttonText: 'Confirm',
                     conTit: 'Please Confirm the transaction in your wallet',
-                    conText: `<p>Rent <span>${
-                        data_.volume
-                    } ${'BNB'}</span>, the execution price is <span>${
-                        data_.price
+                    conText: `<p>Supply <span>${
+                        data.volume
+                    } ${'BNB'}</span> Policys, with the strike price of <span>${
+                        data.price
                     } ${'BNB'}</span></p>`,
                 });
             })
@@ -293,11 +293,11 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                     loading: true,
                     buttonText: 'Confirm',
                     conTit: 'Please Confirm the transaction in your wallet',
-                    conText: `<p>Rent <span>${_data.showVolueme} ${
-                        _data.showType
+                    conText: `<p>Buy <span>${datas.showVolueme} ${
+                        datas.showType
                     }
-                    </span> policys, the Premium is <span>
-                    ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
+                    </span> Policys, with the strike price of <span>
+                    ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                     </span></p>`,
                 });
             })

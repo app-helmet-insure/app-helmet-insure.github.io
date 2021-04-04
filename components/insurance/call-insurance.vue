@@ -317,8 +317,8 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>Rent <span>${datas.showVolueme} ${datas.showType}
-                  </span> policys, the Premium is <span>
+        conText: `<p>Buy <span>${datas.showVolueme} ${datas.showType}
+                  </span> Policys, with the strike price of <span>
                   ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                   </span></p>`,
         activeTip: true,

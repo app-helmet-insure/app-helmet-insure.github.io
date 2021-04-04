@@ -708,7 +708,6 @@ export const onExercise = async (data, callBack, flag) => {
                 title: 'Waiting For Confirmation',
                 layout: 'layout2',
                 loading: true,
-                buttonText: 'Confirm',
                 conTit: 'Please Confirm the transaction in your wallet',
                 conText: `<p>You will swap<span> ${fixD(
                     data._underlying_vol,
@@ -727,6 +726,7 @@ export const onExercise = async (data, callBack, flag) => {
                         title: 'Transation submitted',
                         layout: 'layout2',
                         loading: false,
+                        button: true,
                         buttonText: 'Confirm',
                         conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                         showDialog: false,

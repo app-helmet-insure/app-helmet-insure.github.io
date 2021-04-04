@@ -660,8 +660,12 @@ export const getBalance = async (type, currcy) => {
         .balanceOf(window.CURRENTADDRESS)
         .call()
         .then((res) => {
-            let tocurrcy = currcy ? currcy : type;
-            return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
+            if (currcy == 'hTPT') {
+                return res / 10000;
+            } else {
+                let tocurrcy = currcy ? currcy : type;
+                return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
+            }
         });
 };
 export const getLastTime = async (type, currcy) => {

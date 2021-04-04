@@ -409,7 +409,7 @@ export default {
         result.push(hDODOPolicy);
       }
       if (hTPTPolicy) {
-        // result.push(hTPTPolicy);
+        result.push(hTPTPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1092,10 +1092,11 @@ export default {
         this.$store.state.userInfo.data.account &&
         this.$store.state.userInfo.data.account.toLowerCase();
       let volume = await getBalance(
-        "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c"
+        "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+        "hTPT"
       );
       let currentTime = new Date().getTime();
-      if (fixD(volume, 5) != 0) {
+      if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c");
         let resultItem;
         resultItem = {
@@ -1110,7 +1111,7 @@ export default {
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xeca41281c24451168a37211f0bc2b8645af45092",
-          _strikePrice: fromWei(6000000000000000000000000000000, Token),
+          _strikePrice: 0.06,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1620057600000,
           transfer: true,
@@ -1119,8 +1120,8 @@ export default {
           symbol: "hTPT",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(6000000000000000000000000000000, Token),
-          outPriceUnit: "HELMET",
+          outPrice: 0.06,
+          outPriceUnit: "BUSD",
           // showType: "img",
           unit: 4,
           showVolume: volume,

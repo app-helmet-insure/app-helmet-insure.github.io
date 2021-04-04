@@ -380,14 +380,14 @@ export default {
     initFlashMiningData() {
       let apyArray = this.apyArray;
       let arr = [
-        // {
-        //   miningName: "hTPT Pool",
-        //   desc: "By hDODO-Helmet LPT",
-        //   earn: "hTPT",
-        //   dueDate: this.getRemainTime("2021/04/26 00:00"),
-        //   weekly: fixD((2000000 / 15) * 7, 2) + " hTPT",
-        //   yearEarn: apyArray["hTPT"] || "--",
-        // },
+        {
+          miningName: "hTPT Pool",
+          desc: "By hDODO-Helmet LPT",
+          earn: "hTPT",
+          dueDate: this.getRemainTime("2021/04/26 00:00"),
+          weekly: fixD((2000000 / 15) * 7, 2) + " hTPT",
+          yearEarn: apyArray["hTPT"] || "--",
+        },
         {
           miningName: "hDODO Pool",
           desc: "By hMATH-Helmet LPT",

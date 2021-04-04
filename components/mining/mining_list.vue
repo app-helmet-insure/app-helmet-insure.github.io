@@ -11,7 +11,12 @@
             : 'mining_show'
         "
       >
-        <img src="" alt="" />
+        <img
+          class="combo_img"
+          src="~/assets/img/mining/combo_web.png"
+          alt=""
+          v-if="item.combo"
+        />
         <section>
           <span>{{ item.miningName }}</span>
           <!-- <i v-if="item.info"
@@ -135,6 +140,12 @@
       v-for="item in miningList"
       :key="item.earn + '1'"
     >
+      <img
+        class="combo_img"
+        src="~/assets/img/mining/combo_h5.png"
+        alt=""
+        v-if="item.combo"
+      />
       <section>
         <span>{{ item.miningName }}</span>
         <p>
@@ -342,7 +353,7 @@ export default {
           earnNum: "two",
           earn: "helmet_cake",
           dueDate: "Ongoing",
-          como: true,
+          combo: true,
           info: true,
           earnName: "APR",
           yearEarn: apyArray["helmet_cake"] || "--",
@@ -352,7 +363,7 @@ export default {
           earn: "helmet_dodo",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/04/10 00:00"),
-          como: true,
+          combo: true,
           info: true,
           earnName: "APR",
           yearEarn: apyArray["helmet_dodo"] || "--",
@@ -362,7 +373,7 @@ export default {
           earn: "helmet",
           earnNum: "one",
           dueDate: "Ongoing",
-          como: false,
+          combo: false,
           info: true,
           earnName: "APY",
           yearEarn: apyArray["helmet"] || "--",
@@ -372,7 +383,7 @@ export default {
           earn: "helmet_for",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/20 00:00"),
-          como: true,
+          combo: true,
           info: true,
           earnName: "APR",
           yearEarn: apyArray["helmet_for"] || "--",
@@ -382,7 +393,7 @@ export default {
           earn: "helmet_burger",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/07 00:00"),
-          como: true,
+          combo: true,
           info: true,
           earnName: "APR",
           yearEarn: apyArray["helmet_burger"] || "--",
@@ -587,6 +598,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
     h3 {
       font-size: 18px;
       font-family: Helvetica;
@@ -607,8 +619,16 @@ export default {
     background: #ffffff;
     display: flex;
     flex-direction: column;
+    position: relative;
     .activeMining {
       border-bottom: 1px solid #e8e8eb;
+    }
+    .combo_img {
+      position: absolute;
+      width: 156px;
+      height: 37px;
+      left: -8px;
+      top: -11px;
     }
     .mining_show {
       width: 100%;
@@ -860,8 +880,16 @@ export default {
     flex-direction: column;
     margin-bottom: 10px;
     border-radius: 5px;
+    position: relative;
     .activeMining {
       border-bottom: 1px solid #e8e8eb;
+    }
+    .combo_img {
+      position: absolute;
+      width: 156px;
+      height: 37px;
+      left: -8px;
+      top: -11px;
     }
     section {
       &:nth-of-type(1) {

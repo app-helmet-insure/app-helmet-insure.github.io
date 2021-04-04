@@ -49,7 +49,7 @@
               alt=""
               src="~/assets/img/burnmining/egg.png"
               v-if="item.earn == 'hTPT'"
-              style="width: 50px; height: 50px"
+              style="width: 50px; height: 50px; margin-left: 10px"
             />
             <span v-else>{{ item.earn }} </span>
           </p>
@@ -150,7 +150,7 @@
               alt=""
               src="~/assets/img/burnmining/egg.png"
               v-if="item.earn == 'hTPT'"
-              style="width: 50px; height: 50px"
+              style="width: 24px; height: 24px; margin-left: 10px"
             />
             <span v-else>{{ item.earn }} </span>
           </p>
@@ -651,8 +651,8 @@ export default {
         div {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          margin-left: 10px;
+          // align-items: center;
+          margin-left: 20px;
           > span {
             display: flex;
             align-items: center;

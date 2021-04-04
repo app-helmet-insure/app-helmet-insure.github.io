@@ -77,7 +77,14 @@
           </p>
         </section>
         <section>
-          <input type="text" />
+          <input
+            type="text"
+            name=""
+            v-model="item.buyNum"
+            :max="item.remain"
+            :maxlength="8"
+            :placeholder="$t('Table.NumberSubscriptions')"
+          />
           <button
             @click="handleClickBuy(item)"
             :style="

@@ -61,7 +61,7 @@
     </div>
     <div class="insurance_list_H5">
       <div
-        class="list_item"
+        class="list_item_H5"
         v-for="(item, index) in showList"
         :key="index"
         v-if="item.price.length < 10"
@@ -78,7 +78,14 @@
         </section>
         <section>
           <input type="text" />
-          <button @click="handleClickBuy(item)">
+          <button
+            @click="handleClickBuy(item)"
+            :style="
+              item.status == 'dated' || item.remain == 0
+                ? 'visibility:hidden;'
+                : ''
+            "
+          >
             {{ $t("Table.Subscribe") }}
           </button>
         </section>
@@ -418,7 +425,7 @@ export default {
     > h3 {
       margin: 20px 0;
     }
-    .list_item {
+    .list_item_H5 {
       width: 100%;
       padding: 14px 0;
       border-bottom: 1px solid #e8e8eb;
@@ -468,8 +475,8 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans;
             color: #ffffff;
+            background: #17173a;
             line-height: 18px;
-
             border-radius: 5px;
           }
         }

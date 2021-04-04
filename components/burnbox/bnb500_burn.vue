@@ -425,7 +425,7 @@ export default {
         this.list.rewards = this.list.bonusValue;
       } else {
         this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
-        this.list.rewards = process > 0 ? fixD(process * 100000, 4) : 0;
+        this.list.rewards = process > 0 ? fixD(process * 1000000, 4) : 0;
       }
     },
     // 抵押

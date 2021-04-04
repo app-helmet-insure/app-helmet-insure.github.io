@@ -385,7 +385,7 @@ export default {
           desc: "By hDODO-Helmet LPT",
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
-          weekly: fixD((2000000 / 15) * 7, 2) + " hTPT",
+          weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
           yearEarn: apyArray["hTPT"] || "--",
         },
         {
@@ -483,6 +483,7 @@ export default {
       let LptVolume = await totalSupply("HTPTPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HTPTPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
+
       let APY = fixD(
         precision.times(
           precision.divide(

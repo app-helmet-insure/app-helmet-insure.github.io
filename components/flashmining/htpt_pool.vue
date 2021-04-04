@@ -83,7 +83,7 @@
         </p>
       </div>
       <a
-        href="https://exchange.pancakeswap.finance/?_gl=1*12xhdmm*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxNDAxNjA5MS41NC4xLjE2MTQwMTYxNjQuMA..#/add/0xe204c4C21c6eD90E37cB06cB94436614f3208D58/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        href="https://exchange.pancakeswap.finance/#/add/0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
         target="_blank"
         >From <i class="pancake"></i>Get hDODO-HELMET LPT</a
       >
@@ -172,12 +172,12 @@
       <div class="ContractAddress">
         <span>hTPT {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0xECa41281c24451168a37211F0bc2b8645AF45092
+          0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0xECa41281c24451168a37211F0bc2b8645AF45092')
+              copyAdress($event, '0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c')
             "
           ></i>
         </p>
@@ -433,7 +433,7 @@ export default {
       let apy = fixD(
         precision.times(
           precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(2000000, 14), 365),
+            precision.times(HAUTOHELMET, precision.divide(2000000, 21), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -460,7 +460,7 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type, "HTPT");
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
@@ -472,7 +472,7 @@ export default {
       if (this.expired) {
         this.textList[0].num = "--";
       } else {
-        this.textList[0].num = fixD((2000000 / 14) * 7, 2) + " hTPT";
+        this.textList[0].num = fixD((2000000 / 21) * 7, 2) + " hTPT";
       }
     },
     // 抵押

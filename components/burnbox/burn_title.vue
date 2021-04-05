@@ -60,7 +60,7 @@ export default {};
     &_wrap {
       width: 100%;
       height: 100%;
-      background-image: url("../../assets/img/burnmining/burnbox_titlebg_h5.png");
+      background-image: url("../../assets/img/burnmining/burn_banner_h5.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center center;

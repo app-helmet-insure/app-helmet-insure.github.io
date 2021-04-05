@@ -209,7 +209,7 @@
       </section>
       <section>
         <span>{{ item.weekly }}</span>
-        <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
+        <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
       </section>
       <section>
         <button
@@ -387,6 +387,8 @@ export default {
           dueDate: this.getRemainTime("2021/04/26 00:00"),
           weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
           yearEarn: apyArray["hTPT"] || "--",
+          expired: new Date("2021/04/26 00:00") * 1,
+          started: new Date("2021/04/06 00:00") * 1,
         },
         {
           miningName: "hDODO Pool",
@@ -395,6 +397,7 @@ export default {
           dueDate: this.getRemainTime("2021/03/31 12:00"),
           weekly: fixD((40000 / 15) * 7, 2) + " hDODO",
           yearEarn: apyArray["hDODO"] || "--",
+          expired: new Date("2021/03/31 12:00") * 1,
         },
         {
           miningName: "hMATH Pool",
@@ -403,6 +406,7 @@ export default {
           dueDate: this.getRemainTime("2021/03/18 00:00"),
           weekly: fixD((30000 / 15) * 7, 2) + " hMATH",
           yearEarn: apyArray["hMATH"] || "--",
+          expired: new Date("2021/03/18 00:00") * 1,
         },
         {
           miningName: "hAUTO Pool",
@@ -411,6 +415,7 @@ export default {
           dueDate: this.getRemainTime("2021/03/09 00:00"),
           weekly: fixD((10 / 14) * 7, 2) + " hAUTO",
           yearEarn: apyArray["hAUTO"] || "--",
+          expired: new Date("2021/03/09 00:00") * 1,
         },
         {
           miningName: "BNB500 Pool",
@@ -419,6 +424,7 @@ export default {
           dueDate: this.getRemainTime("2021/02/29 00:00"),
           weekly: fixD((1000 / 10) * 7, 2) + " BNB500",
           yearEarn: apyArray["BNB500"] || "--",
+          expired: new Date("2021/02/29 00:00") * 1,
         },
         {
           miningName: "hCTK Pool",
@@ -427,6 +433,7 @@ export default {
           dueDate: this.getRemainTime("2021/02/28 00:00"),
           weekly: fixD((70000 / 21) * 7, 2) + " hCTK",
           yearEarn: apyArray["hCTK"] || "--",
+          expired: new Date("2021/02/28 00:00") * 1,
         },
         {
           miningName: "HCCT Pool",
@@ -435,6 +442,7 @@ export default {
           dueDate: this.getRemainTime("2021/02/13 00:00"),
           weekly: fixD(16000 * 7, 2) + " HCCT",
           yearEarn: apyArray["HCCT"] || "--",
+          expired: new Date("2021/02/13 00:00") * 1,
         },
       ];
       this.miningList = arr;
@@ -497,12 +505,17 @@ export default {
         ),
         2
       );
-      if (this.expired) {
-        this.miningList[0].yearEarn = "--";
+
+      let expiredTime = this.miningList[0].expired;
+      let startedTime = this.miningList[0].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[0].yearEarn = "Infinity";
       } else {
         this.apyArray.hTPT = fixD(APY, 2);
         this.miningList[0].yearEarn = fixD(APY, 2);
       }
+      console.log(this.miningList);
     },
     async GET_HDODO_POOL_APY() {
       let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格
@@ -524,10 +537,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[0].yearEarn = "--";
+        this.miningList[1].yearEarn = "--";
       } else {
         this.apyArray.hDODO = fixD(APY, 2);
-        this.miningList[0].yearEarn = fixD(APY, 2);
+        this.miningList[1].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HMATH_POOL_APY() {
@@ -550,10 +563,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[1].yearEarn = "--";
+        this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.hMATH = fixD(APY, 2);
-        this.miningList[1].yearEarn = fixD(APY, 2);
+        this.miningList[2].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HAUTO_POOL_APY() {
@@ -576,10 +589,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[2].yearEarn = "--";
+        this.miningList[3].yearEarn = "--";
       } else {
         this.apyArray.hAUTO = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
       }
     },
     async GET_BNB500_POOL_APY() {
@@ -602,10 +615,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[3].yearEarn = "--";
+        this.miningList[4].yearEarn = "--";
       } else {
         this.apyArray.BNB500 = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCCT_POOL_APY() {
@@ -627,10 +640,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[4].yearEarn = "--";
+        this.miningList[5].yearEarn = "--";
       } else {
         this.apyArray.HCCT = fixD(APY, 2);
-        this.miningList[4].yearEarn = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCTK_POOL_APY() {
@@ -653,10 +666,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[5].yearEarn = "--";
+        this.miningList[6].yearEarn = "--";
       } else {
         this.apyArray.HCTK = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
+        this.miningList[6].yearEarn = fixD(APY, 2);
       }
     },
   },

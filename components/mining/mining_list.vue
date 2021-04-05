@@ -194,8 +194,13 @@
               ? 'activeButton stakeMining'
               : 'stakeMining'
           "
+          style="margin-right: 10px"
         >
           {{ $t("Table.Stakeing") }}
+        </button>
+        <button @click="toCompound" v-if="item.compound">
+          <i :class="claimLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.Compound") }}
         </button>
         <button
           @click="ClaimMiningH5(item.earn)"
@@ -206,6 +211,7 @@
               ? 'activeButton claimMining'
               : 'claimMining'
           "
+          style="margin-left: 10px"
         >
           {{ $t("Table.Claim") }}
         </button>
@@ -288,12 +294,18 @@ export default {
       showActiveMining: false,
       activeMining: "",
       TradeType: "", //H5 tradingType
+      claimLoading: false,
+      HelmetBalance: 0,
     };
   },
   mounted() {
+    this.$bus.$on("CLAIM_LOADING_HELMETPOOL", (data) => {
+      this.claimLoading = false;
+    });
     this.initMiningData();
     setTimeout(() => {
       this.getAPY();
+      this.getHelmetBalance();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
@@ -317,6 +329,14 @@ export default {
       if (newValue) {
         this.initMiningData();
       }
+    },
+    // 复投
+    toCompound() {
+      this.$bus.$emit("OPEN_COMPOUND", {
+        title: "Compound HELMET Earned",
+        number: this.HelmetBalance,
+        pool: "HELMETPOOL",
+      });
     },
     StakeMiningH5(MiningType) {
       console.log(MiningType);
@@ -344,6 +364,11 @@ export default {
     },
     close_wraper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
+    },
+    async getHelmetBalance() {
+      let type = "HELMETPOOL";
+      let Helmet = await CangetPAYA(type);
+      this.HelmetBalance = Helmet;
     },
     initMiningData() {
       let apyArray = this.apyArray;
@@ -376,6 +401,7 @@ export default {
           combo: false,
           info: true,
           earnName: "APY",
+          compound: true,
           yearEarn: apyArray["helmet"] || "--",
         },
         {
@@ -923,11 +949,17 @@ export default {
           color: rgba(23, 23, 58, 0.45);
           line-height: 18px;
           font-weight: normal;
-          img {
+          .two {
             width: 35px;
             height: 20px;
           }
+          .one {
+            width: 20px;
+            height: 20px;
+          }
           > span {
+            text-align: center;
+            min-width: 60px;
             margin-left: 10px;
             padding: 4px 11px;
             background: #f8f9fa;
@@ -1021,7 +1053,7 @@ export default {
           background: #fffaf3;
         }
         button {
-          min-width: 148px;
+          flex: 1;
           height: 36px;
           background: #f8f9fa;
           border-radius: 5px;

@@ -838,6 +838,7 @@ export default {
           display: flex;
           align-items: center;
           flex: 2;
+          min-width: 160px;
           > i {
             display: block;
             width: 30px;
@@ -1108,6 +1109,7 @@ export default {
         margin-top: 12px;
         display: flex;
         justify-content: space-between;
+
         p {
           display: flex;
           flex-direction: column;

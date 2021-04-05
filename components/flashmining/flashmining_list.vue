@@ -46,16 +46,25 @@
         <section>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            <span v-if="item.openDate == 'Mining'">
+              <span v-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{
+                  item.dueDate == "Expired"
+                    ? $t("Insurance.Insurance_text22")
+                    : item.dueDate
+                }}
+              </span>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              <span>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i> {{ item.openDate.minute }}
+                <b>{{ $t("Content.MinM") }}</b>
+              </span>
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -192,16 +201,25 @@
         <div>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            <span v-if="item.openDate == 'Mining'">
+              <span v-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{
+                  item.dueDate == "Expired"
+                    ? $t("Insurance.Insurance_text22")
+                    : item.dueDate
+                }}
+              </span>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              <span>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i> {{ item.openDate.minute }}
+                <b>{{ $t("Content.MinM") }}</b>
+              </span>
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -344,7 +362,6 @@ export default {
   },
   methods: {
     StakeMiningH5(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.TradeType = "STAKE";
       this.showActiveFlash = true;
@@ -359,7 +376,6 @@ export default {
       this.$bus.$emit("OPEN_WRAPER_PAFE", true);
     },
     StakeMining(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.showActiveFlash = true;
       this.activeFlash = MiningType;
@@ -385,6 +401,7 @@ export default {
           desc: "By hDODO-Helmet LPT",
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
+          openDate: this.getMiningTime("2021/04/06 00:00"),
           weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
           yearEarn: apyArray["hTPT"] || "--",
           expired: new Date("2021/04/26 00:00") * 1,
@@ -395,6 +412,7 @@ export default {
           desc: "By hMATH-Helmet LPT",
           earn: "hDODO",
           dueDate: this.getRemainTime("2021/03/31 12:00"),
+          openDate: "Mining",
           weekly: fixD((40000 / 15) * 7, 2) + " hDODO",
           yearEarn: apyArray["hDODO"] || "--",
           expired: new Date("2021/03/31 12:00") * 1,
@@ -404,6 +422,7 @@ export default {
           desc: "By hAUTO-Helmet LPT",
           earn: "hMATH",
           dueDate: this.getRemainTime("2021/03/18 00:00"),
+          openDate: "Mining",
           weekly: fixD((30000 / 15) * 7, 2) + " hMATH",
           yearEarn: apyArray["hMATH"] || "--",
           expired: new Date("2021/03/18 00:00") * 1,
@@ -413,6 +432,7 @@ export default {
           desc: "By BNB500-Helmet LPT",
           earn: "hAUTO",
           dueDate: this.getRemainTime("2021/03/09 00:00"),
+          openDate: "Mining",
           weekly: fixD((10 / 14) * 7, 2) + " hAUTO",
           yearEarn: apyArray["hAUTO"] || "--",
           expired: new Date("2021/03/09 00:00") * 1,
@@ -422,6 +442,7 @@ export default {
           desc: "By hCTK-Helmet LPT",
           earn: "BNB500",
           dueDate: this.getRemainTime("2021/02/29 00:00"),
+          openDate: "Mining",
           weekly: fixD((1000 / 10) * 7, 2) + " BNB500",
           yearEarn: apyArray["BNB500"] || "--",
           expired: new Date("2021/02/29 00:00") * 1,
@@ -431,6 +452,7 @@ export default {
           desc: "By HCCT-Helmet LPT",
           earn: "hCTK",
           dueDate: this.getRemainTime("2021/02/28 00:00"),
+          openDate: "Mining",
           weekly: fixD((70000 / 21) * 7, 2) + " hCTK",
           yearEarn: apyArray["hCTK"] || "--",
           expired: new Date("2021/02/28 00:00") * 1,
@@ -440,6 +462,7 @@ export default {
           desc: "By LONG-Helmet LPT",
           earn: "HCCT",
           dueDate: this.getRemainTime("2021/02/13 00:00"),
+          openDate: "Mining",
           weekly: fixD(16000 * 7, 2) + " HCCT",
           yearEarn: apyArray["HCCT"] || "--",
           expired: new Date("2021/02/13 00:00") * 1,
@@ -474,6 +497,32 @@ export default {
           hour: "00",
         };
         return "Expired";
+      }
+    },
+    getMiningTime(time) {
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        return template;
+      } else {
+        return "Mining";
       }
     },
     getAPY() {
@@ -515,7 +564,6 @@ export default {
         this.apyArray.hTPT = fixD(APY, 2);
         this.miningList[0].yearEarn = fixD(APY, 2);
       }
-      console.log(this.miningList);
     },
     async GET_HDODO_POOL_APY() {
       let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格

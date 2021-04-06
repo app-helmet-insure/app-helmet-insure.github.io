@@ -297,9 +297,10 @@ export default {
       let nowTime = new Date() * 1;
       for (let i = 0; i < InsuanceData.length; i++) {
         let InsuranceTime = InsuranceDate[InsuanceData[i]["InsuranceType"]];
-        let InunranceDay = Math.ceil(
-          (new Date(InsuranceTime) * 1 - nowTime) / 86400000
-        );
+        let InunranceDay =
+          Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000) > 0
+            ? Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000)
+            : 0;
         // 保险周期
         InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-");
         // 保险剩余天数

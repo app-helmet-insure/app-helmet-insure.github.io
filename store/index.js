@@ -136,7 +136,7 @@ export const state = () => ({
             CTK: '2021/04/12 00:00',
             BURGER: '2021/04/12 00:00',
             WBNB: '2021/04/21 00:00',
-            MATH: '2021/04/05 00:00',
+            MATH: '2021/05/05 00:00',
         },
     ],
     echartIndexArray: {
@@ -159,7 +159,7 @@ export const state = () => ({
             CTK: 0.015,
             BURGER: 0.03,
             WBNB: 600,
-            MATH: 0.014,
+            MATH: 0.015,
         },
         // 腰斩价格
         {
@@ -170,7 +170,7 @@ export const state = () => ({
             CTK: 0.003,
             BURGER: 0.008,
             WBNB: 150,
-            MATH: 0.003,
+            MATH: 0.004,
         },
     ],
     // 抵押物

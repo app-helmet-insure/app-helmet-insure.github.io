@@ -26,7 +26,11 @@
           alt=""
         />
         <section>
-       
+          <span
+            class="onePager"
+            v-html="item.miningName"
+            @click="hadnleShowOnePager($event, item.earn)"
+          ></span>
           <span>{{ item.desc }}</span>
         </section>
         <section>
@@ -930,7 +934,7 @@ export default {
         }
         &:nth-of-type(6) {
           min-width: 220px;
-          flex: 4;
+          flex: 2;
           display: flex;
           justify-content: flex-end;
           .activeButton {

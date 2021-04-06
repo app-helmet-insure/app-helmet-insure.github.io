@@ -336,20 +336,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hDODO?",
-        text: [
-          "hDODO is the call option of DODO.",
-          "Total Supply: 75,000 (22,000 for vDODO holders, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
-          "Expire date: Apr. 14th 24:00 SGT",
-          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
-          "If hDODO get expired, it could be souvenir token",
-          "Please do not trade heavily on hDODO.",
-        ],
-      });
-    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });

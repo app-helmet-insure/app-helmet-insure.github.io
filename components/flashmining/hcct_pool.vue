@@ -354,20 +354,6 @@ export default {
         copys.destroy();
       });
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is LONG token？",
-        text: [
-          "LONG is the CAKE  Cover Miss Out policy certification. Policy holders can use Long token as proof to activate the policy. It is the certification showing that you have bought policy and it is necessary when you activate policy. ",
-          "To be brief, if $CAKE hit over $1.5 before Feb.15th 24:00 SGT, you could activate your airdrop policy to claim benefits.",
-          "For example, if $CAKE hit $1.6 on Feb.10th, you could use $1.5 to swap a $CAKE token with 1 policy (1 LONG Token). Eventually, you could sell this $CAKE in the market and get extra $0.1 benefit. That is why we call it ‘COVER Miss out’. (the final settlement currency will be BNB)",
-          "However, if $CAKE does not hit $1.5, there will be no need for you to activate the Cover Miss Out policy. and the LONG Token will be a souvenir for you.",
-          "Policy Expire Date: Feb.15th 24:00 SGT",
-          "More details in our Medium.",
-        ],
-      });
-    },
     WatchIndexArray(newValue, value) {
       if (newValue) {
         this.getAPY();

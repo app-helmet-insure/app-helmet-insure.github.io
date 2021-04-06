@@ -333,21 +333,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hAUTO?",
-        text: [
-          "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
-          "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
-          "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
-          "$hAUTO Flash Mining",
-          "Start: Feb. 23rd 20:00 SGT",
-          "End: Mar.9th 24:00",
-          "Policy Expire date: Mar. 24th 24:00 SGT",
-        ],
-      });
-    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });

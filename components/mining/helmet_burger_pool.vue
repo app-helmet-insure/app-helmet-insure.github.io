@@ -322,19 +322,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hBurger?",
-        text: [
-          "A total of $450,000 $hBurger was given away to LPT Miners on helmet.insure (including Helmet-BNB, Helmet-LONG, Helmet-HCCT LPT Pool, PancakeSwap Helmet-BNB Farm) ",
-          "Groundbreaking design of Policy Mining for Real Token!!! $60,000 COMBO Mining Bonus of $Helmet & $Burger !",
-          "It is $Burger cover miss out policy. The reasonable activate price: 1 $Burger=0.07 BNB. For example, if $Burger hit 0.08 BNB, you could swap 0.07BNB+1$hBurger to 1 $Burger, and get 0.01BNB profit.",
-          "Expire date: March, 9th, 2021",
-          "More details in our Medium.",
-        ],
-      });
-    },
     getDownTime() {
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;

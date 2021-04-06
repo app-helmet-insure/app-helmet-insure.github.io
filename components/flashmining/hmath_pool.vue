@@ -303,6 +303,10 @@ export default {
     this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
     });
+    this.$bus.$on("OPEN_ONEPAGER1", (a) => {
+      console.log(a);
+      // this.showOnepager();
+    });
     setTimeout(() => {
       this.getBalance();
       this.getAPY();
@@ -339,23 +343,6 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
-    },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hMATH?",
-        text: [
-          "MATH cover miss out policy. (It performs more like a call option of MATH)",
-          "In this policy, the ratio of MATH & BNB is",
-          "1MATH =0.014BNB",
-          "It is the reasonable activate price, meaning that you could swap 0.014BNB+1$hMATH to 1MATH before the expire date.",
-          "For example, if $MATH hit 0.015BNB, you could activate the policy and swap 0.014BNB + 1$hMATH to 1 $MATH on Tradingview tab, and get 0.001BNB as profit.",
-          "$hMATH Flash Mining Start: Mar. 2nd 24:00 SGT",
-          "End: Mar.17th 24:00 SGT",
-          "Policy Expire date: Mar. 22nd 24:00 SGT",
-          "Total supply: 30,000",
-        ],
-      });
     },
     copyAdress(e, text) {
       let copys = new ClipboardJS(".copy", { text: () => text });

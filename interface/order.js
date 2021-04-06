@@ -219,7 +219,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                             message:
                                 'The rental advertisement is published successfully',
                             type: 'success',
-                            // duration: 0,
                         });
                     }
                     setTimeout(() => {

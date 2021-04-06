@@ -3,7 +3,17 @@
     <div class="flashmining_title">
       <h3>{{ $t("Header.FlashMining") }}</h3>
     </div>
-    <div class="mining_item" v-for="item in miningList" :key="item.earn">
+    <div
+      class="mining_item"
+      v-for="(item, index) in miningList"
+      :key="item.earn"
+    >
+      <img
+        class="link_flash"
+        src="~/assets/img/flashmining/flash_link.png"
+        alt=""
+        v-if="index != 0"
+      />
       <div
         :class="
           activeFlash == item.earn && showActiveFlash
@@ -16,30 +26,14 @@
           alt=""
         />
         <section>
-          <span>{{ item.miningName }}</span>
+       
           <span>{{ item.desc }}</span>
         </section>
         <section>
           <p>
             {{ $t("Table.EarnList") }}
-            <span
-              >{{ item.earn }}
-              <!-- <i
-                ><svg
-                  t="1617039040708"
-                  class="icon"
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  p-id="1287"
-                  width="16"
-                  height="16"
-                >
-                  <path
-                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                    p-id="1288"
-                  ></path></svg
-              ></i> -->
+            <span>
+              {{ item.earn }}
             </span>
           </p>
         </section>
@@ -164,30 +158,18 @@
             alt=""
           />
           <p>
-            <span>{{ item.miningName }}</span>
+            <span
+              class="onePager"
+              v-html="item.miningName"
+              @click="hadnleShowOnePager($event, item.earn)"
+            ></span>
             <span>{{ item.desc }}</span>
           </p>
         </div>
         <p>
           {{ $t("Table.EarnList") }}
-          <span
-            >{{ item.earn }}
-            <!-- <i
-                ><svg
-                  t="1617039040708"
-                  class="icon"
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  p-id="1287"
-                  width="16"
-                  height="16"
-                >
-                  <path
-                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                    p-id="1288"
-                  ></path></svg
-              ></i> -->
+          <span>
+            {{ item.earn }}
           </span>
         </p>
       </section>
@@ -361,6 +343,18 @@ export default {
     },
   },
   methods: {
+    hadnleShowOnePager(e, earn) {
+      if (e.target.tagName === "I") {
+        let Earn = earn;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${earn}?`,
+          text: earn,
+        });
+      } else {
+        return;
+      }
+    },
     StakeMiningH5(MiningType) {
       this.activeType = "STAKE";
       this.TradeType = "STAKE";
@@ -397,7 +391,7 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "hTPT Pool",
+          miningName: "<i>hTPT</i> Pool",
           desc: "By hDODO-Helmet LPT",
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
@@ -408,7 +402,7 @@ export default {
           started: new Date("2021/04/06 00:00") * 1,
         },
         {
-          miningName: "hDODO Pool",
+          miningName: "<i>hDODO</i> Pool",
           desc: "By hMATH-Helmet LPT",
           earn: "hDODO",
           dueDate: this.getRemainTime("2021/03/31 12:00"),
@@ -418,7 +412,7 @@ export default {
           expired: new Date("2021/03/31 12:00") * 1,
         },
         {
-          miningName: "hMATH Pool",
+          miningName: "<i>hMATH</i> Pool",
           desc: "By hAUTO-Helmet LPT",
           earn: "hMATH",
           dueDate: this.getRemainTime("2021/03/18 00:00"),
@@ -428,7 +422,7 @@ export default {
           expired: new Date("2021/03/18 00:00") * 1,
         },
         {
-          miningName: "hAUTO Pool",
+          miningName: "<i>hAUTO</i> Pool",
           desc: "By BNB500-Helmet LPT",
           earn: "hAUTO",
           dueDate: this.getRemainTime("2021/03/09 00:00"),
@@ -438,7 +432,7 @@ export default {
           expired: new Date("2021/03/09 00:00") * 1,
         },
         {
-          miningName: "BNB500 Pool",
+          miningName: "<i>hTPT</i> Pool",
           desc: "By hCTK-Helmet LPT",
           earn: "BNB500",
           dueDate: this.getRemainTime("2021/02/29 00:00"),
@@ -448,7 +442,7 @@ export default {
           expired: new Date("2021/02/29 00:00") * 1,
         },
         {
-          miningName: "hCTK Pool",
+          miningName: "<i>hCTK</i> Pool",
           desc: "By HCCT-Helmet LPT",
           earn: "hCTK",
           dueDate: this.getRemainTime("2021/02/28 00:00"),
@@ -458,7 +452,7 @@ export default {
           expired: new Date("2021/02/28 00:00") * 1,
         },
         {
-          miningName: "HCCT Pool",
+          miningName: "<i>HCCT</i> Pool",
           desc: "By LONG-Helmet LPT",
           earn: "HCCT",
           dueDate: this.getRemainTime("2021/02/13 00:00"),
@@ -555,7 +549,6 @@ export default {
         2
       );
 
-      let expiredTime = this.miningList[0].expired;
       let startedTime = this.miningList[0].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
@@ -724,7 +717,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.onePager {
+  > i {
+    cursor: pointer;
+    border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+    &:hover {
+      color: #fd7e14;
+      border-bottom: 2px dotted #fd7e14;
+    }
+  }
+}
+</style>
+<style lang="scss" scoped >
 @media screen and (min-width: 750px) {
   .icon {
     width: 20px;
@@ -760,6 +765,14 @@ export default {
     background: #ffffff;
     display: flex;
     flex-direction: column;
+    position: relative;
+    .link_flash {
+      width: 8px;
+      height: 32px;
+      position: absolute;
+      left: 6px;
+      top: -21px;
+    }
     .activeFlash {
       border-bottom: 1px solid #e8e8eb;
     }
@@ -779,13 +792,14 @@ export default {
           display: flex;
           flex-direction: column;
           flex: 2;
+          min-width: 160px;
           span {
             &:nth-of-type(1) {
               font-size: 16px;
               font-family: IBMPlexSans-Medium, IBMPlexSans;
               font-weight: 600;
               color: #17173a;
-              line-height: 16px;
+              line-height: 18px;
             }
             &:nth-of-type(2) {
               font-size: 12px;
@@ -815,22 +829,10 @@ export default {
               font-size: 14px;
               font-family: IBMPlexSans;
               color: #17173a;
-              line-height: 14px;
+              line-height: 16px;
               margin-left: 4px;
               min-width: 90px;
               justify-content: center;
-              > i {
-                margin-left: 2px;
-                cursor: pointer;
-                svg {
-                  fill: rgba(164, 162, 178, 1);
-                }
-                &:hover {
-                  svg {
-                    fill: #fd8a2b;
-                  }
-                }
-              }
             }
           }
         }
@@ -1057,14 +1059,14 @@ export default {
                 font-family: IBMPlexSans-Medium, IBMPlexSans;
                 font-weight: 600;
                 color: #17173a;
-                line-height: 16px;
+                line-height: 17px;
               }
               &:nth-of-type(2) {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 color: rgba(23, 23, 58, 0.45);
-                line-height: 12px;
-                margin-top: 4px;
+                line-height: 14px;
+                margin-top: 2px;
               }
             }
           }
@@ -1090,18 +1092,6 @@ export default {
             margin-left: 4px;
             min-width: 90px;
             justify-content: center;
-            > i {
-              margin-left: 2px;
-              cursor: pointer;
-              svg {
-                fill: rgba(164, 162, 178, 1);
-              }
-              &:hover {
-                svg {
-                  fill: #fd8a2b;
-                }
-              }
-            }
           }
         }
       }
@@ -1109,7 +1099,6 @@ export default {
         margin-top: 12px;
         display: flex;
         justify-content: space-between;
-
         p {
           display: flex;
           flex-direction: column;

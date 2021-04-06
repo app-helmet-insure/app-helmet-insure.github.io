@@ -331,20 +331,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hFOR?",
-        text: [
-          "It is $FOR cover miss out insurance policy (like the call option of $FOR). The reasonable activate price: 1 $FOR=0.25 HELMET.",
-          "For example, if $FOR hit 0.3 HELMET, you could swap only 0.25HELMET+1$hFOR to 1 $FOR, and get 0.05HELMET profit.",
-          "COMBO Mining period: 15days, from Mar.4th 24:00 SGT to Mar.19th 24:00 SGT (snapshot and Airdrop will be finished before Mar.4th 24:00 SGT)",
-          "Expire date: April 4th, 2021",
-          "if $hFOR expired, it could be a souvenir token",
-          "b/c $hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
-        ],
-      });
-    },
     getDownTime() {
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;

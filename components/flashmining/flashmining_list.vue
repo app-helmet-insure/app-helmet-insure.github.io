@@ -779,6 +779,7 @@ export default {
           display: flex;
           flex-direction: column;
           flex: 2;
+          min-width: 155px;
           span {
             &:nth-of-type(1) {
               font-size: 16px;

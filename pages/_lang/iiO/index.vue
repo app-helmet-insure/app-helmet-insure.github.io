@@ -3,13 +3,6 @@
     <div class="banner">
       <div class="banner_center"></div>
     </div>
-    <!-- <div class="content_h5">
-      <h3>
-        <img src="~/assets/img/iio/helmet_logo.png" alt="" />
-        {{ $t("IIO.ComingSoon") }}
-      </h3>
-      <p>{{ $t("IIO.InitialOffering") }}</p>
-    </div> -->
     <div class="apply_iio">
       <div class="left">
         <p>Want to launch your own IIO with Helmet?</p>

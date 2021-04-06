@@ -1,6 +1,6 @@
 <template>
-  <transition name="onepager">
-    <div class="onepager_mask" v-if="showFlag" @touchmove.prevent>
+  <transition name="onepager" @touchmove.prevent>
+    <div class="onepager_mask" v-if="showFlag">
       <div class="onepager_wrapper">
         <div class="title">
           <i @click="closeOnepager"></i>
@@ -87,7 +87,7 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 3px;
+    border-radius: 8px;
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -120,7 +120,7 @@ export default {
     }
     .content {
       border: 1px solid #f96001;
-      border-radius: 50px;
+      border-radius: 20px;
       padding: 30px 20px;
       background-image: url("../../assets/img/flashmining/pagerlogo.png");
       background-repeat: no-repeat;
@@ -145,7 +145,7 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 3px;
+    border-radius: 8px;
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
@@ -179,7 +179,7 @@ export default {
     .content {
       flex: 1;
       border: 1px solid #f96001;
-      border-radius: 50px;
+      border-radius: 20px;
       padding: 30px 20px 0;
       overflow: hidden;
       section {

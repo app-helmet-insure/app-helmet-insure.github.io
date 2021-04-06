@@ -383,7 +383,6 @@ export default {
       if (data.category == "WBNB" && data.currency == "BUSD") {
         data["divide"] = true;
       }
-      console.log(data);
       if (data.currency == "WBNB" && data.category != "BUSD" && type == 2) {
         object.conText = `<p>Supply <span>${
           data.volume

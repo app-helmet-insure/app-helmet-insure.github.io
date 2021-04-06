@@ -108,18 +108,17 @@ export const getReward3 = async (type) => {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
             });
     } catch (error) {
         console.log(error);
     }
 };
-export const applyReward3 = async (ContractAdress, TicketAddress, callBack) => {
+export const applyReward3 = async (
+    ContractAdress,
+    TicketAddress,
+    TicketPrice,
+    callBack
+) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {
@@ -128,11 +127,7 @@ export const applyReward3 = async (ContractAdress, TicketAddress, callBack) => {
     if (TicketAddress.indexOf('0x') === -1) {
         TicketAddress = getContract(TicketAddress, charID);
     }
-    bus.$emit('OPEN_STATUS_DIALOG', {
-        type: 'pending',
-        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
-        conText: `<p>Rent <span> </span>, the execution price is <span></span></p>`,
-    });
+
     try {
         const Contract = await expERC20(TicketAddress);
         await oneKeyArrpove(Contract, ContractAdress, 1000000, callBack);
@@ -143,8 +138,12 @@ export const applyReward3 = async (ContractAdress, TicketAddress, callBack) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
-                    conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<span>It will cost ${TicketPrice} HELMET for the Ticket</span>`,
                 });
             })
             .on('confirmation', function(confirmationNumber, receipt) {
@@ -152,11 +151,13 @@ export const applyReward3 = async (ContractAdress, TicketAddress, callBack) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit:
-                                '<div>The rental advertisement is published successfully, you can check it on <a href="/sell" target="blank">my rental advertisement page</a></div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({

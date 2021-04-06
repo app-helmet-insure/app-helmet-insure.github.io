@@ -3,12 +3,12 @@
     <div class="iio_wrap">
       <h3 class="iio_title">XXX 面向 LPT 持有者公开兑换池</h3>
       <div class="iio_address">
-        0xdBa054fDb2A542E9128c91Ae62fE832177bf3536
+        0x5d03b2f490cD40bc9859EB13193C2f711583560E
         <i
           class="copy"
           id="copy_default"
           @click="
-            copyAdress($event, '0x936909e72951A19a5e1d75A109B0D34f06f39838')
+            copyAdress($event, '0x5d03b2f490cD40bc9859EB13193C2f711583560E')
           "
         ></i>
       </div>
@@ -54,32 +54,29 @@ import { totalSupply, getLPTOKEN } from "~/interface/deposite";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import { getLongValue } from "~/interface/event.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
-import { applied3 } from "~/interface/iio.js";
 export default {
+  props: ["ticketFlag"],
   data() {
     return {
       showMsg: {
         DepositedVolume: 0,
         DepositeValue: 0,
       },
-      ticketFlag: false,
     };
+  },
+  watch: {
+    ticketFlag(newValue) {
+      this.ticketFlag = newValue;
+    },
   },
   mounted() {
     setTimeout(() => {
       this.getBalance();
-      this.buyAppliedFlag();
     }, 1000);
   },
   methods: {
     toStep1() {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
-    },
-    async buyAppliedFlag() {
-      let reward_name = "IIO_HELMETBNB_REWARD";
-      let pool_name = "IIO_HELMETBNB_POOL";
-      let res = await applied3(pool_name, reward_name);
-      this.ticketFlag = res;
     },
     async getBalance() {
       let lpt_name = "IIO_HELMETBNB_LPT";

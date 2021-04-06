@@ -52,7 +52,28 @@ export default {
     async BuyPassport() {
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let res = await applyReward3(ContractAdress, TicketAddress, () => {});
+      let object = {
+        title: "WARNING",
+        layout: "layout1",
+        activeTip: true,
+        loading: false,
+        button: true,
+        conText: `<span>It will cost ${this.PassportPrice} HELMET for the Ticket</span>`,
+        buttonText: "Confirm",
+        showDialog: true,
+      };
+      this.$bus.$emit("OPEN_STATUS_DIALOG", object);
+      this.$bus.$on("PROCESS_ACTION", (res) => {
+        if (res) {
+          applyReward3(
+            ContractAdress,
+            TicketAddress,
+            this.PassportPrice,
+            () => {}
+          );
+        }
+        return;
+      });
     },
   },
 };

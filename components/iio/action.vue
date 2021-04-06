@@ -6,7 +6,7 @@
         <div
           class="action_step_item"
           :class="active_step == 1 ? 'active_step' : ''"
-          @click="active_step = 1"
+          :style="ticketFlag ? 'pointer-events: none' : ''"
         >
           <svg class="icon" aria-hidden="true">
             <use href="#icon-buy"></use>
@@ -65,6 +65,7 @@ import StepOne from "./step-one";
 import StepTwo from "./step-two";
 import StepThree from "./step-three";
 export default {
+  props: ["ticketFlag"],
   components: {
     StepOne,
     StepTwo,
@@ -75,10 +76,19 @@ export default {
       active_step: 1,
     };
   },
+  watch: {
+    ticketFlag(newValue) {
+      this.ticketFlag = newValue;
+      if (newValue) {
+        this.active_step = 2;
+      }
+    },
+  },
   mounted() {
     this.$bus.$on("JUMP_STEP", (res) => {
       this.active_step = res.step;
     });
+    console.log(this.ticketFlag);
   },
 };
 </script>

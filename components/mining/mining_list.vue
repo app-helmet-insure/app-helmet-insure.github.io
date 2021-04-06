@@ -266,6 +266,7 @@ import {
   getAllHelmet,
   Rewards,
   RewardsDuration,
+  CangetPAYA,
 } from "~/interface/deposite";
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";

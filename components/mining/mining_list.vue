@@ -18,24 +18,11 @@
           v-if="item.combo"
         />
         <section>
-          <span>{{ item.miningName }}</span>
-          <!-- <i v-if="item.info"
-            ><svg
-              t="1617039040708"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="1287"
-              width="16"
-              height="16"
-            >
-              <path
-                d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                p-id="1288"
-              ></path>
-            </svg>
-          </i> -->
+          <span
+            class="onePager"
+            v-html="item.miningName"
+            @click="hadnleShowOnePager($event, item.onePager)"
+          ></span>
         </section>
         <section>
           <p>
@@ -147,7 +134,11 @@
         v-if="item.combo"
       />
       <section>
-        <span>{{ item.miningName }}</span>
+        <span
+          class="onePager"
+          v-html="item.miningName"
+          @click="hadnleShowOnePager($event, item.onePager)"
+        ></span>
         <p>
           {{ $t("Table.EarnList") }}
           <span>
@@ -266,6 +257,7 @@ import {
   getAllHelmet,
   Rewards,
   RewardsDuration,
+  CangetPAYA,
 } from "~/interface/deposite";
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
@@ -325,6 +317,18 @@ export default {
     },
   },
   methods: {
+    hadnleShowOnePager(e, onePager) {
+      if (e.target.tagName === "I" && onePager) {
+        let Earn = onePager;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${onePager}?`,
+          text: onePager,
+        });
+      } else {
+        return;
+      }
+    },
     apyArrayWatch(newValue) {
       if (newValue) {
         this.initMiningData();
@@ -381,16 +385,18 @@ export default {
           combo: true,
           info: true,
           earnName: "APR",
+          onePager: false,
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
-          miningName: "HELMET-hDODO DLP",
+          miningName: "HELMET-<i>hDODO</i> DLP",
           earn: "helmet_dodo",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/04/10 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
+          onePager: "hDODO",
           yearEarn: apyArray["helmet_dodo"] || "--",
         },
         {
@@ -402,26 +408,29 @@ export default {
           info: true,
           earnName: "APY",
           compound: true,
+          onePager: false,
           yearEarn: apyArray["helmet"] || "--",
         },
         {
-          miningName: "HELMET-hFOR LP",
+          miningName: "HELMET-<i>hFOR</i> LP",
           earn: "helmet_for",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/20 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
+          onePager: "hFOR",
           yearEarn: apyArray["helmet_for"] || "--",
         },
         {
-          miningName: "HELMET-hBURGER LP",
+          miningName: "HELMET-<i>hBURGER</i> LP",
           earn: "helmet_burger",
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/07 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
+          onePager: "hBURGER",
           yearEarn: apyArray["helmet_burger"] || "--",
         },
       ];

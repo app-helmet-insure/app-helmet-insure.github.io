@@ -11,7 +11,7 @@
 <script>
 import BURNTITLE from '~/components/burnbox/burn_title.vue'
 import BURNLIST from '~/components/burnbox/burn_list.vue'
-import Onepager from '~/components/mining/onepager.vue'
+import Onepager from '~/components/common/onepager.vue'
 export default {
   components: {
     BURNTITLE,

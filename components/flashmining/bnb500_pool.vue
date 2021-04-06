@@ -342,24 +342,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $BNB500?",
-        text: [
-          "$BNB500 is BNB cover miss out policy.",
-          "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.insure and 1000 for Flash Mining)",
-          "In this policy, we set a ratio: ",
-          "BNB : BUSD = 1:500 ",
-          "it means that you could swap 500 BUSD+1$BNB500 to 1BNB. It is the reasonable active price, for example, if BNB hit $600, you could active the policy and swap 500 BUSD + 1 $BNB500 to 1 BNB with 100BUSD profit.",
-          "Flash Mining Type: ",
-          "$hCTK-$Helmet LP Mining Pool Notice: $hCTK will be expired on 20th Feb. 0:00 SGT , you could activate it ASAP or take part in $BNB500 Flash Mining.",
-          "Flash Mining Start: 18th Feb. 24:00 SGT",
-          "Flash Mining End: 28th Feb. 24:00 SGT",
-          "Expire date: 20th Mar. 24:00 SGT",
-        ],
-      });
-    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });

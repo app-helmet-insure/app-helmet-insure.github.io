@@ -11,7 +11,7 @@
 <script>
 import FlashMiningList from '~/components/flashmining/flashmining_list.vue'
 import FlashMiningTitle from '~/components/flashmining/flashmining_title.vue'
-import Onepager from '~/components/mining/onepager.vue'
+import Onepager from '~/components/common/onepager.vue'
 export default {
   layout: 'default',
   components: { FlashMiningTitle, FlashMiningList, Onepager },

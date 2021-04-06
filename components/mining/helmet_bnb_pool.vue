@@ -293,13 +293,15 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
-      this.textList[1].num = this.apy + "%";
     },
     userInfo() {
       return this.$store.state.userInfo;
     },
   },
   methods: {
+    toIIO() {
+      this.$router.push("/iiO");
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

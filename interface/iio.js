@@ -164,7 +164,7 @@ export const applyReward3 = async (data, callBack) => {
                     } else {
                         Message({
                             message:
-                                'The rental advertisement is published successfully',
+                                'GetRewards Successfully',
                             type: 'success',
                         });
                     }

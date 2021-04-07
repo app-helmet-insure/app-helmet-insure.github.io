@@ -7,7 +7,7 @@
           class="action_step_item"
           :class="active_step == 1 ? 'active_step' : ''"
           @click="active_step = 1"
-          :style="newTicketFlag ? 'pointer-events: none' : ''"
+          :style="ticketFlag ? 'pointer-events: none' : ''"
         >
           <svg class="icon" aria-hidden="true">
             <use href="#icon-buy"></use>
@@ -17,8 +17,15 @@
         <div class="step_own" v-show="active_step == 1">
           <StepOne></StepOne>
         </div>
-        <svg class="icon" aria-hidden="true">
-          <use href="#icon-right1"></use>
+        <svg class="icon" aria-hidden="true" v-if="active_step == 1">
+          <use href="#icon-WhiteRight"></use>
+        </svg>
+        <svg
+          class="icon"
+          aria-hidden="true"
+          v-if="active_step === 2 || active_step === 3"
+        >
+          <use href="#icon-OrangeRight"></use>
         </svg>
         <!-- step2 ----------------------------------------------------------------->
         <div
@@ -34,9 +41,13 @@
         <div class="step_own" v-show="active_step == 2">
           <StepTwo></StepTwo>
         </div>
-        <svg class="icon" aria-hidden="true">
-          <use href="#icon-right1"></use>
+        <svg class="icon" aria-hidden="true" v-if="active_step < 3">
+          <use href="#icon-WhiteRight"></use>
         </svg>
+        <svg class="icon" aria-hidden="true" v-if="active_step === 3">
+          <use href="#icon-OrangeRight"></use>
+        </svg>
+
         <!-- step3  ---------------------------------------------------------------->
         <div
           class="action_step_item"
@@ -65,8 +76,8 @@
 import StepOne from "./step-one";
 import StepTwo from "./step-two";
 import StepThree from "./step-three";
+import { applied3 } from "~/interface/iio.js";
 export default {
-  props: ["ticketFlag"],
   components: {
     StepOne,
     StepTwo,
@@ -76,21 +87,24 @@ export default {
     return {
       active_step: 1,
       newTicketFlag: false,
+      ticketFlag: false,
     };
-  },
-  watch: {
-    ticketFlag(newValue) {
-      this.newTicketFlag = newValue;
-      if (newValue) {
-        this.active_step = 2;
-      }
-    },
   },
   mounted() {
     this.$bus.$on("JUMP_STEP", (res) => {
       this.active_step = res.step;
     });
-    console.log(this.ticketFlag);
+    setTimeout(() => {
+      this.buyAppliedFlag();
+    }, 1000);
+  },
+  methods: {
+    async buyAppliedFlag() {
+      let reward_name = "IIO_HELMETBNB_REWARD";
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let res = await applied3(pool_name, reward_name);
+      this.ticketFlag = res;
+    },
   },
 };
 </script>

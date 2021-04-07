@@ -54,32 +54,36 @@ import { totalSupply, getLPTOKEN } from "~/interface/deposite";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import { getLongValue } from "~/interface/event.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import { applied3 } from "~/interface/iio.js";
 export default {
-  props: ["ticketFlag"],
   data() {
     return {
       showMsg: {
         DepositedVolume: 0,
         DepositeValue: 0,
       },
+      ticketFlag: false,
     };
-  },
-  watch: {
-    ticketFlag(newValue) {
-      this.ticketFlag = newValue;
-    },
   },
   mounted() {
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getBalance();
+      this.buyAppliedFlag();
     });
     setTimeout(() => {
       this.getBalance();
+      this.buyAppliedFlag();
     }, 1000);
   },
   methods: {
     toStep1() {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
+    },
+    async buyAppliedFlag() {
+      let reward_name = "IIO_HELMETBNB_REWARD";
+      let pool_name = "IIO_HELMETBNB_POOL";
+      let res = await applied3(pool_name, reward_name);
+      this.ticketFlag = res;
     },
     async getBalance() {
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";

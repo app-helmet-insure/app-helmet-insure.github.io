@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     toHome() {
-      this.$router.push("/");
+      this.$router.push("/MyPolicy");
     },
     async getBalance() {
       let pool_name = "IIO_HELMETBNB_POOL";

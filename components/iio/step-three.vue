@@ -15,30 +15,33 @@
         </p>
         <p>
           <span>余额</span>
-          <span>11</span>
+          <span>{{ SwapBalance }} HELMET</span>
         </p>
       </div>
       <div class="rewardDetail">
         <i></i>
         <p>
-          <span
-            >当前待兑换 <i>100 iMatter</i>, 共可兑换 <i>100 Matter</i>
+          <span>
+            当前待兑换 <i>{{ AvailableVolume }} iMatter</i>, 共可兑换
+            <i>{{ AvailableVolume }} Matter</i>
           </span>
           <span>需要支付 <i>12.33333 BNB</i></span>
         </p>
       </div>
-      <button @click="getReward">兑换</button>
+      <button @click="swapActive">兑换</button>
     </div>
   </div>
 </template>
 
 <script>
 import { getReward3, earned3 } from "~/interface/iio.js";
+import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 export default {
   data() {
     return {
       AvailableVolume: 0,
+      SwapBalance: 0,
     };
   },
   mounted() {
@@ -52,10 +55,13 @@ export default {
     },
     async getBalance() {
       let pool_name = "IIO_HELMETBNB_POOL";
+      let TicketAddress = "IIO_HELMETBNB_TICKET";
       let AvailableVolume = await earned3(pool_name);
+      let SwapBalance = await getBalance(TicketAddress);
       this.AvailableVolume = fixD(AvailableVolume, 4);
+      this.SwapBalance = fixD(SwapBalance, 4);
     },
-    async getReward() {
+    async swapActive() {
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await getReward3(pool_name);
     },

@@ -125,7 +125,6 @@ export const balanceOf = async (type, currcy, flag = false) => {
         });
 };
 export const toDeposite = async (type, data, flag, callBack) => {
-    console.log();
     const charID = window.chainID;
     const address = window.CURRENTADDRESS;
     let amount = data.amount;
@@ -139,10 +138,12 @@ export const toDeposite = async (type, data, flag, callBack) => {
         adress = getContract(type, charID);
         adressLPT = getContract(type + '_LPT', charID);
     }
+    console.log(adress, adressLPT, address);
     if (!adress || !adressLPT || !address) {
         return;
     }
     let result;
+    console.log(amount);
     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: true });
     try {
         const Contract = await expERC20(adressLPT);
@@ -159,7 +160,6 @@ export const toDeposite = async (type, data, flag, callBack) => {
                 }
             });
         }
-
         const deposite = await Deposite(adress);
         result = deposite.methods
             .stake(amount)

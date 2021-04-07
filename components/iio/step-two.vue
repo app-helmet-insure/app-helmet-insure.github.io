@@ -41,7 +41,10 @@
       <i></i>
       <p class="text">
         <span>预计可获得： </span>
-        <span> 100 iTOKEN <i class="question"></i> </span>
+        <span>
+          {{ showMsg.AvailableVolume }} iTOKEN
+          <i class="question"></i>
+        </span>
       </p>
       <a>什么是 iTOKEN ？</a>
     </div>
@@ -59,7 +62,7 @@ import {
   toDeposite,
 } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
-import { getReward3 } from "~/interface/iio.js";
+import { getReward3, earned3 } from "~/interface/iio.js";
 export default {
   data() {
     return {
@@ -98,7 +101,7 @@ export default {
   },
   methods: {
     async getBalance() {
-      let lpt_name = "IIO_HELMETBNB_LPT";
+      let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
       // 可抵押数量
       let DepositeVolume = await getBalance(lpt_name);
@@ -106,10 +109,13 @@ export default {
       let DepositedVolume = await getLPTOKEN(pool_name);
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
+      // 可领取
+      let AvailableVolume = await earned3(pool_name);
 
       this.showMsg.DepositeVolume = fixD(DepositeVolume, 4);
       this.showMsg.DepositedVolume = fixD(DepositedVolume, 4);
       this.showMsg.DepositeTotal = fixD(DepositeTotal, 4);
+      this.showMsg.AvailableVolume = fixD(AvailableVolume, 4);
       this.showMsg.MyPoolShare = fixD(
         (DepositedVolume / DepositeTotal) * 100,
         2
@@ -137,6 +143,7 @@ export default {
       }
       this.stakeLoading = true;
       let type = "IIO_HELMETBNB_POOL";
+      console.log(1);
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
   },

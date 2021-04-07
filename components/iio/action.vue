@@ -6,7 +6,8 @@
         <div
           class="action_step_item"
           :class="active_step == 1 ? 'active_step' : ''"
-          :style="ticketFlag ? 'pointer-events: none' : ''"
+          @click="active_step = 1"
+          :style="newTicketFlag ? 'pointer-events: none' : ''"
         >
           <svg class="icon" aria-hidden="true">
             <use href="#icon-buy"></use>
@@ -74,11 +75,12 @@ export default {
   data() {
     return {
       active_step: 1,
+      newTicketFlag: false,
     };
   },
   watch: {
     ticketFlag(newValue) {
-      this.ticketFlag = newValue;
+      this.newTicketFlag = newValue;
       if (newValue) {
         this.active_step = 2;
       }

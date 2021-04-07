@@ -113,12 +113,14 @@ export const getReward3 = async (type) => {
         console.log(error);
     }
 };
-export const applyReward3 = async (
-    ContractAdress,
-    TicketAddress,
-    TicketPrice,
-    callBack
-) => {
+export const applyReward3 = async (data, callBack) => {
+    console.log(data);
+    let ContractAdress = data.ContractAdress;
+    let TicketAddress = data.TicketAddress;
+    let TicketPrice = data.PassportPrice;
+    if (!ContractAdress || !TicketAddress || !TicketPrice) {
+        return;
+    }
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {
@@ -164,11 +166,11 @@ export const applyReward3 = async (
                             message:
                                 'The rental advertisement is published successfully',
                             type: 'success',
-                            // duration: 0,
                         });
                     }
                     setTimeout(() => {
-                        bus.$emit('REFRESH_BALANCE');
+                        console.log(data);
+                        bus.$emit(`REFRESH_${data.ContractAdress}`);
                     }, 1000);
                 }
             })

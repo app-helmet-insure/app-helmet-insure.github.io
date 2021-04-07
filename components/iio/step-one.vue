@@ -7,7 +7,9 @@
           <i>{{ $t("Content.UsableBalance") }}</i
           >: {{ Balance }} HELMET</span
         >
-        <a>获得 HELMET</a>
+        <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
+          >获得 HELMET</a
+        >
       </p>
       <label>
         <div class="input">
@@ -39,12 +41,17 @@ export default {
     setTimeout(() => {
       this.getPassPortPrice();
     }, 1000);
+    this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
+      this.getPassPortPrice();
+      this.$bus.$emit("JUMP_STEP", { step: 2 });
+    });
   },
   methods: {
     async getPassPortPrice() {
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let price = await ticketVol3(ContractAdress, TicketAddress);
+      let RewardAddress = "IIO_HELMETBNB_REWARD";
+      let price = await ticketVol3(ContractAdress, RewardAddress);
       let balance = await getBalance(TicketAddress);
       this.PassportPrice = price;
       this.Balance = fixD(balance, 4);
@@ -52,6 +59,11 @@ export default {
     async BuyPassport() {
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
+      let data = {
+        ContractAdress,
+        TicketAddress,
+        PassportPrice: this.PassportPrice,
+      };
       let object = {
         title: "WARNING",
         layout: "layout1",
@@ -65,13 +77,9 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", object);
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          applyReward3(
-            ContractAdress,
-            TicketAddress,
-            this.PassportPrice,
-            () => {}
-          );
+          applyReward3(data, () => {});
         }
+        data = {};
         return;
       });
     },

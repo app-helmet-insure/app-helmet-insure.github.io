@@ -70,6 +70,9 @@ export default {
     },
   },
   mounted() {
+    this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
     }, 1000);
@@ -79,7 +82,7 @@ export default {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
     },
     async getBalance() {
-      let lpt_name = "IIO_HELMETBNB_LPT";
+      let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
       // 已抵押数量
       let DepositedVolume = await getLPTOKEN(pool_name);

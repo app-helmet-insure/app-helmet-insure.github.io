@@ -152,9 +152,15 @@
     </div>
     <div
       class="mining_item_h5"
-      v-for="item in miningList"
+      v-for="(item, index) in miningList"
       :key="item.earn + '1'"
     >
+      <img
+        class="link_flash"
+        src="~/assets/img/flashmining/flash_link.png"
+        alt=""
+        v-if="index != 0"
+      />
       <section>
         <div>
           <img
@@ -1038,6 +1044,14 @@ export default {
     display: flex;
     flex-direction: column;
     border-radius: 5px;
+    position: relative;
+    .link_flash {
+      width: 8px;
+      height: 32px;
+      position: absolute;
+      left: 10px;
+      top: -21px;
+    }
     .activeFlash {
       border-bottom: 1px solid #e8e8eb;
     }

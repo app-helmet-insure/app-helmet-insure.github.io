@@ -17,6 +17,13 @@
           alt=""
           v-if="item.combo"
         />
+        <img
+          class="combo_img"
+          style="width: 210px"
+          src="~/assets/img/mining/flash_web.png"
+          alt=""
+          v-if="item.flash"
+        />
         <section>
           <span
             class="onePager"
@@ -105,8 +112,13 @@
           :activeType="activeType"
           :TradeType="'ALL'"
         ></HelmetDodoPool>
-        <HelmetHelmetPool
+        <!-- <HelmetHelmetPool
           v-if="activeMining == 'helmet' && showActiveMining"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></HelmetHelmetPool> -->
+        <HelmetHelmetPool
+          v-if="activeMining == 'helmet_mdex' && showActiveMining"
           :activeType="activeType"
           :TradeType="'ALL'"
         ></HelmetHelmetPool>
@@ -132,6 +144,13 @@
         src="~/assets/img/mining/combo_h5.png"
         alt=""
         v-if="item.combo"
+      />
+      <img
+        class="combo_img"
+        style="width: 210px"
+        src="~/assets/img/mining/flash_web.png"
+        alt=""
+        v-if="item.flash"
       />
       <section>
         <span
@@ -231,8 +250,13 @@
         :activeType="activeType"
         :TradeType="activeType"
       ></HelmetDodoPool>
-      <HelmetHelmetPool
+      <!-- <HelmetHelmetPool
         v-if="activeMining == 'helmet'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HelmetHelmetPool> -->
+      <HelmetHelmetPool
+        v-if="activeMining == 'helmet_mdex'"
         :activeType="activeType"
         :TradeType="activeType"
       ></HelmetHelmetPool>
@@ -399,12 +423,25 @@ export default {
           onePager: "hDODO",
           yearEarn: apyArray["helmet_dodo"] || "--",
         },
+        // {
+        //   miningName: "HELMET POOL",
+        //   earn: "helmet",
+        //   earnNum: "one",
+        //   dueDate: "Ongoing",
+        //   combo: false,
+        //   info: true,
+        //   earnName: "APY",
+        //   compound: true,
+        //   onePager: false,
+        //   yearEarn: apyArray["helmet"] || "--",
+        // },
         {
           miningName: "HELMET POOL",
-          earn: "helmet",
-          earnNum: "one",
+          earn: "helmet_mdex",
+          earnNum: "two",
           dueDate: "Ongoing",
           combo: false,
+          flash: true,
           info: true,
           earnName: "APY",
           compound: true,

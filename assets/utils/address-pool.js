@@ -307,6 +307,8 @@ export const getTokenName = (address) => {
             return 'DODO';
         case '0xeca41281c24451168a37211f0bc2b8645af45092':
             return 'TPT';
+        case '0x25d2e80cb6b86881fd7e07dd263fb79f4abe033c':
+            return 'MDEX';
         default:
             return '--';
     }

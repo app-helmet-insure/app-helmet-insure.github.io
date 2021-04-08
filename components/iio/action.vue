@@ -103,6 +103,9 @@ export default {
       let reward_name = "IIO_HELMETBNB_REWARD";
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await applied3(pool_name, reward_name);
+      if (res) {
+        this.active_step = 2;
+      }
       this.ticketFlag = res;
     },
   },

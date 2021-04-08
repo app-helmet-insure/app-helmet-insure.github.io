@@ -11,21 +11,23 @@
       <div class="step_myaccount">
         <p>
           <span>待兑换</span>
-          <span>{{ AvailableVolume }} HELMET</span>
+          <span>{{ fixD(AvailableVolume, 4) }} HELMET</span>
         </p>
         <p>
           <span>余额</span>
-          <span>{{ SwapBalance }} HELMET</span>
+          <span>{{ fixD(SwapBalance, 4) }} HELMET</span>
         </p>
       </div>
       <div class="rewardDetail">
         <i></i>
         <p>
           <span>
-            当前待兑换 <i>{{ AvailableVolume }} iMatter</i>, 共可兑换
-            <i>{{ AvailableVolume }} Matter</i>
+            当前待兑换 <i>{{ fixD(AvailableVolume, 4) }} iMatter</i>, 共可兑换
+            <i>{{ fixD(AvailableVolume, 4) }} Matter</i>
           </span>
-          <span>需要支付 <i>12.33333 BNB</i></span>
+          <span
+            >需要支付 <i>{{ fixD(swapAssets, 5) }} BUSD</i></span
+          >
         </p>
       </div>
       <button @click="swapActive">兑换</button>
@@ -34,14 +36,18 @@
 </template>
 
 <script>
-import { getReward3, earned3 } from "~/interface/iio.js";
 import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
+import { getTokenName } from "~/assets/utils/address-pool.js";
+import { onExercise } from "~/interface/order.js";
+import precision from "~/assets/js/precision.js";
 export default {
   data() {
     return {
       AvailableVolume: 0,
       SwapBalance: 0,
+      swapAssets: 0,
+      fixD,
     };
   },
   mounted() {
@@ -54,16 +60,49 @@ export default {
       this.$router.push("/MyPolicy");
     },
     async getBalance() {
-      let pool_name = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let AvailableVolume = await earned3(pool_name);
+      let RewardAddress = "IIO_HELMETBNB_REWARD";
+      let AvailableVolume = await getBalance(RewardAddress);
       let SwapBalance = await getBalance(TicketAddress);
-      this.AvailableVolume = fixD(AvailableVolume, 4);
-      this.SwapBalance = fixD(SwapBalance, 4);
+      this.AvailableVolume = AvailableVolume;
+      this.SwapBalance = SwapBalance;
+      this.swapAssets = AvailableVolume * 0.1;
     },
     async swapActive() {
-      let pool_name = "IIO_HELMETBNB_POOL";
-      let res = await getReward3(pool_name);
+      let data = {
+        token: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
+        _underlying_vol: precision.times(0.1, this.AvailableVolume),
+        vol: this.AvailableVolume,
+        long: "0x7aB58afb8500c3e37BdD59C0b4b732d177Df55B4", //奖励地址
+        _underlying: getTokenName("0xe9e7cea3dedca5984780bafc599bd69add087d56"),
+        _collateral: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
+        settleToken: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
+        flag: true,
+        approveAddress1: "FACTORY",
+        approveAddress2: "",
+        unit: "",
+        showVolume: this.AvailableVolume,
+      };
+      this.$bus.$emit("OPEN_STATUS_DIALOG", {
+        title: "WARNING",
+        layout: "layout1",
+        conText: `<p>you will swap<span> ${fixD(data._underlying_vol, 8)} ${
+          data._underlying
+        }</span> to <span> ${fixD(data.showVolume, 8)} ${
+          data._collateral
+        }</span></p>`,
+        activeTip: true,
+        loading: false,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: true,
+      });
+      this.$bus.$on("PROCESS_ACTION", (res) => {
+        if (res) {
+          onExercise(data, data.flag);
+        }
+        data = {};
+      });
     },
   },
 };

@@ -126,7 +126,7 @@
           </span>
         </p>
         <p>
-          <span>MDEX {{ $t("Table.HELMETRewards") }}：</span>
+          <span>MDX {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <span>
               <countTo
@@ -137,7 +137,7 @@
                 :decimals="8"
               />
               <span v-else>--</span>
-              MDEX</span
+              MDX</span
             >
           </span>
         </p>

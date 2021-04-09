@@ -19,7 +19,7 @@
         />
         <img
           class="combo_img"
-          style="width: 210px"
+          style="width: 236px"
           src="~/assets/img/mining/flash_web.png"
           alt=""
           v-if="item.flash"
@@ -147,7 +147,7 @@
       />
       <img
         class="combo_img"
-        style="width: 210px"
+        style="width: 236px"
         src="~/assets/img/mining/flash_web.png"
         alt=""
         v-if="item.flash"
@@ -440,8 +440,8 @@ export default {
           earn: "helmet_mdex",
           earnNum: "two",
           dueDate: "Ongoing",
-          combo: true,
-          // flash: true,
+          combo: false,
+          flash: true,
           info: true,
           earnName: "APY",
           compound: true,

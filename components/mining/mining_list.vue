@@ -28,6 +28,13 @@
           alt=""
           v-if="item.flash"
         />
+        <img
+          class="combo_img"
+          style="width: 116px"
+          src="~/assets/img/mining/serial_web.png"
+          alt=""
+          v-if="item.serial"
+        />
         <section>
           <span
             class="onePager"
@@ -125,7 +132,7 @@
           :TradeType="'ALL'"
         ></HelmetDodoPool>
         <FeiFeiPool
-          v-if="activeMining == 'qFEI' && showActiveMining"
+          v-if="activeMining == 'QFEI' && showActiveMining"
           :activeType="activeType"
           :TradeType="'ALL'"
         ></FeiFeiPool>
@@ -163,6 +170,12 @@
         src="~/assets/img/mining/flash_web.png"
         alt=""
         v-if="item.flash"
+      /><img
+        class="combo_img"
+        style="width: 116px"
+        src="~/assets/img/mining/serial_web.png"
+        alt=""
+        v-if="item.serial"
       />
       <section>
         <span
@@ -265,7 +278,7 @@
         :TradeType="activeType"
       ></HelmetDodoPool>
       <FeiFeiPool
-        v-if="activeMining == 'qFEI'"
+        v-if="activeMining == 'QFEI'"
         :activeType="activeType"
         :TradeType="'activeType'"
       ></FeiFeiPool>
@@ -445,13 +458,12 @@ export default {
         },
         {
           miningName: "FEI(BSC) POOL",
-          earn: "qFEI",
+          earn: "QFEI",
           earnImg: false,
           earnNum: "1",
           dueDate: this.getRemainTime("2021/04/17 00:00"),
           openDate: this.getMiningTime("2021/04/10 00:00"),
-          combo: true,
-          flash: false,
+          serial: true,
           info: true,
           earnName: "APY",
           compound: true,

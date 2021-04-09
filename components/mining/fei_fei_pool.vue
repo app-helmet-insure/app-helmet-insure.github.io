@@ -69,9 +69,7 @@
             <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
-          <a
-            href="https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-            target="_blank"
+          <a href="https://www.chainswap.exchange/" target="_blank"
             >Swap FEI(ETH) to BSC By <i class="chainswap"></i> ChainSwap</a
           >
         </section>

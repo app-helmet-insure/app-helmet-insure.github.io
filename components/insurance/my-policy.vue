@@ -374,7 +374,7 @@ export default {
       let HCCTIIPolicy = await this.HCCTIIPolicy();
       let hDODOPolicy = await this.hDODOPolicy();
       let hTPTPolicy = await this.hTPTPolicy();
-
+      let QFEIPolicy = await this.QFEIPolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -410,6 +410,9 @@ export default {
       }
       if (hTPTPolicy) {
         result.push(hTPTPolicy);
+      }
+      if (QFEIPolicy) {
+        result.push(QFEIPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1126,6 +1129,59 @@ export default {
           unit: 4,
           showVolume: volume,
           TypeCoin: getTokenName("0xeca41281c24451168a37211f0bc2b8645af45092"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async QFEIPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a");
+        let resultItem;
+        resultItem = {
+          id: 12,
+          bidID: 12,
+          buyer: myAddress,
+          price: 0.1,
+          Rent: volume * 0.1,
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1620576000000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
+          _strikePrice: 1,
+          _underlying: "0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31",
+          _expiry: 1620576000000,
+          transfer: true,
+          longAdress: "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a",
+          type: "Call",
+          symbol: "QFEI",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 1,
+          outPriceUnit: "QSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

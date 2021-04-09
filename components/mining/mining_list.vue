@@ -280,7 +280,7 @@
       <FeiFeiPool
         v-if="activeMining == 'QFEI'"
         :activeType="activeType"
-        :TradeType="'activeType'"
+        :TradeType="activeType"
       ></FeiFeiPool>
       <HelmetHelmetPool
         v-if="activeMining == 'helmet_mdex'"
@@ -396,7 +396,6 @@ export default {
       });
     },
     StakeMiningH5(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.showActiveMining = true;
       this.activeMining = MiningType;
@@ -409,7 +408,6 @@ export default {
       this.$bus.$emit("OPEN_WRAPER_PAFE", true);
     },
     StakeMining(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.showActiveMining = true;
       this.activeMining = MiningType;
@@ -444,35 +442,6 @@ export default {
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
-          miningName: "HELMET-<i>hDODO</i> DLP",
-          earn: "helmet_dodo",
-          earnImg: true,
-          earnNum: "two",
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
-          openDate: "Mining",
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: "hDODO",
-          yearEarn: apyArray["helmet_dodo"] || "--",
-        },
-        {
-          miningName: "FEI(BSC) POOL",
-          earn: "QFEI",
-          earnImg: false,
-          earnNum: "1",
-          dueDate: this.getRemainTime("2021/04/17 00:00"),
-          openDate: this.getMiningTime("2021/04/10 00:00"),
-          serial: true,
-          info: true,
-          earnName: "APY",
-          compound: true,
-          onePager: false,
-          yearEarn: apyArray["qfei"] || "--",
-          expired: new Date("2021/04/17 00:00") * 1,
-          started: new Date("2021/04/10 00:00") * 1,
-        },
-        {
           miningName: "HELMET POOL",
           earn: "helmet_mdex",
           earnImg: true,
@@ -487,6 +456,35 @@ export default {
           onePager: false,
           yearEarn: apyArray["helmet"] || "--",
         },
+        {
+          miningName: "FEI(BSC) POOL",
+          earn: "QFEI",
+          earnImg: false,
+          earnNum: "1",
+          dueDate: this.getRemainTime("2021/04/17 00:00"),
+          openDate: this.getMiningTime("2021/04/10 00:00"),
+          serial: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["qfei"] || "--",
+          expired: new Date("2021/04/17 00:00") * 1,
+          started: new Date("2021/04/10 00:00") * 1,
+        },
+        {
+          miningName: "HELMET-<i>hDODO</i> DLP",
+          earn: "helmet_dodo",
+          earnImg: true,
+          earnNum: "two",
+          dueDate: this.getRemainTime("2021/04/10 00:00"),
+          openDate: "Mining",
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: "hDODO",
+          yearEarn: apyArray["helmet_dodo"] || "--",
+        },
+
         {
           miningName: "HELMET-<i>hFOR</i> LP",
           earn: "helmet_for",
@@ -560,6 +558,35 @@ export default {
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
     },
+    async HELMET_POOL_APY() {
+      let HelmetVolume = await totalSupply("HELMETPOOL");
+      // （1+日产量/总质押量）^365
+      let APY =
+        Math.pow(
+          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
+          365
+        ) * 100;
+
+      this.apyArray.helmet = fixD(APY, 2);
+      this.miningList[1].yearEarn = fixD(APY, 2);
+    },
+
+    async FEI_POOL_APY() {
+      let HelmetVolume = await totalSupply("FEIPOOL");
+      // （1+日产量/总质押量）^365
+      let APY =
+        Math.pow(precision.plus(1, precision.divide(200000, HelmetVolume)), 7) *
+        100;
+
+      let startedTime = this.miningList[2].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[2].yearEarn = "--";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[2].yearEarn = "--";
+      }
+    },
     async HELMET_hDODO_DLP_APY() {
       let lptBnbValue = await uniswap("DODO", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
@@ -588,33 +615,6 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
-    },
-    async FEI_POOL_APY() {
-      let HelmetVolume = await totalSupply("FEIPOOL");
-      // （1+日产量/总质押量）^365
-      let APY =
-        Math.pow(precision.plus(1, precision.divide(200000, HelmetVolume)), 7) *
-        100;
-      let startedTime = this.miningList[2].started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.miningList[2].yearEarn = "Infinity";
-      } else {
-        this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
-      }
-    },
-    async HELMET_POOL_APY() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      // （1+日产量/总质押量）^365
-      let APY =
-        Math.pow(
-          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
-          365
-        ) * 100;
-
-      this.apyArray.helmet = fixD(APY, 2);
       this.miningList[3].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
@@ -692,7 +692,6 @@ export default {
         (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
       );
       let template;
-
       if (dueDate > now) {
         template = {
           day: day > 9 ? day : "0" + day,

@@ -36,7 +36,11 @@ export const compound = async (address, type) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -45,11 +49,13 @@ export const compound = async (address, type) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully Compound',
-                            conTit:
-                                '<div>Compound activated successfully</div>',
-                            conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
+                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({

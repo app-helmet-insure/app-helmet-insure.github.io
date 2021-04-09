@@ -13,7 +13,7 @@
         </svg>
       </div>
     </div>
-    <div class="account" v-if="account && routeObj.name == 'index'">
+    <div class="account">
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -255,7 +255,7 @@ export default {
 @media screen and (max-width: 750px) {
   .header-container {
     justify-content: space-between;
-    padding: 12px 10px 20px;
+    padding: 12px 10px 50px;
     background: #fff;
     .logo {
       display: flex;

@@ -125,6 +125,22 @@
             >
           </span>
         </p>
+        <p>
+          <span>MDX {{ $t("Table.HELMETRewards") }}：</span>
+          <span>
+            <span>
+              <countTo
+                v-if="isLogin"
+                :startVal="Number(0)"
+                :endVal="Number(balance.Cake)"
+                :duration="2000"
+                :decimals="8"
+              />
+              <span v-else>--</span>
+              MDX</span
+            >
+          </span>
+        </p>
         <button
           @click="toCompound"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
@@ -142,6 +158,7 @@ import {
   totalSupply,
   getLPTOKEN,
   CangetPAYA,
+  CangetUNI,
   getPAYA,
   exitStake,
   getBalance,
@@ -198,6 +215,7 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
+        Cake: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -295,12 +313,15 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
+      // 可领取Mdex
+      let Cake = await CangetUNI(type);
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
       this.balance.Deposite = fixD(Deposite, 4);
       this.balance.Withdraw = fixD(Withdraw, 4);
       this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.Cake = fixD(Cake, 8);
       this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       this.textList[0].num = fixD(33057.57 * 7, 2) + " HELMET";
@@ -334,7 +355,8 @@ export default {
       }
       this.claimLoading = true;
       let type = "HELMETPOOL";
-      let res = await getPAYA(type);
+      let res = await getDoubleReward(type);
+      // let res = await getPAYA(type);
     },
     // 退出
     async toExit() {

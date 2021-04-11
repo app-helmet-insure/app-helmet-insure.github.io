@@ -642,7 +642,8 @@ export default {
         this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        // this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[2].yearEarn = "--";
       }
     },
     async QFEI_QSD_DLP_APY() {

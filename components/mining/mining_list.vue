@@ -500,14 +500,14 @@ export default {
           earn: "kun",
           earnImg: true,
           earnNum: "one",
-          dueDate: this.getRemainTime("2021/05/01 00:00"),
+          dueDate: this.getRemainTime("2021/05/02 00:00"),
           openDate: this.getMiningTime("2021/04/12 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["kun"] || "--",
-          expired: new Date("2021/05/01 00:00") * 1,
+          expired: new Date("2021/05/02 00:00") * 1,
           started: new Date("2021/04/12 00:00") * 1,
         },
         {
@@ -612,11 +612,29 @@ export default {
     },
 
     async FEI_POOL_APY() {
-      let HelmetVolume = await totalSupply("FEIPOOL");
+      let lptBnbValue = await uniswap("QFEI", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 200000;
+      console.log(allVolume);
+      //总抵押
+      let supplyVolume = await totalSupply("FEIPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("FEIPOOL_LPT"); //数量
+      // 抵押总价值
+      let lptBnbValue1 = await uniswap("FEI", "WBNB");
+      let lptHelmetValue1 = await uniswap("WBNB", "HELMET");
+      let stakeValue = lptBnbValue1 * lptHelmetValue1;
+      console.log(DODOHELMET, stakeValue);
       // （1+日产量/总质押量）^365
       let APY =
-        Math.pow(precision.plus(1, precision.divide(200000, HelmetVolume)), 7) *
-        100;
+        precision.divide(
+          precision.times(precision.divide(allVolume, 20), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
 
       let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
@@ -624,7 +642,7 @@ export default {
         this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[2].yearEarn = "--";
+        this.miningList[2].yearEarn = fixD(APY, 2);
       }
     },
     async QFEI_QSD_DLP_APY() {

@@ -34,6 +34,12 @@
           src="~/assets/img/mining/serial_web.png"
           alt=""
           v-if="item.serial"
+        /><img
+          class="combo_img"
+          style="width: 32px; height: 32px; left: 10px"
+          src="~/assets/img/mining/serialnext_web.png"
+          alt=""
+          v-if="item.serialNext"
         />
         <section>
           <span
@@ -136,6 +142,11 @@
           :activeType="activeType"
           :TradeType="'ALL'"
         ></FeiFeiPool>
+        <QfeiQsdPool
+          v-if="activeMining == 'kun' && showActiveMining"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></QfeiQsdPool>
         <HelmetHelmetPool
           v-if="activeMining == 'helmet_mdex' && showActiveMining"
           :activeType="activeType"
@@ -176,6 +187,12 @@
         src="~/assets/img/mining/serial_web.png"
         alt=""
         v-if="item.serial"
+      /><img
+        class="combo_img"
+        style="width: 32px; height: 32px; left: 10px"
+        src="~/assets/img/mining/serialnext_web.png"
+        alt=""
+        v-if="item.serialNext"
       />
       <section>
         <span
@@ -282,6 +299,11 @@
         :activeType="activeType"
         :TradeType="activeType"
       ></FeiFeiPool>
+      <QfeiQsdPool
+        v-if="activeMining == 'kun'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></QfeiQsdPool>
       <HelmetHelmetPool
         v-if="activeMining == 'helmet_mdex'"
         :activeType="activeType"
@@ -317,6 +339,7 @@ import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
+import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
@@ -326,6 +349,7 @@ export default {
     Wraper,
     HelmetHelmetPool,
     FeiFeiPool,
+    QfeiQsdPool,
     HelmetBurgerPool,
     HelmetForPool,
     HelmetBnbPool,
@@ -460,7 +484,7 @@ export default {
           miningName: "FEI(BSC) POOL",
           earn: "QFEI",
           earnImg: false,
-          earnNum: "1",
+          earnNum: "one",
           dueDate: this.getRemainTime("2021/04/17 00:00"),
           openDate: this.getMiningTime("2021/04/10 00:00"),
           serial: true,
@@ -470,6 +494,21 @@ export default {
           yearEarn: apyArray["qfei"] || "--",
           expired: new Date("2021/04/17 00:00") * 1,
           started: new Date("2021/04/10 00:00") * 1,
+        },
+        {
+          miningName: "QFEI-QSD DLP",
+          earn: "kun",
+          earnImg: true,
+          earnNum: "one",
+          dueDate: this.getRemainTime("2021/05/01 00:00"),
+          openDate: this.getMiningTime("2021/04/12 00:00"),
+          serialNext: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["kun"] || "--",
+          expired: new Date("2021/05/01 00:00") * 1,
+          started: new Date("2021/04/12 00:00") * 1,
         },
         {
           miningName: "HELMET-<i>hDODO</i> DLP",
@@ -519,6 +558,7 @@ export default {
       this.HELMET_BNB_LP_APY();
       this.HELMET_hDODO_DLP_APY();
       this.FEI_POOL_APY();
+      this.QFEI_QSD_DLP_APY();
       this.HELMET_POOL_APY();
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
@@ -587,6 +627,38 @@ export default {
         this.miningList[2].yearEarn = "--";
       }
     },
+    async QFEI_QSD_DLP_APY() {
+      let lptBnbValue = await uniswap("KUN", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "USDT");
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 150000;
+      //总抵押
+      let supplyVolume = await totalSupply("KUNPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("KUNPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("USDT", "KUNPOOL_LPT", true);
+      console.log(supplyVolume, stakeVolue, stakeValue, DODOHELMET);
+      let APY = precision.divide(
+        precision.times(precision.divide(allVolume, 20), 365),
+        precision.times(
+          precision.divide(precision.times(stakeValue, 2), stakeVolue),
+          supplyVolume
+        )
+      );
+      console.log(APY);
+      // let startedTime = this.miningList[3].started;
+      // let nowTime = new Date() * 1;
+      // if (nowTime < startedTime) {
+      //   this.miningList[3].yearEarn = "--";
+      // } else {
+      //   this.apyArray.qfei = fixD(APY, 2);
+      //   this.miningList[3].yearEarn = "--";
+      // }
+      APY = APY * 100;
+      this.apyArray.helmet_dodo = fixD(APY, 2);
+      this.miningList[3].yearEarn = fixD(APY, 2);
+    },
     async HELMET_hDODO_DLP_APY() {
       let lptBnbValue = await uniswap("DODO", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
@@ -615,7 +687,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[3].yearEarn = fixD(APY, 2);
+      this.miningList[4].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await uniswap("FOR", "WBNB");
@@ -645,7 +717,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[4].yearEarn = fixD(APY, 2);
+      this.miningList[5].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
@@ -676,7 +748,7 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[5].yearEarn = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;

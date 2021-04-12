@@ -73,11 +73,26 @@
             <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
-          <a
-            href="https://app.dodoex.io/liquidity?poolAddress=0x14616328f4Ce3082187B4f1Ee4863DA5516B178A"
-            target="_blank"
-            >From <i class="dodo"></i>Get QFEI-QSD DLP</a
-          >
+          <div class="PC_link" style="display: flex">
+            <a
+              href="https://app.dodoex.io/liquidity?poolAddress=0x14616328f4Ce3082187B4f1Ee4863DA5516B178A"
+              target="_blank"
+              >From <i class="dodo"></i>Get QFEI-QSD DLP</a
+            >
+            <a href="https://bsc.qian.finance/chemix/" target="_blank">
+              &nbsp;Or From <i class="qian"></i> Mint QSD</a
+            >
+          </div>
+          <div class="H5_link">
+            <a
+              href="https://app.dodoex.io/liquidity?poolAddress=0x14616328f4Ce3082187B4f1Ee4863DA5516B178A"
+              target="_blank"
+              >From <i class="dodo"></i>Get QFEI-QSD DLP</a
+            >
+            <a href="https://bsc.qian.finance/chemix/" target="_blank">
+              Or From <i class="qian"></i> Mint QSD</a
+            >
+          </div>
         </section>
       </div>
       <div class="ContractAddress">

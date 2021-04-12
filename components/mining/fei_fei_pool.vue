@@ -75,9 +75,6 @@
           <a href="https://www.chainswap.exchange/" target="_blank"
             >Swap FEI(ETH) to BSC By <i class="chainswap"></i> ChainSwap</a
           >
-          <a href="https://bsc.qian.finance/chemix/" target="_blank"
-            >From <i class="qian"></i> Mint QSD</a
-          >
         </section>
       </div>
       <div class="ContractAddress">

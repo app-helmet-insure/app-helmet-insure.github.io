@@ -12,7 +12,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-buy"></use>
           </svg>
-          <span>1. 购买 Matter 门票</span>
+          <span>1. {{ $t("IIO.BuyTokenTicket") }}</span>
         </div>
         <div class="step_own" v-show="active_step == 1">
           <StepOne></StepOne>
@@ -36,7 +36,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-share"></use>
           </svg>
-          <span>2. 抵押 LPT 获得奖励</span>
+          <span>2. {{ $t("IIO.BuyTokenTicket") }}</span>
         </div>
         <div class="step_own" v-show="active_step == 2">
           <StepTwo></StepTwo>
@@ -57,7 +57,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-earn"></use>
           </svg>
-          <span>3.兑换 Token</span>
+          <span>3.{{ $t("IIO.SwapToken") }}</span>
         </div>
         <div class="step_own" v-show="active_step == 3">
           <StepThree></StepThree>

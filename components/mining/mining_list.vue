@@ -13,7 +13,11 @@
       >
         <img
           class="combo_img"
-          src="~/assets/img/mining/combo_web.png"
+          :src="
+            require(`~/assets/img/mining/combo_${
+              item.dueDate == 'Finished' ? 'expired' : 'web'
+            }.png`)
+          "
           alt=""
           v-if="item.combo"
         />
@@ -23,6 +27,19 @@
           src="~/assets/img/mining/flash_web.png"
           alt=""
           v-if="item.flash"
+        />
+        <img
+          class="combo_img"
+          style="width: 116px"
+          src="~/assets/img/mining/serial_web.png"
+          alt=""
+          v-if="item.serial"
+        /><img
+          class="combo_img"
+          style="width: 32px; height: 32px; left: 10px"
+          src="~/assets/img/mining/serialnext_web.png"
+          alt=""
+          v-if="item.serialNext"
         />
         <section>
           <span
@@ -36,33 +53,41 @@
             {{ $t("Table.EarnList") }}
             <span>
               <img
-                :src="require(`~/assets/img/mining/${item.earn}.png`)"
+                v-if="item.earnImg"
+                :src="
+                  require(`~/assets/img/mining/${
+                    item.dueDate == 'Finished'
+                      ? item.earn + '_expired'
+                      : item.earn
+                  }.png`)
+                "
                 :class="item.earnNum"
                 alt=""
               />
+              <template v-else style="color: #17173a">{{ item.earn }}</template>
             </span>
           </p>
         </section>
         <section>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
               {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
               >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </section>
         <section>
           <span>{{
-            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
+            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>{{ item.earnName }}</span>
         </section>
@@ -112,11 +137,16 @@
           :activeType="activeType"
           :TradeType="'ALL'"
         ></HelmetDodoPool>
-        <!-- <HelmetHelmetPool
-          v-if="activeMining == 'helmet' && showActiveMining"
+        <FeiFeiPool
+          v-if="activeMining == 'QFEI' && showActiveMining"
           :activeType="activeType"
           :TradeType="'ALL'"
-        ></HelmetHelmetPool> -->
+        ></FeiFeiPool>
+        <QfeiQsdPool
+          v-if="activeMining == 'kun' && showActiveMining"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></QfeiQsdPool>
         <HelmetHelmetPool
           v-if="activeMining == 'helmet_mdex' && showActiveMining"
           :activeType="activeType"
@@ -151,6 +181,18 @@
         src="~/assets/img/mining/flash_web.png"
         alt=""
         v-if="item.flash"
+      /><img
+        class="combo_img"
+        style="width: 116px"
+        src="~/assets/img/mining/serial_web.png"
+        alt=""
+        v-if="item.serial"
+      /><img
+        class="combo_img"
+        style="width: 32px; height: 32px; left: 10px"
+        src="~/assets/img/mining/serialnext_web.png"
+        alt=""
+        v-if="item.serialNext"
       />
       <section>
         <span
@@ -162,33 +204,35 @@
           {{ $t("Table.EarnList") }}
           <span>
             <img
+              v-if="item.earnImg"
               :src="require(`~/assets/img/mining/${item.earn}.png`)"
               :class="item.earnNum"
               alt=""
             />
+            <template v-else style="color: #17173a">{{ item.earn }}</template>
           </span>
         </p>
       </section>
       <section>
         <p>
           <span>{{
-            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
+            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>{{ item.earnName }}</span>
         </p>
         <div>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
               {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
               >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -250,11 +294,16 @@
         :activeType="activeType"
         :TradeType="activeType"
       ></HelmetDodoPool>
-      <!-- <HelmetHelmetPool
-        v-if="activeMining == 'helmet'"
+      <FeiFeiPool
+        v-if="activeMining == 'QFEI'"
         :activeType="activeType"
         :TradeType="activeType"
-      ></HelmetHelmetPool> -->
+      ></FeiFeiPool>
+      <QfeiQsdPool
+        v-if="activeMining == 'kun'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></QfeiQsdPool>
       <HelmetHelmetPool
         v-if="activeMining == 'helmet_mdex'"
         :activeType="activeType"
@@ -289,6 +338,8 @@ import { uniswap } from "~/assets/utils/address-pool.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
+import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
+import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
@@ -297,6 +348,8 @@ export default {
   components: {
     Wraper,
     HelmetHelmetPool,
+    FeiFeiPool,
+    QfeiQsdPool,
     HelmetBurgerPool,
     HelmetForPool,
     HelmetBnbPool,
@@ -367,7 +420,6 @@ export default {
       });
     },
     StakeMiningH5(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.showActiveMining = true;
       this.activeMining = MiningType;
@@ -380,7 +432,6 @@ export default {
       this.$bus.$emit("OPEN_WRAPER_PAFE", true);
     },
     StakeMining(MiningType) {
-      console.log(MiningType);
       this.activeType = "STAKE";
       this.showActiveMining = true;
       this.activeMining = MiningType;
@@ -405,7 +456,9 @@ export default {
           miningName: "HELMET-BNB LP",
           earnNum: "two",
           earn: "helmet_cake",
+          earnImg: true,
           dueDate: "Ongoing",
+          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
@@ -413,33 +466,12 @@ export default {
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
-          miningName: "HELMET-<i>hDODO</i> DLP",
-          earn: "helmet_dodo",
-          earnNum: "two",
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: "hDODO",
-          yearEarn: apyArray["helmet_dodo"] || "--",
-        },
-        // {
-        //   miningName: "HELMET POOL",
-        //   earn: "helmet",
-        //   earnNum: "one",
-        //   dueDate: "Ongoing",
-        //   combo: false,
-        //   info: true,
-        //   earnName: "APY",
-        //   compound: true,
-        //   onePager: false,
-        //   yearEarn: apyArray["helmet"] || "--",
-        // },
-        {
           miningName: "HELMET POOL",
           earn: "helmet_mdex",
+          earnImg: true,
           earnNum: "two",
           dueDate: "Ongoing",
+          openDate: "Mining",
           combo: false,
           flash: true,
           info: true,
@@ -449,10 +481,56 @@ export default {
           yearEarn: apyArray["helmet"] || "--",
         },
         {
+          miningName: "FEI(BSC) POOL",
+          earn: "QFEI",
+          earnImg: false,
+          earnNum: "one",
+          dueDate: this.getRemainTime("2021/04/17 00:00"),
+          openDate: this.getMiningTime("2021/04/10 00:00"),
+          serial: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["qfei"] || "--",
+          expired: new Date("2021/04/17 00:00") * 1,
+          started: new Date("2021/04/10 00:00") * 1,
+        },
+        {
+          miningName: "QFEI-QSD DLP",
+          earn: "kun",
+          earnImg: true,
+          earnNum: "one",
+          dueDate: this.getRemainTime("2021/05/02 00:00"),
+          openDate: this.getMiningTime("2021/04/12 00:00"),
+          serialNext: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["kun"] || "--",
+          expired: new Date("2021/05/02 00:00") * 1,
+          started: new Date("2021/04/12 00:00") * 1,
+        },
+        {
+          miningName: "HELMET-<i>hDODO</i> DLP",
+          earn: "helmet_dodo",
+          earnImg: true,
+          earnNum: "two",
+          dueDate: this.getRemainTime("2021/04/10 00:00"),
+          openDate: "Mining",
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: "hDODO",
+          yearEarn: apyArray["helmet_dodo"] || "--",
+        },
+
+        {
           miningName: "HELMET-<i>hFOR</i> LP",
           earn: "helmet_for",
+          earnImg: true,
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/20 00:00"),
+          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
@@ -462,8 +540,10 @@ export default {
         {
           miningName: "HELMET-<i>hBURGER</i> LP",
           earn: "helmet_burger",
+          earnImg: true,
           earnNum: "two",
           dueDate: this.getRemainTime("2021/03/07 00:00"),
+          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
@@ -477,6 +557,8 @@ export default {
     getAPY() {
       this.HELMET_BNB_LP_APY();
       this.HELMET_hDODO_DLP_APY();
+      this.FEI_POOL_APY();
+      this.QFEI_QSD_DLP_APY();
       this.HELMET_POOL_APY();
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
@@ -504,7 +586,7 @@ export default {
         precision.times(miningTime, bnbValue)
       );
       let cakeapy = precision.divide(
-        precision.times(cakePrice, 1480000),
+        precision.times(cakePrice, 740000),
         precision.times(
           precision.divide(bnbValue, totalHelmet),
           cakeValue,
@@ -515,6 +597,75 @@ export default {
       let APY = precision.plus(helmetapy, cakeapy) * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
+    },
+    async HELMET_POOL_APY() {
+      let HelmetVolume = await totalSupply("HELMETPOOL");
+      // （1+日产量/总质押量）^365
+      let APY =
+        Math.pow(
+          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
+          365
+        ) * 100;
+
+      this.apyArray.helmet = fixD(APY, 2);
+      this.miningList[1].yearEarn = fixD(APY, 2);
+    },
+
+    async FEI_POOL_APY() {
+      let lptBnbValue = await uniswap("QFEI", "QSD");
+      let DODOHELMET = lptBnbValue;
+      let allVolume = DODOHELMET * 200000;
+      //总抵押
+      let supplyVolume = await totalSupply("FEIPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("FEIPOOL_LPT"); //数量
+      // 抵押总价值
+      let lptBnbValue1 = await uniswap("FEI", "WBNB");
+      let lptHelmetValue1 = await uniswap("WBNB", "QSD");
+      let stakeValue = lptBnbValue1 * lptHelmetValue1;
+      // （1+日产量/总质押量）^365
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 7), 365),
+          precision.times(stakeValue, supplyVolume)
+        ) * 100;
+
+      let startedTime = this.miningList[2].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[2].yearEarn = "--";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[2].yearEarn = fixD(APY, 2);
+      }
+    },
+    async QFEI_QSD_DLP_APY() {
+      let lptBnbValue = await uniswap("KUN", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "QSD");
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 150000;
+      //总抵押
+      let supplyVolume = await totalSupply("KUNPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("KUNPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("QSD", "KUNPOOL_LPT");
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 20), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let startedTime = this.miningList[3].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[3].yearEarn = "Infinity";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
+      }
     },
     async HELMET_hDODO_DLP_APY() {
       let lptBnbValue = await uniswap("DODO", "WBNB");
@@ -544,20 +695,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
-    },
-    async HELMET_POOL_APY() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
-      // （1+日产量/总质押量）^365
-      let APY =
-        Math.pow(
-          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
-          365
-        ) * 100;
-
-      this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[2].yearEarn = fixD(APY, 2);
+      this.miningList[4].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await uniswap("FOR", "WBNB");
@@ -587,7 +725,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[3].yearEarn = fixD(APY, 2);
+      this.miningList[5].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
@@ -618,7 +756,32 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[4].yearEarn = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
+    },
+    getMiningTime(time) {
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        return template;
+      } else {
+        return "Mining";
+      }
     },
     getRemainTime(time) {
       let now = new Date() * 1;
@@ -646,7 +809,7 @@ export default {
           day: "00",
           hour: "00",
         };
-        return "Expired";
+        return "Finished";
       }
     },
   },

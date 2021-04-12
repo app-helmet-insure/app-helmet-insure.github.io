@@ -309,6 +309,10 @@ export const getTokenName = (address) => {
             return 'TPT';
         case '0x9c65ab58d8d978db963e63f2bfb7121627e3a739':
             return 'MDX';
+        case '0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31':
+            return 'FEI';
+        case '0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2':
+            return 'QSD';
         default:
             return '--';
     }

@@ -44,25 +44,16 @@
         <section>
           <i></i>
           <p>
-            <span v-if="item.openDate == 'Mining'">
-              <span v-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-              </span>
-              <span v-else>
-                {{
-                  item.dueDate == "Expired"
-                    ? $t("Insurance.Insurance_text22")
-                    : item.dueDate
-                }}
-              </span>
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
+              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              <span>
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-                <i>/</i> {{ item.openDate.minute }}
-                <b>{{ $t("Content.MinM") }}</b>
-              </span>
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -73,7 +64,7 @@
         </section>
         <section>
           <span>{{
-            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
+            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>APR</span>
         </section>
@@ -186,32 +177,23 @@
       <section>
         <p>
           <span>{{
-            item.dueDate == "Expired" ? "--" : item.yearEarn + "%"
+            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>APR</span>
         </p>
         <div>
           <i></i>
           <p>
-            <span v-if="item.openDate == 'Mining'">
-              <span v-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-              </span>
-              <span v-else>
-                {{
-                  item.dueDate == "Expired"
-                    ? $t("Insurance.Insurance_text22")
-                    : item.dueDate
-                }}
-              </span>
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
+              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              <span>
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-                <i>/</i> {{ item.openDate.minute }}
-                <b>{{ $t("Content.MinM") }}</b>
-              </span>
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -500,7 +482,7 @@ export default {
           day: "00",
           hour: "00",
         };
-        return "Expired";
+        return "Finished";
       }
     },
     getMiningTime(time) {

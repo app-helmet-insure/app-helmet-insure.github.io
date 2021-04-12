@@ -1,9 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <!-- <div class="swiper-slide verson">
+      <div class="swiper-slide feimining">
         <div></div>
-      </div> -->
+      </div>
       <div class="swiper-slide burntpt">
         <div></div>
       </div>
@@ -129,6 +129,12 @@ export default {
         background-position: center;
       }
     }
+    .feimining {
+      background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
+      > div {
+        background-image: url("../../assets/img/banner/fei_mining_web.png");
+      }
+    }
     .verson {
       background: linear-gradient(
         360deg,
@@ -195,6 +201,12 @@ export default {
       );
       > div {
         background-image: url("../../assets/img/banner/verson_h5.png");
+      }
+    }
+    .feimining {
+      background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
+      > div {
+        background-image: url("../../assets/img/banner/fei_mining_h5.png");
       }
     }
     .burntpt {

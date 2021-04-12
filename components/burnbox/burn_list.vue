@@ -31,13 +31,7 @@
         <section>
           <p>
             {{ $t("Table.EarnList") }}
-            <img
-              alt=""
-              src="~/assets/img/burnmining/egg.png"
-              v-if="item.earn == 'hTPT'"
-              style="width: 50px; height: 50px; margin-left: 10px"
-            />
-            <span v-else>{{ item.earn }} </span>
+            <span>{{ item.earn }} </span>
           </p>
         </section>
         <section>
@@ -136,13 +130,8 @@
           ></span>
           <p>
             {{ $t("Table.EarnList") }}
-            <img
-              alt=""
-              src="~/assets/img/burnmining/egg.png"
-              v-if="item.earn == 'hTPT'"
-              style="width: 24px; height: 24px; margin-left: 10px"
-            />
-            <span v-else>{{ item.earn }} </span>
+
+            <span>{{ item.earn }} </span>
           </p>
         </div>
       </section>

@@ -147,11 +147,13 @@
     "LoadingWallet": "Loading the wallet data"
   },
   "IIO": {
-    "BuyTokenTicket": "1. BUY TICKET",
-    "DepositLptReward": "2. Stake LPT to get iToken",
-    "SwapToken": "3. Activate your iToken",
+    "BuyTokenTicket": "BUY TICKET",
+    "DepositLptReward": "Stake LPT to get iToken",
+    "SwapToken": "Activate your iToken",
     "ComingSoon": "Coming soon…",
-    "InitialOffering": "Your OPTION to redefine Initial Offering"
+    "InitialOffering": "Your OPTION to redefine Initial Offering",
+    "Pool": "{name} 面向 LPT 持有者公开兑换池",
+    "Tip": "这是兑换池合约地址，请不要向合约地址直接转币"
   },
   "Tip": {
     "Dpr": "Daily percentage of yield, DPR= daily yield / staking volume",

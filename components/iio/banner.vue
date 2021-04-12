@@ -1,7 +1,7 @@
 <template>
   <div class="iio_banner">
     <div class="iio_wrap">
-      <h3 class="iio_title">XXX 面向 LPT 持有者公开兑换池</h3>
+      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "XXX" }) }}</h3>
       <div class="iio_address">
         0x5d03b2f490cD40bc9859EB13193C2f711583560E
         <i
@@ -12,7 +12,7 @@
           "
         ></i>
       </div>
-      <span class="ioo_tips">这是兑换池合约地址，请不要向合约地址直接转币</span>
+      <span class="ioo_tips">{{ $t("IIO.Tip") }}</span>
       <div class="ioo_details">
         <div class="wrap">
           <p>

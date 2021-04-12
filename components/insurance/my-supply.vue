@@ -24,7 +24,7 @@
             <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
           </p>
           <p>
-            <span>{{ $t("Table.supplyPrice") }}: </span>
+            <span>{{ $t("Table.PolicyPrice") }}: </span>
             <span>{{ fixD(item.price, 8) }} HELMET</span>
           </p>
         </section>
@@ -81,7 +81,7 @@
             <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
           </p>
           <p>
-            <span>{{ $t("Table.supplyPrice") }}: </span>
+            <span>{{ $t("Table.PolicyPrice") }}: </span>
             <span>{{ fixD(item.price, 8) }} HELMET</span>
           </p>
         </section>

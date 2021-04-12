@@ -1,6 +1,6 @@
 <template>
   <div class="stepOne">
-    <div class="step_title">购买 Matter 门票后抵押 LPT 才能获得奖励</div>
+    <div class="step_title">{{ $t("IIO.ActionOne", { name: "Token" }) }}</div>
     <div class="step_action">
       <p class="step_buy">
         <span>
@@ -8,7 +8,7 @@
           >: {{ Balance }} HELMET</span
         >
         <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
-          >获得 HELMET</a
+          >{{ $t("IIO.Get") }} HELMET</a
         >
       </p>
       <label>
@@ -18,10 +18,10 @@
         </div>
       </label>
       <p class="text">
-        <span>每张资格通证: {{ PassportPrice }} HELMET</span>
+        <span>{{ $t("IIO.OneTicket") }}: {{ PassportPrice }} HELMET</span>
       </p>
-      <button @click="BuyPassport">购买 Matter 门票</button>
-      <p class="tips">此次用于购买门票的所有 Helmet 将在兑换结束后全部销毁</p>
+      <button @click="BuyPassport">{{ $t("IIO.BuyTokenTicket") }}</button>
+      <p class="tips">{{ $t("IIO.Tip2") }}</p>
     </div>
   </div>
 </template>

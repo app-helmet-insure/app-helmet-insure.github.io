@@ -16,29 +16,34 @@
       <div class="ioo_details">
         <div class="wrap">
           <p>
-            <span>参与人数</span>
+            <span>{{ $t("IIO.ActiveNumber") }}</span>
             <span>1000 人</span>
           </p>
           <i></i>
           <p>
-            <span>总发行量</span>
+            <span>{{ $t("IIO.TotalSupply") }}</span>
             <span>100000 MATTER</span>
           </p>
           <i></i>
         </div>
         <div class="tip" v-if="!ticketFlag">
-          <i></i>你尚未购买门票，<span @click="toStep1"
-            >购买门票激活份额 ></span
+          <i></i>{{ $t("IIO.NoTicket") }}，<span @click="toStep1"
+            >{{ $t("IIO.BuyTicket") }} ></span
+          >
+        </div>
+        <div class="tip" v-if="ticketFlag">
+          <i></i>{{ $t("IIO.HaveTicket") }}，<span @click="toStep2"
+            >{{ $t("IIO.AddShare") }} ></span
           >
         </div>
         <div class="wrap">
           <p>
-            <span>总质押金额</span>
+            <span>{{ $t("IIO.TotalValue") }}</span>
             <span>{{ showMsg.DepositeValue }} USD</span>
           </p>
           <i></i>
           <p>
-            <span>我的抵押</span>
+            <span>{{ $t("IIO.MyStake") }}</span>
             <span>{{ showMsg.DepositedVolume }} LPT</span>
           </p>
         </div>
@@ -78,6 +83,9 @@ export default {
   methods: {
     toStep1() {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
+    },
+    toStep2() {
+      this.$bus.$emit("JUMP_STEP", { step: 2 });
     },
     async buyAppliedFlag() {
       let reward_name = "IIO_HELMETBNB_REWARD";
@@ -139,7 +147,6 @@ export default {
     align-items: center;
   }
   .iio_title {
-    width: 595px;
     font-size: 40px;
     font-weight: 600;
     color: #121212;

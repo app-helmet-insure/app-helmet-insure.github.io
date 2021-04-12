@@ -1,6 +1,6 @@
 <template>
   <div class="stepTwo">
-    <div class="step_title">抵押 LPT 领取 iTOKEN 奖励</div>
+    <div class="step_title">{{ $t("IIO.ActionTwo", { name: "Token" }) }}</div>
     <div class="step_action">
       <label>
         <p>
@@ -40,16 +40,17 @@
       >
       <i></i>
       <p class="text">
-        <span>预计可获得： </span>
+        <span>{{ $t("IIO.Earn") }}： </span>
         <span>
           {{ showMsg.AvailableVolume }} iTOKEN
           <i class="question"></i>
         </span>
       </p>
-      <a>什么是 iTOKEN ？</a>
+      <a>{{ $t("IIO.What") }} iTOKEN ？</a>
     </div>
     <button v-if="getRewardFlag" class="getReward" @click="getReward">
-      <i :class="claimLoading ? 'loading_pic' : ''"></i>领取奖励
+      <i :class="claimLoading ? 'loading_pic' : ''"></i
+      >{{ $t("IIO.GetReward") }}
     </button>
     <button
       v-else
@@ -60,7 +61,7 @@
       {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
       {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
       {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
-      可领取奖励
+      {{ $t("IIO.CanGetReward") }}
     </button>
   </div>
 </template>
@@ -73,7 +74,7 @@ import {
   toDeposite,
 } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
-import { getReward3, earned3 } from "~/interface/iio.js";
+import { getReward3, earned3, applied3 } from "~/interface/iio.js";
 export default {
   data() {
     return {
@@ -186,7 +187,6 @@ export default {
       }
       this.stakeLoading = true;
       let type = "IIO_HELMETBNB_POOL";
-      console.log(1);
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
   },

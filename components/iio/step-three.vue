@@ -1,36 +1,43 @@
 <template>
   <div class="stepThree">
-    <div class="step_title">兑换TOKEN</div>
-    <p>
-      你可在<span>2021-04-12 00:00</span>前在此兑换 Matter, 也可以在<i
-        @click="toHome"
-        >我的保单</i
-      >页面兑换
-    </p>
+    <div class="step_title">{{ $t("IIO.ActionThree") }}</div>
+    <p
+      v-html="
+        $t('IIO.CanGetReward', { time: '2021-04-12 00:00', name: 'Matter' })
+      "
+      @click="toHome($event)"
+    ></p>
     <div class="step_action">
       <div class="step_myaccount">
         <p>
-          <span>待兑换</span>
+          <span>{{ $t("IIO.CanSwap") }}</span>
           <span>{{ fixD(AvailableVolume, 4) }} HELMET</span>
         </p>
         <p>
-          <span>余额</span>
+          <span>{{ $t("IIO.Balance") }}</span>
           <span>{{ fixD(SwapBalance, 4) }} HELMET</span>
         </p>
       </div>
       <div class="rewardDetail">
         <i></i>
         <p>
-          <span>
-            当前待兑换 <i>{{ fixD(AvailableVolume, 4) }} iMatter</i>, 共可兑换
-            <i>{{ fixD(AvailableVolume, 4) }} Matter</i>
+          <span
+            v-html="
+              $t('IIO.SwapMyToken', {
+                num1: fixD(AvailableVolume, 4),
+                name1: 'iMatter',
+                num2: fixD(AvailableVolume, 4),
+                name2: 'Matter',
+              })
+            "
+          >
           </span>
           <span
-            >需要支付 <i>{{ fixD(swapAssets, 5) }} BUSD</i></span
+            >{{ $t("IIO.Speed") }} <i>{{ fixD(swapAssets, 5) }} BUSD</i></span
           >
         </p>
       </div>
-      <button @click="swapActive">兑换</button>
+      <button @click="swapActive">{{ $t("IIO.Swap") }}</button>
     </div>
   </div>
 </template>
@@ -41,6 +48,7 @@ import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
+import { applied3 } from "~/interface/iio.js";
 export default {
   data() {
     return {
@@ -56,8 +64,10 @@ export default {
     }, 1000);
   },
   methods: {
-    toHome() {
-      this.$router.push("/MyPolicy");
+    toHome(e) {
+      if (e.target.tagName === "I") {
+        this.$router.push("/MyPolicy");
+      }
     },
     async getBalance() {
       let TicketAddress = "IIO_HELMETBNB_TICKET";
@@ -174,6 +184,7 @@ export default {
           background-repeat: no-repeat;
           background-size: 100% 100%;
           cursor: pointer;
+          flex-shrink: 0;
         }
         p {
           margin-left: 4px;
@@ -181,7 +192,7 @@ export default {
             display: block;
             font-size: 14px;
             color: #9b9b9b;
-            line-height: 16px;
+            line-height: 18px;
             i {
               color: #121212;
             }
@@ -272,6 +283,7 @@ export default {
           background-repeat: no-repeat;
           background-size: 100% 100%;
           cursor: pointer;
+          flex-shrink: 0;
         }
         p {
           margin-left: 4px;

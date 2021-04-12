@@ -36,7 +36,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-share"></use>
           </svg>
-          <span>2. {{ $t("IIO.BuyTokenTicket") }}</span>
+          <span>2. {{ $t("IIO.DepositLptReward") }}</span>
         </div>
         <div class="step_own" v-show="active_step == 2">
           <StepTwo></StepTwo>
@@ -194,6 +194,7 @@ export default {
     width: 100%;
     padding: 60px 0;
     background: #f7f7fa;
+    position: relative;
   }
 }
 @media screen and (max-width: 750px) {

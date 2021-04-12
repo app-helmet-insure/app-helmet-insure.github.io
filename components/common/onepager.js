@@ -78,4 +78,12 @@ export default {
         'Expire date: March, 9th, 2021',
         'More details in our Medium.',
     ],
+    QFEI: [
+        'It is the call option of $QSD',
+        'The ratio of $QSD & $FEI = 1:1',
+        'With 1 $QFEI, you could swap 1 $FEI to 1$QSD on the Insurance- Policy you hold Tab before expire date.',
+        'Expire date: May 10th',
+        'You could farm $KUN by $QFEI-$QSD LPT',
+        'Please do not trade heavily on $QFEI.',
+    ],
 };

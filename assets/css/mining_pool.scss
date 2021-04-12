@@ -157,6 +157,9 @@
                             background-image: url('../../assets/img/icon/qian@2x.png');
                         }
                     }
+                    .H5_link {
+                        display: none;
+                    }
                 }
             }
         }
@@ -313,6 +316,9 @@
                         .qian {
                             background-image: url('../../assets/img/icon/qian@2x.png');
                         }
+                    }
+                    .PC_link {
+                        display: none !important;
                     }
                 }
             }

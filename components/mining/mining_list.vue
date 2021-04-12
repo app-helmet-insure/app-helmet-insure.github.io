@@ -496,7 +496,7 @@ export default {
           started: new Date("2021/04/10 00:00") * 1,
         },
         {
-          miningName: "QFEI-QSD DLP",
+          miningName: "<i>QFEI</i>-QSD DLP",
           earn: "kun",
           earnImg: true,
           earnNum: "one",
@@ -505,7 +505,7 @@ export default {
           serialNext: true,
           info: true,
           earnName: "APR",
-          onePager: false,
+          onePager: "QFEI",
           yearEarn: apyArray["kun"] || "--",
           expired: new Date("2021/05/02 00:00") * 1,
           started: new Date("2021/04/12 00:00") * 1,

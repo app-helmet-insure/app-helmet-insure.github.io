@@ -586,7 +586,7 @@ export default {
         precision.times(miningTime, bnbValue)
       );
       let cakeapy = precision.divide(
-        precision.times(cakePrice, 740000),
+        precision.times(cakePrice, 1200000),
         precision.times(
           precision.divide(bnbValue, totalHelmet),
           cakeValue,

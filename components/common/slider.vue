@@ -120,6 +120,14 @@
           </nuxt-link>
         </li>
         <li class="menu_item">
+          <nuxt-link to="/NFT" :class="routeObj.name === 'NFT' ? 'active' : ''">
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-iio"></use>
+            </svg>
+            {{ $t("Header.NFT") }}
+          </nuxt-link>
+        </li>
+        <li class="menu_item">
           <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-papar"></use>

@@ -27,5 +27,6 @@ export default {
   box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
   border-radius: 10px 10px 5px 5px;
   padding: 40px 0;
+  margin-bottom: 40px;
 }
 </style>

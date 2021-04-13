@@ -1,20 +1,16 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide iio">
+        <div></div>
+      </div>
       <div class="swiper-slide feimining">
         <div></div>
       </div>
       <div class="swiper-slide burntpt">
         <div></div>
       </div>
-      <div class="swiper-slide combododo">
-        <div></div>
-      </div>
-      <div class="swiper-slide dodogroup">
-        <div></div>
-      </div>
     </div>
-    <!-- <div class="swiper-pagination"></div> -->
     <div class="swiper-button-next swiper-button-black"></div>
     <div class="swiper-button-prev swiper-button-black"></div>
   </div>
@@ -146,10 +142,10 @@ export default {
         background-image: url("../../assets/img/banner/verson_web.png");
       }
     }
-    .combododo {
-      background: linear-gradient(225deg, #ff9502 0%, #ffc400 100%);
+    .iio {
+      background: #fd662c;
       > div {
-        background-image: url("../../assets/img/banner/combo_dodo_web.png");
+        background-image: url("../../assets/img/banner/iio_web.png");
       }
     }
     .burntpt {
@@ -161,12 +157,6 @@ export default {
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
-    }
-    .dodogroup {
-      background: #000000;
-      > div {
-        background-image: url("../../assets/img/banner/dodo_group_web.png");
-      }
     }
   }
 }
@@ -215,21 +205,15 @@ export default {
         background-image: url("../../assets/img/banner/burn_tpt_h5.png");
       }
     }
-    .combododo {
-      background: linear-gradient(225deg, #ff9502 0%, #ffc400 100%);
+    .iio {
+      background: #fd662c;
       > div {
-        background-image: url("../../assets/img/banner/combo_dodo_h5.png");
+        background-image: url("../../assets/img/banner/iio_h5.png");
       }
     }
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;
-    }
-    .dodogroup {
-      background: #000000;
-      > div {
-        background-image: url("../../assets/img/banner/dodo_group_h5.png");
-      }
     }
   }
 }

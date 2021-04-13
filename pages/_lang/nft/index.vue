@@ -28,7 +28,6 @@ export default {
 @media screen and (min-width: 750px) {
   .main_container {
     width: 100%;
-    height: 100%;
     margin: 20px auto 40px;
     background: #241e26;
   }
@@ -139,6 +138,7 @@ export default {
 @media screen and (max-width: 750px) {
   .main_container {
     width: 100%;
+    background: #241e26;
   }
   .nft_wraper {
     width: 100%;

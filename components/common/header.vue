@@ -1,5 +1,8 @@
 <template>
-  <div class="header-container">
+  <div
+    class="header-container"
+    :style="routeObj.name == 'nft' ? 'background:#241e26 !important' : ''"
+  >
     <div class="logo">
       <img src="~/assets/img/helmet/header_logo.png" alt="" />
       <div class="more" @click="handleShowMask">

@@ -81,14 +81,14 @@
         </section>
       </div>
       <div class="ContractAddress">
-        <span>QFEI {{ $t("Table.ContractAddress") }}</span>
+        <span>QSD {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a
+          0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a')
+              copyAdress($event, '0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2')
             "
           ></i>
         </p>
@@ -156,6 +156,19 @@
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
+      </div>
+      <div class="ContractAddress">
+        <span>KUN {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x1a2fb0af670d0234c2857fad35b789f8cb725584
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x1a2fb0af670d0234c2857fad35b789f8cb725584')
+            "
+          ></i>
+        </p>
       </div>
     </div>
   </div>

@@ -77,6 +77,19 @@
           >
         </section>
       </div>
+      <div class="ContractAddress">
+        <span>FEI(BSC) {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -144,6 +157,19 @@
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
+      <div class="ContractAddress">
+        <span>QFEI {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -161,6 +187,8 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   props: ["activeType", "TradeType"],
   components: {

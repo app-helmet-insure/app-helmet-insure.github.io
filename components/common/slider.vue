@@ -122,7 +122,7 @@
         <li class="menu_item">
           <nuxt-link to="/NFT" :class="routeObj.name === 'IIO' ? 'active' : ''">
             <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-iio"></use>
+              <use xlink:href="#icon-nft"></use>
             </svg>
             {{ $t("Header.NFT") }}
           </nuxt-link>
@@ -145,6 +145,18 @@
         </li>
       </ul>
       <div class="footer">
+        <div class="logo_wrap">
+          <a
+            href="https://www.coingecko.com/en/coins/helmet-insure"
+            target="_blank"
+            ><img src="~/assets/img/slider/coingecko.png" alt=""
+          /></a>
+          <a
+            href="https://coinmarketcap.com/currencies/helmet-insure/"
+            target="_blank"
+            ><img src="~/assets/img/slider/cmc.png" alt=""
+          /></a>
+        </div>
         <div class="footer_top">
           <a href="https://twitter.com/Helmet_insure" target="_blank">
             <svg class="icon" aria-hidden="true">
@@ -427,7 +439,30 @@ export default {
   }
   .footer {
     height: 128px;
-    padding: 0 20px;
+    .logo_wrap {
+      display: flex;
+      transform: translateX(-10px);
+      a {
+        margin-right: 8px;
+        height: 30px;
+        padding: 0 8px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          background: rgba(23, 23, 58, 0.3);
+        }
+        &:last-of-type {
+          margin: 0;
+        }
+        img {
+          height: 16px;
+        }
+      }
+    }
     .footer_top {
       height: 64px;
       display: flex;
@@ -630,7 +665,32 @@ export default {
     }
   }
   .footer {
-    padding: 0 10px;
+    .logo_wrap {
+      display: flex;
+      margin-bottom: 10px;
+      transform: translateX(-10px);
+      margin-bottom: 20px;
+      a {
+        margin-right: 8px;
+        height: 30px;
+        padding: 0 8px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          background: rgba(23, 23, 58, 0.3);
+        }
+        &:last-of-type {
+          margin: 0;
+        }
+        img {
+          height: 16px;
+        }
+      }
+    }
     .footer_top {
       height: 36px;
       display: flex;

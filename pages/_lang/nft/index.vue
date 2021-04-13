@@ -27,13 +27,15 @@ export default {
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
   .main_container {
-    width: 80%;
-    width: 1026px;
+    width: 100%;
+    height: 100%;
     margin: 20px auto 40px;
+    background: #241e26;
   }
   .nft_wraper {
     width: 1026px;
     height: 910px;
+    margin: 0 auto;
     background: #241e26;
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 10px;
@@ -69,7 +71,7 @@ export default {
       .pz1 {
         position: absolute;
         width: 157px;
-        height: 137px;
+        height: 138px;
         left: 73px;
         bottom: 1px;
         background-image: url("../../../assets/img/nftcome/pz1_web.png");
@@ -87,7 +89,7 @@ export default {
         cursor: pointer;
         &:hover + .pz1 {
           left: 383px !important;
-          bottom: 322px !important;
+          bottom: 321px !important;
         }
       }
       .pz2 {
@@ -186,7 +188,7 @@ export default {
       }
       .pz1box {
         width: 94px;
-        height: 82px;
+        height: 83px;
         background: transparent;
         position: absolute;
         left: 100px;

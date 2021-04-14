@@ -349,6 +349,7 @@ export default {
           2
         );
       }
+      InsuanceData[0].InsuranceDay = 30;
       this.InsuanceData = InsuanceData;
       this.$forceUpdate();
     },

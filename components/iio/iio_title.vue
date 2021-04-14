@@ -3,7 +3,7 @@
     <div class="iio_title_wrap">
       <div class="iio_title_text">
         <h3>IIO: Initial BSC Token Offerings</h3>
-        <p>Neo token sale model with European option logic.</p>
+        <p>New assets distribution model with European option logic.</p>
       </div>
     </div>
   </div>

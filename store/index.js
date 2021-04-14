@@ -137,7 +137,6 @@ export const state = () => ({
             BURGER: '2021/05/12 00:00',
             WBNB: '2021/04/21 00:00',
             MATH: '2021/05/05 00:00',
-            COIN: '--',
         },
     ],
     echartIndexArray: {

@@ -25,7 +25,7 @@
           <section>
             <img
               :src="
-                require(`~/assets/img/insurancetype/${item.InsuranceType}.png`)
+                require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
               "
               alt=""
             />
@@ -55,7 +55,7 @@
                   : 'buyPutInsurance'
               "
               :style="
-                item.InsuranceType == 'COIN'
+                item.InsuranceImg == 'COIN'
                   ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
                   : ''
               "
@@ -73,7 +73,7 @@
                   : 'buyCallInsurance'
               "
               :style="
-                item.InsuranceType == 'COIN'
+                item.InsuranceImg == 'COIN'
                   ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
                   : ''
               "
@@ -91,7 +91,7 @@
                   : 'issueInsurance'
               "
               :style="
-                item.InsuranceType == 'COIN'
+                item.InsuranceImg == 'COIN'
                   ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
                   : ''
               "
@@ -142,7 +142,7 @@
           <div>
             <img
               :src="
-                require(`~/assets/img/insurancetype/${item.InsuranceType}.png`)
+                require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
               "
               alt=""
             />
@@ -157,7 +157,7 @@
           <button
             @click="buyInsurance_h5(item.InsuranceType)"
             :style="
-              item.InsuranceType == 'COIN'
+              item.InsuranceImg == 'COIN'
                 ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
                 : ''
             "
@@ -167,7 +167,7 @@
           <button
             @click="issueInsurance_h5(item.InsuranceType)"
             :style="
-              item.InsuranceType == 'COIN'
+              item.InsuranceImg == 'COIN'
                 ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
                 : ''
             "
@@ -295,31 +295,40 @@ export default {
     async InitInsuanceData() {
       let InsuanceData = [
         {
-          InsuranceType: "COIN",
+          InsuranceType: "COIN(BSC)",
+          InsuranceImg: "COIN",
         },
         {
           InsuranceType: "HELMET",
+          InsuranceImg: "HELMET",
         },
         {
           InsuranceType: "ETH",
+          InsuranceImg: "ETH",
         },
         {
           InsuranceType: "BTCB",
+          InsuranceImg: "BTCB",
         },
         {
           InsuranceType: "CAKE",
+          InsuranceImg: "CAKE",
         },
         {
           InsuranceType: "CTK",
+          InsuranceImg: "CTK",
         },
         {
           InsuranceType: "BURGER",
+          InsuranceImg: "BURGER",
         },
         {
           InsuranceType: "WBNB",
+          InsuranceImg: "WBNB",
         },
         {
           InsuranceType: "MATH",
+          InsuranceImg: "MATH",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];
@@ -334,7 +343,9 @@ export default {
             ? Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000)
             : 0;
         // 保险周期
-        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-") || "--";
+        InsuanceData[i].InsuranceDate = InsuranceTime
+          ? InsuranceTime.replace(reg, "-")
+          : "--";
         // 保险剩余天数
         InsuanceData[i].InsuranceDay = InunranceDay || "--";
 

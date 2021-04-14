@@ -86,4 +86,11 @@ export default {
         'You could farm $KUN by $QFEI-$QSD LPT',
         'Please do not trade heavily on $QFEI.',
     ],
+    BHELMET: [
+        'Total Supply: 190,000',
+        'Activate price: 1HELMET=1.5BUSD, meaning that you could get 1 $HELMET by just $1.5',
+        'Expire date: June 16th 00:00 SGT ',
+        '$BHELMET is the reward for HELMET-BNB MLP, allowing Helmeters to get Helmet at lower price. ',
+        `Remember to activate $bHELMET on 'Policy You Hold' tab and do not trade heavily on $BHELMET.`,
+    ],
 };

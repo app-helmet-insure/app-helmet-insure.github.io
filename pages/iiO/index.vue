@@ -1,4 +1,4 @@
 <script>
-import IIO from "~/pages/_lang/iio/index.vue";
+import IIO from "~/pages/_lang/iiO/index.vue";
 export default IIO;
 </script>

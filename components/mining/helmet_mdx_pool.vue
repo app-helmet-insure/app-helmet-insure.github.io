@@ -77,7 +77,7 @@
         </section>
       </div>
       <div class="ContractAddress">
-        <span>bHELMET {{ $t("Table.ContractAddress") }}</span>
+        <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
         <p>
           0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
           <i
@@ -130,7 +130,10 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>bHELMET {{ $t("Table.HELMETRewards") }}：</span>
+          <span
+            ><i @click="hadnleShowOnePager($event, 'BHELMET')">BHELMET</i>
+            {{ $t("Table.HELMETRewards") }}：</span
+          >
           <span>
             <countTo
               v-if="isLogin"
@@ -140,7 +143,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            bHELMET</span
+            BHELMET</span
           >
         </p>
         <p>
@@ -289,6 +292,18 @@ export default {
     },
   },
   methods: {
+    hadnleShowOnePager(e, onePager) {
+      if (e.target.tagName === "I" && onePager) {
+        let Earn = onePager;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${onePager}?`,
+          text: onePager,
+        });
+      } else {
+        return;
+      }
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -359,4 +374,18 @@ export default {
 </script>
 <style lang='scss'scoped>
 @import "../../assets/css/mining_pool.scss";
+.button {
+  > p {
+    > span {
+      i {
+        cursor: pointer;
+        border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+        &:hover {
+          color: #fd8a2b;
+          border-bottom: 2px dotted #fd8a2b;
+        }
+      }
+    }
+  }
+}
 </style>

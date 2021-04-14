@@ -1232,7 +1232,7 @@ export default {
           transfer: true,
           longAdress: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
           type: "Call",
-          symbol: "bHELMET",
+          symbol: "BHELMET",
           approveAddress1: "FACTORY",
           approveAddress2: "",
           outPrice: 1.5,

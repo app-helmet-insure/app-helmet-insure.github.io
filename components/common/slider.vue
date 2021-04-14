@@ -143,7 +143,7 @@
           </nuxt-link>
         </li>
         <li class="menu_item">
-          <nuxt-link to="/IIO" :class="routeObj.name === 'iio' ? 'active' : ''">
+          <nuxt-link to="/IIO" :class="routeObj.name === 'iiO' ? 'active' : ''">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-iio"></use>
             </svg>

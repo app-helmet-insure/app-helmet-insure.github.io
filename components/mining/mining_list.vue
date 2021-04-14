@@ -636,9 +636,8 @@ export default {
       let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
       // 抵押总价值
       let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
-
       // （1+日产量/总质押量）^365
-      let APY =
+      let helmetAPY =
         precision.divide(
           precision.times(precision.divide(allVolume, 30), 365),
           precision.times(
@@ -646,7 +645,19 @@ export default {
             supplyVolume
           )
         ) * 100;
-      console.log(APY);
+      let lptBnbValue1 = await uniswap("MDX", "WBNB");
+      let lptHelmetValue1 = await uniswap("WBNB", "HELMET");
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 3467.52;
+
+      let mdxAPY =
+        precision.divide(
+          precision.times(precision.divide(stakeValue1, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let APY = helmetAPY + mdxAPY;
       let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {

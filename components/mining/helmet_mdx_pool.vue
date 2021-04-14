@@ -12,7 +12,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          LPT
+          MLP
         </p>
       </div>
       <div class="content">
@@ -47,7 +47,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;MLP</span
           >
         </p>
         <p>
@@ -61,7 +61,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;MLP</span
           >
         </p>
         <section>
@@ -72,9 +72,22 @@
           <a
             href="https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
             target="_blank"
-            >From <i class="mdx"></i>Get HELMET-BNB LPT</a
+            >From <i class="mdx"></i>Get HELMET-BNB MLP</a
           >
         </section>
+      </div>
+      <div class="ContractAddress">
+        <span>bHELMET {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672')
+            "
+          ></i>
+        </p>
       </div>
     </div>
     <i></i>
@@ -90,7 +103,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          LPT
+          MLP
         </p>
       </div>
       <div class="content">
@@ -117,7 +130,7 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>BHELMET {{ $t("Table.HELMETRewards") }}：</span>
+          <span>bHELMET {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <countTo
               v-if="isLogin"
@@ -127,7 +140,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            BHELMET</span
+            bHELMET</span
           >
         </p>
         <p>

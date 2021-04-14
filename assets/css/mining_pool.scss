@@ -113,8 +113,8 @@
                     span {
                         display: flex;
                         align-items: center;
-                        padding: 0 8px;
-                        height: 24px;
+                        padding: 4px 8px;
+                        min-height: 24px;
                         position: absolute;
                         right: 15px;
                         font-size: 12px;
@@ -123,6 +123,10 @@
                         background: #f8f9fa;
                         border-radius: 5px;
                         border: 1px solid #e8e8eb;
+                        &:hover {
+                            background: #fffaf3;
+                            border: 1px solid #fd7e14;
+                        }
                     }
                 }
             }
@@ -155,6 +159,9 @@
                         }
                         .qian {
                             background-image: url('../../assets/img/icon/qian@2x.png');
+                        }
+                        .mdx {
+                            background-image: url('../../assets/img/icon/mdx@2x.png');
                         }
                     }
                     .H5_link {
@@ -273,8 +280,8 @@
                     span {
                         display: flex;
                         align-items: center;
-                        padding: 0 8px;
-                        height: 24px;
+                        padding: 4px 8px;
+                        min-height: 24px;
                         position: absolute;
                         right: 15px;
                         font-size: 12px;
@@ -283,6 +290,10 @@
                         background: #f8f9fa;
                         border-radius: 5px;
                         border: 1px solid #e8e8eb;
+                        &:hover {
+                            background: #fffaf3;
+                            border: 1px solid #fd7e14;
+                        }
                     }
                 }
             }
@@ -315,6 +326,9 @@
                         }
                         .qian {
                             background-image: url('../../assets/img/icon/qian@2x.png');
+                        }
+                        .mdx {
+                            background-image: url('../../assets/img/icon/mdx@2x.png');
                         }
                     }
                     .PC_link {

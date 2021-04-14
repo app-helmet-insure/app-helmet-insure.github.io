@@ -132,6 +132,11 @@
           :activeType="activeType"
           :TradeType="'ALL'"
         ></HelmetBnbPool>
+        <HelmetMdxPool
+          v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></HelmetMdxPool>
         <HelmetDodoPool
           v-if="activeMining == 'helmet_dodo' && showActiveMining"
           :activeType="activeType"
@@ -289,6 +294,11 @@
         :activeType="activeType"
         :TradeType="activeType"
       ></HelmetBnbPool>
+      <HelmetMdxPool
+        v-if="activeMining == 'bhelmet_mdx'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></HelmetMdxPool>
       <HelmetDodoPool
         v-if="activeMining == 'helmet_dodo'"
         :activeType="activeType"
@@ -337,6 +347,7 @@ import precision from "~/assets/js/precision.js";
 import { uniswap } from "~/assets/utils/address-pool.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
 import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
@@ -348,6 +359,7 @@ export default {
   components: {
     Wraper,
     HelmetHelmetPool,
+    HelmetMdxPool,
     FeiFeiPool,
     QfeiQsdPool,
     HelmetBurgerPool,
@@ -466,6 +478,21 @@ export default {
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
+          miningName: "HELMET-BNB MLP",
+          earnNum: "two",
+          earn: "bhelmet_mdx",
+          earnImg: true,
+          dueDate: this.getRemainTime("2021/05/15 00:00"),
+          openDate: this.getMiningTime("2021/04/15 00:00"),
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["bhelmet_mdx"] || "--",
+          expired: new Date("2021/05/15 00:00") * 1,
+          started: new Date("2021/04/15 00:00") * 1,
+        },
+        {
           miningName: "HELMET POOL",
           earn: "helmet_mdex",
           earnImg: true,
@@ -562,6 +589,7 @@ export default {
       this.HELMET_POOL_APY();
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
+      this.HELMET_MDX_LP_APY();
     },
     async HELMET_BNB_LP_APY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
@@ -598,6 +626,36 @@ export default {
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
     },
+    async HELMET_MDX_LP_APY() {
+      let lptBnbValue = await uniswap("BHELMET", "HELMET");
+      let DODOHELMET = lptBnbValue;
+      let allVolume = DODOHELMET * 180000;
+      //总抵押
+      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
+
+      // （1+日产量/总质押量）^365
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      console.log(APY);
+      let startedTime = this.miningList[1].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[1].yearEarn = "--";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[1].yearEarn = fixD(APY, 2);
+      }
+    },
     async HELMET_POOL_APY() {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       // （1+日产量/总质押量）^365
@@ -608,7 +666,7 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
+      this.miningList[2].yearEarn = fixD(APY, 2);
     },
 
     async FEI_POOL_APY() {
@@ -633,10 +691,10 @@ export default {
       let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[2].yearEarn = "--";
+        this.miningList[3].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
       }
     },
     async QFEI_QSD_DLP_APY() {
@@ -661,10 +719,10 @@ export default {
       let startedTime = this.miningList[3].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[3].yearEarn = "Infinity";
+        this.miningList[4].yearEarn = "Infinity";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_hDODO_DLP_APY() {
@@ -695,7 +753,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[4].yearEarn = fixD(APY, 2);
+      this.miningList[5].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await uniswap("FOR", "WBNB");
@@ -725,7 +783,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[5].yearEarn = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
@@ -756,7 +814,7 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[6].yearEarn = fixD(APY, 2);
+      this.miningList[7].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;

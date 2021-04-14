@@ -54,6 +54,11 @@
                   ? 'activeButton buyPutInsurance'
                   : 'buyPutInsurance'
               "
+              :style="
+                item.InsuranceType == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Insurance.Insurance_text6") }}
               <i class="selectDown"></i>
@@ -67,6 +72,11 @@
                   ? 'activeButton buyCallInsurance'
                   : 'buyCallInsurance'
               "
+              :style="
+                item.InsuranceType == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Insurance.Insurance_text7") }}
               <i class="selectDown"></i>
@@ -79,6 +89,11 @@
                 activeType == 'SELL'
                   ? 'activeButton issueInsurance'
                   : 'issueInsurance'
+              "
+              :style="
+                item.InsuranceType == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
               "
             >
               {{ $t("Insurance.Insurance_text8") }}
@@ -139,10 +154,24 @@
           </p>
         </section>
         <section>
-          <button @click="buyInsurance_h5(item.InsuranceType)">
+          <button
+            @click="buyInsurance_h5(item.InsuranceType)"
+            :style="
+              item.InsuranceType == 'COIN'
+                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Insurance.Insurance_text24") }}
           </button>
-          <button @click="issueInsurance_h5(item.InsuranceType)">
+          <button
+            @click="issueInsurance_h5(item.InsuranceType)"
+            :style="
+              item.InsuranceType == 'COIN'
+                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Insurance.Insurance_text8") }}
           </button>
         </section>
@@ -266,6 +295,9 @@ export default {
     async InitInsuanceData() {
       let InsuanceData = [
         {
+          InsuranceType: "COIN",
+        },
+        {
           InsuranceType: "HELMET",
         },
         {
@@ -302,9 +334,9 @@ export default {
             ? Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000)
             : 0;
         // 保险周期
-        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-");
+        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-") || "--";
         // 保险剩余天数
-        InsuanceData[i].InsuranceDay = InunranceDay;
+        InsuanceData[i].InsuranceDay = InunranceDay || "--";
 
         // BNB价格
         InsuanceData[i].InsurancePriceBNB = fixD(

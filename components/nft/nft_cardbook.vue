@@ -9,7 +9,14 @@
     </div>
     <div class="nft_cardbook_cards">
       <div class="one_card">
-        <div class="dora_card"></div>
+        <div class="dora_card">
+          <div
+            class="dora_piece"
+            v-for="item in cardList"
+            :key="item.card_name"
+            :style="`background-image:url(${require(`../../assets/img/nft/${item.card_img.toLowerCase()}_Dora.png`)}`"
+          ></div>
+        </div>
         <button>马上兑换</button>
         <a>查看 Dora NFT 合约地址</a>
       </div>
@@ -153,8 +160,20 @@ export default {
       .dora_card {
         width: 309px;
         height: 400px;
-        background: #fcc;
+        background-image: url("../../assets/img/nft/zero_Dora.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
         flex-shrink: 0;
+        border-radius: 10px;
+        position: relative;
+        .dora_piece {
+          width: 100%;
+          height: 100%;
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          position: absolute;
+          left: 0;
+        }
       }
       > button {
         width: 240px;
@@ -201,8 +220,8 @@ export default {
         width: 140px;
         height: 180px;
         background: #ffffff;
-        // box-shadow: 0px 0px 32px 0px #aeaeae,
-        //   2px 2px 0px 0px rgba(255, 255, 255, 0.4);
+        box-shadow: 0px 0px 32px 0px #aeaeae inset;
+
         border-radius: 6px;
         > div {
           width: 100%;

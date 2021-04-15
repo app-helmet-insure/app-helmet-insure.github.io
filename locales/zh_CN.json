@@ -151,6 +151,25 @@
     "BuyTokenTicket": "1. 购买 TOKEN 门票",
     "DepositLptReward": "2. 抵押 LPT 获得奖励",
     "SwapToken": "3. 兑换 Token",
+    "Details": "Details",
+    "Details_title1": "如何获得IIO项目代币?",
+    "Details_text1": "获得可交易的iTOKEN，可以在‘我的保单’或者‘IIO’相关页面激活/行权",
+    "Details_text2": "行权需要相应的基本代币，如BUSD/BNB/HELMET",
+    "Details_title2": "如何获取iTOKEN?",
+    "Details_text3": "1.得到HELMET-BNB LPTs(Pancakeswap)",
+    "Details_text4": "2.购买完门票后，在IIO页面可以查看你预期的iTOKEN份额",
+    "Details_text5": "3.提取你的iTOKEN",
+    "Details_title3": "什么是IIO燃烧机制?",
+    "Details_text6": "IIO参与者筹集的门票(HELMET)将被永久焚烧",
+    "Details_title4": "我是否会因为获得新的IIO Token而失去helmet-bnb LP?",
+    "Details_text7": "这对你在池中的LPT没有影响，因为合约只会扫描你的LPT份额来计算你的iToken份额",
+    "Details_text8": "此外，在IIO期间，您将享受helmet- bnb LP Pool的双重奖励",
+    "Details_text9": "iToken分配机制: 基本上，你在helmet-bnb池中拥有越多的LPT，你将获得越多的iToken",
+    "Details_text10": "用户可以根据自己的意愿参与IIO，他们对iToken的最终分配将基于IIO结束时其他用户投入的所有LPT中他们所持有的LPT的百分比",
+    "Details_text11": "如果与池子的总额相比，您拥有的LP代币数量非常少，那么您的份额可能只占总额的很一小部分",
+    "Details_text12": "出售前: 1.购买HELMET和BNB代币 2.通过在Pancakeswap增加HELMET和BNB流动性获得 LP代币; 3.在官网‘挖矿’板块中抵押Helmet-BNB LP(Pancakeswap)",
+    "Details_text13": "出售期间: 1.用helmet支付IIO门票; 2.系统会根据你的LP数量显示相应份额，开始挖掘您的iToken (IIO share)",
+    "Details_text14": "出售后:当IIO完成后，你就可以 1.交易iToken; 2.通过激活你的iToken来兑换IIO代币(你需要在你的钱包里准备足够的基本代币，如BNB，HELMET或BUSD来完成交换)"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",
@@ -166,8 +185,8 @@
     "FlashTip2": "你可以挖出不同品种的保单，请注意每一个保单品种的到期日",
     "MiningTip1": "挖矿是token奖励挖矿活动",
     "MiningTip2": "你可以通过不同的LPT挖出多重token奖励，请注意池子的到期日提示",
-    "IIOTip1": "IIO: Initial BSC Token Offerings",
-    "IIOTip2": "New assets distribution model with European option logic."
+    "IIOTip1": "IIO: BSC项目打新板块",
+    "IIOTip2": "以欧式期权逻辑为基础的全新代币资产分发模式"
   },
   "Account": {
     "Account": "我的账户",

@@ -1,19 +1,18 @@
 <template>
   <div class="iio_details">
-    <h3>Details</h3>
+    <h3>{{ $t("IIO.Details") }}</h3>
     <div class="details_wrap">
       <div class="qus" @click="showQus1">
         <i :class="aws1 ? 'open' : 'close'"></i>
-        <p>How to get IIO Token?</p>
+        <p>{{ $t("IIO.Details_title1") }}</p>
       </div>
       <div class="aws" v-if="aws1">
         <div class="text">
           <p>
-            Get the tradable iTokens which could be activated/swapped to IIO
-            Tokens on Insurance tab or IIO tab after the sale.
+            {{ $t("IIO.Details_text1") }}
           </p>
           <p>
-            This swap required corresponding basic token like BUSD/BNB/HELMET
+            {{ $t("IIO.Details_text2") }}
           </p>
         </div>
       </div>
@@ -21,75 +20,42 @@
     <div class="details_wrap">
       <div class="qus" @click="showQus2">
         <i :class="aws2 ? 'open' : 'close'"></i>
-        <p>How to get iTOKEN?</p>
+        <p>{{ $t("IIO.Details_title2") }}</p>
       </div>
       <div class="aws" v-if="aws2">
         <div class="text">
-          <p>1.Get HELMET-BNB LPTs</p>
-          <p>2.Stake them into HELMET-BNB Pool to check your expected share</p>
-          <p>3.Claim your iTOKEN</p>
+          <p>{{ $t("IIO.Details_text3") }}</p>
+          <p>{{ $t("IIO.Details_text4") }}</p>
+          <p>{{ $t("IIO.Details_text5") }}</p>
         </div>
       </div>
     </div>
     <div class="details_wrap">
       <div class="qus" @click="showQus3">
         <i :class="aws2 ? 'open' : 'close'"></i>
-        <p>What is the Token Burning Mechanism?</p>
+        <p>{{ $t("IIO.Details_title3") }}</p>
       </div>
       <div class="aws" v-if="aws3">
         <div class="text">
-          <p>
-            Tickets ($HELMET) from IIO participants raised will be burned
-            forever.
-          </p>
+          <p>{{ $t("IIO.Details_text6") }}</p>
         </div>
       </div>
     </div>
     <div class="details_wrap">
       <div class="qus" @click="showQus4">
         <i :class="aws4 ? 'open' : 'close'"></i>
-        <p>Will I lose my HELMET-BNB LP for getting new IIO Token?</p>
+        <p>{{ $t("IIO.Details_title4") }}</p>
       </div>
       <div class="aws" v-if="aws4">
         <div class="text">
-          <p>
-            There will be no effect on your LPT in the pool, since Helmet team
-            will only scan your LPT Share to calculate your iToken share.
-          </p>
-          <p>
-            PLUS, in the period of IIO, you’ll enjoy the Dual-rewards of
-            HELMET-BNB LP Pool.
-          </p>
-          <p>
-            iToken distribution mechanism： Basically, the more LPT you have in
-            HELMET-BNB Pool, the more iToken you will get.
-          </p>
-          <p>
-            Users can subscribe as much or as little as they want to the IIO,
-            and their final allocation of iToken will be based on the amount of
-            LPT they hold as a percentage of all LPT put in by other users at
-            the time the IIO ends.
-          </p>
-          <p>
-            If you have a very small amount of LP tokens compared to the total
-            amount committed by others, your contribution may be such a small
-            part of the total.​
-          </p>
-          <p>
-            Before Sale: 1.Buy HELMET and BNB tokens; 2.Get HELMET-BNB LP tokens
-            by adding HELMET and BNB liquidity;
-          </p>
-          <p>
-            During Sale: 1.While the sale is live, go to PAY for the IIO ticket;
-            2.Commit or add your HELMET-BNB LP tokens to start mining your
-            iToken (IIO share);
-          </p>
-          <p>
-            After Sale: When the sale is complete, you could 1.Trade the iToken;
-            2.Swap the IIO tokens by activating your iToken ( you need to
-            prepare enough required basic token like BNB, HELMET or BUSD in your
-            wallet to complete this swap)
-          </p>
+          <p>{{ $t("IIO.Details_text7") }}</p>
+          <p>{{ $t("IIO.Details_text8") }}</p>
+          <p>{{ $t("IIO.Details_text9") }}</p>
+          <p>{{ $t("IIO.Details_text10") }}</p>
+          <p>{{ $t("IIO.Details_text11") }}</p>
+          <p>{{ $t("IIO.Details_text12") }}</p>
+          <p>{{ $t("IIO.Details_text13") }}</p>
+          <p>{{ $t("IIO.Details_text14") }}</p>
         </div>
       </div>
     </div>

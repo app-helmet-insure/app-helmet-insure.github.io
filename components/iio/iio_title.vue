@@ -2,8 +2,8 @@
   <div class="iio_title">
     <div class="iio_title_wrap">
       <div class="iio_title_text">
-        <h3></h3>
-        <p></p>
+        <h3>{{ $t("Tip.IIOTip1") }}</h3>
+        <p>{{ $t("Tip.IIOTip2") }}</p>
       </div>
     </div>
   </div>

@@ -245,6 +245,14 @@
               <use xlink:href="#icon-audit"></use>
             </svg>
           </a>
+          <a
+            href="https://line.me/ti/g2/PEPrGL03FLQFz2d06z3UaA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+            target="_blank"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-line"></use>
+            </svg>
+          </a>
         </div>
         <div class="footer_bottom">
           <Langauage class="langauage" />
@@ -537,7 +545,7 @@ export default {
       border-bottom: 1px solid #e8e8eb;
       a {
         margin-right: 20px;
-        &:nth-of-type(4) {
+        &:last-of-type {
           margin: 0;
         }
         .icon {
@@ -547,9 +555,6 @@ export default {
           &:hover {
             fill: #17173a;
           }
-        }
-        &:nth-of-type(4) {
-          margin: 0;
         }
       }
     }
@@ -774,7 +779,7 @@ export default {
             fill: #17173a;
           }
         }
-        &:nth-of-type(4) {
+        &:last-of-type {
           margin: 0;
         }
       }

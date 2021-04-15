@@ -20,7 +20,10 @@
     <!-- <PHeader></PHeader> -->
     <div class="content">
       <PSlider></PSlider>
-      <div class="content_wrap">
+      <div
+        class="content_wrap"
+        :style="routeObj.name == 'nft' ? 'background:#241e26 !important' : ''"
+      >
         <PHeader :account="true"></PHeader>
         <template>
           <transition name="fade">
@@ -93,6 +96,10 @@ export default {
     };
   },
   computed: {
+    routeObj() {
+      console.log(this.$route);
+      return this.$route;
+    },
     longMap() {
       return this.$store.state.longMap;
     },

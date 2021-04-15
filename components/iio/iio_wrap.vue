@@ -20,11 +20,11 @@
           <div class="text">
             <p>
               <span>{{ $t("IIO.HomeText1") }}</span
-              ><span>APR.19,9PM SGT</span>
+              ><span>Apr. 19th 21:00 SGT</span>
             </p>
             <p>
               <span>{{ $t("IIO.HomeText2") }}</span
-              ><span>APR 23,9PM SGT</span>
+              ><span>Apr. 23th 21:00 SGT</span>
             </p>
             <p>
               <span>{{ $t("IIO.HomeText3") }}</span

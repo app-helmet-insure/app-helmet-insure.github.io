@@ -151,8 +151,6 @@
     "BuyTokenTicket": "1. 购买 TOKEN 门票",
     "DepositLptReward": "2. 抵押 LPT 获得奖励",
     "SwapToken": "3. 兑换 Token",
-    "ComingSoon": "Coming soon…",
-    "InitialOffering": "Your OPTION to redefine Initial Offering"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",
@@ -167,7 +165,9 @@
     "FlashTip1": "闪电挖矿是一系列短期保单挖矿活动",
     "FlashTip2": "你可以挖出不同品种的保单，请注意每一个保单品种的到期日",
     "MiningTip1": "挖矿是token奖励挖矿活动",
-    "MiningTip2": "你可以通过不同的LPT挖出多重token奖励，请注意池子的到期日提示"
+    "MiningTip2": "你可以通过不同的LPT挖出多重token奖励，请注意池子的到期日提示",
+    "IIOTip1": "IIO: Initial BSC Token Offerings",
+    "IIOTip2": "New assets distribution model with European option logic."
   },
   "Account": {
     "Account": "我的账户",

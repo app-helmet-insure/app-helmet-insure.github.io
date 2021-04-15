@@ -151,8 +151,6 @@
     "BuyTokenTicket": "1. BUY TICKET",
     "DepositLptReward": "2. Stake LPT to get iToken",
     "SwapToken": "3. Activate your iToken",
-    "ComingSoon": "Coming soon…",
-    "InitialOffering": "Your OPTION to redefine Initial Offering"
   },
   "Tip": {
     "Dpr": "Daily percentage of yield, DPR= daily yield / staking volume",
@@ -168,7 +166,9 @@
     "FlashTip1": "Flash Mining is a short-term policy mining campaign.",
     "FlashTip2": "You could farm different policy with the notice of expiration date.",
     "MiningTip1": "Helmet Mining Campaigns.",
-    "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs)."
+    "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).",
+    "IIOTip1": "IIO: Initial BSC Token Offerings",
+    "IIOTip2": "New assets distribution model with European option logic."
   },
   "Account": {
     "Account": "Account",

@@ -13,7 +13,7 @@
             :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
             alt=""
           />
-          <h3>chainswap</h3>
+          <h3>chainswap<span>(TOKEN)</span></h3>
           <a href="https://www.chainswap.exchange/" target="_blank"
             ><span>chainswap.com</span><i></i
           ></a>
@@ -123,6 +123,9 @@ export default {
         font-weight: 500;
         color: #ffffff;
         line-height: 28px;
+        span {
+          font-size: 22px;
+        }
       }
       > a {
         display: flex;
@@ -271,6 +274,9 @@ export default {
         font-weight: 500;
         color: #ffffff;
         line-height: 28px;
+        span {
+          font-size: 22px;
+        }
       }
       > a {
         display: flex;

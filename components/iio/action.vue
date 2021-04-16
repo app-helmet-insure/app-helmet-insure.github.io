@@ -193,7 +193,7 @@ export default {
     margin-bottom: 80px;
     width: 100%;
     padding: 60px 0;
-    background: #f7f7fa;
+    background: #fff;
     position: relative;
   }
 }
@@ -275,7 +275,7 @@ export default {
     margin-top: 28px;
     width: 100%;
     padding: 20px 12px 30px;
-    background: #f7f7fa;
+    background: #fff;
     border-radius: 3px;
   }
   .step_content {

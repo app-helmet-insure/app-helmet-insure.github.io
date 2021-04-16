@@ -100,15 +100,8 @@ export default {
       let DepositedVolume = await getLPTOKEN(pool_name);
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
-      let obj = [
-        { "0x6411310c07d8c48730172146fd6f31fa84034a8b": toWei(DepositeTotal) },
-      ];
-      getLongValue(obj).then((res) => {
-        let DepositeValue =
-          res.data[0]["0x6411310c07d8c48730172146fd6f31fa84034a8b"];
-        this.showMsg.DepositeValue = addCommom(DepositeValue, 2);
-      });
-      this.showMsg.DepositedVolume = addCommom(DepositedVolume, 2);
+      this.showMsg.DepositeValue = addCommom(DepositeTotal, 2);
+      this.showMsg.DepositedVolume = fixD(DepositedVolume, 2);
     },
     copyAdress(e, text) {
       let _this = this;

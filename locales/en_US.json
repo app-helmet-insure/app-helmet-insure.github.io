@@ -172,7 +172,7 @@
     "What": "What is",
     "GetReward": "Claim iTOKEN",
     "ActionThree": "Swap IIO TOKEN",
-    "CanGetReward": "You could swap {name} before <span>{time}</span>, or activate your itoken on <i>The policy you hold</i> tab",
+    "CanGetReward": "You could swap {name} during <span>{time1}</span>—<span>{time2}</span>",
     "CanSwap": "My share",
     "Balance": "Balance",
     "SwapMyToken": "You have got <i> {num1} {name1}</i>, which could be swapped to <i> {num2} {name2}</i> ",

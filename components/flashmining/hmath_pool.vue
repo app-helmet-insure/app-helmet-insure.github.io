@@ -303,10 +303,6 @@ export default {
     this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
     });
-    this.$bus.$on("OPEN_ONEPAGER1", (a) => {
-      console.log(a);
-      // this.showOnepager();
-    });
     setTimeout(() => {
       this.getBalance();
       this.getAPY();

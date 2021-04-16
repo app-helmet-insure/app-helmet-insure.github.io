@@ -1,68 +1,86 @@
 <template>
   <div class="stepTwo">
-    <div class="step_title">{{ $t("IIO.ActionTwo", { name: "Token" }) }}</div>
-    <div class="step_action">
-      <label>
-        <p>
-          <span>{{ $t("Table.AmountDeposit") }}</span>
-          <span>
-            {{ showMsg.DepositeVolume }} LPT {{ $t("Table.DAvailable") }}
-          </span>
+    <div class="left">
+      <div class="step_title">{{ $t("IIO.ActionTwo", { name: "Token" }) }}</div>
+      <div class="step_action">
+        <label>
+          <p>
+            <span>{{ $t("Table.AmountDeposit") }}</span>
+            <span>
+              {{ showMsg.DepositeVolume }} LPT {{ $t("Table.DAvailable") }}
+            </span>
+          </p>
+          <div class="input">
+            <input type="text" v-model="DepositeNum" />
+            <span @click="DepositeNum = showMsg.DepositeVolume">
+              {{ $t("Table.Max") }}
+            </span>
+          </div>
+        </label>
+        <button @click="toDeposite" :class="stakeLoading ? 'disable ' : ''">
+          <i :class="stakeLoading ? 'loading_pic' : ''"></i>
+          {{ $t("Table.ConfirmDeposit") }}
+        </button>
+      </div>
+      <div class="step_details">
+        <p class="text">
+          <span> {{ $t("Table.MyDeposits") }}： </span>
+          <span> {{ showMsg.DepositedVolume }} LPT </span>
         </p>
-        <div class="input">
-          <input type="text" v-model="DepositeNum" />
-          <span @click="DepositeNum = showMsg.DepositeVolume">
-            {{ $t("Table.Max") }}
-          </span>
-        </div>
-      </label>
-      <button @click="toDeposite" :class="stakeLoading ? 'disable ' : ''">
-        <i :class="stakeLoading ? 'loading_pic' : ''"></i>
-        {{ $t("Table.ConfirmDeposit") }}
-      </button>
+        <p class="text">
+          <span> {{ $t("Table.TotalDeposited") }}： </span>
+          <span> {{ showMsg.DepositeTotal }} LPT </span>
+        </p>
+        <p class="text">
+          <span>{{ $t("Table.MyPoolShare") }}： </span>
+          <span> {{ showMsg.MyPoolShare }}%</span>
+        </p>
+        <a
+          href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+          target="_blank"
+          >Get HELMET-BNB LPT</a
+        >
+      </div>
     </div>
-    <div class="step_details">
-      <p class="text">
-        <span>
-          {{ $t("Table.MyDeposits") }}/{{ $t("Table.TotalDeposited") }}：
-        </span>
-        <span>
-          {{ showMsg.DepositedVolume }}/{{ showMsg.DepositeTotal }} LPT
-        </span>
-      </p>
-      <p class="text">
-        <span>{{ $t("Table.MyPoolShare") }}： </span>
-        <span> {{ showMsg.MyPoolShare }}%</span>
-      </p>
-      <a
-        href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-        target="_blank"
-        >Get HELMET-BNB LPT</a
-      >
-      <i></i>
+    <i></i>
+    <div class="right">
       <p class="text">
         <span>{{ $t("IIO.Earn") }}： </span>
         <span>
-          {{ showMsg.AvailableVolume }} iTOKEN
-          <i class="question"></i>
+          {{ showMsg.AvailableVolume }}
+          <i class="under" @click="hadnleShowOnePager($event, 'iTOKEN')">
+            iTOKEN</i
+          >
         </span>
       </p>
-      <a>{{ $t("IIO.What") }} iTOKEN ？</a>
+      <button v-if="getRewardFlag" class="getReward" @click="getReward">
+        <i :class="claimLoading ? 'loading_pic' : ''"></i
+        >{{ $t("IIO.GetReward") }}
+      </button>
+      <button
+        v-else
+        class="getReward"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "d" }}
+        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
+        {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
+        {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
+      </button>
+      <div class="ContractAddress">
+        <span>iTOKEN {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x9ebbb98f2bc5d5d8e49579995c5efac487303bea
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
-    <button v-if="getRewardFlag" class="getReward" @click="getReward">
-      <i :class="claimLoading ? 'loading_pic' : ''"></i
-      >{{ $t("IIO.GetReward") }}
-    </button>
-    <button
-      v-else
-      class="getReward"
-      style="pointer-events: none; background: #cfcfd2"
-    >
-      {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "d" }}
-      {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
-      {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
-      {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
-    </button>
   </div>
 </template>
 
@@ -121,6 +139,18 @@ export default {
     }, 1000);
   },
   methods: {
+    hadnleShowOnePager(e, onePager) {
+      if (e.target.tagName === "I" && onePager) {
+        console.log(1);
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${onePager}?`,
+          text: onePager,
+        });
+      } else {
+        return;
+      }
+    },
     async getBalance() {
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
@@ -136,7 +166,7 @@ export default {
       this.showMsg.DepositeVolume = fixD(DepositeVolume, 4);
       this.showMsg.DepositedVolume = fixD(DepositedVolume, 4);
       this.showMsg.DepositeTotal = fixD(DepositeTotal, 4);
-      this.showMsg.AvailableVolume = fixD(AvailableVolume, 4);
+      this.showMsg.AvailableVolume = fixD(AvailableVolume, 8);
       this.showMsg.MyPoolShare = fixD(
         (DepositedVolume / DepositeTotal) * 100,
         2
@@ -156,7 +186,7 @@ export default {
     },
     getRewardTime() {
       let nowTime = new Date() * 1;
-      let getTime = new Date("2021/04/16 17:00");
+      let getTime = new Date("2021/04/16 16:00");
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
@@ -207,58 +237,140 @@ export default {
   animation: loading 2s 0s linear infinite;
 }
 @media screen and (min-width: 750px) {
-  .stepTwo {
-    width: 420px;
-    margin: 0 auto;
-    .step_title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #121212;
+  .ContractAddress {
+    font-size: 14px;
+    color: #fd7e14;
+    margin-top: 8px;
+    span {
+      color: #fd7e14 !important;
     }
-    .step_action {
-      > label {
-        > p {
-          margin: 20px 0 10px 0;
+    p {
+      display: flex;
+      margin-top: 4px;
+      align-items: center;
+      font-weight: 550;
+      font-size: 12px !important;
+    }
+    i {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-image: url("../../assets/img/helmet/copy.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      cursor: pointer;
+      margin-left: 4px;
+      flex-shrink: 0;
+    }
+  }
+  .stepTwo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    .left {
+      width: 320px;
+      .step_title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #121212;
+      }
+      .step_action {
+        > label {
+          > p {
+            margin: 20px 0 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span {
+              font-size: 14px;
+              color: #9b9b9b;
+            }
+          }
+          .input {
+            width: 100%;
+            height: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            input {
+              width: 100%;
+              height: 100%;
+              border-radius: 5px;
+              border: 1px solid #cfcfd2;
+              padding-left: 12px;
+              &:focus {
+                height: 39px;
+                border: 2px solid #ff9600;
+                padding-left: 11px;
+              }
+            }
+            span {
+              position: absolute;
+              font-size: 14px;
+              color: #121212;
+              right: 15px;
+              cursor: pointer;
+            }
+          }
+        }
+        > button {
+          margin-top: 20px;
+          width: 100%;
+          height: 40px;
+          background: #121212;
+          border-radius: 5px;
+          font-size: 14px;
+          font-weight: 600;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            background: #2c2c2c;
+          }
+        }
+      }
+      .step_details {
+        margin-top: 12px;
+        width: 320px;
+        .text {
+          margin-top: 4px;
           display: flex;
           justify-content: space-between;
           align-items: center;
           span {
-            font-size: 14px;
-            color: #9b9b9b;
-          }
-        }
-        .input {
-          width: 100%;
-          height: 40px;
-          position: relative;
-          display: flex;
-          align-items: center;
-          input {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-            border: 1px solid #cfcfd2;
-            padding-left: 12px;
-            &:focus {
-              height: 39px;
-              border: 2px solid #ff9600;
-              padding-left: 11px;
+            &:nth-of-type(1) {
+              font-size: 14px;
+              color: #9b9b9b;
+              line-height: 20px;
+            }
+            &:nth-of-type(2) {
+              font-size: 14px;
+              color: #121212;
+              line-height: 20px;
+              display: flex;
+              align-items: center;
             }
           }
-          span {
-            position: absolute;
-            font-size: 14px;
-            color: #121212;
-            right: 15px;
-            cursor: pointer;
-          }
+        }
+        > a {
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 600;
+          color: #ff9600;
+          line-height: 20px;
+          margin-top: 4px;
         }
       }
-      > button {
+    }
+    .right {
+      width: 320px;
+      .getReward {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
+        background: #ff9600;
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
@@ -267,12 +379,17 @@ export default {
         align-items: center;
         justify-content: center;
         &:hover {
-          background: #2c2c2c;
+          background: #ffa000;
         }
       }
-    }
-    .step_details {
-      margin-top: 12px;
+      > a {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ff9600;
+        line-height: 20px;
+        margin-top: 4px;
+      }
       .text {
         margin-top: 4px;
         display: flex;
@@ -288,39 +405,55 @@ export default {
             font-size: 14px;
             color: #121212;
             line-height: 20px;
-            display: flex;
-            align-items: center;
+            font-weight: 600;
+          }
+        }
+        .under {
+          border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+          cursor: pointer;
+          &:hover {
+            color: #fd7e14;
+            border-bottom: 2px dotted #fd7e14;
           }
         }
       }
-      > a {
-        display: inline-block;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ff9600;
-        line-height: 20px;
-        margin-top: 4px;
-      }
     }
-    .getReward {
-      margin-top: 20px;
-      width: 100%;
-      height: 40px;
-      background: #ff9600;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #ffffff;
+    > i {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      &:hover {
-        background: #ffa000;
-      }
+      width: 1px;
+      height: 246px;
+      background: #e8e8eb;
+      margin: 0 80px;
     }
   }
 }
 @media screen and (max-width: 750px) {
+  .ContractAddress {
+    font-size: 12px;
+    color: #fd7e14;
+    margin-top: 8px;
+    span {
+      color: #fd7e14 !important;
+    }
+    p {
+      display: flex;
+      margin-top: 4px;
+      align-items: center;
+      font-weight: 550;
+      font-size: 12px !important;
+    }
+    i {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background-image: url("../../assets/img/helmet/copy.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      cursor: pointer;
+      margin-left: 4px;
+      flex-shrink: 0;
+    }
+  }
   .stepTwo {
     width: 100%;
     .step_title {
@@ -412,13 +545,7 @@ export default {
           }
         }
       }
-      > i {
-        display: block;
-        width: 100%;
-        height: 1px;
-        border: 1px dashed #ebe9e3;
-        margin-top: 10px;
-      }
+
       > a {
         display: block;
         margin-top: 8px;
@@ -442,6 +569,43 @@ export default {
       justify-content: center;
       &:hover {
         background: #ffa000;
+      }
+    }
+    > i {
+      display: block;
+      width: 100%;
+      height: 1px;
+      border: 1px dashed #ebe9e3;
+      margin-top: 10px;
+    }
+    .right {
+      margin-top: 10px;
+      .text {
+        margin-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        span {
+          &:nth-of-type(1) {
+            font-size: 14px;
+            color: #9b9b9b;
+            line-height: 20px;
+          }
+          &:nth-of-type(2) {
+            font-size: 14px;
+            color: #121212;
+            line-height: 20px;
+            font-weight: 600;
+          }
+        }
+        .under {
+          border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+          cursor: pointer;
+          &:hover {
+            color: #fd7e14;
+            border-bottom: 2px dotted #fd7e14;
+          }
+        }
       }
     }
   }

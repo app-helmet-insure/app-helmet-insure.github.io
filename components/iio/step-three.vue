@@ -3,7 +3,11 @@
     <div class="step_title">{{ $t("IIO.ActionThree") }}</div>
     <p
       v-html="
-        $t('IIO.CanGetReward', { time: '2021-04-12 00:00', name: 'Matter' })
+        $t('IIO.CanGetReward', {
+          time1: '2021-04-11 00:00',
+          time2: '2021-04-12 00:00',
+          name: 'TOKEN',
+        })
       "
       @click="toHome($event)"
     ></p>
@@ -11,11 +15,11 @@
       <div class="step_myaccount">
         <p>
           <span>{{ $t("IIO.CanSwap") }}</span>
-          <span>{{ fixD(AvailableVolume, 4) }} HELMET</span>
+          <span>{{ fixD(AvailableVolume, 8) }} HELMET</span>
         </p>
         <p>
           <span>{{ $t("IIO.Balance") }}</span>
-          <span>{{ fixD(SwapBalance, 4) }} HELMET</span>
+          <span>{{ fixD(SwapBalance, 8) }} HELMET</span>
         </p>
       </div>
       <div class="rewardDetail">
@@ -24,9 +28,9 @@
           <span
             v-html="
               $t('IIO.SwapMyToken', {
-                num1: fixD(AvailableVolume, 4),
+                num1: fixD(AvailableVolume, 8),
                 name1: 'iTOEKN',
-                num2: fixD(AvailableVolume, 4),
+                num2: fixD(AvailableVolume, 8),
                 name2: 'TOKEN',
               })
             "

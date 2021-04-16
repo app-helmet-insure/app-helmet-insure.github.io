@@ -93,4 +93,12 @@ export default {
         '$BHELMET is the reward for HELMET-BNB MLP, allowing Helmeters to get Helmet at lower price. ',
         `Remember to activate $bHELMET on 'Policy You Hold' tab and do not trade heavily on $BHELMET.`,
     ],
+    iTOKEN: [
+        'iToken is the certificate to swap/activate for $TOKEN.',
+        'Only users who hold iToken could get $TOKEN during April 23rd 21:00 SGT - April 24th 21:00 SGT',
+        'iToken cannot be activated before/after that time period',
+        'iTOKEN activate/swap formula: 1 iTOKEN+0.3BUSD 1 $TOKEN',
+        'The lifetime of iToken is from Apr. 23rd 21:00 SGT - Apr. 24th 21:00 SGT. ',
+        'Please be sure to activate the iToken within the validity period.',
+    ],
 };

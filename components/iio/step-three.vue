@@ -83,7 +83,7 @@ export default {
         token: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         _underlying_vol: precision.times(0.1, this.AvailableVolume),
         vol: this.AvailableVolume,
-        long: "0x7aB58afb8500c3e37BdD59C0b4b732d177Df55B4", //奖励地址
+        long: "0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5", //奖励地址
         _underlying: getTokenName("0xe9e7cea3dedca5984780bafc599bd69add087d56"),
         _collateral: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
         settleToken: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),

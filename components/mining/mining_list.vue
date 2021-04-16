@@ -739,7 +739,7 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[2].started;
+      let startedTime = this.miningList[3].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[3].yearEarn = "--";
@@ -767,7 +767,8 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[4].started;
+      console.log(APY, supplyVolume, stakeVolue, DODOHELMET);
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[4].yearEarn = "Infinity";

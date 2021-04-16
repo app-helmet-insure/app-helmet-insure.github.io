@@ -94,6 +94,9 @@ export default {
     this.$bus.$on("JUMP_STEP", (res) => {
       this.active_step = res.step;
     });
+    this.$bus.$on("GET_FLAG", () => {
+      this.buyAppliedFlag();
+    });
     setTimeout(() => {
       this.buyAppliedFlag();
     }, 1000);

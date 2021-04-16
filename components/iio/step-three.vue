@@ -106,8 +106,8 @@ export default {
         _collateral: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
         settleToken: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
         flag: true,
-        approveAddress1: "FACTORY",
-        approveAddress2: "",
+        approveAddress1: "ORDER",
+        approveAddress2: "0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5",
         unit: "",
         showVolume: this.AvailableVolume,
       };

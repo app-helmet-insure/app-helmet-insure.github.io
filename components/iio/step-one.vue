@@ -48,10 +48,10 @@ export default {
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getPassPortPrice();
       this.$bus.$emit("JUMP_STEP", { step: 2 });
+      this.$bus.$emit("GET_FLAG");
     });
     this.buyFlag1 = new Date() * 1 < new Date("2021/04/16 23:30") * 1;
     this.buyFlag2 = new Date() * 1 > new Date("2021/04/16 21:00") * 1;
-    console.log(this.buyFlag1, this.buyFlag2);
   },
   methods: {
     async getPassPortPrice() {

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getBalance } from "~/interface/order";
+import { getBalance } from "~/interface/deposite.js";
 import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
@@ -75,6 +75,8 @@ export default {
     setTimeout(() => {
       this.getBalance();
     }, 1000);
+    this.activeFlag1 = new Date() * 1 < new Date("2021/04/17 12:00") * 1;
+    this.activeFlag2 = new Date() * 1 > new Date("2021/04/16 23:00") * 1;
   },
   methods: {
     toHome(e) {
@@ -86,7 +88,10 @@ export default {
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let RewardAddress = "IIO_HELMETBNB_REWARD";
       let AvailableVolume = await getBalance(RewardAddress);
-      let SwapBalance = await getBalance("BUSD");
+      let SwapBalance = await getBalance(
+        "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+      );
+      console.log(AvailableVolume);
       this.AvailableVolume = AvailableVolume;
       this.SwapBalance = SwapBalance;
       this.swapAssets = AvailableVolume * 0.1;

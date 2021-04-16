@@ -176,7 +176,7 @@
     "CanSwap": "My share",
     "Balance": "Balance",
     "SwapMyToken": "You have got <i> {num1} {name1}</i>, which could be swapped to <i> {num2} {name2}</i> ",
-    "Speed": "Pay",
+    "Speed": "Need Pay",
     "Swap": "Swap",
     "CanSwapToken": "My {name}",
     "SwapTokened": "Swap To",

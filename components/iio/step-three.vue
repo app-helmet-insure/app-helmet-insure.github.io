@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getBalance } from "~/interface/deposite";
+import { getBalance } from "~/interface/order";
 import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
@@ -67,7 +67,7 @@ export default {
       SwapBalance: 0,
       swapAssets: 0,
       fixD,
-      activeFlag1: new Date() * 1 < new Date("2021/04/16 19:00") * 1,
+      activeFlag1: new Date() * 1 < new Date("2021/04/16 20:00") * 1,
       activeFlag2: new Date() * 1 > new Date("2021/04/16 18:00") * 1,
     };
   },

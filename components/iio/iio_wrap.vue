@@ -41,14 +41,7 @@
               >
             </p>
           </div>
-          <button
-            @click="toDetails(item.enterFlag)"
-            :style="
-              item.enterFlag ? '' : 'background: #d5d5db;pointer-events: none;'
-            "
-          >
-            Enter Pool
-          </button>
+          <button @click="toDetails">Enter Pool</button>
         </template>
         <img
           class="soon_img"
@@ -98,7 +91,6 @@ export default {
           showStart: "Apr. 19th 21:00 SGT",
           showEnd: "Apr. 23rd 21:00 SGT",
           link: "https://www.chainswap.exchange/",
-          enterFlag: new Date() * 1 > new Date("2021/04/16 14:00") * 1,
         },
         {
           iio_name: "2",
@@ -118,10 +110,8 @@ export default {
       ];
       this.iioData = iioData;
     },
-    toDetails(flag) {
-      if (flag) {
-        this.$router.push("/IIO/Details");
-      }
+    toDetails() {
+      this.$router.push("/IIO/Details");
     },
   },
 };

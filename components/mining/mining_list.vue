@@ -4,7 +4,7 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line" v-if="item.earn == 'helmet_dodo'">
+      <div class="finshed_line finshed_pc" v-if="item.earn == 'helmet_dodo'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -191,113 +191,130 @@
         </div>
       </div>
     </div>
-    <div
-      class="mining_item_h5"
-      v-for="item in miningList"
-      :key="item.earn + '1'"
-    >
-      <img
-        class="combo_img"
-        src="~/assets/img/mining/combo_h5.png"
-        alt=""
-        v-if="item.combo"
-      />
-      <img
-        class="combo_img"
-        style="width: 236px"
-        src="~/assets/img/mining/flash_web.png"
-        alt=""
-        v-if="item.flash"
-      /><img
-        class="combo_img"
-        style="width: 116px"
-        src="~/assets/img/mining/serial_web.png"
-        alt=""
-        v-if="item.serial"
-      /><img
-        class="combo_img"
-        style="width: 32px; height: 32px; left: 10px"
-        src="~/assets/img/mining/serialnext_web.png"
-        alt=""
-        v-if="item.serialNext"
-      />
-      <section>
-        <span
-          class="onePager"
-          v-html="item.miningName"
-          @click="hadnleShowOnePager($event, item.onePager)"
-        ></span>
-        <p>
-          {{ $t("Table.EarnList") }}
-          <span>
-            <img
-              v-if="item.earnImg"
-              :src="require(`~/assets/img/mining/${item.earn}.png`)"
-              :class="item.earnNum"
-              alt=""
-            />
-            <template v-else style="color: #17173a">{{ item.earn }}</template>
-          </span>
-        </p>
-      </section>
-      <section>
-        <p>
-          <span>{{
-            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
-          }}</span>
-          <span>{{ item.earnName }}</span>
-        </p>
-        <div>
-          <i></i>
+    <div v-for="item in miningList" :key="item.earn + '1'">
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'helmet_dodo'">
+        <p></p>
+        <i></i>
+        <span>Finished</span>
+        <i></i>
+        <p></p>
+      </div>
+      <div class="mining_item_h5">
+        <img
+          class="combo_img"
+          src="~/assets/img/mining/combo_h5.png"
+          alt=""
+          v-if="item.combo"
+        />
+        <img
+          class="combo_img"
+          style="width: 236px"
+          src="~/assets/img/mining/flash_web.png"
+          alt=""
+          v-if="item.flash"
+        /><img
+          class="combo_img"
+          style="width: 116px"
+          src="~/assets/img/mining/serial_web.png"
+          alt=""
+          v-if="item.serial"
+        /><img
+          class="combo_img"
+          style="width: 32px; height: 32px; left: 10px"
+          src="~/assets/img/mining/serialnext_web.png"
+          alt=""
+          v-if="item.serialNext"
+        /><img
+          class="combo_img"
+          style="
+            width: 83px;
+            height: 28px;
+            left: 100%;
+            transform: translateX(-100%);
+          "
+          src="~/assets/img/mining/iiostark.png"
+          alt=""
+          v-if="item.iio"
+        />
+        <section>
+          <span
+            class="onePager"
+            v-html="item.miningName"
+            @click="hadnleShowOnePager($event, item.onePager)"
+          ></span>
           <p>
-            <span v-if="typeof item.openDate == 'object'">
-              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+            {{ $t("Table.EarnList") }}
+            <span>
+              <img
+                v-if="item.earnImg"
+                :src="require(`~/assets/img/mining/${item.earn}.png`)"
+                :class="item.earnNum"
+                alt=""
+              />
+              <template v-else style="color: #17173a">{{ item.earn }}</template>
             </span>
-            <span v-else-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ item.dueDate }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
-        </div>
-      </section>
-      <section>
-        <button
-          @click="StakeMiningH5(item.earn)"
-          :class="
-            activeMining == item.earn &&
-            showActiveMining &&
-            activeType == 'STAKE'
-              ? 'activeButton stakeMining'
-              : 'stakeMining'
-          "
-          style="margin-right: 10px"
-        >
-          {{ $t("Table.Stakeing") }}
-        </button>
-        <button @click="toCompound" v-if="item.compound">
-          <i :class="claimLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.Compound") }}
-        </button>
-        <button
-          @click="ClaimMiningH5(item.earn)"
-          :class="
-            activeMining == item.earn &&
-            showActiveMining &&
-            activeType == 'CLAIM'
-              ? 'activeButton claimMining'
-              : 'claimMining'
-          "
-          style="margin-left: 10px"
-        >
-          {{ $t("Table.Claim") }}
-        </button>
-      </section>
+        </section>
+        <section>
+          <p>
+            <span>{{
+              item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
+            }}</span>
+            <span>{{ item.earnName }}</span>
+          </p>
+          <div>
+            <i></i>
+            <p>
+              <span v-if="typeof item.openDate == 'object'">
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.dueDate }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </div>
+        </section>
+        <section>
+          <button
+            @click="StakeMiningH5(item.earn)"
+            :class="
+              activeMining == item.earn &&
+              showActiveMining &&
+              activeType == 'STAKE'
+                ? 'activeButton stakeMining'
+                : 'stakeMining'
+            "
+            style="margin-right: 10px"
+          >
+            {{ $t("Table.Stakeing") }}
+          </button>
+          <button @click="toCompound" v-if="item.compound">
+            <i :class="claimLoading ? 'loading_pic' : ''"></i
+            >{{ $t("Table.Compound") }}
+          </button>
+          <button
+            @click="ClaimMiningH5(item.earn)"
+            :class="
+              activeMining == item.earn &&
+              showActiveMining &&
+              activeType == 'CLAIM'
+                ? 'activeButton claimMining'
+                : 'claimMining'
+            "
+            style="margin-left: 10px"
+          >
+            {{ $t("Table.Claim") }}
+          </button>
+        </section>
+      </div>
     </div>
+
     <Wraper>
       <div class="wraper_title">
         <h3>
@@ -911,7 +928,6 @@ export default {
 <style lang="scss" scoped>
 .finshed_line {
   width: 100%;
-
   margin: 20px 0 21px 0;
   display: flex;
   align-items: center;
@@ -938,6 +954,9 @@ export default {
   }
 }
 @media screen and (min-width: 750px) {
+  .finshed_h5 {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;
@@ -1197,6 +1216,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .finshed_pc {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;

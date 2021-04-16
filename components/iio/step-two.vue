@@ -70,12 +70,12 @@
       <div class="ContractAddress">
         <span>iTOKEN {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x9ebbb98f2bc5d5d8e49579995c5efac487303bea
+          0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x9ebbb98f2bc5d5d8e49579995c5efac487303bea')
+              copyAdress($event, '0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5')
             "
           ></i>
         </p>
@@ -93,6 +93,8 @@ import {
 } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import { getReward3, earned3, applied3 } from "~/interface/iio.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   data() {
     return {
@@ -139,6 +141,23 @@ export default {
     }, 1000);
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     hadnleShowOnePager(e, onePager) {
       if (e.target.tagName === "I" && onePager) {
         console.log(1);

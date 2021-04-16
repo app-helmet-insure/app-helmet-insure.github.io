@@ -3,11 +3,11 @@
     <div class="iio_wrap">
       <h3 class="iio_title">{{ $t("IIO.Pool", { name: "XXX" }) }}</h3>
       <div class="iio_address">
-        0x5d03b2f490cD40bc9859EB13193C2f711583560E
+        0xb22425206d40605e9be5a5460786dbab5aba9485
         <a
           class="copy"
           id="copy_default"
-          href="https://www.bscscan.com/address/0x5d03b2f490cd40bc9859eb13193c2f711583560e"
+          href="https://www.bscscan.com/address/0xb22425206d40605e9be5a5460786dbab5aba9485"
           target="_blank"
         ></a>
       </div>

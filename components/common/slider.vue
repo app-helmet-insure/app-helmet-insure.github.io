@@ -662,6 +662,11 @@ export default {
             fill: #17173a;
           }
         }
+        .new,
+        .hot {
+          position: absolute;
+          right: 20px;
+        }
       }
       .child_menu {
         display: flex;

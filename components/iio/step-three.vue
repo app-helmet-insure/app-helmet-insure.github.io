@@ -14,22 +14,23 @@
     <div class="step_action">
       <div class="step_myaccount">
         <p>
-          <span>{{ $t("IIO.CanSwap") }}</span>
-          <span>{{ fixD(AvailableVolume, 8) }} HELMET</span>
+          <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span>
+          <span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
         </p>
         <p>
           <span>{{ $t("IIO.Balance") }}</span>
-          <span>{{ fixD(SwapBalance, 8) }} HELMET</span>
+          <span>{{ fixD(SwapBalance, 8) }} BUSD</span>
         </p>
       </div>
       <div class="rewardDetail">
-        <i></i>
         <div>
           <p>
-            <span>当前待兑换</span><span>{{ fixD(AvailableVolume, 8) }}</span>
+            <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span
+            ><span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
           </p>
           <p>
-            <span>共可兑换</span><span>{{ fixD(AvailableVolume, 8) }}</span>
+            <span>{{ $t("IIO.SwapTokened") }}</span
+            ><span>{{ fixD(AvailableVolume, 8) }} TOKEN</span>
           </p>
           <p>
             <span>{{ $t("IIO.Speed") }}</span
@@ -37,7 +38,16 @@
           </p>
         </div>
       </div>
-      <button @click="swapActive">{{ $t("IIO.Swap") }}</button>
+      <button
+        @click="swapActive"
+        :style="
+          activeFlag1 && activeFlag2
+            ? ''
+            : 'background: #d5d5db;pointer-events: none;'
+        "
+      >
+        {{ $t("IIO.Swap") }}
+      </button>
     </div>
   </div>
 </template>
@@ -49,6 +59,7 @@ import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
 import { applied3 } from "~/interface/iio.js";
+
 export default {
   data() {
     return {
@@ -56,6 +67,8 @@ export default {
       SwapBalance: 0,
       swapAssets: 0,
       fixD,
+      activeFlag1: new Date() * 1 < new Date("2021/04/16 19:00") * 1,
+      activeFlag2: new Date() * 1 > new Date("2021/04/16 18:00") * 1,
     };
   },
   mounted() {
@@ -73,14 +86,14 @@ export default {
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let RewardAddress = "IIO_HELMETBNB_REWARD";
       let AvailableVolume = await getBalance(RewardAddress);
-      let SwapBalance = await getBalance(TicketAddress);
+      let SwapBalance = await getBalance("BUSD");
       this.AvailableVolume = AvailableVolume;
       this.SwapBalance = SwapBalance;
       this.swapAssets = AvailableVolume * 0.1;
     },
     async swapActive() {
       let data = {
-        token: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
+        token: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
         _underlying_vol: precision.times(0.1, this.AvailableVolume),
         vol: this.AvailableVolume,
         long: "0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5", //奖励地址
@@ -177,12 +190,11 @@ export default {
         align-items: flex-start;
         > i {
           display: block;
-          width: 16px;
-          height: 16px;
+          width: 20px;
+          height: 20px;
           background-image: url("../../assets/img/iio/information.png");
           background-repeat: no-repeat;
           background-size: 100% 100%;
-          cursor: pointer;
           flex-shrink: 0;
         }
         div {
@@ -196,7 +208,7 @@ export default {
             width: 100%;
             margin-top: 10px;
             &:nth-of-type(1) {
-              margin: 0;
+              margin-top: 4px;
             }
             span {
               display: block;

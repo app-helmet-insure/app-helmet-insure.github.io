@@ -25,9 +25,9 @@
             v-html="
               $t('IIO.SwapMyToken', {
                 num1: fixD(AvailableVolume, 4),
-                name1: 'iMatter',
+                name1: 'iTOEKN',
                 num2: fixD(AvailableVolume, 4),
-                name2: 'Matter',
+                name2: 'TOKEN',
               })
             "
           >

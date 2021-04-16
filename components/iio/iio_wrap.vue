@@ -1,8 +1,61 @@
 <template>
   <div class="iio_wrap">
     <div class="iio_project">
-      <div v-for="item in iioData" :key="item.iio_name" class="iio_item">
-        <img :src="require(`~/assets/img/iio/${item.iio_img}.png`)" alt="" />
+      <div
+        v-for="item in iioData"
+        :key="item.iio_name"
+        class="iio_item"
+        :style="`background:${item.background}`"
+      >
+        <template v-if="item.coming">
+          <img
+            class="coming_img"
+            :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
+            alt=""
+          />
+          <h3>
+            {{ item.iio_name }}<span>({{ item.swapUtil }})</span>
+          </h3>
+          <a href="https://www.chainswap.exchange/" target="_blank"
+            ><span>{{ item.iio_webSite }}</span
+            ><i></i
+          ></a>
+          <div class="text">
+            <p>
+              <span>{{ $t("IIO.HomeText1") }}</span
+              ><span>{{ item.showStart }}</span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.HomeText2") }}</span
+              ><span>{{ item.showEnd }}</span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.HomeText3") }}</span
+              ><span>{{ item.swapVolume }} {{ item.swapUtil }}</span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.HomeText4") }}</span
+              ><span
+                >{{ item.swapUtil }}={{ item.stakeShare
+                }}{{ item.stakeUtil }}</span
+              >
+            </p>
+          </div>
+          <button
+            @click="toDetails(item.enterFlag)"
+            :style="
+              item.enterFlag ? '' : 'background: #d5d5db;pointer-events: none;'
+            "
+          >
+            Enter Pool
+          </button>
+        </template>
+        <img
+          class="soon_img"
+          v-if="!item.coming"
+          :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
+          alt=""
+        />
       </div>
       <div class="apply_iio">
         <div class="add_iio"></div>
@@ -31,23 +84,44 @@ export default {
     initData() {
       let iioData = [
         {
-          iio_name: "1",
-          iio_img: "iio1",
+          iio_name: "chainswap",
+          iio_img: "iio_chainswap",
+          iio_webSite: "chainswap.com",
+          coming: true,
+          background: "#7A4AE3",
+          startTime: "2021/04/16 14:00",
+          endTime: "2021/04/16 19:00",
+          swapVolume: 100000,
+          swapUtil: "TOKEN",
+          stakeUtil: "USDT",
+          stakeShare: 0.3,
+          showStart: "Apr. 19th 21:00 SGT",
+          showEnd: "Apr. 23rd 21:00 SGT",
+          link: "https://www.chainswap.exchange/",
+          enterFlag: new Date() * 1 > new Date("2021/04/16 14:00") * 1,
         },
         {
           iio_name: "2",
           iio_img: "iio2",
+          coming: false,
         },
         {
           iio_name: "3",
           iio_img: "iio3",
+          coming: false,
         },
         {
           iio_name: "4",
           iio_img: "iio4",
+          coming: false,
         },
       ];
       this.iioData = iioData;
+    },
+    toDetails(flag) {
+      if (flag) {
+        this.$router.push("/IIO/Details");
+      }
     },
   },
 };
@@ -64,7 +138,97 @@ export default {
       height: 360px;
       flex-shrink: 0;
       margin-top: 30px;
-      img {
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .coming_img {
+        width: 100px;
+        height: 100px;
+      }
+      > h3 {
+        font-size: 28px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 28px;
+        span {
+          font-size: 22px;
+        }
+      }
+      > a {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+        cursor: pointer;
+
+        span {
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 14px;
+          text-decoration: underline;
+          &:hover {
+            color: #fff;
+          }
+        }
+        i {
+          margin-top: 4px;
+          display: block;
+          width: 12px;
+          height: 12px;
+          background-image: url("../../assets/img/insurancelist/share_icon.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          margin-left: 2px;
+        }
+      }
+      .text {
+        width: 100%;
+        p {
+          width: 100%;
+          padding: 0 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 14px;
+          &:nth-of-type(1) {
+            margin-top: 28px;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 14px;
+              font-family: IBMPlexSans-Medium, IBMPlexSans;
+              font-weight: 500;
+              color: #ffffff;
+              line-height: 14px;
+            }
+          }
+        }
+      }
+      > button {
+        margin-top: 20px;
+        width: 280px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 20px;
+        &:hover {
+          background: rgba(255, 255, 255, 0.4);
+        }
+      }
+      .soon_img {
         width: 100%;
       }
     }
@@ -128,7 +292,97 @@ export default {
       width: 320px;
       height: 360px;
       flex-shrink: 0;
-      img {
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .coming_img {
+        width: 100px;
+        height: 100px;
+      }
+      > h3 {
+        font-size: 28px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 28px;
+        span {
+          font-size: 22px;
+        }
+      }
+      > a {
+        display: flex;
+        align-items: center;
+        margin-top: 4px;
+        cursor: pointer;
+
+        span {
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: rgba(255, 255, 255, 0.6);
+          line-height: 14px;
+          text-decoration: underline;
+          &:hover {
+            color: #fff;
+          }
+        }
+        i {
+          margin-top: 4px;
+          display: block;
+          width: 12px;
+          height: 12px;
+          background-image: url("../../assets/img/insurancelist/share_icon.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          margin-left: 2px;
+        }
+      }
+      .text {
+        width: 100%;
+        p {
+          width: 100%;
+          padding: 0 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 14px;
+          &:nth-of-type(1) {
+            margin-top: 28px;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 14px;
+              font-family: IBMPlexSans-Medium, IBMPlexSans;
+              font-weight: 500;
+              color: #ffffff;
+              line-height: 14px;
+            }
+          }
+        }
+      }
+      > button {
+        margin-top: 20px;
+        width: 280px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        font-size: 16px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 20px;
+        &:hover {
+          background: rgba(255, 255, 255, 0.4);
+        }
+      }
+      .soon_img {
         width: 100%;
       }
     }

@@ -1222,13 +1222,13 @@ export default {
           Rent: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1655308800000)).format(
+          dueDate: moment(new Date(1623772800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _strikePrice: fromWei(1500000000000000000, Token),
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1655308800000,
+          _expiry: 1623772800000,
           transfer: true,
           longAdress: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
           type: "Call",

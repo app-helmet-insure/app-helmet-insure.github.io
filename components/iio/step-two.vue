@@ -35,7 +35,8 @@
         <span> {{ showMsg.MyPoolShare }}%</span>
       </p>
       <a
-        href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        target="_blank"
         >Get HELMET-BNB LPT</a
       >
       <i></i>
@@ -61,7 +62,6 @@
       {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
       {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
       {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
-      {{ $t("IIO.CanGetReward") }}
     </button>
   </div>
 </template>
@@ -156,7 +156,7 @@ export default {
     },
     getRewardTime() {
       let nowTime = new Date() * 1;
-      let getTime = new Date("2021/04/08 16:20");
+      let getTime = new Date("2021/04/16 17:00");
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

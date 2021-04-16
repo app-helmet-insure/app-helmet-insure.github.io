@@ -15,14 +15,14 @@
       <span class="ioo_tips">{{ $t("IIO.Tip") }}</span>
       <div class="ioo_details">
         <div class="wrap">
-          <p>
+          <!-- <p>
             <span>{{ $t("IIO.ActiveNumber") }}</span>
             <span>1000 人</span>
-          </p>
-          <i></i>
+          </p> -->
+          <!-- <i></i> -->
           <p>
             <span>{{ $t("IIO.TotalSupply") }}</span>
-            <span>100000 MATTER</span>
+            <span>100000 TOKEN</span>
           </p>
           <i></i>
         </div>

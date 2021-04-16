@@ -148,7 +148,7 @@
     "LoadingWallet": "loading the wallet data"
   },
   "IIO": {
-    "BuyTokenTicket": "购买 {TOKEN} 门票",
+    "BuyTokenTicket": "购买门票",
     "DepositLptReward": "抵押 LPT 获得奖励",
     "SwapToken": "兑换 Token",
     "ComingSoon": "Coming soon…",
@@ -176,6 +176,10 @@
     "CanSwap": "待兑换",
     "Balance": "余额",
     "SwapMyToken": "当前待兑换<i>{num1}</i> {name1} ,共可兑换<i>{num2}</i> {name2}",
+    "HomeText1": "iToken开始释放时间",
+    "HomeText2": "iToken开始兑换时间",
+    "HomeText3": "兑换数量",
+    "HomeText4": "兑换比例",
     "Details": "Details",
     "Details_title1": "如何获得IIO项目代币?",
     "Details_text1": "获得可交易的iTOKEN，可以在‘我的保单’或者‘IIO’相关页面激活/行权",

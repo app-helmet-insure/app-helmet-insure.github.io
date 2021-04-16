@@ -4,13 +4,12 @@
       <h3 class="iio_title">{{ $t("IIO.Pool", { name: "XXX" }) }}</h3>
       <div class="iio_address">
         0x5d03b2f490cD40bc9859EB13193C2f711583560E
-        <i
+        <a
           class="copy"
           id="copy_default"
-          @click="
-            copyAdress($event, '0x5d03b2f490cD40bc9859EB13193C2f711583560E')
-          "
-        ></i>
+          href="https://www.bscscan.com/address/0x5d03b2f490cd40bc9859eb13193c2f711583560e"
+          target="_blank"
+        ></a>
       </div>
       <span class="ioo_tips">{{ $t("IIO.Tip") }}</span>
       <div class="ioo_details">
@@ -39,7 +38,7 @@
         <div class="wrap">
           <p>
             <span>{{ $t("IIO.TotalValue") }}</span>
-            <span>{{ showMsg.DepositeValue }} USD</span>
+            <span>{{ showMsg.DepositeValue }} LPT</span>
           </p>
           <i></i>
           <p>
@@ -103,23 +102,6 @@ export default {
       this.showMsg.DepositeValue = addCommom(DepositeTotal, 2);
       this.showMsg.DepositedVolume = fixD(DepositedVolume, 2);
     },
-    copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
-        Message({
-          message: "Successfully copied",
-          type: "success",
-          // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
-    },
   },
 };
 </script>
@@ -163,11 +145,11 @@ export default {
     margin-top: 20px;
     background: rgba(255, 150, 0, 0.1);
     border-radius: 26px;
-    i {
+    a {
       display: inline-block;
       width: 20px;
       height: 20px;
-      background-image: url("../../assets/img/helmet/copy.png");
+      background-image: url("../../assets/img/iio/share.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       cursor: pointer;
@@ -277,11 +259,11 @@ export default {
     background: rgba(255, 150, 0, 0.1);
     border-radius: 26px;
     justify-content: center;
-    i {
+    a {
       display: block;
       width: 12px;
       height: 12px;
-      background-image: url("../../assets/img/helmet/copy.png");
+      background-image: url("../../assets/img/iio/share.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       cursor: pointer;

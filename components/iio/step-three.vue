@@ -4,8 +4,8 @@
     <p
       v-html="
         $t('IIO.CanGetReward', {
-          time1: '2021-04-11 00:00',
-          time2: '2021-04-12 00:00',
+          time1: 'Apr.11th 00:00',
+          time2: 'Apr.12th 00:00',
           name: 'TOKEN',
         })
       "
@@ -24,22 +24,18 @@
       </div>
       <div class="rewardDetail">
         <i></i>
-        <p>
-          <span
-            v-html="
-              $t('IIO.SwapMyToken', {
-                num1: fixD(AvailableVolume, 8),
-                name1: 'iTOEKN',
-                num2: fixD(AvailableVolume, 8),
-                name2: 'TOKEN',
-              })
-            "
-          >
-          </span>
-          <span
-            >{{ $t("IIO.Speed") }} <i>{{ fixD(swapAssets, 5) }} BUSD</i></span
-          >
-        </p>
+        <div>
+          <p>
+            <span>当前待兑换</span><span>{{ fixD(AvailableVolume, 8) }}</span>
+          </p>
+          <p>
+            <span>共可兑换</span><span>{{ fixD(AvailableVolume, 8) }}</span>
+          </p>
+          <p>
+            <span>{{ $t("IIO.Speed") }}</span
+            ><span>{{ fixD(swapAssets, 8) }} BUSD</span>
+          </p>
+        </div>
       </div>
       <button @click="swapActive">{{ $t("IIO.Swap") }}</button>
     </div>
@@ -135,10 +131,9 @@ export default {
     > p {
       width: 466px;
       font-size: 14px;
-      color: #9b9b9b;
+      color: rgba(23, 23, 58, 0.4);
       margin-top: 20px;
       span {
-        color: #121212;
         margin: 0 3px;
       }
       i {
@@ -160,8 +155,8 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 14px;
-              color: #9b9b9b;
               line-height: 14px;
+              color: rgba(23, 23, 58, 0.4);
             }
             &:nth-of-type(2) {
               margin-top: 8px;
@@ -175,7 +170,7 @@ export default {
       }
       .rewardDetail {
         width: 100%;
-        background: #ededf0;
+        background: #f8f9fa;
         margin-top: 16px;
         padding: 12px 10px;
         display: flex;
@@ -190,18 +185,35 @@ export default {
           cursor: pointer;
           flex-shrink: 0;
         }
-        p {
+        div {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
           margin-left: 4px;
-          span {
-            display: block;
-            font-size: 14px;
-            color: #9b9b9b;
-            line-height: 18px;
-            i {
-              color: #121212;
+          p {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+            &:nth-of-type(1) {
+              margin: 0;
             }
-            &:nth-of-type(2) {
-              margin-top: 8px;
+            span {
+              display: block;
+              font-size: 14px;
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: rgba(23, 23, 58, 0.4);
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans-Bold, IBMPlexSans;
+                font-weight: bold;
+                color: #17173a;
+                line-height: 14px;
+              }
             }
           }
         }
@@ -233,13 +245,9 @@ export default {
     > p {
       width: 100%;
       font-size: 12px;
-      color: #9b9b9b;
+      color: rgba(23, 23, 58, 0.4);
       margin-top: 20px;
       line-height: 20px;
-      span {
-        color: #121212;
-        margin: 0 3px;
-      }
       i {
         color: #ff9600;
         cursor: pointer;
@@ -259,7 +267,7 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 12px;
-              color: #9b9b9b;
+              color: rgba(23, 23, 58, 0.4);
               line-height: 16px;
             }
             &:nth-of-type(2) {
@@ -274,7 +282,7 @@ export default {
       }
       .rewardDetail {
         width: 100%;
-        background: #ededf0;
+        background: #f8f9fa;
         margin-top: 16px;
         padding: 12px 10px;
         display: flex;
@@ -289,18 +297,35 @@ export default {
           cursor: pointer;
           flex-shrink: 0;
         }
-        p {
+        div {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
           margin-left: 4px;
-          span {
-            display: block;
-            font-size: 12px;
-            color: #9b9b9b;
-            line-height: 14px;
-            i {
-              color: #121212;
+          p {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+            &:nth-of-type(1) {
+              margin: 0;
             }
-            &:nth-of-type(2) {
-              margin-top: 8px;
+            span {
+              display: block;
+              font-size: 14px;
+              &:nth-of-type(1) {
+                font-size: 14px;
+                font-family: IBMPlexSans;
+                color: rgba(23, 23, 58, 0.4);
+                line-height: 14px;
+              }
+              &:nth-of-type(2) {
+                font-size: 14px;
+                font-family: IBMPlexSans-Bold, IBMPlexSans;
+                font-weight: bold;
+                color: #17173a;
+                line-height: 14px;
+              }
             }
           }
         }

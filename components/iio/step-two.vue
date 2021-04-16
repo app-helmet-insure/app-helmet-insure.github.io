@@ -284,7 +284,7 @@ export default {
             align-items: center;
             span {
               font-size: 14px;
-              color: #9b9b9b;
+              color: #17173a;
             }
           }
           .input {
@@ -342,7 +342,7 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 14px;
-              color: #9b9b9b;
+              color: #17173a;
               line-height: 20px;
             }
             &:nth-of-type(2) {
@@ -398,7 +398,7 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #9b9b9b;
+            color: #17173a;
             line-height: 20px;
           }
           &:nth-of-type(2) {
@@ -477,7 +477,7 @@ export default {
           align-items: center;
           span {
             font-size: 12px;
-            color: #9b9b9b;
+            color: #17173a;
           }
         }
         .input {
@@ -535,7 +535,7 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #9b9b9b;
+            color: #17173a;
             line-height: 20px;
           }
           &:nth-of-type(2) {
@@ -588,7 +588,7 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #9b9b9b;
+            color: #17173a;
             line-height: 20px;
           }
           &:nth-of-type(2) {

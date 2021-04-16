@@ -3,170 +3,192 @@
     <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
-    <div class="mining_item" v-for="item in miningList" :key="item.earn">
-      <div
-        :class="
-          activeMining == item.earn && showActiveMining
-            ? 'activeMining mining_show'
-            : 'mining_show'
-        "
-      >
-        <img
-          class="combo_img"
-          :src="
-            require(`~/assets/img/mining/combo_${
-              item.dueDate == 'Finished' ? 'expired' : 'web'
-            }.png`)
-          "
-          alt=""
-          v-if="item.combo"
-        />
-        <img
-          class="combo_img"
-          style="width: 236px"
-          src="~/assets/img/mining/flash_web.png"
-          alt=""
-          v-if="item.flash"
-        />
-        <img
-          class="combo_img"
-          style="width: 116px"
-          src="~/assets/img/mining/serial_web.png"
-          alt=""
-          v-if="item.serial"
-        /><img
-          class="combo_img"
-          style="width: 32px; height: 32px; left: 10px"
-          src="~/assets/img/mining/serialnext_web.png"
-          alt=""
-          v-if="item.serialNext"
-        />
-        <section>
-          <span
-            class="onePager"
-            v-html="item.miningName"
-            @click="hadnleShowOnePager($event, item.onePager)"
-          ></span>
-        </section>
-        <section>
-          <p>
-            {{ $t("Table.EarnList") }}
-            <span>
-              <img
-                v-if="item.earnImg"
-                :src="
-                  require(`~/assets/img/mining/${
-                    item.dueDate == 'Finished'
-                      ? item.earn + '_expired'
-                      : item.earn
-                  }.png`)
-                "
-                :class="item.earnNum"
-                alt=""
-              />
-              <template v-else style="color: #17173a">{{ item.earn }}</template>
-            </span>
-          </p>
-        </section>
-        <section>
-          <i></i>
-          <p>
-            <span v-if="typeof item.openDate == 'object'">
-              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
-            </span>
-            <span v-else-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ item.dueDate }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
-          </p>
-        </section>
-        <section>
-          <span>{{
-            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
-          }}</span>
-          <span>{{ item.earnName }}</span>
-        </section>
-        <section>
-          <button
-            @click="StakeMining(item.earn)"
-            :class="
-              activeMining == item.earn &&
-              showActiveMining &&
-              activeType == 'STAKE'
-                ? 'activeButton stakeMining'
-                : 'stakeMining'
-            "
-          >
-            {{ $t("Table.Stakeing") }}
-            <i class="selectDown"></i>
-          </button>
-          <button
-            @click="ClaimMining(item.earn)"
-            :class="
-              activeMining == item.earn &&
-              showActiveMining &&
-              activeType == 'CLAIM'
-                ? 'activeButton claimMining'
-                : 'claimMining'
-            "
-          >
-            {{ $t("Table.Claim") }}
-            <i class="selectDown"></i>
-          </button>
-        </section>
+    <div v-for="item in miningList" :key="item.earn">
+      <div class="finshed_line" v-if="item.earn == 'helmet_dodo'">
+        <p></p>
+        <i></i>
+        <span>Finished</span>
+        <i></i>
+        <p></p>
       </div>
-      <div
-        class="mining_detail"
-        v-if="showActiveMining && activeMining == item.earn"
-      >
-        <svg class="close" aria-hidden="true" @click="showActiveMining = false">
-          <use xlink:href="#icon-close"></use>
-        </svg>
-        <HelmetBnbPool
-          v-if="activeMining == 'helmet_cake' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetBnbPool>
-        <HelmetMdxPool
-          v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetMdxPool>
-        <HelmetDodoPool
-          v-if="activeMining == 'helmet_dodo' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetDodoPool>
-        <FeiFeiPool
-          v-if="activeMining == 'QFEI' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></FeiFeiPool>
-        <QfeiQsdPool
-          v-if="activeMining == 'kun' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></QfeiQsdPool>
-        <HelmetHelmetPool
-          v-if="activeMining == 'helmet_mdex' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetHelmetPool>
-        <HelmetForPool
-          v-if="activeMining == 'helmet_for' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetForPool>
-        <HelmetBurgerPool
-          v-if="activeMining == 'helmet_burger' && showActiveMining"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HelmetBurgerPool>
+      <div class="mining_item">
+        <div
+          :class="
+            activeMining == item.earn && showActiveMining
+              ? 'activeMining mining_show'
+              : 'mining_show'
+          "
+        >
+          <img
+            class="combo_img"
+            :src="
+              require(`~/assets/img/mining/combo_${
+                item.dueDate == 'Finished' ? 'expired' : 'web'
+              }.png`)
+            "
+            alt=""
+            v-if="item.combo"
+          />
+          <img
+            class="combo_img"
+            style="width: 236px"
+            src="~/assets/img/mining/flash_web.png"
+            alt=""
+            v-if="item.flash"
+          />
+          <img
+            class="combo_img"
+            style="width: 116px"
+            src="~/assets/img/mining/serial_web.png"
+            alt=""
+            v-if="item.serial"
+          /><img
+            class="combo_img"
+            style="width: 32px; height: 32px; left: 10px"
+            src="~/assets/img/mining/serialnext_web.png"
+            alt=""
+            v-if="item.serialNext"
+          /><img
+            class="combo_img"
+            style="width: 83px; height: 28px; left: 376px"
+            src="~/assets/img/mining/iiostark.png"
+            alt=""
+            v-if="item.iio"
+          />
+
+          <section>
+            <span
+              class="onePager"
+              v-html="item.miningName"
+              @click="hadnleShowOnePager($event, item.onePager)"
+            ></span>
+          </section>
+          <section>
+            <p>
+              {{ $t("Table.EarnList") }}
+              <span>
+                <img
+                  v-if="item.earnImg"
+                  :src="
+                    require(`~/assets/img/mining/${
+                      item.dueDate == 'Finished'
+                        ? item.earn + '_expired'
+                        : item.earn
+                    }.png`)
+                  "
+                  :class="item.earnNum"
+                  alt=""
+                />
+                <template v-else style="color: #17173a">{{
+                  item.earn
+                }}</template>
+              </span>
+            </p>
+          </section>
+          <section>
+            <i></i>
+            <p>
+              <span v-if="typeof item.openDate == 'object'">
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.dueDate }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </section>
+          <section>
+            <span>{{
+              item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
+            }}</span>
+            <span>{{ item.earnName }}</span>
+          </section>
+          <section>
+            <button
+              @click="StakeMining(item.earn)"
+              :class="
+                activeMining == item.earn &&
+                showActiveMining &&
+                activeType == 'STAKE'
+                  ? 'activeButton stakeMining'
+                  : 'stakeMining'
+              "
+            >
+              {{ $t("Table.Stakeing") }}
+              <i class="selectDown"></i>
+            </button>
+            <button
+              @click="ClaimMining(item.earn)"
+              :class="
+                activeMining == item.earn &&
+                showActiveMining &&
+                activeType == 'CLAIM'
+                  ? 'activeButton claimMining'
+                  : 'claimMining'
+              "
+            >
+              {{ $t("Table.Claim") }}
+              <i class="selectDown"></i>
+            </button>
+          </section>
+        </div>
+        <div
+          class="mining_detail"
+          v-if="showActiveMining && activeMining == item.earn"
+        >
+          <svg
+            class="close"
+            aria-hidden="true"
+            @click="showActiveMining = false"
+          >
+            <use xlink:href="#icon-close"></use>
+          </svg>
+          <HelmetBnbPool
+            v-if="activeMining == 'helmet_cake' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBnbPool>
+          <HelmetMdxPool
+            v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetMdxPool>
+          <HelmetDodoPool
+            v-if="activeMining == 'helmet_dodo' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetDodoPool>
+          <FeiFeiPool
+            v-if="activeMining == 'QFEI' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></FeiFeiPool>
+          <QfeiQsdPool
+            v-if="activeMining == 'kun' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></QfeiQsdPool>
+          <HelmetHelmetPool
+            v-if="activeMining == 'helmet_mdex' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetHelmetPool>
+          <HelmetForPool
+            v-if="activeMining == 'helmet_for' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetForPool>
+          <HelmetBurgerPool
+            v-if="activeMining == 'helmet_burger' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBurgerPool>
+        </div>
       </div>
     </div>
     <div
@@ -475,6 +497,7 @@ export default {
           info: true,
           earnName: "APR",
           onePager: false,
+          iio: true,
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
@@ -886,6 +909,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.finshed_line {
+  width: 100%;
+
+  margin: 20px 0 21px 0;
+  display: flex;
+  align-items: center;
+  p {
+    flex: 1;
+    height: 1px;
+    background: #e8e8eb;
+  }
+  span {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(23, 23, 58, 0.4);
+    line-height: 20px;
+    margin: 0 16px;
+  }
+  i {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/img/mining/finished.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
 @media screen and (min-width: 750px) {
   .icon {
     width: 20px;

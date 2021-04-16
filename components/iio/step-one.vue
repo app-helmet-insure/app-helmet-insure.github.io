@@ -83,7 +83,6 @@ export default {
         return;
       });
     },
-    
   },
 };
 </script>
@@ -109,7 +108,7 @@ export default {
           line-height: 14px;
           color: #121212;
           i {
-            color: #9b9b9b;
+            color: #17173a;
           }
         }
         a {
@@ -137,7 +136,7 @@ export default {
           span {
             position: absolute;
             font-size: 14px;
-            color: #9b9b9b;
+            color: #17173a;
             right: 15px;
           }
         }
@@ -158,12 +157,12 @@ export default {
       .text {
         margin-top: 4px;
         font-size: 14px;
-        color: #9b9b9b;
+        color: #17173a;
       }
       .tips {
         margin-top: 8px;
         font-size: 14px;
-        color: #9b9b9b;
+        color: #17173a;
       }
     }
   }
@@ -186,7 +185,7 @@ export default {
           font-size: 12px;
           color: #121212;
           i {
-            color: #9b9b9b;
+            color: #17173a;
           }
         }
         a {
@@ -213,7 +212,7 @@ export default {
           span {
             position: absolute;
             font-size: 14px;
-            color: #9b9b9b;
+            color: #17173a;
             right: 15px;
           }
         }
@@ -234,12 +233,12 @@ export default {
       .text {
         margin-top: 4px;
         font-size: 12px;
-        color: #9b9b9b;
+        color: #17173a;
       }
       .tips {
         margin-top: 8px;
         font-size: 12px;
-        color: #9b9b9b;
+        color: #17173a;
       }
     }
   }

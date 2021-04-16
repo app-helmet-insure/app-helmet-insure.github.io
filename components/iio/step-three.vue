@@ -4,8 +4,8 @@
     <p
       v-html="
         $t('IIO.CanGetReward', {
-          time1: 'Apr.11th 00:00',
-          time2: 'Apr.12th 00:00',
+          time1: 'Apr.16th 23:00',
+          time2: 'Apr.17th 12:00',
           name: 'TOKEN',
         })
       "
@@ -67,8 +67,8 @@ export default {
       SwapBalance: 0,
       swapAssets: 0,
       fixD,
-      activeFlag1: new Date() * 1 < new Date("2021/04/16 20:00") * 1,
-      activeFlag2: new Date() * 1 > new Date("2021/04/16 18:00") * 1,
+      activeFlag1: new Date() * 1 < new Date("2021/04/17 12:00") * 1,
+      activeFlag2: new Date() * 1 > new Date("2021/04/16 23:00") * 1,
     };
   },
   mounted() {

@@ -17,7 +17,9 @@
 
       <button
         @click="BuyPassport"
-        :style="buyFlag ? '' : 'background: #d5d5db;pointer-events: none;'"
+        :style="
+          buyFlag1 & buyFlag2 ? '' : 'background: #d5d5db;pointer-events: none;'
+        "
       >
         {{ $t("IIO.BuyTokenTicket") }}
       </button>
@@ -35,7 +37,8 @@ export default {
     return {
       PassportPrice: 0,
       Balance: 0,
-      buyFlag: new Date() * 1 < new Date("2021/04/16 19:00") * 1,
+      buyFlag1: new Date() * 1 < new Date("2021/04/16 23:00") * 1,
+      buyFlag2: new Date() * 1 > new Date("2021/04/16 21:00") * 1,
     };
   },
   mounted() {

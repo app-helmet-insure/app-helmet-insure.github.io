@@ -19,6 +19,12 @@
           </td>
         </tr>
         <tr>
+          <td>
+            <span>iTOKEN Activate Period</span
+            ><span><i class="warn"></i> 24hours</span>
+          </td>
+        </tr>
+        <tr>
           <td><span>Activating Price</span><span>1TOKEN=0.3USDT</span></td>
         </tr>
         <tr>
@@ -44,7 +50,10 @@
         <tr>
           <td><span>Total Supply</span><span>100,000,000</span></td>
         </tr>
-        <tr>
+        <tr class="none">
+          <td><span></span><span></span></td>
+        </tr>
+        <tr class="none">
           <td><span></span><span></span></td>
         </tr>
       </table>
@@ -174,6 +183,17 @@ export default {};
               color: rgba(23, 23, 58, 0.6);
             }
             &:nth-of-type(2) {
+              display: flex;
+              align-items: center;
+              i {
+                margin-right: 4px;
+                width: 20px;
+                height: 20px;
+                display: block;
+                background-image: url("../../assets/img/helmet/wran.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+              }
               float: right;
               font-size: 14px;
               font-family: IBMPlexSans;
@@ -253,6 +273,9 @@ export default {};
         tr {
           border: 1px solid #e8e8eb;
         }
+        .none {
+          display: none;
+        }
       }
       th {
         width: 50%;
@@ -273,6 +296,17 @@ export default {};
             color: rgba(23, 23, 58, 0.6);
           }
           &:nth-of-type(2) {
+            display: flex;
+            align-items: center;
+            i {
+              margin-right: 4px;
+              width: 20px;
+              height: 20px;
+              display: block;
+              background-image: url("../../assets/img/helmet/wran.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+            }
             float: right;
             font-size: 14px;
             font-family: IBMPlexSans;

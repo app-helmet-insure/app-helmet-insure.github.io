@@ -193,7 +193,7 @@ export default {
   }
   .step_content {
     margin-top: 50px;
-    margin-bottom: 80px;
+    margin-bottom: 10px;
     width: 100%;
     padding: 60px 0;
     background: #fff;

@@ -62,7 +62,7 @@
         class="getReward"
         style="pointer-events: none; background: #cfcfd2"
       >
-        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "d" }}
+        {{ getRewardObj.day == "00" ? "" : getRewardObj.day + "d" }}
         {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
         {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
         {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
@@ -70,13 +70,11 @@
       <div class="ContractAddress">
         <span>iTOKEN {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5
+          --
           <i
             class="copy"
             id="copy_default"
-            @click="
-              copyAdress($event, '0xDe5C32b056Da3FB485D559dAdA847D7c747Db7f5')
-            "
+            @click="copyAdress($event, '--')"
           ></i>
         </p>
       </div>
@@ -205,7 +203,7 @@ export default {
     },
     getRewardTime() {
       let nowTime = new Date() * 1;
-      let getTime = new Date("2021/04/16 22:00");
+      let getTime = new Date("2021/04/19 21:00");
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

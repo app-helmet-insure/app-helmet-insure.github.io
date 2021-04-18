@@ -177,7 +177,7 @@
     "Balance": "Balance",
     "SwapMyToken": "You have got <i> {num1} {name1}</i>, which could be swapped to <i> {num2} {name2}</i> ",
     "Speed": "Need Pay",
-    "Swap": "Swap",
+    "Swap": "Activate",
     "CanSwapToken": "My {name}",
     "SwapTokened": "Swap To",
     "HomeText1": "iTOKEN Distributing",

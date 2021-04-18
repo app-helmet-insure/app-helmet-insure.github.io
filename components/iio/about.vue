@@ -62,9 +62,10 @@
     <div class="iio_about_dsc">
       <h3>About</h3>
       <p>
-        ChainSwap is introducing a new way of conducting public offerings on
-        Uniswap. Currently, the only place to conduct an LBP is Balancer, we aim
-        to change that by introducing an open-source codebase.
+        ChainSwap is a cross-chain asset bridge & application hub for smart
+        chains. ChainSwap allows projects to seamlessly bridge between ETH, BSC
+        and HECO. In the future ChainSwap will be integrating chains and provide
+        full cross-chain solutions between BTC, DOT, SOL and more.
       </p>
       <p>
         ChainSwap has closed a $3M strategic funding round with participation

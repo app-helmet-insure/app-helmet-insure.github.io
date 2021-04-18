@@ -4,8 +4,8 @@
     <p
       v-html="
         $t('IIO.CanGetReward', {
-          time1: 'Apr.16th 23:00',
-          time2: 'Apr.17th 12:00',
+          time1: 'Apr.23rd 21:00',
+          time2: 'Apr.24th 21:00',
           name: 'TOKEN',
         })
       "
@@ -38,13 +38,27 @@
           </p>
         </div>
       </div>
+
       <button
+        v-if="getRewardFlag == 'soon'"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ getRewardObj.day == "00" ? "" : getRewardObj.day + "d" }}
+        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
+        {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
+        {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
+      </button>
+      <button
+        v-if="getRewardFlag == 'expired'"
+        class="getReward"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ $t("IIO.Swap") }}
+      </button>
+      <button
+        v-if="getRewardFlag == true"
+        class="getReward"
         @click="swapActive"
-        :style="
-          activeFlag1 && activeFlag2
-            ? ''
-            : 'background: #d5d5db;pointer-events: none;'
-        "
       >
         {{ $t("IIO.Swap") }}
       </button>
@@ -67,16 +81,25 @@ export default {
       SwapBalance: 0,
       swapAssets: 0,
       fixD,
-      activeFlag1: new Date() * 1 < new Date("2021/04/17 12:00") * 1,
-      activeFlag2: new Date() * 1 > new Date("2021/04/16 23:00") * 1,
+      getRewardFlag: false,
+      getRewardObj: {
+        day: "00",
+        hour: "00",
+        minute: "00",
+        second: "00",
+      },
     };
   },
   mounted() {
     setTimeout(() => {
       this.getBalance();
     }, 1000);
-    this.activeFlag1 = new Date() * 1 < new Date("2021/04/17 12:00") * 1;
-    this.activeFlag2 = new Date() * 1 > new Date("2021/04/16 23:00") * 1;
+    this.getRewardTime();
+    setInterval(() => {
+      setTimeout(() => {
+        this.getRewardTime();
+      });
+    }, 1000);
   },
   methods: {
     toHome(e) {
@@ -91,10 +114,38 @@ export default {
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"
       );
-      console.log(AvailableVolume);
       this.AvailableVolume = AvailableVolume;
       this.SwapBalance = SwapBalance;
       this.swapAssets = AvailableVolume * 0.1;
+    },
+    getRewardTime() {
+      let nowTime = new Date() * 1;
+      let startTime = new Date("2021/04/23 21:00");
+      let endTime = new Date("2021/04/24 21:00");
+      let downTime = startTime - nowTime;
+      let day = Math.floor(downTime / (24 * 3600000));
+      let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let getRewardObj = {
+        day: day > 9 ? day : "0" + day,
+        hour: hour > 9 ? hour : "0" + hour,
+        minute: minute > 9 ? minute : "0" + minute,
+        second: second > 9 ? second : "0" + second,
+      };
+      this.getRewardObj = getRewardObj;
+
+      if (nowTime > startTime && nowTime < endTime) {
+        this.getRewardFlag = true;
+      } else if (nowTime < startTime) {
+        this.getRewardFlag = "soon";
+      } else {
+        this.getRewardFlag = "expired";
+      }
     },
     async swapActive() {
       let data = {

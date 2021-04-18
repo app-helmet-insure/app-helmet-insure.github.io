@@ -37,8 +37,8 @@ export default {
     return {
       PassportPrice: 0,
       Balance: 0,
-      buyFlag1: new Date() * 1 < new Date("2021/04/16 23:00") * 1,
-      buyFlag2: new Date() * 1 > new Date("2021/04/16 21:00") * 1,
+      buyFlag1: new Date() * 1 < new Date("2021/04/19 21:00") * 1,
+      buyFlag2: new Date() * 1 > new Date("2021/04/23 21:00") * 1,
     };
   },
   mounted() {

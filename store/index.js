@@ -129,13 +129,13 @@ export const state = () => ({
 
     allDueDate: [
         {
-            BTCB: '2021/04/18 00:00',
-            ETH: '2021/04/18 00:00',
+            BTCB: '2021/05/22 00:00',
+            ETH: '2021/05/22 00:00',
             HELMET: '2021/04/24 00:00',
             CAKE: '2021/05/12 00:00',
             CTK: '2021/05/12 00:00',
             BURGER: '2021/05/12 00:00',
-            WBNB: '2021/04/21 00:00',
+            WBNB: '2021/05/22 00:00',
             MATH: '2021/05/05 00:00',
         },
     ],
@@ -152,25 +152,25 @@ export const state = () => ({
     strikePriceArray: [
         // 翻倍价格
         {
-            BTCB: 440,
-            ETH: 14,
+            BTCB: 240,
+            ETH: 10,
             HELMET: 0.01,
             CAKE: 0.1,
             CTK: 0.015,
             BURGER: 0.02,
-            WBNB: 600,
+            WBNB: 900,
             MATH: 0.015,
             COIN: '--',
         },
         // 腰斩价格
         {
-            BTCB: 110,
-            ETH: 3.5,
+            BTCB: 60,
+            ETH: 2.5,
             HELMET: 0.003,
             CAKE: 0.025,
             CTK: 0.004,
             BURGER: 0.005,
-            WBNB: 150,
+            WBNB: 300,
             MATH: 0.004,
             COIN: '--',
         },

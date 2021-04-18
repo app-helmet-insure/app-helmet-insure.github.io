@@ -14,13 +14,23 @@
         <h3>{{ PassportPrice }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
-
       <button
-        @click="BuyPassport"
-        :style="
-          buyFlag1 & buyFlag2 ? '' : 'background: #d5d5db;pointer-events: none;'
-        "
+        v-if="getRewardFlag == 'soon'"
+        style="pointer-events: none; background: #cfcfd2"
       >
+        {{ getRewardObj.day == "00" ? "" : getRewardObj.day + "d" }}
+        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
+        {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
+        {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
+      </button>
+      <button
+        v-if="getRewardFlag == 'expired'"
+        class="getReward"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ $t("IIO.BuyTokenTicket") }}
+      </button>
+      <button v-if="getRewardFlag == true" @click="BuyPassport">
         {{ $t("IIO.BuyTokenTicket") }}
       </button>
       <p class="tips">{{ $t("IIO.Tip2") }}</p>
@@ -37,8 +47,13 @@ export default {
     return {
       PassportPrice: 0,
       Balance: 0,
-      buyFlag1: new Date() * 1 < new Date("2021/04/19 21:00") * 1,
-      buyFlag2: new Date() * 1 > new Date("2021/04/23 21:00") * 1,
+      getRewardFlag: false,
+      getRewardObj: {
+        day: "00",
+        hour: "00",
+        minute: "00",
+        second: "00",
+      },
     };
   },
   mounted() {
@@ -50,8 +65,12 @@ export default {
       this.$bus.$emit("JUMP_STEP", { step: 2 });
       this.$bus.$emit("GET_FLAG");
     });
-    this.buyFlag1 = new Date() * 1 < new Date("2021/04/16 23:30") * 1;
-    this.buyFlag2 = new Date() * 1 > new Date("2021/04/16 21:00") * 1;
+    this.getRewardTime();
+    setInterval(() => {
+      setTimeout(() => {
+        this.getRewardTime();
+      });
+    }, 1000);
   },
   methods: {
     async getPassPortPrice() {
@@ -89,6 +108,35 @@ export default {
         data = {};
         return;
       });
+    },
+    getRewardTime() {
+      let nowTime = new Date() * 1;
+      let startTime = new Date("2021/04/19 21:00");
+      let endTime = new Date("2021/04/23 21:00");
+      let downTime = startTime - nowTime;
+      let day = Math.floor(downTime / (24 * 3600000));
+      let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let getRewardObj = {
+        day: day > 9 ? day : "0" + day,
+        hour: hour > 9 ? hour : "0" + hour,
+        minute: minute > 9 ? minute : "0" + minute,
+        second: second > 9 ? second : "0" + second,
+      };
+      this.getRewardObj = getRewardObj;
+
+      if (nowTime > startTime && nowTime < endTime) {
+        this.getRewardFlag = true;
+      } else if (nowTime < startTime) {
+        this.getRewardFlag = "soon";
+      } else {
+        this.getRewardFlag = "expired";
+      }
     },
   },
 };

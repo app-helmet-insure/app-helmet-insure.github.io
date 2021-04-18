@@ -1,7 +1,7 @@
 <template>
   <div class="iio_banner">
     <div class="iio_wrap">
-      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "XXX" }) }}</h3>
+      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "ChainSwap" }) }}</h3>
       <div class="iio_address">
         0xb22425206d40605e9be5a5460786dbab5aba9485
         <a
@@ -21,7 +21,7 @@
           <!-- <i></i> -->
           <p>
             <span>{{ $t("IIO.TotalSupply") }}</span>
-            <span>100000 TOKEN</span>
+            <span>100,000 TOKEN</span>
           </p>
           <i></i>
         </div>

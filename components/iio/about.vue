@@ -44,7 +44,7 @@
         <tr>
           <td>
             <span>Initial Circulating Supply (Day of sale)</span
-            ><span>100000</span>
+            ><span>100,000</span>
           </td>
         </tr>
         <tr>

@@ -2,45 +2,24 @@
   <div class="stepTwo">
     <div class="left">
       <div class="step_title">{{ $t("IIO.ActionTwo", { name: "Token" }) }}</div>
-      <div class="step_action">
-        <label>
-          <p>
-            <span>{{ $t("Table.AmountDeposit") }}</span>
-            <span>
-              {{ showMsg.DepositeVolume }} LPT {{ $t("Table.DAvailable") }}
-            </span>
-          </p>
-          <div class="input">
-            <input type="text" v-model="DepositeNum" />
-            <span @click="DepositeNum = showMsg.DepositeVolume">
-              {{ $t("Table.Max") }}
-            </span>
-          </div>
-        </label>
-        <button @click="toDeposite" :class="stakeLoading ? 'disable ' : ''">
-          <i :class="stakeLoading ? 'loading_pic' : ''"></i>
-          {{ $t("Table.ConfirmDeposit") }}
-        </button>
-      </div>
       <div class="step_details">
         <p class="text">
           <span> {{ $t("Table.MyDeposits") }}： </span>
-          <span> {{ showMsg.DepositedVolume }} LPT </span>
+          <span> {{ addCommom(showMsg.DepositedVolume, 4) }} LPT </span>
         </p>
         <p class="text">
           <span> {{ $t("Table.TotalDeposited") }}： </span>
-          <span> {{ showMsg.DepositeTotal }} LPT </span>
+          <span> {{ addCommom(showMsg.DepositeTotal, 4) }} LPT </span>
         </p>
         <p class="text">
           <span>{{ $t("Table.MyPoolShare") }}： </span>
-          <span> {{ showMsg.MyPoolShare }}%</span>
+          <span> {{ fixD(showMsg.MyPoolShare, 2) }}%</span>
         </p>
-        <a
-          href="https://exchange.pancakeswap.finance/?_gl=1*zq5iue*_ga*MTYwNTE3ODIwNC4xNjEwNjQzNjU4*_ga_334KNG3DMQ*MTYxMDk0NjUzNC4yMy4wLjE2MTA5NDY1MzUuMA..#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-          target="_blank"
-          >Get HELMET-BNB LPT</a
-        >
       </div>
+      <button @click="toDeposite">
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i>
+        {{ $t("IIO.StepTwoAction") }}
+      </button>
     </div>
     <i></i>
     <div class="right">
@@ -89,7 +68,7 @@ import {
   getBalance,
   toDeposite,
 } from "~/interface/deposite";
-import { fixD } from "~/assets/js/util.js";
+import { fixD, addCommom } from "~/assets/js/util.js";
 import { getReward3, earned3, applied3 } from "~/interface/iio.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
@@ -106,6 +85,8 @@ export default {
       stakeLoading: false,
       claimLoading: false,
       getRewardFlag: false,
+      addCommom,
+      fixD,
       getRewardObj: {
         day: "00",
         hour: "00",
@@ -180,10 +161,10 @@ export default {
       // 可领取
       let AvailableVolume = await earned3(pool_name);
 
-      this.showMsg.DepositeVolume = fixD(DepositeVolume, 4);
-      this.showMsg.DepositedVolume = fixD(DepositedVolume, 4);
-      this.showMsg.DepositeTotal = fixD(DepositeTotal, 4);
-      this.showMsg.AvailableVolume = fixD(AvailableVolume, 8);
+      this.showMsg.DepositeVolume = DepositeVolume;
+      this.showMsg.DepositedVolume = DepositedVolume;
+      this.showMsg.DepositeTotal = DepositeTotal;
+      this.showMsg.AvailableVolume = AvailableVolume;
       this.showMsg.MyPoolShare = fixD(
         (DepositedVolume / DepositeTotal) * 100,
         2
@@ -226,15 +207,7 @@ export default {
     },
     // 抵押
     toDeposite() {
-      if (!this.DepositeNum) {
-        return;
-      }
-      if (this.stakeLoading) {
-        return;
-      }
-      this.stakeLoading = true;
-      let type = "IIO_HELMETBNB_POOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
     },
   },
 };
@@ -292,62 +265,6 @@ export default {
         font-weight: 600;
         color: #121212;
       }
-      .step_action {
-        > label {
-          > p {
-            margin: 20px 0 10px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            span {
-              font-size: 14px;
-              color: #17173a;
-            }
-          }
-          .input {
-            width: 100%;
-            height: 40px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            input {
-              width: 100%;
-              height: 100%;
-              border-radius: 5px;
-              border: 1px solid #cfcfd2;
-              padding-left: 12px;
-              &:focus {
-                height: 39px;
-                border: 2px solid #ff9600;
-                padding-left: 11px;
-              }
-            }
-            span {
-              position: absolute;
-              font-size: 14px;
-              color: #121212;
-              right: 15px;
-              cursor: pointer;
-            }
-          }
-        }
-        > button {
-          margin-top: 20px;
-          width: 100%;
-          height: 40px;
-          background: #121212;
-          border-radius: 5px;
-          font-size: 14px;
-          font-weight: 600;
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          &:hover {
-            background: #2c2c2c;
-          }
-        }
-      }
       .step_details {
         margin-top: 12px;
         width: 320px;
@@ -378,6 +295,22 @@ export default {
           color: #ff9600;
           line-height: 20px;
           margin-top: 4px;
+        }
+      }
+      button {
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        background: #121212;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+          background: #2c2c2c;
         }
       }
     }
@@ -525,22 +458,6 @@ export default {
           }
         }
       }
-      > button {
-        margin-top: 20px;
-        width: 100%;
-        height: 40px;
-        background: #121212;
-        border-radius: 3px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        &:hover {
-          background: #2c2c2c;
-        }
-      }
     }
     .step_details {
       margin-top: 20px;
@@ -562,7 +479,6 @@ export default {
           }
         }
       }
-
       > a {
         display: block;
         margin-top: 8px;
@@ -570,6 +486,22 @@ export default {
         font-weight: 600;
         color: #ff9600;
         line-height: 20px;
+      }
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      background: #121212;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        background: #2c2c2c;
       }
     }
     .getReward {

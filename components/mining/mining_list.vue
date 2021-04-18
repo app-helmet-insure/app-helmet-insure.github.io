@@ -314,61 +314,62 @@
         </section>
       </div>
     </div>
-
-    <Wraper>
-      <div class="wraper_title">
-        <h3>
-          {{
-            activeType == "STAKE"
-              ? $t("Insurance.Insurance_text23")
-              : $t("Table.Claim")
-          }}
-        </h3>
-        <svg class="icon close" aria-hidden="true" @click="close_wraper">
-          <use xlink:href="#icon-close"></use>
-        </svg>
-      </div>
-      <HelmetBnbPool
-        v-if="activeMining == 'helmet_cake'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetBnbPool>
-      <HelmetMdxPool
-        v-if="activeMining == 'bhelmet_mdx'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetMdxPool>
-      <HelmetDodoPool
-        v-if="activeMining == 'helmet_dodo'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetDodoPool>
-      <FeiFeiPool
-        v-if="activeMining == 'QFEI'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></FeiFeiPool>
-      <QfeiQsdPool
-        v-if="activeMining == 'kun'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></QfeiQsdPool>
-      <HelmetHelmetPool
-        v-if="activeMining == 'helmet_mdex'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetHelmetPool>
-      <HelmetForPool
-        v-if="activeMining == 'helmet_for'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetForPool>
-      <HelmetBurgerPool
-        v-if="activeMining == 'helmet_burger'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetBurgerPool>
-    </Wraper>
+    <div class="h5_wrap">
+      <Wraper>
+        <div class="wraper_title">
+          <h3>
+            {{
+              activeType == "STAKE"
+                ? $t("Insurance.Insurance_text23")
+                : $t("Table.Claim")
+            }}
+          </h3>
+          <svg class="icon close" aria-hidden="true" @click="close_wraper">
+            <use xlink:href="#icon-close"></use>
+          </svg>
+        </div>
+        <HelmetBnbPool
+          v-if="activeMining == 'helmet_cake'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetBnbPool>
+        <HelmetMdxPool
+          v-if="activeMining == 'bhelmet_mdx'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetMdxPool>
+        <HelmetDodoPool
+          v-if="activeMining == 'helmet_dodo'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetDodoPool>
+        <FeiFeiPool
+          v-if="activeMining == 'QFEI'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></FeiFeiPool>
+        <QfeiQsdPool
+          v-if="activeMining == 'kun'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></QfeiQsdPool>
+        <HelmetHelmetPool
+          v-if="activeMining == 'helmet_mdex'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetHelmetPool>
+        <HelmetForPool
+          v-if="activeMining == 'helmet_for'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetForPool>
+        <HelmetBurgerPool
+          v-if="activeMining == 'helmet_burger'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetBurgerPool>
+      </Wraper>
+    </div>
   </div>
 </template>
 
@@ -432,6 +433,21 @@ export default {
         this.getAPY();
       });
     }, 20000);
+    let flag = navigator.userAgent.match(
+      /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    );
+    console.log(flag);
+    if (this.$route.params.earn) {
+      this.activeMining = this.$route.params.earn;
+      this.showActiveMining = true;
+      this.activeType = "STAKE";
+      if (flag) {
+        this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+        this.TradeType = "STAKE";
+      } else {
+        this.TradeType = "STAKE";
+      }
+    }
   },
   computed: {
     indexArray() {
@@ -768,7 +784,6 @@ export default {
           )
         ) * 100;
       let startedTime = this.miningList[4].started;
-      console.log(APY, supplyVolume, stakeVolue, DODOHELMET);
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[4].yearEarn = "Infinity";
@@ -955,6 +970,9 @@ export default {
   }
 }
 @media screen and (min-width: 750px) {
+  .h5_wrap {
+    display: none;
+  }
   .finshed_h5 {
     display: none;
   }

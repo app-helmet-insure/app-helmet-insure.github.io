@@ -1,4 +1,4 @@
 <script>
-import Details from "~/pages/_lang/iiO/details.vue";
-export default Details;
+import details from "~/pages/_lang/iiO/details.vue";
+export default details;
 </script>

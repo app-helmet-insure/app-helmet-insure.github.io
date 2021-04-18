@@ -111,7 +111,7 @@ export default {
       this.iioData = iioData;
     },
     toDetails() {
-      this.$router.push("/IIO/Details");
+      this.$router.push("/iio/details");
     },
   },
 };

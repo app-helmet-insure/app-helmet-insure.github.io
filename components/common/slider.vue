@@ -143,7 +143,7 @@
           </nuxt-link>
         </li>
         <li class="menu_item">
-          <nuxt-link to="/IIO" :class="routeObj.name === 'iiO' ? 'active' : ''">
+          <nuxt-link to="/iio" :class="routeObj.name === 'iiO' ? 'active' : ''">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-iio"></use>
             </svg>
@@ -151,7 +151,7 @@
           </nuxt-link>
         </li>
         <li class="menu_item">
-          <nuxt-link to="/NFT" :class="routeObj.name === 'nft' ? 'active' : ''">
+          <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-nft"></use>
             </svg>

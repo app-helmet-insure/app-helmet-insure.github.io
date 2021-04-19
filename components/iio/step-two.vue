@@ -186,7 +186,7 @@ export default {
     },
     getRewardTime() {
       let nowTime = Date.now();
-      let getTime = Date.parse("2021/04/19 21:00");
+      let getTime = Date.parse("2021/04/19 13:00 UTC");
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

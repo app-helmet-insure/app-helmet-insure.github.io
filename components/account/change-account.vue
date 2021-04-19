@@ -196,8 +196,13 @@ export default {
       background-position: center center;
       background-size: 100% 100%;
     }
-    .current-account {
+    @media screen and (min-width: 750px) {
       width: 320px;
+    }
+    @media screen and (max-width: 750px) {
+      width: 96%;
+    }
+    .current-account {
       border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;

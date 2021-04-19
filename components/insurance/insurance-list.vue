@@ -739,7 +739,7 @@ export default {
         margin-top: 12px;
         button {
           flex: 1;
-          min-width: 138px;
+          min-width: 108px;
           height: 32px;
           background: #f8f9fa;
           border-radius: 5px;

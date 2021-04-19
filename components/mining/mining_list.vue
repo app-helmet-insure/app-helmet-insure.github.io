@@ -184,7 +184,7 @@
             :TradeType="'ALL'"
           ></QfeiQsdPool>
           <HelmetHelmetPool
-            v-if="activeMining == 'helmet_mdex' && showActiveMining"
+            v-if="activeMining == 'helmet' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
           ></HelmetHelmetPool>
@@ -374,7 +374,7 @@
           :TradeType="activeType"
         ></QfeiQsdPool>
         <HelmetHelmetPool
-          v-if="activeMining == 'helmet_mdex'"
+          v-if="activeMining == 'helmet'"
           :activeType="activeType"
           :TradeType="activeType"
         ></HelmetHelmetPool>
@@ -570,9 +570,9 @@ export default {
         },
         {
           miningName: "HELMET POOL",
-          earn: "helmet_mdex",
+          earn: "helmet",
           earnImg: true,
-          earnNum: "two",
+          earnNum: "one",
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: false,

@@ -118,6 +118,11 @@
                   ? 'activeButton stakeMining'
                   : 'stakeMining'
               "
+              :style="
+                item.earn == 'QHELMET'
+                  ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Table.Stakeing") }}
               <i class="selectDown"></i>
@@ -130,6 +135,11 @@
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
                   : 'claimMining'
+              "
+              :style="
+                item.earn == 'QHELMET'
+                  ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
+                  : ''
               "
             >
               {{ $t("Table.Claim") }}
@@ -291,6 +301,11 @@
                 : 'stakeMining'
             "
             style="margin-right: 10px"
+            :style="
+              item.earn == 'QHELMET'
+                ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
+                : ''
+            "
           >
             {{ $t("Table.Stakeing") }}
           </button>
@@ -308,6 +323,11 @@
                 : 'claimMining'
             "
             style="margin-left: 10px"
+            :style="
+              item.earn == 'QHELMET'
+                ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
+                : ''
+            "
           >
             {{ $t("Table.Claim") }}
           </button>
@@ -594,6 +614,19 @@ export default {
           started: new Date("2021/04/12 00:00") * 1,
         },
         {
+          miningName: "HELMET-KUN DLP",
+          earn: "QHELMET",
+          earnImg: false,
+          earnNum: "one",
+          dueDate: "--",
+          openDate: "--",
+          serialNext: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: "--",
+        },
+        {
           miningName: "HELMET-<i>hDODO</i> DLP",
           earn: "helmet_dodo",
           earnImg: true,
@@ -792,6 +825,34 @@ export default {
         this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
+    async HELMET_KUN_DLP_APY() {
+      let lptBnbValue = await uniswap("KUN", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "QSD");
+      let DODOHELMET = lptBnbValue * lptHelmetValue;
+      let allVolume = DODOHELMET * 150000;
+      //总抵押
+      let supplyVolume = await totalSupply("KUNPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("KUNPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("QSD", "KUNPOOL_LPT");
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 20), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let startedTime = this.miningList[5].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[5].yearEarn = "Infinity";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
+      }
+    },
     async HELMET_hDODO_DLP_APY() {
       let lptBnbValue = await uniswap("DODO", "WBNB");
       let lptHelmetValue = await uniswap("WBNB", "HELMET");
@@ -820,7 +881,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[5].yearEarn = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await uniswap("FOR", "WBNB");
@@ -850,7 +911,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[6].yearEarn = fixD(APY, 2);
+      this.miningList[7].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await uniswap("BURGER", "WBNB");
@@ -881,7 +942,7 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[7].yearEarn = fixD(APY, 2);
+      this.miningList[8].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;

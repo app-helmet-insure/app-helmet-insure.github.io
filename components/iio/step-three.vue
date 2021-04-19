@@ -116,7 +116,7 @@ export default {
       );
       this.AvailableVolume = AvailableVolume;
       this.SwapBalance = SwapBalance;
-      this.swapAssets = AvailableVolume * 0.1;
+      this.swapAssets = AvailableVolume * 0.3;
     },
     getRewardTime() {
       let nowTime = Date.now();

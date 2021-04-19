@@ -36,8 +36,8 @@
             <p>
               <span>{{ $t("IIO.HomeText4") }}</span
               ><span
-                >{{ item.swapUtil }}={{ item.stakeShare
-                }}{{ item.stakeUtil }}</span
+                >1 {{ item.swapUtil }} = {{ item.stakeShare }}
+                {{ item.stakeUtil }}</span
               >
             </p>
           </div>

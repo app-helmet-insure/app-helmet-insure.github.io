@@ -110,9 +110,9 @@ export default {
       });
     },
     getRewardTime() {
-      let nowTime = new Date() * 1;
-      let startTime = new Date("2021/04/19 21:00");
-      let endTime = new Date("2021/04/23 21:00");
+      let nowTime = Date.now();
+      let startTime = Date.parse("2021/04/19 21:00");
+      let endTime = Date.parse("2021/04/23 21:00");
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

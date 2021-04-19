@@ -185,8 +185,8 @@ export default {
       let res = await getReward3(pool_name);
     },
     getRewardTime() {
-      let nowTime = new Date() * 1;
-      let getTime = new Date("2021/04/19 21:00");
+      let nowTime = Date.now();
+      let getTime = Date.parse("2021/04/19 21:00");
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

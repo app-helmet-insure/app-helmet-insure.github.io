@@ -109,8 +109,8 @@
           ></path>
         </svg>
         <span>Website: </span>
-        <a href="https://www.chainswap.exchange/" target="_blank"
-          >https://www.chainswap.exchange/</a
+        <a href="https://www.chainswap.com" target="_blank"
+          >www.chainswap.com</a
         >
       </p>
       <p>

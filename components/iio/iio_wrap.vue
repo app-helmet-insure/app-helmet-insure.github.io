@@ -16,7 +16,7 @@
           <h3>
             {{ item.iio_name }}<span>({{ item.swapUtil }})</span>
           </h3>
-          <a href="https://www.chainswap.exchange/" target="_blank"
+          <a :href="`https://${item.iio_webSite}`" target="_blank"
             ><span>{{ item.iio_webSite }}</span
             ><i></i
           ></a>
@@ -79,7 +79,7 @@ export default {
         {
           iio_name: "chainswap",
           iio_img: "iio_chainswap",
-          iio_webSite: "chainswap.com",
+          iio_webSite: "www.chainswap.com",
           coming: true,
           background: "#7A4AE3",
           startTime: "2021/04/19 21:00",

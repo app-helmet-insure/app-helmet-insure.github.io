@@ -197,7 +197,7 @@ export default {
       background-size: 100% 100%;
     }
     .current-account {
-      width: 100%;
+      width: 320px;
       border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;

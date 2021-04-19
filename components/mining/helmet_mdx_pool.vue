@@ -170,6 +170,19 @@
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
+      <div class="ContractAddress">
+        <span>MDX {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x9c65ab58d8d978db963e63f2bfb7121627e3a739
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x9c65ab58d8d978db963e63f2bfb7121627e3a739')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
   </div>
 </template>

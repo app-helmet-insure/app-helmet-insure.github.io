@@ -26,7 +26,7 @@
       <p class="text">
         <span>{{ $t("IIO.Earn") }}： </span>
         <span>
-          {{ showMsg.AvailableVolume }}
+          {{ fixD(showMsg.AvailableVolume, 8) }}
           <i class="under" @click="hadnleShowOnePager($event, 'iTOKEN')">
             iTOKEN</i
           >

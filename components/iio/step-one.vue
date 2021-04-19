@@ -30,7 +30,12 @@
       >
         {{ $t("IIO.BuyTokenTicket") }}
       </button>
-      <button v-if="getRewardFlag == true" @click="BuyPassport">
+      <button
+        v-if="getRewardFlag == true"
+        @click="BuyPassport"
+        :style="buyLoading ? 'pointer-events: none' : ''"
+      >
+        <i :class="buyLoading ? 'loading_pic' : ''"></i>
         {{ $t("IIO.BuyTokenTicket") }}
       </button>
       <p class="tips">{{ $t("IIO.Tip2") }}</p>
@@ -48,6 +53,7 @@ export default {
       PassportPrice: 0,
       Balance: 0,
       getRewardFlag: false,
+      buyLoading: false,
       getRewardObj: {
         day: "00",
         hour: "00",
@@ -64,6 +70,9 @@ export default {
       this.getPassPortPrice();
       this.$bus.$emit("JUMP_STEP", { step: 2 });
       this.$bus.$emit("GET_FLAG");
+    });
+    this.$bus.$on("CLOSE_LOADING_STATUS", () => {
+      this.buyLoading = false;
     });
     this.getRewardTime();
     setInterval(() => {
@@ -84,6 +93,7 @@ export default {
       this.Balance = fixD(balance, 4);
     },
     async BuyPassport() {
+      this.buyLoading = true;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let data = {
@@ -203,6 +213,9 @@ export default {
         }
       }
       > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 20px;
         width: 100%;
         height: 40px;
@@ -284,6 +297,9 @@ export default {
         }
       }
       > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 20px;
         width: 100%;
         height: 40px;

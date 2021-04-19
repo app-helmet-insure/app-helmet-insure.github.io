@@ -139,7 +139,12 @@ export const applyReward3 = async (data, callBack) => {
 
     try {
         const Contract = await expERC20(TicketAddress);
-        await oneKeyArrpove(Contract, ContractAdress, 1000000, callBack);
+        await oneKeyArrpove(Contract, ContractAdress, 1000000, (res) => {
+            console.log(res);
+            if (res == 'failed') {
+                bus.$emit('CLOSE_LOADING_STATUS');
+            }
+        });
         const IIOContract = await IIO(ContractAdress);
         IIOContract.methods
             .applyReward3()
@@ -175,13 +180,14 @@ export const applyReward3 = async (data, callBack) => {
                         });
                     }
                     setTimeout(() => {
-                        console.log(data);
                         bus.$emit(`REFRESH_${data.ContractAdress}`);
+                        bus.$emit('CLOSE_LOADING_STATUS');
                     }, 1000);
                 }
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('CLOSE_LOADING_STATUS');
             });
     } catch (error) {
         console.log(error);

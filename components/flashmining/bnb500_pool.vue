@@ -207,7 +207,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -423,7 +423,7 @@ export default {
       this.MingTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("BNB500", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswap("BNB500", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("BNB500POOL"); //数量
       let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);

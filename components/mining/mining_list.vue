@@ -394,7 +394,7 @@ import {
 } from "~/interface/deposite";
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
@@ -609,8 +609,8 @@ export default {
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
-          dueDate: this.getMiningTime("2021/05/11 00:00"),
-          openDate: this.getRemainTime("2021/04/21 00:00"),
+          dueDate: this.getRemainTime("2021/05/11 00:00"),
+          openDate: this.getMiningTime("2021/04/21 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
@@ -710,7 +710,7 @@ export default {
       this.miningList[0].yearEarn = fixD(APY, 2);
     },
     async HELMET_MDX_LP_APY() {
-      let lptBnbValue = await uniswap("BHELMET", "HELMET");
+      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
       let DODOHELMET = lptBnbValue;
       let allVolume = DODOHELMET * 180000;
       //总抵押
@@ -728,8 +728,8 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let lptBnbValue1 = await uniswap("MDX", "WBNB");
-      let lptHelmetValue1 = await uniswap("WBNB", "HELMET");
+      let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
       let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 3467.52;
 
       let mdxAPY =
@@ -764,7 +764,7 @@ export default {
     },
 
     async FEI_POOL_APY() {
-      let lptBnbValue = await uniswap("QFEI", "QSD");
+      let lptBnbValue = await pancakeswap("QFEI", "QSD");
       let DODOHELMET = lptBnbValue;
       let allVolume = DODOHELMET * 200000;
       //总抵押
@@ -772,8 +772,8 @@ export default {
       // 总发行
       let stakeVolue = await totalSupply("FEIPOOL_LPT"); //数量
       // 抵押总价值
-      let lptBnbValue1 = await uniswap("FEI", "WBNB");
-      let lptHelmetValue1 = await uniswap("WBNB", "QSD");
+      let lptBnbValue1 = await pancakeswap("FEI", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "QSD");
       let stakeValue = lptBnbValue1 * lptHelmetValue1;
       // （1+日产量/总质押量）^365
       let APY =
@@ -792,8 +792,8 @@ export default {
       }
     },
     async QFEI_QSD_DLP_APY() {
-      let lptBnbValue = await uniswap("KUN", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "QSD");
+      let lptBnbValue = await pancakeswap("KUN", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "QSD");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = DODOHELMET * 150000;
       //总抵押
@@ -820,8 +820,8 @@ export default {
       }
     },
     async HELMET_KUN_DLP_APY() {
-      let lptBnbValue = await uniswap("QHELMET", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let lptBnbValue = await pancakeswap("QHELMET", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = DODOHELMET * 60000;
       //总抵押
@@ -838,10 +838,8 @@ export default {
             supplyVolume
           )
         ) * 100;
-      console.log(APY);
       let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
-      console.log(nowTime < startedTime);
       if (nowTime < startedTime) {
         this.miningList[5].yearEarn = "Infinity";
       } else {
@@ -850,8 +848,8 @@ export default {
       }
     },
     async HELMET_hDODO_DLP_APY() {
-      let lptBnbValue = await uniswap("DODO", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let lptBnbValue = await pancakeswap("DODO", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = DODOHELMET * 10000;
       //总抵押
@@ -880,8 +878,8 @@ export default {
       this.miningList[6].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
-      let lptBnbValue = await uniswap("FOR", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let lptBnbValue = await pancakeswap("FOR", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
       let FORHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = FORHELMET * 182010;
       //总抵押
@@ -910,8 +908,8 @@ export default {
       this.miningList[7].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
+      let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
+      let bnbhelmetValue = await pancakeswap("WBNB", "HELMET");
       let burgerHelmet = burgebnbrValue * bnbhelmetValue;
       let allVolume = burgerHelmet * 15000;
       //总抵押
@@ -984,12 +982,14 @@ export default {
         template = {
           day: day > 9 ? day : "0" + day,
           hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
         };
         return template;
       } else {
         template = {
           day: "00",
           hour: "00",
+          MINUTE: "00",
         };
         return "Finished";
       }

@@ -101,4 +101,12 @@ export default {
         'The lifetime of iToken is from Apr. 23rd 21:00 SGT - Apr. 24th 21:00 SGT. ',
         'Please be sure to activate the iToken within the validity period.',
     ],
+    QHELMET: [
+        '$QHELMET is the policy that allow users to buy HELMET at almost $1.5 ',
+        'Total Supply: 60,000',
+        'Activate price: 1HELMET=1.5QSD, meaning that you could get 1 $HELMET by just 1.5QSD',
+        'Expire date: June 19th 24:00 SGT',
+        '$QHELMET is the reward for HELMET-KUN DLP, allowing users to get Helmet at lower price.',
+        "Remember to activate $QHELMET on 'Policy You Hold' tab and do not trade heavily on $QHELMET.",
+    ],
 };

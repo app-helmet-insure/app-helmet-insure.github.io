@@ -133,7 +133,10 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>QHELMET {{ $t("Table.HELMETRewards") }}：</span>
+          <span
+            ><i @click="hadnleShowOnePager($event, 'QHELMET')">QHELMET</i>
+            {{ $t("Table.HELMETRewards") }}：</span
+          >
           <span>
             <countTo
               v-if="isLogin"
@@ -189,7 +192,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -287,6 +290,18 @@ export default {
     },
   },
   methods: {
+    hadnleShowOnePager(e, onePager) {
+      if (e.target.tagName === "I" && onePager) {
+        let Earn = onePager;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${onePager}?`,
+          text: onePager,
+        });
+      } else {
+        return;
+      }
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -415,4 +430,18 @@ export default {
 </script>
 <style lang='scss'scoped>
 @import "../../assets/css/mining_pool.scss";
+.button {
+  > p {
+    > span {
+      i {
+        cursor: pointer;
+        border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+        &:hover {
+          color: #fd8a2b;
+          border-bottom: 2px dotted #fd8a2b;
+        }
+      }
+    }
+  }
+}
 </style>

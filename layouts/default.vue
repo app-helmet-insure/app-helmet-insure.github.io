@@ -63,7 +63,7 @@ import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import RiskWarning from "~/components/common/risk-warning.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { getBalance } from "~/interface/order.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
@@ -97,7 +97,6 @@ export default {
   },
   computed: {
     routeObj() {
-      console.log(this.$route);
       return this.$route;
     },
     longMap() {
@@ -366,18 +365,18 @@ export default {
       let putIndexPirce = {};
       let echartIndexArray = {};
       // helmet
-      let bnbbusd = await uniswap("WBNB", "BUSD");
-      let cakebusd = await uniswap("CAKE", "BUSD");
-      let helmetbusd = await uniswap("BUSD", "HELMET");
+      let bnbbusd = await pancakeswap("WBNB", "BUSD");
+      let cakebusd = await pancakeswap("CAKE", "BUSD");
+      let helmetbusd = await pancakeswap("BUSD", "HELMET");
       for (let i = 0; i < list.length; i++) {
         let px;
         let indexPx;
         if ("WBNB" != list[i]) {
-          px = await uniswap("WBNB", list[i]);
+          px = await pancakeswap("WBNB", list[i]);
         } else {
           px = 1;
         }
-        indexPx = await uniswap(
+        indexPx = await pancakeswap(
           this.policyUndArray[1][list[i]],
           this.policyUndArray[0][list[i]]
         );
@@ -390,7 +389,7 @@ export default {
       for (let i = 0; i < list.length; i++) {
         let px;
         if ("WBNB" != list[i]) {
-          px = await uniswap(list[i], "WBNB");
+          px = await pancakeswap(list[i], "WBNB");
         } else {
           px = 1;
         }

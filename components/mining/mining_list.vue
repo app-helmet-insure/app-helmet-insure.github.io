@@ -118,11 +118,6 @@
                   ? 'activeButton stakeMining'
                   : 'stakeMining'
               "
-              :style="
-                item.earn == 'QHELMET'
-                  ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
-                  : ''
-              "
             >
               {{ $t("Table.Stakeing") }}
               <i class="selectDown"></i>
@@ -135,11 +130,6 @@
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
                   : 'claimMining'
-              "
-              :style="
-                item.earn == 'QHELMET'
-                  ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
-                  : ''
               "
             >
               {{ $t("Table.Claim") }}
@@ -183,6 +173,11 @@
             :activeType="activeType"
             :TradeType="'ALL'"
           ></QfeiQsdPool>
+          <HelmetKunPool
+            v-if="activeMining == 'QHELMET' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetKunPool>
           <HelmetHelmetPool
             v-if="activeMining == 'helmet' && showActiveMining"
             :activeType="activeType"
@@ -301,11 +296,6 @@
                 : 'stakeMining'
             "
             style="margin-right: 10px"
-            :style="
-              item.earn == 'QHELMET'
-                ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
-                : ''
-            "
           >
             {{ $t("Table.Stakeing") }}
           </button>
@@ -323,11 +313,6 @@
                 : 'claimMining'
             "
             style="margin-left: 10px"
-            :style="
-              item.earn == 'QHELMET'
-                ? 'color: rgba(23, 23, 58, 0.2);; pointer-events: none'
-                : ''
-            "
           >
             {{ $t("Table.Claim") }}
           </button>
@@ -373,6 +358,11 @@
           :activeType="activeType"
           :TradeType="activeType"
         ></QfeiQsdPool>
+        <HelmetKunPool
+          v-if="activeMining == 'QHELMET'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetKunPool>
         <HelmetHelmetPool
           v-if="activeMining == 'helmet'"
           :activeType="activeType"
@@ -409,6 +399,7 @@ import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
+import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
 import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
@@ -420,6 +411,7 @@ export default {
     Wraper,
     HelmetHelmetPool,
     HelmetMdxPool,
+    HelmetKunPool,
     FeiFeiPool,
     QfeiQsdPool,
     HelmetBurgerPool,
@@ -618,12 +610,14 @@ export default {
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
-          dueDate: "--",
-          openDate: "--",
+          dueDate: this.getRemainTime("2021/04/21 00:00"),
+          openDate: this.getMiningTime("2021/05/10 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: false,
+          expired: new Date("2021/04/21 00:00") * 1,
+          started: new Date("2021/05/10 00:00") * 1,
           yearEarn: "--",
         },
         {

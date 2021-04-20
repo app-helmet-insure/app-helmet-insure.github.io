@@ -448,12 +448,6 @@ export const getPAYA = async (type) => {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
             });
     } catch (error) {
         console.log(error);

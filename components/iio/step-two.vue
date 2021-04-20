@@ -17,7 +17,6 @@
         </p>
       </div>
       <button @click="toDeposite">
-        <i :class="stakeLoading ? 'loading_pic' : ''"></i>
         {{ $t("IIO.StepTwoAction") }}
       </button>
     </div>
@@ -84,7 +83,6 @@ export default {
         MyPoolShare: 0, //我的池子份额
       },
       DepositeNum: "",
-      stakeLoading: false,
       claimLoading: false,
       getRewardFlag: false,
       addCommom,
@@ -98,10 +96,6 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_IIO_HELMETBNB_POOL", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
     this.$bus.$on("CLAIM_LOADING_IIO_HELMETBNB_POOL", (data) => {
       this.claimLoading = false;
     });
@@ -146,7 +140,7 @@ export default {
           showFlag: true,
           title: `What is $${onePager}?`,
           text: onePager,
-        });
+        });x`x`
       } else {
         return;
       }

@@ -160,12 +160,12 @@
       <div class="ContractAddress">
         <span>QHELMET {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x76c415ececd88f76d6e6b5401a82b5ba075819f4
+          0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x76c415ececd88f76d6e6b5401a82b5ba075819f4')
+              copyAdress($event, '0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99')
             "
           ></i>
         </p>
@@ -269,19 +269,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -370,58 +360,6 @@ export default {
         copys.destroy();
       });
     },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
-    async getAPY() {
-      // FOR的helmet价值
-      let lptBnbValue = await uniswap("DODO", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let QHELMETPOOL = lptBnbValue * lptHelmetValue;
-      let allVolume = QHELMETPOOL * 10000;
-      //总抵押
-      let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("QHELMETPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "QHELMETPOOL_LPT", true);
-      let burgerApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(allVolume, 21), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      let helmetApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(25000, 21), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-
-      let apy = precision.plus(burgerApy, helmetApy);
-      this.apy = apy ? apy : 0;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
-    },
     async getBalance() {
       let helmetType = "QHELMETPOOL_LPT";
       let type = "QHELMETPOOL";
@@ -433,24 +371,13 @@ export default {
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
       let Helmet = await CangetPAYA(type);
-      //  可领取Cake
-      let Cake = await CangetUNI(type);
-
+      console.log(Deposite);
       // 赋值
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-
-      if (this.expired) {
-        this.textList[0].num = "--";
-        this.textList[0].num1 = "--";
-      } else {
-        this.textList[0].num = fixD((25000 / 21) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((10000 / 21) * 7, 2) + " DODO";
-      }
     },
     // 抵押
     toDeposite() {

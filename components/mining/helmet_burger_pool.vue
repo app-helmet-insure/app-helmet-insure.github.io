@@ -442,21 +442,12 @@ export default {
       let Cake = await CangetUNI(type);
 
       // 赋值
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.Cake = Cake;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-      this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
-      if (this.expired) {
-        this.textList[0].num = "--";
-        this.textList[0].num1 = "--";
-      } else {
-        this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
-      }
     },
     // 抵押
     toDeposite() {

@@ -226,24 +226,6 @@ export default {
           color: "#00B900",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -290,19 +272,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -405,58 +377,6 @@ export default {
         copys.destroy();
       });
     },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
-    async getAPY() {
-      // FOR的helmet价值
-      let lptBnbValue = await uniswap("DODO", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
-      let DODOHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = DODOHELMET * 10000;
-      //总抵押
-      let supplyVolume = await totalSupply("DODOHELMET"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("DODOHELMET_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "DODOHELMET_LPT", true);
-      let burgerApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(allVolume, 21), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      let helmetApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(25000, 21), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-
-      let apy = precision.plus(burgerApy, helmetApy);
-      this.apy = apy ? apy : 0;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
-    },
     async getBalance() {
       let helmetType = "DODOHELMET_LPT";
       let type = "DODOHELMET";
@@ -472,11 +392,11 @@ export default {
       let Cake = await CangetUNI(type);
 
       // 赋值
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.Cake = Cake;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
 
       if (this.expired) {

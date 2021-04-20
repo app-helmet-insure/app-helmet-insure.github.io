@@ -17,6 +17,9 @@
         ></path>
       </svg>
     </a>
+    <div>
+      <span>{{ locale.name }}</span>
+    </div>
     <ul>
       <li
         v-for="item in localeList"

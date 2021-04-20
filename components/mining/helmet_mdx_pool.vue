@@ -230,24 +230,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -288,9 +270,6 @@ export default {
     setTimeout(() => {
       this.getBalance();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {});
-    }, 20000);
   },
   watch: {
     userInfo: {
@@ -361,15 +340,12 @@ export default {
         "HELMETMDXPOOL"
       );
       let helmetReward = await Rewards("HELMETMDXPOOL", "0");
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.Cake = Cake;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num =
-        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
-        " HELMET";
     },
     // 抵押
     toDeposite() {

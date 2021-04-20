@@ -41,7 +41,7 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
-    locales: ['en_US', 'zh_CN'],
+    locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
     locale: 'en_US',
     chainID: null,
     localeList: [
@@ -49,16 +49,27 @@ export const state = () => ({
             key: 'en_US',
             name: 'English',
         },
-        // {
-        //   key: "po_TU",
-        //   name: "Português",
-        // },
         {
             key: 'zh_CN',
             name: '中文',
         },
+        {
+            key: 'ko_KR',
+            name: '한국어',
+        },
+        {
+            key: 'es_MX',
+            name: 'Español',
+        },
+        {
+            key: 'ja_JP',
+            name: '日本語',
+        },
+        {
+            key: 'fr_FR',
+            name: 'Français',
+        },
     ],
-    // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],
     coinList: [
         'HELMET',
         'ETH',
@@ -69,7 +80,6 @@ export const state = () => ({
         'WBNB',
         'MATH',
     ],
-    // coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE', 'CTK', 'FORTUBE'],
     longMap: null,
     sellMap: null,
     buyMap: null,

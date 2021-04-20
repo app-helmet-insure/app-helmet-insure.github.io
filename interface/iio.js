@@ -142,7 +142,6 @@ export const applyReward3 = async (data, callBack) => {
     try {
         const Contract = await expERC20(TicketAddress);
         await oneKeyArrpove(Contract, ContractAdress, 1000000, (res) => {
-            console.log(res);
             if (res == 'failed') {
                 bus.$emit('CLOSE_LOADING_STATUS');
             }
@@ -214,7 +213,6 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);
     if (parseInt(awc) >= parseInt(num)) {
-        // console.log("额度充足", parseInt(awc));
         return;
     }
     // 无限授权

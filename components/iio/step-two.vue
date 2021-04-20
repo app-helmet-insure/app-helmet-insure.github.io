@@ -135,12 +135,12 @@ export default {
     },
     hadnleShowOnePager(e, onePager) {
       if (e.target.tagName === "I" && onePager) {
-        console.log(1);
         this.$bus.$emit("OPEN_ONEPAGER", {
           showFlag: true,
           title: `What is $${onePager}?`,
           text: onePager,
-        });x`x`
+        });
+        x`x`;
       } else {
         return;
       }

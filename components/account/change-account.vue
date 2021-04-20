@@ -106,9 +106,7 @@ export default {
             this.$bus.$emit("REFRESH_BALANCE");
             this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
           });
-      } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
-      }
+      } catch (error) {}
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({

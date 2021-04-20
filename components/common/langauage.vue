@@ -17,18 +17,15 @@
         ></path>
       </svg>
     </a>
-    <span>{{ langName }}</span>
-    <div>
-      <ul>
-        <li
-          v-for="item in localeList"
-          :key="item.key"
-          @click="switchLang(item.key)"
-        >
-          {{ item.name }}
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li
+        v-for="item in localeList"
+        :key="item.key"
+        @click="switchLang(item.key)"
+      >
+        {{ item.name }}<i v-if="item.key != 'zh_CN'">/</i>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -62,10 +59,6 @@ export default {
   methods: {
     watchLocale(newVol) {
       this.lang = newVol;
-      this.langName = this.localeList.filter(
-        (item) => item.key === newVol
-      ).name;
-      console.log(this.localeList.filter((item) => item.key === newVol));
     },
     switchLang(lang) {
       this.lang = lang;
@@ -89,34 +82,16 @@ export default {
       height: 24px;
       margin-right: 6px;
     }
-    > div {
-      position: relative;
-      span {
-      }
-      ul {
-        width: 120px;
-        padding: 10px 15px;
-        background: #ffffff;
-        box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
-        border-radius: 5px 5px 0px 0px;
-        position: absolute;
-
-        li {
-          &:hover {
-            background: #f8f9fa;
-            border-radius: 5px;
-          }
-          width: 100%;
-          text-align: center;
-          height: 32px;
-          font-size: 14px;
-          font-family: PingFangSC-Regular, PingFang SC;
-          color: #22292f;
-          line-height: 32px;
-          cursor: pointer;
-          &:hover {
-            color: #17173a;
-          }
+    ul {
+      display: flex;
+      li {
+        font-size: 14px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: rgba(23, 23, 58, 0.7);
+        line-height: 20px;
+        cursor: pointer;
+        &:hover {
+          color: #17173a;
         }
       }
     }

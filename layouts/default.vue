@@ -133,6 +133,9 @@ export default {
       let chainID = this.$store.state.chainID;
       return chainID;
     },
+    localeList() {
+      return this.$store.state.localeList;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -153,12 +156,6 @@ export default {
     },
   },
   async mounted() {
-    // let flag = navigator.userAgent.match(
-    //   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-    // );
-    // if (flag) {
-    //   window.location.href = "https://m.helmet.insure/";
-    // }
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -168,7 +165,6 @@ export default {
     window.chainID = await getID();
     this.showWallet();
     this.$store.commit("SET_CHAINID", window.chainID);
-
     this.getUserInfo();
     // 获取映射
     this.$store.dispatch("setAllMap");
@@ -330,9 +326,7 @@ export default {
             this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
           });
-      } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
-      }
+      } catch (error) {}
     },
     async getUserInfo() {
       let res = await mateMaskInfo();

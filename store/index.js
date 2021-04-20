@@ -41,9 +41,10 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
-    locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
+    // locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
+    locales: ['en_US', 'zh_CN'],
     locale: 'en_US',
-    chainID: null,
+    chainID: 56,
     localeList: [
         {
             key: 'en_US',
@@ -53,22 +54,22 @@ export const state = () => ({
             key: 'zh_CN',
             name: '中文',
         },
-        {
-            key: 'ko_KR',
-            name: '한국어',
-        },
-        {
-            key: 'es_MX',
-            name: 'Español',
-        },
-        {
-            key: 'ja_JP',
-            name: '日本語',
-        },
-        {
-            key: 'fr_FR',
-            name: 'Français',
-        },
+        // {
+        //     key: 'ko_KR',
+        //     name: '한국어',
+        // },
+        // {
+        //     key: 'es_MX',
+        //     name: 'Español',
+        // },
+        // {
+        //     key: 'ja_JP',
+        //     name: '日本語',
+        // },
+        // {
+        //     key: 'fr_FR',
+        //     name: 'Français',
+        // },
     ],
     coinList: [
         'HELMET',
@@ -444,12 +445,11 @@ export const mutations = {
 };
 
 export const actions = {
-    // nuxtServerInit(store, {req}) {
-    //   if (req.locale) {
-    //     store.commit('SET_LANG', req.locale);
-    //   }
+    // nuxtServerInit(store, { req }) {
+    //     if (req.locale) {
+    //         store.commit('SET_LANG', req.locale);
+    //     }
     // },
-
     setLanguage({ commit }, data) {
         commit('SET_LANG', data);
     },
@@ -539,7 +539,6 @@ export const actions = {
             let _col;
             for (let i = 0; i < data.length; i++) {
                 // if (last - data[i].blockNumber < h24) {
-                console.log(data[i]);
                 _col = getTokenName(
                     data[i].returnValues._collateral,
                     window.chainID

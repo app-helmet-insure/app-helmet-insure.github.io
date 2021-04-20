@@ -4,14 +4,14 @@
     "Mining": "マイニング",
     "FlashMining": "フラッシュマイニング",
     "BruningBox": "バーニングボックス",
-    "IIO": "IIO", 
+    "IIO": "IIO",
     "NFT": "ピクセルパズル",
     "Plan": "予定",
     "Govern": "ガバナンス",
     "GuideBook": "説明書",
-    "Medium": "Medium", 
+    "Medium": "Medium",
     "ConnectWrong": "接続エラー",
-    "ConnectWallet": "ウォレット接続",
+    "ConnectWallet": "ウォレット接続"
   },
   "Banner": {
     "ClosedPolicy": "Policy Category",
@@ -23,7 +23,7 @@
     "TradeStart": "HELMETの取引開始",
     "TradeTime": "1/15の6PM PM SGTまで",
     "HELMETAdress": "HELMET コントラクトアドレス",
-    "HelmetPcice": "HELMET価格",
+    "HelmetPcice": "HELMET価格"
   },
   "Type": {
     "BuyInsurance": "購入Policy",
@@ -65,7 +65,7 @@
     "SelectCoin": "トークンを選ぶ"
   },
   "Table": {
-    "ID": "ID", 
+    "ID": "ID",
     "Rent": "貸出価格",
     "Premium": "プレミアム",
     "AllRent": "プレミアム",
@@ -126,8 +126,8 @@
     "Minted": "Mint",
     "CurrentlyStaked": "現在のステーキング",
     "text1": "もし期間内の[CAKE-BNB]swap価格が[200] BNBより[安い]/[高い]場合にはDPR[3%]をリスクなしで得ることができます。",
-    "Cont": "cont", 
-    "Tips": "1 Policy for 1 {type}", 
+    "Cont": "cont",
+    "Tips": "1 Policy for 1 {type}",
     "Bonus": "ボーナス",
     "FireProcess": "バーニング進行",
     "Burn": "バーン",
@@ -172,7 +172,7 @@
     "What": "なに？",
     "GetReward": "iTOKENを請求する",
     "ActionThree": "IIOトークンをスワップする",
-    "CanGetReward": "あなたは<span>{time}</span>の前にスワップすることができ, <i>The policy you hold</i> tab"にアクティベートすることができます,
+    "CanGetReward": "あなたは<span>{time}</span>の前にスワップすることができ",
     "CanSwap": "マイシェア",
     "Balance": "バランス",
     "SwapMyToken": "<i> {num2} {name2}</i>　から　<i> {num1} {name1}</i>　を獲得しました",

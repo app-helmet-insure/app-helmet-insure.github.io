@@ -18,11 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in showList"
-            :key="index"
-            v-if="item.price.length < 10"
-          >
+          <tr v-for="(item, index) in showList" :key="index">
             <td>
               {{ item.showID }}
               <i
@@ -61,12 +57,7 @@
       </table>
     </div>
     <div class="insurance_list_H5">
-      <div
-        class="list_item_H5"
-        v-for="(item, index) in showList"
-        :key="index"
-        v-if="item.price.length < 10"
-      >
+      <div class="list_item_H5" v-for="(item, index) in showList" :key="index">
         <section>
           <p>
             <span>{{ $t("Table.Rent") }}</span>
@@ -280,7 +271,6 @@ export default {
           resultList.push(resultItem);
         }
       }
-      console.log(resultList);
       resultList.sort(function (a, b) {
         return Number(a.price) - Number(b.price);
       });

@@ -448,7 +448,6 @@ export default {
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
     );
-    console.log(flag);
     if (this.$route.params.earn) {
       this.activeMining = this.$route.params.earn;
       this.showActiveMining = true;
@@ -610,15 +609,15 @@ export default {
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
-          dueDate: this.getRemainTime("2021/04/21 00:00"),
-          openDate: this.getMiningTime("2021/05/10 00:00"),
+          dueDate: this.getMiningTime("2021/05/11 00:00"),
+          openDate: this.getRemainTime("2021/04/21 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          expired: new Date("2021/04/21 00:00") * 1,
-          started: new Date("2021/05/10 00:00") * 1,
-          yearEarn: "--",
+          expired: new Date("2021/05/10 00:00") * 1,
+          started: new Date("2021/04/21 00:00") * 1,
+          yearEarn: apyArray["qhelmet"] || "--",
         },
         {
           miningName: "HELMET-<i>hDODO</i> DLP",
@@ -669,6 +668,7 @@ export default {
       this.HELMET_hDODO_DLP_APY();
       this.FEI_POOL_APY();
       this.QFEI_QSD_DLP_APY();
+      this.HELMET_KUN_DLP_APY();
       this.HELMET_POOL_APY();
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
@@ -820,16 +820,16 @@ export default {
       }
     },
     async HELMET_KUN_DLP_APY() {
-      let lptBnbValue = await uniswap("KUN", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "QSD");
+      let lptBnbValue = await uniswap("QHELMET", "WBNB");
+      let lptHelmetValue = await uniswap("WBNB", "HELMET");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = DODOHELMET * 150000;
+      let allVolume = DODOHELMET * 60000;
       //总抵押
-      let supplyVolume = await totalSupply("KUNPOOL"); //数量
+      let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
       // 总发行
-      let stakeVolue = await totalSupply("KUNPOOL_LPT"); //数量
+      let stakeVolue = await totalSupply("QHELMETPOOL_LPT"); //数量
       // 抵押总价值
-      let stakeValue = await balanceOf("QSD", "KUNPOOL_LPT");
+      let stakeValue = await balanceOf("HELMET", "QHELMETPOOL_LPT");
       let APY =
         precision.divide(
           precision.times(precision.divide(allVolume, 20), 365),
@@ -838,12 +838,14 @@ export default {
             supplyVolume
           )
         ) * 100;
+      console.log(APY);
       let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
+      console.log(nowTime < startedTime);
       if (nowTime < startedTime) {
         this.miningList[5].yearEarn = "Infinity";
       } else {
-        this.apyArray.qfei = fixD(APY, 2);
+        this.apyArray.qhelmet = fixD(APY, 2);
         this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },

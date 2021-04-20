@@ -144,7 +144,6 @@ export const toDeposite = async (type, data, flag, callBack) => {
         adress = getContract(type, charID);
         adressLPT = getContract(type + '_LPT', charID);
     }
-    console.log(adress, adressLPT, address);
     if (!adress || !adressLPT || !address) {
         return;
     }

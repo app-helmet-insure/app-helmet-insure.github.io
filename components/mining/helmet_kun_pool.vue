@@ -181,6 +181,7 @@ import {
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
+  getPAYA,
   getDoubleReward,
   exitStake,
   getBalance,

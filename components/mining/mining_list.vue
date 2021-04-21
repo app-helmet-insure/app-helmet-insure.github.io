@@ -567,7 +567,7 @@ export default {
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: false,
-          flash: true,
+          flash: false,
           info: true,
           earnName: "APY",
           compound: true,

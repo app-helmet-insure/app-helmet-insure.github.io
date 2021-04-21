@@ -377,6 +377,7 @@ export default {
       let QFEIPolicy = await this.QFEIPolicy();
       let bHELMETPolicy = await this.bHELMETPolicy();
       let qHELMETPolicy = await this.qHELMETPolicy();
+      let xhBURGERolicy = await this.xhBURGERolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -421,6 +422,9 @@ export default {
       }
       if (qHELMETPolicy) {
         result.push(qHELMETPolicy);
+      }
+      if (xhBURGERolicy) {
+        result.push(xhBURGERolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1296,6 +1300,59 @@ export default {
           outPriceUnit: "QSD",
           showVolume: volume,
           TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async xhBURGERolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xCa7597633927A98B800738eD5CD2933a74a80e8c"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xCa7597633927A98B800738eD5CD2933a74a80e8c");
+        let resultItem;
+        resultItem = {
+          id: 15,
+          bidID: 15,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1621612800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd",
+          _strikePrice: fromWei(100000000000000000, Token),
+          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          _expiry: 1621612800000,
+          transfer: true,
+          longAdress: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
+          type: "Call",
+          symbol: "hxBURGER",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 0.1,
+          outPriceUnit: "BNB",
+          showVolume: volume,
+          TypeCoin: getTokenName("0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

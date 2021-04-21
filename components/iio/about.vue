@@ -1,6 +1,6 @@
 <template>
   <div class="iio_about">
-    <div class="iio_about_table">
+    <div class="iio_about_table" v-if="iioPage === 'iio-id'">
       <table>
         <tr>
           <th>Project Information</th>
@@ -192,6 +192,9 @@ export default {
     iioType() {
       return this.$route.params.id;
     },
+    iioPage() {
+      return this.$route.name;
+    },
   },
   watch: {
     iioType: {
@@ -203,7 +206,6 @@ export default {
   methods: {
     WatchIIOType(newValue, oldValue) {
       this.About = Information[newValue];
-      console.log(this.About, Information, newValue);
     },
     copyAdress(e, text) {
       let _this = this;

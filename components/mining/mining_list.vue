@@ -832,7 +832,6 @@ export default {
       // 抵押总价值
       let stakeValue =
         (await balanceOf("HELMET", "QHELMETPOOL_LPT")) * HelmetUsdtValue;
-      console.log(lptBnbValue, stakeValue, HelmetUsdtValue);
       let APY =
         precision.divide(
           precision.times(precision.divide(allVolume, 20), 365),
@@ -841,7 +840,6 @@ export default {
             supplyVolume
           )
         ) * 100;
-      console.log(stakeVolue, supplyVolume);
       let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {

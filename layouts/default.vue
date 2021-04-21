@@ -29,9 +29,6 @@
           <transition name="fade">
             <nuxt />
           </transition>
-          <transition name="fade">
-            <nuxt-child />
-          </transition>
         </template>
       </div>
     </div>

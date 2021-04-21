@@ -239,6 +239,7 @@ export default {
     top: 0;
     transform: translateX(-50%);
     transition: opacity 0.3s, transform 0.4s, top 0.4s;
+    color: #ffffff;
     &.ex-message-info {
       /* @include themeify {
       background: rgba(themed('color-info'), 0.08);

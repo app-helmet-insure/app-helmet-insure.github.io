@@ -20,6 +20,7 @@
 <script>
 import "~/assets/font/font.css";
 export default {
+  name:'nft',
   methods: {},
 };
 </script>

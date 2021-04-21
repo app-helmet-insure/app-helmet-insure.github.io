@@ -2,7 +2,7 @@
   <div class="iio_wrap">
     <div class="iio_project">
       <div
-        v-for="item in iioData"
+        v-for="(item, index) in iioData"
         :key="item.iio_name"
         class="iio_item"
         :style="`background:${item.background}`"
@@ -41,7 +41,7 @@
               >
             </p>
           </div>
-          <button @click="toDetails">Enter Pool</button>
+          <button @click="toDetails(index)">Enter Pool</button>
         </template>
         <img
           class="soon_img"
@@ -67,15 +67,7 @@
 export default {
   data() {
     return {
-      iioData: [],
-    };
-  },
-  mounted() {
-    this.initData();
-  },
-  methods: {
-    initData() {
-      let iioData = [
+      iioData: [
         {
           iio_name: "chainswap",
           iio_img: "iio_chainswap",
@@ -107,11 +99,22 @@ export default {
           iio_img: "iio4",
           coming: false,
         },
-      ];
-      this.iioData = iioData;
+      ],
+    };
+  },
+  mounted() {
+    // this.initData();
+  },
+  methods: {
+    initData() {
+      // let iioData =
+      // this.iioData = iioData;
     },
-    toDetails() {
-      this.$router.push("/iio/details");
+    toDetails(index) {
+      let data = this.iioData[index];
+      this.$router.push({
+        path: `iio/${data.iio_name}`,
+      });
     },
   },
 };

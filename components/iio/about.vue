@@ -6,29 +6,43 @@
           <th>Project Information</th>
         </tr>
         <tr>
-          <td><span>Project Name</span><span>ChainSwap</span></td>
-        </tr>
-        <tr>
           <td>
-            <span>iTOKEN Distributing</span><span>Apr. 19th 21:00 SGT</span>
+            <span>Project Name</span>
+            <span>{{ About.ProjcetInformation.ProjectName }}</span>
           </td>
         </tr>
         <tr>
           <td>
-            <span>iTOKEN Activating</span><span>Apr. 23rd 21:00 SGT</span>
+            <span>iTOKEN Distributing</span>
+            <span>{{ About.ProjcetInformation.Distributing }}</span>
           </td>
         </tr>
         <tr>
           <td>
-            <span>iTOKEN Activate Period</span
-            ><span><i class="warn"></i> 24hours</span>
+            <span>iTOKEN Activating</span>
+            <span>{{ About.ProjcetInformation.Activating }}</span>
           </td>
         </tr>
         <tr>
-          <td><span>Activating Price</span><span>1TOKEN=0.3BUSD</span></td>
+          <td>
+            <span>iTOKEN Activate Period</span>
+            <span>
+              <i class="warn"></i>
+              {{ About.ProjcetInformation.ActivatePeriod }}
+            </span>
+          </td>
         </tr>
         <tr>
-          <td><span>Ticket Price</span><span>1 Helmet</span></td>
+          <td>
+            <span>Activating Price</span>
+            <span>{{ About.ProjcetInformation.ActivatingxPrice }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>Ticket Price</span>
+            <span>{{ About.ProjcetInformation.TicketPrice }}</span>
+          </td>
         </tr>
       </table>
       <table>
@@ -36,22 +50,20 @@
           <th>ChainSwap Token Information</th>
         </tr>
         <tr>
-          <td><span>Token Name</span><span>$TOKEN</span></td>
+          <td>
+            <span>Token Name</span>
+            <span>{{ About.TokenInformation.TokenName }}</span>
+          </td>
         </tr>
         <tr>
           <td>
             <span>Address</span
             ><span>
-              <section>0x3b73c1b2ea59835cbfcadade5462b6ab630d9890</section>
+              <section>{{ About.TokenInformation.Address }}</section>
               <i
                 class="copy"
                 id="copy_default"
-                @click="
-                  copyAdress(
-                    $event,
-                    '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890'
-                  )
-                "
+                @click="copyAdress($event, About.TokenInformation.Address)"
               ></i>
             </span>
           </td>
@@ -59,11 +71,14 @@
         <tr>
           <td>
             <span>Initial Circulating Supply (Day of sale)</span
-            ><span>100,000</span>
+            ><span>{{ About.TokenInformation.Supply }}</span>
           </td>
         </tr>
         <tr>
-          <td><span>Total Supply</span><span>100,000,000</span></td>
+          <td>
+            <span>Total Supply</span
+            ><span>{{ About.TokenInformation.TotalSupply }}</span>
+          </td>
         </tr>
         <tr class="none">
           <td><span></span><span></span></td>
@@ -162,8 +177,34 @@
 <script>
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import Information from "./Iio_information.js";
 export default {
+  data() {
+    return {
+      About: [],
+    };
+  },
+  mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+  },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+      console.log(this.About, Information, newValue);
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });

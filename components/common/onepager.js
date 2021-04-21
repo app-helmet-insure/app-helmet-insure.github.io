@@ -109,4 +109,12 @@ export default {
         '$QHELMET is the reward for HELMET-KUN DLP, allowing users to get Helmet at lower price.',
         "Remember to activate $QHELMET on 'Policy You Hold' tab and do not trade heavily on $QHELMET.",
     ],
+    hxBURGER: [
+        "It is $xBurger's cover miss out policy ( CALL Option of $xBurger). The reasonable activate price: 1 $xBurger=0.1 BNB.",
+        'For example, if $xBurger hit 0.2 BNB, you could swap 0.1BNB+1 $hxBurger to 1 $xBurger, and get net 0.1BNB profit.',
+        'Total supply: 20,000',
+        'Expire date: May, 21st, 2021',
+        'Helmet team took 20,000 Helmet as premium for supporting $hxBurger policy creating.',
+        'Do not trade heavily on $hxBurger, since if xBurger fail to hit 0.1BNB, $hxBurger would just be a souvenir token.',
+    ],
 };

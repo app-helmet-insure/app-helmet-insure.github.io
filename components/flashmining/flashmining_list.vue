@@ -105,7 +105,7 @@
           <use xlink:href="#icon-close"></use>
         </svg>
         <Hxburgerpool
-          v-if="activeFlash == 'hXBURGER' && showActiveFlash"
+          v-if="activeFlash == 'hxBURGER' && showActiveFlash"
           :activeType="activeType"
           :TradeType="'ALL'"
         ></Hxburgerpool>
@@ -245,7 +245,7 @@
         </svg>
       </div>
       <Hxburgerpool
-        v-if="activeFlash == 'hXBURGER'"
+        v-if="activeFlash == 'hxBURGER'"
         :activeType="activeType"
         :TradeType="activeType"
       ></Hxburgerpool>
@@ -397,11 +397,11 @@ export default {
         {
           miningName: "<i>hxBURGER</i> Pool",
           desc: "By hTPT-Helmet LPT",
-          earn: "hXBURGER",
+          earn: "hxBURGER",
           dueDate: this.getRemainTime("2021/05/22 00:00"),
           openDate: this.getMiningTime("2021/04/22 00:00"),
-          weekly: fixD((20000 / 20) * 7, 2) + " hXBURGER",
-          yearEarn: apyArray["hXBURGER"] || "--",
+          weekly: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          yearEarn: apyArray["hxBURGER"] || "--",
           expired: new Date("2021/05/22 00:00") * 1,
           started: new Date("2021/04/22 00:00") * 1,
         },
@@ -563,13 +563,13 @@ export default {
         ),
         2
       );
-
+      console.log(APY);
       let startedTime = this.miningList[0].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[0].yearEarn = "Infinity";
       } else {
-        this.apyArray.hXBURGER = fixD(APY, 2);
+        this.apyArray.hxBURGER = fixD(APY, 2);
         this.miningList[0].yearEarn = fixD(APY, 2);
       }
     },

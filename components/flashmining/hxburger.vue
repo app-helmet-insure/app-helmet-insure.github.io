@@ -83,7 +83,7 @@
         </p>
       </div>
       <a
-        href="https://exchange.pancakeswap.finance/#/add/0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        href="https://exchange.pancakeswap.finance/#/add/0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
         target="_blank"
         >From <i class="pancake"></i>Get hTPT-HELMET LPT</a
       >
@@ -143,7 +143,7 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>hXBURGER {{ $t("Table.HELMETRewards") }}：</span>
+          <span>hxBURGER {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <span>
               <countTo
@@ -154,7 +154,7 @@
                 :decimals="8"
               />
               <span v-else>--</span>
-              hXBURGER</span
+              hxBURGER</span
             >
           </span>
         </p>
@@ -170,7 +170,7 @@
         </button>
       </div>
       <div class="ContractAddress">
-        <span>hXBURGER {{ $t("Table.ContractAddress") }}</span>
+        <span>hxBURGER {{ $t("Table.ContractAddress") }}</span>
         <p>
           0xCa7597633927A98B800738eD5CD2933a74a80e8c
           <i

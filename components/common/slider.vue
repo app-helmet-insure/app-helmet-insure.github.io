@@ -112,7 +112,7 @@
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-burnbox"></use>
             </svg>
-            {{ $t("Table.BurnMining") }}
+            {{ $t("Header.BruningBox") }}
           </nuxt-link>
         </div>
         <div class="menu_item">
@@ -669,7 +669,6 @@ export default {
           height: 30px;
           position: absolute;
           left: 0;
-          z-index: 1;
           top: 0;
         }
         > .icon {

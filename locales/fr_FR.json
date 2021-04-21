@@ -178,6 +178,13 @@
         "SwapMyToken": "Tu as <i> {num1} {name1}</i>, qui pourrait être échangé en <i> {num2} {name2}</i> ",
         "Speed": "Payer",
         "Swap": "Échanger",
+        "CanSwapToken": "My {name}", //111
+        "SwapTokened": "Swap To", //111
+        "StepTwoAction": "Go to Stake LPT", //111
+        "HomeText1": "iTOKEN Distributing", //111
+        "HomeText2": "iTOKEN Activating", //111
+        "HomeText3": "Total Supply", //111
+        "HomeText4": "Activating Price", //111
         "Details": "Des détails",
         "Details_title1": "Comment avoir IIO Token?",
         "Details_text1": "Obtenez les iTokens échangeables qui pourraient être activés/échangés contre des jetons IIO dans l'onglet Assurance ou dans l'onglet IIO après la vente.",

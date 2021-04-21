@@ -2,8 +2,8 @@
   "Header": {
     "Trade": "トレーディングビュー",
     "Mining": "マイニング",
-    "FlashMining": "フラッシュマイニング",
-    "BruningBox": "バーニングボックス",
+    "FlashMining": "短期採掘",
+    "BruningBox": "燃焼箱",
     "IIO": "IIO",
     "NFT": "ピクセルパズル",
     "Plan": "予定",
@@ -178,6 +178,13 @@
     "SwapMyToken": "<i> {num2} {name2}</i>　から　<i> {num1} {name1}</i>　を獲得しました",
     "Speed": "支払い",
     "Swap": "スワップ",
+    "CanSwapToken": "My {name}", //111
+    "SwapTokened": "Swap To", //111
+    "StepTwoAction": "Go to Stake LPT", //111
+    "HomeText1": "iTOKEN Distributing", //111
+    "HomeText2": "iTOKEN Activating", //111
+    "HomeText3": "Total Supply", //111
+    "HomeText4": "Activating Price", //111
     "Details": "詳しく",
     "Details_title1": "IIOトークンの手に入れ方",
     "Details_text1": "販売後に「保険」タブまたは「IIO」タブでIIOトークンに有効化/交換できる取引可能なiTokensを入手できます。",

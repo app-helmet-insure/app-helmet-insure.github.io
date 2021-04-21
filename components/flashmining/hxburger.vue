@@ -212,7 +212,7 @@ export default {
     return {
       list: {
         name: "hAUTO Pool (By hDODO-Helmet LPT)",
-        dueDate: "2021/05/22 00:00",
+        dueDate: "2021/05/12 00:00",
         DownTime: {
           day: 0,
           hour: 0,

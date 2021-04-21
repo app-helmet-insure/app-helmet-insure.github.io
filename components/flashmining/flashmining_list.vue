@@ -398,11 +398,11 @@ export default {
           miningName: "<i>hxBURGER</i> Pool",
           desc: "By hTPT-Helmet LPT",
           earn: "hxBURGER",
-          dueDate: this.getRemainTime("2021/05/22 00:00"),
+          dueDate: this.getRemainTime("2021/05/12 00:00"),
           openDate: this.getMiningTime("2021/04/22 00:00"),
           weekly: fixD((20000 / 20) * 7, 2) + " hxBURGER",
           yearEarn: apyArray["hxBURGER"] || "--",
-          expired: new Date("2021/05/22 00:00") * 1,
+          expired: new Date("2021/05/12 00:00") * 1,
           started: new Date("2021/04/22 00:00") * 1,
         },
         {
@@ -550,6 +550,7 @@ export default {
       let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
+      console.log(HAUTOHELMET, HelmetValue);
       let APY = fixD(
         precision.times(
           precision.divide(

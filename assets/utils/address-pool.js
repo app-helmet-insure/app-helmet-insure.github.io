@@ -1,13 +1,5 @@
 // import {web3} from './web3-obj.js';
 import addressList from '~/abi/config.js';
-import {
-    Token,
-    Fetcher,
-    Route,
-    Pair,
-    TokenAmount,
-    sortsBefore,
-} from '@pancakeswap-libs/sdk';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import precision from '~/assets/js/precision.js';
 import { Contract } from '@ethersproject/contracts';
@@ -194,7 +186,7 @@ export const getID = async () => {
     } else {
         const walletConnectProvider = new WalletConnectProvider({
             chainId: 56,
-
+            bridge: 'wss://bridge.walletconnect.org/',
             rpc: {
                 56: 'https://bsc-dataseed1.binance.org/',
             },
@@ -210,63 +202,7 @@ export const getID = async () => {
 };
 
 // UniSwap SDK
-export const uniswap = async (token1, token2) => {
-    const address1 = getAddress(token1, window.chainID);
-    const address2 = getAddress(token2, window.chainID);
-    const TOKEN1 = new Token(
-        window.chainID,
-        address1,
-        getWei_2(token1),
-        token1,
-        token1
-    );
-    const TOKEN2 = new Token(
-        window.chainID,
-        address2,
-        getWei_2(token2),
-        token2,
-        token2
-    );
-    try {
-        // 获取交易对地址
-        const address = Pair.getAddress(TOKEN1, TOKEN2);
-        // 获取Provider
-        let provider = getDefaultProvider(getNetwork('56'));
-        // 获取合约方法
-        const Contracts = await new window.WEB3.eth.Contract(
-            IPancakePair.abi,
-            address,
-            provider
-        );
-        // 获取getReserves
-        let result = await Contracts.methods
-            .getReserves()
-            .call()
-            .then((res) => {
-                return res;
-            });
-        const balances = TOKEN1.sortsBefore(TOKEN2)
-            ? [result.reserve0, result.reserve1]
-            : [result.reserve1, result.reserve0];
-        let pair = new Pair(
-            new TokenAmount(TOKEN1, balances[0]),
-            new TokenAmount(TOKEN2, balances[1])
-        );
-        // let path = new Token(
-        //   "56",
-        //   "0x4E76DfeA6Fb3726e9A77628AAa23839E3298BC37",
-        //   18,
-        //   "HELMET",
-        //   "HELMET"
-        // );
-        const route = new Route([pair], TOKEN1);
-        let Price = route.midPrice.toSignificant(6);
-        return Price;
-    } catch (error) {
-        console.log(error);
-        return 0;
-    }
-};
+
 export const getTokenName = (address) => {
     let tokenAddress = address.toLowerCase();
     if (!tokenAddress) {
@@ -313,6 +249,8 @@ export const getTokenName = (address) => {
             return 'FEI';
         case '0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2':
             return 'QSD';
+        case '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890':
+            return 'TOKEN';
         default:
             return '--';
     }

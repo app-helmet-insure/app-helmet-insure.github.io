@@ -283,7 +283,7 @@ import Wraper from "~/components/common/wraper.vue";
 import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
 import HctkPool from "~/components/flashmining/hctk_pool.vue";
@@ -521,7 +521,7 @@ export default {
       this.GET_HTPT_POOL_APY();
     },
     async GET_HTPT_POOL_APY() {
-      let HAUTOHELMET = await uniswap("HTPT", "HELMET"); //Hlemt价格
+      let HAUTOHELMET = await pancakeswap("HTPT", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HTPTPOOL"); //数量
       let LptVolume = await totalSupply("HTPTPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HTPTPOOL_LPT", true);
@@ -551,7 +551,7 @@ export default {
       }
     },
     async GET_HDODO_POOL_APY() {
-      let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswap("HDODO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HDODOPOOL"); //数量
       let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);
@@ -577,7 +577,7 @@ export default {
       }
     },
     async GET_HMATH_POOL_APY() {
-      let HMATHHELMET = await uniswap("HMATH", "HELMET"); //Hlemt价格
+      let HMATHHELMET = await pancakeswap("HMATH", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HMATHPOOL"); //数量
       let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
@@ -603,7 +603,7 @@ export default {
       }
     },
     async GET_HAUTO_POOL_APY() {
-      let HAUTOHELMET = await uniswap("HAUTO", "HELMET"); //Hlemt价格
+      let HAUTOHELMET = await pancakeswap("HAUTO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
       let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
@@ -629,7 +629,7 @@ export default {
       }
     },
     async GET_BNB500_POOL_APY() {
-      let HCTKHELMET = await uniswap("BNB500", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswap("BNB500", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("BNB500POOL"); //数量
       let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
@@ -655,7 +655,7 @@ export default {
       }
     },
     async GET_HCCT_POOL_APY() {
-      let HCCTHELMET = await uniswap("HCCT", "HELMET");
+      let HCCTHELMET = await pancakeswap("HCCT", "HELMET");
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
@@ -680,7 +680,7 @@ export default {
       }
     },
     async GET_HCTK_POOL_APY() {
-      let HCTKHELMET = await uniswap("HCTK", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswap("HCTK", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HCTKPOOL"); //数量
       let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);

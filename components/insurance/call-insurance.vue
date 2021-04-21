@@ -21,7 +21,6 @@
           <tr
             v-for="(item, index) in showList"
             :key="index"
-            v-if="item.price.length < 10"
           >
             <td>
               {{ item.showID }}
@@ -64,7 +63,6 @@
         class="list_item_H5"
         v-for="(item, index) in showList"
         :key="index"
-        v-if="item.price.length < 10"
       >
         <section>
           <p>
@@ -276,7 +274,6 @@ export default {
           resultList.push(resultItem);
         }
       }
-      console.log(resultList);
       resultList.sort(function (a, b) {
         return Number(a.price) - Number(b.price);
       });

@@ -192,24 +192,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -248,22 +230,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
-    apy(newValue, value) {
-      this.apy = newValue;
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -282,25 +251,6 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
-    async getAPY() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      let helmetTime = (await RewardsDuration("HELMETPOOL")) / 86400;
-      // （1+日产量/总质押量）^365
-      let apy = fixD(
-        Math.pow(
-          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
-          365
-        ) * 100,
-        2
-      );
-      this.apy = HelmetVolume ? apy : 0;
-      this.textList[1].num = this.apy + "%";
     },
     async getBalance() {
       let helmetType = "HELMETPOOL_LPT";

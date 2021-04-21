@@ -86,4 +86,27 @@ export default {
         'You could farm $KUN by $QFEI-$QSD LPT',
         'Please do not trade heavily on $QFEI.',
     ],
+    BHELMET: [
+        'Total Supply: 190,000',
+        'Activate price: 1HELMET=1.5BUSD, meaning that you could get 1 $HELMET by just $1.5',
+        'Expire date: June 16th 00:00 SGT ',
+        '$BHELMET is the reward for HELMET-BNB MLP, allowing Helmeters to get Helmet at lower price. ',
+        `Remember to activate $bHELMET on 'Policy You Hold' tab and do not trade heavily on $BHELMET.`,
+    ],
+    iTOKEN: [
+        'iToken is the certificate to swap/activate for $TOKEN.',
+        'Only users who hold iToken could get $TOKEN during April 23rd 21:00 SGT - April 24th 21:00 SGT',
+        'iToken cannot be activated before/after that time period',
+        'iTOKEN activate/swap formula: 1 iTOKEN+0.3BUSD 1 $TOKEN',
+        'The lifetime of iToken is from Apr. 23rd 21:00 SGT - Apr. 24th 21:00 SGT. ',
+        'Please be sure to activate the iToken within the validity period.',
+    ],
+    QHELMET: [
+        '$QHELMET is the policy that allow users to buy HELMET at almost $1.5 ',
+        'Total Supply: 60,000',
+        'Activate price: 1HELMET=1.5QSD, meaning that you could get 1 $HELMET by just 1.5QSD',
+        'Expire date: June 19th 24:00 SGT',
+        '$QHELMET is the reward for HELMET-KUN DLP, allowing users to get Helmet at lower price.',
+        "Remember to activate $QHELMET on 'Policy You Hold' tab and do not trade heavily on $QHELMET.",
+    ],
 };

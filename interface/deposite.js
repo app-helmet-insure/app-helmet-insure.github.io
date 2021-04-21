@@ -144,7 +144,6 @@ export const toDeposite = async (type, data, flag, callBack) => {
         adress = getContract(type, charID);
         adressLPT = getContract(type + '_LPT', charID);
     }
-    console.log(adress, adressLPT, address);
     if (!adress || !adressLPT || !address) {
         return;
     }
@@ -448,12 +447,6 @@ export const getPAYA = async (type) => {
                 bus.$emit(`CLAIM_LOADING_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
             });
     } catch (error) {
         console.log(error);

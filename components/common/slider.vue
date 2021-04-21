@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="sliderFlag ? 'openSlider slider' : 'closeSlider slider'"
-    @touchmove.prevent
+    :class="sliderShowFlag ? 'openSlider slider' : 'closeSlider slider'"
+    @touchmove.prevent.self
     @click.self="CloseMask"
   >
     <div class="slider_wrap">
@@ -11,39 +11,41 @@
         @mouseleave="whirlLogo(false)"
         :class="['logo', whirlLogoFlag && 'whirl_logo']"
       ></a>
-      <ul class="menu">
-        <li class="menu_group menu_item">
-          <a
-            @click="sliderClick"
-            :class="
-              routeObj.name === 'index'
-                ? 'active'
-                : routeObj.name == 'myPolicy' ||
-                  routeObj.name == 'mySupply' ||
-                  routeObj.name == 'myClaim'
-                ? 'active_child'
-                : ''
-            "
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-insurance"></use>
-            </svg>
-            {{ $t("Table.safe") }}
-            <svg
+      <div class="menu">
+        <div class="menu_group">
+          <div class="menu_item">
+            <a
+              @click="sliderClick"
               :class="
                 routeObj.name === 'index'
-                  ? 'right active'
+                  ? 'active'
                   : routeObj.name == 'myPolicy' ||
                     routeObj.name == 'mySupply' ||
                     routeObj.name == 'myClaim'
-                  ? 'active_child right'
-                  : 'right'
+                  ? 'active_child'
+                  : ''
               "
             >
-              <use xlink:href="#icon-rightSelect"></use>
-            </svg>
-          </a>
-          <ul
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-insurance"></use>
+              </svg>
+              {{ $t("Table.safe") }}
+              <svg
+                :class="
+                  routeObj.name === 'index'
+                    ? 'right active'
+                    : routeObj.name == 'myPolicy' ||
+                      routeObj.name == 'mySupply' ||
+                      routeObj.name == 'myClaim'
+                    ? 'active_child right'
+                    : 'right'
+                "
+              >
+                <use xlink:href="#icon-rightSelect"></use>
+              </svg>
+            </a>
+          </div>
+          <div
             class="child_menu"
             v-if="
               sliderFlag ||
@@ -52,33 +54,33 @@
               routeObj.name == 'myClaim'
             "
           >
-            <li class="child_menu_item">
+            <p class="child_menu_item">
               <nuxt-link
                 to="/myPolicy"
                 :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
               >
                 {{ $t("Type.MyGuarantee") }}
               </nuxt-link>
-            </li>
-            <li class="child_menu_item">
+            </p>
+            <p class="child_menu_item">
               <nuxt-link
                 to="/mySupply"
                 :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
               >
                 {{ $t("Type.IssueInsurance") }}
               </nuxt-link>
-            </li>
-            <li class="child_menu_item">
+            </p>
+            <p class="child_menu_item">
               <nuxt-link
                 to="/myClaim"
                 :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
               >
                 {{ $t("Type.Claim") }}
               </nuxt-link>
-            </li>
-          </ul>
-        </li>
-        <li class="menu_item">
+            </p>
+          </div>
+        </div>
+        <div class="menu_item">
           <nuxt-link
             to="/mining"
             :class="routeObj.name === 'mining' ? 'active' : ''"
@@ -87,9 +89,10 @@
               <use xlink:href="#icon-mining1"></use>
             </svg>
             {{ $t("Header.Mining") }}
+            <i class="num">5</i>
           </nuxt-link>
-        </li>
-        <li class="menu_item">
+        </div>
+        <div class="menu_item">
           <nuxt-link
             to="/flashmining"
             :class="routeObj.name === 'flashmining' ? 'active' : ''"
@@ -98,9 +101,10 @@
               <use xlink:href="#icon-flashmining"></use>
             </svg>
             {{ $t("Header.FlashMining") }}
+            <i class="num">1</i>
           </nuxt-link>
-        </li>
-        <li class="menu_item">
+        </div>
+        <div class="menu_item">
           <nuxt-link
             to="/burnbox"
             :class="routeObj.name === 'burnbox' ? 'active' : ''"
@@ -110,41 +114,59 @@
             </svg>
             {{ $t("Table.BurnMining") }}
           </nuxt-link>
-        </li>
-        <li class="menu_item">
-          <nuxt-link to="/IIO" :class="routeObj.name === 'IIO' ? 'active' : ''">
+        </div>
+        <div class="menu_item">
+          <nuxt-link to="/iio" :class="routeObj.name === 'iio' ? 'active' : ''">
+            <svg class="hot" aria-hidden="true">
+              <use
+                :href="`#icon-${routeObj.name === 'iio' ? 'hot1' : 'hot'}`"
+              ></use>
+            </svg>
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-iio"></use>
             </svg>
             {{ $t("Header.IIO") }}
+            <i class="num">1</i>
           </nuxt-link>
-        </li>
-        <li class="menu_item">
-          <nuxt-link to="/NFT" :class="routeObj.name === 'NFT' ? 'active' : ''">
+        </div>
+        <div class="menu_item">
+          <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
             <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-iio"></use>
+              <use xlink:href="#icon-nft"></use>
             </svg>
             {{ $t("Header.NFT") }}
           </nuxt-link>
-        </li>
-        <li class="menu_item">
+        </div>
+        <div class="menu_item">
           <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-papar"></use>
             </svg>
             {{ $t("Header.GuideBook") }}
           </a>
-        </li>
-        <li class="menu_item">
+        </div>
+        <div class="menu_item">
           <a href="https://helmetinsure.medium.com/" target="_blank">
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-medium"></use>
             </svg>
             {{ $t("Header.Medium") }}</a
           >
-        </li>
-      </ul>
+        </div>
+      </div>
       <div class="footer">
+        <div class="logo_wrap">
+          <a
+            href="https://www.coingecko.com/en/coins/helmet-insure"
+            target="_blank"
+            ><img src="~/assets/img/slider/coingecko.png" alt=""
+          /></a>
+          <a
+            href="https://coinmarketcap.com/currencies/helmet-insure/"
+            target="_blank"
+            ><img src="~/assets/img/slider/cmc.png" alt=""
+          /></a>
+        </div>
         <div class="footer_top">
           <a href="https://twitter.com/Helmet_insure" target="_blank">
             <svg class="icon" aria-hidden="true">
@@ -161,14 +183,17 @@
               <use xlink:href="#icon-Discord"></use>
             </svg>
           </a>
-          <!-- <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-medium"></use>
-        </svg>
-      </a> -->
           <a href="https://certik.foundation/projects/helmet" target="_blank">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-audit"></use>
+            </svg>
+          </a>
+          <a
+            href="https://line.me/ti/g2/PEPrGL03FLQFz2d06z3UaA?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+            target="_blank"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-line"></use>
             </svg>
           </a>
         </div>
@@ -187,6 +212,7 @@ export default {
   data() {
     return {
       sliderFlag: false,
+      sliderShowFlag: false,
       whirlLogoFlag: false,
     };
   },
@@ -197,17 +223,17 @@ export default {
   },
   mounted() {
     this.$bus.$on("OPEN_SILDER", (res) => {
-      this.sliderFlag = res;
+      this.sliderShowFlag = res;
     });
   },
   watch: {
     $route() {
-      this.$route.path !== "/" && (this.sliderFlag = false);
+      this.$route.path !== "/";
     },
   },
   methods: {
     CloseMask() {
-      this.sliderFlag = false;
+      this.sliderShowFlag = false;
     },
     sliderClick() {
       this.sliderFlag = !this.sliderFlag;
@@ -307,49 +333,10 @@ export default {
   .menu {
     margin-top: 40px;
     flex: 1;
+    overflow-y: auto;
     &_group {
       height: auto;
       position: relative;
-    }
-    &_item {
-      width: 100%;
-      font-size: 16px;
-      font-family: HelveticaNeue-Medium, HelveticaNeue;
-      font-weight: 600;
-      line-height: 50px;
-      cursor: pointer;
-      > a {
-        color: rgba(23, 23, 58, 0.7);
-        display: block;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        position: relative;
-        > .icon {
-          width: 24px;
-          height: 24px;
-          margin-right: 16px;
-          display: block;
-          flex-shrink: 0;
-        }
-        .right {
-          width: 24px;
-          height: 24px;
-          position: absolute;
-          fill: #17173a;
-          right: 20px;
-        }
-        &:hover {
-          color: #17173a;
-          > .icon {
-            fill: #17173a;
-          }
-          > .right {
-            fill: #17173a;
-          }
-        }
-      }
       .child_menu {
         display: flex;
         flex-direction: column;
@@ -388,12 +375,82 @@ export default {
         }
       }
     }
+    &_item {
+      width: 100%;
+      font-size: 16px;
+      font-family: HelveticaNeue-Medium, HelveticaNeue;
+      font-weight: 600;
+      line-height: 50px;
+      cursor: pointer;
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      > a {
+        color: rgba(23, 23, 58, 0.7);
+        display: block;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        position: relative;
+        .num {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 16px;
+          height: 16px;
+          background: #dc3545;
+          position: absolute;
+          border-radius: 50%;
+          right: 20px;
+          font-size: 12px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+          line-height: 12px;
+        }
+        .hot {
+          width: 30px;
+          height: 30px;
+          position: absolute;
+          left: 0;
+          z-index: 1;
+          top: 0;
+        }
+        > .icon {
+          width: 24px;
+          height: 24px;
+          margin-right: 16px;
+          display: block;
+          flex-shrink: 0;
+        }
+        .right {
+          width: 24px;
+          height: 24px;
+          position: absolute;
+          fill: #17173a;
+          right: 20px;
+        }
+        &:hover {
+          color: #17173a;
+          > .icon {
+            fill: #17173a;
+          }
+          > .right {
+            fill: #17173a;
+          }
+        }
+      }
+    }
     .active {
       width: 100%;
       height: 50px;
       background: #fd7e14;
       border-radius: 5px;
       color: #ffffff;
+      .num {
+        background: #ff9c4b;
+      }
       .icon {
         width: 24px;
         height: 24px;
@@ -427,7 +484,30 @@ export default {
   }
   .footer {
     height: 128px;
-    padding: 0 20px;
+    .logo_wrap {
+      display: flex;
+      transform: translateX(-10px);
+      a {
+        margin-right: 8px;
+        height: 30px;
+        padding: 0 8px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          background: rgba(23, 23, 58, 0.3);
+        }
+        &:last-of-type {
+          margin: 0;
+        }
+        img {
+          height: 16px;
+        }
+      }
+    }
     .footer_top {
       height: 64px;
       display: flex;
@@ -435,7 +515,7 @@ export default {
       border-bottom: 1px solid #e8e8eb;
       a {
         margin-right: 20px;
-        &:nth-of-type(4) {
+        &:last-of-type {
           margin: 0;
         }
         .icon {
@@ -445,9 +525,6 @@ export default {
           &:hover {
             fill: #17173a;
           }
-        }
-        &:nth-of-type(4) {
-          margin: 0;
         }
       }
     }
@@ -512,50 +589,10 @@ export default {
   .menu {
     margin-top: 40px;
     flex: 1;
+    overflow-y: auto;
     &_group {
       height: auto;
       position: relative;
-    }
-
-    &_item {
-      width: 100%;
-      font-size: 14px;
-      font-family: HelveticaNeue-Medium, HelveticaNeue;
-      font-weight: 600;
-      line-height: 40px;
-      cursor: pointer;
-      > a {
-        color: rgba(23, 23, 58, 0.7);
-        display: block;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        position: relative;
-        > .icon {
-          width: 20px;
-          height: 20px;
-          margin-right: 8px;
-          display: block;
-          fill: rgba(23, 23, 58, 0.7);
-        }
-        .right {
-          position: absolute;
-          right: 20px;
-          width: 20px;
-          height: 20px;
-          fill: rgba(23, 23, 58, 0.7);
-        }
-        &:hover {
-          color: #17173a;
-          > .icon {
-            fill: #17173a;
-          }
-          > .right {
-            fill: #17173a;
-          }
-        }
-      }
       .child_menu {
         display: flex;
         flex-direction: column;
@@ -593,12 +630,82 @@ export default {
         }
       }
     }
+
+    &_item {
+      width: 100%;
+      font-size: 14px;
+      font-family: HelveticaNeue-Medium, HelveticaNeue;
+      font-weight: 600;
+      line-height: 40px;
+      cursor: pointer;
+      border-radius: 5px;
+      overflow: hidden;
+      > a {
+        color: rgba(23, 23, 58, 0.7);
+        display: block;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        position: relative;
+        .num {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 16px;
+          height: 16px;
+          background: #dc3545;
+          position: absolute;
+          border-radius: 50%;
+          right: 20px;
+          font-size: 12px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+          line-height: 12px;
+        }
+        .hot {
+          width: 30px;
+          height: 30px;
+          position: absolute;
+          left: 0;
+          z-index: 1;
+          top: 0;
+        }
+        > .icon {
+          width: 20px;
+          height: 20px;
+          margin-right: 8px;
+          display: block;
+          fill: rgba(23, 23, 58, 0.7);
+        }
+        .right {
+          position: absolute;
+          right: 20px;
+          width: 20px;
+          height: 20px;
+          fill: rgba(23, 23, 58, 0.7);
+        }
+        &:hover {
+          color: #17173a;
+          > .icon {
+            fill: #17173a;
+          }
+          > .right {
+            fill: #17173a;
+          }
+        }
+      }
+    }
     .active {
       width: 100%;
       height: 4 0px;
       background: #fd7e14;
       border-radius: 5px;
       color: #ffffff;
+      .num {
+        background: #ff9c4b;
+      }
       .icon {
         width: 20px;
         height: 20px;
@@ -630,7 +737,32 @@ export default {
     }
   }
   .footer {
-    padding: 0 10px;
+    .logo_wrap {
+      display: flex;
+      margin-bottom: 10px;
+      transform: translateX(-10px);
+      margin-bottom: 20px;
+      a {
+        margin-right: 8px;
+        height: 30px;
+        padding: 0 8px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          background: rgba(23, 23, 58, 0.3);
+        }
+        &:last-of-type {
+          margin: 0;
+        }
+        img {
+          height: 16px;
+        }
+      }
+    }
     .footer_top {
       height: 36px;
       display: flex;
@@ -647,7 +779,7 @@ export default {
             fill: #17173a;
           }
         }
-        &:nth-of-type(4) {
+        &:last-of-type {
           margin: 0;
         }
       }

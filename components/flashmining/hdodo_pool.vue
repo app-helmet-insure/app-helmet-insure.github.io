@@ -199,7 +199,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -422,7 +422,7 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
-      let HCTKHELMET = await uniswap("HDODO", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswap("HDODO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HDODOPOOL"); //数量
       let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);

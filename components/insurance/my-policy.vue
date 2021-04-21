@@ -375,6 +375,8 @@ export default {
       let hDODOPolicy = await this.hDODOPolicy();
       let hTPTPolicy = await this.hTPTPolicy();
       let QFEIPolicy = await this.QFEIPolicy();
+      let bHELMETPolicy = await this.bHELMETPolicy();
+      let qHELMETPolicy = await this.qHELMETPolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -413,6 +415,12 @@ export default {
       }
       if (QFEIPolicy) {
         result.push(QFEIPolicy);
+      }
+      if (bHELMETPolicy) {
+        result.push(bHELMETPolicy);
+      }
+      if (qHELMETPolicy) {
+        result.push(qHELMETPolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -1182,6 +1190,112 @@ export default {
           outPriceUnit: "QSD",
           showVolume: volume,
           TypeCoin: getTokenName("0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async bHELMETPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672");
+        let resultItem;
+        resultItem = {
+          id: 13,
+          bidID: 13,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1623772800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _strikePrice: fromWei(1500000000000000000, Token),
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1623772800000,
+          transfer: true,
+          longAdress: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          type: "Call",
+          symbol: "BHELMET",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 1.5,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async qHELMETPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99");
+        let resultItem;
+        resultItem = {
+          id: 14,
+          bidID: 14,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1624118400000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+          _strikePrice: fromWei(1500000000000000000, Token),
+          _underlying: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
+          _expiry: 1624118400000,
+          transfer: true,
+          longAdress: "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99",
+          type: "Call",
+          symbol: "QHELMET",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 1.5,
+          outPriceUnit: "QSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

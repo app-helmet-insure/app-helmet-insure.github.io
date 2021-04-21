@@ -106,9 +106,7 @@ export default {
             this.$bus.$emit("REFRESH_BALANCE");
             this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
           });
-      } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
-      }
+      } catch (error) {}
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
@@ -196,8 +194,13 @@ export default {
       background-position: center center;
       background-size: 100% 100%;
     }
+    @media screen and (min-width: 750px) {
+      width: 320px;
+    }
+    @media screen and (max-width: 750px) {
+      width: 96%;
+    }
     .current-account {
-      width: 100%;
       border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;

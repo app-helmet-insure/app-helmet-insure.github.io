@@ -50,9 +50,7 @@ export default {
               this.$bus.$emit("REFRESH_MINING");
               this.closeDialog();
             });
-        } catch (error) {
-          console.log("MateMask 扩展插件未安装或未启用##", error);
-        }
+        } catch (error) {}
       } else if (item === "WalletConnect") {
         this.connectWallet();
       }
@@ -157,9 +155,6 @@ export default {
         border-bottom: 1px solid #ededf0;
         &.on {
           cursor: pointer;
-          &:hover {
-            // border: 2px solid $text-t;
-          }
         }
         &.off {
           cursor: wait;

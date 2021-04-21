@@ -94,6 +94,9 @@ export default {
     this.$bus.$on("JUMP_STEP", (res) => {
       this.active_step = res.step;
     });
+    this.$bus.$on("GET_FLAG", () => {
+      this.buyAppliedFlag();
+    });
     setTimeout(() => {
       this.buyAppliedFlag();
     }, 1000);
@@ -190,10 +193,10 @@ export default {
   }
   .step_content {
     margin-top: 50px;
-    margin-bottom: 80px;
+    margin-bottom: 10px;
     width: 100%;
     padding: 60px 0;
-    background: #f7f7fa;
+    background: #fff;
     position: relative;
   }
 }
@@ -275,7 +278,7 @@ export default {
     margin-top: 28px;
     width: 100%;
     padding: 20px 12px 30px;
-    background: #f7f7fa;
+    background: #fff;
     border-radius: 3px;
   }
   .step_content {

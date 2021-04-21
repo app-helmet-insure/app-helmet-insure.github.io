@@ -1,45 +1,34 @@
 <template>
   <div class="iio_banner">
     <div class="iio_wrap">
-      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "XXX" }) }}</h3>
-      <div class="iio_address">
-        0x5d03b2f490cD40bc9859EB13193C2f711583560E
-        <i
-          class="copy"
-          id="copy_default"
-          @click="
-            copyAdress($event, '0x5d03b2f490cD40bc9859EB13193C2f711583560E')
-          "
-        ></i>
+      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "ChainSwap" }) }}</h3>
+      <div class="tip" v-if="!ticketFlag">
+        <i></i>{{ $t("IIO.NoTicket") }}，<span @click="toStep1"
+          >{{ $t("IIO.BuyTicket") }} ></span
+        >
       </div>
-      <span class="ioo_tips">{{ $t("IIO.Tip") }}</span>
+      <div class="tip" v-if="ticketFlag">
+        <i></i>{{ $t("IIO.HaveTicket") }}，<span @click="toStep2"
+          >{{ $t("IIO.AddShare") }} ></span
+        >
+      </div>
       <div class="ioo_details">
         <div class="wrap">
-          <p>
+          <!-- <p>
             <span>{{ $t("IIO.ActiveNumber") }}</span>
             <span>1000 人</span>
-          </p>
-          <i></i>
+          </p> -->
+          <!-- <i></i> -->
           <p>
             <span>{{ $t("IIO.TotalSupply") }}</span>
-            <span>100000 MATTER</span>
+            <span>100,000 TOKEN</span>
           </p>
           <i></i>
-        </div>
-        <div class="tip" v-if="!ticketFlag">
-          <i></i>{{ $t("IIO.NoTicket") }}，<span @click="toStep1"
-            >{{ $t("IIO.BuyTicket") }} ></span
-          >
-        </div>
-        <div class="tip" v-if="ticketFlag">
-          <i></i>{{ $t("IIO.HaveTicket") }}，<span @click="toStep2"
-            >{{ $t("IIO.AddShare") }} ></span
-          >
         </div>
         <div class="wrap">
           <p>
             <span>{{ $t("IIO.TotalValue") }}</span>
-            <span>{{ showMsg.DepositeValue }} USD</span>
+            <span>{{ showMsg.DepositeValue }} LPT</span>
           </p>
           <i></i>
           <p>
@@ -85,7 +74,7 @@ export default {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
     },
     toStep2() {
-      this.$bus.$emit("JUMP_STEP", { step: 2 });
+      this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
     },
     async buyAppliedFlag() {
       let reward_name = "IIO_HELMETBNB_REWARD";
@@ -100,32 +89,8 @@ export default {
       let DepositedVolume = await getLPTOKEN(pool_name);
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
-      let obj = [
-        { "0x6411310c07d8c48730172146fd6f31fa84034a8b": toWei(DepositeTotal) },
-      ];
-      getLongValue(obj).then((res) => {
-        let DepositeValue =
-          res.data[0]["0x6411310c07d8c48730172146fd6f31fa84034a8b"];
-        this.showMsg.DepositeValue = addCommom(DepositeValue, 2);
-      });
-      this.showMsg.DepositedVolume = addCommom(DepositedVolume, 2);
-    },
-    copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
-        Message({
-          message: "Successfully copied",
-          type: "success",
-          // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
+      this.showMsg.DepositeValue = addCommom(DepositeTotal, 2);
+      this.showMsg.DepositedVolume = fixD(DepositedVolume, 2);
     },
   },
 };
@@ -153,68 +118,37 @@ export default {
     text-align: center;
     padding-top: 80px;
   }
-  .ioo_tips {
-    margin-top: 20px;
-    font-size: 14px;
+  .tip {
+    margin-top: 40px;
+    padding: 0px 10px;
+    height: 30px;
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
     color: #787878;
-  }
-  .iio_address {
-    width: 505px;
+    border-radius: 16px;
+    border: 1px solid #ff9600;
     display: flex;
     align-items: center;
-    height: 36px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #ff9600;
-    padding: 3px 30px;
-    margin-top: 20px;
-    background: rgba(255, 150, 0, 0.1);
-    border-radius: 26px;
-    i {
+    span {
+      color: #ff9600;
+      cursor: pointer;
+    }
+    > i {
       display: inline-block;
-      width: 20px;
-      height: 20px;
-      background-image: url("../../assets/img/helmet/copy.png");
+      width: 14px;
+      height: 14px;
+      background-image: url("../../assets/img/iio/information.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
-      cursor: pointer;
-      margin-left: 4px;
-      flex-shrink: 0;
+      margin-right: 4px;
     }
   }
   .ioo_details {
     display: flex;
-    margin-top: 100px;
+    margin-top: 120px;
     position: relative;
     right: 0;
-    .tip {
-      position: absolute;
-      right: 0;
-      top: -45px;
-      padding: 0px 10px;
-      height: 24px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #787878;
-      border-radius: 16px;
-      border: 1px solid #ff9600;
-      display: flex;
-      align-items: center;
-      span {
-        color: #ff9600;
-        cursor: pointer;
-      }
-      > i {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background-image: url("../../assets/img/iio/information.png");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        margin-right: 4px;
-      }
-    }
     .wrap {
       display: flex;
       align-items: center;
@@ -265,11 +199,32 @@ export default {
     color: #121212;
     line-height: 33px;
   }
-  .ioo_tips {
+
+  .tip {
+    margin-top: 30px;
+    padding: 0px 10px;
+    height: 24px;
     font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
     color: #787878;
-    text-align: center;
-    margin-top: 12px;
+    border-radius: 16px;
+    border: 1px solid #ff9600;
+    display: flex;
+    align-items: center;
+    span {
+      color: #ff9600;
+      cursor: pointer;
+    }
+    > i {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-image: url("../../assets/img/iio/information.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      margin-right: 4px;
+    }
   }
   .iio_address {
     width: 100%;
@@ -284,11 +239,11 @@ export default {
     background: rgba(255, 150, 0, 0.1);
     border-radius: 26px;
     justify-content: center;
-    i {
+    a {
       display: block;
       width: 12px;
       height: 12px;
-      background-image: url("../../assets/img/helmet/copy.png");
+      background-image: url("../../assets/img/iio/share.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
       cursor: pointer;

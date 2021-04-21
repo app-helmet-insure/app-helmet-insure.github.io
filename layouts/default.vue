@@ -20,7 +20,10 @@
     <!-- <PHeader></PHeader> -->
     <div class="content">
       <PSlider></PSlider>
-      <div class="content_wrap">
+      <div
+        class="content_wrap"
+        :style="routeObj.name == 'nft' ? 'background:#241e26 !important' : ''"
+      >
         <PHeader :account="true"></PHeader>
         <template>
           <transition name="fade">
@@ -60,7 +63,7 @@ import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import RiskWarning from "~/components/common/risk-warning.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { getBalance } from "~/interface/order.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
@@ -93,6 +96,9 @@ export default {
     };
   },
   computed: {
+    routeObj() {
+      return this.$route;
+    },
     longMap() {
       return this.$store.state.longMap;
     },
@@ -126,6 +132,9 @@ export default {
       let chainID = this.$store.state.chainID;
       return chainID;
     },
+    localeList() {
+      return this.$store.state.localeList;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -146,12 +155,6 @@ export default {
     },
   },
   async mounted() {
-    // let flag = navigator.userAgent.match(
-    //   /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
-    // );
-    // if (flag) {
-    //   window.location.href = "https://m.helmet.insure/";
-    // }
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -161,7 +164,6 @@ export default {
     window.chainID = await getID();
     this.showWallet();
     this.$store.commit("SET_CHAINID", window.chainID);
-
     this.getUserInfo();
     // 获取映射
     this.$store.dispatch("setAllMap");
@@ -323,9 +325,7 @@ export default {
             this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
           });
-      } catch (error) {
-        console.log("MateMask 扩展插件未安装或未启用##", error);
-      }
+      } catch (error) {}
     },
     async getUserInfo() {
       let res = await mateMaskInfo();
@@ -365,18 +365,18 @@ export default {
       let putIndexPirce = {};
       let echartIndexArray = {};
       // helmet
-      let bnbbusd = await uniswap("WBNB", "BUSD");
-      let cakebusd = await uniswap("CAKE", "BUSD");
-      let helmetbusd = await uniswap("BUSD", "HELMET");
+      let bnbbusd = await pancakeswap("WBNB", "BUSD");
+      let cakebusd = await pancakeswap("CAKE", "BUSD");
+      let helmetbusd = await pancakeswap("BUSD", "HELMET");
       for (let i = 0; i < list.length; i++) {
         let px;
         let indexPx;
         if ("WBNB" != list[i]) {
-          px = await uniswap("WBNB", list[i]);
+          px = await pancakeswap("WBNB", list[i]);
         } else {
           px = 1;
         }
-        indexPx = await uniswap(
+        indexPx = await pancakeswap(
           this.policyUndArray[1][list[i]],
           this.policyUndArray[0][list[i]]
         );
@@ -389,7 +389,7 @@ export default {
       for (let i = 0; i < list.length; i++) {
         let px;
         if ("WBNB" != list[i]) {
-          px = await uniswap(list[i], "WBNB");
+          px = await pancakeswap(list[i], "WBNB");
         } else {
           px = 1;
         }

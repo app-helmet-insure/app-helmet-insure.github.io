@@ -3,21 +3,211 @@
     <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
-    <div class="mining_item" v-for="item in miningList" :key="item.earn">
-      <div
-        :class="
-          activeMining == item.earn && showActiveMining
-            ? 'activeMining mining_show'
-            : 'mining_show'
-        "
-      >
+    <div v-for="item in miningList" :key="item.earn">
+      <div class="finshed_line finshed_pc" v-if="item.earn == 'helmet_dodo'">
+        <p></p>
+        <i></i>
+        <span>Finished</span>
+        <i></i>
+        <p></p>
+      </div>
+      <div class="mining_item">
+        <div
+          :class="
+            activeMining == item.earn && showActiveMining
+              ? 'activeMining mining_show'
+              : 'mining_show'
+          "
+        >
+          <img
+            class="combo_img"
+            :src="
+              require(`~/assets/img/mining/combo_${
+                item.dueDate == 'Finished' ? 'expired' : 'web'
+              }.png`)
+            "
+            alt=""
+            v-if="item.combo"
+          />
+          <img
+            class="combo_img"
+            style="width: 236px"
+            src="~/assets/img/mining/flash_web.png"
+            alt=""
+            v-if="item.flash"
+          />
+          <img
+            class="combo_img"
+            style="width: 116px"
+            src="~/assets/img/mining/serial_web.png"
+            alt=""
+            v-if="item.serial"
+          /><img
+            class="combo_img"
+            style="width: 32px; height: 32px; left: 10px"
+            src="~/assets/img/mining/serialnext_web.png"
+            alt=""
+            v-if="item.serialNext"
+          /><img
+            class="combo_img"
+            style="width: 83px; height: 28px; left: 376px"
+            src="~/assets/img/mining/iiostark.png"
+            alt=""
+            v-if="item.iio"
+          />
+
+          <section>
+            <span
+              class="onePager"
+              v-html="item.miningName"
+              @click="hadnleShowOnePager($event, item.onePager)"
+            ></span>
+          </section>
+          <section>
+            <p>
+              {{ $t("Table.EarnList") }}
+              <span>
+                <img
+                  v-if="item.earnImg"
+                  :src="
+                    require(`~/assets/img/mining/${
+                      item.dueDate == 'Finished'
+                        ? item.earn + '_expired'
+                        : item.earn
+                    }.png`)
+                  "
+                  :class="item.earnNum"
+                  alt=""
+                />
+                <template v-else style="color: #17173a">{{
+                  item.earn
+                }}</template>
+              </span>
+            </p>
+          </section>
+          <section>
+            <i></i>
+            <p>
+              <span v-if="typeof item.openDate == 'object'">
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.dueDate }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </section>
+          <section>
+            <span>{{
+              item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
+            }}</span>
+            <span>{{ item.earnName }}</span>
+          </section>
+          <section>
+            <button
+              @click="StakeMining(item.earn)"
+              :class="
+                activeMining == item.earn &&
+                showActiveMining &&
+                activeType == 'STAKE'
+                  ? 'activeButton stakeMining'
+                  : 'stakeMining'
+              "
+            >
+              {{ $t("Table.Stakeing") }}
+              <i class="selectDown"></i>
+            </button>
+            <button
+              @click="ClaimMining(item.earn)"
+              :class="
+                activeMining == item.earn &&
+                showActiveMining &&
+                activeType == 'CLAIM'
+                  ? 'activeButton claimMining'
+                  : 'claimMining'
+              "
+            >
+              {{ $t("Table.Claim") }}
+              <i class="selectDown"></i>
+            </button>
+          </section>
+        </div>
+        <div
+          class="mining_detail"
+          v-if="showActiveMining && activeMining == item.earn"
+        >
+          <svg
+            class="close"
+            aria-hidden="true"
+            @click="showActiveMining = false"
+          >
+            <use xlink:href="#icon-close"></use>
+          </svg>
+          <HelmetBnbPool
+            v-if="activeMining == 'helmet_cake' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBnbPool>
+          <HelmetMdxPool
+            v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetMdxPool>
+          <HelmetDodoPool
+            v-if="activeMining == 'helmet_dodo' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetDodoPool>
+          <FeiFeiPool
+            v-if="activeMining == 'QFEI' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></FeiFeiPool>
+          <QfeiQsdPool
+            v-if="activeMining == 'kun' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></QfeiQsdPool>
+          <HelmetKunPool
+            v-if="activeMining == 'QHELMET' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetKunPool>
+          <HelmetHelmetPool
+            v-if="activeMining == 'helmet' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetHelmetPool>
+          <HelmetForPool
+            v-if="activeMining == 'helmet_for' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetForPool>
+          <HelmetBurgerPool
+            v-if="activeMining == 'helmet_burger' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBurgerPool>
+        </div>
+      </div>
+    </div>
+    <div v-for="item in miningList" :key="item.earn + '1'">
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'helmet_dodo'">
+        <p></p>
+        <i></i>
+        <span>Finished</span>
+        <i></i>
+        <p></p>
+      </div>
+      <div class="mining_item_h5">
         <img
           class="combo_img"
-          :src="
-            require(`~/assets/img/mining/combo_${
-              item.dueDate == 'Finished' ? 'expired' : 'web'
-            }.png`)
-          "
+          src="~/assets/img/mining/combo_h5.png"
           alt=""
           v-if="item.combo"
         />
@@ -27,8 +217,7 @@
           src="~/assets/img/mining/flash_web.png"
           alt=""
           v-if="item.flash"
-        />
-        <img
+        /><img
           class="combo_img"
           style="width: 116px"
           src="~/assets/img/mining/serial_web.png"
@@ -40,6 +229,17 @@
           src="~/assets/img/mining/serialnext_web.png"
           alt=""
           v-if="item.serialNext"
+        /><img
+          class="combo_img"
+          style="
+            width: 83px;
+            height: 28px;
+            left: 100%;
+            transform: translateX(-100%);
+          "
+          src="~/assets/img/mining/iiostark.png"
+          alt=""
+          v-if="item.iio"
         />
         <section>
           <span
@@ -47,20 +247,12 @@
             v-html="item.miningName"
             @click="hadnleShowOnePager($event, item.onePager)"
           ></span>
-        </section>
-        <section>
           <p>
             {{ $t("Table.EarnList") }}
             <span>
               <img
                 v-if="item.earnImg"
-                :src="
-                  require(`~/assets/img/mining/${
-                    item.dueDate == 'Finished'
-                      ? item.earn + '_expired'
-                      : item.earn
-                  }.png`)
-                "
+                :src="require(`~/assets/img/mining/${item.earn}.png`)"
                 :class="item.earnNum"
                 alt=""
               />
@@ -69,31 +261,33 @@
           </p>
         </section>
         <section>
-          <i></i>
           <p>
-            <span v-if="typeof item.openDate == 'object'">
-              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
-            </span>
-            <span v-else-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ item.dueDate }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
+            <span>{{
+              item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
+            }}</span>
+            <span>{{ item.earnName }}</span>
           </p>
-        </section>
-        <section>
-          <span>{{
-            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
-          }}</span>
-          <span>{{ item.earnName }}</span>
+          <div>
+            <i></i>
+            <p>
+              <span v-if="typeof item.openDate == 'object'">
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.dueDate == 'object'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.dueDate }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </div>
         </section>
         <section>
           <button
-            @click="StakeMining(item.earn)"
+            @click="StakeMiningH5(item.earn)"
             :class="
               activeMining == item.earn &&
               showActiveMining &&
@@ -101,12 +295,16 @@
                 ? 'activeButton stakeMining'
                 : 'stakeMining'
             "
+            style="margin-right: 10px"
           >
             {{ $t("Table.Stakeing") }}
-            <i class="selectDown"></i>
+          </button>
+          <button @click="toCompound" v-if="item.compound">
+            <i :class="claimLoading ? 'loading_pic' : ''"></i
+            >{{ $t("Table.Compound") }}
           </button>
           <button
-            @click="ClaimMining(item.earn)"
+            @click="ClaimMiningH5(item.earn)"
             :class="
               activeMining == item.earn &&
               showActiveMining &&
@@ -114,212 +312,74 @@
                 ? 'activeButton claimMining'
                 : 'claimMining'
             "
+            style="margin-left: 10px"
           >
             {{ $t("Table.Claim") }}
-            <i class="selectDown"></i>
           </button>
         </section>
       </div>
-      <div
-        class="mining_detail"
-        v-if="showActiveMining && activeMining == item.earn"
-      >
-        <svg class="close" aria-hidden="true" @click="showActiveMining = false">
-          <use xlink:href="#icon-close"></use>
-        </svg>
+    </div>
+    <div class="h5_wrap">
+      <Wraper>
+        <div class="wraper_title">
+          <h3>
+            {{
+              activeType == "STAKE"
+                ? $t("Insurance.Insurance_text23")
+                : $t("Table.Claim")
+            }}
+          </h3>
+          <svg class="icon close" aria-hidden="true" @click="close_wraper">
+            <use xlink:href="#icon-close"></use>
+          </svg>
+        </div>
         <HelmetBnbPool
-          v-if="activeMining == 'helmet_cake' && showActiveMining"
+          v-if="activeMining == 'helmet_cake'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
         ></HelmetBnbPool>
-        <HelmetDodoPool
-          v-if="activeMining == 'helmet_dodo' && showActiveMining"
+        <HelmetMdxPool
+          v-if="activeMining == 'bhelmet_mdx'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
+        ></HelmetMdxPool>
+        <HelmetDodoPool
+          v-if="activeMining == 'helmet_dodo'"
+          :activeType="activeType"
+          :TradeType="activeType"
         ></HelmetDodoPool>
         <FeiFeiPool
-          v-if="activeMining == 'QFEI' && showActiveMining"
+          v-if="activeMining == 'QFEI'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
         ></FeiFeiPool>
         <QfeiQsdPool
-          v-if="activeMining == 'kun' && showActiveMining"
+          v-if="activeMining == 'kun'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
         ></QfeiQsdPool>
-        <HelmetHelmetPool
-          v-if="activeMining == 'helmet_mdex' && showActiveMining"
+        <HelmetKunPool
+          v-if="activeMining == 'QHELMET'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
+        ></HelmetKunPool>
+        <HelmetHelmetPool
+          v-if="activeMining == 'helmet'"
+          :activeType="activeType"
+          :TradeType="activeType"
         ></HelmetHelmetPool>
         <HelmetForPool
-          v-if="activeMining == 'helmet_for' && showActiveMining"
+          v-if="activeMining == 'helmet_for'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
         ></HelmetForPool>
         <HelmetBurgerPool
-          v-if="activeMining == 'helmet_burger' && showActiveMining"
+          v-if="activeMining == 'helmet_burger'"
           :activeType="activeType"
-          :TradeType="'ALL'"
+          :TradeType="activeType"
         ></HelmetBurgerPool>
-      </div>
+      </Wraper>
     </div>
-    <div
-      class="mining_item_h5"
-      v-for="item in miningList"
-      :key="item.earn + '1'"
-    >
-      <img
-        class="combo_img"
-        src="~/assets/img/mining/combo_h5.png"
-        alt=""
-        v-if="item.combo"
-      />
-      <img
-        class="combo_img"
-        style="width: 236px"
-        src="~/assets/img/mining/flash_web.png"
-        alt=""
-        v-if="item.flash"
-      /><img
-        class="combo_img"
-        style="width: 116px"
-        src="~/assets/img/mining/serial_web.png"
-        alt=""
-        v-if="item.serial"
-      /><img
-        class="combo_img"
-        style="width: 32px; height: 32px; left: 10px"
-        src="~/assets/img/mining/serialnext_web.png"
-        alt=""
-        v-if="item.serialNext"
-      />
-      <section>
-        <span
-          class="onePager"
-          v-html="item.miningName"
-          @click="hadnleShowOnePager($event, item.onePager)"
-        ></span>
-        <p>
-          {{ $t("Table.EarnList") }}
-          <span>
-            <img
-              v-if="item.earnImg"
-              :src="require(`~/assets/img/mining/${item.earn}.png`)"
-              :class="item.earnNum"
-              alt=""
-            />
-            <template v-else style="color: #17173a">{{ item.earn }}</template>
-          </span>
-        </p>
-      </section>
-      <section>
-        <p>
-          <span>{{
-            item.dueDate == "Finished" ? "--" : item.yearEarn + "%"
-          }}</span>
-          <span>{{ item.earnName }}</span>
-        </p>
-        <div>
-          <i></i>
-          <p>
-            <span v-if="typeof item.openDate == 'object'">
-              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
-            </span>
-            <span v-else-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ item.dueDate }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
-          </p>
-        </div>
-      </section>
-      <section>
-        <button
-          @click="StakeMiningH5(item.earn)"
-          :class="
-            activeMining == item.earn &&
-            showActiveMining &&
-            activeType == 'STAKE'
-              ? 'activeButton stakeMining'
-              : 'stakeMining'
-          "
-          style="margin-right: 10px"
-        >
-          {{ $t("Table.Stakeing") }}
-        </button>
-        <button @click="toCompound" v-if="item.compound">
-          <i :class="claimLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.Compound") }}
-        </button>
-        <button
-          @click="ClaimMiningH5(item.earn)"
-          :class="
-            activeMining == item.earn &&
-            showActiveMining &&
-            activeType == 'CLAIM'
-              ? 'activeButton claimMining'
-              : 'claimMining'
-          "
-          style="margin-left: 10px"
-        >
-          {{ $t("Table.Claim") }}
-        </button>
-      </section>
-    </div>
-    <Wraper>
-      <div class="wraper_title">
-        <h3>
-          {{
-            activeType == "STAKE"
-              ? $t("Insurance.Insurance_text23")
-              : $t("Table.Claim")
-          }}
-        </h3>
-        <svg class="icon close" aria-hidden="true" @click="close_wraper">
-          <use xlink:href="#icon-close"></use>
-        </svg>
-      </div>
-      <HelmetBnbPool
-        v-if="activeMining == 'helmet_cake'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetBnbPool>
-      <HelmetDodoPool
-        v-if="activeMining == 'helmet_dodo'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetDodoPool>
-      <FeiFeiPool
-        v-if="activeMining == 'QFEI'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></FeiFeiPool>
-      <QfeiQsdPool
-        v-if="activeMining == 'kun'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></QfeiQsdPool>
-      <HelmetHelmetPool
-        v-if="activeMining == 'helmet_mdex'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetHelmetPool>
-      <HelmetForPool
-        v-if="activeMining == 'helmet_for'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetForPool>
-      <HelmetBurgerPool
-        v-if="activeMining == 'helmet_burger'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HelmetBurgerPool>
-    </Wraper>
   </div>
 </template>
 
@@ -334,10 +394,12 @@ import {
 } from "~/interface/deposite";
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
+import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
 import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
@@ -348,6 +410,8 @@ export default {
   components: {
     Wraper,
     HelmetHelmetPool,
+    HelmetMdxPool,
+    HelmetKunPool,
     FeiFeiPool,
     QfeiQsdPool,
     HelmetBurgerPool,
@@ -381,6 +445,20 @@ export default {
         this.getAPY();
       });
     }, 20000);
+    let flag = navigator.userAgent.match(
+      /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+    );
+    if (this.$route.params.earn) {
+      this.activeMining = this.$route.params.earn;
+      this.showActiveMining = true;
+      this.activeType = "STAKE";
+      if (flag) {
+        this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+        this.TradeType = "STAKE";
+      } else {
+        this.TradeType = "STAKE";
+      }
+    }
   },
   computed: {
     indexArray() {
@@ -463,17 +541,33 @@ export default {
           info: true,
           earnName: "APR",
           onePager: false,
+          iio: true,
           yearEarn: apyArray["helmet_cake"] || "--",
         },
         {
-          miningName: "HELMET POOL",
-          earn: "helmet_mdex",
-          earnImg: true,
+          miningName: "HELMET-BNB MLP",
           earnNum: "two",
+          earn: "bhelmet_mdx",
+          earnImg: true,
+          dueDate: this.getRemainTime("2021/05/15 00:00"),
+          openDate: this.getMiningTime("2021/04/15 00:00"),
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["bhelmet_mdx"] || "--",
+          expired: new Date("2021/05/15 00:00") * 1,
+          started: new Date("2021/04/15 00:00") * 1,
+        },
+        {
+          miningName: "HELMET POOL",
+          earn: "helmet",
+          earnImg: true,
+          earnNum: "one",
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: false,
-          flash: true,
+          flash: false,
           info: true,
           earnName: "APY",
           compound: true,
@@ -509,6 +603,21 @@ export default {
           yearEarn: apyArray["kun"] || "--",
           expired: new Date("2021/05/02 00:00") * 1,
           started: new Date("2021/04/12 00:00") * 1,
+        },
+        {
+          miningName: "HELMET-KUN DLP",
+          earn: "QHELMET",
+          earnImg: false,
+          earnNum: "one",
+          dueDate: this.getRemainTime("2021/05/11 00:00"),
+          openDate: this.getMiningTime("2021/04/21 00:00"),
+          serialNext: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          expired: new Date("2021/05/10 00:00") * 1,
+          started: new Date("2021/04/21 00:00") * 1,
+          yearEarn: apyArray["qhelmet"] || "--",
         },
         {
           miningName: "HELMET-<i>hDODO</i> DLP",
@@ -559,9 +668,11 @@ export default {
       this.HELMET_hDODO_DLP_APY();
       this.FEI_POOL_APY();
       this.QFEI_QSD_DLP_APY();
+      this.HELMET_KUN_DLP_APY();
       this.HELMET_POOL_APY();
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
+      this.HELMET_MDX_LP_APY();
     },
     async HELMET_BNB_LP_APY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
@@ -598,6 +709,47 @@ export default {
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
     },
+    async HELMET_MDX_LP_APY() {
+      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
+      let DODOHELMET = lptBnbValue;
+      let allVolume = DODOHELMET * 180000;
+      //总抵押
+      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
+      // （1+日产量/总质押量）^365
+      let helmetAPY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 3467.52;
+
+      let mdxAPY =
+        precision.divide(
+          precision.times(precision.divide(stakeValue1, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let APY = helmetAPY + mdxAPY;
+      let startedTime = this.miningList[1].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[1].yearEarn = "--";
+      } else {
+        this.apyArray.qfei = fixD(APY, 2);
+        this.miningList[1].yearEarn = fixD(APY, 2);
+      }
+    },
     async HELMET_POOL_APY() {
       let HelmetVolume = await totalSupply("HELMETPOOL");
       // （1+日产量/总质押量）^365
@@ -608,11 +760,11 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
+      this.miningList[2].yearEarn = fixD(APY, 2);
     },
 
     async FEI_POOL_APY() {
-      let lptBnbValue = await uniswap("QFEI", "QSD");
+      let lptBnbValue = await pancakeswap("QFEI", "QSD");
       let DODOHELMET = lptBnbValue;
       let allVolume = DODOHELMET * 200000;
       //总抵押
@@ -620,8 +772,8 @@ export default {
       // 总发行
       let stakeVolue = await totalSupply("FEIPOOL_LPT"); //数量
       // 抵押总价值
-      let lptBnbValue1 = await uniswap("FEI", "WBNB");
-      let lptHelmetValue1 = await uniswap("WBNB", "QSD");
+      let lptBnbValue1 = await pancakeswap("FEI", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "QSD");
       let stakeValue = lptBnbValue1 * lptHelmetValue1;
       // （1+日产量/总质押量）^365
       let APY =
@@ -630,18 +782,18 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[2].started;
+      let startedTime = this.miningList[3].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[2].yearEarn = "--";
+        this.miningList[3].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
       }
     },
     async QFEI_QSD_DLP_APY() {
-      let lptBnbValue = await uniswap("KUN", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "QSD");
+      let lptBnbValue = await pancakeswap("KUN", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "QSD");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = DODOHELMET * 150000;
       //总抵押
@@ -658,18 +810,50 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[3].yearEarn = "Infinity";
+        this.miningList[4].yearEarn = "Infinity";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
+      }
+    },
+    async HELMET_KUN_DLP_APY() {
+      let lptBnbValue = await pancakeswap("QHELMET", "QSD");
+      let HelmetWBNBValue = await pancakeswap("HELMET", "WBNB");
+      let WBNBUSDValue = await pancakeswap("WBNB", "USDT");
+      let HelmetUsdtValue = HelmetWBNBValue * WBNBUSDValue;
+      let allVolume = lptBnbValue * 60000;
+      //总抵押
+      let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("QHELMETPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue =
+        (await balanceOf("HELMET", "QHELMETPOOL_LPT")) * HelmetUsdtValue;
+      console.log(lptBnbValue, stakeValue, HelmetUsdtValue);
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 20), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      console.log(stakeVolue, supplyVolume);
+      let startedTime = this.miningList[5].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[5].yearEarn = "Infinity";
+      } else {
+        this.apyArray.qhelmet = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_hDODO_DLP_APY() {
-      let lptBnbValue = await uniswap("DODO", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let lptBnbValue = await pancakeswap("DODO", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
       let DODOHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = DODOHELMET * 10000;
       //总抵押
@@ -695,11 +879,11 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[4].yearEarn = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
-      let lptBnbValue = await uniswap("FOR", "WBNB");
-      let lptHelmetValue = await uniswap("WBNB", "HELMET");
+      let lptBnbValue = await pancakeswap("FOR", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
       let FORHELMET = lptBnbValue * lptHelmetValue;
       let allVolume = FORHELMET * 182010;
       //总抵押
@@ -725,11 +909,11 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[5].yearEarn = fixD(APY, 2);
+      this.miningList[7].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
+      let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
+      let bnbhelmetValue = await pancakeswap("WBNB", "HELMET");
       let burgerHelmet = burgebnbrValue * bnbhelmetValue;
       let allVolume = burgerHelmet * 15000;
       //总抵押
@@ -756,7 +940,7 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[6].yearEarn = fixD(APY, 2);
+      this.miningList[8].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;
@@ -802,12 +986,14 @@ export default {
         template = {
           day: day > 9 ? day : "0" + day,
           hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
         };
         return template;
       } else {
         template = {
           day: "00",
           hour: "00",
+          MINUTE: "00",
         };
         return "Finished";
       }
@@ -817,7 +1003,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.finshed_line {
+  width: 100%;
+  margin: 20px 0 21px 0;
+  display: flex;
+  align-items: center;
+  p {
+    flex: 1;
+    height: 1px;
+    background: #e8e8eb;
+  }
+  span {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: rgba(23, 23, 58, 0.4);
+    line-height: 20px;
+    margin: 0 16px;
+  }
+  i {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/img/mining/finished.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
 @media screen and (min-width: 750px) {
+  .h5_wrap {
+    display: none;
+  }
+  .finshed_h5 {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;
@@ -1077,6 +1296,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .finshed_pc {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;

@@ -206,7 +206,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -389,7 +389,7 @@ export default {
       this.list.DownTime = template;
     },
     async getAPY() {
-      let HCCTHELMET = await uniswap("HCCT", "HELMET");
+      let HCCTHELMET = await pancakeswap("HCCT", "HELMET");
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);

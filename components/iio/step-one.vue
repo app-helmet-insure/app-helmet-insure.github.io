@@ -4,23 +4,40 @@
     <div class="step_action">
       <p class="step_buy">
         <span>
-          <i>{{ $t("Content.UsableBalance") }}</i
-          >: {{ Balance }} HELMET</span
+          <i>{{ $t("Content.UsableBalance") }}:</i> {{ Balance }} HELMET</span
         >
         <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
           >{{ $t("IIO.Get") }} HELMET</a
         >
       </p>
-      <label>
-        <div class="input">
-          <input type="text" readonly :value="PassportPrice" />
-          <span>HELMET</span>
-        </div>
-      </label>
-      <p class="text">
-        <span>{{ $t("IIO.OneTicket") }}: {{ PassportPrice }} HELMET</span>
-      </p>
-      <button @click="BuyPassport">{{ $t("IIO.BuyTokenTicket") }}</button>
+      <div class="input">
+        <h3>{{ PassportPrice }}HELMET</h3>
+        <span>{{ $t("IIO.OneTicket") }}</span>
+      </div>
+      <button
+        v-if="getRewardFlag == 'soon'"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ getRewardObj.day == "00" ? "" : getRewardObj.day + "d" }}
+        {{ getRewardObj.hour == "00" ? "" : getRewardObj.hour + "h" }}
+        {{ getRewardObj.minute == "00" ? "" : getRewardObj.minute + "m " }}
+        {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
+      </button>
+      <button
+        v-if="getRewardFlag == 'expired'"
+        class="getReward"
+        style="pointer-events: none; background: #cfcfd2"
+      >
+        {{ $t("IIO.BuyTokenTicket") }}
+      </button>
+      <button
+        v-if="getRewardFlag == true"
+        @click="BuyPassport"
+        :style="buyLoading ? 'pointer-events: none' : ''"
+      >
+        <i :class="buyLoading ? 'loading_pic' : ''"></i>
+        {{ $t("IIO.BuyTokenTicket") }}
+      </button>
       <p class="tips">{{ $t("IIO.Tip2") }}</p>
     </div>
   </div>
@@ -35,6 +52,14 @@ export default {
     return {
       PassportPrice: 0,
       Balance: 0,
+      getRewardFlag: false,
+      buyLoading: false,
+      getRewardObj: {
+        day: "00",
+        hour: "00",
+        minute: "00",
+        second: "00",
+      },
     };
   },
   mounted() {
@@ -44,7 +69,18 @@ export default {
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getPassPortPrice();
       this.$bus.$emit("JUMP_STEP", { step: 2 });
+      this.$bus.$emit("GET_FLAG");
     });
+    this.$bus.$on("CLOSE_LOADING_STATUS", () => {
+      this.buyLoading = false;
+    });
+    this.getRewardTime();
+    setInterval(() => {
+      setTimeout(() => {
+        this.getRewardTime();
+      });
+      clearTimeout();
+    }, 1000);
   },
   methods: {
     async getPassPortPrice() {
@@ -57,6 +93,7 @@ export default {
       this.Balance = fixD(balance, 4);
     },
     async BuyPassport() {
+      this.buyLoading = true;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let data = {
@@ -83,6 +120,35 @@ export default {
         return;
       });
     },
+    getRewardTime() {
+      let nowTime = Date.now();
+      let startTime = Date.parse("2021/04/19 13:00 UTC");
+      let endTime = Date.parse("2021/04/23 13:00 UTC");
+      let downTime = startTime - nowTime;
+      let day = Math.floor(downTime / (24 * 3600000));
+      let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (downTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let getRewardObj = {
+        day: day > 9 ? day : "0" + day,
+        hour: hour > 9 ? hour : "0" + hour,
+        minute: minute > 9 ? minute : "0" + minute,
+        second: second > 9 ? second : "0" + second,
+      };
+      this.getRewardObj = getRewardObj;
+
+      if (nowTime > startTime && nowTime < endTime) {
+        this.getRewardFlag = true;
+      } else if (nowTime < startTime) {
+        this.getRewardFlag = "soon";
+      } else {
+        this.getRewardFlag = "expired";
+      }
+    },
   },
 };
 </script>
@@ -108,7 +174,7 @@ export default {
           line-height: 14px;
           color: #121212;
           i {
-            color: #9b9b9b;
+            color: rgba(23, 23, 58, 0.4);
           }
         }
         a {
@@ -117,31 +183,39 @@ export default {
           color: #ff9600;
         }
       }
-      > label {
-        display: block;
+
+      .input {
         margin-top: 10px;
-        .input {
-          width: 100%;
-          height: 40px;
-          position: relative;
-          display: flex;
-          align-items: center;
-          input {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-            border: 1px solid #cfcfd2;
-            padding-left: 12px;
-          }
-          span {
-            position: absolute;
-            font-size: 14px;
-            color: #9b9b9b;
-            right: 15px;
-          }
+        width: 100%;
+        height: 96px;
+        position: relative;
+        align-items: center;
+        background-image: url("../../assets/img/iio/ticket_bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h3 {
+          font-size: 20px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 500;
+          color: #17173a;
+          line-height: 25px;
+        }
+        span {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(23, 23, 58, 0.4);
+          line-height: 20px;
+          margin-top: 4px;
         }
       }
       > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 20px;
         width: 100%;
         height: 40px;
@@ -157,12 +231,13 @@ export default {
       .text {
         margin-top: 4px;
         font-size: 14px;
-        color: #9b9b9b;
+        color: #17173a;
       }
       .tips {
         margin-top: 8px;
         font-size: 14px;
-        color: #9b9b9b;
+        color: rgba(23, 23, 58, 0.4);
+        text-align: center;
       }
     }
   }
@@ -185,7 +260,7 @@ export default {
           font-size: 12px;
           color: #121212;
           i {
-            color: #9b9b9b;
+            color: rgba(23, 23, 58, 0.4);
           }
         }
         a {
@@ -193,31 +268,38 @@ export default {
           color: #ff9600;
         }
       }
-      > label {
-        display: block;
+      .input {
         margin-top: 10px;
-        .input {
-          width: 100%;
-          height: 40px;
-          position: relative;
-          display: flex;
-          align-items: center;
-          input {
-            width: 100%;
-            height: 100%;
-            border-radius: 5px;
-            border: 1px solid #cfcfd2;
-            padding-left: 12px;
-          }
-          span {
-            position: absolute;
-            font-size: 14px;
-            color: #9b9b9b;
-            right: 15px;
-          }
+        width: 100%;
+        height: 96px;
+        position: relative;
+        align-items: center;
+        background-image: url("../../assets/img/iio/ticket_bg.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h3 {
+          font-size: 20px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 500;
+          color: #17173a;
+          line-height: 25px;
+        }
+        span {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: rgba(23, 23, 58, 0.4);
+          line-height: 20px;
+          margin-top: 4px;
         }
       }
       > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         margin-top: 20px;
         width: 100%;
         height: 40px;
@@ -233,12 +315,13 @@ export default {
       .text {
         margin-top: 4px;
         font-size: 12px;
-        color: #9b9b9b;
+        color: #17173a;
       }
       .tips {
         margin-top: 8px;
         font-size: 12px;
-        color: #9b9b9b;
+        text-align: center;
+        color: rgba(23, 23, 58, 0.4);
       }
     }
   }

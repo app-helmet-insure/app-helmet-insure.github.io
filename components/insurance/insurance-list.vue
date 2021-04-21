@@ -25,7 +25,7 @@
           <section>
             <img
               :src="
-                require(`~/assets/img/insurancetype/${item.InsuranceType}.png`)
+                require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
               "
               alt=""
             />
@@ -54,6 +54,11 @@
                   ? 'activeButton buyPutInsurance'
                   : 'buyPutInsurance'
               "
+              :style="
+                item.InsuranceImg == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Insurance.Insurance_text6") }}
               <i class="selectDown"></i>
@@ -67,6 +72,11 @@
                   ? 'activeButton buyCallInsurance'
                   : 'buyCallInsurance'
               "
+              :style="
+                item.InsuranceImg == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
+              "
             >
               {{ $t("Insurance.Insurance_text7") }}
               <i class="selectDown"></i>
@@ -79,6 +89,11 @@
                 activeType == 'SELL'
                   ? 'activeButton issueInsurance'
                   : 'issueInsurance'
+              "
+              :style="
+                item.InsuranceImg == 'COIN'
+                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                  : ''
               "
             >
               {{ $t("Insurance.Insurance_text8") }}
@@ -127,7 +142,7 @@
           <div>
             <img
               :src="
-                require(`~/assets/img/insurancetype/${item.InsuranceType}.png`)
+                require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
               "
               alt=""
             />
@@ -139,10 +154,24 @@
           </p>
         </section>
         <section>
-          <button @click="buyInsurance_h5(item.InsuranceType)">
+          <button
+            @click="buyInsurance_h5(item.InsuranceType)"
+            :style="
+              item.InsuranceImg == 'COIN'
+                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Insurance.Insurance_text24") }}
           </button>
-          <button @click="issueInsurance_h5(item.InsuranceType)">
+          <button
+            @click="issueInsurance_h5(item.InsuranceType)"
+            :style="
+              item.InsuranceImg == 'COIN'
+                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
+                : ''
+            "
+          >
             {{ $t("Insurance.Insurance_text8") }}
           </button>
         </section>
@@ -266,28 +295,40 @@ export default {
     async InitInsuanceData() {
       let InsuanceData = [
         {
+          InsuranceType: "COIN(BSC)",
+          InsuranceImg: "COIN",
+        },
+        {
           InsuranceType: "HELMET",
+          InsuranceImg: "HELMET",
         },
         {
           InsuranceType: "ETH",
+          InsuranceImg: "ETH",
         },
         {
           InsuranceType: "BTCB",
+          InsuranceImg: "BTCB",
         },
         {
           InsuranceType: "CAKE",
+          InsuranceImg: "CAKE",
         },
         {
           InsuranceType: "CTK",
+          InsuranceImg: "CTK",
         },
         {
           InsuranceType: "BURGER",
+          InsuranceImg: "BURGER",
         },
         {
           InsuranceType: "WBNB",
+          InsuranceImg: "WBNB",
         },
         {
           InsuranceType: "MATH",
+          InsuranceImg: "MATH",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];
@@ -302,9 +343,11 @@ export default {
             ? Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000)
             : 0;
         // 保险周期
-        InsuanceData[i].InsuranceDate = InsuranceTime.replace(reg, "-");
+        InsuanceData[i].InsuranceDate = InsuranceTime
+          ? InsuranceTime.replace(reg, "-")
+          : "--";
         // 保险剩余天数
-        InsuanceData[i].InsuranceDay = InunranceDay;
+        InsuanceData[i].InsuranceDay = InunranceDay || "--";
 
         // BNB价格
         InsuanceData[i].InsurancePriceBNB = fixD(
@@ -317,6 +360,7 @@ export default {
           2
         );
       }
+      InsuanceData[0].InsuranceDay = 30;
       this.InsuanceData = InsuanceData;
       this.$forceUpdate();
     },
@@ -695,7 +739,7 @@ export default {
         margin-top: 12px;
         button {
           flex: 1;
-          min-width: 138px;
+          min-width: 108px;
           height: 32px;
           background: #f8f9fa;
           border-radius: 5px;

@@ -2,7 +2,7 @@ import Web3 from 'web3';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 const walletConnectProvider = new WalletConnectProvider({
     chainId: 56,
-
+    bridge: 'wss://bridge.walletconnect.org/',
     rpc: {
         56: 'https://bsc-dataseed1.binance.org/',
     },

@@ -201,7 +201,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -236,24 +236,6 @@ export default {
           color: "#00B900",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -380,19 +362,11 @@ export default {
       let Helmet = await CangetPAYA(type);
 
       // 赋值
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-
-      if (this.expired) {
-        this.textList[0].num = "--";
-        this.textList[0].num1 = "--";
-      } else {
-        this.textList[0].num = fixD((25000 / 21) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((10000 / 21) * 7, 2) + " DODO";
-      }
     },
     // 抵押
     toDeposite() {

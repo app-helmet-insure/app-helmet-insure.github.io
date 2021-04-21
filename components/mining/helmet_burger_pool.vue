@@ -191,7 +191,7 @@ import {
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { uniswap } from "~/assets/utils/address-pool.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
@@ -226,24 +226,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -400,8 +382,8 @@ export default {
     },
     async getAPY() {
       // BURGER的helmet价值
-      let burgebnbrValue = await uniswap("BURGER", "WBNB");
-      let bnbhelmetValue = await uniswap("WBNB", "HELMET");
+      let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
+      let bnbhelmetValue = await pancakeswap("WBNB", "HELMET");
       let burgerHelmet = burgebnbrValue * bnbhelmetValue;
       let allVolume = burgerHelmet * 15000;
       //总抵押
@@ -460,21 +442,12 @@ export default {
       let Cake = await CangetUNI(type);
 
       // 赋值
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.Cake = Cake;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-      this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-      this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
-      if (this.expired) {
-        this.textList[0].num = "--";
-        this.textList[0].num1 = "--";
-      } else {
-        this.textList[0].num = fixD((75000 / 25) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((15000 / 25) * 7, 2) + " BURGER";
-      }
     },
     // 抵押
     toDeposite() {

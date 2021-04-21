@@ -41,24 +41,36 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
+    // locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
     locales: ['en_US', 'zh_CN'],
     locale: 'en_US',
-    chainID: null,
+    chainID: 56,
     localeList: [
         {
             key: 'en_US',
             name: 'English',
         },
-        // {
-        //   key: "po_TU",
-        //   name: "Português",
-        // },
         {
             key: 'zh_CN',
             name: '中文',
         },
+        // {
+        //     key: 'ko_KR',
+        //     name: '한국어',
+        // },
+        // {
+        //     key: 'es_MX',
+        //     name: 'Español',
+        // },
+        // {
+        //     key: 'ja_JP',
+        //     name: '日本語',
+        // },
+        // {
+        //     key: 'fr_FR',
+        //     name: 'Français',
+        // },
     ],
-    // typeList: ["WETH", "UNI", "WBTC", "CRV", "OTHERS"],
     coinList: [
         'HELMET',
         'ETH',
@@ -69,7 +81,6 @@ export const state = () => ({
         'WBNB',
         'MATH',
     ],
-    // coinList: ['BTCB', 'ETH', 'HELMET', 'CAKE', 'CTK', 'FORTUBE'],
     longMap: null,
     sellMap: null,
     buyMap: null,
@@ -129,13 +140,13 @@ export const state = () => ({
 
     allDueDate: [
         {
-            BTCB: '2021/04/18 00:00',
-            ETH: '2021/04/18 00:00',
+            BTCB: '2021/05/22 00:00',
+            ETH: '2021/05/22 00:00',
             HELMET: '2021/04/24 00:00',
             CAKE: '2021/05/12 00:00',
             CTK: '2021/05/12 00:00',
             BURGER: '2021/05/12 00:00',
-            WBNB: '2021/04/21 00:00',
+            WBNB: '2021/05/22 00:00',
             MATH: '2021/05/05 00:00',
         },
     ],
@@ -152,25 +163,27 @@ export const state = () => ({
     strikePriceArray: [
         // 翻倍价格
         {
-            BTCB: 440,
-            ETH: 14,
+            BTCB: 240,
+            ETH: 10,
             HELMET: 0.01,
             CAKE: 0.1,
             CTK: 0.015,
             BURGER: 0.02,
-            WBNB: 600,
+            WBNB: 900,
             MATH: 0.015,
+            COIN: '--',
         },
         // 腰斩价格
         {
-            BTCB: 110,
-            ETH: 3.5,
+            BTCB: 60,
+            ETH: 2.5,
             HELMET: 0.003,
             CAKE: 0.025,
             CTK: 0.004,
             BURGER: 0.005,
-            WBNB: 150,
+            WBNB: 300,
             MATH: 0.004,
+            COIN: '--',
         },
     ],
     // 抵押物
@@ -432,12 +445,11 @@ export const mutations = {
 };
 
 export const actions = {
-    // nuxtServerInit(store, {req}) {
-    //   if (req.locale) {
-    //     store.commit('SET_LANG', req.locale);
-    //   }
+    // nuxtServerInit(store, { req }) {
+    //     if (req.locale) {
+    //         store.commit('SET_LANG', req.locale);
+    //     }
     // },
-
     setLanguage({ commit }, data) {
         commit('SET_LANG', data);
     },
@@ -527,7 +539,6 @@ export const actions = {
             let _col;
             for (let i = 0; i < data.length; i++) {
                 // if (last - data[i].blockNumber < h24) {
-                console.log(data[i]);
                 _col = getTokenName(
                     data[i].returnValues._collateral,
                     window.chainID

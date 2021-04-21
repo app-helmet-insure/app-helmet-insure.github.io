@@ -1,13 +1,13 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide chainswap">
+        <div></div>
+      </div>
       <div class="swiper-slide iio">
         <div></div>
       </div>
       <div class="swiper-slide feimining">
-        <div></div>
-      </div>
-      <div class="swiper-slide burntpt">
         <div></div>
       </div>
     </div>
@@ -148,10 +148,10 @@ export default {
         background-image: url("../../assets/img/banner/iio_web.png");
       }
     }
-    .burntpt {
-      background: linear-gradient(360deg, #f4b690 0%, #ff603a 100%);
+    .chainswap {
+      background: linear-gradient(90deg, #7a4ae3 0%, #9920e0 50%, #7a4ae3 100%);
       > div {
-        background-image: url("../../assets/img/banner/burn_tpt_web.png");
+        background-image: url("../../assets/img/banner/chainswap_pc.png");
       }
     }
     .imgbanner {
@@ -199,10 +199,10 @@ export default {
         background-image: url("../../assets/img/banner/fei_mining_h5.png");
       }
     }
-    .burntpt {
-      background: linear-gradient(360deg, #f4b690 0%, #ff603a 100%);
+    .chainswap {
+      background: linear-gradient(90deg, #7a4ae3 0%, #9920e0 50%, #7a4ae3 100%);
       > div {
-        background-image: url("../../assets/img/banner/burn_tpt_h5.png");
+        background-image: url("../../assets/img/banner/chainswap_h5.png");
       }
     }
     .iio {

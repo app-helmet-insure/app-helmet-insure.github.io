@@ -75,7 +75,11 @@ export const getReward3 = async (type) => {
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('OPEN_STATUS_DIALOG', {
-                    type: 'submit',
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
@@ -87,10 +91,13 @@ export const getReward3 = async (type) => {
                     if (window.statusDialog) {
                         bus.$emit('CLOSE_STATUS_DIALOG');
                         bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully claim',
-                            conTit: '<div>Claim activated successfully</div>',
+                            title: 'Transation submitted',
+                            layout: 'layout2',
+                            buttonText: 'Confirm',
                             conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                            button: true,
+                            buttonText: 'Confirm',
+                            showDialog: false,
                         });
                     } else {
                         Message({
@@ -101,11 +108,13 @@ export const getReward3 = async (type) => {
                     setTimeout(() => {
                         bus.$emit('REFRESH_ASSETS');
                         bus.$emit('REFRESH_MINING');
+                        bus.$emit(`RELOAD_DATA_${type}`);
                     }, 1000);
                 }
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
+                bus.$emit(`RELOAD_DATA_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
             });
@@ -132,7 +141,11 @@ export const applyReward3 = async (data, callBack) => {
 
     try {
         const Contract = await expERC20(TicketAddress);
-        await oneKeyArrpove(Contract, ContractAdress, 1000000, callBack);
+        await oneKeyArrpove(Contract, ContractAdress, 1000000, (res) => {
+            if (res == 'failed') {
+                bus.$emit('CLOSE_LOADING_STATUS');
+            }
+        });
         const IIOContract = await IIO(ContractAdress);
         IIOContract.methods
             .applyReward3()
@@ -163,19 +176,19 @@ export const applyReward3 = async (data, callBack) => {
                         });
                     } else {
                         Message({
-                            message:
-                                'GetRewards Successfully',
+                            message: 'GetRewards Successfully',
                             type: 'success',
                         });
                     }
                     setTimeout(() => {
-                        console.log(data);
                         bus.$emit(`REFRESH_${data.ContractAdress}`);
+                        bus.$emit('CLOSE_LOADING_STATUS');
                     }, 1000);
                 }
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('CLOSE_LOADING_STATUS');
             });
     } catch (error) {
         console.log(error);
@@ -200,7 +213,6 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 判断授权额度是否充足
     const awc = await allowance(token_exp, contract_str);
     if (parseInt(awc) >= parseInt(num)) {
-        // console.log("额度充足", parseInt(awc));
         return;
     }
     // 无限授权

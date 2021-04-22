@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide cakev2">
+        <div></div>
+      </div>
       <div class="swiper-slide xburger">
         <div></div>
       </div>
@@ -128,7 +131,12 @@ export default {
         background-position: center;
       }
     }
-
+    .cakev2 {
+      background: #f1c153;
+      > div {
+        background-image: url("../../assets/img/banner/cake_v2_web.png");
+      }
+    }
     .xburger {
       background: #ff9600;
       > div {
@@ -139,17 +147,6 @@ export default {
       background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
       > div {
         background-image: url("../../assets/img/banner/fei_mining_web.png");
-      }
-    }
-    .verson {
-      background: linear-gradient(
-        360deg,
-        #d94107 0%,
-        #e6761c 41%,
-        #ff9243 100%
-      );
-      > div {
-        background-image: url("../../assets/img/banner/verson_web.png");
       }
     }
     .iio {
@@ -192,21 +189,16 @@ export default {
         background-position: center;
       }
     }
+    .cakev2 {
+      background: #f1c153;
+      > div {
+        background-image: url("../../assets/img/banner/cake_v2_h5.png");
+      }
+    }
     .xburger {
       background: #ff9600;
       > div {
         background-image: url("../../assets/img/banner/Xburger_h5.png");
-      }
-    }
-    .verson {
-      background: linear-gradient(
-        360deg,
-        #d94107 0%,
-        #e6761c 41%,
-        #ff9243 100%
-      );
-      > div {
-        background-image: url("../../assets/img/banner/verson_h5.png");
       }
     }
     .feimining {

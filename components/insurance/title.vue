@@ -1,9 +1,14 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide cakev2">
+      <a
+        class="swiper-slide cakev2"
+        style="cursor: poiner"
+        href="https://helmetinsure.medium.com/q-a-for-the-%EF%B8%8F-lpt-migration-pancakeswap-202464f03072"
+        target="_blank"
+      >
         <div></div>
-      </div>
+      </a>
       <div class="swiper-slide xburger">
         <div></div>
       </div>
@@ -122,7 +127,7 @@ export default {
       display: flex;
       width: 100%;
       height: 180px;
-      > div {
+      div {
         margin: 0 auto;
         width: 1026px;
         height: 100%;

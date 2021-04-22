@@ -573,8 +573,10 @@ export default {
       if (nowTime < startedTime) {
         this.miningList[0].yearEarn = "Infinity";
       } else {
-        this.apyArray.hxBURGER = fixD(APY, 2);
-        this.miningList[0].yearEarn = fixD(APY, 2);
+        this.apyArray.hxBURGER = "--";
+        this.miningList[0].yearEarn = "--";
+        // this.apyArray.hxBURGER = fixD(APY, 2);
+        // this.miningList[0].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HTPT_POOL_APY() {

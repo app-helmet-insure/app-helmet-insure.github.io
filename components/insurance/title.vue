@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide xburger">
+        <div></div>
+      </div>
       <div class="swiper-slide chainswap">
         <div></div>
       </div>
@@ -125,6 +128,13 @@ export default {
         background-position: center;
       }
     }
+
+    .xburger {
+      background: #ff9600;
+      > div {
+        background-image: url("../../assets/img/banner/Xburger_web.png");
+      }
+    }
     .feimining {
       background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
       > div {
@@ -180,6 +190,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .xburger {
+      background: #ff9600;
+      > div {
+        background-image: url("../../assets/img/banner/Xburger_h5.png");
       }
     }
     .verson {

@@ -238,24 +238,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -302,22 +284,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
-    apy(newValue, value) {
-      this.apy = newValue;
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -387,31 +356,6 @@ export default {
         this.actionType = "withdraw";
       }
       this.list.DownTime = template;
-    },
-    async getAPY() {
-      let HCCTHELMET = await pancakeswap("HCCT", "HELMET");
-      let HcctVolume = await totalSupply("HCCTPOOL");
-      let LptVolume = await totalSupply("HCCTPOOL_LPT");
-      let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
-      let apy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCCTHELMET, 16000, 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HcctVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      this.apy = apy;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
     },
     async getBalance() {
       let helmetType = "HCCTPOOL_LPT";

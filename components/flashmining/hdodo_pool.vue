@@ -233,24 +233,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -301,22 +283,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
-    apy(newValue, value) {
-      this.apy = newValue;
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -420,36 +389,6 @@ export default {
         };
       }
       this.list.DownTime = template;
-    },
-    async getAPY() {
-      let HCTKHELMET = await pancakeswap("HDODO", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HDODOPOOL"); //数量
-      let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let apy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCTKHELMET, precision.divide(40000, 15), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      this.apy = apy;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        if (this.openMining) {
-          this.textList[1].num = this.apy + "%";
-        } else {
-          this.textList[1].num = "Infinity" + "%";
-        }
-      }
     },
     async getBalance() {
       let helmetType = "HDODOPOOL_LPT";

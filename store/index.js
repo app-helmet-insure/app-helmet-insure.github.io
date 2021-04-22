@@ -41,7 +41,6 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
-    // locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
     locales: ['en_US', 'zh_CN'],
     locale: 'en_US',
     chainID: 56,
@@ -54,22 +53,6 @@ export const state = () => ({
             key: 'zh_CN',
             name: '中文',
         },
-        // {
-        //     key: 'ko_KR',
-        //     name: '한국어',
-        // },
-        // {
-        //     key: 'es_MX',
-        //     name: 'Español',
-        // },
-        // {
-        //     key: 'ja_JP',
-        //     name: '日本語',
-        // },
-        // {
-        //     key: 'fr_FR',
-        //     name: 'Français',
-        // },
     ],
     coinList: [
         'HELMET',

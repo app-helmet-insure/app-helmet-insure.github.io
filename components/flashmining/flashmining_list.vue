@@ -294,6 +294,7 @@ import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { burgerswap } from "~/assets/utils/burgerswap.js";
 import Hxburgerpool from "~/components/flashmining/hxburger.vue";
 import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
@@ -328,6 +329,7 @@ export default {
     this.initFlashMiningData();
     setTimeout(() => {
       this.getAPY();
+      this.swap();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
@@ -347,6 +349,9 @@ export default {
     },
   },
   methods: {
+    async swap() {
+      await burgerswap();
+    },
     hadnleShowOnePager(e, earn) {
       if (e.target.tagName === "I") {
         let Earn = earn;
@@ -550,7 +555,6 @@ export default {
       let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
       // APY = 年产量*helmet价格/抵押价值
-      console.log(HAUTOHELMET, HelmetValue);
       let APY = fixD(
         precision.times(
           precision.divide(
@@ -564,7 +568,6 @@ export default {
         ),
         2
       );
-      console.log(APY);
       let startedTime = this.miningList[0].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {

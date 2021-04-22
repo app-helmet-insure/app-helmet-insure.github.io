@@ -231,24 +231,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -298,22 +280,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
-    apy(newValue, value) {
-      this.apy = newValue;
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -408,32 +377,6 @@ export default {
         )} ${second}${this.$t("Content.SecondD")}`;
       }
       this.MingTime = template;
-    },
-    async getAPY() {
-      let HAUTOHELMET = await pancakeswap("HAUTO", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
-      let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let apy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(10, 14), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      this.apy = apy ? apy : 0;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
     },
     async getBalance() {
       let helmetType = "HAUTOPOOL_LPT";

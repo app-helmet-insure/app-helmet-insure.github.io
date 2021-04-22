@@ -107,6 +107,11 @@ export default {
           iio_img: "iio4",
           coming: false,
         },
+        {
+          iio_name: "5",
+          iio_img: "iio5",
+          coming: false,
+        },
       ];
       this.iioData = iioData;
     },

@@ -102,14 +102,8 @@ export default {
       ],
     };
   },
-  mounted() {
-    // this.initData();
-  },
+
   methods: {
-    initData() {
-      // let iioData =
-      // this.iioData = iioData;
-    },
     toDetails(index) {
       let data = this.iioData[index];
       this.$router.push({

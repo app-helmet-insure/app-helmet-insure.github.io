@@ -104,6 +104,11 @@
         <svg class="close" aria-hidden="true" @click="showActiveFlash = false">
           <use xlink:href="#icon-close"></use>
         </svg>
+        <Hxburgerpool
+          v-if="activeFlash == 'hxBURGER' && showActiveFlash"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></Hxburgerpool>
         <HtptPool
           v-if="activeFlash == 'hTPT' && showActiveFlash"
           :activeType="activeType"
@@ -239,6 +244,11 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </div>
+      <Hxburgerpool
+        v-if="activeFlash == 'hxBURGER'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></Hxburgerpool>
       <HtptPool
         v-if="activeFlash == 'hTPT'"
         :activeType="activeType"
@@ -284,6 +294,8 @@ import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { burgerswap } from "~/assets/utils/burgerswap.js";
+import Hxburgerpool from "~/components/flashmining/hxburger.vue";
 import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
 import HctkPool from "~/components/flashmining/hctk_pool.vue";
@@ -294,6 +306,7 @@ import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
 export default {
   components: {
     Wraper,
+    Hxburgerpool,
     HtptPool,
     HcctPool,
     HctkPool,
@@ -316,6 +329,7 @@ export default {
     this.initFlashMiningData();
     setTimeout(() => {
       this.getAPY();
+      this.swap();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
@@ -335,6 +349,9 @@ export default {
     },
   },
   methods: {
+    async swap() {
+      await burgerswap();
+    },
     hadnleShowOnePager(e, earn) {
       if (e.target.tagName === "I") {
         let Earn = earn;
@@ -383,12 +400,23 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
+          miningName: "<i>hxBURGER</i> Pool",
+          desc: "By hTPT-Helmet LPT",
+          earn: "hxBURGER",
+          dueDate: this.getRemainTime("2021/05/12 00:00"),
+          openDate: this.getMiningTime("2021/04/22 00:00"),
+          weekly: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          yearEarn: apyArray["hxBURGER"] || "--",
+          expired: new Date("2021/05/12 00:00") * 1,
+          started: new Date("2021/04/22 00:00") * 1,
+        },
+        {
           miningName: "<i>hTPT</i> Pool",
           desc: "By hDODO-Helmet LPT",
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
           openDate: this.getMiningTime("2021/04/06 00:00"),
-          weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
+          weekly: fixD((2000000 / 14) * 7, 2) + " hTPT",
           yearEarn: apyArray["hTPT"] || "--",
           expired: new Date("2021/04/26 00:00") * 1,
           started: new Date("2021/04/06 00:00") * 1,
@@ -519,6 +547,37 @@ export default {
       this.GET_HMATH_POOL_APY();
       this.GET_HCCT_POOL_APY();
       this.GET_HTPT_POOL_APY();
+      this.GET_HXBURGER_POOL_APY();
+    },
+    async GET_HXBURGER_POOL_APY() {
+      let HAUTOHELMET = await burgerswap("XBURGER", "HELMET", 1, 18); //Hlemt价格
+      let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
+      let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
+      // APY = 年产量*helmet价格/抵押价值
+      let APY = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(HAUTOHELMET, precision.divide(20000, 20), 365),
+            precision.times(
+              precision.divide(precision.times(HelmetValue, 2), LptVolume),
+              HctkVolume
+            )
+          ),
+          100
+        ),
+        2
+      );
+      let startedTime = this.miningList[0].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[0].yearEarn = "Infinity";
+      } else {
+        this.apyArray.hxBURGER = "--";
+        this.miningList[0].yearEarn = "--";
+        // this.apyArray.hxBURGER = fixD(APY, 2);
+        // this.miningList[0].yearEarn = fixD(APY, 2);
+      }
     },
     async GET_HTPT_POOL_APY() {
       let HAUTOHELMET = await pancakeswap("HTPT", "HELMET"); //Hlemt价格
@@ -541,13 +600,13 @@ export default {
         2
       );
 
-      let startedTime = this.miningList[0].started;
+      let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[0].yearEarn = "Infinity";
+        this.miningList[1].yearEarn = "Infinity";
       } else {
         this.apyArray.hTPT = fixD(APY, 2);
-        this.miningList[0].yearEarn = fixD(APY, 2);
+        this.miningList[1].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HDODO_POOL_APY() {
@@ -570,10 +629,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[1].yearEarn = "--";
+        this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.hDODO = fixD(APY, 2);
-        this.miningList[1].yearEarn = fixD(APY, 2);
+        this.miningList[2].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HMATH_POOL_APY() {
@@ -596,10 +655,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[2].yearEarn = "--";
+        this.miningList[3].yearEarn = "--";
       } else {
         this.apyArray.hMATH = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HAUTO_POOL_APY() {
@@ -622,10 +681,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[3].yearEarn = "--";
+        this.miningList[4].yearEarn = "--";
       } else {
         this.apyArray.hAUTO = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async GET_BNB500_POOL_APY() {
@@ -648,10 +707,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[4].yearEarn = "--";
+        this.miningList[5].yearEarn = "--";
       } else {
         this.apyArray.BNB500 = fixD(APY, 2);
-        this.miningList[4].yearEarn = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCCT_POOL_APY() {
@@ -673,10 +732,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[5].yearEarn = "--";
+        this.miningList[6].yearEarn = "--";
       } else {
         this.apyArray.HCCT = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
+        this.miningList[6].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCTK_POOL_APY() {
@@ -699,10 +758,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[6].yearEarn = "--";
+        this.miningList[7].yearEarn = "--";
       } else {
         this.apyArray.HCTK = fixD(APY, 2);
-        this.miningList[6].yearEarn = fixD(APY, 2);
+        this.miningList[7].yearEarn = fixD(APY, 2);
       }
     },
   },

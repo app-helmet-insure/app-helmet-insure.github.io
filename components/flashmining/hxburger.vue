@@ -57,7 +57,9 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="8"
+              :decimals="8
+              
+              "
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -83,19 +85,19 @@
         </p>
       </div>
       <a
-        href="https://exchange.pancakeswap.finance/?_gl=1*12xhdmm*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxNDAxNjA5MS41NC4xLjE2MTQwMTYxNjQuMA..#/add/0xe204c4C21c6eD90E37cB06cB94436614f3208D58/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+        href="https://exchange.pancakeswap.finance/#/add/0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
         target="_blank"
-        >From <i class="pancake"></i>Get BNB500-HELMET LPT</a
+        >From <i class="pancake"></i>Get hTPT-HELMET LPT</a
       >
       <div class="ContractAddress">
-        <span>BNB500 {{ $t("Table.ContractAddress") }}</span>
+        <span>hTPT {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0xe204c4c21c6ed90e37cb06cb94436614f3208d58
+          0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0xe204c4c21c6ed90e37cb06cb94436614f3208d58')
+              copyAdress($event, '0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c')
             "
           ></i>
         </p>
@@ -143,7 +145,7 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>hAUTO {{ $t("Table.HELMETRewards") }}：</span>
+          <span>hxBURGER {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <span>
               <countTo
@@ -154,7 +156,7 @@
                 :decimals="8"
               />
               <span v-else>--</span>
-              hAUTO</span
+              hxBURGER</span
             >
           </span>
         </p>
@@ -170,14 +172,14 @@
         </button>
       </div>
       <div class="ContractAddress">
-        <span>hAUTO {{ $t("Table.ContractAddress") }}</span>
+        <span>hxBURGER {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
+          0xCa7597633927A98B800738eD5CD2933a74a80e8c
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112')
+              copyAdress($event, '0xCa7597633927A98B800738eD5CD2933a74a80e8c')
             "
           ></i>
         </p>
@@ -211,8 +213,8 @@ export default {
   data() {
     return {
       list: {
-        name: "hAUTO Pool (By BNB500-Helmet LPT)",
-        dueDate: "2021/03/09 00:00",
+        name: "hAUTO Pool (By hDODO-Helmet LPT)",
+        dueDate: "2021/05/12 00:00",
         DownTime: {
           day: 0,
           hour: 0,
@@ -257,22 +259,21 @@ export default {
   mounted() {
     setInterval(() => {
       setTimeout(() => {
-        this.getMiningTime();
         this.getDownTime();
       });
       clearTimeout();
     }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HXBURGERPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HXBURGERPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HAUTOPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HXBURGERPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HAUTOPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_HXBURGERPOOL", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -319,11 +320,6 @@ export default {
         copys.destroy();
       });
     },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
     getDownTime() {
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;
@@ -353,34 +349,9 @@ export default {
       }
       this.list.DownTime = template;
     },
-    getMiningTime() {
-      let now = new Date() * 1;
-      let dueDate = "2021/02/23 20:00";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
-      if (dueDate < now) {
-        template = `${0}${this.$t("Content.HourD")} ${0}${this.$t(
-          "Content.MinD"
-        )} ${0}${this.$t("Content.SecondD")}`;
-      } else {
-        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
-          "Content.MinD"
-        )} ${second}${this.$t("Content.SecondD")}`;
-      }
-      this.MingTime = template;
-    },
     async getBalance() {
-      let helmetType = "HAUTOPOOL_LPT";
-      let type = "HAUTOPOOL";
+      let helmetType = "HXBURGERPOOL_LPT";
+      let type = "HXBURGERPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -400,7 +371,7 @@ export default {
       if (this.expired) {
         this.textList[0].num = "--";
       } else {
-        this.textList[0].num = fixD((10 / 14) * 7, 2) + " hAUTO";
+        this.textList[0].num = fixD((2000000 / 21) * 7, 2) + " hTPT";
       }
     },
     // 抵押
@@ -412,7 +383,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HAUTOPOOL";
+      let type = "HXBURGERPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -421,7 +392,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HAUTOPOOL";
+      let type = "HXBURGERPOOL";
       let res = await getPAYA(type);
     },
     // 退出
@@ -430,7 +401,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HAUTOPOOL";
+      let type = "HXBURGERPOOL";
       let res = await exitStake(type);
     },
   },

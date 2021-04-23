@@ -1092,7 +1092,7 @@ export default {
         &:nth-of-type(1) {
           display: flex;
           align-items: center;
-          flex: 4;
+          flex: 3;
           span {
             font-size: 16px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -1114,7 +1114,7 @@ export default {
           }
         }
         &:nth-of-type(2) {
-          flex: 2;
+          flex: 3;
           p {
             font-size: 14px;
             font-family: IBMPlexSans;
@@ -1215,7 +1215,7 @@ export default {
           }
         }
         &:nth-of-type(5) {
-          flex: 4;
+          flex: 3;
           display: flex;
           justify-content: flex-end;
           min-width: 200px;

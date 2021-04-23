@@ -9,7 +9,7 @@ export default {
             TicketPrice: '1 Helmet',
         },
         TokenInformation: {
-            TokenName: '$TOKEN',
+            TokenName: 'TOKEN',
             Address: '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890',
             Supply: '100,000',
             TotalSupply: '100,000,000',
@@ -42,6 +42,56 @@ export default {
                 type: 'Medium',
                 link: 'https://chain-swap.medium.com/',
                 show: 'https://chain-swap.medium.com/',
+            },
+        ],
+    },
+    bsports: {
+        ProjcetInformation: {
+            ProjectName: 'BSports',
+            Distributing: 'Apr. 19th 21:00 SGT',
+            Activating: 'Apr. 23rd 21:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1TOKEN=0.3BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'TOKEN',
+            Address: '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890',
+            Supply: '100,000',
+            TotalSupply: '100,000,000',
+        },
+        About: [
+            'BSports is a liquidity forecasting protocol similar to mainstream protocol design models such as Uniswap and MakerDAO: simplicity. We expect to change the complex logic and structure of traditional predictive platforms with shortcode and concise logic, and to increase scalability and secondary authoring space.',
+            "First, BSports is divided into two main parts, liquidity mining pools, and forecasting protocols. They replace traditional betting bookmakers with water injections and Speculators' bets. It is interesting that on the BSports platform, users can play two roles; that is, the dealer can also be a speculator, this is a multi-end game process, when predicting a football match, when you speculator identity bet A team win, when over time, you If you think team A has no chance of winning, then you can continue to switch to team B or crazy in the liquidity pool to bet money (the dealer itself has a certain dealer advantage) to make up for the loss that team A may bring you, of course, when injected or slightly calculate the profit and loss.",
+        ],
+        TokenDistribution: [
+            '70% Minning',
+            '10% IFO',
+            '10% Market&Live-Ops',
+            '5% Partner',
+            '5% Team',
+        ],
+        Media: [
+            {
+                type: 'Website',
+                link: 'https://www.bsports.io',
+                show: 'www.bsports.io',
+            },
+            {
+                type: 'Twitter',
+                link: 'https://twitter.com/BSports_io',
+                show: 'https://twitter.com/BSports_io',
+            },
+            {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/BSports_io',
+                show: 'https://t.me/BSports_io',
+            },
+
+            {
+                type: 'Medium',
+                link: 'https://bsports-io.medium.com/',
+                show: 'https://bsports-io.medium.com/',
             },
         ],
     },

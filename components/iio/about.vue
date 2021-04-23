@@ -106,7 +106,7 @@
       </p>
       <h3>Token distribution:</h3>
       <p>
-        $TOKEN is the token of the ChainSwap platform. The total amount is 100M,
+        TOKEN is the token of the ChainSwap platform. The total amount is 100M,
         2% of the total amount is 100% unlock token, and will be distributed to
         public sale and airdrop. Public sale will be held as IDO on 5 different
         platforms with a total amount of 1M. Airdrop that is given to users is

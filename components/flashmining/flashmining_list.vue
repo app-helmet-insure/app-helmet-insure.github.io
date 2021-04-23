@@ -550,7 +550,7 @@ export default {
       this.GET_HXBURGER_POOL_APY();
     },
     async GET_HXBURGER_POOL_APY() {
-      let HAUTOHELMET = await pancakeswap("XBURGER", "HELMET"); //Hlemt价格
+      let HAUTOHELMET = await burgerswap("XBURGER", "HELMET", 1, 18); //Hlemt价格
       let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
       let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
@@ -573,10 +573,10 @@ export default {
       if (nowTime < startedTime) {
         this.miningList[0].yearEarn = "Infinity";
       } else {
-        this.apyArray.hxBURGER = "--";
-        this.miningList[0].yearEarn = "--";
-        // this.apyArray.hxBURGER = fixD(APY, 2);
-        // this.miningList[0].yearEarn = fixD(APY, 2);
+        // this.apyArray.hxBURGER = "--";
+        // this.miningList[0].yearEarn = "--";
+        this.apyArray.hxBURGER = fixD(APY, 2);
+        this.miningList[0].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HTPT_POOL_APY() {

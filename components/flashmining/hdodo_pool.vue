@@ -57,7 +57,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -71,7 +71,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.TotalLPT)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -404,10 +404,10 @@ export default {
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
-      this.balance.Deposite = fixD(Deposite, 8);
-      this.balance.Withdraw = fixD(Withdraw, 8);
-      this.balance.hCTK = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 8);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.hCTK = Helmet;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       if (this.expired) {
         this.textList[0].num = "--";

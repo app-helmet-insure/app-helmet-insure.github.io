@@ -7,18 +7,17 @@ export const BurgerSwapContract = async (address) => {
         '0x1eCaeE6e4e01C45712ccd9262c3e9F623A6ac7ed'
     );
 };
-export const burgerswap = async (token1, token2, volume, unit) => {
+export const burgerswap = async (token1, token2, unit) => {
     const charID = window.chainID;
     let TOKEN1 = getAddress(token1, charID);
     let TOKEN2 = getAddress(token2, charID);
-    let VOLUME = volume * Math.pow(10, unit);
     let Contract = await BurgerSwapContract();
     return Contract.methods
         .getLpValueByFactory(
             '0x1eCaeE6e4e01C45712ccd9262c3e9F623A6ac7ed',
             TOKEN1,
             TOKEN2,
-            VOLUME
+            '1000000000000000000'
         )
         .call()
         .then((res) => {

@@ -329,7 +329,6 @@ export default {
     this.initFlashMiningData();
     setTimeout(() => {
       this.getAPY();
-      this.swap();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
@@ -349,9 +348,6 @@ export default {
     },
   },
   methods: {
-    async swap() {
-      await burgerswap();
-    },
     hadnleShowOnePager(e, earn) {
       if (e.target.tagName === "I") {
         let Earn = earn;
@@ -550,7 +546,7 @@ export default {
       this.GET_HXBURGER_POOL_APY();
     },
     async GET_HXBURGER_POOL_APY() {
-      let HAUTOHELMET = await burgerswap("XBURGER", "HELMET", 1, 18); //Hlemt价格
+      let HAUTOHELMET = await burgerswap("HXBURGER", "HELMET", 18); //Hlemt价格
       let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
       let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);

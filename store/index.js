@@ -168,7 +168,7 @@ export const state = () => ({
         {
             BTCB: 240,
             ETH: 10,
-            HELMET: 0.002,
+            HELMET: 0.008,
             CAKE: 0.1,
             CTK: 0.015,
             BURGER: 0.02,
@@ -180,7 +180,7 @@ export const state = () => ({
         {
             BTCB: 60,
             ETH: 2.5,
-            HELMET: 0.008,
+            HELMET: 0.002,
             CAKE: 0.025,
             CTK: 0.004,
             BURGER: 0.005,

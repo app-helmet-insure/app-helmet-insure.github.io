@@ -149,7 +149,7 @@ export default {
     },
     async swapActive() {
       let data = {
-        token: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
+        token: getTokenName("0xe9e7cea3dedca5984780bafc599bd69add087d56"),
         _underlying_vol: precision.times(0.3, this.AvailableVolume),
         vol: this.AvailableVolume,
         long: "0x029A09ABE791a3Be60Aa64d569F4C34890f24097", //奖励地址

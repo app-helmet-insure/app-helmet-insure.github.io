@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide langauage">
+        <div></div>
+      </div>
       <a
         class="swiper-slide cakev2"
         style="cursor: poiner"
@@ -136,6 +139,12 @@ export default {
         background-position: center;
       }
     }
+    .langauage {
+      background: #ffa729;
+      > div {
+        background-image: url("../../assets/img/banner/langauage_web.png");
+      }
+    }
     .cakev2 {
       background: #f1c153;
       > div {
@@ -192,6 +201,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .langauage {
+      background: #ffa729;
+      > div {
+        background-image: url("../../assets/img/banner/langauage_h5.png");
       }
     }
     .cakev2 {

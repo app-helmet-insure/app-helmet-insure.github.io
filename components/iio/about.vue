@@ -25,7 +25,7 @@
           </td>
         </tr>
         <tr>
-          <td><span>Activating Price</span><span>1TOKEN=0.3USDT</span></td>
+          <td><span>Activating Price</span><span>1TOKEN=0.3BUSD</span></td>
         </tr>
         <tr>
           <td><span>Ticket Price</span><span>1 Helmet</span></td>

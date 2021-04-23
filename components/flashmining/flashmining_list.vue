@@ -412,7 +412,7 @@ export default {
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
           openDate: this.getMiningTime("2021/04/06 00:00"),
-          weekly: fixD((2000000 / 14) * 7, 2) + " hTPT",
+          weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
           yearEarn: apyArray["hTPT"] || "--",
           expired: new Date("2021/04/26 00:00") * 1,
           started: new Date("2021/04/06 00:00") * 1,
@@ -585,7 +585,7 @@ export default {
       let APY = fixD(
         precision.times(
           precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(2000000, 14), 365),
+            precision.times(HAUTOHELMET, precision.divide(2000000, 21), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume

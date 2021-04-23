@@ -142,22 +142,53 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    img {
-      width: 24px;
-      height: 24px;
-      margin-right: 6px;
+    position: relative;
+    span {
+      display: flex;
+      padding: 0 15px;
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: rgba(23, 23, 58, 0.7);
+      cursor: pointer;
+      height: 32px;
+      align-items: center;
+      text-align: left;
+      &:hover {
+        background: #f8f9fa;
+        border-radius: 5px;
+      }
     }
     ul {
-      display: flex;
+      display: none;
+      width: 120px;
+      padding: 10px 15px;
+      background: #ffffff;
+      box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
+      border-radius: 5px 5px 0px 0px;
+      position: absolute;
+      bottom: 45px;
       li {
+        &:hover {
+          background: #f8f9fa;
+          border-radius: 5px;
+        }
+        width: 100%;
+        text-align: center;
+        height: 32px;
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
-        color: rgba(23, 23, 58, 0.7);
-        line-height: 20px;
+        color: #22292f;
+        line-height: 32px;
         cursor: pointer;
         &:hover {
           color: #17173a;
         }
+      }
+    }
+    &:hover {
+      ul {
+        display: block;
       }
     }
   }

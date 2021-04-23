@@ -207,6 +207,8 @@
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",
     "Copy": "复制成功",
+    "Active1": "Please double check the price above，",
+    "Active2": "Helmet team will not cover your loss on this.",
     "Active": "请务必确认价格是否匹配，不合适的价格行权可能会造成亏损",
     "SendCoin": "请不要把您的helmet打入合约地址，连接钱包并调至BSC网络，我们会自动读取数据。",
     "RiskWarning": "NOTICE",
@@ -226,6 +228,15 @@
     "ConnectedWith": "选择钱包",
     "Change": "更换钱包",
     "SignOut": "登出"
+  },
+  "Wallet": {
+    "SelectWallet": "Select a wallet",
+    "NeedInstall": "You'll need to install",
+    "Install": "Tocontinue.Once you have it installed,go ahead and",
+    "Refresh": "Refresh the page",
+    "InstallMetaMask": "Install MetaMask",
+    "Back": "Back",
+    "ConnectWallet": "Connect to your {item} Wallet"
   },
   "Insurance": {
     "Insurance_text1": "保险交易",

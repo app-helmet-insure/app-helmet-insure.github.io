@@ -22,11 +22,15 @@
           ></a>
           <div class="text">
             <p>
-              <span>{{ $t("IIO.HomeText1") }}</span
+              <span>{{
+                $t("IIO.HomeText1", { name: `i${item.swapUtil}` })
+              }}</span
               ><span>{{ item.showStart }}</span>
             </p>
             <p>
-              <span>{{ $t("IIO.HomeText2") }}</span
+              <span>{{
+                $t("IIO.HomeText2", { name: `i${item.swapUtil}` })
+              }}</span
               ><span>{{ item.showEnd }}</span>
             </p>
             <p>
@@ -41,7 +45,14 @@
               >
             </p>
           </div>
-          <button @click="toDetails">Enter Pool</button>
+          <button
+            @click="toDetails"
+            :style="
+              !item.open ? 'background: #D5D5DB;pointer-events: none' : ''
+            "
+          >
+            Enter Pool
+          </button>
         </template>
         <img
           class="soon_img"
@@ -77,7 +88,7 @@ export default {
     initData() {
       let iioData = [
         {
-          iio_name: "chainswap",
+          iio_name: "ChainSwap",
           iio_img: "iio_chainswap",
           iio_webSite: "www.chainswap.com",
           coming: true,
@@ -91,26 +102,42 @@ export default {
           showStart: "Apr. 19th 21:00 SGT",
           showEnd: "Apr. 23rd 21:00 SGT",
           link: "https://www.chainswap.exchange/",
+          open: true,
         },
         {
-          iio_name: "2",
-          iio_img: "iio2",
-          coming: false,
+          iio_name: "BlackHole",
+          iio_img: "iio_blackhole",
+          iio_webSite: "blackhole.black",
+          coming: true,
+          background: "#33B9C2",
+          startTime: "2021/04/26 20:00",
+          endTime: "2021/04/28 20:45",
+          swapVolume: "200,000",
+          swapUtil: "BLACK",
+          stakeUtil: "BUSD",
+          stakeShare: 0.05,
+          showStart: "Apr. 26th 20:00 SGT",
+          showEnd: "Apr.  28th 20:45 SGT",
+          link: "https://www.chainswap.exchange/",
+          open: false,
         },
         {
           iio_name: "3",
-          iio_img: "iio3",
+          iio_img: "iio2",
           coming: false,
+          open: false,
         },
         {
           iio_name: "4",
           iio_img: "iio4",
           coming: false,
+          open: false,
         },
         {
           iio_name: "5",
           iio_img: "iio5",
           coming: false,
+          open: false,
         },
       ];
       this.iioData = iioData;

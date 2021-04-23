@@ -145,7 +145,7 @@ export const state = () => ({
         {
             BTCB: '2021/05/21 24:00',
             ETH: '2021/05/21 24:00',
-            HELMET: '2021/04/23 24:00',
+            HELMET: '2021/05/21 24:00',
             CAKE: '2021/05/11 24:00',
             CTK: '2021/05/11 24:00',
             BURGER: '2021/05/11 24:00',
@@ -168,7 +168,7 @@ export const state = () => ({
         {
             BTCB: 240,
             ETH: 10,
-            HELMET: 0.01,
+            HELMET: 0.002,
             CAKE: 0.1,
             CTK: 0.015,
             BURGER: 0.02,
@@ -180,7 +180,7 @@ export const state = () => ({
         {
             BTCB: 60,
             ETH: 2.5,
-            HELMET: 0.003,
+            HELMET: 0.008,
             CAKE: 0.025,
             CTK: 0.004,
             BURGER: 0.005,

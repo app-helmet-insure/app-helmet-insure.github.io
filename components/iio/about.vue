@@ -39,7 +39,22 @@
           <td><span>Token Name</span><span>$TOKEN</span></td>
         </tr>
         <tr>
-          <td><span>Address</span><span>--</span></td>
+          <td>
+            <span>Address</span
+            ><span>
+              <section>0x029A09ABE791a3Be60Aa64d569F4C34890f24097</section>
+              <i
+                class="copy"
+                id="copy_default"
+                @click="
+                  copyAdress(
+                    $event,
+                    '0x029A09ABE791a3Be60Aa64d569F4C34890f24097'
+                  )
+                "
+              ></i>
+            </span>
+          </td>
         </tr>
         <tr>
           <td>
@@ -137,7 +152,29 @@
 </template>
 
 <script>
-export default {};
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
+export default {
+  methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>
@@ -191,9 +228,19 @@ export default {};
                 width: 20px;
                 height: 20px;
                 display: block;
+              }
+              .warn {
                 background-image: url("../../assets/img/helmet/wran.png");
                 background-repeat: no-repeat;
                 background-size: 100% 100%;
+              }
+              > .copy {
+                width: 16px;
+                height: 20px;
+                background-image: url("../../assets/img/icon/copy.png");
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                cursor: pointer;
               }
               float: right;
               font-size: 14px;
@@ -290,6 +337,9 @@ export default {};
         height: 50px;
         padding: 0 20px;
         span {
+          display: block;
+          width: 50%;
+          max-width: 170px;
           &:nth-of-type(1) {
             float: left;
             font-size: 14px;
@@ -299,20 +349,45 @@ export default {};
           &:nth-of-type(2) {
             display: flex;
             align-items: center;
+            justify-content: flex-end;
+            section {
+              width: 150px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
             i {
               margin-right: 4px;
               width: 20px;
               height: 20px;
               display: block;
+            }
+            .warn {
               background-image: url("../../assets/img/helmet/wran.png");
               background-repeat: no-repeat;
               background-size: 100% 100%;
+            }
+            > .copy {
+              width: 16px;
+              height: 20px;
+              background-image: url("../../assets/img/icon/copy.png");
+              background-repeat: no-repeat;
+              background-size: 100% 100%;
+              cursor: pointer;
             }
             float: right;
             font-size: 14px;
             font-family: IBMPlexSans;
             color: #17173a;
           }
+        }
+        i {
+          width: 16px;
+          height: 16px;
+          display: block;
+          background-image: url("../../assets/img/icon/copy.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
       }
     }

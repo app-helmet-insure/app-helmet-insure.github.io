@@ -49,11 +49,13 @@
       <div class="ContractAddress">
         <span>iTOKEN {{ $t("Table.ContractAddress") }}</span>
         <p>
-          --
+          0x029A09ABE791a3Be60Aa64d569F4C34890f24097
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, '--')"
+            @click="
+              copyAdress($event, '0x029A09ABE791a3Be60Aa64d569F4C34890f24097')
+            "
           ></i>
         </p>
       </div>

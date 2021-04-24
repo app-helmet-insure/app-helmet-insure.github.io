@@ -31,13 +31,6 @@
           />
           <img
             class="combo_img"
-            style="width: 236px"
-            src="~/assets/img/mining/flash_web.png"
-            alt=""
-            v-if="item.flash"
-          />
-          <img
-            class="combo_img"
             style="width: 116px"
             src="~/assets/img/mining/serial_web.png"
             alt=""
@@ -118,6 +111,11 @@
                   ? 'activeButton stakeMining'
                   : 'stakeMining'
               "
+              :style="
+                item.earn == 'helmet_cake_v2'
+                  ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
+                  : ''
+              "
             >
               {{ $t("Table.Stakeing") }}
               <i class="selectDown"></i>
@@ -130,6 +128,11 @@
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
                   : 'claimMining'
+              "
+              :style="
+                item.earn == 'helmet_cake_v2'
+                  ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
+                  : ''
               "
             >
               {{ $t("Table.Claim") }}
@@ -213,12 +216,6 @@
         />
         <img
           class="combo_img"
-          style="width: 236px"
-          src="~/assets/img/mining/flash_web.png"
-          alt=""
-          v-if="item.flash"
-        /><img
-          class="combo_img"
           style="width: 116px"
           src="~/assets/img/mining/serial_web.png"
           alt=""
@@ -296,6 +293,11 @@
                 : 'stakeMining'
             "
             style="margin-right: 10px"
+            :style="
+              item.earn == 'helmet_cake_v2'
+                ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
+                : ''
+            "
           >
             {{ $t("Table.Stakeing") }}
           </button>
@@ -313,6 +315,11 @@
                 : 'claimMining'
             "
             style="margin-left: 10px"
+            :style="
+              item.earn == 'helmet_cake_v2'
+                ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
+                : ''
+            "
           >
             {{ $t("Table.Claim") }}
           </button>
@@ -531,9 +538,9 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "HELMET-BNB LP",
+          miningName: "HELMET-BNB LP <i class='v1'></i>",
           earnNum: "two",
-          earn: "helmet_cake",
+          earn: "helmet_cake_v1",
           earnImg: true,
           dueDate: "Ongoing",
           openDate: "Mining",
@@ -541,8 +548,20 @@ export default {
           info: true,
           earnName: "APR",
           onePager: false,
-          iio: true,
-          yearEarn: apyArray["helmet_cake"] || "--",
+          yearEarn: apyArray["helmet_cake_v1"] || "--",
+        },
+        {
+          miningName: "HELMET-BNB LP <i class='v2'></i>",
+          earnNum: "two",
+          earn: "helmet_cake_v2",
+          earnImg: true,
+          dueDate: "--",
+          openDate: "Mining",
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["helmet_cake_v2"] || "--",
         },
         {
           miningName: "HELMET-BNB MLP",
@@ -664,7 +683,8 @@ export default {
       this.$forceUpdate();
     },
     getAPY() {
-      this.HELMET_BNB_LP_APY();
+      this.HELMET_BNB_LP_V1_APY();
+      this.HELMET_BNB_LP_V2_APY();
       this.HELMET_hDODO_DLP_APY();
       this.FEI_POOL_APY();
       this.QFEI_QSD_DLP_APY();
@@ -674,7 +694,7 @@ export default {
       this.HELMET_hBURGER_LP_APY();
       this.HELMET_MDX_LP_APY();
     },
-    async HELMET_BNB_LP_APY() {
+    async HELMET_BNB_LP_V1_APY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let cakePrice = this.$store.state.CAKE_BUSD;
       let bnbPrice = this.$store.state.BNB_BUSD;
@@ -704,10 +724,44 @@ export default {
           bnbPrice
         )
       );
-
-      let APY = precision.plus(helmetapy, cakeapy) * 100;
-      this.apyArray.helmet_cake = fixD(APY, 2);
+      let APY = helmetapy * 100;
+      this.apyArray.helmet_cake_v1 = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
+    },
+    async HELMET_BNB_LP_V2_APY() {
+      this.helmetPrice = this.indexArray[1]["HELMET"];
+      let cakePrice = this.$store.state.CAKE_BUSD;
+      let bnbPrice = this.$store.state.BNB_BUSD;
+      // 总LPT
+      let totalHelmet = await totalSupply("HELMETBNB_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let helmetReward = await Rewards("HELMETBNB", "0");
+      // BNB总价值
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      // BNB总价值不翻倍
+      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
+      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
+      let dayHelmet = totalHelmet;
+      let helmetapy = precision.divide(
+        precision.times(
+          this.helmetPrice,
+          precision.minus(HelmetAllowance, helmetReward),
+          365
+        ),
+        precision.times(miningTime, bnbValue)
+      );
+      let cakeapy = precision.divide(
+        precision.times(cakePrice, 1200000),
+        precision.times(
+          precision.divide(bnbValue, totalHelmet),
+          cakeValue,
+          bnbPrice
+        )
+      );
+      let APY = cakeapy * 100;
+      this.apyArray.helmet_cake = fixD(APY, 2);
+      // this.miningList[1].yearEarn = fixD(APY, 2);
+      this.miningList[1].yearEarn = "--";
     },
     async HELMET_MDX_LP_APY() {
       let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
@@ -744,10 +798,10 @@ export default {
       let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[1].yearEarn = "--";
+        this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[1].yearEarn = fixD(APY, 2);
+        this.miningList[2].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_POOL_APY() {
@@ -760,7 +814,7 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[2].yearEarn = fixD(APY, 2);
+      this.miningList[3].yearEarn = fixD(APY, 2);
     },
 
     async FEI_POOL_APY() {
@@ -785,10 +839,10 @@ export default {
       let startedTime = this.miningList[3].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[3].yearEarn = "--";
+        this.miningList[4].yearEarn = "--";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async QFEI_QSD_DLP_APY() {
@@ -813,10 +867,10 @@ export default {
       let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[4].yearEarn = "Infinity";
+        this.miningList[5].yearEarn = "Infinity";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[4].yearEarn = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_KUN_DLP_APY() {
@@ -843,10 +897,10 @@ export default {
       let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[5].yearEarn = "Infinity";
+        this.miningList[6].yearEarn = "Infinity";
       } else {
         this.apyArray.qhelmet = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
+        this.miningList[6].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_hDODO_DLP_APY() {
@@ -877,7 +931,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[6].yearEarn = fixD(APY, 2);
+      this.miningList[7].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await pancakeswap("FOR", "WBNB");
@@ -907,7 +961,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[7].yearEarn = fixD(APY, 2);
+      this.miningList[8].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
@@ -938,7 +992,7 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[8].yearEarn = fixD(APY, 2);
+      this.miningList[9].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;
@@ -999,7 +1053,31 @@ export default {
   },
 };
 </script>
-
+<style  lang='scss'>
+.onePager {
+  display: flex;
+  align-items: center;
+  .v1,
+  .v2 {
+    border: none;
+    display: inline-block;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    &:hover {
+      border: none;
+    }
+  }
+  .v1 {
+    background-image: url("../../assets/img/mining/v1_icon.png");
+  }
+  .v2 {
+    background-image: url("../../assets/img/mining/v2_icon.png");
+  }
+}
+</style>
 <style lang="scss" scoped>
 .finshed_line {
   width: 100%;
@@ -1028,6 +1106,7 @@ export default {
     background-size: 100% 100%;
   }
 }
+
 @media screen and (min-width: 750px) {
   .h5_wrap {
     display: none;

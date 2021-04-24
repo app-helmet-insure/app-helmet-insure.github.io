@@ -183,6 +183,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('MDX')">Add MDX to MetaMask</p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>
@@ -200,13 +204,13 @@ import {
   toDeposite,
   getAllHelmet,
   Rewards,
-  RewardsDuration,
 } from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import { getAddress } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -286,6 +290,16 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, unit) {
+      let tokenAddress = getAddress(token);
+      let data = {
+        tokenAddress: tokenAddress,
+        tokenSymbol: token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });

@@ -161,7 +161,6 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
@@ -171,10 +170,9 @@ import {
   toDeposite,
   getAllHelmet,
   Rewards,
-  RewardsDuration,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
 export default {
   props: ["activeType", "TradeType"],
@@ -214,8 +212,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      helmetapy: 0,
-      cakeapy: 0,
       isLogin: false,
     };
   },
@@ -238,38 +234,12 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
-    },
-    helmetapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(fixD(newValue * 100, 2), fixD(this.cakeapy * 100, 2)) +
-          "%";
-      }
-    },
-    cakeapy(newValue, value) {
-      if (newValue) {
-        this.textList[1].num =
-          precision.plus(
-            fixD(this.helmetapy * 100, 2),
-            fixD(newValue * 100, 2)
-          ) + "%";
-      }
     },
   },
   computed: {
@@ -288,48 +258,6 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
-    async getAPY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
-      let dayHelmet = totalHelmet;
-      // (helmetPrice*(HelmetAllowance-helmetReward)*365)/(100*bnbValue)
-      let helmetapy = precision.divide(
-        precision.times(
-          this.helmetPrice,
-          precision.minus(HelmetAllowance, helmetReward),
-          365
-        ),
-        precision.times(miningTime, bnbValue)
-      );
-      let cakeapy = precision.divide(
-        precision.times(cakePrice, 1480000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
-      );
-
-      this.helmetapy = helmetapy;
-      this.cakeapy = cakeapy;
-      this.textList[1].num =
-        precision.plus(fixD(helmetapy * 100, 2), fixD(cakeapy * 100, 2)) + "%";
     },
     async getBalance() {
       let helmetType = "HELMETBNB_LPT";

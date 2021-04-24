@@ -248,7 +248,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      apy: 0,
       MingTime: 0,
       actionType: "deposit",
       fixD,
@@ -321,11 +320,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
     },
     getDownTime() {
       if (!this.openMining) {

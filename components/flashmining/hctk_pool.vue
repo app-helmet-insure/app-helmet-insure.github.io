@@ -289,12 +289,7 @@ export default {
       this.getBalance();
     }, 1000);
   },
-  watch: {
-    userInfo: {
-      handler: "userInfoWatch",
-      immediate: true,
-    },
-  },
+  watch: {},
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
@@ -324,11 +319,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
     },
     getDownTime() {
       let now = new Date() * 1;

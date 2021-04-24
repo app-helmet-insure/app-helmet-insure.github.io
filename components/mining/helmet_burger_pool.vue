@@ -272,19 +272,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -374,58 +364,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
-    },
-    async getAPY() {
-      // BURGER的helmet价值
-      let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
-      let bnbhelmetValue = await pancakeswap("WBNB", "HELMET");
-      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allVolume = burgerHelmet * 15000;
-      //总抵押
-      let supplyVolume = await totalSupply("BURGERHELMET"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("BURGERHELMET_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
-      let burgerApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(allVolume, 25), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      let helmetApy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(precision.divide(75000, 25), 365),
-            precision.times(
-              precision.divide(precision.times(stakeValue, 2), stakeVolue),
-              supplyVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-
-      let apy = precision.plus(burgerApy, helmetApy);
-      this.apy = apy ? apy : 0;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
     },
     async getBalance() {
       let helmetType = "BURGERHELMET_LPT";

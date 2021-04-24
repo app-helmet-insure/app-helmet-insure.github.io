@@ -2,75 +2,83 @@
   <div class="iio_about">
     <div class="iio_about_table">
       <table>
-        <tr>
-          <th>Project Information</th>
-        </tr>
-        <tr>
-          <td><span>Project Name</span><span>ChainSwap</span></td>
-        </tr>
-        <tr>
-          <td>
-            <span>iTOKEN Distributing</span><span>Apr. 19th 21:00 SGT</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>iTOKEN Activating</span><span>Apr. 23rd 21:00 SGT</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>iTOKEN Activate Period</span
-            ><span><i class="warn"></i> 24hours</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span>Activating Price</span><span>1TOKEN=0.3BUSD</span></td>
-        </tr>
-        <tr>
-          <td><span>Ticket Price</span><span>1 Helmet</span></td>
-        </tr>
+        <thead>
+          <tr>
+            <th>Project Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>Project Name</span><span>ChainSwap</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span>iTOKEN Distributing</span><span>Apr. 19th 21:00 SGT</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>iTOKEN Activating</span><span>Apr. 23rd 21:00 SGT</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>iTOKEN Activate Period</span
+              ><span><i class="warn"></i> 24hours</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Activating Price</span><span>1TOKEN=0.3BUSD</span></td>
+          </tr>
+          <tr>
+            <td><span>Ticket Price</span><span>1 Helmet</span></td>
+          </tr>
+        </tbody>
       </table>
       <table>
-        <tr>
-          <th>ChainSwap Token Information</th>
-        </tr>
-        <tr>
-          <td><span>Token Name</span><span>TOKEN</span></td>
-        </tr>
-        <tr>
-          <td>
-            <span>Address</span
-            ><span>
-              <section>0x3b73c1b2ea59835cbfcadade5462b6ab630d9890</section>
-              <i
-                class="copy"
-                id="copy_default"
-                @click="
-                  copyAdress(
-                    $event,
-                    '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890'
-                  )
-                "
-              ></i>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span>Initial Circulating Supply (Day of sale)</span
-            ><span>100,000</span>
-          </td>
-        </tr>
-        <tr>
-          <td><span>Total Supply</span><span>100,000,000</span></td>
-        </tr>
-        <tr class="none">
-          <td><span></span><span></span></td>
-        </tr>
-        <tr class="none">
-          <td><span></span><span></span></td>
-        </tr>
+        <thead>
+          <tr>
+            <th>ChainSwap Token Information</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span>Token Name</span><span>TOKEN</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span>Address</span
+              ><span>
+                <section>0x3b73c1b2ea59835cbfcadade5462b6ab630d9890</section>
+                <i
+                  class="copy"
+                  id="copy_default"
+                  @click="
+                    copyAdress(
+                      $event,
+                      '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890'
+                    )
+                  "
+                ></i>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Initial Circulating Supply (Day of sale)</span
+              ><span>100,000</span>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Total Supply</span><span>100,000,000</span></td>
+          </tr>
+          <tr class="none">
+            <td><span></span><span></span></td>
+          </tr>
+          <tr class="none">
+            <td><span></span><span></span></td>
+          </tr>
+        </tbody>
       </table>
     </div>
 

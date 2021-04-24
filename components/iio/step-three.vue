@@ -91,6 +91,9 @@ export default {
     };
   },
   mounted() {
+    this.$bus.$on("REFRESH_ALL_DATA", () => {
+      this.getBalance();
+    });
     setTimeout(() => {
       this.getBalance();
     }, 1000);

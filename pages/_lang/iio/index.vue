@@ -13,6 +13,7 @@ import IIOMiningTitle from "~/components/iio/iio_title.vue";
 import IIOMiningWrap from "~/components/iio/iio_wrap.vue";
 import IIOMiningDetails from "~/components/iio/iio_detail.vue";
 export default {
+  name: "iio",
   components: {
     IIOMiningTitle,
     IIOMiningWrap,

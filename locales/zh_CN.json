@@ -163,7 +163,7 @@
     "BuyTicket": "购买门票激活份额",
     "TotalValue": "总抵押",
     "MyStake": "我的抵押",
-    "ActionOne": "购买 {name} 门票后抵押 LPT 才能获得奖励",
+    "ActionOne": "购买{name}门票后抵押LPT才能获得{token}奖励",
     "Get": "获得",
     "OneTicket": "门票价格",
     "Tip2": "此次用于购买门票的所有 Helmet 将在兑换结束后全部销毁",

@@ -1,5 +1,5 @@
 <template>
-  <div class="stepOne" v-if="iioPage === 'iio-id'">
+  <div class="stepOne">
     <div class="step_title">
       {{ $t("IIO.ActionOne", { name: About.Token, token: "i" + About.Token }) }}
     </div>
@@ -71,10 +71,10 @@ export default {
     let name = this.$route.params.id;
     this.About = Information[name];
     setTimeout(() => {
-      this.getPassPortPrice();
+      // this.getPassPortPrice();
     }, 1000);
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
-      this.getPassPortPrice();
+      // this.getPassPortPrice();
       this.$bus.$emit("JUMP_STEP", { step: 2 });
       this.$bus.$emit("GET_FLAG");
     });

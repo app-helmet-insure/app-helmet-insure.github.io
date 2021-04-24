@@ -1,7 +1,7 @@
 <template>
   <div class="stepOne" v-if="iioPage === 'iio-id'">
     <div class="step_title">
-      {{ $t("IIO.ActionOne", { name: "Token", token: "i" + About.Token }) }}
+      {{ $t("IIO.ActionOne", { name: About.Token, token: "i" + About.Token }) }}
     </div>
     <div class="step_action">
       <p class="step_buy">
@@ -13,7 +13,8 @@
         >
       </p>
       <div class="input">
-        <h3>{{ PassportPrice || 1 }}HELMET</h3>
+        <!-- <h3>{{ PassportPrice  }}HELMET</h3> -->
+        <h3>{{ 1 }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
       <button

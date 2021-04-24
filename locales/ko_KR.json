@@ -149,8 +149,8 @@
   },
   "IIO": {
     "BuyTokenTicket": "티켓 구매",
-    "DepositLptReward": "LPT를 사용하여 i토큰 받기",
-    "SwapToken": "당신의 i토큰을 활성화",
+    "DepositLptReward": "LPT를 사용하여 {token} 토큰 받기",
+    "SwapToken": "당신의 {token} 토큰을 활성화",
     "ComingSoon": "곧 출시합니다…",
     "InitialOffering": "Initial Offering을 재정의 할 수 있는 옵션",
     "Pool": "{name} Initial Offering Pool for HELMET-BNB LPers",

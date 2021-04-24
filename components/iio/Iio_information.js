@@ -1,5 +1,6 @@
 export default {
     chainswap: {
+        name: 'ChainSwap',
         Token: 'TOKEN',
         Time1: 'Apr.19th 21:00',
         Time2: 'Apr.23rd 21:00',
@@ -56,27 +57,31 @@ export default {
         },
     },
     blackhole: {
-        Token: 'BALCK',
+        name: 'BlackHole',
+        Token: 'BLACK',
         Time1: 'Apr.26th 20:00',
         Time2: 'Apr.28th 20:45',
         Time3: 'Apr.29th 20:45',
         Time1UTC: '2021/04/26 12:00 UTC',
         Time2UTC: '2021/04/28 12:45 UTC',
         Time3UTC: '2021/04/29 12:45 UTC',
+        Collateral: '0xd714d91A169127e11D8FAb3665d72E8b7ef9Dbe2',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '--',
         ActivePrice: 0.05,
         ProjcetInformation: {
             ProjectName: 'BlackHole Protocol',
             Distributing: 'Apr. 26th 20:00 SGT',
             Activating: 'Apr.  28th 20:45 SGT',
             ActivatePeriod: '24hours',
-            ActivatingxPrice: '1TOKEN=0.05BUSD',
+            ActivatingxPrice: '1BLACK=0.05BUSD',
             TicketPrice: '1 Helmet',
         },
         TokenInformation: {
             TokenName: 'BLACK',
             Address: '0xd714d91A169127e11D8FAb3665d72E8b7ef9Dbe2',
             Supply: '200,000',
-            TotalSupply: '100million',
+            TotalSupply: '100,000,000',
         },
         About: [
             'BlackHole Protocol is an approval-free cross-chain burning platform based on Ethereum network. Any user or project governor could create a burning pool by holding BLACK and old Token LP to permanently burn the old Token into a new Token, thus gaining ecological vitality.',

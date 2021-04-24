@@ -149,8 +149,8 @@
   },
   "IIO": {
     "BuyTokenTicket": "购买门票",
-    "DepositLptReward": "抵押 LPT 获得奖励",
-    "SwapToken": "兑换 Token",
+    "DepositLptReward": "抵押 LPT 获得 {token} 奖励",
+    "SwapToken": "兑换 {token}",
     "ComingSoon": "Coming soon…",
     "InitialOffering": "Your OPTION to redefine Initial Offering",
     "Pool": "{name} 面向 LPT 持有者公开兑换池",

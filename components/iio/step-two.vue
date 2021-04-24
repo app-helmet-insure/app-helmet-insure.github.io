@@ -18,7 +18,10 @@
           <span> {{ fixD(showMsg.MyPoolShare, 2) }}%</span>
         </p>
       </div>
-      <button @click="toDeposite">
+      <button
+        @click="toDeposite"
+        style="background: #ccc; pointer-events: none"
+      >
         {{ $t("IIO.StepTwoAction") }}
       </button>
     </div>
@@ -53,11 +56,11 @@
       <div class="ContractAddress">
         <span>i{{ About.Token }} {{ $t("Table.ContractAddress") }}</span>
         <p>
-          {{ About.TokenInformation.Address }}
+          {{ About.LongAdress }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, About.TokenInformation.Address)"
+            @click="copyAdress($event, About.LongAdress)"
           ></i>
         </p>
       </div>

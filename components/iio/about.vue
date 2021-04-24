@@ -16,19 +16,19 @@
           </tr>
           <tr>
             <td>
-              <span>iTOKEN Distributing</span>
+              <span>i{{ About.Token }} Distributing</span>
               <span>{{ About.ProjcetInformation.Distributing }}</span>
             </td>
           </tr>
           <tr>
             <td>
-              <span>iTOKEN Activating</span>
+              <span>i{{ About.Token }} Activating</span>
               <span>{{ About.ProjcetInformation.Activating }}</span>
             </td>
           </tr>
           <tr>
             <td>
-              <span>iTOKEN Activate Period</span>
+              <span>i{{ About.Token }} Activate Period</span>
               <span>
                 <i class="warn"></i>
                 {{ About.ProjcetInformation.ActivatePeriod }}
@@ -52,7 +52,7 @@
       <table>
         <thead>
           <tr>
-            <th>ChainSwap Token Information</th>
+            <th>{{ About.Token }} Token Information</th>
           </tr>
         </thead>
         <tbody>
@@ -102,7 +102,7 @@
       <p v-for="(item, index) in About.About" :key="index + 'About'">
         {{ item }}
       </p>
-      <h3>TokenDistribution</h3>
+      <h3>Token Distribution</h3>
       <p
         v-for="(item, index) in About.TokenDistribution"
         :key="index + 'TokenDistribution'"

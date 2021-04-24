@@ -149,8 +149,8 @@
   },
   "IIO": {
     "BuyTokenTicket": "BUY Ticket",
-    "DepositLptReward": "Stake LPT to get iToken",
-    "SwapToken": "Activate your iToken",
+    "DepositLptReward": "Stake LPT to get {token}",
+    "SwapToken": "Activate your {token}",
     "ComingSoon": "Coming soon…",
     "InitialOffering": "Your OPTION to redefine Initial Offering",
     "Pool": "{name} Initial Offering Pool for HELMET-BNB LPers",

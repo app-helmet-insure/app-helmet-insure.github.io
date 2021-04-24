@@ -148,7 +148,7 @@ export default {
     toDetails(index) {
       let name = this.iioData[index].iio_name.toLowerCase();
       this.$router.push({
-        path: `iio/details/${name}`,
+        path: `iio/${name}`,
       });
     },
     getStatus(newValue) {

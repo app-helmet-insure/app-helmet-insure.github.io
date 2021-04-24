@@ -1,5 +1,5 @@
 <template>
-  <div class="iio_banner">
+  <div class="iio_banner" v-if="iioPage === 'iio-id'">
     <div class="iio_wrap">
       <h3 class="iio_title">{{ $t("IIO.Pool", { name: About.name }) }}</h3>
       <div class="tip" v-if="!ticketFlag">

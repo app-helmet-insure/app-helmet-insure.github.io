@@ -1,5 +1,5 @@
 <template>
-  <div class="action_wrap">
+  <div class="action_wrap" v-if="iioPage === 'iio-id'">
     <div class="action_step">
       <div class="action_step_wrap">
         <!-- step1 ---------------------------------------------------------------->

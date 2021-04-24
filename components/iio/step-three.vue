@@ -1,5 +1,5 @@
 <template>
-  <div class="stepThree">
+  <div class="stepThree" v-if="iioPage === 'iio-id'">
     <div class="step_title">{{ $t("IIO.ActionThree") }}</div>
     <p
       v-html="

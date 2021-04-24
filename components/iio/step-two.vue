@@ -1,5 +1,5 @@
 <template>
-  <div class="stepTwo">
+  <div class="stepTwo" v-if="iioPage === 'iio-id'">
     <div class="left">
       <div class="step_title">
         {{ $t("IIO.ActionTwo", { token: "i" + About.Token }) }}

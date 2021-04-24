@@ -167,7 +167,7 @@
     "Get": "Get",
     "OneTicket": "Ticket price",
     "Tip2": "All HELMETs of the ticket will be burnt after this IIO",
-    "ActionTwo": "Stake LPT to get iTOKEN share",
+    "ActionTwo": "Stake LPT to get {token} share",
     "Earn": "Earned",
     "What": "What is",
     "GetReward": "Claim iTOKEN",

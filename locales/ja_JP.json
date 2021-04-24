@@ -167,7 +167,7 @@
     "Get": "獲得する",
     "OneTicket": "チケット価格",
     "Tip2": "全てのチケットはこのIIOの後バーンされます",
-    "ActionTwo": "iTOKENのシェアを得るためにLPTをステーキングする",
+    "ActionTwo": "{token}のシェアを得るためにLPTをステーキングする",
     "Earn": "予想収益",
     "What": "なに？",
     "GetReward": "iTOKENを請求する",

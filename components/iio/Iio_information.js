@@ -1,6 +1,16 @@
 export default {
     chainswap: {
         Token: 'TOKEN',
+        Time1: 'Apr.19th 21:00',
+        Time2: 'Apr.23rd 21:00',
+        Time3: 'Apr.24th 21:00',
+        Time1UTC: '2021/04/19 13:00 UTC',
+        Time2UTC: '2021/04/23 13:00 UTC',
+        Time3UTC: '2021/04/24 13:00 UTC',
+        Collateral: '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x029A09ABE791a3Be60Aa64d569F4C34890f24097',
+        ActivePrice: 0.3,
         ProjcetInformation: {
             ProjectName: 'ChainSwap',
             Distributing: 'Apr. 19th 21:00 SGT',
@@ -22,32 +32,38 @@ export default {
         TokenDistribution: [
             '$TOKEN is the token of the ChainSwap platform. The total amount is 100M, 2% of the total amount is 100% unlock token, and will be distributed to public sale and airdrop. Public sale will be held as IDO on 5 different platforms with a total amount of 1M. Airdrop that is given to users is also 1M.',
         ],
-        Media: [
-            {
+        Media: {
+            Website: {
                 type: 'Website',
                 link: 'https://www.chainswap.com',
                 show: 'www.chainswap.com',
             },
-            {
+            Twitter: {
                 type: 'Twitter',
                 link: 'https://twitter.com/chain_swap',
                 show: 'https://twitter.com/chain_swap',
             },
-            {
+            Telegram: {
                 type: 'Telegram (EN)',
                 link: 'https://t.me/chainswap',
                 show: 'https://t.me/chainswap',
             },
-
-            {
+            Medium: {
                 type: 'Medium',
                 link: 'https://chain-swap.medium.com/',
                 show: 'https://chain-swap.medium.com/',
             },
-        ],
+        },
     },
     blackhole: {
         Token: 'BALCK',
+        Time1: 'Apr.26th 20:00',
+        Time2: 'Apr.28th 20:45',
+        Time3: 'Apr.29th 20:45',
+        Time1UTC: '2021/04/26 12:00 UTC',
+        Time2UTC: '2021/04/28 12:45 UTC',
+        Time3UTC: '2021/04/29 12:45 UTC',
+        ActivePrice: 0.05,
         ProjcetInformation: {
             ProjectName: 'BlackHole Protocol',
             Distributing: 'Apr. 26th 20:00 SGT',

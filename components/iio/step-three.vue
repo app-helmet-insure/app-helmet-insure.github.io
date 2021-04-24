@@ -4,9 +4,9 @@
     <p
       v-html="
         $t('IIO.CanGetReward', {
-          time1: 'Apr.23rd 21:00',
-          time2: 'Apr.24th 21:00',
-          name: 'TOKEN',
+          time1: About.Time2,
+          time2: About.Time3,
+          name: About.Token,
         })
       "
       @click="toHome($event)"
@@ -14,8 +14,8 @@
     <div class="step_action">
       <div class="step_myaccount">
         <p>
-          <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span>
-          <span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
+          <span>{{ $t("IIO.CanSwapToken", { name: "i" + About.Token }) }}</span>
+          <span>{{ fixD(AvailableVolume, 8) }} i{{ About.Token }}</span>
         </p>
         <p>
           <span>{{ $t("IIO.Balance") }}</span>
@@ -25,12 +25,14 @@
       <div class="rewardDetail">
         <div>
           <p>
-            <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span
-            ><span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
+            <span>{{
+              $t("IIO.CanSwapToken", { name: "i" + About.Token })
+            }}</span
+            ><span>{{ fixD(AvailableVolume, 8) }} i{{ About.Token }}</span>
           </p>
           <p>
             <span>{{ $t("IIO.SwapTokened") }}</span
-            ><span>{{ fixD(AvailableVolume, 8) }} TOKEN</span>
+            ><span>{{ fixD(AvailableVolume, 8) }} {{ About.Token }}</span>
           </p>
           <p>
             <span>{{ $t("IIO.Speed") }}</span
@@ -72,6 +74,7 @@ import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
+import Information from "./Iio_information.js";
 import { applied3 } from "~/interface/iio.js";
 
 export default {
@@ -88,9 +91,12 @@ export default {
         minute: "00",
         second: "00",
       },
+      About: [],
     };
   },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     setTimeout(() => {
       this.getBalance();
     }, 1000);
@@ -101,7 +107,24 @@ export default {
       });
     }, 1000);
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     toHome(e) {
       if (e.target.tagName === "I") {
         this.$router.push("/MyPolicy");
@@ -120,8 +143,8 @@ export default {
     },
     getRewardTime() {
       let nowTime = Date.now();
-      let startTime = Date.parse("2021/04/23 13:00 UTC");
-      let endTime = Date.parse("2021/04/24 13:00 UTC");
+      let startTime = Date.parse(this.About.Time2UTC);
+      let endTime = Date.parse(this.About.Time3UTC);
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

@@ -1,7 +1,7 @@
 <template>
   <div class="stepOne" v-if="iioPage === 'iio-id'">
     <div class="step_title">
-      {{ $t("IIO.ActionOne", { name: About.Token, token: "i" + About.Token }) }}
+      {{ $t("IIO.ActionOne", { name: "Token", token: "i" + About.Token }) }}
     </div>
     <div class="step_action">
       <p class="step_buy">
@@ -13,7 +13,7 @@
         >
       </p>
       <div class="input">
-        <h3>{{ PassportPrice }}HELMET</h3>
+        <h3>{{ PassportPrice || 1 }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
       <button
@@ -67,6 +67,8 @@ export default {
     };
   },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     setTimeout(() => {
       this.getPassPortPrice();
     }, 1000);
@@ -85,8 +87,6 @@ export default {
       });
       clearTimeout();
     }, 1000);
-    let name = this.$route.params.id;
-    this.About = Information[name];
   },
   watch: {
     iioType: {
@@ -145,8 +145,8 @@ export default {
     },
     getRewardTime() {
       let nowTime = Date.now();
-      let startTime = Date.parse("2021/04/19 13:00 UTC");
-      let endTime = Date.parse("2021/04/23 13:00 UTC");
+      let startTime = Date.parse(this.About.Time1UTC);
+      let endTime = Date.parse(this.About.Time2UTC);
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

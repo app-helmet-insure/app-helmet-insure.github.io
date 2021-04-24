@@ -167,7 +167,7 @@
     "Get": "Get",
     "OneTicket": "티켓 가격",
     "Tip2": "IIO이후 티켓의 모든 헬멧이 소각됩니다.",
-    "ActionTwo": "LPT를 스테이킹하여 i토큰 지분을 받기",
+    "ActionTwo": "LPT를 스테이킹하여 {token} 토큰 지분을 받기",
     "Earn": "예상 수익",
     "What": "What is",
     "GetReward": "i토큰 청구하기",

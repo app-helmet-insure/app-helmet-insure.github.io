@@ -152,7 +152,7 @@
             <use xlink:href="#icon-close"></use>
           </svg>
           <HelmetBnbPool
-            v-if="activeMining == 'helmet_cake' && showActiveMining"
+            v-if="activeMining == 'helmet_cake_v1' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
           ></HelmetBnbPool>
@@ -341,7 +341,7 @@
           </svg>
         </div>
         <HelmetBnbPool
-          v-if="activeMining == 'helmet_cake'"
+          v-if="activeMining == 'helmet_cake_v1'"
           :activeType="activeType"
           :TradeType="activeType"
         ></HelmetBnbPool>
@@ -555,7 +555,7 @@ export default {
           earnNum: "two",
           earn: "helmet_cake_v2",
           earnImg: true,
-          dueDate: "--",
+          dueDate: "Soon",
           openDate: "Mining",
           combo: true,
           info: true,

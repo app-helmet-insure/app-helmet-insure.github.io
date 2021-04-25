@@ -18,9 +18,9 @@
       <div class="swiper-slide xburger">
         <div></div>
       </div>
-      <div class="swiper-slide chainswap">
+      <!-- <div class="swiper-slide chainswap">
         <div></div>
-      </div>
+      </div> -->
       <div class="swiper-slide iio">
         <div></div>
       </div>

@@ -725,14 +725,14 @@ export default {
       let cakePrice = this.$store.state.CAKE_BUSD;
       let bnbPrice = this.$store.state.BNB_BUSD;
       // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let totalHelmet = await totalSupply("HELMETBNB1_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB1");
+      let helmetReward = await Rewards("HELMETBNB1", "0");
       // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB1_LPT")) * 2;
       // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
+      let cakeValue = await balanceOf("HELMETBNB1_LPT", "CAKEHELMET", true);
+      let miningTime = (await RewardsDuration("HELMETBNB1")) / 86400;
       let dayHelmet = totalHelmet;
       let helmetapy = precision.divide(
         precision.times(
@@ -742,15 +742,13 @@ export default {
         ),
         precision.times(miningTime, bnbValue)
       );
+      console.log(bnbValue);
       let cakeapy = precision.divide(
-        precision.times(cakePrice, 1200000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
+        precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
+        precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
-      let APY = cakeapy * 100;
+      console.log(helmetapy);
+      let APY = (cakeapy + helmetapy) * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[1].yearEarn = fixD(APY, 2);
     },

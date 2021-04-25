@@ -429,6 +429,7 @@ import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -1014,7 +1015,7 @@ export default {
     getMiningTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = Date.parse(dueDate + " UTC +8");
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -1039,7 +1040,7 @@ export default {
     getRemainTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = Date.parse(dueDate + " UTC +8");
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);

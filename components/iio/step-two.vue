@@ -77,6 +77,7 @@ import { getReward3, earned3, applied3 } from "~/interface/iio.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import Information from "./Iio_information.js";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -207,8 +208,8 @@ export default {
       let res = await getReward3(pool_name, reward_name);
     },
     getRewardTime() {
-      let nowTime = Date.now();
-      let getTime = Date.parse(this.About.Time1UTC);
+      let nowTime = new Date();
+      let getTime = new Date(moment(this.About.Time1UTC)) * 1;
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

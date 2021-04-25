@@ -303,6 +303,7 @@ import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
 import HautoPool from "~/components/flashmining/hauto_pool.vue";
 import HmathPool from "~/components/flashmining/hmath_pool.vue";
 import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
+import moment from "moment";
 export default {
   components: {
     Wraper,
@@ -483,7 +484,7 @@ export default {
     getRemainTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = Date.parse(dueDate + " UTC +8");
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -512,7 +513,7 @@ export default {
     getMiningTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = Date.parse(dueDate + " UTC +8");
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);

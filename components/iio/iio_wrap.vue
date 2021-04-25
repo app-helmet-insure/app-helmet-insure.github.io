@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
@@ -91,8 +92,8 @@ export default {
           stakeShare: 0.3,
           showStart: "Apr. 19th 21:00 SGT",
           showEnd: "Apr. 23rd 21:00 SGT",
-          openTimeUTC: "2021/04/19 21:00 UTC +8",
-          closeTimeUTC: "2021/04/24 21:00 UTC +8",
+          openTimeUTC: "2021/04/19 21:00 UTC+8",
+          closeTimeUTC: "2021/04/24 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
           open: true,
           status: false,
@@ -110,8 +111,8 @@ export default {
           stakeShare: 0.05,
           showStart: "Apr. 26th 20:00 SGT",
           showEnd: "Apr.  29th 21:00 SGT",
-          openTimeUTC: "2021/04/24 20:00 UTC +8",
-          closeTimeUTC: "2021/04/30 21:00 UTC +8",
+          openTimeUTC: "2021/04/24 20:00 UTC+8",
+          closeTimeUTC: "2021/04/30 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
           open: true,
           status: false,
@@ -153,11 +154,11 @@ export default {
     },
     getStatus(newValue) {
       let data = newValue || this.iioData;
-      let nowTime = Date.now();
+      let nowTime = moment.now();
       data.forEach((item) => {
         if (item.open) {
-          let startTime = Date.parse(item.openTimeUTC);
-          let endTime = Date.parse(item.closeTimeUTC);
+          let startTime = new Date(moment(item.openTimeUTC)) * 1;
+          let endTime = new Date(moment(item.closeTimeUTC)) * 1;
           if (nowTime > startTime) {
             item.status = true;
           }

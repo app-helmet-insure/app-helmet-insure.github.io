@@ -76,6 +76,7 @@ import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
 import Information from "./Iio_information.js";
 import { applied3 } from "~/interface/iio.js";
+import moment from "moment";
 
 export default {
   data() {
@@ -143,9 +144,9 @@ export default {
       this.swapAssets = AvailableVolume * 0.3;
     },
     getRewardTime() {
-      let nowTime = Date.now();
-      let startTime = Date.parse(this.About.Time2UTC);
-      let endTime = Date.parse(this.About.Time3UTC);
+      let nowTime = new Date();
+      let startTime = new Date(moment(this.About.Time2UTC)) * 1;
+      let endTime = new Date(moment(this.About.Time3UTC)) * 1;
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

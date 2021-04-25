@@ -534,13 +534,14 @@ export default {
           earnNum: "two",
           earn: "helmet_cake_v1",
           earnImg: true,
-          dueDate: "Ongoing",
+          dueDate: this.getRemainTime("2021/04/25 17:00"),
           openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["helmet_cake_v1"] || "--",
+          expired: new Date("2021/04/25 17:00") * 1,
         },
         {
           miningName: "HELMET-BNB LP <i class='v2'></i>",
@@ -749,7 +750,8 @@ export default {
       );
       let APY = (cakeapy + helmetapy) * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
-      this.miningList[1].yearEarn = fixD(APY, 2);
+      this.miningList[1].yearEarn = "Infinity";
+      // this.miningList[1].yearEarn = fixD(APY, 2);
     },
     async HELMET_MDX_LP_APY() {
       let lptBnbValue = await pancakeswap("BHELMET", "HELMET");

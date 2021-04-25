@@ -556,7 +556,7 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "HELMET-BNB LP <i class='v2'></i>",
+          miningName: "HELMET-BNB&nbsp;LP <i class='v2'></i>",
           earnNum: "two",
           earn: "helmet_cake_v2",
           earnImg: true,
@@ -570,7 +570,7 @@ export default {
           yearEarn: apyArray["helmet_cake_v2"] || "--",
         },
         {
-          miningName: "HELMET-BNB MLP",
+          miningName: "HELMET-BNB&nbsp;MLP",
           earnNum: "two",
           earn: "bhelmet_mdx",
           earnImg: true,
@@ -585,7 +585,7 @@ export default {
           started: new Date("2021/04/15 00:00") * 1,
         },
         {
-          miningName: "HELMET POOL",
+          miningName: "HELMET&nbsp;POOL",
           earn: "helmet",
           earnImg: true,
           earnNum: "one",
@@ -600,7 +600,7 @@ export default {
           yearEarn: apyArray["helmet"] || "--",
         },
         {
-          miningName: "FEI(BSC) POOL",
+          miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",
           earnImg: false,
           earnNum: "one",
@@ -615,7 +615,7 @@ export default {
           started: new Date("2021/04/10 00:00") * 1,
         },
         {
-          miningName: "<i>QFEI</i>-QSD DLP",
+          miningName: "<i>QFEI</i>-QSD&nbsp;DLP",
           earn: "kun",
           earnImg: true,
           earnNum: "one",
@@ -630,7 +630,7 @@ export default {
           started: new Date("2021/04/12 00:00") * 1,
         },
         {
-          miningName: "HELMET-KUN DLP",
+          miningName: "HELMET-KUN&nbsp;DLP",
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
@@ -645,7 +645,7 @@ export default {
           yearEarn: apyArray["qhelmet"] || "--",
         },
         {
-          miningName: "HELMET-BNB LP <i class='v1'></i>",
+          miningName: "HELMET-BNB&nbsp;LP <i class='v1'></i>",
           earnNum: "two",
           earn: "helmet_cake_v1",
           earnImg: true,
@@ -659,7 +659,7 @@ export default {
           expired: new Date("2021/04/25 17:00") * 1,
         },
         {
-          miningName: "HELMET-<i>hDODO</i> DLP",
+          miningName: "HELMET-<i>hDODO</i>&nbsp;DLP",
           earn: "helmet_dodo",
           earnImg: true,
           earnNum: "two",
@@ -673,7 +673,7 @@ export default {
         },
 
         {
-          miningName: "HELMET-<i>hFOR</i> LP",
+          miningName: "HELMET-<i>hFOR</i>&nbsp;LP",
           earn: "helmet_for",
           earnImg: true,
           earnNum: "two",
@@ -686,7 +686,7 @@ export default {
           yearEarn: apyArray["helmet_for"] || "--",
         },
         {
-          miningName: "HELMET-<i>hBURGER</i> LP",
+          miningName: "HELMET-<i>hBURGER</i>&nbsp;LP",
           earn: "helmet_burger",
           earnImg: true,
           earnNum: "two",

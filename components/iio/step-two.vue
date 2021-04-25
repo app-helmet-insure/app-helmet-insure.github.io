@@ -18,10 +18,7 @@
           <span> {{ fixD(showMsg.MyPoolShare, 2) }}%</span>
         </p>
       </div>
-      <button
-        @click="toDeposite"
-        style="background: #ccc; pointer-events: none"
-      >
+      <button @click="toDeposite">
         {{ $t("IIO.StepTwoAction") }}
       </button>
     </div>
@@ -207,7 +204,7 @@ export default {
       let Name = this.iioType.toUpperCase();
       let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
-      let res = await getReward3(pool_name,reward_name);
+      let res = await getReward3(pool_name, reward_name);
     },
     getRewardTime() {
       let nowTime = Date.now();
@@ -234,7 +231,7 @@ export default {
     },
     // 抵押
     toDeposite() {
-      this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
+      this.$router.push({ name: "mining", params: { earn: "helmet_cake_v2" } });
     },
   },
 };

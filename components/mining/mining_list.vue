@@ -90,11 +90,11 @@
                 <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                <template v-if="item.dueDate.hour != '00'">
+                <template v-if="item.dueDate.day != '00'">
                   {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="item.dueDate.minute != '00'">
+                <template>
                   {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
@@ -283,11 +283,11 @@
                 <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                <template v-if="item.dueDate.hour != '00'">
+                <template v-if="item.dueDate.day != '00'">
                   {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="item.dueDate.minute != '00'">
+                <template>
                   {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
@@ -847,12 +847,13 @@ export default {
           )
         ) * 100;
       let startedTime = this.miningList[4].started;
+      console.log(APY);
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[4].yearEarn = "Infinity";
       } else {
         this.apyArray.qfei = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async HELMET_KUN_DLP_APY() {
@@ -1061,7 +1062,7 @@ export default {
         template = {
           day: "00",
           hour: "00",
-          MINUTE: "00",
+          minute: "00",
         };
         return "Finished";
       }

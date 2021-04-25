@@ -548,12 +548,13 @@ export default {
           earn: "helmet_cake_v2",
           earnImg: true,
           dueDate: "Ongoing",
-          openDate: "Mining",
+          openDate: this.getMiningTime("2021/04/25 17:00"),
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["helmet_cake_v2"] || "--",
+          started: new Date("2021/04/25 17:00") * 1,
         },
         {
           miningName: "HELMET-BNB MLP",
@@ -742,12 +743,10 @@ export default {
         ),
         precision.times(miningTime, bnbValue)
       );
-      console.log(bnbValue);
       let cakeapy = precision.divide(
         precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
         precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
-      console.log(helmetapy);
       let APY = (cakeapy + helmetapy) * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[1].yearEarn = fixD(APY, 2);

@@ -13,7 +13,7 @@
         >
       </p>
       <div class="input">
-        <h3>{{ PassportPrice }}HELMET</h3>
+        <h3>{{ 1 }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
       <button

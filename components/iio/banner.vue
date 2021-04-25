@@ -102,7 +102,7 @@ export default {
       let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await applied3(pool_name, reward_name);
-      this.ticketFlag = res;
+      // this.ticketFlag = res;
     },
     async getBalance() {
       let Name = this.iioType.toUpperCase();

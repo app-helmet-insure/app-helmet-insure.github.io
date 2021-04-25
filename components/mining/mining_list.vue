@@ -111,11 +111,6 @@
                   ? 'activeButton stakeMining'
                   : 'stakeMining'
               "
-              :style="
-                item.earn == 'helmet_cake_v2'
-                  ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
-                  : ''
-              "
             >
               {{ $t("Table.Stakeing") }}
               <i class="selectDown"></i>
@@ -128,11 +123,6 @@
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
                   : 'claimMining'
-              "
-              :style="
-                item.earn == 'helmet_cake_v2'
-                  ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
-                  : ''
               "
             >
               {{ $t("Table.Claim") }}
@@ -156,6 +146,11 @@
             :activeType="activeType"
             :TradeType="'ALL'"
           ></HelmetBnbPool>
+          <HelmetBnb1Pool
+            v-if="activeMining == 'helmet_cake_v2' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBnb1Pool>
           <HelmetMdxPool
             v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
             :activeType="activeType"
@@ -293,11 +288,6 @@
                 : 'stakeMining'
             "
             style="margin-right: 10px"
-            :style="
-              item.earn == 'helmet_cake_v2'
-                ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
-                : ''
-            "
           >
             {{ $t("Table.Stakeing") }}
           </button>
@@ -315,11 +305,6 @@
                 : 'claimMining'
             "
             style="margin-left: 10px"
-            :style="
-              item.earn == 'helmet_cake_v2'
-                ? 'color: rgba(23, 23, 58, 0.2);pointer-events: none;'
-                : ''
-            "
           >
             {{ $t("Table.Claim") }}
           </button>
@@ -345,6 +330,11 @@
           :activeType="activeType"
           :TradeType="activeType"
         ></HelmetBnbPool>
+        <HelmetBnb1Pool
+          v-if="activeMining == 'helmet_cake_v2'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetBnb1Pool>
         <HelmetMdxPool
           v-if="activeMining == 'bhelmet_mdx'"
           :activeType="activeType"
@@ -404,6 +394,7 @@ import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
@@ -417,6 +408,7 @@ export default {
   components: {
     Wraper,
     HelmetHelmetPool,
+    HelmetBnb1Pool,
     HelmetMdxPool,
     HelmetKunPool,
     FeiFeiPool,
@@ -555,7 +547,7 @@ export default {
           earnNum: "two",
           earn: "helmet_cake_v2",
           earnImg: true,
-          dueDate: "Soon",
+          dueDate: "Ongoing",
           openDate: "Mining",
           combo: true,
           info: true,
@@ -760,8 +752,7 @@ export default {
       );
       let APY = cakeapy * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
-      // this.miningList[1].yearEarn = fixD(APY, 2);
-      this.miningList[1].yearEarn = "--";
+      this.miningList[1].yearEarn = fixD(APY, 2);
     },
     async HELMET_MDX_LP_APY() {
       let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
@@ -784,7 +775,7 @@ export default {
         ) * 100;
       let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
       let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 3467.52;
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 4854.528;
 
       let mdxAPY =
         precision.divide(

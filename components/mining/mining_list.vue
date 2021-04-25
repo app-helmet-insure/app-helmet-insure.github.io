@@ -35,13 +35,15 @@
             src="~/assets/img/mining/serial_web.png"
             alt=""
             v-if="item.serial"
-          /><img
+          />
+          <img
             class="combo_img"
             style="width: 32px; height: 32px; left: 10px"
             src="~/assets/img/mining/serialnext_web.png"
             alt=""
             v-if="item.serialNext"
-          /><img
+          />
+          <img
             class="combo_img"
             style="width: 83px; height: 28px; left: 376px"
             src="~/assets/img/mining/iiostark.png"
@@ -559,13 +561,13 @@ export default {
           earn: "helmet_cake_v2",
           earnImg: true,
           dueDate: "Ongoing",
-          openDate: this.getMiningTime("2021/04/25 17:00"),
+          openDate: "Mining",
           combo: true,
           info: true,
+          iio: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["helmet_cake_v2"] || "--",
-          started: new Date("2021/04/25 17:00") * 1,
         },
         {
           miningName: "HELMET-BNB MLP",

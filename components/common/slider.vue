@@ -83,7 +83,7 @@
         <div class="menu_item">
           <nuxt-link
             to="/mining"
-            :class="routeObj.name.includes('mining') ? 'active' : ''"
+            :class="routeObj.name == 'mining' ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-mining1"></use>
@@ -95,7 +95,7 @@
         <div class="menu_item">
           <nuxt-link
             to="/flashmining"
-            :class="routeObj.name === 'flashmining' ? 'active' : ''"
+            :class="routeObj.name == 'flashmining' ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-flashmining"></use>

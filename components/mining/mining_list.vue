@@ -82,12 +82,24 @@
             <i></i>
             <p>
               <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <template v-if="item.dueDate.hour != '00'">
+                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.minute != '00'">
+                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.day == '00'">
+                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </template>
               </span>
               <span v-else>
                 {{ item.dueDate }}
@@ -263,12 +275,24 @@
             <i></i>
             <p>
               <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <template v-if="item.dueDate.hour != '00'">
+                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.minute != '00'">
+                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.day == '00'">
+                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </template>
               </span>
               <span v-else>
                 {{ item.dueDate }}
@@ -1251,6 +1275,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {
@@ -1527,6 +1554,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {

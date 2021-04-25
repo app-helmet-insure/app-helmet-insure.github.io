@@ -173,6 +173,8 @@ export default {
       }
     },
     async getBalance() {
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
       // 可抵押数量
@@ -182,7 +184,7 @@ export default {
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
       // 可领取
-      let AvailableVolume = await earned3(pool_name);
+      let AvailableVolume = await earned3(pool_name, reward_name);
 
       this.showMsg.DepositeVolume = DepositeVolume;
       this.showMsg.DepositedVolume = DepositedVolume;
@@ -202,8 +204,10 @@ export default {
         return;
       }
       this.claimLoading = true;
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
-      let res = await getReward3(pool_name);
+      let res = await getReward3(pool_name,reward_name);
     },
     getRewardTime() {
       let nowTime = Date.now();

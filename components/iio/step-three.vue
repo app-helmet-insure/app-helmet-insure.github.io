@@ -132,7 +132,8 @@ export default {
     },
     async getBalance() {
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let RewardAddress = "IIO_HELMETBNB_REWARD";
+      let Name = this.iioType.toUpperCase();
+      let RewardAddress = `IIO_HELMETBNB_${Name}`;
       let AvailableVolume = await getBalance(RewardAddress);
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"

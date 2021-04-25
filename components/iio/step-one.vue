@@ -13,8 +13,7 @@
         >
       </p>
       <div class="input">
-        <!-- <h3>{{ PassportPrice  }}HELMET</h3> -->
-        <h3>{{ 1 }}HELMET</h3>
+        <h3>{{ PassportPrice }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
       <button
@@ -71,10 +70,10 @@ export default {
     let name = this.$route.params.id;
     this.About = Information[name];
     setTimeout(() => {
-      // this.getPassPortPrice();
+      this.getPassPortPrice();
     }, 1000);
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
-      // this.getPassPortPrice();
+      this.getPassPortPrice();
       this.$bus.$emit("JUMP_STEP", { step: 2 });
       this.$bus.$emit("GET_FLAG");
     });
@@ -108,9 +107,10 @@ export default {
       this.About = Information[newValue];
     },
     async getPassPortPrice() {
+      let Name = this.iioType.toUpperCase();
+      let RewardAddress = `IIO_HELMETBNB_${Name}`;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let RewardAddress = "IIO_HELMETBNB_REWARD";
       let price = await ticketVol3(ContractAdress, RewardAddress);
       let balance = await getBalance(TicketAddress);
       this.PassportPrice = price;
@@ -118,11 +118,14 @@ export default {
     },
     async BuyPassport() {
       this.buyLoading = true;
+      let Name = this.iioType.toUpperCase();
+      let RewardAdress = `IIO_HELMETBNB_${Name}`;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let data = {
         ContractAdress,
         TicketAddress,
+        RewardAdress,
         PassportPrice: this.PassportPrice,
       };
       let object = {

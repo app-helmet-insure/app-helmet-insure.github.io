@@ -122,7 +122,9 @@
           >
             <svg class="hot" aria-hidden="true">
               <use
-                :href="`#icon-${routeObj.name === 'iio' ? 'hot1' : 'hot'}`"
+                :href="`#icon-${
+                  routeObj.name.includes('iio') ? 'hot1' : 'hot'
+                }`"
               ></use>
             </svg>
             <svg class="icon svg-icon" aria-hidden="true">

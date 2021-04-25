@@ -44,15 +44,18 @@ export const ticketVol3 = async (ContractAdress, TicketAddress) => {
         });
 };
 // 可领取数量
-export const earned3 = async (ContractAdress) => {
+export const earned3 = async (ContractAdress, RewardAdress) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {
         ContractAdress = getContract(ContractAdress, charID);
     }
+    if (RewardAdress.indexOf('0x') === -1) {
+        RewardAdress = getContract(RewardAdress, charID);
+    }
     const IIOContract = await IIO(ContractAdress);
     return IIOContract.methods
-        .earned3(account)
+        .earned3(RewardAdress, account)
         .call()
         .then((res) => {
             let unit = ContractAdress;
@@ -60,17 +63,19 @@ export const earned3 = async (ContractAdress) => {
         });
 };
 // 领取奖励
-export const getReward3 = async (type) => {
+export const getReward3 = async (ContractAdress, RewardAdress) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
-    let ContractAdress;
-    if (type.indexOf('0x') === -1) {
-        ContractAdress = getContract(type, charID);
+    if (ContractAdress.indexOf('0x') === -1) {
+        ContractAdress = getContract(ContractAdress, charID);
+    }
+    if (RewardAdress.indexOf('0x') === -1) {
+        RewardAdress = getContract(RewardAdress, charID);
     }
     const IIOContract = await IIO(ContractAdress);
     try {
         IIOContract.methods
-            .getReward3()
+            .getReward3(RewardAdress)
             .send({ from: account })
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -123,8 +128,8 @@ export const getReward3 = async (type) => {
     }
 };
 export const applyReward3 = async (data, callBack) => {
-    console.log(data);
     let ContractAdress = data.ContractAdress;
+    let RewardAdress = data.RewardAdress;
     let TicketAddress = data.TicketAddress;
     let TicketPrice = data.PassportPrice;
     if (!ContractAdress || !TicketAddress || !TicketPrice) {
@@ -135,10 +140,12 @@ export const applyReward3 = async (data, callBack) => {
     if (ContractAdress.indexOf('0x') === -1) {
         ContractAdress = getContract(ContractAdress, charID);
     }
+    if (RewardAdress.indexOf('0x') === -1) {
+        RewardAdress = getContract(RewardAdress, charID);
+    }
     if (TicketAddress.indexOf('0x') === -1) {
         TicketAddress = getContract(TicketAddress, charID);
     }
-
     try {
         const Contract = await expERC20(TicketAddress);
         await oneKeyArrpove(Contract, ContractAdress, 1000000, (res) => {
@@ -148,7 +155,7 @@ export const applyReward3 = async (data, callBack) => {
         });
         const IIOContract = await IIO(ContractAdress);
         IIOContract.methods
-            .applyReward3()
+            .applyReward3(RewardAdress)
             .send({ from: account })
             .on('transactionHash', function(hash) {
                 bus.$emit('CLOSE_STATUS_DIALOG');

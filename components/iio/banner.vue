@@ -98,13 +98,15 @@ export default {
       this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
     },
     async buyAppliedFlag() {
-      let reward_name = "IIO_HELMETBNB_REWARD";
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await applied3(pool_name, reward_name);
-      // this.ticketFlag = res;
+      this.ticketFlag = res;
     },
     async getBalance() {
-      let lpt_name = "IIO_HELMETBNB_POOL_LPT";
+      let Name = this.iioType.toUpperCase();
+      let lpt_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       // 已抵押数量
       let DepositedVolume = await getLPTOKEN(pool_name);

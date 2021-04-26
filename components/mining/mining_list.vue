@@ -735,13 +735,6 @@ export default {
         ),
         precision.times(miningTime, bnbValue)
       );
-      console.log(
-        this.helmetPrice,
-        HelmetAllowance,
-        helmetReward,
-        miningTime,
-        bnbValue
-      );
       let cakeapy = precision.divide(
         precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
         precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)

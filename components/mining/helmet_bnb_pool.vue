@@ -32,7 +32,7 @@
         <button
           @click="toDeposite"
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="'background: #ccc !important; pointer-events:none'"
+          style="background: #ccc !important; pointer-events: none"
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmDeposit") }}
@@ -150,7 +150,7 @@
         <button
           @click="toClaim"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="'background: #ccc !important; pointer-events:none'"
+          style="background: #ccc !important; pointer-events: none"
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}

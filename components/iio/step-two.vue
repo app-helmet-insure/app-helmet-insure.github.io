@@ -165,7 +165,6 @@ export default {
           title: `What is $${onePager}?`,
           text: onePager,
         });
-        x`x`;
       } else {
         return;
       }

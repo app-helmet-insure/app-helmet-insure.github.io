@@ -134,7 +134,7 @@ export default {
       if (res) {
         this.active_step = 2;
       }
-      // this.ticketFlag = res;
+      this.ticketFlag = res;
     },
   },
 };

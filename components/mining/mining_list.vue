@@ -848,7 +848,6 @@ export default {
           )
         ) * 100;
       let startedTime = this.miningList[4].started;
-      console.log(APY);
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.miningList[4].yearEarn = "Infinity";
@@ -863,6 +862,7 @@ export default {
       let WBNBUSDValue = await pancakeswap("WBNB", "USDT");
       let HelmetUsdtValue = HelmetWBNBValue * WBNBUSDValue;
       let allVolume = lptBnbValue * 60000;
+      console.log(lptBnbValue);
       //总抵押
       let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
       // 总发行

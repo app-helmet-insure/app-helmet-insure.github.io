@@ -5,8 +5,18 @@
         v-for="(item, index) in iioData"
         :key="item.iio_name"
         class="iio_item"
-        :style="`background:${item.background}`"
+        :style="`--background:${item.background}; --animation_bg:${
+          item.status != 'finished' && item.open
+            ? 'linear-gradient(45deg,red,#ffaa2b 10%,#f3ff45 20%,#84ff7f 30%,#7bfdfb 40%,#5ee7fc 50%,#7fbbff 60%,#af88ff 70%,#d973fd 80%,#ff6fec 90%,red);'
+            : ''
+        }`"
       >
+        <img
+          v-if="item.open"
+          :src="require(`~/assets/img/iio/${item.status || 'finished'}.png`)"
+          alt=""
+          class="status"
+        />
         <template v-if="item.coming">
           <img
             class="coming_img"
@@ -48,7 +58,9 @@
           <button
             @click="toDetails(index)"
             :style="
-              !item.status ? 'background: #D5D5DB;pointer-events: none' : ''
+              item.status == 'finished'
+                ? 'background: #D5D5DB;pointer-events: none'
+                : ''
             "
           >
             {{ !item.status ? "Finished" : "Enter Pool" }}
@@ -92,11 +104,12 @@ export default {
           stakeShare: 0.3,
           showStart: "Apr. 19th 21:00 SGT",
           showEnd: "Apr. 23rd 21:00 SGT",
-          openTimeUTC: "2021/04/19 21:00 UTC+8",
-          closeTimeUTC: "2021/04/24 21:00 UTC+8",
+          warnupTimeUTC: "2021/04/16 21:00 UTC+8",
+          distributingTimeUTC: "2021/04/19 21:00 UTC+8",
+          activatingTimeUTC: "2021/04/23 20:00 UTC+8",
+          finishedTimeUTC: "2021/04/24 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
           open: true,
-          status: false,
           sort: 0,
         },
         {
@@ -111,11 +124,12 @@ export default {
           stakeShare: 0.05,
           showStart: "Apr. 26th 20:00 SGT",
           showEnd: "Apr.  29th 21:00 SGT",
-          openTimeUTC: "2021/04/24 20:00 UTC+8",
-          closeTimeUTC: "2021/04/30 21:00 UTC+8",
+          warnupTimeUTC: "2021/04/24 20:00 UTC+8",
+          distributingTimeUTC: "2021/04/26 20:00 UTC+8",
+          activatingTimeUTC: "2021/04/29 21:00 UTC+8",
+          finishedTimeUTC: "2021/04/30 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
           open: true,
-          status: false,
           sort: 0,
         },
         {
@@ -157,13 +171,21 @@ export default {
       let nowTime = moment.now();
       data.forEach((item) => {
         if (item.open) {
-          let startTime = new Date(moment(item.openTimeUTC)) * 1;
-          let endTime = new Date(moment(item.closeTimeUTC)) * 1;
-          if (nowTime > startTime) {
-            item.status = true;
+          let warnup = new Date(moment(item.warnupTimeUTC)) * 1;
+          let distributing = new Date(moment(item.distributingTimeUTC)) * 1;
+          let activating = new Date(moment(item.activatingTimeUTC)) * 1;
+          let finished = new Date(moment(item.finishedTimeUTC)) * 1;
+          if (nowTime > warnup && nowTime < distributing) {
+            item.status = "warmup";
           }
-          if (nowTime > endTime) {
-            item.status = false;
+          if (nowTime > distributing && nowTime < activating) {
+            item.status = "distributing";
+          }
+          if (nowTime > activating && nowTime < finished) {
+            item.status = "activating";
+          }
+          if (nowTime > finished) {
+            item.status = "finished";
             item.sort = 1;
           }
         }
@@ -171,6 +193,7 @@ export default {
       data = data.sort(function (a, b) {
         return a.sort - b.sort;
       });
+      console.log(this.iioData);
       this.iioData = data;
     },
   },
@@ -192,6 +215,61 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
+      .status {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 68px;
+        height: 68px;
+      }
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        content: "";
+        border-radius: 10px;
+        background: var(--background);
+      }
+      &::after {
+        filter: blur(8px);
+        position: absolute;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        content: "";
+        top: -5px;
+        right: -5px;
+        bottom: -5px;
+        left: -5px;
+        z-index: -2;
+        background: var(--animation_bg);
+        background-position-x: left;
+        background-position-y: top;
+        background-size: 300% 300%;
+        background-attachment: scroll;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: initial;
+        animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
+          running;
+        border-radius: 10px;
+        animation: animation_bg 2s linear 0s infinite normal none running;
+      }
+      @keyframes animation_bg {
+        0% {
+          background-position: 0 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        to {
+          background-position: 0 50%;
+        }
+      }
       .coming_img {
         width: 100px;
         height: 100px;

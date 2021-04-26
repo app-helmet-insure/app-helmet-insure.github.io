@@ -190,7 +190,6 @@ export default {
         unit: "",
         showVolume: this.AvailableVolume,
       };
-      console.log(data);
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",

@@ -71,7 +71,7 @@ export default {
         ActivePrice: 0.05,
         ProjcetInformation: {
             ProjectName: 'BlackHole Protocol',
-            Distributing: 'Apr. 26th 20:00 SGT',
+            Distributing: 'Apr. 26th 20:00 SGT - Apr. 28th 20:00 SGT',
             Activating: 'Apr.  29th 21:00 SGT',
             ActivatePeriod: '24hours',
             ActivatingxPrice: '1BLACK=0.05BUSD',

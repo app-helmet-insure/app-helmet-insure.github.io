@@ -117,7 +117,7 @@ export default {
         'Helmet team took 20,000 Helmet as premium for supporting $hxBurger policy creating.',
         'Do not trade heavily on $hxBurger, since if xBurger fail to hit 0.1BNB, $hxBurger would just be a souvenir token.',
     ],
-    iBALCK: [
+    iBLACK: [
         'iBLACK is the certificate to swap/activate for BLACK. ',
         'Only users who hold iBLACK could get BLACK during April 29th 21:00 SGT — April 30th 21:00 SGT(️iBLACK cannot be activated before/after that time period))',
         'iBLACK activate/swap formula: 1iBLACK+0.05BUSD = 1BLACK',

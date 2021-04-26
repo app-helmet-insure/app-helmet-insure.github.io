@@ -170,7 +170,7 @@
     "ActionTwo": "Stakea LPT para obtener {token}",
     "Earn": "Ganancias Esperadas",
     "What": "Qué es",
-    "GetReward": "Reclamar iTOKEN",
+    "GetReward": "Reclamar {token}",
     "ActionThree": "Intercambiar IIO TOKEN",
     "CanGetReward": "Puedes cambiar {name} antes <span>{time}</span>, o activar tus itoken en <i>The policy you hold</i>",
     "CanSwap": "Mi Parrticipación",

@@ -170,7 +170,7 @@
     "ActionTwo": "Stake LPT to get {token} share",
     "Earn": "Earned",
     "What": "What is",
-    "GetReward": "Claim iTOKEN",
+    "GetReward": "Claim {token}",
     "ActionThree": "Swap IIO TOKEN",
     "CanGetReward": "You could swap {name} during <span>{time1}</span>-<span>{time2}</span>",
     "CanSwap": "My share",

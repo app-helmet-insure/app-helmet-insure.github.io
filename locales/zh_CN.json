@@ -170,7 +170,7 @@
     "ActionTwo": "抵押 LPT 领取 {token} 奖励",
     "Earn": "获得",
     "What": "什么是",
-    "GetReward": "领取奖励",
+    "GetReward": "领取{token}奖励",
     "ActionThree": "兑换TOKEN",
     "CanGetReward": "你可在{time1}-{time2}期间在此兑换 {name}",
     "Speed": "需要支付",

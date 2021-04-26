@@ -259,17 +259,7 @@ export default {
         border-radius: 10px;
         animation: animation_bg 2s linear 0s infinite normal none running;
       }
-      @keyframes animation_bg {
-        0% {
-          background-position: 0 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        to {
-          background-position: 0 50%;
-        }
-      }
+
       .coming_img {
         width: 100px;
         height: 100px;
@@ -424,6 +414,50 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
+      .status {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 68px;
+        height: 68px;
+      }
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        content: "";
+        border-radius: 10px;
+        background: var(--background);
+      }
+      &::after {
+        filter: blur(8px);
+        position: absolute;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        content: "";
+        top: -5px;
+        right: -5px;
+        bottom: -5px;
+        left: -5px;
+        z-index: -2;
+        background: var(--animation_bg);
+        background-position-x: left;
+        background-position-y: top;
+        background-size: 300% 300%;
+        background-attachment: scroll;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: initial;
+        animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
+          running;
+        border-radius: 10px;
+        animation: animation_bg 2s linear 0s infinite normal none running;
+      }
       .coming_img {
         width: 100px;
         height: 100px;
@@ -563,6 +597,17 @@ export default {
         }
       }
     }
+  }
+}
+@keyframes animation_bg {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0 50%;
   }
 }
 </style>

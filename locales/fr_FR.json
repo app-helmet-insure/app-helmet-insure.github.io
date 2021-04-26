@@ -170,7 +170,7 @@
         "ActionTwo": "Miser LPT pour obtenir {token} share",
         "Earn": "Revenu attendu",
         "What": "Qu'est-ce que",
-        "GetReward": "Réclamer iTOKEN",
+        "GetReward": "Réclamer {token}",
         "ActionThree": "échanger IIO TOKEN",
         "CanGetReward": "Vous pourriez échanger {name} avant que <span>{time}</span>, ou activez votre itoken on <i>La police d'assurance que vous détenez</i> tab",
         "CanSwap": "Mon partage",

@@ -170,7 +170,7 @@
     "ActionTwo": "{token}のシェアを得るためにLPTをステーキングする",
     "Earn": "予想収益",
     "What": "なに？",
-    "GetReward": "iTOKENを請求する",
+    "GetReward": "{token}を請求する",
     "ActionThree": "IIOトークンをスワップする",
     "CanGetReward": "あなたは<span>{time}</span>の前にスワップすることができ",
     "CanSwap": "マイシェア",

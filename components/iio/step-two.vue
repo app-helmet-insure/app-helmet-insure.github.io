@@ -38,7 +38,7 @@
       </p>
       <button v-if="getRewardFlag" class="getReward" @click="getReward">
         <i :class="claimLoading ? 'loading_pic' : ''"></i
-        >{{ $t("IIO.GetReward") }}
+        >{{ $t("IIO.GetReward", { token: "i" + About.Token }) }}
       </button>
       <button
         v-else

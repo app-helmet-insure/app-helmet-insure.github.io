@@ -170,7 +170,7 @@
     "ActionTwo": "Stake LPT untuk mendapatkan {token}",
     "Earn": "Penghasilan yang diharapkan",
     "What": "Apa Ini",
-    "GetReward": "Klaim iTOKEN",
+    "GetReward": "Klaim {token}",
     "ActionThree": "Tukar IIO TOKEN",
     "CanGetReward": "Anda bisa bertukar {name} sebelum <span>{time}</span>, atau aktifkan itoken Anda <i>Polis yang Anda pegang</i> tab",
     "CanSwap": "Bagian saya",

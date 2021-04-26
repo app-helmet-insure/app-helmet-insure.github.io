@@ -58,12 +58,12 @@
           <button
             @click="toDetails(index)"
             :style="
-              item.status == 'finished'
+              item.status == 'finished' || !item.enterbutton
                 ? 'background: #D5D5DB;pointer-events: none'
                 : ''
             "
           >
-            {{ !item.status ? "Finished" : "Enter Pool" }}
+            {{ item.status == "finished" ? "Finished" : "Enter Pool" }}
           </button>
         </template>
         <img
@@ -109,6 +109,7 @@ export default {
           activatingTimeUTC: "2021/04/23 20:00 UTC+8",
           finishedTimeUTC: "2021/04/24 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
+          enterbutton: true,
           open: true,
           sort: 0,
         },
@@ -129,19 +130,34 @@ export default {
           activatingTimeUTC: "2021/04/29 21:00 UTC+8",
           finishedTimeUTC: "2021/04/30 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
+          enterbutton: true,
+          open: true,
+          sort: 0,
+        },
+        {
+          iio_name: "WeStarter",
+          iio_img: "iio_westarter",
+          iio_webSite: "www.westarter.org",
+          coming: true,
+          background: "#269E38",
+          swapVolume: "120,000",
+          swapUtil: "WAR",
+          stakeUtil: "BUSD",
+          stakeShare: 0.25,
+          showStart: "Apr. 27th 21:00 SGT",
+          showEnd: "Apr.  29th 21:00 SGT",
+          warnupTimeUTC: "2021/04/27 21:00 UTC+8",
+          distributingTimeUTC: "2021/04/29 21:00 UTC+8",
+          activatingTimeUTC: "2021/04/30 21:00 UTC+8",
+          finishedTimeUTC: "2021/05/01 21:00 UTC+8",
+          link: "https://www.chainswap.exchange/",
+          enterbutton: true,
           open: true,
           sort: 0,
         },
         {
           iio_name: "2",
           iio_img: "iio2",
-          coming: false,
-          open: false,
-          sort: 0,
-        },
-        {
-          iio_name: "4",
-          iio_img: "iio4",
           coming: false,
           open: false,
           sort: 0,
@@ -175,7 +191,11 @@ export default {
           let distributing = new Date(moment(item.distributingTimeUTC)) * 1;
           let activating = new Date(moment(item.activatingTimeUTC)) * 1;
           let finished = new Date(moment(item.finishedTimeUTC)) * 1;
-          if (nowTime > warnup && nowTime < distributing) {
+          if (nowTime < warnup) {
+            item.status = "warmup";
+            item.enterbutton = false;
+          }
+          if (nowTime < warnup && nowTime < distributing) {
             item.status = "warmup";
           }
           if (nowTime > distributing && nowTime < activating) {
@@ -189,6 +209,12 @@ export default {
             item.sort = 1;
           }
         }
+      });
+      data = data.sort(function (a, b) {
+        return (
+          new Date(moment(b.finishedTimeUTC)) * 1 -
+          new Date(moment(a.finishedTimeUTC)) * 1
+        );
       });
       data = data.sort(function (a, b) {
         return a.sort - b.sort;

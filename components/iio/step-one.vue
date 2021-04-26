@@ -13,7 +13,7 @@
         >
       </p>
       <div class="input">
-        <h3>{{ 1 }}HELMET</h3>
+        <h3>{{ PassportPrice }}HELMET</h3>
         <span>{{ $t("IIO.OneTicket") }}</span>
       </div>
       <button
@@ -51,7 +51,7 @@ import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import Information from "./Iio_information.js";
 import moment from "moment";
-export default {  
+export default {
   data() {
     return {
       PassportPrice: 0,

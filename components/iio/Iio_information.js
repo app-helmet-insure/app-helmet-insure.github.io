@@ -67,7 +67,7 @@ export default {
         Time3UTC: '2021/04/30 21:00 UTC+8',
         Collateral: '0xd714d91A169127e11D8FAb3665d72E8b7ef9Dbe2',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        LongAdress: '--',
+        LongAdress: '0x04adbe36c4d39e6ec799f69906a48d83f88dc268',
         ActivePrice: 0.05,
         ProjcetInformation: {
             ProjectName: 'BlackHole Protocol',

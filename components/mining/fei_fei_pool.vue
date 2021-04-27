@@ -197,7 +197,7 @@ import countTo from "vue-count-to";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import { getAddress } from "~/assets/utils/address-pool.js";
-import addToken from "~/assets/utils/addToken.js";
+import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {

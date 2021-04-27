@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide balckhole">
+        <div></div>
+      </div>
       <div class="swiper-slide langauage">
         <div></div>
       </div>
@@ -15,9 +18,9 @@
       <div class="swiper-slide xburger">
         <div></div>
       </div>
-      <div class="swiper-slide chainswap">
+      <!-- <div class="swiper-slide chainswap">
         <div></div>
-      </div>
+      </div> -->
       <div class="swiper-slide iio">
         <div></div>
       </div>
@@ -139,6 +142,12 @@ export default {
         background-position: center;
       }
     }
+    .balckhole {
+      background: #091521;
+      > div {
+        background-image: url("../../assets/img/banner/blackHole.png");
+      }
+    }
     .langauage {
       background: #ffa729;
       > div {
@@ -201,6 +210,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .balckhole {
+      background: #091521;
+      > div {
+        background-image: url("../../assets/img/banner/blackhole_h5H5.png");
       }
     }
     .langauage {

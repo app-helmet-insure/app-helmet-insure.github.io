@@ -1,5 +1,5 @@
 <template>
-  <div class="iio_about">
+  <div class="iio_about" v-if="iioPage === 'iio-id'">
     <div class="iio_about_table">
       <table>
         <thead>
@@ -9,56 +9,68 @@
         </thead>
         <tbody>
           <tr>
-            <td><span>Project Name</span><span>ChainSwap</span></td>
-          </tr>
-          <tr>
             <td>
-              <span>iTOKEN Distributing</span><span>Apr. 19th 21:00 SGT</span>
+              <span>Project Name</span>
+              <span>{{ About.ProjcetInformation.ProjectName }}</span>
             </td>
           </tr>
           <tr>
             <td>
-              <span>iTOKEN Activating</span><span>Apr. 23rd 21:00 SGT</span>
+              <span>i{{ About.Token }} Distributing</span>
+              <span>{{ About.ProjcetInformation.Distributing }}</span>
             </td>
           </tr>
           <tr>
             <td>
-              <span>iTOKEN Activate Period</span
-              ><span><i class="warn"></i> 24hours</span>
+              <span>i{{ About.Token }} Activating</span>
+              <span>{{ About.ProjcetInformation.Activating }}</span>
             </td>
           </tr>
           <tr>
-            <td><span>Activating Price</span><span>1TOKEN=0.3BUSD</span></td>
+            <td>
+              <span>i{{ About.Token }} Activate Period</span>
+              <span>
+                <i class="warn"></i>
+                {{ About.ProjcetInformation.ActivatePeriod }}
+              </span>
+            </td>
           </tr>
           <tr>
-            <td><span>Ticket Price</span><span>1 Helmet</span></td>
+            <td>
+              <span>Activating Price</span>
+              <span>{{ About.ProjcetInformation.ActivatingxPrice }}</span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span>Ticket Price</span>
+              <span>{{ About.ProjcetInformation.TicketPrice }}</span>
+            </td>
           </tr>
         </tbody>
       </table>
       <table>
         <thead>
           <tr>
-            <th>ChainSwap Token Information</th>
+            <th>{{ About.Token }} Token Information</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><span>Token Name</span><span>TOKEN</span></td>
+            <td>
+              <span>Token Name</span>
+              <span>{{ About.TokenInformation.TokenName }}</span>
+            </td>
           </tr>
           <tr>
             <td>
               <span>Address</span
               ><span>
-                <section>0x3b73c1b2ea59835cbfcadade5462b6ab630d9890</section>
+                <section>{{ About.TokenInformation.Address }}</section>
                 <i
                   class="copy"
                   id="copy_default"
-                  @click="
-                    copyAdress(
-                      $event,
-                      '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890'
-                    )
-                  "
+                  @click="copyAdress($event, About.TokenInformation.Address)"
                 ></i>
               </span>
             </td>
@@ -66,11 +78,14 @@
           <tr>
             <td>
               <span>Initial Circulating Supply (Day of sale)</span
-              ><span>100,000</span>
+              ><span>{{ About.TokenInformation.Supply }}</span>
             </td>
           </tr>
           <tr>
-            <td><span>Total Supply</span><span>100,000,000</span></td>
+            <td>
+              <span>Total Supply</span
+              ><span>{{ About.TokenInformation.TotalSupply }}</span>
+            </td>
           </tr>
           <tr class="none">
             <td><span></span><span></span></td>
@@ -84,27 +99,28 @@
 
     <div class="iio_about_dsc">
       <h3>About</h3>
-      <p>
-        ChainSwap is a cross-chain asset bridge & application hub for smart
-        chains. ChainSwap allows projects to seamlessly bridge between ETH, BSC
-        and HECO. In the future ChainSwap will be integrating chains and provide
-        full cross-chain solutions between BTC, DOT, SOL and more.
+      <p v-for="(item, index) in About.About" :key="index + 'About'">
+        {{ item }}
       </p>
-      <p>
-        ChainSwap has closed a $3M strategic funding round with participation
-        from Alameda Research, OK Block Dream Fund (OKEx), NGC Ventures, Spark
-        Digital Capital, Metaconstant Ventures, CMS Holdings, Rarestone Captial,
-        Monday Capital, Continue Capital, SRC Capital, DAO Ventures, Mask
-        network, Particle and Power Law Capital.
+      <h3>Token Distribution</h3>
+      <p
+        v-for="(item, index) in About.TokenDistribution"
+        :key="index + 'TokenDistribution'"
+      >
+        {{ item }}
       </p>
-      <h3>Token distribution:</h3>
-      <p>
-        TOKEN is the token of the ChainSwap platform. The total amount is 100M,
-        2% of the total amount is 100% unlock token, and will be distributed to
-        public sale and airdrop. Public sale will be held as IDO on 5 different
-        platforms with a total amount of 1M. Airdrop that is given to users is
-        also 1M.
-      </p>
+      <img
+        class="pc_about"
+        v-if="About.TokenDistribution_img"
+        :src="require(`~/assets/img/iio/${About.TokenDistribution_img}_pc.png`)"
+        alt=""
+      />
+      <img
+        class="h5_about"
+        v-if="About.TokenDistribution_img"
+        :src="require(`~/assets/img/iio/${About.TokenDistribution_img}_h5.png`)"
+        alt=""
+      />
     </div>
     <div class="iio_about_media">
       <p>
@@ -117,9 +133,9 @@
           ></path>
         </svg>
         <span>Website: </span>
-        <a href="https://www.chainswap.com" target="_blank"
-          >www.chainswap.com</a
-        >
+        <a :href="About.Media.Website.link" target="_blank">{{
+          About.Media.Website.show
+        }}</a>
       </p>
       <p>
         <svg width="24px" height="24px">
@@ -131,9 +147,9 @@
           ></path>
         </svg>
         <span>Twitter: </span>
-        <a href="https://twitter.com/chain_swap" target="_blank"
-          >https://twitter.com/chain_swap</a
-        >
+        <a :href="About.Media.Twitter.link" target="_blank">{{
+          About.Media.Twitter.show
+        }}</a>
       </p>
       <p>
         <svg width="24px" height="24px">
@@ -145,9 +161,9 @@
           ></path>
         </svg>
         <span>Telegram (EN): </span>
-        <a href="https://t.me/chainswap" target="_blank"
-          >https://t.me/chainswap</a
-        >
+        <a :href="About.Media.Telegram.link" target="_blank">{{
+          About.Media.Telegram.show
+        }}</a>
       </p>
       <p>
         <svg width="24px" height="24px">
@@ -159,9 +175,9 @@
           ></path>
         </svg>
         <span>Medium: </span>
-        <a href="https://chain-swap.medium.com/" target="_blank"
-          >https://chain-swap.medium.com/</a
-        >
+        <a :href="About.Media.Medium.link" target="_blank">{{
+          About.Media.Medium.show
+        }}</a>
       </p>
     </div>
   </div>
@@ -170,8 +186,36 @@
 <script>
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import Information from "./Iio_information.js";
 export default {
+  data() {
+    return {
+      About: [],
+    };
+  },
+  mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -195,6 +239,9 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
+  .h5_about {
+    display: none;
+  }
   .iio_about {
     width: 1200px;
     margin: 0 auto 40px;
@@ -284,6 +331,9 @@ export default {
         line-height: 22px;
         margin-top: 15px;
       }
+      img {
+        width: 100%;
+      }
     }
     &_media {
       width: 946px;
@@ -319,6 +369,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .pc_about {
+    display: none;
+  }
   .iio_about {
     width: 100%;
     background: #fff;
@@ -423,6 +476,9 @@ export default {
         color: #17173a;
         line-height: 22px;
         margin-top: 15px;
+      }
+      img {
+        width: 100%;
       }
     }
     &_media {

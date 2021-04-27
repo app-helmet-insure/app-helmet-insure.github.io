@@ -32,6 +32,7 @@
         <button
           @click="toDeposite"
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
+          style="background: #ccc !important; pointer-events: none"
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmDeposit") }}
@@ -72,7 +73,7 @@
           <a
             href="https://v1exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
             target="_blank"
-            >From <i class="pancake"></i>Get HELMET-BNB LPT</a
+            >From <i class="pancake"></i>Get HELMET-BNB LPT(V1 Old)</a
           >
         </section>
       </div>
@@ -149,6 +150,7 @@
         <button
           @click="toClaim"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
+          style="background: #ccc !important; pointer-events: none"
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
@@ -251,9 +253,6 @@ export default {
     },
   },
   methods: {
-    toIIO() {
-      this.$router.push("/iiO");
-    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

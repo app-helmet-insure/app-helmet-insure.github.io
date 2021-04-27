@@ -12,7 +12,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          DLP
+          LPT
         </p>
       </div>
       <div class="content">
@@ -32,9 +32,6 @@
         <button
           @click="toDeposite"
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events:none' : ''
-          "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmDeposit") }}
@@ -50,7 +47,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;DLP</span
+            &nbsp;LPT</span
           >
         </p>
         <p>
@@ -64,40 +61,23 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;DLP</span
+            &nbsp;LPT</span
           >
         </p>
-
         <section>
           <p>
             <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
           <a
-            href="https://app.dodoex.io/liquidity?poolAddress=0x7f6ea24c10e32c8a5fd1c9b2c1239340671460cc"
+            href="https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
             target="_blank"
-            >From <i class="dodo"></i>Get HELMET-hDODO DLP</a
+            >From <i class="pancake"></i>Get HELMET-BNB LPT(V2)</a
           >
         </section>
       </div>
-      <div class="ContractAddress">
-        <span>hDODO {{ $t("Table.ContractAddress") }}</span>
-        <p>
-          0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3')
-            "
-          ></i>
-        </p>
-      </div>
-      <div class="addToken">
-        <p @click="addTokenFn('HDODO', 'hDODO')">Add hDODO to MetaMask</p>
-        <i></i>
-      </div>
     </div>
+    <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -110,7 +90,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          DLP
+          LPT
         </p>
       </div>
       <div class="content">
@@ -137,7 +117,7 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>DODO {{ $t("Table.HELMETRewards") }}：</span>
+          <span>CAKE {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <span>
               <countTo
@@ -148,7 +128,7 @@
                 :decimals="8"
               />
               <span v-else>--</span>
-              DODO</span
+              CAKE</span
             >
           </span>
         </p>
@@ -169,9 +149,6 @@
         <button
           @click="toClaim"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
-          "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
@@ -184,6 +161,7 @@
 <script>
 import {
   totalSupply,
+  balanceOf,
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
@@ -191,13 +169,13 @@ import {
   exitStake,
   getBalance,
   toDeposite,
+  getAllHelmet,
+  Rewards,
+  RewardsDuration,
 } from "~/interface/deposite";
-import { fixD } from "~/assets/js/util.js";
-import Message from "~/components/common/Message";
-import ClipboardJS from "clipboard";
+import precision from "~/assets/js/precision.js";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
-import { getAddress, getContract } from "~/assets/utils/address-pool.js";
-import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -206,27 +184,19 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-hDODO DLP",
-        dueDate: "2021/04/10 00:00",
-        DownTime: {
-          day: "00",
-          hour: "00",
-          minute: "00",
-          second: "00",
-        },
+        name: "HELMET-BNB LP",
       },
       textList: [
         {
-          text: this.$t("Table.RewardsDistribution") + `（weekly）`,
+          text: this.$t("Table.RewardsDistribution") + "（weekly）",
           num: 0,
-          color: "#00B900",
-          unit: "",
-          num1: 0,
+          color: "#28a745",
+          unit: "（weekly）",
         },
         {
           text: this.$t("Table.PoolAPR"),
           num: 0,
-          color: "#00B900",
+          color: "#28a745",
           unit: "",
         },
       ],
@@ -244,30 +214,23 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      MingTime: "",
+      helmetapy: 0,
+      cakeapy: 0,
       isLogin: false,
-      expired: false,
     };
   },
   mounted() {
-    setInterval(() => {
-      setTimeout(() => {
-        this.getMiningTime();
-        this.getDownTime();
-      });
-      clearTimeout();
-    }, 1000);
-    this.$bus.$on("DEPOSITE_LOADING_DODOHELMET", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HELMETBNB1", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_DODOHELMET", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HELMETBNB1", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_DODOHELMET", (data) => {
+    this.$bus.$on("EXIT_LOADING_HELMETBNB1", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_DODOHELMET", () => {
+    this.$bus.$on("RELOAD_DATA_HELMETBNB1", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -292,108 +255,14 @@ export default {
     },
   },
   methods: {
-    async addTokenFn(token, tokenName, unit) {
-      let tokenAddress = getAddress(token);
-      let tokenAddress1 = getContract(token);
-      let data = {
-        tokenAddress: tokenAddress || tokenAddress1,
-        tokenSymbol: tokenName || token,
-        tokenDecimals: unit || 18,
-        tokenImage: "",
-      };
-      await addToken(data);
-    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $hDODO?",
-        text: [
-          "hDODO is the call option of DODO.",
-          "Total Supply: 75,000 (22,000 for vDODO holders, 40,000 for FLASH Mining, 10,000 for Burning BOX) Reasonable strike price: 1 DODO= 10 HELMET",
-          "Expire date: Apr. 14th 24:00 SGT",
-          "Example: If you get 1 hDODO, you could swap 10 HELMET to 1 DODO by click the 'activate' button on TradingView Tab. To be specific, if DODO hit $21 and HELMET hit $2, you could get $1 profit by this 'Activate' behavior.",
-          "If hDODO get expired, it could be souvenir token",
-          "Please do not trade heavily on hDODO.",
-        ],
-      });
-    },
-    getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.dueDate;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
-
-      if (dueDate > now) {
-        template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
-      } else {
-        template = {
-          day: "00",
-          hour: "00",
-        };
-        this.expired = true;
-      }
-      this.list.DownTime = template;
-    },
-    getMiningTime() {
-      let now = new Date() * 1;
-      let dueDate = "2021/03/20 00:00";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
-      if (dueDate < now) {
-        template = ``;
-      } else {
-        template = `${hour}${this.$t("Content.HourD")} ${minute}${this.$t(
-          "Content.MinD"
-        )} ${second}${this.$t("Content.SecondD")}`;
-      }
-      this.MingTime = template;
-    },
-    copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
-        Message({
-          message: "Successfully copied",
-          type: "success",
-          // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
-    },
     async getBalance() {
-      let helmetType = "DODOHELMET_LPT";
-      let type = "DODOHELMET";
+      let helmetType = "HELMETBNB1_LPT";
+      let type = "HELMETBNB1";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -404,22 +273,20 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
-
-      // 赋值
-      this.balance.Deposite = Deposite;
-      this.balance.Withdraw = Withdraw;
-      this.balance.Helmet = Helmet;
-      this.balance.Cake = Cake;
-      this.balance.TotalLPT = TotalLPT;
+      // 总Helmet
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB1");
+      let helmetReward = await Rewards("HELMETBNB1", "0");
+      this.balance.Deposite = fixD(Deposite, 4);
+      this.balance.Withdraw = fixD(Withdraw, 4);
+      this.balance.Helmet = fixD(Helmet, 8);
+      this.balance.Cake = fixD(Cake, 8);
+      this.balance.TotalLPT = fixD(TotalLPT, 4);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
-
-      if (this.expired) {
-        this.textList[0].num = "--";
-        this.textList[0].num1 = "--";
-      } else {
-        this.textList[0].num = fixD((25000 / 21) * 7, 2) + " HELMET";
-        this.textList[0].num1 = fixD((10000 / 21) * 7, 2) + " DODO";
-      }
+      this.textList[0].num =
+        fixD((precision.minus(HelmetAllowance, helmetReward) / 365) * 7, 2) +
+        " HELMET";
+      // this.textList[3].num = addCommom(Deposite, 4)
+      // this.textList[4].num = addCommom(Helmet, 4)
     },
     // 抵押
     toDeposite() {
@@ -430,7 +297,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "DODOHELMET";
+      let type = "HELMETBNB1";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -439,7 +306,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "DODOHELMET";
+      let type = "HELMETBNB1";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -448,7 +315,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "DODOHELMET";
+      let type = "HELMETBNB1";
       let res = await exitStake(type);
     },
   },

@@ -1,7 +1,9 @@
 <template>
-  <div class="stepTwo">
+  <div class="stepTwo" v-if="iioPage === 'iio-id'">
     <div class="left">
-      <div class="step_title">{{ $t("IIO.ActionTwo", { name: "Token" }) }}</div>
+      <div class="step_title">
+        {{ $t("IIO.ActionTwo", { token: "i" + About.Token }) }}
+      </div>
       <div class="step_details">
         <p class="text">
           <span> {{ $t("Table.MyDeposits") }}： </span>
@@ -26,14 +28,17 @@
         <span>{{ $t("IIO.Earn") }}： </span>
         <span>
           {{ fixD(showMsg.AvailableVolume, 8) }}
-          <i class="under" @click="hadnleShowOnePager($event, 'iTOKEN')">
-            iTOKEN</i
+          <i
+            class="under"
+            @click="hadnleShowOnePager($event, 'i' + About.Token)"
+          >
+            i{{ About.Token }}</i
           >
         </span>
       </p>
       <button v-if="getRewardFlag" class="getReward" @click="getReward">
         <i :class="claimLoading ? 'loading_pic' : ''"></i
-        >{{ $t("IIO.GetReward") }}
+        >{{ $t("IIO.GetReward", { token: "i" + About.Token }) }}
       </button>
       <button
         v-else
@@ -46,15 +51,13 @@
         {{ getRewardObj.second == "00" ? "" : getRewardObj.second + "s" }}
       </button>
       <div class="ContractAddress">
-        <span>iTOKEN {{ $t("Table.ContractAddress") }}</span>
+        <span>i{{ About.Token }} {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x029A09ABE791a3Be60Aa64d569F4C34890f24097
+          {{ About.LongAdress }}
           <i
             class="copy"
             id="copy_default"
-            @click="
-              copyAdress($event, '0x029A09ABE791a3Be60Aa64d569F4C34890f24097')
-            "
+            @click="copyAdress($event, About.LongAdress)"
           ></i>
         </p>
       </div>
@@ -73,6 +76,8 @@ import { fixD, addCommom } from "~/assets/js/util.js";
 import { getReward3, earned3, applied3 } from "~/interface/iio.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import Information from "./Iio_information.js";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -93,9 +98,12 @@ export default {
         minute: "00",
         second: "00",
       },
+      About: [],
     };
   },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     this.$bus.$on("CLAIM_LOADING_IIO_HELMETBNB_POOL", (data) => {
       this.claimLoading = false;
     });
@@ -115,7 +123,24 @@ export default {
       });
     }, 1000);
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -140,12 +165,13 @@ export default {
           title: `What is $${onePager}?`,
           text: onePager,
         });
-        x`x`;
       } else {
         return;
       }
     },
     async getBalance() {
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
       // 可抵押数量
@@ -155,7 +181,7 @@ export default {
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
       // 可领取
-      let AvailableVolume = await earned3(pool_name);
+      let AvailableVolume = await earned3(pool_name, reward_name);
 
       this.showMsg.DepositeVolume = DepositeVolume;
       this.showMsg.DepositedVolume = DepositedVolume;
@@ -175,12 +201,14 @@ export default {
         return;
       }
       this.claimLoading = true;
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
-      let res = await getReward3(pool_name);
+      let res = await getReward3(pool_name, reward_name);
     },
     getRewardTime() {
-      let nowTime = Date.now();
-      let getTime = Date.parse("2021/04/19 13:00 UTC");
+      let nowTime = new Date();
+      let getTime = new Date(moment(this.About.Time1UTC)) * 1;
       let downTime = getTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
@@ -203,7 +231,7 @@ export default {
     },
     // 抵押
     toDeposite() {
-      this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
+      this.$router.push({ name: "mining", params: { earn: "helmet_cake_v2" } });
     },
   },
 };

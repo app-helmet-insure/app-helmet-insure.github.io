@@ -33,7 +33,7 @@
               <svg
                 :class="
                   routeObj.name === 'index'
-                    ? 'right active'
+                    ? 'right'
                     : routeObj.name == 'myPolicy' ||
                       routeObj.name == 'mySupply' ||
                       routeObj.name == 'myClaim'
@@ -83,7 +83,7 @@
         <div class="menu_item">
           <nuxt-link
             to="/mining"
-            :class="routeObj.name === 'mining' ? 'active' : ''"
+            :class="routeObj.name == 'mining' ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-mining1"></use>
@@ -95,7 +95,7 @@
         <div class="menu_item">
           <nuxt-link
             to="/flashmining"
-            :class="routeObj.name === 'flashmining' ? 'active' : ''"
+            :class="routeObj.name == 'flashmining' ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-flashmining"></use>
@@ -107,7 +107,7 @@
         <div class="menu_item">
           <nuxt-link
             to="/burnbox"
-            :class="routeObj.name === 'burnbox' ? 'active' : ''"
+            :class="routeObj.name.includes('burnbox') ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-burnbox"></use>
@@ -116,21 +116,29 @@
           </nuxt-link>
         </div>
         <div class="menu_item">
-          <nuxt-link to="/iio" :class="routeObj.name === 'iio' ? 'active' : ''">
+          <nuxt-link
+            to="/iio"
+            :class="routeObj.name.includes('iio') ? 'active' : ''"
+          >
             <svg class="hot" aria-hidden="true">
               <use
-                :href="`#icon-${routeObj.name === 'iio' ? 'hot1' : 'hot'}`"
+                :href="`#icon-${
+                  routeObj.name.includes('iio') ? 'hot1' : 'hot'
+                }`"
               ></use>
             </svg>
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-iio"></use>
             </svg>
             {{ $t("Header.IIO") }}
-            <i class="num">1</i>
+            <i class="num">2</i>
           </nuxt-link>
         </div>
         <div class="menu_item">
-          <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
+          <nuxt-link
+            to="/nft"
+            :class="routeObj.name.includes('nft') ? 'active' : ''"
+          >
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-nft"></use>
             </svg>
@@ -225,6 +233,7 @@ export default {
     this.$bus.$on("OPEN_SILDER", (res) => {
       this.sliderShowFlag = res;
     });
+    console.log(this.$route);
   },
   watch: {
     $route() {

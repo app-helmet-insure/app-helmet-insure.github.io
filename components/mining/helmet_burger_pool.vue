@@ -281,9 +281,6 @@ export default {
     },
   },
   computed: {
-    indexArray() {
-      return this.$store.state.allIndexPrice;
-    },
     userInfo() {
       return this.$store.state.userInfo;
     },

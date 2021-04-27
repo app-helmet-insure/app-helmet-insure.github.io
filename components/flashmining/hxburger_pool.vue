@@ -57,9 +57,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="8
-              
-              "
+              :decimals="8"
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -101,6 +99,10 @@
             "
           ></i>
         </p>
+      </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HTPT', 'hTPT', 4)">Add hTPT to MetaMask</p>
+        <i></i>
       </div>
     </div>
     <i></i>
@@ -205,6 +207,8 @@ import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["TradeType"],
   components: {
@@ -298,6 +302,17 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let tokenAddress1 = getContract(token);
+      let data = {
+        tokenAddress: tokenAddress || tokenAddress1,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

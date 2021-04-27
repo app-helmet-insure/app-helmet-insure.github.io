@@ -296,8 +296,7 @@ export default {
       let tokenAddress1 = getContract(token);
       let data = {
         tokenAddress: tokenAddress || tokenAddress1,
-        tokenSymbol: tokenName,
-        token,
+        tokenSymbol: tokenName || token,
         tokenDecimals: unit || 18,
         tokenImage: "",
       };

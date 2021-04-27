@@ -1,5 +1,5 @@
 <template>
-  <div class="action_wrap">
+  <div class="action_wrap" v-if="iioPage === 'iio-id'">
     <div class="action_step">
       <div class="action_step_wrap">
         <!-- step1 ---------------------------------------------------------------->
@@ -36,7 +36,10 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-share"></use>
           </svg>
-          <span>2. {{ $t("IIO.DepositLptReward") }}</span>
+          <span
+            >2.
+            {{ $t("IIO.DepositLptReward", { token: `i${About.Token}` }) }}</span
+          >
         </div>
         <div class="step_own" v-show="active_step == 2">
           <StepTwo></StepTwo>
@@ -57,7 +60,7 @@
           <svg class="icon" aria-hidden="true">
             <use href="#icon-earn"></use>
           </svg>
-          <span>3.{{ $t("IIO.SwapToken") }}</span>
+          <span>3.{{ $t("IIO.SwapToken", { token: `i${About.Token}` }) }}</span>
         </div>
         <div class="step_own" v-show="active_step == 3">
           <StepThree></StepThree>
@@ -77,6 +80,7 @@ import StepOne from "./step-one";
 import StepTwo from "./step-two";
 import StepThree from "./step-three";
 import { applied3 } from "~/interface/iio.js";
+import Information from "./Iio_information.js";
 export default {
   components: {
     StepOne,
@@ -88,9 +92,26 @@ export default {
       active_step: 1,
       newTicketFlag: false,
       ticketFlag: false,
+      About: [],
     };
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     this.$bus.$on("JUMP_STEP", (res) => {
       this.active_step = res.step;
     });
@@ -102,8 +123,12 @@ export default {
     }, 1000);
   },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     async buyAppliedFlag() {
-      let reward_name = "IIO_HELMETBNB_REWARD";
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await applied3(pool_name, reward_name);
       if (res) {
@@ -166,6 +191,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #22292f;
+        text-align: center;
       }
     }
     .active_step {

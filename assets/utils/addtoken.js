@@ -7,7 +7,6 @@ async function addToken({
 }) {
     try {
         // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-        console.log(tokenAddress, tokenSymbol, tokenDecimals, tokenImage);
         await ethereum
             .request({
                 method: 'wallet_watchAsset',

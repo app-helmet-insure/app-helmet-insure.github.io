@@ -1,6 +1,12 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide four">
+        <div></div>
+      </div>
+      <div class="swiper-slide westarter">
+        <div></div>
+      </div>
       <div class="swiper-slide balckhole">
         <div></div>
       </div>
@@ -16,15 +22,6 @@
         <div></div>
       </a>
       <div class="swiper-slide xburger">
-        <div></div>
-      </div>
-      <!-- <div class="swiper-slide chainswap">
-        <div></div>
-      </div> -->
-      <div class="swiper-slide iio">
-        <div></div>
-      </div>
-      <div class="swiper-slide feimining">
         <div></div>
       </div>
     </div>
@@ -142,6 +139,18 @@ export default {
         background-position: center;
       }
     }
+    .four {
+      background: #ffcf27;
+      > div {
+        background-image: url("../../assets/img/banner/four_web.png");
+      }
+    }
+    .westarter {
+      background: #3faa62;
+      > div {
+        background-image: url("../../assets/img/banner/westarter_web.png");
+      }
+    }
     .balckhole {
       background: #091521;
       > div {
@@ -164,24 +173,6 @@ export default {
       background: #ff9600;
       > div {
         background-image: url("../../assets/img/banner/Xburger_web.png");
-      }
-    }
-    .feimining {
-      background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
-      > div {
-        background-image: url("../../assets/img/banner/fei_mining_web.png");
-      }
-    }
-    .iio {
-      background: #fd662c;
-      > div {
-        background-image: url("../../assets/img/banner/iio_web.png");
-      }
-    }
-    .chainswap {
-      background: linear-gradient(90deg, #7a4ae3 0%, #9920e0 50%, #7a4ae3 100%);
-      > div {
-        background-image: url("../../assets/img/banner/chainswap_pc.png");
       }
     }
     .imgbanner {
@@ -212,10 +203,22 @@ export default {
         background-position: center;
       }
     }
+    .four {
+      background: #ffcf27;
+      > div {
+        background-image: url("../../assets/img/banner/four_h5.png");
+      }
+    }
     .balckhole {
       background: #091521;
       > div {
         background-image: url("../../assets/img/banner/blackhole_h5H5.png");
+      }
+    }
+    .westarter {
+      background: #3faa62;
+      > div {
+        background-image: url("../../assets/img/banner/westarter_h5.png");
       }
     }
     .langauage {
@@ -234,24 +237,6 @@ export default {
       background: #ff9600;
       > div {
         background-image: url("../../assets/img/banner/Xburger_h5.png");
-      }
-    }
-    .feimining {
-      background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
-      > div {
-        background-image: url("../../assets/img/banner/fei_mining_h5.png");
-      }
-    }
-    .chainswap {
-      background: linear-gradient(90deg, #7a4ae3 0%, #9920e0 50%, #7a4ae3 100%);
-      > div {
-        background-image: url("../../assets/img/banner/chainswap_h5.png");
-      }
-    }
-    .iio {
-      background: #fd662c;
-      > div {
-        background-image: url("../../assets/img/banner/iio_h5.png");
       }
     }
     .imgbanner {

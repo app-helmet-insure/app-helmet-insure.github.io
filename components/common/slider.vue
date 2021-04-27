@@ -131,7 +131,7 @@
               <use xlink:href="#icon-iio"></use>
             </svg>
             {{ $t("Header.IIO") }}
-            <i class="num">1</i>
+            <i class="num">2</i>
           </nuxt-link>
         </div>
         <div class="menu_item">

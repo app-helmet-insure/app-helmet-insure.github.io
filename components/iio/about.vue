@@ -109,6 +109,18 @@
       >
         {{ item }}
       </p>
+      <img
+        class="pc_about"
+        v-if="About.TokenDistribution_img"
+        :src="require(`~/assets/img/iio/${About.TokenDistribution_img}_pc.png`)"
+        alt=""
+      />
+      <img
+        class="h5_about"
+        v-if="About.TokenDistribution_img"
+        :src="require(`~/assets/img/iio/${About.TokenDistribution_img}_h5.png`)"
+        alt=""
+      />
     </div>
     <div class="iio_about_media">
       <p>
@@ -227,6 +239,9 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and (min-width: 750px) {
+  .h5_about {
+    display: none;
+  }
   .iio_about {
     width: 1200px;
     margin: 0 auto 40px;
@@ -316,6 +331,9 @@ export default {
         line-height: 22px;
         margin-top: 15px;
       }
+      img {
+        width: 100%;
+      }
     }
     &_media {
       width: 946px;
@@ -351,6 +369,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .pc_about {
+    display: none;
+  }
   .iio_about {
     width: 100%;
     background: #fff;
@@ -455,6 +476,9 @@ export default {
         color: #17173a;
         line-height: 22px;
         margin-top: 15px;
+      }
+      img {
+        width: 100%;
       }
     }
     &_media {

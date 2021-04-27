@@ -193,7 +193,6 @@ export default {
           let finished = new Date(moment(item.finishedTimeUTC)) * 1;
           if (nowTime < warnup) {
             item.status = "warmup";
-            item.enterbutton = false;
           }
           if (nowTime < warnup && nowTime < distributing) {
             item.status = "warmup";

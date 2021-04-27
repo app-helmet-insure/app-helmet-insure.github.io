@@ -49,7 +49,7 @@
 import { ticketVol3, applyReward3 } from "~/interface/iio";
 import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
-import Information from "./Iio_information.js";
+import Information from "./iio_information.js";
 import moment from "moment";
 export default {
   data() {

@@ -63,11 +63,12 @@ export const earned3 = async (ContractAdress, RewardAdress) => {
         });
 };
 // 领取奖励
-export const getReward3 = async (ContractAdress, RewardAdress) => {
+export const getReward3 = async (type, RewardAdress) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
-    if (ContractAdress.indexOf('0x') === -1) {
-        ContractAdress = getContract(ContractAdress, charID);
+    let ContractAdress;
+    if (type.indexOf('0x') === -1) {
+        ContractAdress = getContract(type, charID);
     }
     if (RewardAdress.indexOf('0x') === -1) {
         RewardAdress = getContract(RewardAdress, charID);

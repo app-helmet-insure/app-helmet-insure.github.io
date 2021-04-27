@@ -255,6 +255,8 @@ export const getTokenName = (address) => {
             return 'xBURGER';
         case '0xd714d91a169127e11d8fab3665d72e8b7ef9dbe2':
             return 'BLACK';
+        case '0x910651f81a605a6ef35d05527d24a72fecef8bf0':
+            return 'WAR';
         default:
             return '--';
     }

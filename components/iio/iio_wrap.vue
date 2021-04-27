@@ -146,8 +146,8 @@ export default {
           stakeShare: 0.25,
           showStart: "Apr. 27th 21:00 SGT",
           showEnd: "Apr. 30th 21:00 SGT",
-          warnupTimeUTC: "2021/04/27 21:00 UTC+8",
-          distributingTimeUTC: "2021/04/29 21:00 UTC+8",
+          warnupTimeUTC: "2021/04/26 24:00 UTC+8",
+          distributingTimeUTC: "2021/04/27 21:00 UTC+8",
           activatingTimeUTC: "2021/04/30 21:00 UTC+8",
           finishedTimeUTC: "2021/05/01 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
@@ -194,7 +194,7 @@ export default {
           if (nowTime < warnup) {
             item.status = "warmup";
           }
-          if (nowTime < warnup && nowTime < distributing) {
+          if (nowTime > warnup && nowTime < distributing) {
             item.status = "warmup";
           }
           if (nowTime > distributing && nowTime < activating) {

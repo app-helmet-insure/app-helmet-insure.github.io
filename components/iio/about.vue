@@ -186,7 +186,7 @@
 <script>
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
-import Information from "./Iio_information.js";
+import Information from "./iio_information.js";
 export default {
   data() {
     return {

@@ -104,6 +104,11 @@
         <svg class="close" aria-hidden="true" @click="showActiveFlash = false">
           <use xlink:href="#icon-close"></use>
         </svg>
+        <Hxburgerpool
+          v-if="activeFlash == 'hxBURGER' && showActiveFlash"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        ></Hxburgerpool>
         <HtptPool
           v-if="activeFlash == 'hTPT' && showActiveFlash"
           :activeType="activeType"
@@ -239,6 +244,11 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </div>
+      <Hxburgerpool
+        v-if="activeFlash == 'hxBURGER'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      ></Hxburgerpool>
       <HtptPool
         v-if="activeFlash == 'hTPT'"
         :activeType="activeType"
@@ -284,6 +294,8 @@ import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { burgerswap } from "~/assets/utils/burgerswap.js";
+import Hxburgerpool from "~/components/flashmining/hxburger_pool.vue";
 import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
 import HctkPool from "~/components/flashmining/hctk_pool.vue";
@@ -291,9 +303,11 @@ import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
 import HautoPool from "~/components/flashmining/hauto_pool.vue";
 import HmathPool from "~/components/flashmining/hmath_pool.vue";
 import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
+import moment from "moment";
 export default {
   components: {
     Wraper,
+    Hxburgerpool,
     HtptPool,
     HcctPool,
     HctkPool,
@@ -383,7 +397,18 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "<i>hTPT</i> Pool",
+          miningName: "<i>hxBURGER</i>&nbsp;Pool",
+          desc: "By hTPT-Helmet LPT",
+          earn: "hxBURGER",
+          dueDate: this.getRemainTime("2021/05/12 00:00"),
+          openDate: this.getMiningTime("2021/04/22 00:00"),
+          weekly: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          yearEarn: apyArray["hxBURGER"] || "--",
+          expired: new Date("2021/05/12 00:00") * 1,
+          started: new Date("2021/04/22 00:00") * 1,
+        },
+        {
+          miningName: "<i>hTPT</i>&nbsp;Pool",
           desc: "By hDODO-Helmet LPT",
           earn: "hTPT",
           dueDate: this.getRemainTime("2021/04/26 00:00"),
@@ -394,7 +419,7 @@ export default {
           started: new Date("2021/04/06 00:00") * 1,
         },
         {
-          miningName: "<i>hDODO</i> Pool",
+          miningName: "<i>hDODO</i>&nbsp;Pool",
           desc: "By hMATH-Helmet LPT",
           earn: "hDODO",
           dueDate: this.getRemainTime("2021/03/31 12:00"),
@@ -404,7 +429,7 @@ export default {
           expired: new Date("2021/03/31 12:00") * 1,
         },
         {
-          miningName: "<i>hMATH</i> Pool",
+          miningName: "<i>hMATH</i>&nbsp;Pool",
           desc: "By hAUTO-Helmet LPT",
           earn: "hMATH",
           dueDate: this.getRemainTime("2021/03/18 00:00"),
@@ -414,7 +439,7 @@ export default {
           expired: new Date("2021/03/18 00:00") * 1,
         },
         {
-          miningName: "<i>hAUTO</i> Pool",
+          miningName: "<i>hAUTO</i>&nbsp;Pool",
           desc: "By BNB500-Helmet LPT",
           earn: "hAUTO",
           dueDate: this.getRemainTime("2021/03/09 00:00"),
@@ -424,7 +449,7 @@ export default {
           expired: new Date("2021/03/09 00:00") * 1,
         },
         {
-          miningName: "<i>hTPT</i> Pool",
+          miningName: "<i>hTPT</i>&nbsp;Pool",
           desc: "By hCTK-Helmet LPT",
           earn: "BNB500",
           dueDate: this.getRemainTime("2021/02/29 00:00"),
@@ -434,7 +459,7 @@ export default {
           expired: new Date("2021/02/29 00:00") * 1,
         },
         {
-          miningName: "<i>hCTK</i> Pool",
+          miningName: "<i>hCTK</i>&nbsp;Pool",
           desc: "By HCCT-Helmet LPT",
           earn: "hCTK",
           dueDate: this.getRemainTime("2021/02/28 00:00"),
@@ -444,7 +469,7 @@ export default {
           expired: new Date("2021/02/28 00:00") * 1,
         },
         {
-          miningName: "<i>HCCT</i> Pool",
+          miningName: "<i>HCCT</i>&nbsp;Pool",
           desc: "By LONG-Helmet LPT",
           earn: "HCCT",
           dueDate: this.getRemainTime("2021/02/13 00:00"),
@@ -459,7 +484,7 @@ export default {
     getRemainTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = new Date(dueDate);
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -488,7 +513,7 @@ export default {
     getMiningTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = new Date(dueDate);
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -519,6 +544,37 @@ export default {
       this.GET_HMATH_POOL_APY();
       this.GET_HCCT_POOL_APY();
       this.GET_HTPT_POOL_APY();
+      this.GET_HXBURGER_POOL_APY();
+    },
+    async GET_HXBURGER_POOL_APY() {
+      let HAUTOHELMET = await burgerswap("HXBURGER", "HELMET", 18); //Hlemt价格
+      let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
+      let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
+      let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
+      // APY = 年产量*helmet价格/抵押价值
+      let APY = fixD(
+        precision.times(
+          precision.divide(
+            precision.times(HAUTOHELMET, precision.divide(20000, 20), 365),
+            precision.times(
+              precision.divide(precision.times(HelmetValue, 2), LptVolume),
+              HctkVolume
+            )
+          ),
+          100
+        ),
+        2
+      );
+      let startedTime = this.miningList[0].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.miningList[0].yearEarn = "Infinity";
+      } else {
+        // this.apyArray.hxBURGER = "--";
+        // this.miningList[0].yearEarn = "--";
+        this.apyArray.hxBURGER = fixD(APY, 2);
+        this.miningList[0].yearEarn = fixD(APY, 2);
+      }
     },
     async GET_HTPT_POOL_APY() {
       let HAUTOHELMET = await pancakeswap("HTPT", "HELMET"); //Hlemt价格
@@ -530,7 +586,7 @@ export default {
       let APY = fixD(
         precision.times(
           precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(2000000, 14), 365),
+            precision.times(HAUTOHELMET, precision.divide(2000000, 21), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -541,13 +597,13 @@ export default {
         2
       );
 
-      let startedTime = this.miningList[0].started;
+      let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
-        this.miningList[0].yearEarn = "Infinity";
+        this.miningList[1].yearEarn = "Infinity";
       } else {
         this.apyArray.hTPT = fixD(APY, 2);
-        this.miningList[0].yearEarn = fixD(APY, 2);
+        this.miningList[1].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HDODO_POOL_APY() {
@@ -570,10 +626,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[1].yearEarn = "--";
+        this.miningList[2].yearEarn = "--";
       } else {
         this.apyArray.hDODO = fixD(APY, 2);
-        this.miningList[1].yearEarn = fixD(APY, 2);
+        this.miningList[2].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HMATH_POOL_APY() {
@@ -596,10 +652,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[2].yearEarn = "--";
+        this.miningList[3].yearEarn = "--";
       } else {
         this.apyArray.hMATH = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
+        this.miningList[3].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HAUTO_POOL_APY() {
@@ -622,10 +678,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[3].yearEarn = "--";
+        this.miningList[4].yearEarn = "--";
       } else {
         this.apyArray.hAUTO = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
+        this.miningList[4].yearEarn = fixD(APY, 2);
       }
     },
     async GET_BNB500_POOL_APY() {
@@ -648,10 +704,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[4].yearEarn = "--";
+        this.miningList[5].yearEarn = "--";
       } else {
         this.apyArray.BNB500 = fixD(APY, 2);
-        this.miningList[4].yearEarn = fixD(APY, 2);
+        this.miningList[5].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCCT_POOL_APY() {
@@ -673,10 +729,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[5].yearEarn = "--";
+        this.miningList[6].yearEarn = "--";
       } else {
         this.apyArray.HCCT = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
+        this.miningList[6].yearEarn = fixD(APY, 2);
       }
     },
     async GET_HCTK_POOL_APY() {
@@ -699,10 +755,10 @@ export default {
         2
       );
       if (this.expired) {
-        this.miningList[6].yearEarn = "--";
+        this.miningList[7].yearEarn = "--";
       } else {
         this.apyArray.HCTK = fixD(APY, 2);
-        this.miningList[6].yearEarn = fixD(APY, 2);
+        this.miningList[7].yearEarn = fixD(APY, 2);
       }
     },
   },

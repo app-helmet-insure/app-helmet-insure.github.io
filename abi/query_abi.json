@@ -1,0 +1,497 @@
+{
+	"abi": [
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "previousOwner",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "OwnershipTransferred",
+			"type": "event"
+		},
+		{
+			"inputs": [],
+			"name": "chainSymbol",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_lpToken",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_baseToken",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_amount",
+					"type": "uint256"
+				}
+			],
+			"name": "getDemaxLpValue",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_token1",
+					"type": "address"
+				}
+			],
+			"name": "getDemaxPair",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_tokenA",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_tokenB",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_amount",
+					"type": "uint256"
+				}
+			],
+			"name": "getLpValue",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_factory",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_tokenA",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_tokenB",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "_amount",
+					"type": "uint256"
+				}
+			],
+			"name": "getLpValueByFactory",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_token1",
+					"type": "address"
+				}
+			],
+			"name": "getPair",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_factory",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_token1",
+					"type": "address"
+				}
+			],
+			"name": "getPairByFactory",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_pair",
+					"type": "address"
+				}
+			],
+			"name": "getSwapPairReserve",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "token1",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "decimals0",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "decimals1",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "reserve0",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "reserve1",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "totalSupply",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_token1",
+					"type": "address"
+				}
+			],
+			"name": "getSwapPairReserveByTokens",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "token0",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "token1",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "decimals0",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "decimals1",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "reserve0",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "reserve1",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "totalSupply",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_swapFactory",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "_swapDemaxFactory",
+					"type": "address"
+				}
+			],
+			"name": "initialize",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "owner",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "token",
+					"type": "address"
+				}
+			],
+			"name": "queryToken",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "totalSupply",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "decimals",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "balanceOf",
+							"type": "uint256"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "symbol",
+							"type": "string"
+						}
+					],
+					"internalType": "struct Query.Token",
+					"name": "tk",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address[]",
+					"name": "tokens",
+					"type": "address[]"
+				}
+			],
+			"name": "queryTokenList",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "uint256",
+							"name": "totalSupply",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "decimals",
+							"type": "uint256"
+						},
+						{
+							"internalType": "uint256",
+							"name": "balanceOf",
+							"type": "uint256"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "symbol",
+							"type": "string"
+						}
+					],
+					"internalType": "struct Query.Token[]",
+					"name": "token_list",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "renounceOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "swapDemaxFactory",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "swapFactory",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "newOwner",
+					"type": "address"
+				}
+			],
+			"name": "transferOwnership",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

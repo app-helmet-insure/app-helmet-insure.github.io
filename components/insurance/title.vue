@@ -1,9 +1,26 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide chainswap">
+      <div class="swiper-slide balckhole">
         <div></div>
       </div>
+      <div class="swiper-slide langauage">
+        <div></div>
+      </div>
+      <a
+        class="swiper-slide cakev2"
+        style="cursor: poiner"
+        href="https://helmetinsure.medium.com/q-a-for-the-%EF%B8%8F-lpt-migration-pancakeswap-202464f03072"
+        target="_blank"
+      >
+        <div></div>
+      </a>
+      <div class="swiper-slide xburger">
+        <div></div>
+      </div>
+      <!-- <div class="swiper-slide chainswap">
+        <div></div>
+      </div> -->
       <div class="swiper-slide iio">
         <div></div>
       </div>
@@ -116,7 +133,7 @@ export default {
       display: flex;
       width: 100%;
       height: 180px;
-      > div {
+      div {
         margin: 0 auto;
         width: 1026px;
         height: 100%;
@@ -125,21 +142,34 @@ export default {
         background-position: center;
       }
     }
+    .balckhole {
+      background: #091521;
+      > div {
+        background-image: url("../../assets/img/banner/blackHole.png");
+      }
+    }
+    .langauage {
+      background: #ffa729;
+      > div {
+        background-image: url("../../assets/img/banner/langauage_web.png");
+      }
+    }
+    .cakev2 {
+      background: #f1c153;
+      > div {
+        background-image: url("../../assets/img/banner/cake_v2_web.png");
+      }
+    }
+    .xburger {
+      background: #ff9600;
+      > div {
+        background-image: url("../../assets/img/banner/Xburger_web.png");
+      }
+    }
     .feimining {
       background: linear-gradient(31deg, #27bfc3 0%, #c86dd7 100%);
       > div {
         background-image: url("../../assets/img/banner/fei_mining_web.png");
-      }
-    }
-    .verson {
-      background: linear-gradient(
-        360deg,
-        #d94107 0%,
-        #e6761c 41%,
-        #ff9243 100%
-      );
-      > div {
-        background-image: url("../../assets/img/banner/verson_web.png");
       }
     }
     .iio {
@@ -182,15 +212,28 @@ export default {
         background-position: center;
       }
     }
-    .verson {
-      background: linear-gradient(
-        360deg,
-        #d94107 0%,
-        #e6761c 41%,
-        #ff9243 100%
-      );
+    .balckhole {
+      background: #091521;
       > div {
-        background-image: url("../../assets/img/banner/verson_h5.png");
+        background-image: url("../../assets/img/banner/blackhole_h5H5.png");
+      }
+    }
+    .langauage {
+      background: #ffa729;
+      > div {
+        background-image: url("../../assets/img/banner/langauage_h5.png");
+      }
+    }
+    .cakev2 {
+      background: #f1c153;
+      > div {
+        background-image: url("../../assets/img/banner/cake_v2_h5.png");
+      }
+    }
+    .xburger {
+      background: #ff9600;
+      > div {
+        background-image: url("../../assets/img/banner/Xburger_h5.png");
       }
     }
     .feimining {

@@ -1,12 +1,12 @@
 <template>
-  <div class="stepThree">
+  <div class="stepThree" v-if="iioPage === 'iio-id'">
     <div class="step_title">{{ $t("IIO.ActionThree") }}</div>
     <p
       v-html="
         $t('IIO.CanGetReward', {
-          time1: 'Apr.23rd 21:00',
-          time2: 'Apr.24th 21:00',
-          name: 'TOKEN',
+          time1: About.Time2,
+          time2: About.Time3,
+          name: About.Token,
         })
       "
       @click="toHome($event)"
@@ -14,8 +14,8 @@
     <div class="step_action">
       <div class="step_myaccount">
         <p>
-          <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span>
-          <span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
+          <span>{{ $t("IIO.CanSwapToken", { name: "i" + About.Token }) }}</span>
+          <span>{{ fixD(AvailableVolume, 8) }} i{{ About.Token }}</span>
         </p>
         <p>
           <span>{{ $t("IIO.Balance") }}</span>
@@ -25,12 +25,14 @@
       <div class="rewardDetail">
         <div>
           <p>
-            <span>{{ $t("IIO.CanSwapToken", { name: "iTOKEN" }) }}</span
-            ><span>{{ fixD(AvailableVolume, 8) }} iTOKEN</span>
+            <span>{{
+              $t("IIO.CanSwapToken", { name: "i" + About.Token })
+            }}</span
+            ><span>{{ fixD(AvailableVolume, 8) }} i{{ About.Token }}</span>
           </p>
           <p>
             <span>{{ $t("IIO.SwapTokened") }}</span
-            ><span>{{ fixD(AvailableVolume, 8) }} TOKEN</span>
+            ><span>{{ fixD(AvailableVolume, 8) }} {{ About.Token }}</span>
           </p>
           <p>
             <span>{{ $t("IIO.Speed") }}</span
@@ -72,7 +74,9 @@ import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
+import Information from "./Iio_information.js";
 import { applied3 } from "~/interface/iio.js";
+import moment from "moment";
 
 export default {
   data() {
@@ -88,9 +92,12 @@ export default {
         minute: "00",
         second: "00",
       },
+      About: [],
     };
   },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     setTimeout(() => {
       this.getBalance();
     }, 1000);
@@ -101,7 +108,24 @@ export default {
       });
     }, 1000);
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     toHome(e) {
       if (e.target.tagName === "I") {
         this.$router.push("/MyPolicy");
@@ -109,19 +133,20 @@ export default {
     },
     async getBalance() {
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let RewardAddress = "IIO_HELMETBNB_REWARD";
+      let Name = this.iioType.toUpperCase();
+      let RewardAddress = `IIO_HELMETBNB_${Name}`;
       let AvailableVolume = await getBalance(RewardAddress);
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"
       );
       this.AvailableVolume = AvailableVolume;
       this.SwapBalance = SwapBalance;
-      this.swapAssets = AvailableVolume * 0.3;
+      this.swapAssets = AvailableVolume * this.About.ActivePrice;
     },
     getRewardTime() {
-      let nowTime = Date.now();
-      let startTime = Date.parse("2021/04/23 13:00 UTC");
-      let endTime = Date.parse("2021/04/24 13:00 UTC");
+      let nowTime = new Date();
+      let startTime = new Date(moment(this.About.Time2UTC)) * 1;
+      let endTime = new Date(moment(this.About.Time3UTC)) * 1;
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);
@@ -149,12 +174,15 @@ export default {
     },
     async swapActive() {
       let data = {
-        token: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
-        _underlying_vol: precision.times(0.3, this.AvailableVolume),
+        token: getTokenName(this.About.Underlying),
+        _underlying_vol: precision.times(
+          this.About.ActivePrice,
+          this.AvailableVolume
+        ),
         vol: this.AvailableVolume,
-        long: "0x029A09ABE791a3Be60Aa64d569F4C34890f24097", //奖励地址
-        _underlying: getTokenName("0xe9e7cea3dedca5984780bafc599bd69add087d56"),
-        _collateral: getTokenName("0x3b73c1b2ea59835cbfcadade5462b6ab630d9890"),
+        long: this.About.LongAdress, //奖励地址
+        _underlying: getTokenName(this.About.Underlying),
+        _collateral: getTokenName(this.About.Collateral),
         settleToken: getTokenName("0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"),
         flag: true,
         approveAddress1: "FACTORY",

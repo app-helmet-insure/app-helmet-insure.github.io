@@ -41,8 +41,7 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
-    // locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR'],
-    locales: ['en_US', 'zh_CN'],
+    locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR', 'en_ID'],
     locale: 'en_US',
     chainID: 56,
     localeList: [
@@ -54,22 +53,26 @@ export const state = () => ({
             key: 'zh_CN',
             name: '中文',
         },
-        // {
-        //     key: 'ko_KR',
-        //     name: '한국어',
-        // },
-        // {
-        //     key: 'es_MX',
-        //     name: 'Español',
-        // },
-        // {
-        //     key: 'ja_JP',
-        //     name: '日本語',
-        // },
-        // {
-        //     key: 'fr_FR',
-        //     name: 'Français',
-        // },
+        {
+            key: 'ko_KR',
+            name: '한국어',
+        },
+        {
+            key: 'es_MX',
+            name: 'Español',
+        },
+        {
+            key: 'ja_JP',
+            name: '日本語',
+        },
+        {
+            key: 'fr_FR',
+            name: 'Français',
+        },
+        {
+            key: 'en_ID',
+            name: 'Indonesia',
+        },
     ],
     coinList: [
         'HELMET',
@@ -140,14 +143,14 @@ export const state = () => ({
 
     allDueDate: [
         {
-            BTCB: '2021/05/22 00:00',
-            ETH: '2021/05/22 00:00',
-            HELMET: '2021/04/24 00:00',
-            CAKE: '2021/05/12 00:00',
-            CTK: '2021/05/12 00:00',
-            BURGER: '2021/05/12 00:00',
-            WBNB: '2021/05/22 00:00',
-            MATH: '2021/05/05 00:00',
+            BTCB: '2021/05/21 24:00',
+            ETH: '2021/05/21 24:00',
+            HELMET: '2021/05/21 24:00',
+            CAKE: '2021/05/11 24:00',
+            CTK: '2021/05/11 24:00',
+            BURGER: '2021/05/11 24:00',
+            WBNB: '2021/05/20 24:00',
+            MATH: '2021/05/05 24:00',
         },
     ],
     echartIndexArray: {
@@ -165,7 +168,7 @@ export const state = () => ({
         {
             BTCB: 240,
             ETH: 10,
-            HELMET: 0.01,
+            HELMET: 0.008,
             CAKE: 0.1,
             CTK: 0.015,
             BURGER: 0.02,
@@ -177,7 +180,7 @@ export const state = () => ({
         {
             BTCB: 60,
             ETH: 2.5,
-            HELMET: 0.003,
+            HELMET: 0.002,
             CAKE: 0.025,
             CTK: 0.004,
             BURGER: 0.005,

@@ -1,6 +1,8 @@
 <template>
-  <div class="stepOne">
-    <div class="step_title">{{ $t("IIO.ActionOne", { name: "Token" }) }}</div>
+  <div class="stepOne" v-if="iioPage === 'iio-id'">
+    <div class="step_title">
+      {{ $t("IIO.ActionOne", { name: About.Token, token: "i" + About.Token }) }}
+    </div>
     <div class="step_action">
       <p class="step_buy">
         <span>
@@ -47,6 +49,8 @@
 import { ticketVol3, applyReward3 } from "~/interface/iio";
 import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
+import Information from "./Iio_information.js";
+import moment from "moment";
 export default {
   data() {
     return {
@@ -60,9 +64,12 @@ export default {
         minute: "00",
         second: "00",
       },
+      About: [],
     };
   },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     setTimeout(() => {
       this.getPassPortPrice();
     }, 1000);
@@ -82,11 +89,29 @@ export default {
       clearTimeout();
     }, 1000);
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     async getPassPortPrice() {
+      let Name = this.iioType.toUpperCase();
+      let RewardAddress = `IIO_HELMETBNB_${Name}`;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
-      let RewardAddress = "IIO_HELMETBNB_REWARD";
       let price = await ticketVol3(ContractAdress, RewardAddress);
       let balance = await getBalance(TicketAddress);
       this.PassportPrice = price;
@@ -94,11 +119,14 @@ export default {
     },
     async BuyPassport() {
       this.buyLoading = true;
+      let Name = this.iioType.toUpperCase();
+      let RewardAdress = `IIO_HELMETBNB_${Name}`;
       let ContractAdress = "IIO_HELMETBNB_POOL";
       let TicketAddress = "IIO_HELMETBNB_TICKET";
       let data = {
         ContractAdress,
         TicketAddress,
+        RewardAdress,
         PassportPrice: this.PassportPrice,
       };
       let object = {
@@ -121,9 +149,9 @@ export default {
       });
     },
     getRewardTime() {
-      let nowTime = Date.now();
-      let startTime = Date.parse("2021/04/19 13:00 UTC");
-      let endTime = Date.parse("2021/04/23 13:00 UTC");
+      let nowTime = new Date();
+      let startTime = new Date(moment(this.About.Time1UTC)) * 1;
+      let endTime = new Date(moment(this.About.Time2UTC)) * 1;
       let downTime = startTime - nowTime;
       let day = Math.floor(downTime / (24 * 3600000));
       let hour = Math.floor((downTime - day * 24 * 3600000) / 3600000);

@@ -1,7 +1,7 @@
 <template>
-  <div class="iio_banner">
+  <div class="iio_banner" v-if="iioPage === 'iio-id'">
     <div class="iio_wrap">
-      <h3 class="iio_title">{{ $t("IIO.Pool", { name: "ChainSwap" }) }}</h3>
+      <h3 class="iio_title">{{ $t("IIO.Pool", { name: About.name }) }}</h3>
       <div class="tip" v-if="!ticketFlag">
         <i></i>{{ $t("IIO.NoTicket") }}，<span @click="toStep1"
           >{{ $t("IIO.BuyTicket") }} ></span
@@ -21,7 +21,7 @@
           <!-- <i></i> -->
           <p>
             <span>{{ $t("IIO.TotalSupply") }}</span>
-            <span>100,000 TOKEN</span>
+            <span>{{ About.TokenInformation.Supply }} {{ About.Token }}</span>
           </p>
           <i></i>
         </div>
@@ -49,6 +49,7 @@ import { fixD, addCommom } from "~/assets/js/util.js";
 import { getLongValue } from "~/interface/event.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { applied3 } from "~/interface/iio.js";
+import Information from "./Iio_information.js";
 export default {
   data() {
     return {
@@ -57,9 +58,26 @@ export default {
         DepositeValue: 0,
       },
       ticketFlag: false,
+      About: [],
     };
   },
+  watch: {
+    iioType: {
+      handler: "WatchIIOType",
+      immediate: true,
+    },
+  },
+  computed: {
+    iioType() {
+      return this.$route.params.id;
+    },
+    iioPage() {
+      return this.$route.name;
+    },
+  },
   mounted() {
+    let name = this.$route.params.id;
+    this.About = Information[name];
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getBalance();
       this.buyAppliedFlag();
@@ -70,6 +88,9 @@ export default {
     }, 1000);
   },
   methods: {
+    WatchIIOType(newValue, oldValue) {
+      this.About = Information[newValue];
+    },
     toStep1() {
       this.$bus.$emit("JUMP_STEP", { step: 1 });
     },
@@ -77,13 +98,15 @@ export default {
       this.$router.push({ name: "mining", params: { earn: "helmet_cake" } });
     },
     async buyAppliedFlag() {
-      let reward_name = "IIO_HELMETBNB_REWARD";
+      let Name = this.iioType.toUpperCase();
+      let reward_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       let res = await applied3(pool_name, reward_name);
       this.ticketFlag = res;
     },
     async getBalance() {
-      let lpt_name = "IIO_HELMETBNB_POOL_LPT";
+      let Name = this.iioType.toUpperCase();
+      let lpt_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
       // 已抵押数量
       let DepositedVolume = await getLPTOKEN(pool_name);

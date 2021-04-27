@@ -57,7 +57,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -71,7 +71,7 @@
               :startVal="Number(0)"
               :endVal="Number(balance.TotalLPT)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
             &nbsp;LPT</span
@@ -211,7 +211,6 @@ import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import { template } from "@antv/g2plot/lib/utils";
 export default {
   components: {
     countTo,
@@ -240,24 +239,6 @@ export default {
           color: "#28a745",
           unit: "",
         },
-        //  {
-        //   text: this.$t('Table.TotalDeposited'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        //  {
-        //   text: this.$t('Table.MyDeposits'),
-        //   num: 0,
-        //   color: '#17173a',
-        //   unit: ''
-        // },
-        // {
-        //   text: this.$t('Table.MyRewards'),
-        //   num: 0,
-        //   color: '#28a745',
-        //   unit: ''
-        // }
       ],
       balance: {
         Deposite: 0,
@@ -307,22 +288,9 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
-      this.getAPY();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-    }, 20000);
   },
   watch: {
-    indexArray: {
-      handler: "WatchIndexArray",
-      immediate: true,
-    },
-    apy(newValue, value) {
-      this.apy = newValue;
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
@@ -358,11 +326,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
     },
     getDownTime() {
       let now = new Date() * 1;
@@ -422,32 +385,6 @@ export default {
       }
       this.MingTime = template;
     },
-    async getAPY() {
-      let HCTKHELMET = await pancakeswap("BNB500", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("BNB500POOL"); //数量
-      let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let apy = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCTKHELMET, precision.divide(1000, 10), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      this.apy = apy ? apy : 0;
-      if (this.expired) {
-        this.textList[1].num = "--";
-      } else {
-        this.textList[1].num = this.apy + "%";
-      }
-    },
     async getBalance() {
       let helmetType = "BNB500POOL_LPT";
       let type = "BNB500POOL";
@@ -462,10 +399,10 @@ export default {
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
 
-      this.balance.Deposite = fixD(Deposite, 8);
-      this.balance.Withdraw = fixD(Withdraw, 8);
-      this.balance.hCTK = fixD(Helmet, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 8);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.hCTK = Helmet;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       if (this.expired) {
         this.textList[0].num = "--";

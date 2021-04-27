@@ -2,11 +2,21 @@
   <div class="iio_wrap">
     <div class="iio_project">
       <div
-        v-for="item in iioData"
+        v-for="(item, index) in iioData"
         :key="item.iio_name"
         class="iio_item"
-        :style="`background:${item.background}`"
+        :style="`--background:${item.background}; --animation_bg:${
+          item.status != 'finished' && item.open
+            ? 'linear-gradient(45deg,red,#ffaa2b 10%,#f3ff45 20%,#84ff7f 30%,#7bfdfb 40%,#5ee7fc 50%,#7fbbff 60%,#af88ff 70%,#d973fd 80%,#ff6fec 90%,red);'
+            : ''
+        }`"
       >
+        <img
+          v-if="item.open"
+          :src="require(`~/assets/img/iio/${item.status || 'finished'}.png`)"
+          alt=""
+          class="status"
+        />
         <template v-if="item.coming">
           <img
             class="coming_img"
@@ -22,11 +32,15 @@
           ></a>
           <div class="text">
             <p>
-              <span>{{ $t("IIO.HomeText1") }}</span
+              <span>{{
+                $t("IIO.HomeText1", { name: `i${item.swapUtil}` })
+              }}</span
               ><span>{{ item.showStart }}</span>
             </p>
             <p>
-              <span>{{ $t("IIO.HomeText2") }}</span
+              <span>{{
+                $t("IIO.HomeText2", { name: `i${item.swapUtil}` })
+              }}</span
               ><span>{{ item.showEnd }}</span>
             </p>
             <p>
@@ -41,7 +55,16 @@
               >
             </p>
           </div>
-          <button @click="toDetails">Enter Pool</button>
+          <button
+            @click="toDetails(index)"
+            :style="
+              item.status == 'finished' || !item.enterbutton
+                ? 'background: #D5D5DB;pointer-events: none'
+                : ''
+            "
+          >
+            {{ item.status == "finished" ? "Finished" : "Enter Pool" }}
+          </button>
         </template>
         <img
           class="soon_img"
@@ -64,54 +87,140 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   data() {
     return {
-      iioData: [],
-    };
-  },
-  mounted() {
-    this.initData();
-  },
-  methods: {
-    initData() {
-      let iioData = [
+      iioData: [
         {
-          iio_name: "chainswap",
+          iio_name: "ChainSwap",
           iio_img: "iio_chainswap",
           iio_webSite: "www.chainswap.com",
           coming: true,
           background: "#7A4AE3",
-          startTime: "2021/04/19 21:00",
-          endTime: "2021/04/23 21:00",
           swapVolume: "100,000",
           swapUtil: "TOKEN",
           stakeUtil: "BUSD",
           stakeShare: 0.3,
           showStart: "Apr. 19th 21:00 SGT",
           showEnd: "Apr. 23rd 21:00 SGT",
+          warnupTimeUTC: "2021/04/16 21:00 UTC+8",
+          distributingTimeUTC: "2021/04/19 21:00 UTC+8",
+          activatingTimeUTC: "2021/04/23 20:00 UTC+8",
+          finishedTimeUTC: "2021/04/24 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
+          enterbutton: true,
+          open: true,
+          sort: 0,
+        },
+        {
+          iio_name: "BlackHole",
+          iio_img: "iio_blackhole",
+          iio_webSite: "blackhole.black",
+          coming: true,
+          background: "#33B9C2",
+          swapVolume: "200,000",
+          swapUtil: "BLACK",
+          stakeUtil: "BUSD",
+          stakeShare: 0.05,
+          showStart: "Apr. 26th 20:00 SGT",
+          showEnd: "Apr. 29th 21:00 SGT",
+          warnupTimeUTC: "2021/04/24 20:00 UTC+8",
+          distributingTimeUTC: "2021/04/26 20:00 UTC+8",
+          activatingTimeUTC: "2021/04/29 21:00 UTC+8",
+          finishedTimeUTC: "2021/04/30 21:00 UTC+8",
+          link: "https://www.chainswap.exchange/",
+          enterbutton: true,
+          open: true,
+          sort: 0,
+        },
+        {
+          iio_name: "WeStarter",
+          iio_img: "iio_westarter",
+          iio_webSite: "www.westarter.org",
+          coming: true,
+          background: "#269E38",
+          swapVolume: "120,000",
+          swapUtil: "WAR",
+          stakeUtil: "BUSD",
+          stakeShare: 0.25,
+          showStart: "Apr. 27th 21:00 SGT",
+          showEnd: "Apr. 30th 21:00 SGT",
+          warnupTimeUTC: "2021/04/27 21:00 UTC+8",
+          distributingTimeUTC: "2021/04/29 21:00 UTC+8",
+          activatingTimeUTC: "2021/04/30 21:00 UTC+8",
+          finishedTimeUTC: "2021/05/01 21:00 UTC+8",
+          link: "https://www.chainswap.exchange/",
+          enterbutton: true,
+          open: true,
+          sort: 0,
         },
         {
           iio_name: "2",
           iio_img: "iio2",
           coming: false,
+          open: false,
+          sort: 0,
         },
         {
-          iio_name: "3",
-          iio_img: "iio3",
+          iio_name: "5",
+          iio_img: "iio5",
           coming: false,
+          open: false,
+          sort: 0,
         },
-        {
-          iio_name: "4",
-          iio_img: "iio4",
-          coming: false,
-        },
-      ];
-      this.iioData = iioData;
+      ],
+    };
+  },
+  mounted() {
+    this.getStatus(this.iioData);
+  },
+  methods: {
+    toDetails(index) {
+      let name = this.iioData[index].iio_name.toLowerCase();
+      this.$router.push({
+        path: `iio/${name}`,
+      });
     },
-    toDetails() {
-      this.$router.push("/iio/details");
+    getStatus(newValue) {
+      let data = newValue || this.iioData;
+      let nowTime = moment.now();
+      data.forEach((item) => {
+        if (item.open) {
+          let warnup = new Date(moment(item.warnupTimeUTC)) * 1;
+          let distributing = new Date(moment(item.distributingTimeUTC)) * 1;
+          let activating = new Date(moment(item.activatingTimeUTC)) * 1;
+          let finished = new Date(moment(item.finishedTimeUTC)) * 1;
+          if (nowTime < warnup) {
+            item.status = "warmup";
+            item.enterbutton = false;
+          }
+          if (nowTime < warnup && nowTime < distributing) {
+            item.status = "warmup";
+          }
+          if (nowTime > distributing && nowTime < activating) {
+            item.status = "distributing";
+          }
+          if (nowTime > activating && nowTime < finished) {
+            item.status = "activating";
+          }
+          if (nowTime > finished) {
+            item.status = "finished";
+            item.sort = 1;
+          }
+        }
+      });
+      data = data.sort(function (a, b) {
+        return (
+          new Date(moment(b.finishedTimeUTC)) * 1 -
+          new Date(moment(a.finishedTimeUTC)) * 1
+        );
+      });
+      data = data.sort(function (a, b) {
+        return a.sort - b.sort;
+      });
+      console.log(this.iioData);
+      this.iioData = data;
     },
   },
 };
@@ -132,6 +241,51 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
+      .status {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 68px;
+        height: 68px;
+      }
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        content: "";
+        border-radius: 10px;
+        background: var(--background);
+      }
+      &::after {
+        filter: blur(8px);
+        position: absolute;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        content: "";
+        top: -5px;
+        right: -5px;
+        bottom: -5px;
+        left: -5px;
+        z-index: -2;
+        background: var(--animation_bg);
+        background-position-x: left;
+        background-position-y: top;
+        background-size: 300% 300%;
+        background-attachment: scroll;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: initial;
+        animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
+          running;
+        border-radius: 10px;
+        animation: animation_bg 2s linear 0s infinite normal none running;
+      }
+
       .coming_img {
         width: 100px;
         height: 100px;
@@ -286,6 +440,50 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      z-index: 1;
+      .status {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 68px;
+        height: 68px;
+      }
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        content: "";
+        border-radius: 10px;
+        background: var(--background);
+      }
+      &::after {
+        filter: blur(8px);
+        position: absolute;
+        width: calc(100% + 10px);
+        height: calc(100% + 10px);
+        content: "";
+        top: -5px;
+        right: -5px;
+        bottom: -5px;
+        left: -5px;
+        z-index: -2;
+        background: var(--animation_bg);
+        background-position-x: left;
+        background-position-y: top;
+        background-size: 300% 300%;
+        background-attachment: scroll;
+        background-origin: initial;
+        background-clip: initial;
+        background-color: initial;
+        animation: bgPosition-data-v-6a46f06d 2s linear 0s infinite normal none
+          running;
+        border-radius: 10px;
+        animation: animation_bg 2s linear 0s infinite normal none running;
+      }
       .coming_img {
         width: 100px;
         height: 100px;
@@ -425,6 +623,17 @@ export default {
         }
       }
     }
+  }
+}
+@keyframes animation_bg {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0 50%;
   }
 }
 </style>

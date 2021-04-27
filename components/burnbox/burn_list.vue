@@ -284,28 +284,28 @@ export default {
     initBurnBox() {
       let arr = [
         {
-          burnName: "<i>hAUTO</i> Burning Box",
+          burnName: "<i>hAUTO</i>&nbsp;Burning&nbsp;Box",
           earn: "hTPT",
           bonus: 1000000,
           dueDate: this.getRemainTime("2021/04/12 00:00"),
           icon: "hAUTO",
         },
         {
-          burnName: "<i>BNB500</i> Burning Box",
+          burnName: "<i>BNB500</i>&nbsp;Burning&nbsp;Box",
           earn: "hTPT",
           bonus: 1000000,
           dueDate: this.getRemainTime("2021/04/12 00:00"),
           icon: "BNB500",
         },
         {
-          burnName: "<i>hCTK</i> Burning Box",
+          burnName: "<i>hCTK</i>&nbsp;Burning&nbsp;Box",
           earn: "hDODO",
           bonus: 10000,
           dueDate: this.getRemainTime("2021/03/23 00:00"),
           icon: "hCTK",
         },
         {
-          burnName: "<i>HCCT</i> Burning Box",
+          burnName: "<i>HCCT</i>&nbsp;Burning&nbsp;Box",
           earn: "HCCTII",
           bonus: 100000,
           dueDate: this.getRemainTime("2021/03/19 00:00"),
@@ -407,6 +407,9 @@ export default {
             font-weight: 600;
             color: #17173a;
             line-height: 18px;
+            i {
+              margin-right: 4px;
+            }
           }
         }
         &:nth-of-type(2) {

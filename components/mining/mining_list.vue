@@ -4,7 +4,7 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line finshed_pc" v-if="item.earn == 'helmet_dodo'">
+      <div class="finshed_line finshed_pc" v-if="item.earn == 'helmet_cake_v1'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -31,24 +31,19 @@
           />
           <img
             class="combo_img"
-            style="width: 236px"
-            src="~/assets/img/mining/flash_web.png"
-            alt=""
-            v-if="item.flash"
-          />
-          <img
-            class="combo_img"
             style="width: 116px"
             src="~/assets/img/mining/serial_web.png"
             alt=""
             v-if="item.serial"
-          /><img
+          />
+          <img
             class="combo_img"
             style="width: 32px; height: 32px; left: 10px"
             src="~/assets/img/mining/serialnext_web.png"
             alt=""
             v-if="item.serialNext"
-          /><img
+          />
+          <img
             class="combo_img"
             style="width: 83px; height: 28px; left: 376px"
             src="~/assets/img/mining/iiostark.png"
@@ -89,12 +84,24 @@
             <i></i>
             <p>
               <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <template v-if="item.dueDate.day != '00'">
+                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                  <i>/</i>
+                </template>
+                <template>
+                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.day == '00'">
+                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </template>
               </span>
               <span v-else>
                 {{ item.dueDate }}
@@ -149,10 +156,15 @@
             <use xlink:href="#icon-close"></use>
           </svg>
           <HelmetBnbPool
-            v-if="activeMining == 'helmet_cake' && showActiveMining"
+            v-if="activeMining == 'helmet_cake_v1' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
           ></HelmetBnbPool>
+          <HelmetBnb1Pool
+            v-if="activeMining == 'helmet_cake_v2' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetBnb1Pool>
           <HelmetMdxPool
             v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
             :activeType="activeType"
@@ -197,7 +209,7 @@
       </div>
     </div>
     <div v-for="item in miningList" :key="item.earn + '1'">
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'helmet_dodo'">
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'helmet_cake_v1'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -212,12 +224,6 @@
           v-if="item.combo"
         />
         <img
-          class="combo_img"
-          style="width: 236px"
-          src="~/assets/img/mining/flash_web.png"
-          alt=""
-          v-if="item.flash"
-        /><img
           class="combo_img"
           style="width: 116px"
           src="~/assets/img/mining/serial_web.png"
@@ -271,12 +277,24 @@
             <i></i>
             <p>
               <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-                >{{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
               </span>
               <span v-else-if="typeof item.dueDate == 'object'">
-                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-                >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <template v-if="item.dueDate.day != '00'">
+                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                  <i>/</i>
+                </template>
+                <template>
+                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                </template>
+                <template v-if="item.dueDate.day == '00'">
+                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </template>
               </span>
               <span v-else>
                 {{ item.dueDate }}
@@ -334,10 +352,15 @@
           </svg>
         </div>
         <HelmetBnbPool
-          v-if="activeMining == 'helmet_cake'"
+          v-if="activeMining == 'helmet_cake_v1'"
           :activeType="activeType"
           :TradeType="activeType"
         ></HelmetBnbPool>
+        <HelmetBnb1Pool
+          v-if="activeMining == 'helmet_cake_v2'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetBnb1Pool>
         <HelmetMdxPool
           v-if="activeMining == 'bhelmet_mdx'"
           :activeType="activeType"
@@ -397,6 +420,7 @@ import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
+import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
@@ -405,11 +429,13 @@ import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
+import moment from "moment";
 
 export default {
   components: {
     Wraper,
     HelmetHelmetPool,
+    HelmetBnb1Pool,
     HelmetMdxPool,
     HelmetKunPool,
     FeiFeiPool,
@@ -531,21 +557,21 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "HELMET-BNB LP",
+          miningName: "HELMET-BNB&nbsp;LP <i class='v2'></i>",
           earnNum: "two",
-          earn: "helmet_cake",
+          earn: "helmet_cake_v2",
           earnImg: true,
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: true,
           info: true,
+          iio: true,
           earnName: "APR",
           onePager: false,
-          iio: true,
-          yearEarn: apyArray["helmet_cake"] || "--",
+          yearEarn: apyArray["helmet_cake_v2"] || "--",
         },
         {
-          miningName: "HELMET-BNB MLP",
+          miningName: "HELMET-BNB&nbsp;MLP",
           earnNum: "two",
           earn: "bhelmet_mdx",
           earnImg: true,
@@ -560,7 +586,7 @@ export default {
           started: new Date("2021/04/15 00:00") * 1,
         },
         {
-          miningName: "HELMET POOL",
+          miningName: "HELMET&nbsp;POOL",
           earn: "helmet",
           earnImg: true,
           earnNum: "one",
@@ -575,7 +601,7 @@ export default {
           yearEarn: apyArray["helmet"] || "--",
         },
         {
-          miningName: "FEI(BSC) POOL",
+          miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",
           earnImg: false,
           earnNum: "one",
@@ -590,7 +616,7 @@ export default {
           started: new Date("2021/04/10 00:00") * 1,
         },
         {
-          miningName: "<i>QFEI</i>-QSD DLP",
+          miningName: "<i>QFEI</i>-QSD&nbsp;DLP",
           earn: "kun",
           earnImg: true,
           earnNum: "one",
@@ -605,7 +631,7 @@ export default {
           started: new Date("2021/04/12 00:00") * 1,
         },
         {
-          miningName: "HELMET-KUN DLP",
+          miningName: "HELMET-KUN&nbsp;DLP",
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
@@ -620,7 +646,21 @@ export default {
           yearEarn: apyArray["qhelmet"] || "--",
         },
         {
-          miningName: "HELMET-<i>hDODO</i> DLP",
+          miningName: "HELMET-BNB&nbsp;LP <i class='v1'></i>",
+          earnNum: "two",
+          earn: "helmet_cake_v1",
+          earnImg: true,
+          dueDate: this.getRemainTime("2021/04/25 17:00"),
+          openDate: "Mining",
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["helmet_cake_v1"] || "--",
+          expired: new Date("2021/04/25 17:00") * 1,
+        },
+        {
+          miningName: "HELMET-<i>hDODO</i>&nbsp;DLP",
           earn: "helmet_dodo",
           earnImg: true,
           earnNum: "two",
@@ -634,7 +674,7 @@ export default {
         },
 
         {
-          miningName: "HELMET-<i>hFOR</i> LP",
+          miningName: "HELMET-<i>hFOR</i>&nbsp;LP",
           earn: "helmet_for",
           earnImg: true,
           earnNum: "two",
@@ -647,7 +687,7 @@ export default {
           yearEarn: apyArray["helmet_for"] || "--",
         },
         {
-          miningName: "HELMET-<i>hBURGER</i> LP",
+          miningName: "HELMET-<i>hBURGER</i>&nbsp;LP",
           earn: "helmet_burger",
           earnImg: true,
           earnNum: "two",
@@ -664,7 +704,8 @@ export default {
       this.$forceUpdate();
     },
     getAPY() {
-      this.HELMET_BNB_LP_APY();
+      this.HELMET_BNB_LP_V1_APY();
+      this.HELMET_BNB_LP_V2_APY();
       this.HELMET_hDODO_DLP_APY();
       this.FEI_POOL_APY();
       this.QFEI_QSD_DLP_APY();
@@ -674,19 +715,20 @@ export default {
       this.HELMET_hBURGER_LP_APY();
       this.HELMET_MDX_LP_APY();
     },
-    async HELMET_BNB_LP_APY() {
+
+    async HELMET_BNB_LP_V2_APY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let cakePrice = this.$store.state.CAKE_BUSD;
       let bnbPrice = this.$store.state.BNB_BUSD;
       // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
+      let totalHelmet = await totalSupply("HELMETBNB1_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB1");
+      let helmetReward = await Rewards("HELMETBNB1", "0");
       // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB1_LPT")) * 2;
       // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
+      let cakeValue = await balanceOf("HELMETBNB1_LPT", "CAKEHELMET", true);
+      let miningTime = (await RewardsDuration("HELMETBNB1")) / 86400;
       let dayHelmet = totalHelmet;
       let helmetapy = precision.divide(
         precision.times(
@@ -697,15 +739,10 @@ export default {
         precision.times(miningTime, bnbValue)
       );
       let cakeapy = precision.divide(
-        precision.times(cakePrice, 1200000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
+        precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
+        precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
-
-      let APY = precision.plus(helmetapy, cakeapy) * 100;
+      let APY = (cakeapy + helmetapy) * 100;
       this.apyArray.helmet_cake = fixD(APY, 2);
       this.miningList[0].yearEarn = fixD(APY, 2);
     },
@@ -730,7 +767,7 @@ export default {
         ) * 100;
       let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
       let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 3467.52;
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 4854.528;
 
       let mdxAPY =
         precision.divide(
@@ -825,6 +862,7 @@ export default {
       let WBNBUSDValue = await pancakeswap("WBNB", "USDT");
       let HelmetUsdtValue = HelmetWBNBValue * WBNBUSDValue;
       let allVolume = lptBnbValue * 60000;
+      console.log(lptBnbValue);
       //总抵押
       let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
       // 总发行
@@ -832,7 +870,6 @@ export default {
       // 抵押总价值
       let stakeValue =
         (await balanceOf("HELMET", "QHELMETPOOL_LPT")) * HelmetUsdtValue;
-      console.log(lptBnbValue, stakeValue, HelmetUsdtValue);
       let APY =
         precision.divide(
           precision.times(precision.divide(allVolume, 20), 365),
@@ -841,7 +878,6 @@ export default {
             supplyVolume
           )
         ) * 100;
-      console.log(stakeVolue, supplyVolume);
       let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
@@ -850,6 +886,40 @@ export default {
         this.apyArray.qhelmet = fixD(APY, 2);
         this.miningList[5].yearEarn = fixD(APY, 2);
       }
+    },
+    async HELMET_BNB_LP_V1_APY() {
+      this.helmetPrice = this.indexArray[1]["HELMET"];
+      let cakePrice = this.$store.state.CAKE_BUSD;
+      let bnbPrice = this.$store.state.BNB_BUSD;
+      // 总LPT
+      let totalHelmet = await totalSupply("HELMETBNB_LPT");
+      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
+      let helmetReward = await Rewards("HELMETBNB", "0");
+      // BNB总价值
+      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
+      // BNB总价值不翻倍
+      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
+      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
+      let dayHelmet = totalHelmet;
+      let helmetapy = precision.divide(
+        precision.times(
+          this.helmetPrice,
+          precision.minus(HelmetAllowance, helmetReward),
+          365
+        ),
+        precision.times(miningTime, bnbValue)
+      );
+      let cakeapy = precision.divide(
+        precision.times(cakePrice, 1200000),
+        precision.times(
+          precision.divide(bnbValue, totalHelmet),
+          cakeValue,
+          bnbPrice
+        )
+      );
+      let APY = helmetapy * 100;
+      this.apyArray.helmet_cake_v1 = fixD(APY, 2);
+      this.miningList[6].yearEarn = fixD(APY, 2);
     },
     async HELMET_hDODO_DLP_APY() {
       let lptBnbValue = await pancakeswap("DODO", "WBNB");
@@ -879,7 +949,7 @@ export default {
 
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_dodo = fixD(APY, 2);
-      this.miningList[6].yearEarn = fixD(APY, 2);
+      this.miningList[7].yearEarn = fixD(APY, 2);
     },
     async HELMET_hFOR_LP_APY() {
       let lptBnbValue = await pancakeswap("FOR", "WBNB");
@@ -909,7 +979,7 @@ export default {
 
       let APY = precision.plus(forApy, helmetApy) * 100;
       this.apyArray.helmet_for = fixD(APY, 2);
-      this.miningList[7].yearEarn = fixD(APY, 2);
+      this.miningList[8].yearEarn = fixD(APY, 2);
     },
     async HELMET_hBURGER_LP_APY() {
       let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
@@ -940,12 +1010,12 @@ export default {
       );
       let APY = precision.plus(burgerApy, helmetApy) * 100;
       this.apyArray.helmet_burger = fixD(APY, 2);
-      this.miningList[8].yearEarn = fixD(APY, 2);
+      this.miningList[9].yearEarn = fixD(APY, 2);
     },
     getMiningTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = new Date(dueDate);
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -970,7 +1040,7 @@ export default {
     getRemainTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = new Date(dueDate);
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -993,7 +1063,7 @@ export default {
         template = {
           day: "00",
           hour: "00",
-          MINUTE: "00",
+          minute: "00",
         };
         return "Finished";
       }
@@ -1001,7 +1071,31 @@ export default {
   },
 };
 </script>
-
+<style  lang='scss'>
+.onePager {
+  display: flex;
+  align-items: center;
+  .v1,
+  .v2 {
+    border: none;
+    display: inline-block;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    &:hover {
+      border: none;
+    }
+  }
+  .v1 {
+    background-image: url("../../assets/img/mining/v1_icon.png");
+  }
+  .v2 {
+    background-image: url("../../assets/img/mining/v2_icon.png");
+  }
+}
+</style>
 <style lang="scss" scoped>
 .finshed_line {
   width: 100%;
@@ -1030,6 +1124,7 @@ export default {
     background-size: 100% 100%;
   }
 }
+
 @media screen and (min-width: 750px) {
   .h5_wrap {
     display: none;
@@ -1094,7 +1189,7 @@ export default {
         &:nth-of-type(1) {
           display: flex;
           align-items: center;
-          flex: 4;
+          flex: 3;
           span {
             font-size: 16px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -1116,7 +1211,7 @@ export default {
           }
         }
         &:nth-of-type(2) {
-          flex: 2;
+          flex: 3;
           p {
             font-size: 14px;
             font-family: IBMPlexSans;
@@ -1184,6 +1279,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {
@@ -1217,7 +1315,7 @@ export default {
           }
         }
         &:nth-of-type(5) {
-          flex: 4;
+          flex: 3;
           display: flex;
           justify-content: flex-end;
           min-width: 200px;
@@ -1460,6 +1558,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {

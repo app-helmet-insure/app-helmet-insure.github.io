@@ -251,6 +251,10 @@ export const getTokenName = (address) => {
             return 'QSD';
         case '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890':
             return 'TOKEN';
+        case '0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd':
+            return 'xBURGER';
+        case '0xd714d91a169127e11d8fab3665d72e8b7ef9dbe2':
+            return 'BLACK';
         default:
             return '--';
     }

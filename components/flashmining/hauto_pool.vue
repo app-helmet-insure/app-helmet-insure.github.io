@@ -296,6 +296,12 @@ export default {
       return this.$store.state.userInfo;
     },
   },
+  watch: {
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
+  },
   methods: {
     async addTokenFn(token, tokenName, unit) {
       let tokenAddress = getAddress(token);
@@ -309,6 +315,7 @@ export default {
       await addToken(data);
     },
     userInfoWatch(newValue) {
+      console.log(newValue);
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }

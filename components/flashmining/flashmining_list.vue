@@ -449,7 +449,7 @@ export default {
           expired: new Date("2021/03/09 00:00") * 1,
         },
         {
-          miningName: "<i>hTPT</i>&nbsp;Pool",
+          miningName: "<i>BNB500</i>&nbsp;Pool",
           desc: "By hCTK-Helmet LPT",
           earn: "BNB500",
           dueDate: this.getRemainTime("2021/02/29 00:00"),

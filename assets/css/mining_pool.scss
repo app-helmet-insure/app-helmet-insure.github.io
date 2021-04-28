@@ -22,6 +22,30 @@
         flex-shrink: 0;
     }
 }
+.addToken {
+    font-size: 14px;
+    color: #fd7e14;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        color: #fd8a2b;
+    }
+    p {
+        font-weight: 550;
+    }
+    i {
+        margin-left: 4px;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        background-image: url('../../assets/img/icon/sMetaMask.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        flex-shrink: 0;
+    }
+}
 .icon {
     width: 24px;
     height: 24px;

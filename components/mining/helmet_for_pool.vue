@@ -93,6 +93,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HFOR', 'hFOR')">Add hFOR to MetaMask</p>
+        <i></i>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -190,10 +194,12 @@ import {
   getBalance,
   toDeposite,
 } from "~/interface/deposite";
-import { fixD, } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -285,6 +291,17 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let tokenAddress1 = getContract(token);
+      let data = {
+        tokenAddress: tokenAddress || tokenAddress1,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

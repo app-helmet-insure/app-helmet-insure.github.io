@@ -93,6 +93,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('KUN')">Add KUN to MetaMask</p>
+        <i></i>
+      </div>
     </div>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="title">
@@ -173,6 +177,10 @@
           ></i>
         </p>
       </div>
+      <!-- <div class="addToken">
+        <p @click="addTokenFn('QHELMET', 'QHelmet')">Add QHELMET to MetaMask</p>
+        <i></i>
+      </div> -->
     </div>
   </div>
 </template>
@@ -180,22 +188,19 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
-  CangetUNI,
   getPAYA,
-  getDoubleReward,
   exitStake,
   getBalance,
   toDeposite,
 } from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -290,6 +295,16 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let data = {
+        tokenAddress: tokenAddress,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     hadnleShowOnePager(e, onePager) {
       if (e.target.tagName === "I" && onePager) {
         let Earn = onePager;

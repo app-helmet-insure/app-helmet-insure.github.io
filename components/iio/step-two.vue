@@ -76,7 +76,7 @@ import { fixD, addCommom } from "~/assets/js/util.js";
 import { getReward3, earned3, applied3 } from "~/interface/iio.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
-import Information from "./Iio_information.js";
+import Information from "./iio_information.js";
 import moment from "moment";
 export default {
   data() {

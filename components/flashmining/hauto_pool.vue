@@ -100,6 +100,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('BNB500', 'BNB500')">Add BNB500 to MetaMask</p>
+        <i></i>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -182,6 +186,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HAUTO', 'hAUTO')">Add hAUTO to MetaMask</p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>
@@ -189,7 +197,6 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
   getPAYA,
@@ -197,12 +204,12 @@ import {
   getBalance,
   toDeposite,
 } from "~/interface/deposite";
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["TradeType"],
   components: {
@@ -246,7 +253,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      apy: 0,
       MingTime: 0,
       actionType: "deposit",
       fixD,
@@ -282,12 +288,6 @@ export default {
       this.getBalance();
     }, 1000);
   },
-  watch: {
-    userInfo: {
-      handler: "userInfoWatch",
-      immediate: true,
-    },
-  },
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
@@ -296,8 +296,26 @@ export default {
       return this.$store.state.userInfo;
     },
   },
+  watch: {
+    userInfo: {
+      handler: "userInfoWatch",
+      immediate: true,
+    },
+  },
   methods: {
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let tokenAddress1 = getContract(token);
+      let data = {
+        tokenAddress: tokenAddress || tokenAddress1,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
+      console.log(newValue);
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
@@ -318,11 +336,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
     },
     getDownTime() {
       let now = new Date() * 1;

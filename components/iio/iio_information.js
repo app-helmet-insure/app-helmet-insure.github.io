@@ -122,4 +122,59 @@ export default {
             },
         },
     },
+    westarter: {
+        name: 'WeStarter',
+        Token: 'WAR',
+        Time1: 'Apr.27th 21:00',//mining open
+        Time2: 'Apr.30th 21:00',//active start
+        Time3: 'May.01st 21:00',//active end
+        Time1UTC: '2021/04/27 21:00 UTC+8',
+        Time2UTC: '2021/04/30 21:00 UTC+8',
+        Time3UTC: '2021/05/01 21:00 UTC+8',
+        Collateral: '0x910651f81a605a6ef35d05527d24a72fecef8bf0',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x6942B960d5bC6ED07016d6142547cF496DdEc3f1',
+        ActivePrice: 0.25,
+        ProjcetInformation: {
+            ProjectName: 'WeStarter',
+            Distributing: 'Apr. 27th 21:00 SGT - Apr. 29th 21:00 SGT',
+            Activating: 'Apr. 30th 21:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1WAR=0.25BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'WAR',
+            Address: '0x910651f81a605a6ef35d05527d24a72fecef8bf0',
+            Supply: '120,000',
+            TotalSupply: '100,000,000',
+        },
+        About: [
+            'WeStarter is a cross-chain token initial swap platform which based on HECO network. Through the fluency of the product and sufficient industry resources, it carries the requirement of funds and resources for a variety of asset types. With the role of gatekeeper, through the decentralized incentive and governance mechanism of tokens, to achieve the goal of selecting high-quality assets.',
+        ],
+        TokenDistribution: [],
+        TokenDistribution_img: 'wetsarter_info',
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'www.westarter.org',
+                show: 'www.westarter.org',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/westarter_org/',
+                show: 'https://twitter.com/westarter_org/',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/westarter_official',
+                show: 'https://t.me/westarter_official',
+            },
+            Medium: {
+                type: 'Medium',
+                link: 'https://westarter.medium.com/',
+                show: 'https://westarter.medium.com/',
+            },
+        },
+    },
 };

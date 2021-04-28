@@ -100,6 +100,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HMATH', 'hMATH')">Add hMATH to MetaMask</p>
+        <i></i>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -182,6 +186,10 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HDODO', 'hDODO')">Add hDODO to MetaMask</p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>
@@ -203,6 +211,8 @@ import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addToken.js";
 export default {
   props: ["TradeType"],
   components: {
@@ -248,7 +258,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      apy: 0,
       MingTime: 0,
       actionType: "deposit",
       fixD,
@@ -300,6 +309,17 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let tokenAddress1 = getContract(token);
+      let data = {
+        tokenAddress: tokenAddress || tokenAddress1,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -321,11 +341,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copys.destroy();
       });
-    },
-    WatchIndexArray(newValue, value) {
-      if (newValue) {
-        this.getAPY();
-      }
     },
     getDownTime() {
       if (!this.openMining) {

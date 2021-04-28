@@ -163,7 +163,6 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
   CangetUNI,
@@ -173,10 +172,9 @@ import {
   toDeposite,
   getAllHelmet,
   Rewards,
-  RewardsDuration,
 } from "~/interface/deposite";
 import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
 export default {
   props: ["activeType", "TradeType"],
@@ -216,8 +214,6 @@ export default {
       claimLoading: false,
       exitLoading: false,
       helmetPrice: 0,
-      helmetapy: 0,
-      cakeapy: 0,
       isLogin: false,
     };
   },

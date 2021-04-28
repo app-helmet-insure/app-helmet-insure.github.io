@@ -1,4 +1,13 @@
-export const applied3 = async (ContractAdress, RewardAdress) => {
+import { nft } from './index';
+import {
+    getAddress,
+    getContract,
+    getWei,
+    getID,
+} from '~/assets/utils/address-pool.js';
+import bus from '~/assets/js/bus';
+import Message from '~/components/common/Message';
+export const bet = async (ContractAdress, RewardAdress) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {

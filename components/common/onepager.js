@@ -124,4 +124,11 @@ export default {
         'The lifetime of iBLACK is from Apr. 29th 21:00 SGT — Apr. 30th 21:00 SGT. ',
         'Please be sure to activate the iBLACK within the validity period.',
     ],
+    iWAR: [
+        'iWAR is the certificate to swap/activate for WAR.',
+        'Only users who hold iWAR could get WAR during Apr. 30th 21:00 SGT — May 1st 21:00 SGT(iWAR cannot be activated before/after that time period)',
+        'iWAR activate/swap formula: 1 iWAR+0.25BUSD  1 WAR',
+        'The lifetime of iWAR is from Apr. 30th 21:00 SGT — May 1st 21:00 SGT. ',
+        'Please be sure to activate the iWAR within the validity period.',
+    ],
 };

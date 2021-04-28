@@ -74,7 +74,7 @@ import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
-import Information from "./Iio_information.js";
+import Information from "./iio_information.js";
 import { applied3 } from "~/interface/iio.js";
 import moment from "moment";
 

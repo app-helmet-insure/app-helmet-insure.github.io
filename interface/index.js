@@ -7,6 +7,7 @@ import deposite_abi from '~/abi/deposite_abi.json';
 import token_abi from '~/abi/token_abi.json';
 import helmet_abi from '~/abi/helmet_abi.json';
 import iio_abi from '~/abi/iio_abi.json';
+import nft_abi from '~/abi/nft_abi.json';
 import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 
 export const getCurrentAccount = async () => {
@@ -90,4 +91,7 @@ export const HelmetMining = async (address) => {
 };
 export const IIO = async (address) => {
     return await new window.WEB3.eth.Contract(iio_abi.abi, address);
+};
+export const NFT = async (address) => {
+    return await new window.WEB3.eth.Contract(nft_abi.abi, address);
 };

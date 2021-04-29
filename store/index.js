@@ -41,7 +41,16 @@ import { toRounding } from '~/assets/js/util.js';
 import factory_abi from '~/abi/factory_abi.json';
 import { fixDEAdd } from '~/assets/js/util.js';
 export const state = () => ({
-    locales: ['en_US', 'zh_CN', 'ko_KR', 'es_MX', 'ja_JP', 'fr_FR', 'en_ID'],
+    locales: [
+        'en_US',
+        'zh_CN',
+        'ko_KR',
+        'es_MX',
+        'ja_JP',
+        'fr_FR',
+        'en_ID',
+        'fa_IR',
+    ],
     locale: 'en_US',
     chainID: 56,
     localeList: [
@@ -72,6 +81,10 @@ export const state = () => ({
         {
             key: 'en_ID',
             name: 'Indonesia',
+        },
+        {
+            key: 'fa_IR',
+            name: 'فارسی',
         },
     ],
     coinList: [

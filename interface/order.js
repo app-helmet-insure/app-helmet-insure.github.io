@@ -167,7 +167,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     price = window.WEB3.utils.toWei(String(price), getWei(data_.category));
     // window.WEB3.utils.toWei(String(number), unit);
     data.price = price;
-    console.log(data);
     try {
         const Contract = await expERC20(data.currency);
         // 一键判断是否需要授权，给予无限授权

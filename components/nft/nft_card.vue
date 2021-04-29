@@ -12,14 +12,44 @@
     </div>
     <div class="card_bottom"></div>
     <div class="card_button">
-      <button class="one">单次抽卡<span> 1 HELMET</span></button>
-      <button class="ten">10次抽卡<span> 8 HELMET</span></button>
+      <button class="one" @mouseup="handleClickBet">
+        单次抽卡<span> 1 HELMET</span>
+      </button>
+      <button class="ten" @mouseup="handleClickBet10">
+        10次抽卡<span> 8 HELMET</span>
+      </button>
     </div>
   </div>
 </template>
-
 <script>
-export default {};
+import { bet, bet10 } from "~/interface/nft.js";
+export default {
+  data() {
+    return {};
+  },
+  methods: {
+    async handleClickBet() {
+      let Type = "NFT_POOL";
+      let Cost = "NFT_COST";
+      await bet(Type, Cost, (data) => {
+        console.log(data);
+        if (data.status == "success") {
+          this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet" });
+        }
+      });
+    },
+    async handleClickBet10() {
+      let Type = "NFT_POOL";
+      let Cost = "NFT_COST";
+      await bet10(Type, Cost, (data) => {
+        console.log(data);
+        if (data.status == "success") {
+          this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet10" });
+        }
+      });
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>

@@ -2,12 +2,12 @@
   <div class="nft_card">
     <div class="show_card">
       <!-- 正面 -->
-      <div class="positive box">
+      <div
+        class="positive box"
+        ref="positive"
+        :style="rotate ? ' animation: positive 2s linear 0s infinite;' : ''"
+      >
         <div class="positive_card"></div>
-      </div>
-      <!-- 反面 -->
-      <div class="reverse box">
-        <div class="reverse_card"></div>
       </div>
     </div>
     <div class="card_bottom"></div>
@@ -22,19 +22,31 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
+import animation from "~/assets/css/animation.scss";
 import { bet, bet10 } from "~/interface/nft.js";
+Vue.use(animation);
 export default {
   data() {
-    return {};
+    return {
+      rotate: false,
+    };
   },
   methods: {
+    handleAddClass(e) {},
     async handleClickBet() {
       let Type = "NFT_POOL";
       let Cost = "NFT_COST";
       await bet(Type, Cost, (data) => {
-        console.log(data);
-        if (data.status == "success") {
+        if (data.status == "bet_pendding") {
+          this.rotate = true;
+        }
+        if (data.status == "bet_success") {
+          this.rotate = false;
           this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet" });
+        }
+        if (data.status == "bet_error") {
+          this.rotate = false;
         }
       });
     },
@@ -42,9 +54,15 @@ export default {
       let Type = "NFT_POOL";
       let Cost = "NFT_COST";
       await bet10(Type, Cost, (data) => {
-        console.log(data);
-        if (data.status == "success") {
+        if (data.status == "bet_pendding") {
+          this.rotate = true;
+        }
+        if (data.status == "bet_success") {
+          this.rotate = false;
           this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet10" });
+        }
+        if (data.status == "bet_error") {
+          this.rotate = false;
         }
       });
     },
@@ -52,7 +70,24 @@ export default {
 };
 </script>
 
+
 <style lang='scss' scoped>
+@keyframes positive {
+  0% {
+    transform: rotateY(0);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+// @keyframes reverse {
+//   0% {
+//     transform: rotateY(-360deg);
+//   }
+//   100% {
+//     transform: rotateY(0deg);
+//   }
+// }
 .nft_card {
   margin-top: 23px;
   background-image: url("../../assets/img/nft/nft_card_web.png");
@@ -69,27 +104,24 @@ export default {
   .box {
     width: 286px;
     height: 354px;
-    background-image: url("../../assets/img/nft/border_web.png");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    // position: absolute;
+    background-image: url("../../assets/img/nft/border_web.png");
     > div {
       width: 240px;
       height: 310px;
       transition: all 1s;
+      background-image: url("../../assets/img/nft/card_dora.png");
       backface-visibility: hidden;
       border-radius: 10px;
       cursor: pointer;
-      background-image: url("../../assets/img/nft/card_dora.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
     }
-  }
-  .reverse {
-    transform: rotateY(-180deg);
   }
 }
 .card_bottom {

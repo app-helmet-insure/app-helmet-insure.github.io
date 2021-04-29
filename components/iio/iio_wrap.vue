@@ -218,7 +218,6 @@ export default {
       data = data.sort(function (a, b) {
         return a.sort - b.sort;
       });
-      console.log(this.iioData);
       this.iioData = data;
     },
   },

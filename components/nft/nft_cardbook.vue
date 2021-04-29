@@ -4,8 +4,8 @@
       <span>我的卡片<i></i></span>
     </div>
     <div class="nft_cardbook_balance">
-      <p>我的 Dora NFT：2</p>
-      <p>我的待兑换NFT：2</p>
+      <p>我的 Dora NFT：{{ DoraBalance }}</p>
+      <p>我的待兑换NFT：{{ CardBalance }}</p>
     </div>
     <div class="nft_cardbook_cards">
       <div class="one_card">
@@ -14,7 +14,11 @@
             class="dora_piece"
             v-for="item in cardList"
             :key="item.card_name"
-            :style="`background-image:url(${require(`../../assets/img/nft/${item.card_img.toLowerCase()}_Dora.png`)}`"
+            :style="
+              item.CardBalance
+                ? `background-image:url(${require(`../../assets/img/nft/${item.card_img.toLowerCase()}_Dora.png`)}`
+                : ''
+            "
           ></div>
         </div>
         <button>马上兑换</button>
@@ -65,6 +69,8 @@ export default {
   data() {
     return {
       cardList: [],
+      DoraBalance: 0,
+      CardBalance: 0,
     };
   },
   mounted() {
@@ -155,11 +161,13 @@ export default {
       this.cardList = list;
     },
     async getCardBalance() {
+      this.DoraBalance = await balanceOf("NFT_MAKE");
       for (let i = 0; i < this.cardList.length; i++) {
         let item = this.cardList[i];
         let Card = "NFT_" + item.ContractName;
-        let balance = await balanceOf(Card);
+        let balance = Number(await balanceOf(Card));
         item.CardBalance = balance;
+        this.CardBalance += balance;
       }
     },
   },

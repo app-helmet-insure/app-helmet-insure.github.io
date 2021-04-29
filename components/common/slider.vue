@@ -423,7 +423,6 @@ export default {
           height: 30px;
           position: absolute;
           left: 0;
-          z-index: 1;
           top: 0;
         }
         > .icon {

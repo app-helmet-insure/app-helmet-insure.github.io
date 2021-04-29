@@ -173,6 +173,36 @@ export const balanceOf = async (card) => {
             return res;
         });
 };
+export const needClaim = async (type) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let ContarctAdress = type;
+    if (type.indexOf('0x') === -1) {
+        ContarctAdress = getContract(type, charID);
+    }
+    const contract = await NFT(ContarctAdress);
+    return contract.methods
+        .needClaim(account)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+export const needClaim10 = async (type) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let ContarctAdress = type;
+    if (type.indexOf('0x') === -1) {
+        ContarctAdress = getContract(type, charID);
+    }
+    const contract = await NFT(ContarctAdress);
+    return contract.methods
+        .needClaim10(account)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 校验参数

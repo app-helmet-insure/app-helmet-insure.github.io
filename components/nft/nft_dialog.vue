@@ -87,6 +87,8 @@ export default {
     },
     closeDialog() {
       this.$bus.$emit("NFT_DIALOG_STATUS", { flag: false });
+      this.status = "dataFail";
+      this.$bus.$emit("GET_CARD_BALANCE");
     },
   },
 };

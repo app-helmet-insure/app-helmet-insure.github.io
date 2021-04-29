@@ -12,11 +12,17 @@
     </div>
     <div class="card_bottom"></div>
     <div class="card_button">
-      <button class="one" @mouseup="handleClickBet">
+      <button class="one" @mouseup="handleClickBet" v-if="!needClaimFlag">
         单次抽卡<span> 1 HELMET</span>
       </button>
-      <button class="ten" @mouseup="handleClickBet10">
+      <button class="one" @click="openDialog('bet')" v-else>
+        开启我的奖励
+      </button>
+      <button class="ten" @mouseup="handleClickBet10" v-if="!needClaim10Flag">
         10次抽卡<span> 8 HELMET</span>
+      </button>
+      <button class="ten" @click="openDialog('bet10')" v-else>
+        开启我的十连抽奖励
       </button>
     </div>
   </div>
@@ -24,16 +30,30 @@
 <script>
 import Vue from "vue";
 import animation from "~/assets/css/animation.scss";
-import { bet, bet10 } from "~/interface/nft.js";
+import { bet, bet10, needClaim, needClaim10 } from "~/interface/nft.js";
 Vue.use(animation);
 export default {
   data() {
     return {
       rotate: false,
+      needClaimFlag: false,
+      needClaim10Flag: false,
     };
   },
+  mounted() {
+    this.$bus.$on("GET_CARD_BALANCE", () => {
+      this.getNeedCliam();
+      this.getNeedCliam10();
+    });
+    setTimeout(() => {
+      this.getNeedCliam();
+      this.getNeedCliam10();
+    }, 1000);
+  },
   methods: {
-    handleAddClass(e) {},
+    openDialog(action) {
+      this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: action });
+    },
     async handleClickBet() {
       let Type = "NFT_POOL";
       let Cost = "NFT_COST";
@@ -66,6 +86,16 @@ export default {
         }
       });
     },
+    async getNeedCliam() {
+      let Type = "NFT_POOL";
+      this.needClaimFlag = await needClaim(Type);
+      console.log(this.needClaimFlag);
+    },
+    async getNeedCliam10() {
+      let Type = "NFT_POOL";
+      this.needClaim10Flag = await needClaim10(Type);
+      console.log(this.needClaim10Flag);
+    },
   },
 };
 </script>
@@ -80,14 +110,6 @@ export default {
     transform: rotateY(360deg);
   }
 }
-// @keyframes reverse {
-//   0% {
-//     transform: rotateY(-360deg);
-//   }
-//   100% {
-//     transform: rotateY(0deg);
-//   }
-// }
 .nft_card {
   margin-top: 23px;
   background-image: url("../../assets/img/nft/nft_card_web.png");
@@ -109,7 +131,6 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    // position: absolute;
     background-image: url("../../assets/img/nft/border_web.png");
     > div {
       width: 240px;

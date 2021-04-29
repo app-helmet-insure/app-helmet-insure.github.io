@@ -138,7 +138,7 @@ export default {
         ProjcetInformation: {
             ProjectName: 'WeStarter',
             Distributing: 'Apr. 27th 21:00 SGT - Apr. 29th 21:00 SGT',
-            Activating: 'Apr. 30th 21:00 SGT',
+            Activating: 'Apr. 29th 21:00 SGT',
             ActivatePeriod: '24hours',
             ActivatingxPrice: '1WAR=0.25BUSD',
             TicketPrice: '1 Helmet',

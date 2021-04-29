@@ -22,14 +22,11 @@
     <!-- <PHeader></PHeader> -->
     <div class="content">
       <PSlider></PSlider>
-      <div
-        class="content_wrap"
-        :style="routeObj.name == 'nft' ? 'background:#241e26 !important' : ''"
-      >
+      <div class="content_wrap">
         <PHeader :account="true"></PHeader>
         <template>
           <transition name="fade">
-            <nuxt />
+            <nuxt-child />
           </transition>
         </template>
       </div>

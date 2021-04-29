@@ -157,6 +157,31 @@ export const claim10 = async (ContractType, callBack) => {
         console.log(error);
     }
 };
+export const compose = async (ContractType, callBack) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let ContractAdress;
+    if (ContractType.indexOf('0x') === -1) {
+        ContractAdress = getContract(ContractType, charID);
+    }
+    try {
+        const IIOContract = await NFT(ContractAdress);
+        IIOContract.methods
+            .compose()
+            .send({ from: account })
+            .on('transactionHash', function(transactionHash) {
+                callBack({ status: 'compose_pendding' });
+            })
+            .on('receipt', function(receipt) {
+                callBack({ status: 'compose_success' }); // contains the new contract address
+            })
+            .on('error', function(error) {
+                callBack({ status: 'compose_error' });
+            });
+    } catch (error) {
+        console.log(error);
+    }
+};
 export const balanceOf = async (card) => {
     const charID = 56;
     const account = window.CURRENTADDRESS;
@@ -164,7 +189,6 @@ export const balanceOf = async (card) => {
     if (card.indexOf('0x') === -1) {
         CardAdress = getContract(card, charID);
     }
-    console.log(card, CardAdress);
     const contract = await Deposite(CardAdress);
     return contract.methods
         .balanceOf(account)
@@ -198,6 +222,21 @@ export const needClaim10 = async (type) => {
     const contract = await NFT(ContarctAdress);
     return contract.methods
         .needClaim10(account)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+export const composeEnable = async (type) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let ContarctAdress = type;
+    if (type.indexOf('0x') === -1) {
+        ContarctAdress = getContract(type, charID);
+    }
+    const contract = await NFT(ContarctAdress);
+    return contract.methods
+        .composeEnable(account)
         .call()
         .then((res) => {
             return res;

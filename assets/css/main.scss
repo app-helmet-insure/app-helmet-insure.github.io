@@ -33,6 +33,11 @@ button {
     padding: 0px;
     box-sizing: border-box;
 }
+button {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
 html,
 body {
     color: #17173a;

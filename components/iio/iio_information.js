@@ -125,11 +125,11 @@ export default {
     westarter: {
         name: 'WeStarter',
         Token: 'WAR',
-        Time1: 'Apr.27th 21:00',//mining open
-        Time2: 'Apr.30th 21:00',//active start
-        Time3: 'May.01st 21:00',//active end
+        Time1: 'Apr.27th 21:00', //mining open
+        Time2: 'Apr.29th 21:00', //active start
+        Time3: 'May.01st 21:00', //active end
         Time1UTC: '2021/04/27 21:00 UTC+8',
-        Time2UTC: '2021/04/30 21:00 UTC+8',
+        Time2UTC: '2021/04/29 21:00 UTC+8',
         Time3UTC: '2021/05/01 21:00 UTC+8',
         Collateral: '0x910651f81a605a6ef35d05527d24a72fecef8bf0',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
@@ -138,7 +138,7 @@ export default {
         ProjcetInformation: {
             ProjectName: 'WeStarter',
             Distributing: 'Apr. 27th 21:00 SGT - Apr. 29th 21:00 SGT',
-            Activating: 'Apr. 30th 21:00 SGT',
+            Activating: 'Apr. 29th 21:00 SGT',
             ActivatePeriod: '24hours',
             ActivatingxPrice: '1WAR=0.25BUSD',
             TicketPrice: '1 Helmet',

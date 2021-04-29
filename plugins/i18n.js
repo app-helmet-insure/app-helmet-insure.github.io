@@ -18,6 +18,7 @@ export default ({ app, store }) => {
             ja_JP: require('~/locales/ja_JP.json'),
             fr_FR: require('~/locales/fr_FR.json'),
             en_ID: require('~/locales/en_ID.json'),
+            fa_IR: require('~/locales/fa_IR.json'),
         },
     });
 

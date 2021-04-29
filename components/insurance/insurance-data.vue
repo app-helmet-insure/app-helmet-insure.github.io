@@ -17,12 +17,12 @@
             <label>{{ $t("Banner.LongValue") }}</label>
             <span v-if="isLogin">
               <template>
-                <countTo
+                $<countTo
                   :startVal="Number(0)"
                   :endVal="Number(totalHelmetsBorrowedVolume)"
                   :duration="2000"
                   :decimals="2"
-                />$
+                />
               </template>
             </span>
             <span v-else>--</span>
@@ -35,7 +35,7 @@
           <p>
             <label>
               <span>{{ $t("Banner.HelmetPcice") }}</span>
-              <span> {{ isLogin ? helmetPrice : "--" }} USD </span>
+              <span> $ {{ isLogin ? helmetPrice : "--" }}</span>
             </label>
             <span>
               From:&nbsp;

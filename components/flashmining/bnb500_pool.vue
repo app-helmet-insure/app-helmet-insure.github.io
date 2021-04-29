@@ -220,7 +220,7 @@ import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
 import { getAddress, getContract } from "~/assets/utils/address-pool.js";
-import addToken from "~/assets/utils/addToken.js";
+import addToken from "~/assets/utils/addtoken.js";
 export default {
   components: {
     countTo,

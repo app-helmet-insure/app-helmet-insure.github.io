@@ -22,13 +22,30 @@
       </div>
       <div class="eight_card">
         <div v-for="item in cardList" :key="item.card_name" class="item_card">
-          <div class="item_card_wrap">
+          <div
+            :class="
+              item.CardBalance != 0
+                ? 'haveCard item_card_wrap'
+                : 'zeroCard item_card_wrap'
+            "
+            :style="`--itemShadow:${item.boxShadow}; --itemBorder:${item.border}`"
+          >
+            <i class="balanceCard" v-if="item.CardBalance != 0">{{
+              item.CardBalance > 99 ? 99 : item.CardBalance
+            }}</i>
             <div>
               <p>{{ item.card_name }}</p>
               <img
+                v-if="item.CardBalance != 0"
+                :src="require(`~/assets/img/nft/have_${item.card_img}.png`)"
+                alt=""
+              />
+              <img
+                v-else
                 :src="require(`~/assets/img/nft/zero_${item.card_img}.png`)"
                 alt=""
               />
+
               <section>
                 <button>share</button>
                 <button>Donate</button>
@@ -43,6 +60,7 @@
 </template>
 
 <script>
+import { balanceOf } from "~/interface/nft.js";
 export default {
   data() {
     return {
@@ -51,6 +69,12 @@ export default {
   },
   mounted() {
     this.dataInit();
+    setTimeout(() => {
+      this.getCardBalance();
+    }, 1000);
+    this.$bus.$on("GET_CARD_BALANCE", () => {
+      this.getCardBalance();
+    });
   },
   methods: {
     dataInit() {
@@ -59,44 +83,84 @@ export default {
           card_name: "Helmet",
           card_img: "Helmet",
           card_adress: "Helmet",
+          ContractName: "NFT1",
+          CardBalance: 0,
+          boxShadow: "0px 0px 16px 0px #ffdf00;0px 0px 32px 0px #FFB04D inset;",
+          border: "1px solid #FFDF00",
         },
         {
           card_name: "Tenet",
           card_img: "Tenet",
           card_adress: "Tenet",
+          ContractName: "NFT5",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #494002 inset",
+          border: "none",
         },
         {
           card_name: "PancakeSwap",
           card_img: "Pancake",
           card_adress: "Pancake",
+          ContractName: "NFT2",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #804005 inset",
+          border: "none",
         },
         {
           card_name: "Ditto",
           card_img: "Ditto",
           card_adress: "Ditto",
+          ContractName: "NFT6",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #FCA1E7 inset",
+          border: "none",
         },
         {
           card_name: "Soteria",
           card_img: "Soteria",
           card_adress: "Soteria",
+          ContractName: "NFT3",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #F18F50 inset",
+          border: "none",
         },
         {
           card_name: "Yieldwatch",
           card_img: "Yieldwatch",
           card_adress: "Watch",
+          ContractName: "NFT7",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #F1DB90 inset",
+          border: "none",
         },
         {
           card_name: "Berry",
           card_img: "Berry",
           card_adress: "Berry",
+          ContractName: "NFT4",
+          CardBalance: 0,
+          boxShadow: "0px 0px 32px 0px #CB83FF inset",
+          border: "none",
         },
         {
           card_name: "Belt",
           card_img: "Belt",
           card_adress: "Belt",
+          ContractName: "NFT8",
+          CardBalance: 0,
+          boxShadow: "0px 0px 22px 0px #685155 inset",
+          border: "none",
         },
       ];
       this.cardList = list;
+    },
+    async getCardBalance() {
+      for (let i = 0; i < this.cardList.length; i++) {
+        let item = this.cardList[i];
+        let Card = "NFT_" + item.ContractName;
+        let balance = await balanceOf(Card);
+        item.CardBalance = balance;
+      }
     },
   },
 };
@@ -215,21 +279,47 @@ export default {
       .item_card {
         width: 25%;
       }
+      .zeroCard {
+        box-shadow: 0px 0px 32px 0px #aeaeae inset;
+        p {
+          color: #8c8c8c;
+        }
+      }
+      .haveCard {
+        box-shadow: var(--itemShadow);
+        border: var(--itemBorder);
+      }
+      .balanceCard {
+        width: 21px;
+        height: 21px;
+        background: #fd7e14;
+        position: absolute;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-family: FredokaOne-Regular, FredokaOne;
+        color: #ffffff;
+        line-height: 12px;
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
+      }
       .item_card_wrap {
         margin: 0 auto;
         width: 140px;
         height: 180px;
         background: #ffffff;
-        box-shadow: 0px 0px 32px 0px #aeaeae inset;
-
         border-radius: 6px;
+        position: relative;
         > div {
           width: 100%;
           padding: 20px;
+
           > p {
             font-size: 12px;
             font-family: FredokaOne-Regular;
-            color: #8c8c8c;
             line-height: 12px;
             text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
             text-align: center;

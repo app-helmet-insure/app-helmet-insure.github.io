@@ -10,7 +10,7 @@
             <span>{{ CardFilter(item) }}</span>
             <img
               :src="
-                require(`~/assets/img/nft/${
+                require(`~/assets/img/nft/have_${
                   CardFilter(item) || 'mysterious'
                 }.png`)
               "
@@ -19,7 +19,10 @@
           </div>
         </div>
         <div class="button">
-          <button @click="handleClaim(nft_action)">开奖</button>
+          <button @click="handleClaim(nft_action)" v-if="status == 'dataFail'">
+            开奖
+          </button>
+          <button @click="closeDialog()" v-else>领取</button>
         </div>
       </div>
     </div>
@@ -35,9 +38,14 @@ export default {
       nft_action: "bet",
       nft_data: [],
       CardFilter,
+      status: "dataFail",
     };
   },
-  watch: {},
+  watch: {
+    nft_data(newValue) {
+      this.nft_data = newValue;
+    },
+  },
   mounted() {
     if (this.nft_action == "bet") {
       this.nft_data = ["a"];
@@ -60,12 +68,25 @@ export default {
       if (action == "bet") {
         claim(Type, (data) => {
           console.log(data);
+          if (data.status == "dataSuccess") {
+            this.nft_data = data.data;
+            this.status = data.status;
+            this.$bus.$emit("GET_CARD_BALANCE");
+          }
         });
       } else {
         claim10(Type, (data) => {
           console.log(data);
+          if (data.status == "dataSuccess") {
+            this.nft_data = data.data;
+            this.status = data.status;
+            this.$bus.$emit("GET_CARD_BALANCE");
+          }
         });
       }
+    },
+    closeDialog() {
+      this.$bus.$emit("NFT_DIALOG_STATUS", { flag: false });
     },
   },
 };
@@ -103,6 +124,7 @@ export default {
       transform: translateX(-50%);
       left: 50%;
       top: -48px;
+      z-index: 1;
       p {
         font-size: 15px;
         font-family: PingFangSC-Regular;
@@ -128,7 +150,6 @@ export default {
         }
       }
       .button {
-        height: 64px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -156,6 +177,9 @@ export default {
       background-size: 100% 100%;
       display: flex;
       flex-direction: column;
+      .button {
+        height: 64px;
+      }
     }
     .bet10 {
       width: 543px;
@@ -163,6 +187,11 @@ export default {
       background-image: url("../../assets/img/nft/dialog_bg_ten.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
+      display: flex;
+      flex-direction: column;
+      .button {
+        height: 52px;
+      }
     }
     .bet_wrap {
       width: 100%;
@@ -170,24 +199,52 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .card_item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-items: center;
-      padding: 12px;
-      span {
-        display: block;
-        height: 8px;
-        font-size: 8px;
-        font-family: FredokaOne-Regular, FredokaOne;
-        color: #fd7e14;
-        line-height: 8px;
-        text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+      > .card_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        padding: 20px 15px 20px 15px;
+        span {
+          display: block;
+          height: 8px;
+          font-size: 8px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          color: #fd7e14;
+          line-height: 8px;
+          text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+        }
+        img {
+          margin-top: 5px;
+        }
       }
-      img {
-        margin-top: 5px;
+    }
+    .bet10_wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 35px 23px 15px 23px;
+      flex: 1;
+      > .card_item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        padding: 20px 15px 20px 15px;
+        span {
+          display: block;
+          height: 8px;
+          font-size: 8px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          color: #fd7e14;
+          line-height: 8px;
+          text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+        }
+        img {
+          margin-top: 5px;
+        }
       }
     }
   }

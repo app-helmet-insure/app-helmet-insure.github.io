@@ -1,4 +1,4 @@
-import { NFT, expERC20 } from './index';
+import { NFT, expERC20, Deposite } from './index';
 import {
     getAddress,
     getContract,
@@ -115,7 +115,11 @@ export const claim = async (ContractType, callBack) => {
                 callBack({ status: 'error' });
             })
             .then((res) => {
-                console.log(res, 'bet');
+                let data = {
+                    status: 'dataSuccess',
+                    data: [res.events.Claim.returnValues[1]],
+                };
+                callBack(data);
             });
     } catch (error) {
         console.log(error);
@@ -143,11 +147,31 @@ export const claim10 = async (ContractType, callBack) => {
                 callBack({ status: 'error' });
             })
             .then((res) => {
-                console.log(res, 'bet10');
+                let data = {
+                    status: 'dataSuccess',
+                    data: res.events.Claim10.returnValues[1],
+                };
+                callBack(data);
             });
     } catch (error) {
         console.log(error);
     }
+};
+export const balanceOf = async (card) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let CardAdress = card;
+    if (card.indexOf('0x') === -1) {
+        CardAdress = getContract(card, charID);
+    }
+    console.log(card, CardAdress);
+    const contract = await Deposite(CardAdress);
+    return contract.methods
+        .balanceOf(account)
+        .call()
+        .then((res) => {
+            return res;
+        });
 };
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {

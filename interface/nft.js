@@ -13,21 +13,21 @@ export const CardFilter = (address) => {
         return;
     }
     switch (tokenAddress) {
-        case '0xb8ed5c338c55ee6044d526186e468f79233db260':
+        case '0x8ae671d05937c78c4735c997974e38f54814d70a':
             return 'Helmet';
-        case '0x8c0e49434fb47bfa608f38d791067fc1724139ff':
+        case '0x6a2dfb87f5923a0d6ad8e5127ed001cde29fe77a':
             return 'Pancake';
-        case '0xbd84ba7380c085741f56efa27a590f22bda41cab':
+        case '0xf56197bc80c70024c925a2cfe8ce27a5be7835d7':
             return 'Soteria';
-        case '0x36d2dbaf48c549de81986283ea97be4001fd71d8':
+        case '0x18869bc6a45ca83880d2564b249e61a793b794a1':
             return 'Berry';
-        case '0xc472fd7f7e082cea78cf7cf46804eb0c2fa0f5c7':
+        case '0x05f7bd01433bfab7b8511788e678de5fa92e276a':
             return 'Tenet';
-        case '0x179783849e72bf5359c7e7e766f23853b097a979':
+        case '0xb962b860f880bb461eeb323fc33dc9efce157dac':
             return 'Ditto';
-        case '0x5d48e0feb8d4771fa87ab5224f4dd24d5df399ad':
+        case '0x7ece489d4b363f8a51ff35f8769da11231160b8d':
             return 'Yieldwatch';
-        case '0x8b1040c273d09e6eb92f5a9b9febd629d872a3e7':
+        case '0x15b626735442f2aea386e4ec81de603902e344aa':
             return 'Belt';
         default:
             return '';

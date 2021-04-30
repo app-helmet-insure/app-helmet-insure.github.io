@@ -5,8 +5,7 @@
       <div class="nft_window_bg">
         <div class="nft_share" v-if="action == 'share'">
           <div>
-            我在 Helmet 抽卡获得 {{ card_Name }} NFT, 快来和我交换. 集齐 8 个
-            NFT 可瓜分总奖池; 活动地址:
+            {{ $t("NFT.Text1", { card_Name: card_Name }) }}
             <a href="https://app.helmet.insure/#/nft"
               >https://app.helmet.insure/#/nft</a
             >
@@ -17,15 +16,15 @@
             @click="
               copyAdress(
                 $event,
-                `我在Helmet抽卡获得${card_Name}NFT,快来和我交换集齐8个
-                 NFT可瓜分总奖池;活动地址:https://app.helmet.insure/#/nft`
+                $t('NFT.Text1', { card_Name: card_Name }) +
+                  `https://app.helmet.insure/#/nft`
               )
             "
-            >复制</span
+            >{{ $t("NFT.Copy") }}</span
           >
         </div>
         <div class="nft_send" v-if="action == 'donate'">
-          <label>请输入地址</label>
+          <label>{{ $t("NFT.EnterAdress") }}</label>
           <input type="text" />
           <div>
             <i
@@ -33,14 +32,19 @@
               :class="checkFlag ? 'checktrue checkbox' : 'checkfalse checkbox'"
             ></i>
             <p>
-              请自行确认地址是否正确, 一旦发送无法撤回,发送
-              {{ card_Name }} NFT纯属个人行为, 与平台无关
+              {{ $t("NFT.Text1", { card_Name: card_Name }) }}
             </p>
           </div>
           <div class="button">
-            <button @click="closeWindow">取消</button>
-            <button>赠送</button>
+            <button @click="closeWindow">{{ $t("NFT.Cancel") }}</button>
+            <button>{{ $t("NFT.Send") }}</button>
           </div>
+        </div>
+        <div class="nft_adress" v-if="action == 'adress'">
+          <p>
+            <span> {{ card_Name }}NFT:</span>
+            <span> {{ getContract(`NFT_${ContractName}`) }}</span>
+          </p>
         </div>
       </div>
     </div>
@@ -50,6 +54,7 @@
 <script>
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+import { getContract } from "~/assets/utils/address-pool.js";
 export default {
   data() {
     return {
@@ -58,6 +63,7 @@ export default {
       checkFlag: false,
       windowFlag: false,
       ContractName: "",
+      getContract,
     };
   },
   mounted() {
@@ -264,6 +270,24 @@ export default {
       }
     }
   }
+  .nft_adress {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+    p {
+      display: flex;
+      flex-direction: column;
+      width: 339px;
+      height: 42px;
+      font-size: 15px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #d47a52;
+      line-height: 21px;
+    }
+  }
 }
 @media screen and(max-width:750px) {
   .nft_window_mask {
@@ -463,6 +487,24 @@ export default {
           text-shadow: 0px 2px 0px #9383e0, 0px 2px 5px #e2dcff;
         }
       }
+    }
+  }
+  .nft_adress {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+    p {
+      display: flex;
+      flex-direction: column;
+      width: 339px;
+      height: 42px;
+      font-size: 15px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #d47a52;
+      line-height: 21px;
     }
   }
 }

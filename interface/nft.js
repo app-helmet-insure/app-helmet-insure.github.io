@@ -197,6 +197,26 @@ export const balanceOf = async (card) => {
             return res;
         });
 };
+export const getBalance = async (card, address) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let CardAdress = card;
+    let PoolAdress;
+    if (card.indexOf('0x') === -1) {
+        CardAdress = getContract(card, charID);
+    }
+    if (address && address.indexOf('0x') === -1) {
+        PoolAdress = getContract(address, charID);
+    }
+    const contract = await Deposite(CardAdress);
+    return contract.methods
+        .balanceOf(PoolAdress)
+        .call()
+        .then((res) => {
+            let tocurrcy = card;
+            return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
+        });
+};
 export const needClaim = async (type) => {
     const charID = 56;
     const account = window.CURRENTADDRESS;

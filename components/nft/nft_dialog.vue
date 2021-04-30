@@ -2,7 +2,7 @@
   <div class="nft_dialog_mask" v-if="nft_flag">
     <div class="nft_dialog">
       <div class="nft_dialog_title">
-        <p>手气爆棚</p>
+        <p>{{ $t("NFT.Suprice") }}</p>
       </div>
       <div :class="`nft_dialog_bg ${nft_action}`">
         <div :class="`card_wrap ${nft_action}_wrap`">
@@ -25,9 +25,11 @@
         </div>
         <div class="button">
           <button @click="handleClaim(nft_action)" v-if="status == 'dataFail'">
-            开奖
+            {{ $t("NFT.open") }}
           </button>
-          <button @click="closeDialog()" v-else>领取</button>
+          <button @click="closeDialog()" v-else>
+            {{ $t("NFT.getReward") }}
+          </button>
         </div>
       </div>
     </div>
@@ -204,7 +206,7 @@ export default {
       }
     }
     .bet {
-      width: 100%;
+      width: 97%;
       height: 244px;
       background-image: url("../../assets/img/nft/dialog_bg_one.png");
       background-repeat: no-repeat;
@@ -373,8 +375,7 @@ export default {
       }
     }
     .bet10 {
-      width: 543px;
-      height: 363px;
+      width: 95%;
       background-image: url("../../assets/img/nft/dialog_bg_ten.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
@@ -415,10 +416,12 @@ export default {
       height: 100%;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
       padding: 35px 23px 15px 23px;
       flex: 1;
       > .card_item {
+        margin: 2px;
         display: flex;
         flex-direction: column;
         align-items: center;

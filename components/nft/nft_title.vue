@@ -1,9 +1,9 @@
 <template>
   <div class="nft_title">
-    <div class="nft_name">奖池</div>
+    <div class="nft_name">{{ $t("NFT.Reward") }}</div>
     <div class="nft_earn">
       <span
-        v-for="(item, index) in '8,292,429'"
+        v-for="(item, index) in RewardPoll"
         :key="index"
         :class="isNaN(item) ? '' : 'radius'"
       >
@@ -11,14 +11,77 @@
       </span>
     </div>
     <div class="nft_time">
-      <p><i></i><span> 距奖池兑换 </span> 12:00:00</p>
+      <p>
+        <i></i><span> {{ $t("NFT.CanSwap") }} </span> {{ Time.day
+        }}{{ $t("Content.DayM") }}{{ Time.hour }}{{ $t("Content.HourM")
+        }}{{ Time.minute }}{{ $t("Content.MinM") }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import "~/assets/font/font.css";
-export default {};
+import { getBalance } from "~/interface/nft.js";
+import { addCommom } from "~/assets/js/util.js";
+import moment from "moment";
+export default {
+  data() {
+    return {
+      RewardPoll: "0",
+      Time: {
+        day: "00",
+        hour: "00",
+        minute: "00",
+      },
+    };
+  },
+  mounted() {
+    this.$bus.$on("GET_CARD_BALANCE", () => {
+      this.getRewardNumber();
+    });
+    setTimeout(() => {
+      this.getRewardNumber();
+    }, 1000);
+    this.getRemainTime();
+  },
+  methods: {
+    async getRewardNumber() {
+      let num = await getBalance("NFT_COST", "NFT_POOL");
+      this.RewardPoll = addCommom(num, 0);
+    },
+    getRemainTime() {
+      let now = new Date() * 1;
+      let dueDate = new Date(moment("2021/05/10 00:00 UTC+8")) * 1;
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        this.Time = template;
+      } else {
+        template = {
+          day: "00",
+          hour: "00",
+          minute: "00",
+        };
+        this.Time = template;
+      }
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>
@@ -65,7 +128,7 @@ export default {};
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 170px;
+      width: 205px;
       position: relative;
       padding: 0px 10px 0px 15px;
       background: linear-gradient(180deg, #4f3e5b 0%, #4d3e57 100%);
@@ -140,7 +203,7 @@ export default {};
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 160px;
+      width: 185px;
       position: relative;
       padding: 0px 10px 0px 15px;
       background: linear-gradient(180deg, #4f3e5b 0%, #4d3e57 100%);

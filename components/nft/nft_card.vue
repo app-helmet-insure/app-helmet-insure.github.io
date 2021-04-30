@@ -13,16 +13,16 @@
     <div class="card_bottom"></div>
     <div class="card_button">
       <button class="one" @mouseup="handleClickBet" v-if="!needClaimFlag">
-        单次抽卡<span> 1 HELMET</span>
+        {{ $t("NFT.OneCheck") }}<span> 1 HELMET</span>
       </button>
       <button class="one" @click="openDialog('bet')" v-else>
-        开启我的奖励
+        {{ $t("NFT.OpenOne") }}
       </button>
       <button class="ten" @mouseup="handleClickBet10" v-if="!needClaim10Flag">
-        10次抽卡<span> 8 HELMET</span>
+        {{ $t("NFT.TenCheck") }}<span> 8 HELMET</span>
       </button>
       <button class="ten" @click="openDialog('bet10')" v-else>
-        开启我的十连抽奖励
+        {{ $t("NFT.OpenTen") }}
       </button>
     </div>
   </div>

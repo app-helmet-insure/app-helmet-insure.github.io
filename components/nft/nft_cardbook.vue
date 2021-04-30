@@ -1,11 +1,11 @@
 <template>
   <div class="nft_cardbook">
     <div class="nft_cardbook_title">
-      <span>我的卡片<i></i></span>
+      <span>{{ $t("NFT.MyCard") }}<i></i></span>
     </div>
     <div class="nft_cardbook_balance">
-      <p>我的 Dora NFT：{{ DoraBalance }}</p>
-      <p>我的待兑换NFT：{{ CardBalance }}</p>
+      <p>{{ $t("NFT.My") }} Dora NFT：{{ DoraBalance }}</p>
+      <p>{{ $t("NFT.MyCanSwap") }}NFT：{{ CardBalance }}</p>
     </div>
     <div class="nft_cardbook_cards">
       <div class="one_card">
@@ -26,10 +26,12 @@
           @click="handleClickSwap"
           v-if="composeEnableFlag"
         >
-          马上兑换
+          {{ $t("NFT.ToSwap") }}
         </button>
-        <button class="unAble" v-else>卡片不足</button>
-        <a>查看 Dora NFT 合约地址</a>
+        <button class="unAble" v-else>{{ $t("NFT.unSwap") }}</button>
+        <a @click="openWindow('adress', item)"
+          >{{ $t("NFT.Show") }} Dora {{ $t("NFT.Adress") }}
+        </a>
       </div>
       <div class="eight_card">
         <div v-for="item in cardList" :key="item.card_name" class="item_card">
@@ -62,7 +64,9 @@
                 <button @click="openWindow('donate', item)">Donate</button>
               </section>
             </div>
-            <a>{{ item.card_adress }}-NFT 合约地址</a>
+            <a @click="openWindow('adress', item)"
+              >{{ item.card_adress }}-NFT {{ $t("NFT.Adress") }}</a
+            >
           </div>
         </div>
       </div>
@@ -171,14 +175,16 @@ export default {
       this.cardList = list;
     },
     async getCardBalance() {
+      let CardBalance = 0;
       this.DoraBalance = await balanceOf("NFT_MAKE");
       for (let i = 0; i < this.cardList.length; i++) {
         let item = this.cardList[i];
         let Card = "NFT_" + item.ContractName;
         let balance = Number(await balanceOf(Card));
         item.CardBalance = balance;
-        this.CardBalance += balance;
+        CardBalance += balance;
       }
+      this.CardBalance = CardBalance;
     },
     async getComposeEnable() {
       let Type = "NFT_POOL";

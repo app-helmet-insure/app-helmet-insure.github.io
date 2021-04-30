@@ -25,7 +25,7 @@
         </div>
         <div class="nft_send" v-if="action == 'donate'">
           <label>{{ $t("NFT.EnterAdress") }}</label>
-          <input type="text" />
+          <input type="text" v-model="ToAdress" />
           <div>
             <i
               @click="handleCheck"
@@ -37,7 +37,7 @@
           </div>
           <div class="button">
             <button @click="closeWindow">{{ $t("NFT.Cancel") }}</button>
-            <button>{{ $t("NFT.Send") }}</button>
+            <button @click="Send">{{ $t("NFT.Send") }}</button>
           </div>
         </div>
         <div class="nft_adress" v-if="action == 'adress'">
@@ -55,6 +55,7 @@
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 import { getContract } from "~/assets/utils/address-pool.js";
+import { NFTContract } from "~/interface/index";
 export default {
   data() {
     return {
@@ -64,6 +65,7 @@ export default {
       windowFlag: false,
       ContractName: "",
       getContract,
+      ToAdress: "",
     };
   },
   mounted() {
@@ -97,6 +99,14 @@ export default {
     },
     closeWindow() {
       this.$bus.$emit("NFT_WINDOW_STATUS", { flag: false });
+    },
+    async Send() {
+      const MyContract = await NFTContract(
+        "0xBcE765FB9497942Fe854188E79A056bAaEe5c7AC"
+      );
+      await MyContract.methods
+        .transferFrom(window.CURRENTADDRESS, this.ToAdress, "1")
+        .send({ from: window.CURRENTADDRESS });
     },
   },
 };
@@ -190,14 +200,13 @@ export default {
     display: flex;
     flex-direction: column;
     label {
-      width: 70px;
       height: 14px;
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: rgba(23, 23, 58, 0.7);
       line-height: 14px;
-      margin-top: 44px;
+      margin-top: 34px;
     }
     input {
       margin-top: 20px;
@@ -239,7 +248,7 @@ export default {
     }
     .button {
       display: flex;
-      margin-top: 26px;
+      margin-top: 16px;
       align-items: center;
       justify-content: center;
       button {

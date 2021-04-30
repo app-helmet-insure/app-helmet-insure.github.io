@@ -9,7 +9,10 @@
     </div>
     <div class="nft_cardbook_cards">
       <div class="one_card">
-        <div class="dora_card">
+        <div
+          class="dora_card"
+          :style="rotate ? ' animation: cardItem 2s linear 0s infinite;' : ''"
+        >
           <div
             class="dora_piece"
             v-for="item in cardList"
@@ -28,8 +31,13 @@
         >
           {{ $t("NFT.ToSwap") }}
         </button>
-        <button class="unAble" v-else>{{ $t("NFT.unSwap") }}</button>
-        <a @click="openWindow('adress', item)"
+        <button class="unAble" @click="handleClickSwap" v-else>
+          {{ $t("NFT.unSwap") }}
+        </button>
+        <a
+          @click="
+            openWindow('adress', { card_name: 'Dora', ContractName: 'MAKE' })
+          "
           >{{ $t("NFT.Show") }} Dora {{ $t("NFT.Adress") }}
         </a>
       </div>
@@ -76,6 +84,9 @@
 
 <script>
 import { balanceOf, compose, composeEnable } from "~/interface/nft.js";
+import Vue from "vue";
+import animation from "~/assets/css/animation.scss";
+Vue.use(animation);
 export default {
   data() {
     return {
@@ -83,6 +94,7 @@ export default {
       DoraBalance: 0,
       CardBalance: 0,
       composeEnableFlag: false,
+      rotate: false,
     };
   },
   mounted() {
@@ -193,8 +205,15 @@ export default {
     handleClickSwap() {
       let Type = "NFT_POOL";
       compose(Type, (data) => {
+        if (data.status == "compose_pendding") {
+          this.rotate = true;
+        }
         if (data.status == "compose_success") {
           this.getCardBalance();
+          this.rotate = false;
+        }
+        if (data.status == "compose_error") {
+          this.rotate = false;
         }
       });
     },
@@ -408,6 +427,7 @@ export default {
               display: flex;
               justify-content: space-between;
               button {
+                visibility: hidden;
                 height: 20px;
                 padding: 0 4px;
                 font-size: 12px;
@@ -632,6 +652,7 @@ export default {
               display: flex;
               justify-content: space-between;
               button {
+                visibility: hidden;
                 height: 20px;
                 padding: 0 4px;
                 font-size: 12px;

@@ -12,9 +12,20 @@
     </div>
     <div class="nft_time">
       <p>
-        <i></i><span> {{ $t("NFT.CanSwap") }} </span> {{ Time.day
-        }}{{ $t("Content.DayM") }}{{ Time.hour }}{{ $t("Content.HourM")
-        }}{{ Time.minute }}{{ $t("Content.MinM") }}
+        <i></i
+        ><span>
+          {{
+            $t("NFT.CanSwap", {
+              time:
+                Time.day +
+                $t("Content.DayM") +
+                Time.hour +
+                $t("Content.HourM") +
+                Time.minute +
+                $t("Content.MinM"),
+            })
+          }}
+        </span>
       </p>
     </div>
   </div>

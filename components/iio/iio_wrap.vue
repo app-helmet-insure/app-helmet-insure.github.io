@@ -128,7 +128,7 @@ export default {
           warnupTimeUTC: "2021/04/24 20:00 UTC+8",
           distributingTimeUTC: "2021/04/26 20:00 UTC+8",
           activatingTimeUTC: "2021/04/29 21:00 UTC+8",
-          finishedTimeUTC: "2021/04/30 21:00 UTC+8",
+          finishedTimeUTC: "2021/05/04 21:00 UTC+8",
           link: "https://www.chainswap.exchange/",
           enterbutton: true,
           open: true,

@@ -212,6 +212,11 @@
             :activeType="activeType"
             :TradeType="'ALL'"
           ></HelmetBurgerPool>
+          <HelmetXburgerPool
+            v-if="activeMining == 'bhelmet_xburger' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          ></HelmetXburgerPool>
         </div>
       </div>
     </div>
@@ -380,6 +385,11 @@
           :activeType="activeType"
           :TradeType="activeType"
         ></HelmetMdxPool>
+        <HelmetXburgerPool
+          v-if="activeMining == 'bhelmet_xburger'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        ></HelmetXburgerPool>
         <HelmetDodoPool
           v-if="activeMining == 'helmet_dodo'"
           :activeType="activeType"
@@ -443,6 +453,7 @@ import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
 import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
+import HelmetXburgerPool from "~/components/mining/helmet_xburger.vue";
 import moment from "moment";
 
 export default {
@@ -458,6 +469,7 @@ export default {
     HelmetForPool,
     HelmetBnbPool,
     HelmetDodoPool,
+    HelmetXburgerPool,
   },
   data() {
     return {
@@ -472,6 +484,7 @@ export default {
         helmet_dodo: 0,
         helmet_for: 0,
         helmet_burger: 0,
+        bhelmet_xburger: 0,
       },
       miningList: [],
       activeType: "",
@@ -600,15 +613,15 @@ export default {
           earnNum: "two",
           earn: "bhelmet_mdx",
           earnImg: true,
-          dueDate: this.getRemainTime("2021/05/15 00:00"),
           openDate: this.getMiningTime("2021/04/15 00:00"),
+          dueDate: this.getRemainTime("2021/05/15 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["bhelmet_mdx"] || "--",
-          expired: new Date("2021/05/15 00:00") * 1,
           started: new Date("2021/04/15 00:00") * 1,
+          expired: new Date("2021/05/15 00:00") * 1,
         },
         {
           miningName: "HELMET&nbsp;POOL",
@@ -626,48 +639,65 @@ export default {
           yearEarn: apyArray["helmet"] || "--",
         },
         {
+          miningName: "HELMET-hxBURGER BLP",
+          earn: "bhelmet_xburger",
+          earnImg: true,
+          earnNum: "two",
+          openDate: this.getMiningTime("2021/05/02 00:00"),
+          dueDate: this.getRemainTime("2021/05/21 00:00"),
+          combo: false,
+          flash: false,
+          info: true,
+          earnName: "APY",
+          compound: false,
+          onePager: false,
+          yearEarn: apyArray["bhelmet_xburger"] || "--",
+          started: new Date("2021/05/02 00:00") * 1,
+          expired: new Date("2021/05/21 00:00") * 1,
+        },
+        {
           miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",
           earnImg: false,
           earnNum: "one",
-          dueDate: this.getRemainTime("2021/04/17 00:00"),
           openDate: this.getMiningTime("2021/04/10 00:00"),
+          dueDate: this.getRemainTime("2021/04/17 00:00"),
           serial: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["qfei"] || "--",
-          expired: new Date("2021/04/17 00:00") * 1,
           started: new Date("2021/04/10 00:00") * 1,
+          expired: new Date("2021/04/17 00:00") * 1,
         },
         {
           miningName: "<i>QFEI</i>-QSD&nbsp;DLP",
           earn: "kun",
           earnImg: true,
           earnNum: "one",
-          dueDate: this.getRemainTime("2021/05/02 00:00"),
           openDate: this.getMiningTime("2021/04/12 00:00"),
+          dueDate: this.getRemainTime("2021/05/02 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: "QFEI",
           yearEarn: apyArray["kun"] || "--",
-          expired: new Date("2021/05/02 00:00") * 1,
           started: new Date("2021/04/12 00:00") * 1,
+          expired: new Date("2021/05/02 00:00") * 1,
         },
         {
           miningName: "HELMET-KUN&nbsp;DLP",
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
-          dueDate: this.getRemainTime("2021/05/11 00:00"),
           openDate: this.getMiningTime("2021/04/21 00:00"),
+          dueDate: this.getRemainTime("2021/05/11 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          expired: new Date("2021/05/10 00:00") * 1,
           started: new Date("2021/04/21 00:00") * 1,
+          expired: new Date("2021/05/10 00:00") * 1,
           yearEarn: apyArray["qhelmet"] || "--",
         },
         {
@@ -739,7 +769,7 @@ export default {
       this.HELMET_hFOR_LP_APY();
       this.HELMET_hBURGER_LP_APY();
       this.HELMET_MDX_LP_APY();
-      console.log(this.apyArray);
+      this.BHELMET_XBURGER_APY();
     },
 
     async HELMET_BNB_LP_V2_APY() {
@@ -823,7 +853,24 @@ export default {
       this.apyArray.helmet = fixD(APY, 2);
       this.miningList[2].yearEarn = fixD(APY, 2);
     },
-
+    async BHELMET_XBURGER_APY() {
+      let BHELMETBnbValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
+      let XBURGERBnbValue = (await pancakeswap("XBURGER", "HELMET")) * 2500;
+      let RewardValue = BHELMETBnbValue + XBURGERBnbValue;
+      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
+      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
+      let stakeValue = await balanceOf("HELMET", "XBURGERBHELMET_LPT");
+      console.log(stakeValue, stakeVolue, supplyVolume);
+      let APY =
+        precision.divide(
+          precision.times(precision.divide(RewardValue, 20), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      console.log(APY);
+    },
     async FEI_POOL_APY() {
       let lptBnbValue = await pancakeswap("QFEI", "QSD");
       let DODOHELMET = lptBnbValue;
@@ -884,7 +931,6 @@ export default {
       let WBNBUSDValue = await pancakeswap("WBNB", "USDT");
       let HelmetUsdtValue = HelmetWBNBValue * WBNBUSDValue;
       let allVolume = lptBnbValue * 60000;
-      console.log(lptBnbValue);
       //总抵押
       let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
       // 总发行

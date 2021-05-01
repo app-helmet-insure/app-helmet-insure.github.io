@@ -17,9 +17,9 @@ export const mateMaskInfo = (address) => {
             // Required
             qrcodeModal: QRCodeModal,
             bridge: 'wss://bridge.walletconnect.org/',
-            rpc: {
-                56: 'https://bsc-dataseed1.binance.org/',
-            },
+            // rpc: {
+            //     56: 'https://bsc-dataseed1.binance.org/',
+            // },
             qrcode: true,
             pollingInterval: 10000,
         });

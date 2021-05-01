@@ -50,14 +50,23 @@ export const bet = async (ContractType, ContractCost, callBack) => {
         IIOContract.methods
             .bet()
             .send({ from: account })
+            .on('error', function(error) {
+                console.log(11);
+                callBack({ status: 'bet_error' });
+            })
             .on('transactionHash', function(transactionHash) {
+                console.log(22);
                 callBack({ status: 'bet_pendding' });
             })
             .on('receipt', function(receipt) {
+                console.log(33);
                 callBack({ status: 'bet_success' }); // contains the new contract address
             })
-            .on('error', function(error) {
-                callBack({ status: 'bet_error' });
+            .on('confirmation', function(confirmationNumber, receipt) {
+                console.log(44);
+            })
+            .then(function(newContractInstance) {
+                console.log(55);
             });
     } catch (error) {
         console.log(error);

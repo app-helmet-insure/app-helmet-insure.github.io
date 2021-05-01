@@ -24,9 +24,9 @@ export const mateMaskInfo = async (address, name) => {
         const walletConnectProvider = new WalletConnectProvider({
             chainId: 56,
             bridge: 'wss://bridge.walletconnect.org/',
-            rpc: {
-                56: 'https://bsc-dataseed1.binance.org/',
-            },
+            // rpc: {
+            //     56: 'https://bsc-dataseed1.binance.org/',
+            // },
             qrcode: true,
             pollingInterval: 10000,
         });

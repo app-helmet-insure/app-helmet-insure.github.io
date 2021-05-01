@@ -73,7 +73,7 @@
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
           <a href="https://burgerswap.org/trade/pool" target="_blank"
-            >From <i class="burger"></i>Get HELMET-hBURGER BLP</a
+            >From <i class="burger"></i>Get HELMET-hxBURGER BLP</a
           >
         </section>
       </div>

@@ -442,6 +442,7 @@ import {
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { burgerswap } from "~/assets/utils/burgerswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
@@ -644,7 +645,7 @@ export default {
           earnImg: true,
           earnNum: "two",
           openDate: this.getMiningTime("2021/05/02 00:00"),
-          dueDate: this.getRemainTime("2021/05/21 00:00"),
+          dueDate: this.getRemainTime("2021/05/22 00:00"),
           combo: false,
           flash: false,
           info: true,
@@ -653,7 +654,7 @@ export default {
           onePager: false,
           yearEarn: apyArray["bhelmet_xburger"] || "--",
           started: new Date("2021/05/02 00:00") * 1,
-          expired: new Date("2021/05/21 00:00") * 1,
+          expired: new Date("2021/05/22 00:00") * 1,
         },
         {
           miningName: "FEI(BSC)&nbsp;POOL",
@@ -855,12 +856,15 @@ export default {
     },
     async BHELMET_XBURGER_APY() {
       let BHELMETBnbValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
-      let XBURGERBnbValue = (await pancakeswap("XBURGER", "HELMET")) * 2500;
+      let XBURGERBnbValue = 14.140217 * 2500;
       let RewardValue = BHELMETBnbValue + XBURGERBnbValue;
       let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
       let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
-      let stakeValue = await balanceOf("HELMET", "XBURGERBHELMET_LPT");
-      console.log(stakeValue, stakeVolue, supplyVolume);
+      let stakeValue = await balanceOf(
+        "HELMET",
+        "0xFC63E62e950fAFC056C8024B20d1899154e55340"
+      );
+      console.log(XBURGERBnbValue);
       let APY =
         precision.divide(
           precision.times(precision.divide(RewardValue, 20), 365),
@@ -869,7 +873,14 @@ export default {
             supplyVolume
           )
         ) * 100;
-      console.log(APY);
+      let startedTime = this.miningList[3].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.apyArray.bhelmet_xburger = "--";
+      } else {
+        // this.apyArray.bhelmet_xburger = fixD(APY, 2);
+        this.apyArray.bhelmet_xburger = "--";
+      }
     },
     async FEI_POOL_APY() {
       let lptBnbValue = await pancakeswap("QFEI", "QSD");
@@ -890,7 +901,7 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.qfei = "--";
@@ -917,7 +928,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[4].started;
+      let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.kun = "--";
@@ -946,7 +957,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[5].started;
+      let startedTime = this.miningList[6].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.QHELMET = "--";

@@ -56,29 +56,27 @@ export const recruit = async (address, num) => {
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit:
-                                '<div>The rental advertisement is published successfully, you can check it on <a href="/sell" target="blank">my rental advertisement page</a></div>',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                        });
-                    } else {
-                        Message({
-                            message:
-                                'The rental advertisement is published successfully',
-                            type: 'success',
-                            // duration: 0,
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('GET_BALANCE');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        type: 'success',
+                        title: 'Successfully rented',
+                        conTit:
+                            '<div>The rental advertisement is published successfully, you can check it on <a href="/sell" target="blank">my rental advertisement page</a></div>',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    });
+                } else {
+                    Message({
+                        message:
+                            'The rental advertisement is published successfully',
+                        type: 'success',
+                        // duration: 0,
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('GET_BALANCE');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');

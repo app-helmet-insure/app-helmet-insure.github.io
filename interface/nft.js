@@ -274,6 +274,9 @@ export const composeEnable = async (type) => {
             return res;
         });
 };
+export const transferFrom = async(ToAdress,TokenID)=>{
+    
+}
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 校验参数

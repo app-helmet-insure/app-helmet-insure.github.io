@@ -104,6 +104,7 @@ export default {
       const MyContract = await NFTContract(
         "0xBcE765FB9497942Fe854188E79A056bAaEe5c7AC"
       );
+      // tokenOfOwnerByIndex
       await MyContract.methods
         .transferFrom(window.CURRENTADDRESS, this.ToAdress, "1")
         .send({ from: window.CURRENTADDRESS });

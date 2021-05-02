@@ -89,34 +89,32 @@ export const getReward3 = async (type, RewardAdress) => {
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    bus.$emit(`CLAIM_LOADING_${type}`);
-                    bus.$emit(`RELOAD_DATA_${type}`);
-                    bus.$emit('REFRESH_BALANCE');
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            title: 'Transation submitted',
-                            layout: 'layout2',
-                            buttonText: 'Confirm',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                            button: true,
-                            buttonText: 'Confirm',
-                            showDialog: false,
-                        });
-                    } else {
-                        Message({
-                            message: 'Claim activated successfully',
-                            type: 'success',
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('REFRESH_ASSETS');
-                        bus.$emit('REFRESH_MINING');
-                        bus.$emit(`RELOAD_DATA_${type}`);
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                bus.$emit(`CLAIM_LOADING_${type}`);
+                bus.$emit(`RELOAD_DATA_${type}`);
+                bus.$emit('REFRESH_BALANCE');
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                } else {
+                    Message({
+                        message: 'Claim activated successfully',
+                        type: 'success',
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ASSETS');
+                    bus.$emit('REFRESH_MINING');
+                    bus.$emit(`RELOAD_DATA_${type}`);
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
@@ -169,30 +167,28 @@ export const applyReward3 = async (data, callBack) => {
                     conText: `<span>It will cost ${TicketPrice} HELMET for the Ticket</span>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            title: 'Transation submitted',
-                            layout: 'layout2',
-                            buttonText: 'Confirm',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                            button: true,
-                            buttonText: 'Confirm',
-                            showDialog: false,
-                        });
-                    } else {
-                        Message({
-                            message: 'GetRewards Successfully',
-                            type: 'success',
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit(`REFRESH_${data.ContractAdress}`);
-                        bus.$emit('CLOSE_LOADING_STATUS');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                } else {
+                    Message({
+                        message: 'GetRewards Successfully',
+                        type: 'success',
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit(`REFRESH_${data.ContractAdress}`);
+                    bus.$emit('CLOSE_LOADING_STATUS');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -238,7 +234,7 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
         .on('transactionHash', (hash) => {
             callback('approve');
         })
-        .on('confirmation', (_, receipt) => {
+        .on('receipt', function(receipt) {
             callback('success');
         })
         .on('error', (err, receipt) => {

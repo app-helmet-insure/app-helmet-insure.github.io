@@ -90,32 +90,30 @@ export const onIssueSell = async (data_, callBack) => {
                     conText: `<p>Supply <span>${data_.volume} ${data_.currency}</span> Policys, with the strike price of <span>${data_.price} ${data_.showType}</span></p>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            title: 'Transation submitted',
-                            layout: 'layout2',
-                            buttonText: 'Confirm',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                            button: true,
-                            buttonText: 'Confirm',
-                            showDialog: false,
-                        });
-                    } else {
-                        Message({
-                            message:
-                                'The rental advertisement is published successfully',
-                            type: 'success',
-                            // duration: 0,
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('REFRESH_ALL_DATA');
-                        bus.$emit('REFRESH_BALANCE');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                } else {
+                    Message({
+                        message:
+                            'The rental advertisement is published successfully',
+                        type: 'success',
+                        // duration: 0,
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -200,31 +198,29 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                     } ${'BNB'}</span></p>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            title: 'Transation submitted',
-                            layout: 'layout2',
-                            buttonText: 'Confirm',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                            button: true,
-                            buttonText: 'Confirm',
-                            showDialog: false,
-                        });
-                    } else {
-                        Message({
-                            message:
-                                'The rental advertisement is published successfully',
-                            type: 'success',
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('REFRESH_ALL_DATA');
-                        bus.$emit('REFRESH_BALANCE');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                } else {
+                    Message({
+                        message:
+                            'The rental advertisement is published successfully',
+                        type: 'success',
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -300,30 +296,28 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                     </span></p>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            title: 'Transation submitted',
-                            layout: 'layout2',
-                            buttonText: 'Confirm',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                            button: true,
-                            buttonText: 'Confirm',
-                            showDialog: false,
-                        });
-                    } else {
-                        Message({
-                            message: 'The policy is rented successfully',
-                            type: 'success',
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('REFRESH_ALL_DATA');
-                        bus.$emit('REFRESH_BALANCE');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                } else {
+                    Message({
+                        message: 'The policy is rented successfully',
+                        type: 'success',
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ALL_DATA');
+                    bus.$emit('REFRESH_BALANCE');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -473,27 +467,25 @@ export const claim = async () => {
                     conText: `https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
                 });
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                if (confirmationNumber === 0) {
-                    if (window.statusDialog) {
-                        ``;
-                        bus.$emit('CLOSE_STATUS_DIALOG');
-                        bus.$emit('OPEN_STATUS_DIALOG', {
-                            type: 'success',
-                            title: 'Successfully rented',
-                            conTit: '<div>Policy activated successfully</div>',
-                            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                        });
-                    } else {
-                        Message({
-                            message: 'Policy activated successfully',
-                            type: 'success',
-                        });
-                    }
-                    setTimeout(() => {
-                        bus.$emit('REFRESH_ASSETS');
-                    }, 1000);
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    ``;
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        type: 'success',
+                        title: 'Successfully rented',
+                        conTit: '<div>Policy activated successfully</div>',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    });
+                } else {
+                    Message({
+                        message: 'Policy activated successfully',
+                        type: 'success',
+                    });
                 }
+                setTimeout(() => {
+                    bus.$emit('REFRESH_ASSETS');
+                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -717,29 +709,27 @@ export const onExercise = async (data, callBack, flag) => {
                 )} ${data._collateral}</span></p>`,
             });
         })
-        .on('confirmation', function(confirmationNumber, receipt) {
-            if (confirmationNumber === 0) {
-                if (window.statusDialog) {
-                    bus.$emit('CLOSE_STATUS_DIALOG');
-                    bus.$emit('OPEN_STATUS_DIALOG', {
-                        title: 'Transation submitted',
-                        layout: 'layout2',
-                        loading: false,
-                        button: true,
-                        buttonText: 'Confirm',
-                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                        showDialog: false,
-                    });
-                } else {
-                    Message({
-                        message: 'Activated successfully',
-                        type: 'success',
-                    });
-                }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                }, 1000);
+        .on('receipt', function(receipt) {
+            if (window.statusDialog) {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Transation submitted',
+                    layout: 'layout2',
+                    loading: false,
+                    button: true,
+                    buttonText: 'Confirm',
+                    conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    showDialog: false,
+                });
+            } else {
+                Message({
+                    message: 'Activated successfully',
+                    type: 'success',
+                });
             }
+            setTimeout(() => {
+                bus.$emit('REFRESH_ALL_DATA');
+            }, 1000);
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
@@ -778,7 +768,7 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
         .on('transactionHash', (hash) => {
             callback('approve');
         })
-        .on('confirmation', (_, receipt) => {
+        .on('receipt', function(receipt) {
             callback('success');
         })
         .on('error', (err, receipt) => {
@@ -824,22 +814,20 @@ export const onCancel = async (askID, callBack) => {
                 conText: `Cancel your Policy supplying order.`,
             });
         })
-        .on('confirmation', (confirmationNumber, receipt) => {
-            if (confirmationNumber === 0) {
-                bus.$emit('CLOSE_STATUS_DIALOG');
-                bus.$emit('OPEN_STATUS_DIALOG', {
-                    title: 'Transation submitted',
-                    layout: 'layout2',
-                    buttonText: 'Confirm',
-                    conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                    button: true,
-                    buttonText: 'Confirm',
-                    showDialog: false,
-                });
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                }, 1000);
-            }
+        .on('receipt', function(receipt) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Transation submitted',
+                layout: 'layout2',
+                buttonText: 'Confirm',
+                conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                button: true,
+                buttonText: 'Confirm',
+                showDialog: false,
+            });
+            setTimeout(() => {
+                bus.$emit('REFRESH_ALL_DATA');
+            }, 1000);
         })
         .on('error', (err, receipt) => {
             callBack('failed');
@@ -871,13 +859,11 @@ export const onWaive = async (data) => {
         .waive(data.bidID)
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {})
-        .on('confirmation', (confirmationNumber, receipt) => {
-            if (confirmationNumber === 0) {
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                    bus.$emit('ONWAIVE_END', data.bidID);
-                }, 1000);
-            }
+        .on('receipt', function(receipt) {
+            setTimeout(() => {
+                bus.$emit('REFRESH_ALL_DATA');
+                bus.$emit('ONWAIVE_END', data.bidID);
+            }, 1000);
         })
         .on('error', (err, receipt) => {
             bus.$emit('ONWAIVE_END', data.bidID);
@@ -902,12 +888,11 @@ export const RePrice = async (data) => {
         .on('transactionHash', (hash) => {
             bus.$emit('CLONE_REPRICE');
         })
-        .on('confirmation', (confirmationNumber, receipt) => {
-            if (confirmationNumber === 0) {
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                }, 1000);
-            }
+        .on('receipt', function(receipt) {
+            setTimeout(() => {
+                bus.$emit('REFRESH_ALL_DATA');
+            }, 1000);
+
             //onReceiptChange(receipt);
         })
         .on('error', (err, receipt) => {

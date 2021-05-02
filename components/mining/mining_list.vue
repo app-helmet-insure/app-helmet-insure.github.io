@@ -442,7 +442,7 @@ import {
 import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { burgerswap } from "~/assets/utils/burgerswap.js";
+import { burgerswaptoken } from "~/assets/utils/burgerswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
@@ -855,16 +855,20 @@ export default {
       this.miningList[2].yearEarn = fixD(APY, 2);
     },
     async BHELMET_XBURGER_APY() {
-      let BHELMETBnbValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
-      let XBURGERBnbValue = 14.140217 * 2500;
-      let RewardValue = BHELMETBnbValue + XBURGERBnbValue;
-      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
-      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
+      let BHELMETHelmetValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
+      let XBURGERBnbValue = await burgerswaptoken(
+        "0xeE679fACDaC1A80e05e1F749Ac451b98c4A33B0e"
+      );
+      let BNBHELMETValue = await pancakeswap("WBNB", "HELMET");
+      let XBURGERHELMETValue = XBURGERBnbValue * BNBHELMETValue * 2500;
+      // XBURGER/WBNB
+      let RewardValue = BHELMETHelmetValue + XBURGERHELMETValue;
+      let supplyVolume = await totalSupply("XBURGERBHELMET"); //数量
+      let stakeVolue = await totalSupply("XBURGERBHELMET_LPT"); //数量
       let stakeValue = await balanceOf(
         "HELMET",
         "0xFC63E62e950fAFC056C8024B20d1899154e55340"
       );
-      console.log(XBURGERBnbValue);
       let APY =
         precision.divide(
           precision.times(precision.divide(RewardValue, 20), 365),
@@ -878,8 +882,8 @@ export default {
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_xburger = "--";
       } else {
-        // this.apyArray.bhelmet_xburger = fixD(APY, 2);
-        this.apyArray.bhelmet_xburger = "--";
+        this.apyArray.bhelmet_xburger = fixD(APY, 2);
+        // this.apyArray.bhelmet_xburger = "--";
       }
     },
     async FEI_POOL_APY() {

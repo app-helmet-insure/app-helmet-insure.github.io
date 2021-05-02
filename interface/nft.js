@@ -44,30 +44,35 @@ export const bet = async (ContractType, ContractCost, callBack) => {
         ContractCost = getContract(ContractCost, charID);
     }
     const ArrpoveContract = await expERC20(ContractCost);
-    await oneKeyArrpove(ArrpoveContract, ContractType, 100000);
+
+    await oneKeyArrpove(ArrpoveContract, ContractType, 100000, (res) => {
+        if (res == 'approve') {
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `<p>You will approve helmet to pixel puzzle </p>`,
+            });
+        }
+    });
     const IIOContract = await NFT(ContractAdress);
     try {
         IIOContract.methods
             .bet()
             .send({ from: account })
-            // .on('error', function(error) {
-            //     console.log(11);
-            //     callBack({ status: 'bet_error' });
-            // })
+            .on('error', function(error) {
+                callBack({ status: 'bet_error' });
+            })
             .on('transactionHash', function(transactionHash) {
-                console.log(22);
                 callBack({ status: 'bet_pendding' });
             })
             .on('receipt', function(receipt) {
-                console.log(33);
                 callBack({ status: 'bet_success' }); // contains the new contract address
             })
-            .on('confirmation', function(confirmationNumber, receipt) {
-                console.log(44);
-            })
-            .then(function(newContractInstance) {
-                console.log(55);
-            });
+            .on('confirmation', function(confirmationNumber, receipt) {})
+            .then(function(newContractInstance) {});
     } catch (error) {
         console.log(error);
     }
@@ -83,7 +88,18 @@ export const bet10 = async (ContractType, ContractCost, callBack) => {
         ContractCost = getContract(ContractCost, charID);
     }
     const ArrpoveContract = await expERC20(ContractCost);
-    await oneKeyArrpove(ArrpoveContract, ContractType, 100000);
+    await oneKeyArrpove(ArrpoveContract, ContractType, 100000, (res) => {
+        if (res == 'approve') {
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `<p>You will approve helmet to pixel puzzle </p>`,
+            });
+        }
+    });
     const IIOContract = await NFT(ContractAdress);
     try {
         IIOContract.methods
@@ -116,21 +132,18 @@ export const claim = async (ContractType, callBack) => {
             .send({ from: account })
             .on('transactionHash', function(transactionHash) {
                 callBack({ status: 'claim_pendding' });
-                console.log(1);
             })
             .on('receipt', function(receipt) {
                 callBack({ status: 'claim_success' }); // contains the new contract address
-                console.log(2);
             })
-            // .on('error', function(error) {
-            //     callBack({ status: 'claim_error' });
-            // })
+            .on('error', function(error) {
+                callBack({ status: 'claim_error' });
+            })
             .then((res) => {
                 let data = {
                     status: 'dataSuccess',
                     data: [res.events.Claim.returnValues[1]],
                 };
-                console.log(3);
                 callBack(data);
             });
     } catch (error) {
@@ -274,9 +287,7 @@ export const composeEnable = async (type) => {
             return res;
         });
 };
-export const transferFrom = async(ToAdress,TokenID)=>{
-    
-}
+export const transferFrom = async (ToAdress, TokenID) => {};
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 校验参数
@@ -290,8 +301,6 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     const res = await approve(token_exp, contract_str, callback);
 };
 const allowance = async (token_exp, contract_str) => {
-    // const WEB3 = await web3();
-    console.log(token_exp, contract_str);
     const charID = await getID();
     const result = await token_exp.methods
         .allowance(window.CURRENTADDRESS, getContract(contract_str, 56))

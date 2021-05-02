@@ -1,32 +1,36 @@
 <template>
   <div class="nft_title">
-    <div class="nft_name">{{ $t("NFT.Reward") }}</div>
-    <div class="nft_earn">
-      <span
-        v-for="(item, index) in RewardPoll"
-        :key="index"
-        :class="isNaN(item) ? '' : 'radius'"
-      >
-        {{ item }}
-      </span>
-    </div>
-    <div class="nft_time">
-      <p>
-        <i></i
-        ><span>
-          {{
-            $t("NFT.CanSwap", {
-              time:
-                Time.day +
-                $t("Content.DayM") +
-                Time.hour +
-                $t("Content.HourM") +
-                Time.minute +
-                $t("Content.MinM"),
-            })
-          }}
-        </span>
-      </p>
+    <div class="nft_name">pixel puzzle</div>
+    <div class="nft_title_wrap">
+      <div class="nft_earn">
+        <i></i>
+        <p>
+          <span>{{ $t("NFT.RewardVolume") }}(HELMET)</span>
+          <span>
+            {{ RewardPoll }}
+          </span>
+        </p>
+      </div>
+      <div class="nft_time">
+        <i></i>
+        <p>
+          <span>{{ $t("NFT.RewardTime") }}</span>
+          <span>
+            <template v-if="Time.day != '00'">
+              {{ Time.day }}<b>{{ $t("Content.DayM") }}</b>
+              <i>/</i>
+            </template>
+            <template>
+              {{ Time.hour }}<b>{{ $t("Content.HourM") }}</b>
+              <i>/</i>
+            </template>
+            <template v-if="Time.day == '00'">
+              {{ Time.minute }}<b>{{ $t("Content.MinM") }}</b>
+              <i>/</i>
+            </template>
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -80,6 +84,7 @@ export default {
           day: day > 9 ? day : "0" + day,
           hour: hour > 9 ? hour : "0" + hour,
           minute: minute > 9 ? minute : "0" + minute,
+          second: second > 9 ? second : "0" + second,
         };
         this.Time = template;
       } else {
@@ -87,6 +92,7 @@ export default {
           day: "00",
           hour: "00",
           minute: "00",
+          second: "00",
         };
         this.Time = template;
       }
@@ -111,62 +117,94 @@ export default {
     line-height: 24px;
     padding-top: 17px;
   }
-  .nft_earn {
+  .nft_title_wrap {
+    width: 1026px;
+    margin: 20px auto 0px;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-      font-family: FredokaOne-Regular;
-      color: #ffffff;
-      margin: 0 2.5px;
-    }
-    .radius {
-      width: 55px;
-      height: 55px;
-      background-image: url("../../assets/img/nft/earn_bg_web.png");
+  }
+  .nft_earn {
+    display: flex;
+    width: 360px;
+    height: 80px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 40px;
+    margin-right: 20px;
+    > i {
+      display: block;
+      width: 83px;
+      height: 80px;
+      background-image: url("../../assets/img/nft/down_earn.png");
       background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
+    p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      span {
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+          line-height: 17px;
+        }
+        &:nth-of-type(2) {
+          font-size: 38px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+          line-height: 46px;
+        }
+      }
     }
   }
   .nft_time {
     display: flex;
-    justify-content: center;
-    margin-top: 26px;
+    width: 360px;
+    height: 80px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 40px;
+    margin-left: 20px;
+    > i {
+      display: block;
+      width: 80px;
+      height: 80px;
+      background-image: url("../../assets/img/nft/down_time.png");
+      background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
     p {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      width: 205px;
-      position: relative;
-      padding: 0px 10px 0px 15px;
-      background: linear-gradient(180deg, #4f3e5b 0%, #4d3e57 100%);
-      border-radius: 100px;
-      font-size: 14px;
-      font-family: FredokaOne-Regular;
-      color: #ffffff;
-      line-height: 14px;
-      letter-spacing: 1px;
-      height: 20px;
-      i {
-        display: block;
-        width: 28px;
-        height: 29px;
-        background-image: url("../../assets/img/nft/down_time.png");
-        background-size: 100% 100%;
-        position: absolute;
-        left: 0;
-        transform: translateX(-50%);
-      }
+      flex: 1;
       span {
-        font-size: 14px;
-        font-family: PingFangSC-Semibold, PingFang SC;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 14px;
-        margin-right: 2px;
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+          line-height: 17px;
+        }
+        &:nth-of-type(2) {
+          font-size: 38px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+          line-height: 46px;
+        }
+        i {
+          font-family: Regular;
+          margin: 0 -8px;
+          &:last-of-type {
+            display: none;
+          }
+        }
       }
     }
   }
@@ -186,62 +224,92 @@ export default {
     line-height: 24px;
     padding-top: 17px;
   }
+  .nft_title_wrap {
+    width: 100%;
+    margin: 20px auto 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .nft_earn {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 27px;
-      font-family: FredokaOne-Regular;
-      color: #ffffff;
-      margin: 0 2.5px;
-    }
-    .radius {
-      width: 38px;
-      height: 38px;
-      background-image: url("../../assets/img/nft/earn_bg_web.png");
+    width: 80%;
+    height: 60px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 30px;
+
+    > i {
+      display: block;
+      width: 60px;
+      height: 60px;
+      background-image: url("../../assets/img/nft/down_earn.png");
       background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
+    p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      span {
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        &:nth-of-type(2) {
+          font-size: 24px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+        }
+      }
     }
   }
   .nft_time {
     display: flex;
-    justify-content: center;
-    margin-top: 26px;
+    width: 80%;
+    height: 60px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 30px;
+    margin-top: 20px;
+    > i {
+      display: block;
+      width: 60px;
+      height: 60px;
+      background-image: url("../../assets/img/nft/down_time.png");
+      background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
     p {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: center;
-      width: 185px;
-      position: relative;
-      padding: 0px 10px 0px 15px;
-      background: linear-gradient(180deg, #4f3e5b 0%, #4d3e57 100%);
-      border-radius: 100px;
-      font-size: 12px;
-      font-family: FredokaOne-Regular;
-      color: #ffffff;
-      line-height: 13px;
-      letter-spacing: 1px;
-      height: 16px;
-      i {
-        display: block;
-        width: 20px;
-        height: 21px;
-        background-image: url("../../assets/img/nft/down_time.png");
-        background-size: 100% 100%;
-        position: absolute;
-        left: 0;
-        transform: translateX(-50%);
-      }
+      flex: 1;
       span {
-        font-size: 12px;
-        font-family: PingFangSC-Semibold, PingFang SC;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 12px;
-        margin-right: 2px;
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        &:nth-of-type(2) {
+          font-size: 24px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+        }
+        i {
+          font-family: Regular;
+          margin: 0 -6px;
+          &:last-of-type {
+            display: none;
+          }
+        }
       }
     }
   }

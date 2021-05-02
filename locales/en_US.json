@@ -229,7 +229,9 @@
     "EnterAdress": "input wallet address",
     "Text2": "Please recheck the address before you send cards. This transaction is non-retreatable and Helmet.insure will not be held responsible for any losses. You will send {card_Name} NFT",
     "Cancel": "Cancel",
-    "Send": "Donate"
+    "Send": "Donate",
+    "RewardTime": "Game Countdown",
+    "RewardVolume": "Progressive Slot"
   },
   "Tip": {
     "Dpr": "Daily percentage of yield, DPR= daily yield / staking volume",

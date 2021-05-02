@@ -294,7 +294,7 @@ import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { burgerswap } from "~/assets/utils/burgerswap.js";
+import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
 import Hxburgerpool from "~/components/flashmining/hxburger_pool.vue";
 import HtptPool from "~/components/flashmining/htpt_pool.vue";
 import HcctPool from "~/components/flashmining/hcct_pool.vue";
@@ -547,7 +547,7 @@ export default {
       this.GET_HXBURGER_POOL_APY();
     },
     async GET_HXBURGER_POOL_APY() {
-      let HAUTOHELMET = await burgerswap("HXBURGER", "HELMET", 18); //Hlemt价格
+      let HAUTOHELMET = await burgerswaplpt("HXBURGER", "HELMET", 18); //Hlemt价格
       let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
       let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);

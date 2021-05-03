@@ -165,7 +165,7 @@ export default {
           swapUtil: "LEV",
           stakeUtil: "BUSD",
           stakeShare: 0.5,
-          showStart: "May 5th 20:00 SGT",
+          showStart: "May. 5th 20:00 SGT",
           showEnd: "May. 7th 20:00 SGT",
           warnupTimeUTC: "2021/05/03 20:00 UTC+8",
           distributingTimeUTC: "2021/05/05 20:00 UTC+8",

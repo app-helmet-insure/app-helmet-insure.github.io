@@ -231,7 +231,8 @@
         "Cancel": "Cancel",
         "Send": "Donate",
         "RewardTime": "Game Countdown",
-        "RewardVolume": "Progressive Slot"
+        "RewardVolume": "Progressive Slot",
+        "UsersCount": "Players"
     },
     "Tip": {
         "Dpr": "درصد سود روزانه ، DPR = سود روزانه / حجم گرو گذاشته",

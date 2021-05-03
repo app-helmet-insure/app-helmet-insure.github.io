@@ -9,6 +9,7 @@ import helmet_abi from '~/abi/helmet_abi.json';
 import iio_abi from '~/abi/iio_abi.json';
 import nft_abi from '~/abi/nft_abi.json';
 import default_nft_abi from '~/abi/default_nft_abi.json';
+import nft_user_abi from '~/abi/nft_user_abi.json';
 import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 
 export const getCurrentAccount = async () => {
@@ -98,4 +99,7 @@ export const NFT = async (address) => {
 };
 export const NFTContract = async (address) => {
     return await new window.WEB3.eth.Contract(default_nft_abi.abi, address);
+};
+export const NFTusers = async (address) => {
+    return await new window.WEB3.eth.Contract(nft_user_abi.abi, address);
 };

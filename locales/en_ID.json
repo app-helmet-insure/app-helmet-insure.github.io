@@ -231,7 +231,8 @@
     "Cancel": "Cancel",
     "Send": "Donate",
     "RewardTime": "Game Countdown",
-    "RewardVolume": "Progressive Slot"
+    "RewardVolume": "Progressive Slot",
+    "UsersCount": "Players"
   },
   "Tip": {
     "Dpr": "Persentase hasil harian, DPR = hasil harian / volume staking.",

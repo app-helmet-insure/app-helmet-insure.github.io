@@ -2,35 +2,63 @@
   <div class="nft_title">
     <div class="nft_name">pixel puzzle</div>
     <div class="nft_title_wrap">
-      <div class="nft_earn">
-        <i></i>
-        <p>
-          <span>{{ $t("NFT.RewardVolume") }}(HELMET)</span>
-          <span>
-            {{ RewardPoll }}
-          </span>
-        </p>
+      <div class="left">
+        <div class="nft_earn">
+          <i></i>
+          <p>
+            <span>{{ $t("NFT.RewardVolume") }}(HELMET)</span>
+            <span>
+              {{ addCommom(Number(RewardPoll) + 100000) }}
+            </span>
+          </p>
+        </div>
+        <div class="nft_user">
+          <i></i>
+          <p>
+            <span>参与人数</span>
+            <span>
+              {{ addCommom(usersCount) }}
+            </span>
+          </p>
+        </div>
+        <div class="nft_time">
+          <i></i>
+          <p>
+            <span>{{ $t("NFT.RewardTime") }}</span>
+            <span>
+              <template v-if="Time.day != '00'">
+                {{ Time.day }}<b>{{ $t("Content.DayM") }}</b>
+                <i>/</i>
+              </template>
+              <template>
+                {{ Time.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+              </template>
+              <template v-if="Time.day == '00'">
+                {{ Time.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
+              </template>
+            </span>
+          </p>
+        </div>
       </div>
-      <div class="nft_time">
-        <i></i>
-        <p>
-          <span>{{ $t("NFT.RewardTime") }}</span>
-          <span>
-            <template v-if="Time.day != '00'">
-              {{ Time.day }}<b>{{ $t("Content.DayM") }}</b>
-              <i>/</i>
-            </template>
-            <template>
-              {{ Time.hour }}<b>{{ $t("Content.HourM") }}</b>
-              <i>/</i>
-            </template>
-            <template v-if="Time.day == '00'">
-              {{ Time.minute }}<b>{{ $t("Content.MinM") }}</b>
-              <i>/</i>
-            </template>
-          </span>
-        </p>
+      <div class="right">
+        <NFTCARD :rotate="rotate"></NFTCARD>
       </div>
+    </div>
+    <div class="card_button">
+      <button class="one" @mouseup="handleClickBet" v-if="!needClaimFlag">
+        {{ $t("NFT.OneCheck") }}<span> 2 HELMET</span>
+      </button>
+      <button class="one" @click="openDialog('bet')" v-else>
+        {{ $t("NFT.OpenOne") }}
+      </button>
+      <button class="ten" @mouseup="handleClickBet10" v-if="!needClaim10Flag">
+        {{ $t("NFT.TenCheck") }}<span> 16 HELMET</span>
+      </button>
+      <button class="ten" @click="openDialog('bet10')" v-else>
+        {{ $t("NFT.OpenTen") }}
+      </button>
     </div>
   </div>
 </template>
@@ -40,7 +68,19 @@ import "~/assets/font/font.css";
 import { getBalance } from "~/interface/nft.js";
 import { addCommom } from "~/assets/js/util.js";
 import moment from "moment";
+import NFTCARD from "~/components/nft/nft_card";
+import {
+  bet,
+  bet10,
+  needClaim,
+  needClaim10,
+  usersCount,
+} from "~/interface/nft.js";
+
 export default {
+  components: {
+    NFTCARD,
+  },
   data() {
     return {
       RewardPoll: "0",
@@ -49,21 +89,81 @@ export default {
         hour: "00",
         minute: "00",
       },
+      addCommom,
+      rotate: false,
+      needClaimFlag: false,
+      needClaim10Flag: false,
+      usersCount: 0,
     };
   },
   mounted() {
+    setTimeout(() => {
+      this.getNeedCliam();
+      this.getNeedCliam10();
+    }, 1000);
     this.$bus.$on("GET_CARD_BALANCE", () => {
       this.getRewardNumber();
+      this.getNeedCliam();
+      this.getNeedCliam10();
+      this.getUserCount();
     });
     setTimeout(() => {
       this.getRewardNumber();
+      this.getUserCount();
     }, 1000);
     this.getRemainTime();
   },
   methods: {
+    openDialog(action) {
+      this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: action });
+    },
+    async handleClickBet() {
+      let Type = "NFT_POOL";
+      let Cost = "NFT_COST";
+      await bet(Type, Cost, (data) => {
+        if (data.status == "bet_pendding") {
+          this.rotate = true;
+        }
+        if (data.status == "bet_success") {
+          this.rotate = false;
+          this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet" });
+        }
+        if (data.status == "bet_error") {
+          this.rotate = false;
+        }
+      });
+    },
+    async handleClickBet10() {
+      let Type = "NFT_POOL";
+      let Cost = "NFT_COST";
+      await bet10(Type, Cost, (data) => {
+        if (data.status == "bet_pendding") {
+          this.rotate = true;
+        }
+        if (data.status == "bet_success") {
+          this.rotate = false;
+          this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: "bet10" });
+        }
+        if (data.status == "bet_error") {
+          this.rotate = false;
+        }
+      });
+    },
+    async getNeedCliam() {
+      let Type = "NFT_POOL";
+      this.needClaimFlag = await needClaim(Type);
+    },
+    async getNeedCliam10() {
+      let Type = "NFT_POOL";
+      this.needClaim10Flag = await needClaim10(Type);
+    },
     async getRewardNumber() {
       let num = await getBalance("NFT_COST", "NFT_POOL");
       this.RewardPoll = addCommom(num, 0);
+    },
+    async getUserCount() {
+      let res = await usersCount("NFT_POOL");
+      this.usersCount = res;
     },
     getRemainTime() {
       let now = new Date() * 1;
@@ -103,7 +203,15 @@ export default {
 
 <style lang='scss' scoped>
 @media screen and(min-width:750px) {
+  .nft_title {
+    background-image: url("../../assets/img/nft/nft_card_web.png");
+    background-size: 100% 403px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    padding-bottom: 60px;
+  }
   .nft_name {
+    margin-top: 23px;
     width: 329px;
     height: 84px;
     background-image: url("../../assets/img/nft/title_bg_web.png");
@@ -117,23 +225,32 @@ export default {
     line-height: 24px;
     padding-top: 17px;
   }
+
   .nft_title_wrap {
-    width: 1026px;
+    min-width: 1026px;
     margin: 20px auto 0px;
     display: flex;
     justify-content: center;
   }
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 60px;
+  }
+  .right {
+    margin-left: 60px;
+  }
   .nft_earn {
     display: flex;
-    width: 360px;
-    height: 80px;
+    width: 287px;
+    height: 60px;
     background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
-    border-radius: 40px;
-    margin-right: 20px;
+    border-radius: 32px;
     > i {
       display: block;
-      width: 83px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       background-image: url("../../assets/img/nft/down_earn.png");
       background-size: 100% 100%;
       left: 0;
@@ -150,29 +267,71 @@ export default {
           font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           color: #ffffff;
-          line-height: 17px;
         }
         &:nth-of-type(2) {
-          font-size: 38px;
+          font-size: 28px;
           font-family: FredokaOne-Regular, FredokaOne;
           font-weight: 400;
           color: #ffffff;
-          line-height: 46px;
+        }
+      }
+    }
+  }
+  .nft_user {
+    display: flex;
+    width: 287px;
+    height: 60px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 32px;
+    margin-top: 30px;
+    > i {
+      display: block;
+      width: 60px;
+      height: 60px;
+      background-image: url("../../assets/img/nft/down_user.png");
+      background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
+    p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      span {
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        &:nth-of-type(2) {
+          font-size: 28px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+        }
+        i {
+          font-family: Regular;
+          margin: 0 -8px;
+          &:last-of-type {
+            display: none;
+          }
         }
       }
     }
   }
   .nft_time {
     display: flex;
-    width: 360px;
-    height: 80px;
+    width: 287px;
+    height: 60px;
     background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
-    border-radius: 40px;
-    margin-left: 20px;
+    border-radius: 32px;
+    margin-top: 30px;
     > i {
       display: block;
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       background-image: url("../../assets/img/nft/down_time.png");
       background-size: 100% 100%;
       left: 0;
@@ -189,14 +348,12 @@ export default {
           font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           color: #ffffff;
-          line-height: 17px;
         }
         &:nth-of-type(2) {
-          font-size: 38px;
+          font-size: 28px;
           font-family: FredokaOne-Regular, FredokaOne;
           font-weight: 400;
           color: #ffffff;
-          line-height: 46px;
         }
         i {
           font-family: Regular;
@@ -208,8 +365,55 @@ export default {
       }
     }
   }
+  .card_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 27px;
+    padding-bottom: 30px;
+    button {
+      width: 240px;
+      height: 46px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      span {
+        font-family: FredokaOne-Regular, FredokaOne;
+        font-weight: normal;
+      }
+    }
+    .one {
+      background: #999bfb;
+      box-shadow: 0px 8px 0px 0px #9383e0;
+      text-shadow: 0px 1px 0px #9383e0, 0px 1px 3px #e2dcff;
+      margin-right: 20px;
+      &:active {
+        transition: all 0.5s;
+        transform: translateY(6px);
+        box-shadow: 0px 2px 0px 0px #9383e0;
+      }
+    }
+    .ten {
+      background: #ffbf46;
+      box-shadow: 0px 8px 0px 0px #df8c37;
+      text-shadow: 0px 1px 0px #ea9975, 0px 1px 3px #ffe0c8;
+      margin-left: 20px;
+      &:active {
+        transform: translateY(6px);
+        transition: all 0.5s;
+        box-shadow: 0px 2px 0px 0px #df8c37;
+      }
+    }
+  }
 }
 @media screen and(max-width:750px) {
+  .nft_title {
+    background-image: url("../../assets/img/nft/nft_card_web.png");
+    background-size: 100% 403px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
   .nft_name {
     width: 329px;
     height: 84px;
@@ -234,7 +438,7 @@ export default {
   }
   .nft_earn {
     display: flex;
-    width: 80%;
+    min-width: 287px;
     height: 60px;
     background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
     border-radius: 30px;
@@ -269,9 +473,53 @@ export default {
       }
     }
   }
+  .nft_user {
+    display: flex;
+    min-width: 287px;
+    height: 60px;
+    background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
+    border-radius: 32px;
+    margin-top: 30px;
+    > i {
+      display: block;
+      width: 60px;
+      height: 60px;
+      background-image: url("../../assets/img/nft/down_user.png");
+      background-size: 100% 100%;
+      left: 0;
+      transform: translateX(-25%);
+    }
+    p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+      span {
+        &:nth-of-type(1) {
+          font-size: 12px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #ffffff;
+        }
+        &:nth-of-type(2) {
+          font-size: 28px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          font-weight: 400;
+          color: #ffffff;
+        }
+        i {
+          font-family: Regular;
+          margin: 0 -8px;
+          &:last-of-type {
+            display: none;
+          }
+        }
+      }
+    }
+  }
   .nft_time {
     display: flex;
-    width: 80%;
+    min-width: 287px;
     height: 60px;
     background: linear-gradient(180deg, #201a22 0%, #7a687e 100%);
     border-radius: 30px;
@@ -310,6 +558,47 @@ export default {
             display: none;
           }
         }
+      }
+    }
+  }
+  .card_button {
+    padding: 0 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 27px;
+    button {
+      width: 240px;
+      height: 40px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      span {
+        font-family: FredokaOne-Regular, FredokaOne;
+        font-weight: normal;
+      }
+    }
+    .one {
+      background: #999bfb;
+      box-shadow: 0px 6px 0px 0px #9383e0;
+      text-shadow: 0px 1px 0px #9383e0, 0px 1px 3px #e2dcff;
+      margin-right: 5px;
+      &:active {
+        transition: all 0.5s;
+        transform: translateY(4px);
+        box-shadow: 0px 2px 0px 0px #9383e0;
+      }
+    }
+    .ten {
+      background: #ffbf46;
+      box-shadow: 0px 6px 0px 0px #df8c37;
+      text-shadow: 0px 1px 0px #ea9975, 0px 1px 3px #ffe0c8;
+      margin-left: 5px;
+      &:active {
+        transform: translateY(4px);
+        transition: all 0.5s;
+        box-shadow: 0px 2px 0px 0px #df8c37;
       }
     }
   }

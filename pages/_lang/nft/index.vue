@@ -1,7 +1,6 @@
 <template>
   <div class="main_container">
     <NFTTITLE></NFTTITLE>
-    <NFTCARD></NFTCARD>
     <NFTCARDBOOK></NFTCARDBOOK>
     <NFTDIALGO></NFTDIALGO>
     <NFTWINDOW></NFTWINDOW>
@@ -10,14 +9,12 @@
 
 <script>
 import NFTTITLE from "~/components/nft/nft_title";
-import NFTCARD from "~/components/nft/nft_card";
 import NFTCARDBOOK from "~/components/nft/nft_cardbook";
 import NFTDIALGO from "~/components/nft/nft_dialog";
 import NFTWINDOW from "~/components/nft/nft_window";
 export default {
   components: {
     NFTTITLE,
-    NFTCARD,
     NFTCARDBOOK,
     NFTDIALGO,
     NFTWINDOW,

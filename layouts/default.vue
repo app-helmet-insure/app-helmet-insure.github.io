@@ -305,6 +305,8 @@ export default {
             this.getIndexPirce();
             this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
+            this.$bus.$emit("GET_CARD_BALANCE");
+            this.$bus.$emit("NFT_WINDOW_STATUS");
           }, 200);
         });
       }

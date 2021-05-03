@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide nft">
+        <div></div>
+      </div>
       <div class="swiper-slide four">
         <div></div>
       </div>
@@ -139,6 +142,12 @@ export default {
         background-position: center;
       }
     }
+    .nft {
+      background: #7746b5;
+      > div {
+        background-image: url("../../assets/img/banner/nft_web.png");
+      }
+    }
     .four {
       background: #ffcf27;
       > div {
@@ -201,6 +210,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .nft {
+      background: #7746b5;
+      > div {
+        background-image: url("../../assets/img/banner/nft_h5.png");
       }
     }
     .four {

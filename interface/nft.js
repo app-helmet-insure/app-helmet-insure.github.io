@@ -56,6 +56,9 @@ export const bet = async (ContractType, ContractCost, callBack) => {
                 conText: `<p>You will approve helmet to pixel puzzle </p>`,
             });
         }
+        if (res == 'success') {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+        }
     });
     const IIOContract = await NFT(ContractAdress);
     try {
@@ -98,6 +101,9 @@ export const bet10 = async (ContractType, ContractCost, callBack) => {
                 conTit: 'Please Confirm the transaction in your wallet',
                 conText: `<p>You will approve helmet to pixel puzzle </p>`,
             });
+        }
+        if (res == 'success') {
+            bus.$emit('CLOSE_STATUS_DIALOG');
         }
     });
     const IIOContract = await NFT(ContractAdress);

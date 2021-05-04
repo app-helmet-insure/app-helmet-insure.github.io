@@ -131,4 +131,11 @@ export default {
         'The lifetime of iWAR is from Apr. 30th 21:00 SGT — May 1st 21:00 SGT. ',
         'Please be sure to activate the iWAR within the validity period.',
     ],
+    iLEV: [
+        'iLEV is the certificate to swap/activate for LEV.',
+        'Only users who hold iLEV could get LEV during May 7th 20:00 SGT — May 8th 20:00 SGT (iLEV cannot be activated before/after that time period)',
+        'iLEV activate/swap formula: 1 iLEV+0.5BUSD  1 LEV',
+        'The lifetime of iLEV is from May 7th 20:00 SGT — May 8th 20:00 SGT. ',
+        'Please be sure to activate the iLEV within the validity period.',
+    ],
 };

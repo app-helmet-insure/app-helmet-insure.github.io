@@ -1,29 +1,16 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide nft">
+      <div class="swiper-slide lev">
         <div></div>
       </div>
       <div class="swiper-slide four">
         <div></div>
       </div>
-      <div class="swiper-slide westarter">
-        <div></div>
-      </div>
+
       <div class="swiper-slide balckhole">
         <div></div>
       </div>
-      <div class="swiper-slide langauage">
-        <div></div>
-      </div>
-      <a
-        class="swiper-slide cakev2"
-        style="cursor: poiner"
-        href="https://helmetinsure.medium.com/q-a-for-the-%EF%B8%8F-lpt-migration-pancakeswap-202464f03072"
-        target="_blank"
-      >
-        <div></div>
-      </a>
       <div class="swiper-slide xburger">
         <div></div>
       </div>
@@ -154,10 +141,10 @@ export default {
         background-image: url("../../assets/img/banner/four_web.png");
       }
     }
-    .westarter {
-      background: #3faa62;
+    .lev {
+      background: linear-gradient(90deg, #2f7af2 0%, #fa54ac 100%);
       > div {
-        background-image: url("../../assets/img/banner/westarter_web.png");
+        background-image: url("../../assets/img/banner/lev_web.png");
       }
     }
     .balckhole {
@@ -166,18 +153,7 @@ export default {
         background-image: url("../../assets/img/banner/blackHole.png");
       }
     }
-    .langauage {
-      background: #ffa729;
-      > div {
-        background-image: url("../../assets/img/banner/langauage_web.png");
-      }
-    }
-    .cakev2 {
-      background: #f1c153;
-      > div {
-        background-image: url("../../assets/img/banner/cake_v2_web.png");
-      }
-    }
+
     .xburger {
       background: #ff9600;
       > div {
@@ -230,22 +206,10 @@ export default {
         background-image: url("../../assets/img/banner/blackhole_h5H5.png");
       }
     }
-    .westarter {
+    .lev {
       background: #3faa62;
       > div {
-        background-image: url("../../assets/img/banner/westarter_h5.png");
-      }
-    }
-    .langauage {
-      background: #ffa729;
-      > div {
-        background-image: url("../../assets/img/banner/langauage_h5.png");
-      }
-    }
-    .cakev2 {
-      background: #f1c153;
-      > div {
-        background-image: url("../../assets/img/banner/cake_v2_h5.png");
+        background-image: url("../../assets/img/banner/lev_h5.png");
       }
     }
     .xburger {

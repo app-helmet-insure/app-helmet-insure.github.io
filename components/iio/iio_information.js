@@ -177,4 +177,59 @@ export default {
             },
         },
     },
+    lever: {
+        name: 'Lever',
+        Token: 'LEV',
+        Time1: 'May.05th 20:00', //mining open
+        Time2: 'May.07th 20:00', //active start
+        Time3: 'May.08th 20:00', //active end
+        Time1UTC: '2021/05/05 20:00 UTC+8',
+        Time2UTC: '2021/05/07 20:00 UTC+8',
+        Time3UTC: '2021/05/08 20:00 UTC+8',
+        Collateral: '0xbc194e6f748a222754C3E8b9946922c09E7d4e91',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x5be604A1c1425fC639AD4f5d579853d9eF8C6ebC',
+        ActivePrice: 0.25,
+        ProjcetInformation: {
+            ProjectName: 'Lever',
+            Distributing: 'May. 05th 20:00 SGT - May. 07th 20:00 SGT',
+            Activating: 'May. 07th 20:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: 'LEV=0.5BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'LEV',
+            Address: '0xbc194e6f748a222754C3E8b9946922c09E7d4e91',
+            Supply: '60,000',
+            TotalSupply: '100,000,000',
+        },
+        About: [
+            'Lever is developed to bridge the gap between lending protocols and DEXs, increasing capital efficiency in DeFi.',
+            'Lever is an open-source margin trading platform where you can lend, borrow and perform leveraged trading to either buy long/sell short an asset in just one place.',
+        ],
+        TokenDistribution: [],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://Lever.network',
+                show: 'Lever.network',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/LeverNetwork/',
+                show: 'https://twitter.com/LeverNetwork/',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'http://t.me/LeverNetwork',
+                show: 'http://t.me/LeverNetwork',
+            },
+            // Medium: {
+            //     type: 'Medium',
+            //     link: 'https://westarter.medium.com/',
+            //     show: 'https://westarter.medium.com/',
+            // },
+        },
+    },
 };

@@ -189,7 +189,7 @@ export default {
         Collateral: '0xbc194e6f748a222754C3E8b9946922c09E7d4e91',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x5be604A1c1425fC639AD4f5d579853d9eF8C6ebC',
-        ActivePrice: 0.25,
+        ActivePrice: 0.5,
         ProjcetInformation: {
             ProjectName: 'Lever',
             Distributing: 'May. 05th 20:00 SGT - May. 07th 20:00 SGT',
@@ -208,7 +208,18 @@ export default {
             'Lever is developed to bridge the gap between lending protocols and DEXs, increasing capital efficiency in DeFi.',
             'Lever is an open-source margin trading platform where you can lend, borrow and perform leveraged trading to either buy long/sell short an asset in just one place.',
         ],
-        TokenDistribution: [],
+        TokenDistribution: [
+            'Liquidity Mining: 40%',
+            'Ecosystem: 15%',
+            'Team: 15%',
+            'VC Round: 9%',
+            'Strategic Reserve: 6%',
+            'Seed Round: 6%',
+            'AirDrop: 3%',
+            'Private Round: 3%',
+            'Auction: 2%',
+            'IDO: 1%',
+        ],
         Media: {
             Website: {
                 type: 'Website',

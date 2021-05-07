@@ -8,14 +8,14 @@
           <p>
             <span>{{ $t("NFT.RewardVolume") }}(HELMET)</span>
             <span>
-              {{ addCommom(Number(RewardPoll) + 100000) }}
+              {{ addCommom(Number(RewardPoll)) }}
             </span>
           </p>
         </div>
         <div class="nft_user">
           <i></i>
           <p>
-            <span>参与人数</span>
+            <span>{{ $t("NFT.UsersCount") }}</span>
             <span>
               {{ addCommom(usersCount) }}
             </span>
@@ -159,7 +159,7 @@ export default {
     },
     async getRewardNumber() {
       let num = await getBalance("NFT_COST", "NFT_POOL");
-      this.RewardPoll = addCommom(num, 0);
+      this.RewardPoll = Number(num) + 100000;
     },
     async getUserCount() {
       let res = await usersCount("NFT_POOL");

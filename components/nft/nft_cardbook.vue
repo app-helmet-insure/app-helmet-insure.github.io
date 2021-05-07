@@ -68,8 +68,20 @@
               />
 
               <section>
-                <button @click="openWindow('share', item)">Share</button>
-                <button @click="openWindow('donate', item)">Donate</button>
+                <button
+                  v-if="item.CardBalance != 0"
+                  @click="openWindow('share', item)"
+                >
+                  {{ $t("NFT.Share") }}
+                </button>
+                <button v-else>{{ $t("NFT.Share") }}</button>
+                <button
+                  v-if="item.CardBalance != 0"
+                  @click="openWindow('donate', item)"
+                >
+                  {{ $t("NFT.Donate") }}
+                </button>
+                <button v-else>{{ $t("NFT.Donate") }}</button>
               </section>
             </div>
             <a @click="openWindow('adress', item)"
@@ -427,7 +439,7 @@ export default {
               display: flex;
               justify-content: space-between;
               button {
-                visibility: hidden;
+                min-width: 45px;
                 height: 20px;
                 padding: 0 4px;
                 font-size: 12px;
@@ -573,7 +585,7 @@ export default {
         flex-wrap: wrap;
         .item_card {
           width: 50%;
-          margin-top: 30px;
+          margin-top: 50px;
         }
         .zeroCard {
           box-shadow: 0px 0px 32px 0px #aeaeae inset;
@@ -652,7 +664,6 @@ export default {
               display: flex;
               justify-content: space-between;
               button {
-                visibility: hidden;
                 height: 20px;
                 padding: 0 4px;
                 font-size: 12px;

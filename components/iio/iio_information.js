@@ -195,7 +195,7 @@ export default {
             Distributing: 'May. 05th 20:00 SGT - May. 07th 20:00 SGT',
             Activating: 'May. 07th 20:00 SGT',
             ActivatePeriod: '24hours',
-            ActivatingxPrice: 'LEV=0.5BUSD',
+            ActivatingxPrice: '1LEV=0.5BUSD',
             TicketPrice: '1 Helmet',
         },
         TokenInformation: {

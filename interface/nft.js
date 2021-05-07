@@ -1,4 +1,4 @@
-import { NFT, expERC20, Deposite, NFTusers } from './index';
+import { NFT, expERC20, Deposite, NFTusers, NFTContract } from './index';
 import {
     getAddress,
     getContract,
@@ -32,6 +32,64 @@ export const CardFilter = (address) => {
         default:
             return '';
     }
+};
+export const tokenOfOwnerByIndex = async (type) => {
+    const charID = 56;
+    let CardAdress = type;
+    const account = window.CURRENTADDRESS;
+    if (type.indexOf('0x') === -1) {
+        CardAdress = getContract(type, charID);
+    }
+    const contract = await NFTContract(CardAdress);
+    return contract.methods
+        .tokenOfOwnerByIndex(account, 0)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+
+export const transferFrom = async (type, to, TokenID, callBack) => {
+    const charID = 56;
+    let CardAdress = type;
+    const account = window.CURRENTADDRESS;
+    if (type.indexOf('0x') === -1) {
+        CardAdress = getContract(type, charID);
+    }
+
+    const contract = await NFTContract(CardAdress);
+    return contract.methods
+        .transferFrom(account, to, TokenID)
+        .send({ from: account })
+        .on('error', function(error) {
+            callBack({ status: 'send_error' });
+        })
+        .on('transactionHash', function(hash) {
+            callBack({ status: 'send_pendding' });
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+            });
+        })
+        .on('receipt', function(receipt) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Transation submitted',
+                layout: 'layout2',
+                buttonText: 'Confirm',
+                conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                button: true,
+                buttonText: 'Confirm',
+                showDialog: false,
+            });
+            callBack({ status: 'send_success' }); // contains the new contract address
+        })
+        .on('confirmation', function(confirmationNumber, receipt) {})
+        .then(function(newContractInstance) {});
 };
 export const usersCount = async (type) => {
     const charID = 56;
@@ -307,7 +365,6 @@ export const composeEnable = async (type) => {
             return res;
         });
 };
-export const transferFrom = async (ToAdress, TokenID) => {};
 // 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
     // 校验参数

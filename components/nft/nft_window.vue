@@ -56,6 +56,7 @@ import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 import { getContract } from "~/assets/utils/address-pool.js";
 import { NFTContract } from "~/interface/index";
+import { tokenOfOwnerByIndex, transferFrom } from "~/interface/nft.js";
 export default {
   data() {
     return {
@@ -101,13 +102,25 @@ export default {
       this.$bus.$emit("NFT_WINDOW_STATUS", { flag: false });
     },
     async Send() {
-      const MyContract = await NFTContract(
-        "0xBcE765FB9497942Fe854188E79A056bAaEe5c7AC"
-      );
-      // tokenOfOwnerByIndex
-      await MyContract.methods
-        .transferFrom(window.CURRENTADDRESS, this.ToAdress, "1")
-        .send({ from: window.CURRENTADDRESS });
+      let TokenID = await tokenOfOwnerByIndex(`NFT_${this.ContractName}`);
+      console.log(TokenID);
+      if (TokenID) {
+        await transferFrom(
+          `NFT_${this.ContractName}`,
+          this.ToAdress,
+          TokenID,
+          (res) => {
+            if (res.status == "send_success") {
+              this.$bus.$on("GET_CARD_BALANCE", () => {
+                this.getRewardNumber();
+                this.getNeedCliam();
+                this.getNeedCliam10();
+                this.getUserCount();
+              });
+            }
+          }
+        );
+      }
     },
   },
 };

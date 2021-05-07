@@ -103,7 +103,6 @@ export default {
     },
     async Send() {
       let TokenID = await tokenOfOwnerByIndex(`NFT_${this.ContractName}`);
-      console.log(TokenID);
       if (TokenID) {
         await transferFrom(
           `NFT_${this.ContractName}`,
@@ -299,6 +298,7 @@ export default {
     align-items: center;
     justify-content: center;
     padding-bottom: 40px;
+
     p {
       display: flex;
       flex-direction: column;
@@ -518,10 +518,11 @@ export default {
     align-items: center;
     justify-content: center;
     padding-bottom: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     p {
       display: flex;
       flex-direction: column;
-      width: 339px;
       height: 42px;
       font-size: 15px;
       font-family: PingFangSC-Regular, PingFang SC;

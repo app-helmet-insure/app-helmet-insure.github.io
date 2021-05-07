@@ -34,6 +34,36 @@
         <button class="unAble" @click="handleClickSwap" v-else>
           {{ $t("NFT.unSwap") }}
         </button>
+        <section>
+          <button
+            v-if="composeEnableFlag"
+            @click="
+              openWindow('share', { card_name: 'Dora', ContractName: 'MAKE' })
+            "
+          >
+            {{ $t("NFT.Share") }}
+          </button>
+          <button
+            v-else
+            style="background: #d0d0d0; box-shadow: 0px 4px 0px 0px #929292"
+          >
+            {{ $t("NFT.Share") }}
+          </button>
+          <button
+            v-if="composeEnableFlag"
+            @click="
+              openWindow('donate', { card_name: 'Dora', ContractName: 'MAKE' })
+            "
+          >
+            {{ $t("NFT.Donate") }}
+          </button>
+          <button
+            v-else
+            style="background: #d0d0d0; box-shadow: 0px 4px 0px 0px #929292"
+          >
+            {{ $t("NFT.Donate") }}
+          </button>
+        </section>
         <a
           @click="
             openWindow('adress', { card_name: 'Dora', ContractName: 'MAKE' })
@@ -340,6 +370,39 @@ export default {
           text-align: center;
           margin-top: 30px;
         }
+        > section {
+          width: 240px;
+          margin: 20px auto 0;
+          display: flex;
+          justify-content: space-between;
+          button {
+            width: 110px;
+            height: 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            &:nth-of-type(1) {
+              background: #999bfb;
+              box-shadow: 0px 4px 0px 0px #9383e0;
+              &:active {
+                transition: all 0.5s;
+                transform: translateY(2px);
+                box-shadow: 0px 2px 0px 0px #9383e0;
+              }
+            }
+            &:nth-of-type(2) {
+              background: #ffbf46;
+              box-shadow: 0px 4px 0px 0px #df8c37;
+              &:active {
+                transition: all 0.5s;
+                transform: translateY(2px);
+                box-shadow: 0px 2px 0px 0px #df8c37;
+              }
+            }
+          }
+        }
         > a {
           font-size: 12px;
           font-family: IBMPlexSans;
@@ -565,6 +628,39 @@ export default {
           -moz-user-select: none;
           -webkit-user-select: none;
           user-select: none;
+        }
+        > section {
+          width: 240px;
+          margin: 20px auto 0;
+          display: flex;
+          justify-content: space-between;
+          button {
+            width: 110px;
+            height: 32px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            &:nth-of-type(1) {
+              background: #999bfb;
+              box-shadow: 0px 4px 0px 0px #9383e0;
+              &:active {
+                transition: all 0.5s;
+                transform: translateY(2px);
+                box-shadow: 0px 2px 0px 0px #9383e0;
+              }
+            }
+            &:nth-of-type(2) {
+              background: #ffbf46;
+              box-shadow: 0px 4px 0px 0px #df8c37;
+              &:active {
+                transition: all 0.5s;
+                transform: translateY(2px);
+                box-shadow: 0px 2px 0px 0px #df8c37;
+              }
+            }
+          }
         }
         > a {
           font-size: 12px;

@@ -1,6 +1,6 @@
 <template>
   <div class="nft_title">
-    <div class="nft_name">pixel puzzle</div>
+    <div class="nft_name">Pixel Pzzle</div>
     <div class="nft_title_wrap">
       <div class="left">
         <div class="nft_earn">
@@ -167,7 +167,7 @@ export default {
     },
     getRemainTime() {
       let now = new Date() * 1;
-      let dueDate = new Date(moment("2021/05/10 00:00 UTC+8")) * 1;
+      let dueDate = new Date(moment("2021/05/15 00:00 UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);

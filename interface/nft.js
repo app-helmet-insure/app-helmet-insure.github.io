@@ -87,6 +87,7 @@ export const transferFrom = async (type, to, TokenID, callBack) => {
                 showDialog: false,
             });
             callBack({ status: 'send_success' }); // contains the new contract address
+            bus.$emit('NFT_WINDOW_STATUS', { flag: false });
         })
         .on('confirmation', function(confirmationNumber, receipt) {})
         .then(function(newContractInstance) {});

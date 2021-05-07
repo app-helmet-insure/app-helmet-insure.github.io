@@ -31,7 +31,7 @@
         >
           {{ $t("NFT.ToSwap") }}
         </button>
-        <button class="unAble" @click="handleClickSwap" v-else>
+        <button class="unAble" v-else>
           {{ $t("NFT.unSwap") }}
         </button>
         <section>
@@ -760,6 +760,7 @@ export default {
               display: flex;
               justify-content: space-between;
               button {
+                min-width: 45px;
                 height: 20px;
                 padding: 0 4px;
                 font-size: 12px;

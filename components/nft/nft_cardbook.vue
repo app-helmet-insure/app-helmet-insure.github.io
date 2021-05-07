@@ -36,7 +36,7 @@
         </button>
         <section>
           <button
-            v-if="composeEnableFlag"
+            v-if="DoraBalance"
             @click="
               openWindow('share', { card_name: 'Dora', ContractName: 'MAKE' })
             "
@@ -50,7 +50,7 @@
             {{ $t("NFT.Share") }}
           </button>
           <button
-            v-if="composeEnableFlag"
+            v-if="DoraBalance"
             @click="
               openWindow('donate', { card_name: 'Dora', ContractName: 'MAKE' })
             "

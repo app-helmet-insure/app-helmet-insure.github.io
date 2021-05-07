@@ -1,6 +1,6 @@
 <template>
   <div class="nft_title">
-    <div class="nft_name">Pixel Pzzle</div>
+    <div class="nft_name">Pixel Puzzle</div>
     <div class="nft_title_wrap">
       <div class="left">
         <div class="nft_earn">

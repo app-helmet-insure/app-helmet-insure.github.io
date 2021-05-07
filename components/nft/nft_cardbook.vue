@@ -5,7 +5,7 @@
     </div>
     <div class="nft_cardbook_balance">
       <p>{{ $t("NFT.My") }} Dora NFT：{{ DoraBalance }}</p>
-      <p>{{ $t("NFT.MyCanSwap") }}NFT：{{ CardBalance }}</p>
+      <p>{{ $t("NFT.MyCanSwap") }} NFT：{{ CardBalance }}</p>
     </div>
     <div class="nft_cardbook_cards">
       <div class="one_card">

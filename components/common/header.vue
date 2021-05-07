@@ -240,7 +240,7 @@ export default {
 @media screen and (min-width: 750px) {
   .header-container {
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto;
     min-width: 1026px;
     height: 80px;
     background: #f8f9fa;

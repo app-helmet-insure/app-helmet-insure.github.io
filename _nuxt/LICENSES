@@ -5,12 +5,6 @@ object-assign
 */
 
 /*!
-  * vue-router v3.4.8
-  * (c) 2020 Evan You
-  * @license MIT
-  */
-
-/*!
  * The buffer module from node.js, for the browser.
  *
  * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
@@ -25,15 +19,9 @@ object-assign
  */
 
 /*!
- * Vue.js v2.6.12
- * (c) 2014-2020 Evan You
- * Released under the MIT License.
- */
-
-/*!
- * clipboard.js v2.0.6
+ * clipboard.js v2.0.8
  * https://clipboardjs.com/
- * 
+ *
  * Licensed MIT © Zeno Rocha
  */
 
@@ -49,8 +37,8 @@ object-assign
  */
 
 /*!
- * vue-i18n v8.22.1 
- * (c) 2020 kazuya kawaguchi
+ * vue-i18n v8.24.4 
+ * (c) 2021 kazuya kawaguchi
  * Released under the MIT License.
  */
 
@@ -58,12 +46,6 @@ object-assign
  * vue-no-ssr v1.1.1
  * (c) 2018-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
- */
-
-/*!
- * vuex v3.5.1
- * (c) 2020 Evan You
- * @license MIT
  */
 
 /*! *****************************************************************************
@@ -109,6 +91,26 @@ PERFORMANCE OF THIS SOFTWARE.
  * @license MIT
  */
 
+
 //! moment.js
 
 //! moment.js locale configuration
+
+
+/*!
+  * vue-router v3.5.1
+  * (c) 2021 Evan You
+  * @license MIT
+  */
+
+/*!
+ * Vue.js v2.6.12
+ * (c) 2014-2020 Evan You
+ * Released under the MIT License.
+ */
+
+/*!
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */

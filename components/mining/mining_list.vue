@@ -374,57 +374,62 @@
           v-if="activeMining == 'helmet_cake_v1'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetBnbPool>
+        />
         <HelmetBnb1Pool
           v-if="activeMining == 'helmet_cake_v2'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetBnb1Pool>
+        />
         <HelmetMdxPool
           v-if="activeMining == 'bhelmet_mdx'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetMdxPool>
+        />
+        <HelmetDodoDLP
+          v-if="activeMining == 'helmet_dodo_dlp'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        />
         <HelmetXburgerPool
           v-if="activeMining == 'bhelmet_xburger'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetXburgerPool>
+        />
         <HelmetDodoPool
           v-if="activeMining == 'helmet_dodo'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetDodoPool>
+        />
         <FeiFeiPool
           v-if="activeMining == 'QFEI'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></FeiFeiPool>
+        />
         <QfeiQsdPool
           v-if="activeMining == 'kun'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></QfeiQsdPool>
+        />
         <HelmetKunPool
           v-if="activeMining == 'QHELMET'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetKunPool>
+        />
         <HelmetHelmetPool
           v-if="activeMining == 'helmet'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetHelmetPool>
+        />
         <HelmetForPool
           v-if="activeMining == 'helmet_for'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetForPool>
+        />
         <HelmetBurgerPool
           v-if="activeMining == 'helmet_burger'"
           :activeType="activeType"
           :TradeType="activeType"
-        ></HelmetBurgerPool>
+        />
       </Wraper>
     </div>
   </div>
@@ -447,6 +452,7 @@ import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
+import HelmetDodoDLP from "~/components/mining/helmet_dodo_dlp.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
@@ -463,6 +469,7 @@ export default {
     HelmetHelmetPool,
     HelmetBnb1Pool,
     HelmetMdxPool,
+    HelmetDodoDLP,
     HelmetKunPool,
     FeiFeiPool,
     QfeiQsdPool,
@@ -477,6 +484,7 @@ export default {
       apyArray: {
         helmet_cake_v2: 0,
         bhelmet_mdx: 0,
+        helmet_dodo_dlp: 0,
         helmet: 0,
         QFEI: 0,
         kun: 0,
@@ -613,6 +621,21 @@ export default {
           miningName: "HELMET-BNB&nbsp;MLP",
           earnNum: "two",
           earn: "bhelmet_mdx",
+          earnImg: true,
+          openDate: this.getMiningTime("2021/04/15 00:00"),
+          dueDate: this.getRemainTime("2021/05/15 00:00"),
+          combo: true,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["bhelmet_mdx"] || "--",
+          started: new Date("2021/04/15 00:00") * 1,
+          expired: new Date("2021/05/15 00:00") * 1,
+        },
+        {
+          miningName: "HELMET-BNB&nbsp;DLP",
+          earnNum: "two",
+          earn: "helmet_dodo_dlp",
           earnImg: true,
           openDate: this.getMiningTime("2021/04/15 00:00"),
           dueDate: this.getRemainTime("2021/05/15 00:00"),

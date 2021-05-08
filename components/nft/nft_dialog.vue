@@ -6,21 +6,25 @@
       </div>
       <div :class="`nft_dialog_bg ${nft_action}`">
         <div :class="`card_wrap ${nft_action}_wrap`">
-          <div
-            class="card_item"
-            v-for="(item, index) in nft_data"
-            :key="index"
-            :style="rotate ? ' animation: cardItem 2s linear 0s infinite;' : ''"
-          >
-            <span>{{ CardFilter(item) }}</span>
-            <img
-              :src="
-                require(`~/assets/img/nft/have_${
-                  CardFilter(item) || 'mysterious'
-                }.png`)
+          <div class="card_scroll">
+            <div
+              class="card_item"
+              v-for="(item, index) in nft_data"
+              :key="index"
+              :style="
+                rotate ? ' animation: cardItem 2s linear 0s infinite;' : ''
               "
-              alt=""
-            />
+            >
+              <span>{{ CardFilter(item) }}</span>
+              <img
+                :src="
+                  require(`~/assets/img/nft/have_${
+                    CardFilter(item) || 'mysterious'
+                  }.png`)
+                "
+                alt=""
+              />
+            </div>
           </div>
         </div>
         <div class="button">
@@ -235,7 +239,12 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      > .card_item {
+      .card_scroll {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card_item {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -260,10 +269,18 @@ export default {
       height: 100%;
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 35px 23px 15px 23px;
       flex: 1;
-      > .card_item {
+      .card_scroll {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        justify-content: space-between;
+        padding: 35px 23px 15px 23px;
+      }
+      .card_item {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -381,6 +398,7 @@ export default {
       background-size: 100% 100%;
       display: flex;
       flex-direction: column;
+      height: 600px;
       .button {
         height: 52px;
       }
@@ -391,7 +409,15 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      > .card_item {
+      .card_scroll {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+      .card_item {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -413,14 +439,23 @@ export default {
     }
     .bet10_wrap {
       width: 100%;
-      height: 100%;
+      height: 600px;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      padding: 35px 23px 15px 23px;
       flex: 1;
-      > .card_item {
+      overflow: hidden;
+      .card_scroll {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 35px 23px 15px 23px;
+        overflow-y: scroll;
+      }
+      .card_item {
         margin: 2px;
         display: flex;
         flex-direction: column;

@@ -363,7 +363,7 @@ export default {
           color: #ffffff;
         }
         &:nth-of-type(2) {
-          font-size: 24px;
+          font-size: 20px;
           font-family: FredokaOne-Regular, FredokaOne;
           font-weight: 400;
           color: #ffffff;
@@ -450,6 +450,7 @@ export default {
     background-size: 100% 403px;
     background-repeat: no-repeat;
     background-position: bottom;
+    padding-bottom: 30px;
   }
   .nft_name {
     width: 329px;
@@ -583,7 +584,7 @@ export default {
           color: #ffffff;
         }
         &:nth-of-type(2) {
-          font-size: 24px;
+          font-size: 20px;
           font-family: FredokaOne-Regular, FredokaOne;
           font-weight: 400;
           color: #ffffff;
@@ -637,6 +638,30 @@ export default {
         transition: all 0.5s;
         box-shadow: 0px 2px 0px 0px #df8c37;
       }
+    }
+  }
+  .card_tips {
+    justify-content: center;
+    width: 90%;
+    height: 64px;
+    background: #241e26;
+    box-shadow: 0px 0px 15px 0px #ce97bf;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 56px;
+    }
+    p {
+      font-size: 14px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 20px;
+      margin-left: 12px;
     }
   }
 }

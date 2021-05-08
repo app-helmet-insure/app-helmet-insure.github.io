@@ -231,7 +231,9 @@
     "Send": "赠送",
     "RewardTime": "剩余可抽卡天数",
     "RewardVolume": "奖池累积",
-    "UsersCount": "参与人数"
+    "UsersCount": "参与人数",
+    "NFT_TIP1": "你需要在结束前尽可能合成更多的 Dora, 最终来分得更多的奖金",
+    "NFT_TIP2": "请在 5mins 内领取你的卡片，否则你将失去你的卡片"
   },
   "Tip": {
     "Dpr": "提供保单的预期日化收益，DPR=每日收益/抵押价值",

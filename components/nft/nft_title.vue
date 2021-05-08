@@ -26,7 +26,7 @@
           <p>
             <span>{{ $t("NFT.RewardTime") }}</span>
             <span>
-              <template v-if="Time.day != '00'">
+              <template>
                 {{ Time.day }}<b>{{ $t("Content.DayM") }}</b>
                 <i>/</i>
               </template>
@@ -34,8 +34,11 @@
                 {{ Time.hour }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
               </template>
-              <template v-if="Time.day == '00'">
+              <template>
                 {{ Time.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i> </template
+              ><template>
+                {{ Time.second }}<b>{{ $t("Content.SecondM") }}</b>
                 <i>/</i>
               </template>
             </span>
@@ -59,6 +62,10 @@
       <button class="ten" @click="openDialog('bet10')" v-else>
         {{ $t("NFT.OpenTen") }}
       </button>
+    </div>
+    <div class="card_tips">
+      <img src="~/assets/img/nft/home_tip.png" alt="" />
+      <p>{{ $t("NFT.NFT_TIP1") }}</p>
     </div>
   </div>
 </template>
@@ -112,6 +119,12 @@ export default {
       this.getUserCount();
     }, 1000);
     this.getRemainTime();
+    setInterval(() => {
+      setTimeout(() => {
+        this.getRemainTime();
+      }, 1000);
+      clearTimeout();
+    });
   },
   methods: {
     openDialog(action) {
@@ -350,14 +363,14 @@ export default {
           color: #ffffff;
         }
         &:nth-of-type(2) {
-          font-size: 28px;
+          font-size: 24px;
           font-family: FredokaOne-Regular, FredokaOne;
           font-weight: 400;
           color: #ffffff;
         }
         i {
           font-family: Regular;
-          margin: 0 -8px;
+          margin: 0 -6px;
           &:last-of-type {
             display: none;
           }
@@ -370,7 +383,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 27px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
     button {
       width: 240px;
       height: 46px;
@@ -404,6 +417,30 @@ export default {
         transition: all 0.5s;
         box-shadow: 0px 2px 0px 0px #df8c37;
       }
+    }
+  }
+  .card_tips {
+    justify-content: center;
+    width: 503px;
+    height: 64px;
+    background: #241e26;
+    box-shadow: 0px 0px 15px 0px #ce97bf;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 50px;
+      height: 56px;
+    }
+    p {
+      font-size: 14px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 20px;
+      margin-left: 12px;
     }
   }
 }

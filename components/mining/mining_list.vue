@@ -166,57 +166,62 @@
             v-if="activeMining == 'helmet_cake_v1' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetBnbPool>
+          />
           <HelmetBnb1Pool
             v-if="activeMining == 'helmet_cake_v2' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetBnb1Pool>
+          />
           <HelmetMdxPool
             v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetMdxPool>
+          />
+          <BhelmetDodoPool
+            v-if="activeMining == 'bhelmet_dodo' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          />
           <HelmetDodoPool
             v-if="activeMining == 'helmet_dodo' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetDodoPool>
+          />
           <FeiFeiPool
             v-if="activeMining == 'QFEI' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></FeiFeiPool>
+          />
           <QfeiQsdPool
             v-if="activeMining == 'kun' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></QfeiQsdPool>
+          />
           <HelmetKunPool
             v-if="activeMining == 'QHELMET' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetKunPool>
+          />
           <HelmetHelmetPool
             v-if="activeMining == 'helmet' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetHelmetPool>
+          />
           <HelmetForPool
             v-if="activeMining == 'helmet_for' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetForPool>
+          />
           <HelmetBurgerPool
             v-if="activeMining == 'helmet_burger' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetBurgerPool>
+          />
           <HelmetXburgerPool
             v-if="activeMining == 'bhelmet_xburger' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
-          ></HelmetXburgerPool>
+          />
         </div>
       </div>
     </div>
@@ -385,8 +390,8 @@
           :activeType="activeType"
           :TradeType="activeType"
         />
-        <HelmetDodoDLP
-          v-if="activeMining == 'helmet_dodo_dlp'"
+        <BhelmetDodoPool
+          v-if="activeMining == 'bhelmet_dodo'"
           :activeType="activeType"
           :TradeType="activeType"
         />
@@ -452,7 +457,7 @@ import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
 import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
-import HelmetDodoDLP from "~/components/mining/helmet_dodo_dlp.vue";
+import BhelmetDodoPool from "~/components/mining/bhelmet_dodo_pool.vue";
 import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
 import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
 import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
@@ -469,7 +474,7 @@ export default {
     HelmetHelmetPool,
     HelmetBnb1Pool,
     HelmetMdxPool,
-    HelmetDodoDLP,
+    BhelmetDodoPool,
     HelmetKunPool,
     FeiFeiPool,
     QfeiQsdPool,
@@ -484,7 +489,7 @@ export default {
       apyArray: {
         helmet_cake_v2: 0,
         bhelmet_mdx: 0,
-        helmet_dodo_dlp: 0,
+        bhelmet_dodo: 0,
         helmet: 0,
         QFEI: 0,
         kun: 0,
@@ -635,7 +640,7 @@ export default {
         {
           miningName: "HELMET-BNB&nbsp;DLP",
           earnNum: "two",
-          earn: "helmet_dodo_dlp",
+          earn: "bhelmet_dodo",
           earnImg: true,
           openDate: this.getMiningTime("2021/04/15 00:00"),
           dueDate: this.getRemainTime("2021/05/15 00:00"),

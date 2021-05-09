@@ -236,6 +236,9 @@ export default {
       flex-direction: column;
       .button {
         height: 52px;
+        button {
+          margin-top: 20px;
+        }
       }
     }
     .bet_wrap {

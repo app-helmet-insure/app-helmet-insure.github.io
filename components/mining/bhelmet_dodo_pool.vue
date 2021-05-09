@@ -70,24 +70,11 @@
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
           <a
-            href="https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+            href="https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234"
             target="_blank"
-            >From <i class="mdx"></i>Get HELMET-BNB DLP</a
+            >From <i class="dodo"></i>Get HELMET-BNB DLP</a
           >
         </section>
-      </div>
-      <div class="ContractAddress">
-        <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
-        <p>
-          0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672')
-            "
-          ></i>
-        </p>
       </div>
     </div>
     <i></i>
@@ -147,7 +134,7 @@
           >
         </p>
         <p>
-          <span>MDX {{ $t("Table.HELMETRewards") }}：</span>
+          <span>DODO {{ $t("Table.HELMETRewards") }}：</span>
           <span>
             <span>
               <countTo
@@ -158,7 +145,7 @@
                 :decimals="8"
               />
               <span v-else>--</span>
-              MDX</span
+              DODO</span
             >
           </span>
         </p>
@@ -171,20 +158,20 @@
         </button>
       </div>
       <div class="ContractAddress">
-        <span>MDX {{ $t("Table.ContractAddress") }}</span>
+        <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x9c65ab58d8d978db963e63f2bfb7121627e3a739
+          0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x9c65ab58d8d978db963e63f2bfb7121627e3a739')
+              copyAdress($event, '0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672')
             "
           ></i>
         </p>
       </div>
       <div class="addToken">
-        <p @click="addTokenFn('MDX')">Add MDX to MetaMask</p>
+        <p @click="addTokenFn('DODO')">Add DODO to MetaMask</p>
         <i></i>
       </div>
     </div>
@@ -219,7 +206,7 @@ export default {
   data() {
     return {
       list: {
-        name: "HELMET-BNB LP",
+        name: "HELMET-BNB DLP",
       },
       textList: [
         {
@@ -255,17 +242,17 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_HELMETMDXPOOL", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_HELMETDODOPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_HELMETMDXPOOL", (data) => {
+    this.$bus.$on("CLAIM_LOADING_HELMETDODOPOOL", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("EXIT_LOADING_HELMETMDXPOOL", (data) => {
+    this.$bus.$on("EXIT_LOADING_HELMETDODOPOOL", (data) => {
       this.exitLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_HELMETMDXPOOL", () => {
+    this.$bus.$on("RELOAD_DATA_HELMETDODOPOOL", () => {
       this.getBalance();
     });
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -335,10 +322,11 @@ export default {
       }
     },
     async getBalance() {
-      let helmetType = "HELMETMDXPOOL_LPT";
-      let type = "HELMETMDXPOOL";
+      let helmetType = "HELMETDODOPOOL_LPT";
+      let type = "HELMETDODOPOOL";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
+      console.log(Deposite);
       // 可赎回数量
       let Withdraw = await getLPTOKEN(type);
       // 总抵押
@@ -351,9 +339,9 @@ export default {
       let HelmetAllowance = await getAllHelmet(
         "HELMET",
         "FARM",
-        "HELMETMDXPOOL"
+        "HELMETDODOPOOL"
       );
-      let helmetReward = await Rewards("HELMETMDXPOOL", "0");
+      let helmetReward = await Rewards("HELMETDODOPOOL", "0");
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
       this.balance.Helmet = Helmet;
@@ -370,7 +358,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "HELMETMDXPOOL";
+      let type = "HELMETDODOPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -379,7 +367,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "HELMETMDXPOOL";
+      let type = "HELMETDODOPOOL";
       let res = await getDoubleReward(type);
     },
     // 退出
@@ -388,7 +376,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "HELMETMDXPOOL";
+      let type = "HELMETDODOPOOL";
       let res = await exitStake(type);
     },
   },

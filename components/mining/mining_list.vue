@@ -453,6 +453,7 @@ import Wraper from "~/components/common/wraper.vue";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { burgerswaptoken } from "~/assets/utils/burgerswap.js";
+import { dodoswap } from "~/assets/utils/dodoswap.js";
 import { fixD } from "~/assets/js/util.js";
 import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
 import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
@@ -541,6 +542,9 @@ export default {
   computed: {
     indexArray() {
       return this.$store.state.allIndexPrice;
+    },
+    HELMET_BUSD() {
+      return this.$store.state.HELMET_BUSD;
     },
   },
   watch: {
@@ -642,15 +646,15 @@ export default {
           earnNum: "two",
           earn: "bhelmet_dodo",
           earnImg: true,
-          openDate: this.getMiningTime("2021/04/15 00:00"),
-          dueDate: this.getRemainTime("2021/05/15 00:00"),
+          openDate: this.getMiningTime("2021/05/10 00:00"),
+          dueDate: this.getRemainTime("2021/06/15 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
           yearEarn: apyArray["bhelmet_mdx"] || "--",
-          started: new Date("2021/04/15 00:00") * 1,
-          expired: new Date("2021/05/15 00:00") * 1,
+          started: new Date("2021/05/10 00:00") * 1,
+          expired: new Date("2021/06/15 00:00") * 1,
         },
         {
           miningName: "HELMET&nbsp;POOL",
@@ -791,6 +795,7 @@ export default {
       this.HELMET_BNB_LP_V1_APY();
       this.HELMET_BNB_LP_V2_APY();
       this.HELMET_hDODO_DLP_APY();
+      this.BHELMET_DODO_LP_APY();
       this.FEI_POOL_APY();
       this.QFEI_QSD_DLP_APY();
       this.HELMET_KUN_DLP_APY();
@@ -862,12 +867,54 @@ export default {
           )
         ) * 100;
       let APY = helmetAPY + mdxAPY;
-      let startedTime = this.miningList[1].started;
+      let startedTime = this.miningList[0].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_mdx = "--";
       } else {
         this.apyArray.bhelmet_mdx = fixD(APY, 2);
+      }
+    },
+    async BHELMET_DODO_LP_APY() {
+      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
+      let allVolume = lptBnbValue * 12000 * 36;
+      //总抵押
+      let supplyVolume = await totalSupply("HELMETDODOPOOL"); //数量
+      let supplyVolumedodo = await totalSupply(
+        "0x38E02C8AB552DEE3a79E32eB4665ceae538fD145"
+      ); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("HELMETDODOPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "HELMETDODOPOOL_LPT");
+      // （1+日产量/总质押量）^365
+      let helmetAPY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 36), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let lptBnbValue1 = await pancakeswap("USDT", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
+      let stakeValue1 = 36 * 20000 * (lptBnbValue1 * lptHelmetValue1);
+      let dodoAPR =
+        precision.divide(
+          precision.times(precision.divide(stakeValue1, 36), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolumedodo
+          )
+        ) * 100;
+      console.log(helmetAPY, dodoAPR);
+      let APY = helmetAPY + dodoAPR;
+      let startedTime = this.miningList[1].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.apyArray.bhelmet_dodo = "--";
+      } else {
+        this.apyArray.bhelmet_dodo = fixD(APY, 2);
       }
     },
     async HELMET_POOL_APY() {
@@ -905,7 +952,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_xburger = "--";
@@ -933,7 +980,7 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[4].started;
+      let startedTime = this.miningList[3].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.qfei = "--";
@@ -960,7 +1007,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[5].started;
+      let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.kun = "--";
@@ -989,7 +1036,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[6].started;
+      let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.QHELMET = "--";

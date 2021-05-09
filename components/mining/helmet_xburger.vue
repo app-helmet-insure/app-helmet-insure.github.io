@@ -72,7 +72,9 @@
             <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
-          <a href="https://burgerswap.org/trade/pool" target="_blank"
+          <a
+            href="https://burgerswap.org/trade/pool?from=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8&to=0xCa7597633927A98B800738eD5CD2933a74a80e8c"
+            target="_blank"
             >From <i class="burger"></i>Get HELMET-hxBURGER BLP</a
           >
         </section>

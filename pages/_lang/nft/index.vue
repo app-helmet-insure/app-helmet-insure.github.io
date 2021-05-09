@@ -28,7 +28,6 @@ export default {
     min-width: 1026px;
     margin: 0 auto;
     width: 100%;
-    height: 1474px;
     background: #241e26;
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     padding: 40px 0;

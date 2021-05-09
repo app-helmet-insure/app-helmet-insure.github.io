@@ -7,13 +7,6 @@
       <div class="swiper-slide lev">
         <div></div>
       </div>
-      <div class="swiper-slide four">
-        <div></div>
-      </div>
-
-      <div class="swiper-slide balckhole">
-        <div></div>
-      </div>
       <div class="swiper-slide xburger">
         <div></div>
       </div>
@@ -138,22 +131,11 @@ export default {
         background-image: url("../../assets/img/banner/nft_web.png");
       }
     }
-    .four {
-      background: #ffcf27;
-      > div {
-        background-image: url("../../assets/img/banner/four_web.png");
-      }
-    }
+
     .lev {
       background: linear-gradient(90deg, #2f7af2 0%, #fa54ac 100%);
       > div {
         background-image: url("../../assets/img/banner/lev_web.png");
-      }
-    }
-    .balckhole {
-      background: #091521;
-      > div {
-        background-image: url("../../assets/img/banner/blackHole.png");
       }
     }
 
@@ -197,18 +179,7 @@ export default {
         background-image: url("../../assets/img/banner/nft_h5.png");
       }
     }
-    .four {
-      background: #ffcf27;
-      > div {
-        background-image: url("../../assets/img/banner/four_h5.png");
-      }
-    }
-    .balckhole {
-      background: #091521;
-      > div {
-        background-image: url("../../assets/img/banner/blackhole_h5H5.png");
-      }
-    }
+
     .lev {
       background: #3faa62;
       > div {

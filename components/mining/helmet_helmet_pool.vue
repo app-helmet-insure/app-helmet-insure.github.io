@@ -125,22 +125,6 @@
             >
           </span>
         </p>
-        <p>
-          <span>MDX {{ $t("Table.HELMETRewards") }}：</span>
-          <span>
-            <span>
-              <countTo
-                v-if="isLogin"
-                :startVal="Number(0)"
-                :endVal="Number(balance.Cake)"
-                :duration="2000"
-                :decimals="8"
-              />
-              <span v-else>--</span>
-              MDX</span
-            >
-          </span>
-        </p>
         <button
           @click="toCompound"
           :class="claimLoading ? 'disable o_button' : 'o_button'"

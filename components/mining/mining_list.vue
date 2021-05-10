@@ -646,14 +646,14 @@ export default {
           earnNum: "two",
           earn: "bhelmet_dodo",
           earnImg: true,
-          openDate: this.getMiningTime("2021/05/10 00:00"),
+          openDate: this.getMiningTime("2021/05/10 12:00"),
           dueDate: this.getRemainTime("2021/06/15 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["bhelmet_mdx"] || "--",
-          started: new Date("2021/05/10 00:00") * 1,
+          yearEarn: apyArray["bhelmet_dodo"] || "--",
+          started: new Date("2021/05/10 12:00") * 1,
           expired: new Date("2021/06/15 00:00") * 1,
         },
         {
@@ -867,7 +867,7 @@ export default {
           )
         ) * 100;
       let APY = helmetAPY + mdxAPY;
-      let startedTime = this.miningList[0].started;
+      let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_mdx = "--";
@@ -907,10 +907,10 @@ export default {
             supplyVolumedodo
           )
         ) * 100;
-      console.log(helmetAPY, dodoAPR);
       let APY = helmetAPY + dodoAPR;
-      let startedTime = this.miningList[1].started;
+      let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
+      console.log(Number(nowTime) < startedTime, startedTime, nowTime);
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_dodo = "--";
       } else {
@@ -927,7 +927,7 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[2].yearEarn = fixD(APY, 2);
+      this.miningList[3].yearEarn = fixD(APY, 2);
     },
     async BHELMET_XBURGER_APY() {
       let BHELMETHelmetValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
@@ -952,7 +952,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[2].started;
+      let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_xburger = "--";
@@ -980,7 +980,7 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[5].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.qfei = "--";
@@ -1007,7 +1007,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[4].started;
+      let startedTime = this.miningList[6].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.kun = "--";
@@ -1036,7 +1036,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[5].started;
+      let startedTime = this.miningList[7].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.QHELMET = "--";

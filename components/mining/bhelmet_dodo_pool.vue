@@ -76,6 +76,19 @@
           >
         </section>
       </div>
+      <div class="ContractAddress">
+        <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
+        <p>
+          0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672')
+            "
+          ></i>
+        </p>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -158,14 +171,14 @@
         </button>
       </div>
       <div class="ContractAddress">
-        <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
+        <span>DODO {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
+          0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672')
+              copyAdress($event, '0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2')
             "
           ></i>
         </p>

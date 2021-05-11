@@ -422,7 +422,7 @@ export default {
   .card_tips {
     justify-content: center;
     width: 503px;
-    height: 64px;
+    min-height: 64px;
     background: #241e26;
     box-shadow: 0px 0px 15px 0px #ce97bf;
     border-radius: 10px;
@@ -643,7 +643,7 @@ export default {
   .card_tips {
     justify-content: center;
     width: 90%;
-    height: 64px;
+    min-height: 64px;
     background: #241e26;
     box-shadow: 0px 0px 15px 0px #ce97bf;
     border-radius: 10px;

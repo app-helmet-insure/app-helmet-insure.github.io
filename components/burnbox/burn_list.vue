@@ -283,6 +283,13 @@ export default {
     },
     initBurnBox() {
       let arr = [
+        // {
+        //   burnName: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
+        //   earn: "hFOR",
+        //   bonus: 1000000,
+        //   dueDate: this.getRemainTime("2021/04/12 00:00"),
+        //   icon: "hFOR",
+        // },
         {
           burnName: "<i>hAUTO</i>&nbsp;Burning&nbsp;Box",
           earn: "hTPT",

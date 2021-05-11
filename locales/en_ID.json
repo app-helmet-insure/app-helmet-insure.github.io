@@ -232,7 +232,9 @@
     "Send": "Donate",
     "RewardTime": "Game Countdown",
     "RewardVolume": "Progressive Slot",
-    "UsersCount": "Players"
+    "UsersCount": "Players",
+    "NFT_TIP1": "If you didn't claim your cards, PLZ  refresh and wait until 'Check my 10 cards' →'re-claim your cards' button shows.",
+    "NFT_TIP2": "Please 'claim your cards' in 5min otherwise you will lose them."
   },
   "Tip": {
     "Dpr": "Persentase hasil harian, DPR = hasil harian / volume staking.",

@@ -84,26 +84,31 @@
         <svg class="close" aria-hidden="true" @click="showActiveBurn = false">
           <use xlink:href="#icon-close"></use>
         </svg>
+        <HFORBURN
+          v-if="activeBurn == 'hFOR'"
+          :activeType="activeType"
+          :TradeType="'ALL'"
+        />
         <HAUTOBURN
           v-if="activeBurn == 'hAUTO' && showActiveBurn"
           :activeType="activeType"
           :TradeType="'ALL'"
-        ></HAUTOBURN>
+        />
         <BNB500BURN
           v-if="activeBurn == 'BNB500' && showActiveBurn"
           :activeType="activeType"
           :TradeType="'ALL'"
-        ></BNB500BURN>
+        />
         <HCTKBURN
           v-if="activeBurn == 'hCTK' && showActiveBurn"
           :activeType="activeType"
           :TradeType="'ALL'"
-        ></HCTKBURN>
+        />
         <HCCTBURN
           v-if="activeBurn == 'HCCT' && showActiveBurn"
           :activeType="activeType"
           :TradeType="'ALL'"
-        ></HCCTBURN>
+        />
       </div>
     </div>
     <div
@@ -190,26 +195,31 @@
           <use xlink:href="#icon-close"></use>
         </svg>
       </div>
+      <HFORBURN
+        v-if="activeBurn == 'hFOR'"
+        :activeType="activeType"
+        :TradeType="activeType"
+      />
       <HAUTOBURN
         v-if="activeBurn == 'hAUTO'"
         :activeType="activeType"
         :TradeType="activeType"
-      ></HAUTOBURN>
+      />
       <BNB500BURN
         v-if="activeBurn == 'BNB500'"
         :activeType="activeType"
         :TradeType="activeType"
-      ></BNB500BURN>
+      />
       <HCTKBURN
         v-if="activeBurn == 'hCTK'"
         :activeType="activeType"
         :TradeType="activeType"
-      ></HCTKBURN>
+      />
       <HCCTBURN
         v-if="activeBurn == 'HCCT'"
         :activeType="activeType"
         :TradeType="activeType"
-      ></HCCTBURN>
+      />
     </Wraper>
   </div>
 </template>
@@ -220,6 +230,7 @@ import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
 import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 import HAUTOBURN from "~/components/burnbox/hauto_burn.vue";
 import BNB500BURN from "~/components/burnbox/bnb500_burn.vue";
+import HFORBURN from "~/components/burnbox/hfor_burn.vue";
 export default {
   components: {
     Wraper,
@@ -227,6 +238,7 @@ export default {
     HCTKBURN,
     HAUTOBURN,
     BNB500BURN,
+    HFORBURN,
   },
   data() {
     return {
@@ -283,13 +295,13 @@ export default {
     },
     initBurnBox() {
       let arr = [
-        // {
-        //   burnName: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
-        //   earn: "hFOR",
-        //   bonus: 1000000,
-        //   dueDate: this.getRemainTime("2021/04/12 00:00"),
-        //   icon: "hFOR",
-        // },
+        {
+          burnName: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
+          earn: "SHIBh",
+          bonus: 15000000000,
+          dueDate: this.getRemainTime("2021/05/28 00:00"),
+          icon: "hFOR",
+        },
         {
           burnName: "<i>hAUTO</i>&nbsp;Burning&nbsp;Box",
           earn: "hTPT",

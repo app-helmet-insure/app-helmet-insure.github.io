@@ -46,7 +46,7 @@
           "
         />
         <p>
-          <span>hAUTO</span>|<i @click="DepositeNum = balance.Deposite">{{
+          <span>hFOR</span>|<i @click="DepositeNum = balance.Deposite">{{
             $t("Table.Max")
           }}</i>
         </p>
@@ -97,12 +97,12 @@
       <div class="ContractAddress">
         <span>hFOR {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112
+          0xb779F208f8d662558dF8E2b6bFE3b6305CC13389
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112')
+              copyAdress($event, '0xb779F208f8d662558dF8E2b6bFE3b6305CC13389')
             "
           ></i>
         </p>
@@ -130,7 +130,7 @@
         </div>
       </div>
       <p>
-        <span>hTPT {{ $t("Table.HELMETRewards") }}</span>
+        <span>SHIBh {{ $t("Table.HELMETRewards") }}</span>
         <span
           ><countTo
             v-if="isLogin"
@@ -139,7 +139,7 @@
             :duration="2000"
             :decimals="8"
           />
-          hTPT</span
+          SHIBh</span
         >
       </p>
       <div class="input">
@@ -157,7 +157,7 @@
           style="border: 1px solid #fd7e14 !important"
         />
         <p>
-          <span>hTPT</span>|<i
+          <span>SHIBh</span>|<i
             @click="WithdrawNum = balance.Earn"
             style="background: rgba(255, 150, 0, 0.1)"
             >{{ $t("Table.Max") }}</i
@@ -170,14 +170,14 @@
         >{{ $t("Table.Claim") }}
       </button>
       <div class="ContractAddress">
-        <span>hTPT {{ $t("Table.ContractAddress") }}</span>
+        <span>SHIBh {{ $t("Table.ContractAddress") }}</span>
         <p>
-          0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c
+          0x224b33139a377a62d4BaD3D58cEDb7807AE228eB
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, '0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c')
+              copyAdress($event, '0x224b33139a377a62d4BaD3D58cEDb7807AE228eB')
             "
           ></i>
         </p>
@@ -218,8 +218,8 @@ export default {
     return {
       list: {
         name: "HCCT Burning Box",
-        endTime: "2021/04/12 00:00",
-        startTime: "2021/04/05 00:00",
+        endTime: "2021/05/28 00:00",
+        startTime: "2021/05/13 12:00",
         bonusValue: 1000000,
         DownTime: {
           day: "00",
@@ -262,14 +262,14 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_BURNHAUTO", (data) => {
+    this.$bus.$on("DEPOSITE_LOADING_BURNHFOR", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_BURNHAUTO", (data) => {
+    this.$bus.$on("CLAIM_LOADING_BURNHFOR", (data) => {
       this.claimLoading = false;
     });
-    this.$bus.$on("RELOAD_DATA_BURNHAUTO", () => {
+    this.$bus.$on("RELOAD_DATA_BURNHFOR", () => {
       this.getBalance();
     });
     this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
@@ -336,8 +336,8 @@ export default {
       });
     },
     async getBalance() {
-      let helmetType = "BURNHAUTO_LPT";
-      let type = "BURNHAUTO";
+      let helmetType = "BURNHFOR_LPT";
+      let type = "BURNHFOR";
       // 可抵押数量
       let Deposite = await getBalance(helmetType);
       // 可赎回数量
@@ -345,7 +345,7 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type, "HTPT");
+      let Helmet = await CangetPAYA(type);
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
       this.balance.Deposite = fixD(Deposite, 8);
@@ -437,7 +437,7 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "BURNHAUTO";
+      let type = "BURNHFOR";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
     // 结算Paya
@@ -446,7 +446,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "BURNHAUTO";
+      let type = "BURNHFOR";
       let res = await getPAYA(type);
     },
   },

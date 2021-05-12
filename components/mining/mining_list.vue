@@ -898,7 +898,7 @@ export default {
         ) * 100;
       let lptBnbValue1 = await pancakeswap("USDT", "WBNB");
       let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = 36 * 20000 * (lptBnbValue1 * lptHelmetValue1);
+      let stakeValue1 = 36 * 5000 * (lptBnbValue1 * lptHelmetValue1);
       let dodoAPR =
         precision.divide(
           precision.times(precision.divide(stakeValue1, 36), 365),

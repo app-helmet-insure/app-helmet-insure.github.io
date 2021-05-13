@@ -359,10 +359,12 @@ export const CangetPAYA = async (type, currcy) => {
         .then((res) => {
             if (currcy == 'HTPT') {
                 return res / 10000;
-            } else {
-                let tocurrcy = currcy || 'HELMET';
-                return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
             }
+            if (currcy == 'SHIB') {
+                return res / 1000000000000;
+            }
+            let tocurrcy = currcy || 'HELMET';
+            return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
 export const CangetUNI = async (type) => {

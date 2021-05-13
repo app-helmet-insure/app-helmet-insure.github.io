@@ -220,7 +220,7 @@ export default {
         name: "HCCT Burning Box",
         endTime: "2021/05/28 00:00",
         startTime: "2021/05/13 12:00",
-        bonusValue: 1000000,
+        bonusValue: 15000000000,
         DownTime: {
           day: "00",
           hour: "00",
@@ -272,9 +272,6 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHFOR", () => {
       this.getBalance();
     });
-    this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
-      this.showOnepager();
-    });
     setTimeout(() => {
       this.getDownTime();
       this.getMiningTime();
@@ -322,19 +319,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $HCCTII?",
-        text: [
-          "HCCTII is the call option of HELMET.",
-          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
-          "Reasonable activate price: 1 HELMET = 0.1CAKE",
-          "Expire date: Apr. 8th 24:00 SGT",
-          "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
-        ],
-      });
-    },
     async getBalance() {
       let helmetType = "BURNHFOR_LPT";
       let type = "BURNHFOR";
@@ -345,7 +329,7 @@ export default {
       // 总抵押
       let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await CangetPAYA(type, "SHIB");
       // 总Helmet
       // let LptVolume = await totalSupply(helmetType); //发行
       this.balance.Deposite = fixD(Deposite, 8);

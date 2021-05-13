@@ -272,9 +272,6 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHAUTO", () => {
       this.getBalance();
     });
-    this.$bus.$on("SHOW_HCCT_BURN_ONEPAGER", () => {
-      this.showOnepager();
-    });
     setTimeout(() => {
       this.getDownTime();
       this.getMiningTime();
@@ -321,19 +318,6 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
-    },
-    showOnepager() {
-      this.$bus.$emit("OPEN_ONEPAGER", {
-        showFlag: true,
-        title: "What is $HCCTII?",
-        text: [
-          "HCCTII is the call option of HELMET.",
-          "Total Supply: 500,000 (400,000 for CAKE miners on PancakeSwap; 100,000 for Burning BOX on helmet.insure) ",
-          "Reasonable activate price: 1 HELMET = 0.1CAKE",
-          "Expire date: Apr. 8th 24:00 SGT",
-          "Example: If you get 1 HCCT II, you could swap 0.1 CAKE to 1 HELMET by click the 'activate' button on TradingView Tab. To be specific, if HELMET hit $2 and CAKE hit $15, you could get $0.5 profit by this 'Activate' behavior.",
-        ],
-      });
     },
     async getBalance() {
       let helmetType = "BURNHAUTO_LPT";

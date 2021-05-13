@@ -30,7 +30,25 @@
             ><span>{{ item.iio_webSite }}</span
             ><i></i
           ></a>
-          <div class="text">
+          <div class="text" v-if="item.active_page === 1">
+            <p>
+              <span>{{ $t("IIO.ExpiredText1") }}</span>
+              <span>{{ item.expired_burnt }}</span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.ExpiredText2") }}</span>
+              <span>${{ item.expired_stake }}</span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.ExpiredText3") }}</span>
+              <span>{{ item.expired_premium }} </span>
+            </p>
+            <p>
+              <span>{{ $t("IIO.ExpiredText4") }}</span>
+              <span>{{ item.expired_activating }}</span>
+            </p>
+          </div>
+          <div class="text" v-if="item.active_page === 2">
             <p>
               <span>{{
                 $t("IIO.HomeText1", { name: `i${item.swapUtil}` })
@@ -55,7 +73,9 @@
               >
             </p>
           </div>
+
           <button
+            v-if="item.status !== 'finished'"
             @click="toDetails(index)"
             :style="
               item.status == 'finished' || !item.enterbutton
@@ -65,6 +85,20 @@
           >
             {{ item.status == "finished" ? "Finished" : "Enter Pool" }}
           </button>
+          <div v-else class="button_tab">
+            <span
+              @click="item.active_page = 1"
+              :class="item.active_page == 1 ? 'active_page' : ''"
+            >
+              <i></i>
+            </span>
+            <span
+              @click="item.active_page = 2"
+              :class="item.active_page == 2 ? 'active_page' : ''"
+            >
+              <i></i>
+            </span>
+          </div>
         </template>
         <img
           class="soon_img"
@@ -112,6 +146,11 @@ export default {
           enterbutton: true,
           open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "2,200",
+          expired_stake: "29,962,828.05",
+          expired_premium: "5366.66%",
+          expired_activating: "85.44%",
         },
         {
           iio_name: "BlackHole",
@@ -133,6 +172,11 @@ export default {
           enterbutton: true,
           open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "1438",
+          expired_stake: "37,619,415.09",
+          expired_premium: "6500.00%",
+          expired_activating: "64.05%",
         },
         {
           iio_name: "WeStarter",
@@ -154,6 +198,11 @@ export default {
           enterbutton: true,
           open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "1,366",
+          expired_stake: "35,458,440.17",
+          expired_premium: "2620.00%",
+          expired_activating: "91.56%",
         },
         {
           iio_name: "Lever",
@@ -175,6 +224,11 @@ export default {
           enterbutton: true,
           open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "1009",
+          expired_stake: "31,073,418.10",
+          expired_premium: "820.00%",
+          expired_activating: "86.67%",
         },
         {
           iio_name: "2",
@@ -227,6 +281,7 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 1;
+            item.active_page = 1;
           }
         }
       });
@@ -324,7 +379,6 @@ export default {
         align-items: center;
         margin-top: 4px;
         cursor: pointer;
-
         span {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
@@ -389,6 +443,45 @@ export default {
         line-height: 20px;
         &:hover {
           background: rgba(255, 255, 255, 0.4);
+        }
+      }
+      > .button_tab {
+        margin-top: 20px;
+        width: 280px;
+        height: 44px;
+        font-size: 16px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        .active_page {
+          i {
+            background: rgba(255, 255, 255, 0.8) !important;
+          }
+        }
+        span {
+          width: 40px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          &:nth-of-type(1) {
+            margin-right: 3px;
+          }
+          &:nth-of-type(2) {
+            margin-left: 3px;
+          }
+          i {
+            display: block;
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.4);
+          }
         }
       }
       .soon_img {
@@ -587,6 +680,45 @@ export default {
         line-height: 20px;
         &:hover {
           background: rgba(255, 255, 255, 0.4);
+        }
+      }
+      > .button_tab {
+        margin-top: 20px;
+        width: 280px;
+        height: 44px;
+        font-size: 16px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        .active_page {
+          i {
+            background: rgba(255, 255, 255, 0.8) !important;
+          }
+        }
+        span {
+          width: 40px;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          &:nth-of-type(1) {
+            margin-right: 3px;
+          }
+          &:nth-of-type(2) {
+            margin-left: 3px;
+          }
+          i {
+            display: block;
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.4);
+          }
         }
       }
       .soon_img {

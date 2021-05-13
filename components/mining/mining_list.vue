@@ -4,17 +4,10 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line finshed_pc" v-if="item.earn == 'helmet_cake_v1'">
-        <p></p>
-        <i></i>
-        <span>Finished</span>
-        <i></i>
-        <p></p>
-      </div>
       <div class="finshed_line finshed_pc" v-if="item.earn == 'QFEI'">
         <p></p>
         <i></i>
-        <span>Serial Mining</span>
+        <span>Finished</span>
         <i></i>
         <p></p>
       </div>
@@ -39,14 +32,24 @@
           <img
             class="combo_img"
             style="width: 116px"
-            src="~/assets/img/mining/serial_web.png"
+            :src="
+              require(`~/assets/img/mining/${
+                item.dueDate == 'Finished' ? 'serial_web_expired' : 'serial_web'
+              }.png`)
+            "
             alt=""
             v-if="item.serial"
           />
           <img
             class="combo_img"
             style="width: 32px; height: 32px; left: 10px"
-            src="~/assets/img/mining/serialnext_web.png"
+            :src="
+              require(`~/assets/img/mining/${
+                item.dueDate == 'Finished'
+                  ? 'serialnext_web_expired'
+                  : 'serialnext_web'
+              }.png`)
+            "
             alt=""
             v-if="item.serialNext"
           />
@@ -226,37 +229,46 @@
       </div>
     </div>
     <div v-for="item in miningList" :key="item.earn + '1'">
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'helmet_cake_v1'">
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'QFEI'">
         <p></p>
         <i></i>
         <span>Finished</span>
         <i></i>
         <p></p>
       </div>
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'QFEI'">
-        <p></p>
-        <i></i>
-        <span>Serial Mining</span>
-        <i></i>
-        <p></p>
-      </div>
+
       <div class="mining_item_h5">
         <img
           class="combo_img"
-          src="~/assets/img/mining/combo_h5.png"
+          :src="
+            require(`~/assets/img/mining/combo_${
+              item.dueDate == 'Finished' ? 'expired' : 'web'
+            }.png`)
+          "
           alt=""
           v-if="item.combo"
         />
         <img
           class="combo_img"
           style="width: 116px"
-          src="~/assets/img/mining/serial_web.png"
+          :src="
+            require(`~/assets/img/mining/${
+              item.dueDate == 'Finished' ? 'serial_web_expired' : 'serial_web'
+            }.png`)
+          "
           alt=""
           v-if="item.serial"
-        /><img
+        />
+        <img
           class="combo_img"
           style="width: 32px; height: 32px; left: 10px"
-          src="~/assets/img/mining/serialnext_web.png"
+          :src="
+            require(`~/assets/img/mining/${
+              item.dueDate == 'Finished'
+                ? 'serialnext_web_expired'
+                : 'serialnext_web'
+            }.png`)
+          "
           alt=""
           v-if="item.serialNext"
         /><img

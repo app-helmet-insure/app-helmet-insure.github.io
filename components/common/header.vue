@@ -14,12 +14,15 @@
       </div>
     </div>
     <div class="account">
+      <div class="airdrop_web airdrop">
+        <img src="~/assets/img/icon/airdrop.png" alt="" />
+      </div>
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
         @click="openWallectSelect"
-        >{{ $t("Header.ConnectWallet") }}</a
-      >
+        >{{ $t("Header.ConnectWallet") }}
+      </a>
       <div v-else class="address-wrap">
         <div v-if="ChainID != 56" class="wrong">
           <svg class="wrongnetwork" aria-hidden="true">
@@ -53,6 +56,9 @@
         @close="closeChangeWallet"
         @back="openCurrentAccount"
       ></ChangeAccount>
+      <div class="airdrop_h5 airdrop">
+        <img src="~/assets/img/icon/airdrop.png" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -152,6 +158,7 @@ export default {
     display: flex;
     align-items: center;
     text-align: center;
+
     .wrong {
       min-width: 171px;
       height: 36px;
@@ -247,7 +254,18 @@ export default {
     .logo {
       display: none;
     }
+    .airdrop_h5 {
+      display: none;
+    }
     .account {
+      .airdrop {
+        margin-right: 20px;
+        cursor: pointer;
+        > img {
+          width: 24px;
+          height: 24px;
+        }
+      }
       justify-content: flex-end;
     }
   }
@@ -272,6 +290,17 @@ export default {
       }
     }
     .account {
+      .airdrop_web {
+        display: none;
+      }
+      .airdrop {
+        margin-left: 20px;
+        cursor: pointer;
+        > img {
+          width: 24px;
+          height: 24px;
+        }
+      }
       margin-top: 15px;
       justify-content: flex-start;
     }

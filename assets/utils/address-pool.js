@@ -257,6 +257,8 @@ export const getTokenName = (address) => {
             return 'BLACK';
         case '0x910651f81a605a6ef35d05527d24a72fecef8bf0':
             return 'WAR';
+        case '0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561':
+            return 'SHIB';
         default:
             return '--';
     }

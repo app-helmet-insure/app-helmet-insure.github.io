@@ -288,11 +288,11 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                     loading: true,
                     buttonText: 'Confirm',
                     conTit: 'Please Confirm the transaction in your wallet',
-                    conText: `<p>Buy <span>${datas.showVolueme} ${
-                        datas.showType
+                    conText: `<p>Buy <span>${_data.showVolueme} ${
+                        _data.showType
                     }
                     </span> Policys, with the strike price of <span>
-                    ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
+                    ${fixD(_data.price * _data.volume, 8)} ${_data.settleToken}
                     </span></p>`,
                 });
             })

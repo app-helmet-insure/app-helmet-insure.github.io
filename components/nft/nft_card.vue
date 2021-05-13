@@ -3,13 +3,27 @@
     <div class="show_card">
       <!-- 正面 -->
       <div
+        v-if="timeFlag"
         class="positive box"
         ref="positive"
         :style="rotate ? ' animation: positive 2s linear 0s infinite;' : ''"
       >
         <div class="positive_card"></div>
       </div>
+      <div class="expired" v-else>
+        <div>
+          <span>您共可领取</span>
+          <h3>
+            {{ fixD(fixD(RewardPoll / DoraQuantity, 0) * DoraBalance, 0) }}
+            Helmet
+          </h3>
+          <p>
+            每个 Dora 可领取 {{ fixD(RewardPoll / DoraQuantity, 0) }} Helmet
+          </p>
+        </div>
+      </div>
     </div>
+
     <div class="card_bottom"></div>
   </div>
 </template>
@@ -17,10 +31,11 @@
 import Vue from "vue";
 import animation from "~/assets/css/animation.scss";
 Vue.use(animation);
+import { fixD } from "~/assets/js/util.js";
 export default {
-  props: ["rotate"],
+  props: ["rotate", "timeFlag", "RewardPoll", "DoraQuantity", "DoraBalance"],
   data() {
-    return {};
+    return { fixD };
   },
 };
 </script>
@@ -42,7 +57,7 @@ export default {
     position: relative;
     margin: 0 auto;
     z-index: 1;
-    .box {
+    > div {
       width: 286px;
       height: 354px;
       background-size: 100% 100%;
@@ -50,6 +65,8 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .box {
       background-image: url("../../assets/img/nft/border_web.png");
       > div {
         width: 240px;
@@ -61,6 +78,37 @@ export default {
         cursor: pointer;
         background-size: 100% 100%;
         background-repeat: no-repeat;
+      }
+    }
+    .expired {
+      background-image: url("../../assets/img/nft/nft_bg_expired.png");
+      > div {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        span {
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: rgba(23, 23, 58, 0.8);
+          line-height: 17px;
+        }
+        h3 {
+          margin-top: 10px;
+          font-size: 24px;
+          font-family: FredokaOne-Regular, FredokaOne;
+          color: rgba(23, 23, 58, 0.8);
+          line-height: 24px;
+        }
+        p {
+          margin-top: 50px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: rgba(23, 23, 58, 0.8);
+          line-height: 17px;
+        }
       }
     }
   }

@@ -21,9 +21,9 @@
     </p> -->
     <!-- <PHeader></PHeader> -->
     <div class="content">
-      <PSlider></PSlider>
+      <PSlider />
       <div class="content_wrap">
-        <PHeader :account="true"></PHeader>
+        <PHeader :account="true" />
         <template>
           <transition name="fade">
             <nuxt-child />
@@ -36,21 +36,23 @@
       v-if="showRiskWarning"
       @close="closeRiskWarning"
       @confirm="closeRiskWarning"
-    ></RiskWarning>
+    />
     <!-- 下载钱包指引界面 -->
-    <WallectDownLoad></WallectDownLoad>
+    <WallectDownLoad />
     <!-- 钱包交互状态提示弹框 -->
     <StatusDialog
       v-if="showStatusDialog"
       :data="statusData"
       @close="closeStatusDialog"
-    ></StatusDialog>
+    />
+    <Airdrop />
   </div>
 </template>
 <script>
 import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
+import Airdrop from "~/components/common/airdrop.vue";
 import { web3 } from "~/assets/utils/web3-obj.js";
 import {
   getOptionCreatedLog,
@@ -76,6 +78,7 @@ export default {
     PFooter,
     RiskWarning,
     StatusDialog,
+    Airdrop,
     // MyPayaso,
     WallectDownLoad,
   },

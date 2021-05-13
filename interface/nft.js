@@ -106,6 +106,21 @@ export const usersCount = async (type) => {
             return res;
         });
 };
+export const totalSupply = async (type) => {
+    const charID = 56;
+    let ContractAdress = type;
+    const account = window.CURRENTADDRESS;
+    if (type.indexOf('0x') === -1) {
+        ContractAdress = getContract(type, charID);
+    }
+    const contract = await expERC20(ContractAdress);
+    return contract.methods
+        .totalSupply()
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
 export const bet = async (ContractType, ContractCost, callBack) => {
     const charID = 56;
     let ContractAdress;
@@ -281,6 +296,50 @@ export const compose = async (ContractType, callBack) => {
             })
             .on('error', function(error) {
                 callBack({ status: 'compose_error' });
+            });
+    } catch (error) {
+        console.log(error);
+    }
+};
+export const redeem = async (ContractType, callBack) => {
+    const charID = 56;
+    const account = window.CURRENTADDRESS;
+    let ContractAdress;
+    if (ContractType.indexOf('0x') === -1) {
+        ContractAdress = getContract(ContractType, charID);
+    }
+    try {
+        const IIOContract = await NFT(ContractAdress);
+        IIOContract.methods
+            .redeem()
+            .send({ from: account })
+            .on('transactionHash', function(transactionHash) {
+                callBack({ status: 'redeem_pendding' }); // contains the new contract address
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<p>You are swapping the Dora Card or HELMET Rewards</p>`,
+                });
+            })
+            .on('receipt', function(receipt) {
+                callBack({ status: 'redeem_success' }); // contains the new contract address
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Transation submitted',
+                    layout: 'layout2',
+                    buttonText: 'Confirm',
+                    conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    button: true,
+                    buttonText: 'Confirm',
+                    showDialog: false,
+                });
+            })
+            .on('error', function(error) {
+                callBack({ status: 'redeem_error' });
+                bus.$emit('CLOSE_STATUS_DIALOG');
             });
     } catch (error) {
         console.log(error);

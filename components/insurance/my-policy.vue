@@ -378,6 +378,7 @@ export default {
       let bHELMETPolicy = await this.bHELMETPolicy();
       let qHELMETPolicy = await this.qHELMETPolicy();
       let xhBURGERolicy = await this.xhBURGERolicy();
+      let SHIBHRolicy = await this.SHIBHRolicy();
       if (cakePolicy) {
         result.push(cakePolicy);
       }
@@ -425,6 +426,9 @@ export default {
       }
       if (xhBURGERolicy) {
         result.push(xhBURGERolicy);
+      }
+      if (SHIBHRolicy) {
+        result.push(SHIBHRolicy);
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -476,16 +480,51 @@ export default {
         data = {
           token: getTokenName(item._underlying),
           _underlying_vol: item.volume,
-          vol: fixD(item.bnbAmount * item.outPrice, 8),
+          vol: item.volume,
           bidID: item.bidID,
-          long: item.long,
+          long: item.long || item.longAdress,
           exPrice: fixD(precision.divide(1, item._strikePrice), 4),
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
-          showVolume: item.showVolume,
+          approveAddress1: item.approveAddress1,
+          approveAddress2: item.approveAddress2,
+          unit: item.unit ? item.unit : "",
+          showVolume: item.showVolume * item.outPrice,
         };
+        // if (item.transfer) {
+        //   data = {
+        //     token: getTokenName(item._underlying),
+        //     _underlying_vol: item.volume,
+        //     vol: item.volume,
+        //     bidID: item.bidID,
+        //     long: item.long || item.longAdress,
+        //     exPrice: fixD(precision.divide(1, item._strikePrice), 4),
+        //     _underlying: getTokenName(item._underlying),
+        //     _collateral: getTokenName(item._collateral),
+        //     settleToken: getTokenName(item.settleToken),
+        //     flag: item.transfer ? true : false,
+        //     approveAddress1: item.approveAddress1,
+        //     approveAddress2: item.approveAddress2,
+        //     unit: item.unit ? item.unit : "",
+        //     showVolume: item.showVolume * item.outPrice,
+        //   };
+        // } else {
+        //   data = {
+        //     token: getTokenName(item._underlying),
+        //     _underlying_vol: item.volume,
+        //     vol: fixD(item.bnbAmount * item.outPrice, 8),
+        //     bidID: item.bidID,
+        //     long: item.long,
+        //     exPrice: fixD(precision.divide(1, item._strikePrice), 4),
+        //     _underlying: getTokenName(item._underlying),
+        //     _collateral: getTokenName(item._collateral),
+        //     settleToken: getTokenName(item.settleToken),
+        //     flag: item.transfer ? true : false,
+        //     showVolume: item.showVolume,
+        //   };
+        // }
       }
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
@@ -542,7 +581,7 @@ export default {
           approveAddress2: "CAKELONG",
           outPrice: fromWei(30000000000000000, Token),
           outPriceUnit: "BNB",
-          type: "call",
+          type: "Call",
           showVolume: volume,
           TypeCoin: getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"),
         };
@@ -1353,6 +1392,60 @@ export default {
           outPriceUnit: "BNB",
           showVolume: volume,
           TypeCoin: getTokenName("0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async SHIBHRolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+        "SHIBh"
+      );
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x224b33139a377a62d4BaD3D58cEDb7807AE228eB");
+        let resultItem;
+        resultItem = {
+          id: 16,
+          bidID: 16,
+          buyer: myAddress,
+          price: "Airdrop",
+          Rent: "Airdrop",
+          volume: volume,
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1626105600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _strikePrice: 0.000001,
+          _underlying: "0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561",
+          _expiry: 1626105600000,
+          transfer: true,
+          longAdress: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          type: "Put",
+          symbol: "SHIBh",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 0.000001,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

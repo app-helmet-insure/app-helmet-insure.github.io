@@ -25,7 +25,7 @@
           <i></i>
           <p>
             <span>{{ $t("NFT.RewardTime") }}</span>
-            <span>
+            <span v-if="timeFlag">
               <template>
                 {{ Time.day }}<b>{{ $t("Content.DayM") }}</b>
                 <i>/</i>
@@ -42,14 +42,23 @@
                 <i>/</i>
               </template>
             </span>
+            <span v-else>
+              {{ Time }}
+            </span>
           </p>
         </div>
       </div>
       <div class="right">
-        <NFTCARD :rotate="rotate"></NFTCARD>
+        <NFTCARD
+          :rotate="rotate"
+          :timeFlag="timeFlag"
+          :RewardPoll="RewardPoll"
+          :DoraQuantity="DoraQuantity"
+          :DoraBalance="DoraBalance"
+        ></NFTCARD>
       </div>
     </div>
-    <div class="card_button">
+    <div class="card_button" v-if="timeFlag">
       <button class="one" @mouseup="handleClickBet" v-if="!needClaimFlag">
         {{ $t("NFT.OneCheck") }}<span> 2 HELMET</span>
       </button>
@@ -63,6 +72,9 @@
         {{ $t("NFT.OpenTen") }}
       </button>
     </div>
+    <div class="card_button" v-else>
+      <button class="one" @click="handleClickReward">领取</button>
+    </div>
     <div class="card_tips">
       <img src="~/assets/img/nft/home_tip.png" alt="" />
       <p>{{ $t("NFT.NFT_TIP1") }}</p>
@@ -72,7 +84,7 @@
 
 <script>
 import "~/assets/font/font.css";
-import { getBalance } from "~/interface/nft.js";
+import { getBalance, totalSupply, balanceOf, redeem } from "~/interface/nft.js";
 import { addCommom } from "~/assets/js/util.js";
 import moment from "moment";
 import NFTCARD from "~/components/nft/nft_card";
@@ -97,27 +109,31 @@ export default {
         minute: "00",
       },
       addCommom,
+      timeFlag: true,
       rotate: false,
       needClaimFlag: false,
       needClaim10Flag: false,
       usersCount: 0,
+      DoraQuantity: 0,
+      DoraBalance: 0,
     };
   },
   mounted() {
     setTimeout(() => {
       this.getNeedCliam();
       this.getNeedCliam10();
+      this.getDoraBalance();
+      this.getRewardNumber();
+      this.getUserCount();
+      this.getDoraBalance();
     }, 1000);
     this.$bus.$on("GET_CARD_BALANCE", () => {
       this.getRewardNumber();
       this.getNeedCliam();
       this.getNeedCliam10();
       this.getUserCount();
+      this.getDoraBalance();
     });
-    setTimeout(() => {
-      this.getRewardNumber();
-      this.getUserCount();
-    }, 1000);
     this.getRemainTime();
     setInterval(() => {
       setTimeout(() => {
@@ -127,6 +143,15 @@ export default {
     });
   },
   methods: {
+    async getDoraBalance() {
+      let type = "NFT_MAKE";
+      this.DoraQuantity = await totalSupply(type);
+      this.DoraBalance = await balanceOf("NFT_MAKE");
+    },
+    handleClickReward() {
+      let Type = "NFT_POOL";
+      redeem(Type, (data) => {});
+    },
     openDialog(action) {
       this.$bus.$emit("NFT_DIALOG_STATUS", { flag: true, action: action });
     },
@@ -200,6 +225,7 @@ export default {
           second: second > 9 ? second : "0" + second,
         };
         this.Time = template;
+        this.timeFlag = true;
       } else {
         template = {
           day: "00",
@@ -207,7 +233,8 @@ export default {
           minute: "00",
           second: "00",
         };
-        this.Time = template;
+        this.Time = "Finished";
+        this.timeFlag = false;
       }
     },
   },

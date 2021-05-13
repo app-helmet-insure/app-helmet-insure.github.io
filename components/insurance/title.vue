@@ -1,12 +1,13 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide hfor">
+        <div></div>
+      </div>
       <div class="swiper-slide nft">
         <div></div>
       </div>
-      <div class="swiper-slide lev">
-        <div></div>
-      </div>
+
       <div class="swiper-slide xburger">
         <div></div>
       </div>
@@ -132,10 +133,10 @@ export default {
       }
     }
 
-    .lev {
-      background: linear-gradient(90deg, #2f7af2 0%, #fa54ac 100%);
+    .hfor {
+      background: #262724;
       > div {
-        background-image: url("../../assets/img/banner/lev_web.png");
+        background-image: url("../../assets/img/banner/hfor_web.png");
       }
     }
 
@@ -180,10 +181,10 @@ export default {
       }
     }
 
-    .lev {
-      background: #3faa62;
+    .hfor {
+      background: #262724;
       > div {
-        background-image: url("../../assets/img/banner/lev_h5.png");
+        background-image: url("../../assets/img/banner/hfor_h5.png");
       }
     }
     .xburger {

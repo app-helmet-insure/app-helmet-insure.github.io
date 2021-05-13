@@ -822,6 +822,9 @@ export default {
                   &:last-of-type {
                     display: none;
                   }
+
+
+
                 }
               }
               &:nth-of-type(2) {

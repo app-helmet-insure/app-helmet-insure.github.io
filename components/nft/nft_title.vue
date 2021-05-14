@@ -88,6 +88,7 @@ import { getBalance, totalSupply, balanceOf, redeem } from "~/interface/nft.js";
 import { addCommom } from "~/assets/js/util.js";
 import moment from "moment";
 import NFTCARD from "~/components/nft/nft_card";
+import { fixD } from "~/assets/js/util.js";
 import {
   bet,
   bet10,
@@ -197,7 +198,7 @@ export default {
     },
     async getRewardNumber() {
       let num = await getBalance("NFT_COST", "NFT_POOL");
-      this.RewardPoll = Number(num);
+      this.RewardPoll = fixD(Number(num), 0);
     },
     async getUserCount() {
       let res = await usersCount("NFT_POOL");

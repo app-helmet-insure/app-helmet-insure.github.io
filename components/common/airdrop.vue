@@ -1,7 +1,7 @@
 <template>
   <div class="mask" v-if="airdrop">
     <div class="airdrop">
-      <p><span>AirDrop</span><i @click="closeAirdrop"></i></p>
+      <p><span>Airdrop</span><i @click="closeAirdrop"></i></p>
       <div class="text">
         <span>{{ $t("Table.HELMETRewards") }}</span>
         <span>{{ addCommom(getReward, 8) }} SHIBh</span>
@@ -13,7 +13,25 @@
         <span>{{ $t("IIO.Balance") }}:</span>
         <span>{{ addCommom(myBalance, 8) }} SHIBh</span>
       </div>
-      <div class="detail"></div>
+      <div class="detail">
+        <div class="ContractAddress">
+          <span>SHIBh {{ $t("Table.ContractAddress") }}</span>
+          <p>
+            0x224b33139a377a62d4BaD3D58cEDb7807AE228eB
+            <i
+              class="copy"
+              id="copy_default"
+              @click="
+                copyAdress($event, '0x224b33139a377a62d4BaD3D58cEDb7807AE228eB')
+              "
+            ></i>
+          </p>
+        </div>
+        <div class="addToken">
+          <p @click="addTokenFn('SHIBH', 'SHIBh', 12)">Add SHIBh to MetaMask</p>
+          <i></i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +39,10 @@
 <script>
 import { CangetPAYA, getBalance, getPAYA } from "~/interface/deposite";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import addToken from "~/assets/utils/addtoken.js";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import Message from "~/components/common/Message";
+import ClipboardJS from "clipboard";
 export default {
   data() {
     return {
@@ -53,6 +75,34 @@ export default {
     });
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
+    async addTokenFn(token, tokenName, unit) {
+      let tokenAddress = getAddress(token);
+      let tokenAddress1 = getContract(token);
+      let data = {
+        tokenAddress: tokenAddress || tokenAddress1,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     closeAirdrop() {
       this.$bus.$emit("AIRDROP_DIALOG", false);
     },
@@ -90,11 +140,10 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 360px;
     background: #ffffff;
     border-radius: 8px;
     padding: 30px 20px;
-    p {
+    > p {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -105,7 +154,7 @@ export default {
         color: #17173a;
         line-height: 20px;
       }
-      i {
+      > i {
         display: block;
         width: 24px;
         height: 24px;

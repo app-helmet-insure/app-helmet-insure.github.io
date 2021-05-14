@@ -19,7 +19,7 @@ export default {};
     width: 100%;
     min-width: 1026px;
     height: 140px;
-    background: #0e7140;
+    background: #0c0100;
     border-radius: 5px;
     margin-bottom: 20px;
     &_wrap {
@@ -54,7 +54,7 @@ export default {};
   .burn_title {
     width: 95%;
     height: 120px;
-    background: #0e7140;
+    background: #0c0100;
     border-radius: 5px;
     margin: 0 auto;
     &_wrap {

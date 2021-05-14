@@ -197,7 +197,7 @@ export default {
     },
     async getRewardNumber() {
       let num = await getBalance("NFT_COST", "NFT_POOL");
-      this.RewardPoll = Number(num) + 100000;
+      this.RewardPoll = Number(num);
     },
     async getUserCount() {
       let res = await usersCount("NFT_POOL");

@@ -86,6 +86,9 @@
         p {
             font-size: 14px;
         }
+        i {
+            flex-shrink: 0;
+        }
     }
     .mining_pool {
         padding: 40px 0;
@@ -254,6 +257,9 @@
     .ContractAddress {
         p {
             font-size: 12px;
+        }
+        i {
+            flex-shrink: 0;
         }
     }
     .mining_pool {

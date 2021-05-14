@@ -134,6 +134,54 @@ export default {
   left: 0;
   top: 0;
 }
+.ContractAddress {
+  font-size: 14px;
+  color: #fd7e14;
+  margin-top: 8px;
+  a span {
+    color: #17173a;
+  }
+  p {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    font-weight: 550;
+  }
+  .copy {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}
+.addToken {
+  font-size: 14px;
+  color: #fd7e14;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: #fd8a2b;
+  }
+  p {
+    font-weight: 550;
+  }
+  i {
+    margin-left: 4px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/img/icon/sMetamask.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    flex-shrink: 0;
+  }
+}
 @media screen and (min-width: 750px) {
   .airdrop {
     position: absolute;
@@ -220,16 +268,24 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .ContractAddress {
+    p {
+      font-size: 12px;
+    }
+    i {
+      flex-shrink: 0;
+    }
+  }
   .airdrop {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
+    width: 98%;
     background: #ffffff;
     border-radius: 8px;
     padding: 20px 16px;
-    p {
+    > p {
       display: flex;
       align-items: center;
       justify-content: space-between;

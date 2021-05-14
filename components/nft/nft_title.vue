@@ -8,7 +8,7 @@
           <p>
             <span>{{ $t("NFT.RewardVolume") }}(HELMET)</span>
             <span>
-              {{ addCommom(Number(RewardPoll)) }}
+              {{ addCommom(245343, 0) }}
             </span>
           </p>
         </div>

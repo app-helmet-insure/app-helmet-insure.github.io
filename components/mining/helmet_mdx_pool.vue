@@ -32,6 +32,9 @@
         <button
           @click="toDeposite"
           :class="stakeLoading ? 'disable b_button' : 'b_button'"
+          :style="
+            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmDeposit") }}
@@ -165,6 +168,9 @@
         <button
           @click="toClaim"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
+          :style="
+            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
@@ -220,6 +226,7 @@ export default {
     return {
       list: {
         name: "HELMET-BNB LP",
+        dueDate: "2021/05/15 00:00",
       },
       textList: [
         {
@@ -252,9 +259,16 @@ export default {
       helmetapy: 0,
       cakeapy: 0,
       isLogin: false,
+      expired: false,
     };
   },
   mounted() {
+    setInterval(() => {
+      setTimeout(() => {
+        this.getDownTime();
+      });
+      clearTimeout();
+    }, 1000);
     this.$bus.$on("DEPOSITE_LOADING_HELMETMDXPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
@@ -333,6 +347,35 @@ export default {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
+    },
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.dueDate;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
+      } else {
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
+      }
+      this.list.DownTime = template;
     },
     async getBalance() {
       let helmetType = "HELMETMDXPOOL_LPT";

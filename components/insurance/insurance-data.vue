@@ -35,7 +35,14 @@
           <p>
             <label>
               <span>{{ $t("Banner.HelmetPcice") }}</span>
-              <span> $ {{ isLogin ? helmetPrice : "--" }}</span>
+              <span>
+                $ {{ isLogin ? helmetPrice : "--" }}
+                <a
+                  href="https://exchange.pancakeswap.finance/#/swap"
+                  target="_blank"
+                  >Buy</a
+                ></span
+              >
             </label>
             <span>
               From:&nbsp;
@@ -228,6 +235,8 @@ export default {
               flex-direction: column;
               text-align: left;
               > span {
+                display: flex;
+                align-items: center;
                 &:nth-of-type(1) {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
@@ -242,6 +251,20 @@ export default {
                   color: #ffffff;
                   line-height: 24px;
                   margin-top: 16px;
+                }
+                > a {
+                  display: block;
+                  width: 38px;
+                  height: 20px;
+                  background: #ffffff;
+                  border-radius: 5px;
+                  font-size: 14px;
+                  font-family: IBMPlexSans-Medium, IBMPlexSans;
+                  font-weight: 500;
+                  color: #7b9dfe;
+                  text-align: center;
+                  line-height: 20px;
+                  margin-left: 4px;
                 }
               }
             }
@@ -362,6 +385,8 @@ export default {
               flex-direction: column;
               text-align: left;
               > span {
+                display: flex;
+                align-items: center;
                 &:nth-of-type(1) {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
@@ -376,6 +401,20 @@ export default {
                   color: #ffffff;
                   line-height: 24px;
                   margin-top: 16px;
+                }
+                > a {
+                  display: block;
+                  width: 38px;
+                  height: 20px;
+                  background: #ffffff;
+                  border-radius: 5px;
+                  font-size: 14px;
+                  font-family: IBMPlexSans-Medium, IBMPlexSans;
+                  font-weight: 500;
+                  color: #7b9dfe;
+                  text-align: center;
+                  line-height: 20px;
+                  margin-left: 4px;
                 }
               }
             }

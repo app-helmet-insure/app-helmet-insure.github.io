@@ -1445,6 +1445,7 @@ export default {
           outPrice: 0.000001,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          unit: 12,
           TypeCoin: getTokenName("0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561"),
         };
         if (resultItem._expiry < currentTime) {

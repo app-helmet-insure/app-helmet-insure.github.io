@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="account">
-      <div class="airdrop_web airdrop">
+      <div class="airdrop_web airdrop" @click="handleClickAirdrop">
         <img src="~/assets/img/icon/airdrop.png" alt="" />
       </div>
       <a
@@ -56,7 +56,7 @@
         @close="closeChangeWallet"
         @back="openCurrentAccount"
       ></ChangeAccount>
-      <div class="airdrop_h5 airdrop">
+      <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
         <img src="~/assets/img/icon/airdrop.png" alt="" />
       </div>
     </div>
@@ -113,6 +113,9 @@ export default {
   },
   mounted() {},
   methods: {
+    handleClickAirdrop() {
+      this.$bus.$emit("AIRDROP_DIALOG", true);
+    },
     openChangeWallet() {
       this.showChangeWallet = true;
     },

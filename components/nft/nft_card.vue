@@ -82,6 +82,8 @@ export default {
     }
     .expired {
       background-image: url("../../assets/img/nft/nft_bg_expired.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
       > div {
         width: 100%;
         height: 100%;
@@ -148,6 +150,41 @@ export default {
         border-radius: 10px;
         background-size: 100% 100%;
         background-repeat: no-repeat;
+      }
+    }
+  }
+  .expired {
+    width: 199px;
+    height: 249px;
+    background-image: url("../../assets/img/nft/nft_bg_expired.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    > div {
+      width: 199px;
+      height: 249px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      span {
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: rgba(23, 23, 58, 0.8);
+        line-height: 17px;
+      }
+      h3 {
+        margin-top: 10px;
+        font-size: 24px;
+        font-family: FredokaOne-Regular, FredokaOne;
+        color: rgba(23, 23, 58, 0.8);
+        line-height: 24px;
+      }
+      p {
+        margin-top: 50px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        color: rgba(23, 23, 58, 0.8);
+        line-height: 17px;
       }
     }
   }

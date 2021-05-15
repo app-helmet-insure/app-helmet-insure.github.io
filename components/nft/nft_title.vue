@@ -73,7 +73,7 @@
       </button>
     </div>
     <div class="card_button" v-else>
-      <button class="one" @click="handleClickReward">领取</button>
+      <button class="one" @click="handleClickReward">{{ $t("NFT.getReward") }}</button>
     </div>
     <div class="card_tips">
       <img src="~/assets/img/nft/home_tip.png" alt="" />

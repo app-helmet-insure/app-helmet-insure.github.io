@@ -4,7 +4,7 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line finshed_pc" v-if="item.earn == 'bhelmet_mdx'">
+      <div class="finshed_line finshed_pc" v-if="item.earn == 'QFEI'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -176,7 +176,7 @@
             :TradeType="'ALL'"
           />
           <HelmetMdxPool
-            v-if="activeMining == 'bhelmet_mdx' && showActiveMining"
+            v-if="activeMining == 'mdx' && showActiveMining"
             :activeType="activeType"
             :TradeType="'ALL'"
           />
@@ -229,7 +229,7 @@
       </div>
     </div>
     <div v-for="item in miningList" :key="item.earn + '1'">
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'bhelmet_mdx'">
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'QFEI'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -398,7 +398,7 @@
           :TradeType="activeType"
         />
         <HelmetMdxPool
-          v-if="activeMining == 'bhelmet_mdx'"
+          v-if="activeMining == 'mdx'"
           :activeType="activeType"
           :TradeType="activeType"
         />
@@ -501,7 +501,7 @@ export default {
     return {
       apyArray: {
         helmet_cake_v2: 0,
-        bhelmet_mdx: 0,
+        mdx: 0,
         bhelmet_dodo: 0,
         helmet: 0,
         QFEI: 0,
@@ -638,7 +638,23 @@ export default {
           onePager: false,
           yearEarn: apyArray["helmet_cake_v2"] || "--",
         },
-
+        {
+          miningName: "HELMET-BNB&nbsp;MLP",
+          earnNum: "one",
+          earn: "mdx",
+          earnImg: true,
+          // openDate: this.getMiningTime("2021/04/15 00:00"),
+          // dueDate: this.getRemainTime("2021/05/15 00:00"),
+          dueDate: "Ongoing",
+          openDate: "Mining",
+          combo: false,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+          yearEarn: apyArray["mdx"] || "--",
+          // started: new Date("2021/04/15 00:00") * 1,
+          // expired: new Date("2021/05/15 00:00") * 1,
+        },
         {
           miningName: "HELMET-BNB&nbsp;DLP",
           earnNum: "two",
@@ -686,21 +702,7 @@ export default {
           started: new Date("2021/05/02 12:00") * 1,
           expired: new Date("2021/05/22 00:00") * 1,
         },
-        {
-          miningName: "HELMET-BNB&nbsp;MLP",
-          earnNum: "two",
-          earn: "bhelmet_mdx",
-          earnImg: true,
-          openDate: this.getMiningTime("2021/04/15 00:00"),
-          dueDate: this.getRemainTime("2021/05/15 00:00"),
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
-          yearEarn: apyArray["bhelmet_mdx"] || "--",
-          started: new Date("2021/04/15 00:00") * 1,
-          expired: new Date("2021/05/15 00:00") * 1,
-        },
+
         {
           miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",
@@ -848,7 +850,46 @@ export default {
       let APY = (cakeapy + helmetapy) * 100;
       this.apyArray.helmet_cake_v2 = fixD(APY, 2);
     },
+    async HELMET_MDX_LP_APY() {
+      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
+      let DODOHELMET = lptBnbValue;
+      let allVolume = DODOHELMET * 180000;
+      //总抵押
+      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
+      // （1+日产量/总质押量）^365
+      let helmetAPY =
+        precision.divide(
+          precision.times(precision.divide(allVolume, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
+      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 4854.528;
 
+      let mdxAPY =
+        precision.divide(
+          precision.times(precision.divide(stakeValue1, 30), 365),
+          precision.times(
+            precision.divide(precision.times(stakeValue, 2), stakeVolue),
+            supplyVolume
+          )
+        ) * 100;
+      let APY = helmetAPY + mdxAPY;
+      let startedTime = this.miningList[1].started;
+      let nowTime = new Date() * 1;
+      if (nowTime < startedTime) {
+        this.apyArray.mdx = "--";
+      } else {
+        this.apyArray.mdx = fixD(APY, 2);
+      }
+    },
     async BHELMET_DODO_LP_APY() {
       let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
       let allVolume = lptBnbValue * 12000 * 36;
@@ -882,7 +923,7 @@ export default {
           )
         ) * 100;
       let APY = helmetAPY + dodoAPR;
-      let startedTime = this.miningList[1].started;
+      let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
       console.log(Number(nowTime) < startedTime, startedTime, nowTime);
       if (nowTime < startedTime) {
@@ -901,7 +942,7 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[2].yearEarn = fixD(APY, 2);
+      this.miningList[3].yearEarn = fixD(APY, 2);
     },
     async BHELMET_XBURGER_APY() {
       let BHELMETHelmetValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
@@ -926,7 +967,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.miningList[4].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_xburger = "--";
@@ -935,46 +976,7 @@ export default {
         // this.apyArray.bhelmet_xburger = "--";
       }
     },
-    async HELMET_MDX_LP_APY() {
-      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
-      let DODOHELMET = lptBnbValue;
-      let allVolume = DODOHELMET * 180000;
-      //总抵押
-      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
-      // （1+日产量/总质押量）^365
-      let helmetAPY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 30), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
-      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 4854.528;
 
-      let mdxAPY =
-        precision.divide(
-          precision.times(precision.divide(stakeValue1, 30), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let APY = helmetAPY + mdxAPY;
-      let startedTime = this.miningList[4].started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.bhelmet_mdx = "--";
-      } else {
-        this.apyArray.bhelmet_mdx = fixD(APY, 2);
-      }
-    },
     async FEI_POOL_APY() {
       let lptBnbValue = await pancakeswap("QFEI", "QSD");
       let DODOHELMET = lptBnbValue;

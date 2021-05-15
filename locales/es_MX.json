@@ -238,7 +238,9 @@
     "RewardVolume": "Progressive Slot",
     "UsersCount": "Players",
     "NFT_TIP1": "If you didn't claim your cards, PLZ  refresh and wait until 'Check my 10 cards' →'re-claim your cards' button shows.",
-    "NFT_TIP2": "Please 'claim your cards' in 5min otherwise you will lose them."
+    "NFT_TIP2": "Please 'claim your cards' in 5min otherwise you will lose them.",
+    "ClaimTitle": "You will get",
+    "ClaimDora": "{num} Helmet for 1 Dora Card"
   },
   "Tip": {
     "Dpr": "Porcentaje diario de rendimiento, DPR= rendimiento diario / vólumen stakeado",

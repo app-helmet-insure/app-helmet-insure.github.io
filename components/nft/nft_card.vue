@@ -12,13 +12,15 @@
       </div>
       <div class="expired" v-else>
         <div>
-          <span>您共可领取</span>
+          <span>{{ $t("NFT.ClaimTitle") }}</span>
           <h3>
             {{ fixD(fixD(RewardPoll / DoraQuantity, 0) * DoraBalance, 0) }}
             Helmet
           </h3>
           <p>
-            每个 Dora 可领取 {{ fixD(RewardPoll / DoraQuantity, 0) }} Helmet
+            {{
+              $t("NFT.ClaimDora", { num: fixD(RewardPoll / DoraQuantity, 0) })
+            }}
           </p>
         </div>
       </div>

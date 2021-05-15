@@ -3,15 +3,15 @@
     <div class="airdrop">
       <p><span>AirDrop</span><i @click="closeAirdrop"></i></p>
       <div class="text">
-        <span>待领取：</span>
-        <span>{{ addCommom(getReward, 8) }}</span>
+        <span>{{ $t("Table.HELMETRewards") }}</span>
+        <span>{{ addCommom(getReward, 8) }} SHIBh</span>
       </div>
       <button class="button" @click="claim">
         <i :class="claimLoading ? 'loading_pic' : ''"></i>Claim
       </button>
       <div class="smltext">
-        <span>余额:</span>
-        <span>{{ addCommom(myBalance, 8) }}</span>
+        <span>{{ $t("IIO.Balance") }}:</span>
+        <span>{{ addCommom(myBalance, 8) }} SHIBh</span>
       </div>
       <div class="detail"></div>
     </div>

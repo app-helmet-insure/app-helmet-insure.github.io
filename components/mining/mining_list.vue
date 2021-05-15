@@ -881,7 +881,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let APY = helmetAPY + mdxAPY;
+      let APY = mdxAPY;
       let startedTime = this.miningList[1].started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {

@@ -640,7 +640,7 @@ export default {
         },
         {
           miningName: "HELMET-BNB&nbsp;MLP",
-          earnNum: "one",
+          earnNum: "two",
           earn: "mdx",
           earnImg: true,
           // openDate: this.getMiningTime("2021/04/15 00:00"),
@@ -871,14 +871,18 @@ export default {
         ) * 100;
       let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
       let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 4854.528;
-
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 5483.52;
+      let supplyVolume1 = await balanceOf(
+        "HELMETMDXPOOL_LPT",
+        "0xc48fe252aa631017df253578b1405ea399728a50",
+        true
+      );
       let mdxAPY =
         precision.divide(
           precision.times(precision.divide(stakeValue1, 30), 365),
           precision.times(
             precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
+            supplyVolume1
           )
         ) * 100;
       let APY = mdxAPY;
@@ -925,7 +929,6 @@ export default {
       let APY = helmetAPY + dodoAPR;
       let startedTime = this.miningList[2].started;
       let nowTime = new Date() * 1;
-      console.log(Number(nowTime) < startedTime, startedTime, nowTime);
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_dodo = "--";
       } else {

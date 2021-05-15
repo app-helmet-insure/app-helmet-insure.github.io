@@ -79,7 +79,7 @@
           >
         </section>
       </div>
-      <!-- <div class="ContractAddress">
+      <div class="ContractAddress" v-if="Number(balance.Helmet)">
         <span>BHELMET {{ $t("Table.ContractAddress") }}</span>
         <p>
           0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672
@@ -91,7 +91,7 @@
             "
           ></i>
         </p>
-      </div> -->
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -132,7 +132,7 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <!-- <p>
+        <p v-if="Number(balance.Helmet)">
           <span
             ><i @click="hadnleShowOnePager($event, 'BHELMET')">BHELMET</i>
             {{ $t("Table.HELMETRewards") }}：</span
@@ -148,7 +148,7 @@
             <span v-else>--</span>
             BHELMET</span
           >
-        </p> -->
+        </p>
         <p>
           <span>MDX {{ $t("Table.HELMETRewards") }}：</span>
           <span>

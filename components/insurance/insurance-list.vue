@@ -299,6 +299,10 @@ export default {
           InsuranceImg: "COIN",
         },
         {
+          InsuranceType: "SHIB",
+          InsuranceImg: "SHIB",
+        },
+        {
           InsuranceType: "HELMET",
           InsuranceImg: "HELMET",
         },
@@ -352,12 +356,12 @@ export default {
         // BNB价格
         InsuanceData[i].InsurancePriceBNB = fixD(
           InsurancePriceBNB[InsuanceData[i]["InsuranceType"]],
-          4
+          8
         );
         // BUSD价格
         InsuanceData[i].InsurancePriceBUSD = fixD(
           InsurancePriceBNB[InsuanceData[i]["InsuranceType"]] * WBNB_BUSD_Price,
-          2
+          8
         );
       }
       InsuanceData[0].InsuranceDay = 30;

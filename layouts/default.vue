@@ -394,6 +394,9 @@ export default {
         let px;
         if ("WBNB" != list[i]) {
           px = await pancakeswap(list[i], "WBNB");
+          if (list[i] == "SHIB") {
+            console.log(await pancakeswap("SHIB", "BUSD"));
+          }
         } else {
           px = 1;
         }
@@ -453,6 +456,7 @@ export default {
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
       this.$store.commit("SET_HELMET_BUSD", helmetbusd);
+      console.log(arr1, arr);
       this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },

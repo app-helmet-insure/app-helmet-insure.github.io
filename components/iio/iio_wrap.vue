@@ -231,6 +231,13 @@ export default {
           expired_activating: "86.67%",
         },
         {
+          iio_name: "1",
+          iio_img: "iio1",
+          coming: false,
+          open: false,
+          sort: 0,
+        },
+        {
           iio_name: "2",
           iio_img: "iio2",
           coming: false,

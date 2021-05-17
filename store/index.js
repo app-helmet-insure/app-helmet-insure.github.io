@@ -189,7 +189,7 @@ export const state = () => ({
             BURGER: 0.044,
             WBNB: 900,
             MATH: 0.006,
-            SHIB: 0.000034,
+            SHIB: '0.0000000504',
             COIN: '--',
         },
         // 腰斩价格
@@ -202,7 +202,7 @@ export const state = () => ({
             BURGER: 0.011,
             WBNB: 300,
             MATH: 0.0015,
-            SHIB: 0.000008,
+            SHIB: '0.0000000121',
             COIN: '--',
         },
     ],
@@ -230,7 +230,7 @@ export const state = () => ({
             BURGER: 'WBNB',
             WBNB: 'BUSD',
             MATH: 'WBNB',
-            SHIB: 'BUSD',
+            SHIB: 'BNB',
         },
     ],
     // 标的物
@@ -245,7 +245,7 @@ export const state = () => ({
             BURGER: 'WBNB',
             WBNB: 'BUSD',
             MATH: 'WBNB',
-            SHIB: 'BUSD',
+            SHIB: 'BNB',
         },
         // 腰斩标的物
         {

@@ -165,7 +165,7 @@ export const state = () => ({
             BURGER: '2021/05/21 24:00',
             WBNB: '2021/05/21 24:00',
             MATH: '2021/05/21 24:00',
-            SHIB: '2021/05/21 24:00',
+            SHIB: '2021/06/21 24:00',
         },
     ],
     echartIndexArray: {
@@ -189,7 +189,7 @@ export const state = () => ({
             BURGER: 0.044,
             WBNB: 900,
             MATH: 0.006,
-            SHIB: '0.0000000504',
+            SHIB: '0.000000048',
             COIN: '--',
         },
         // 腰斩价格
@@ -202,7 +202,7 @@ export const state = () => ({
             BURGER: 0.011,
             WBNB: 300,
             MATH: 0.0015,
-            SHIB: '0.0000000121',
+            SHIB: '0.000000012',
             COIN: '--',
         },
     ],

@@ -29,7 +29,10 @@
           <i :style="`left: ${positionLeft}%`"></i>
           <p style="left: 50%">
             {{ $t("Insurance.Insurance_text20") }}
-            <span>{{
+            <span v-if="activeInsurance == 'SHIB'">
+              {{ fixD(indexPrice[activeInsurance], 10) }}
+            </span>
+            <span v-else>{{
               activeInsurance == "WBNB"
                 ? toRounding(indexPrice[activeInsurance] * BNB_BUSD, 4)
                 : toRounding(indexPrice[activeInsurance], 4)
@@ -130,7 +133,7 @@ export default {
 @media screen and (min-width: 750px) {
   .insurance_title {
     width: 100%;
-    height: 90px;
+    height: 110px;
     display: flex;
     align-items: center;
     .strikePrice {

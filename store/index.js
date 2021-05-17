@@ -230,7 +230,7 @@ export const state = () => ({
             BURGER: 'WBNB',
             WBNB: 'BUSD',
             MATH: 'WBNB',
-            SHIB: 'BNB',
+            SHIB: 'WBNB',
         },
     ],
     // 标的物
@@ -245,7 +245,7 @@ export const state = () => ({
             BURGER: 'WBNB',
             WBNB: 'BUSD',
             MATH: 'WBNB',
-            SHIB: 'BNB',
+            SHIB: 'WBNB',
         },
         // 腰斩标的物
         {

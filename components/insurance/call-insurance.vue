@@ -18,10 +18,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            v-for="(item, index) in showList"
-            :key="index"
-          >
+          <tr v-for="(item, index) in showList" :key="index">
             <td>
               {{ item.showID }}
               <i
@@ -59,11 +56,7 @@
       </table>
     </div>
     <div class="insurance_list_H5">
-      <div
-        class="list_item_H5"
-        v-for="(item, index) in showList"
-        :key="index"
-      >
+      <div class="list_item_H5" v-for="(item, index) in showList" :key="index">
         <section>
           <p>
             <span>{{ $t("Table.Rent") }}</span>
@@ -184,7 +177,6 @@ export default {
       immediate: true,
     },
   },
-
   methods: {
     userInfoWatch(newValue) {
       let isLogin = newValue.data.isLogin;
@@ -250,7 +242,7 @@ export default {
           seller: item.seller,
           id: item.askID,
           volume: fixD(fromWei(item.volume, coToken), 8),
-          price: fixD(price, 4),
+          price: coToken == "SHIB" ? fixD(price, 10) : fixD(price, 4),
           settleToken: item.settleToken,
           _strikePrice: fromWei(item.longInfo._strikePrice, coToken),
           _underlying: item.longInfo._underlying,
@@ -298,6 +290,7 @@ export default {
       if (!data.buyNum) {
         return;
       }
+      
       let datas;
       datas = {
         askID: data.id,
@@ -310,12 +303,13 @@ export default {
         _expiry: data._expiry,
         _collateral: getTokenName(data._collateral),
         showType: getTokenName(data._collateral),
-      };
+      };1
+      console.log(datas);
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
         conText: `<p>Buy <span>${datas.showVolueme} ${datas.showType}
-                  </span> Policys, with the strike price of <span>
+                  </span> Policys, with the premium of <span>
                   ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                   </span></p>`,
         activeTip: true,

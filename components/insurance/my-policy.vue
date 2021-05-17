@@ -144,6 +144,7 @@ import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 import { balanceOf, getBalance } from "~/interface/deposite";
 import moment from "moment";
+import BigNumber from "bignumber.js";
 export default {
   components: {
     Page,
@@ -291,15 +292,32 @@ export default {
             long: item.sellInfo.long,
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
-            outPrice: fromWei(
-              item.sellInfo.longInfo._strikePrice,
-              Token == "CTK" ? 30 : Token
-            ),
+            // outPrice: fromWei(
+            //   item.sellInfo.longInfo._strikePrice,
+            //   Token == "CTK" ? 30 : Token
+            // ),
             type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
             showVolume: fromWei(item.vol, Token),
           };
+          if (resultItem["TypeCoin"] == "SHIB") {
+            resultItem["outPrice"] = fixD(
+              fromWei(
+                item.sellInfo.longInfo._strikePrice,
+                Token == "CTK" ? 30 : Token
+              ),
+              10
+            );
+          } else {
+            resultItem["outPrice"] = fixD(
+              fromWei(
+                item.sellInfo.longInfo._strikePrice,
+                Token == "CTK" ? 30 : Token
+              ),
+              4
+            );
+          }
         } else {
           resultItem = {
             id: item.bidID,
@@ -322,17 +340,34 @@ export default {
             long: item.sellInfo.long,
             short: item.sellInfo.longInfo.short,
             count: item.sellInfo.longInfo.count,
-            outPrice: toRounding(
-              precision.divide(
-                1,
-                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
-              )
-            ),
+            // outPrice: toRounding(
+            //   precision.divide(
+            //     1,
+            //     fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
+            //   )
+            // ),
             type: item.type,
             TypeCoin: item.TypeCoin,
             outPriceUnit: item.outPriceUnit,
             showVolume: fromWei(item.vol, TokenFlag),
           };
+          if (resultItem["TypeCoin"] == "SHIB") {
+            resultItem["outPrice"] = fixD(
+              precision.divide(
+                1,
+                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
+              ),
+              10
+            );
+          } else {
+            resultItem["outPrice"] = fixD(
+              precision.divide(
+                1,
+                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
+              ),
+              4
+            );
+          }
         }
         exerciseRes = await getExercise(resultItem.buyer);
         bidIDArr = exerciseRes.map((eItem) => {
@@ -459,6 +494,7 @@ export default {
     // 行权
     toActive(item) {
       let data;
+      console.log(item);
       if (item.type == "Call") {
         data = {
           token: getTokenName(item._underlying),
@@ -466,7 +502,7 @@ export default {
           vol: item.volume,
           bidID: item.bidID,
           long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item._strikePrice), 4),
+          exPrice: fixD(precision.divide(1, item._strikePrice), 12),
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
@@ -483,7 +519,7 @@ export default {
           vol: item.volume,
           bidID: item.bidID,
           long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item._strikePrice), 4),
+          exPrice: fixD(precision.divide(1, item._strikePrice), 12),
           _underlying: getTokenName(item._underlying),
           _collateral: getTokenName(item._collateral),
           settleToken: getTokenName(item.settleToken),
@@ -491,41 +527,10 @@ export default {
           approveAddress1: item.approveAddress1,
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
-          showVolume: item.showVolume * item.outPrice,
+          showVolume: item.volume * item.outPrice,
         };
-        // if (item.transfer) {
-        //   data = {
-        //     token: getTokenName(item._underlying),
-        //     _underlying_vol: item.volume,
-        //     vol: item.volume,
-        //     bidID: item.bidID,
-        //     long: item.long || item.longAdress,
-        //     exPrice: fixD(precision.divide(1, item._strikePrice), 4),
-        //     _underlying: getTokenName(item._underlying),
-        //     _collateral: getTokenName(item._collateral),
-        //     settleToken: getTokenName(item.settleToken),
-        //     flag: item.transfer ? true : false,
-        //     approveAddress1: item.approveAddress1,
-        //     approveAddress2: item.approveAddress2,
-        //     unit: item.unit ? item.unit : "",
-        //     showVolume: item.showVolume * item.outPrice,
-        //   };
-        // } else {
-        //   data = {
-        //     token: getTokenName(item._underlying),
-        //     _underlying_vol: item.volume,
-        //     vol: fixD(item.bnbAmount * item.outPrice, 8),
-        //     bidID: item.bidID,
-        //     long: item.long,
-        //     exPrice: fixD(precision.divide(1, item._strikePrice), 4),
-        //     _underlying: getTokenName(item._underlying),
-        //     _collateral: getTokenName(item._collateral),
-        //     settleToken: getTokenName(item.settleToken),
-        //     flag: item.transfer ? true : false,
-        //     showVolume: item.showVolume,
-        //   };
-        // }
       }
+
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",

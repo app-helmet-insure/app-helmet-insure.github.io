@@ -188,9 +188,9 @@ export const fixD = (num, precision) => {
     if (arry[0].length > 14) {
       fixNum = `${arry[0].slice(0, 14)}+`;
     } else {
-      fixNum = fixNum.slice(0, 13);
-      if (fixNum.indexOf(".") === 12) {
-        fixNum = fixNum.slice(0, 12);
+      fixNum = fixNum.slice(0, 19);
+      if (fixNum.indexOf(".") === 18) {
+        fixNum = fixNum.slice(0, 18);
       }
     }
   }

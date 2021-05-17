@@ -307,20 +307,40 @@ export default {
         if (item.flagType) {
           resultItem["unSold"] = askRes;
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
-          resultItem["outPrice"] = fixD(
-            fromWei(item.longInfo._strikePrice, Token == "CTK" ? 30 : Token),
-            4
-          );
+          if (resultItem["TypeCoin"] == "SHIB") {
+            resultItem["outPrice"] = fixD(
+              fromWei(item.longInfo._strikePrice, Token == "CTK" ? 30 : Token),
+              10
+            );
+          } else {
+            resultItem["outPrice"] = fixD(
+              fromWei(item.longInfo._strikePrice, Token == "CTK" ? 30 : Token),
+              4
+            );
+          }
         } else {
           resultItem["unSold"] = fixD(
             precision.divide(askRes, this.strikePriceArray[1][TokenFlag]),
             8
           );
           resultItem["beSold"] = precision.minus(amount, resultItem["unSold"]);
-          resultItem["outPrice"] = fixD(
-            precision.divide(1, fromWei(item.longInfo._strikePrice, TokenFlag)),
-            4
-          );
+          if (resultItem["TypeCoin"] == "SHIB") {
+            resultItem["outPrice"] = fixD(
+              precision.divide(
+                1,
+                fromWei(item.longInfo._strikePrice, TokenFlag)
+              ),
+              10
+            );
+          } else {
+            resultItem["outPrice"] = fixD(
+              precision.divide(
+                1,
+                fromWei(item.longInfo._strikePrice, TokenFlag)
+              ),
+              4
+            );
+          }
         }
 
         if (askRes == "0") {

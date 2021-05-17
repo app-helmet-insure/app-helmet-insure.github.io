@@ -32,8 +32,16 @@
             <span>{{ item.InsuranceType }}</span>
           </section>
           <section>
-            <span>{{ item.InsurancePriceBNB }} BNB</span>
-            <span>${{ item.InsurancePriceBUSD }}</span>
+            <span v-if="item.InsuranceType == 'SHIB'"
+              >{{ fixD(item.InsurancePriceBNB, 10) }} BNB</span
+            >
+            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
+            <span v-else>{{ toRounding(item.InsurancePriceBNB, 4) }} BNB</span>
+            <span v-if="item.InsuranceType == 'SHIB'"
+              >${{ fixD(item.InsurancePriceBUSD, 10) }}</span
+            >
+            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
+            <span v-else>${{ toRounding(item.InsurancePriceBUSD, 4) }}</span>
           </section>
           <section>
             <div>
@@ -149,8 +157,16 @@
             <span>{{ item.InsuranceType }}</span>
           </div>
           <p>
-            <span>{{ item.InsurancePriceBNB }} BNB</span>
-            <span>${{ item.InsurancePriceBUSD }}</span>
+            <span v-if="item.InsuranceType == 'SHIB'"
+              >{{ fixD(item.InsurancePriceBNB, 10) }} BNB</span
+            >
+            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
+            <span v-else>{{ toRounding(item.InsurancePriceBNB, 4) }} BNB</span>
+            <span v-if="item.InsuranceType == 'SHIB'"
+              >${{ fixD(item.InsurancePriceBUSD, 10) }}</span
+            >
+            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
+            <span v-else>${{ toRounding(item.InsurancePriceBUSD, 4) }}</span>
           </p>
         </section>
         <section>
@@ -221,7 +237,7 @@
 </template>
 
 <script>
-import { fixD } from "~/assets/js/util.js";
+import { fixD, toRounding } from "~/assets/js/util.js";
 import PutInsurance from "./put-insurance";
 import CallInsurance from "./call-insurance";
 import IssueInsurance from "./issue-insurance";
@@ -240,6 +256,8 @@ export default {
       activeType: "",
       InsureTypeActive: "CALL", //H5 tab
       TradeType: "", // h5 action type
+      toRounding,
+      fixD,
     };
   },
   computed: {
@@ -299,6 +317,10 @@ export default {
           InsuranceImg: "COIN",
         },
         {
+          InsuranceType: "SHIB",
+          InsuranceImg: "SHIB",
+        },
+        {
           InsuranceType: "HELMET",
           InsuranceImg: "HELMET",
         },
@@ -350,15 +372,11 @@ export default {
         InsuanceData[i].InsuranceDay = InunranceDay || "--";
 
         // BNB价格
-        InsuanceData[i].InsurancePriceBNB = fixD(
-          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]],
-          4
-        );
+        InsuanceData[i].InsurancePriceBNB =
+          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]];
         // BUSD价格
-        InsuanceData[i].InsurancePriceBUSD = fixD(
-          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]] * WBNB_BUSD_Price,
-          2
-        );
+        InsuanceData[i].InsurancePriceBUSD =
+          InsurancePriceBNB[InsuanceData[i]["InsuranceType"]] * WBNB_BUSD_Price;
       }
       InsuanceData[0].InsuranceDay = 30;
       this.InsuanceData = InsuanceData;

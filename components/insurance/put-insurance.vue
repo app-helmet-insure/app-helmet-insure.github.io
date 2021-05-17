@@ -239,7 +239,7 @@ export default {
           seller: item.seller,
           id: item.askID,
           volume: volume,
-          price: fixD(price, 4),
+          price: unToken == "SHIB" ? fixD(price, 10) : fixD(price, 4),
           settleToken: item.settleToken,
           _strikePrice: fromWei(item.longInfo._strikePrice, unToken),
           _underlying: item.longInfo._underlying,
@@ -321,11 +321,12 @@ export default {
         _collateral: getTokenName(data._collateral),
         showType: getTokenName(data._underlying),
       };
+      console.log(data, datas);
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
         conText: `<p>Buy <span>${datas.showVolueme} ${datas.showType}
-                  </span> Policys, with the strike price of <span>
+                  </span> Policys, with the premium of <span>
                   ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                   </span></p>`,
         activeTip: true,

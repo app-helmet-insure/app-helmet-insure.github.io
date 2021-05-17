@@ -412,6 +412,7 @@ export default {
         callIndexPirce["BURGER"] / callIndexPirce["HELMET"] || 0;
       let wbnbHelmet = callIndexPirce["WBNB"] / callIndexPirce["HELMET"] || 0;
       let mathHelmet = callIndexPirce["MATH"] / callIndexPirce["HELMET"] || 0;
+      let shibHelmet = callIndexPirce["SHIB"] / callIndexPirce["HELMET"] || 0;
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -422,6 +423,7 @@ export default {
         BURGER: burgerHelmet,
         WBNB: wbnbHelmet,
         MATH: mathHelmet,
+        SHIB: shibHelmet,
       };
       let Helmetbnb = putIndexPirce["HELMET"] || 0;
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
@@ -432,6 +434,7 @@ export default {
       let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
       let Helmetwbnb = putIndexPirce["WBNB"] / putIndexPirce["HELMET"] || 0;
       let Helmetmath = putIndexPirce["MATH"] / putIndexPirce["HELMET"] || 0;
+      let Helmetshib = putIndexPirce["SHIB"] / putIndexPirce["HELMET"] || 0;
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
@@ -442,6 +445,7 @@ export default {
         BURGER: Helmetburger,
         WBNB: Helmetwbnb,
         MATH: Helmetmath,
+        SHIB: Helmetshib,
       };
       arr1.push(HelmetPirce);
       arr1.push(CoinPirce);
@@ -453,6 +457,7 @@ export default {
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
       this.$store.commit("SET_HELMET_BUSD", helmetbusd);
+      console.log(arr1, arr);
       this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },

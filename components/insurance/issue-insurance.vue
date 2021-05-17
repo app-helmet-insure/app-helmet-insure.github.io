@@ -57,7 +57,12 @@
       </div>
       <span>{{ $t("Content.Earning") }}: {{ callRent }} HELMET</span>
       <div class="input">
-        <input type="text" v-model="callInsuranceNum" maxlength="6" />
+        <input
+          type="text"
+          v-model="callInsuranceNum"
+          maxlength="6"
+          :min="1000"
+        />
         <span class="text">{{ policyColArray[0][activeInsurance] }}</span>
         <span
           class="max"
@@ -153,6 +158,7 @@
 import precision from "~/assets/js/precision.js";
 import { onIssueSell, onIssueSellOnETH } from "~/interface/order.js";
 import { fixD, toRounding } from "~/assets/js/util.js";
+import BigNumber from "bignumber.js";
 export default {
   props: ["activeInsurance", "InsureTypeActive"],
   data() {
@@ -316,7 +322,9 @@ export default {
             Math.min(precision.minus(callStrikePrice, callIndexPx), 0)
           );
           earnings = -(Math.max(callIndexPx - callStrikePrice, 0) - premium);
-          this.callRent = toRounding(earnings < 0 ? 0 : earnings, 8);
+          earnings = BigNumber(earnings.toString()).toFixed();
+          console.log(earnings);
+          this.callRent = fixD(earnings < 0 ? 0 : earnings, 8);
         } else {
           this.callRent = 0;
         }
@@ -340,7 +348,7 @@ export default {
             Math.min(precision.minus(putIndexPx, putStrikePrice), 0)
           );
           earnings = -(Math.max(putStrikePrice - putIndexPx, 0) - premium);
-          this.putRent = toRounding(earnings < 0 ? 0 : earnings, 8);
+          this.putRent = fixD(earnings < 0 ? 0 : earnings, 8);
         } else {
           this.putRent = 0;
         }

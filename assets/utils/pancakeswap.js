@@ -5,7 +5,7 @@ import {
     Pair,
     TokenAmount,
     sortsBefore,
-} from '@pancakeswap-libs/sdk';
+} from '@pancakeswap-libs/sdk-v2';
 import { getAddress, getWei_2 } from './address-pool';
 import { getNetwork } from '@ethersproject/networks';
 import { getDefaultProvider } from '@ethersproject/providers';

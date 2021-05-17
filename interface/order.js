@@ -267,12 +267,12 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     let volume = toWei(fixVolume, _data._collateral);
 
     data.volume = volume;
-    let pay = precision.times(_data._strikePrice, _data.volume);
+    // let pay = precision.times(_data._strikePrice, _data.volume);
 
-    data.pay = toWei(pay, _data.settleToken);
+    // data.pay = toWei(pay, _data.settleToken);
 
     const Contract = await expERC20(data.settleToken);
-
+    console.log(data);
     try {
         // 一键判断是否需要授权，给予无限授权
         await oneKeyArrpove(Contract, 'ORDER', data.payPrice, callBack);

@@ -189,7 +189,7 @@ export const state = () => ({
             BURGER: 0.044,
             WBNB: 900,
             MATH: 0.006,
-            SHIB: '0.000000048',
+            SHIB: '0.0000002326',
             COIN: '--',
         },
         // 腰斩价格
@@ -202,7 +202,7 @@ export const state = () => ({
             BURGER: 0.011,
             WBNB: 300,
             MATH: 0.0015,
-            SHIB: '0.000000012',
+            SHIB: '0.0000000581',
             COIN: '--',
         },
     ],

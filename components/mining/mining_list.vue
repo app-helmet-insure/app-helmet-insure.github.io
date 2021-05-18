@@ -23,7 +23,7 @@
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                item.dueDate == 'Finished' ? 'expired' : 'web'
+                timeArray[item.earn].dueDate == 'Finished' ? 'expired' : 'web'
               }.png`)
             "
             alt=""
@@ -34,7 +34,9 @@
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${
-                item.dueDate == 'Finished' ? 'serial_web_expired' : 'serial_web'
+                timeArray[item.earn].dueDate == 'Finished'
+                  ? 'serial_web_expired'
+                  : 'serial_web'
               }.png`)
             "
             alt=""
@@ -45,7 +47,7 @@
             style="width: 32px; height: 32px; left: 10px"
             :src="
               require(`~/assets/img/mining/${
-                item.dueDate == 'Finished'
+                timeArray[item.earn].dueDate == 'Finished'
                   ? 'serialnext_web_expired'
                   : 'serialnext_web'
               }.png`)
@@ -76,7 +78,7 @@
                   v-if="item.earnImg"
                   :src="
                     require(`~/assets/img/mining/${
-                      item.dueDate == 'Finished'
+                      timeArray[item.earn].dueDate == 'Finished'
                         ? item.earn + '_expired'
                         : item.earn
                     }.png`)
@@ -93,35 +95,42 @@
           <section>
             <i></i>
             <p>
-              <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              <span v-if="typeof timeArray[item.earn].openDate == 'object'">
+                {{ timeArray[item.earn].openDate.hour
+                }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ timeArray[item.earn].openDate.minute
+                }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span v-else-if="typeof item.dueDate == 'object'">
-                <template v-if="item.dueDate.day != '00'">
-                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+              <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
+                <template v-if="timeArray[item.earn].dueDate.day != '00'">
+                  {{ timeArray[item.earn].dueDate.day
+                  }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  {{ timeArray[item.earn].dueDate.hour
+                  }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="item.dueDate.day == '00'">
-                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <template v-if="timeArray[item.earn].dueDate.day == '00'">
+                  {{ timeArray[item.earn].dueDate.minute
+                  }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ item.dueDate }}
+                {{ timeArray[item.earn].dueDate }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
           </section>
           <section>
             <span>{{
-              item.dueDate == "Finished" ? "--" : apyArray[item.earn] + "%"
+              timeArray[item.earn].dueDate == "Finished"
+                ? "--"
+                : apyArray[item.earn] + "%"
             }}</span>
             <span>{{ item.earnName }}</span>
           </section>
@@ -242,7 +251,7 @@
           class="combo_img"
           :src="
             require(`~/assets/img/mining/combo_${
-              item.dueDate == 'Finished' ? 'expired' : 'web'
+              timeArray[item.earn].dueDate == 'Finished' ? 'expired' : 'web'
             }.png`)
           "
           alt=""
@@ -253,7 +262,9 @@
           style="width: 116px"
           :src="
             require(`~/assets/img/mining/${
-              item.dueDate == 'Finished' ? 'serial_web_expired' : 'serial_web'
+              timeArray[item.earn].dueDate == 'Finished'
+                ? 'serial_web_expired'
+                : 'serial_web'
             }.png`)
           "
           alt=""
@@ -264,7 +275,7 @@
           style="width: 32px; height: 32px; left: 10px"
           :src="
             require(`~/assets/img/mining/${
-              item.dueDate == 'Finished'
+              timeArray[item.earn].dueDate == 'Finished'
                 ? 'serialnext_web_expired'
                 : 'serialnext_web'
             }.png`)
@@ -305,35 +316,42 @@
         <section>
           <p>
             <span>{{
-              item.dueDate == "Finished" ? "--" : apyArray[item.earn] + "%"
+              timeArray[item.earn].dueDate == "Finished"
+                ? "--"
+                : apyArray[item.earn] + "%"
             }}</span>
             <span>{{ item.earnName }}</span>
           </p>
           <div>
             <i></i>
             <p>
-              <span v-if="typeof item.openDate == 'object'">
-                {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              <span v-if="typeof timeArray[item.earn].openDate == 'object'">
+                {{ timeArray[item.earn].openDate.hour
+                }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                {{ timeArray[item.earn].openDate.minute
+                }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span v-else-if="typeof item.dueDate == 'object'">
-                <template v-if="item.dueDate.day != '00'">
-                  {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+              <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
+                <template v-if="timeArray[item.earn].dueDate.day != '00'">
+                  {{ timeArray[item.earn].dueDate.day
+                  }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  {{ timeArray[item.earn].dueDate.hour
+                  }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="item.dueDate.day == '00'">
-                  {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <template v-if="timeArray[item.earn].dueDate.day == '00'">
+                  {{ timeArray[item.earn].dueDate.minute
+                  }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ item.dueDate }}
+                {{ timeArray[item.earn].dueDate }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
@@ -513,6 +531,66 @@ export default {
         helmet_burger: 0,
         bhelmet_xburger: 0,
       },
+      timeArray: {
+        helmet_cake_v2: {
+          dueDate: "Ongoing",
+          openDate: "Mining",
+        },
+        mdx: {
+          dueDate: "Ongoing",
+          openDate: "Mining",
+        },
+        bhelmet_dodo: {
+          openDate: this.getMiningTime("2021/05/10 12:00"),
+          dueDate: this.getRemainTime("2021/06/15 00:00"),
+          started: new Date("2021/05/10 12:00") * 1,
+          expired: new Date("2021/06/15 00:00") * 1,
+        },
+        helmet: {
+          dueDate: "Ongoing",
+          openDate: "Mining",
+        },
+        bhelmet_xburger: {
+          openDate: this.getMiningTime("2021/05/02 12:00"),
+          dueDate: this.getRemainTime("2021/05/22 00:00"),
+          started: new Date("2021/05/02 12:00") * 1,
+          expired: new Date("2021/05/22 00:00") * 1,
+        },
+        QFEI: {
+          openDate: this.getMiningTime("2021/04/10 00:00"),
+          dueDate: this.getRemainTime("2021/04/17 00:00"),
+          started: new Date("2021/04/10 00:00") * 1,
+          expired: new Date("2021/04/17 00:00") * 1,
+        },
+        kun: {
+          openDate: this.getMiningTime("2021/04/12 00:00"),
+          dueDate: this.getRemainTime("2021/05/02 00:00"),
+          started: new Date("2021/04/12 00:00") * 1,
+          expired: new Date("2021/05/02 00:00") * 1,
+        },
+        QHELMET: {
+          openDate: this.getMiningTime("2021/04/21 00:00"),
+          dueDate: this.getRemainTime("2021/05/11 00:00"),
+          started: new Date("2021/04/21 00:00") * 1,
+          expired: new Date("2021/05/10 00:00") * 1,
+        },
+        helmet_cake_v1: {
+          dueDate: this.getRemainTime("2021/04/25 17:00"),
+          openDate: "Mining",
+        },
+        helmet_dodo: {
+          dueDate: this.getRemainTime("2021/04/10 00:00"),
+          openDate: "Mining",
+        },
+        helmet_for: {
+          dueDate: this.getRemainTime("2021/03/20 00:00"),
+          openDate: "Mining",
+        },
+        helmet_burger: {
+          dueDate: this.getRemainTime("2021/03/07 00:00"),
+          openDate: "Mining",
+        },
+      },
       miningList: [],
       activeType: "",
       showActiveMining: false,
@@ -636,7 +714,6 @@ export default {
           iio: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["helmet_cake_v2"] || "--",
         },
 
         {
@@ -644,15 +721,10 @@ export default {
           earnNum: "two",
           earn: "bhelmet_dodo",
           earnImg: true,
-          openDate: this.getMiningTime("2021/05/10 12:00"),
-          dueDate: this.getRemainTime("2021/06/15 00:00"),
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["bhelmet_dodo"] || "--",
-          started: new Date("2021/05/10 12:00") * 1,
-          expired: new Date("2021/06/15 00:00") * 1,
         },
         {
           miningName: "HELMET&nbsp;POOL",
@@ -667,113 +739,80 @@ export default {
           earnName: "APY",
           compound: true,
           onePager: false,
-          yearEarn: apyArray["helmet"] || "--",
         },
         {
           miningName: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
           earn: "bhelmet_xburger",
           earnImg: true,
           earnNum: "two",
-          openDate: this.getMiningTime("2021/05/02 12:00"),
-          dueDate: this.getRemainTime("2021/05/22 00:00"),
           combo: true,
           flash: false,
           info: true,
           earnName: "APR",
           compound: false,
           onePager: "hxBURGER",
-          yearEarn: apyArray["bhelmet_xburger"] || "--",
-          started: new Date("2021/05/02 12:00") * 1,
-          expired: new Date("2021/05/22 00:00") * 1,
         },
         {
           miningName: "HELMET-BNB&nbsp;MLP",
           earnNum: "two",
           earn: "mdx",
           earnImg: true,
-          // openDate: this.getMiningTime("2021/04/15 00:00"),
-          // dueDate: this.getRemainTime("2021/05/15 00:00"),
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: false,
           info: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["mdx"] || "--",
-          // started: new Date("2021/04/15 00:00") * 1,
-          // expired: new Date("2021/05/15 00:00") * 1,
         },
         {
           miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",
           earnImg: false,
           earnNum: "one",
-          openDate: this.getMiningTime("2021/04/10 00:00"),
-          dueDate: this.getRemainTime("2021/04/17 00:00"),
           serial: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["qfei"] || "--",
-          started: new Date("2021/04/10 00:00") * 1,
-          expired: new Date("2021/04/17 00:00") * 1,
         },
         {
           miningName: "<i>QFEI</i>-QSD&nbsp;DLP",
           earn: "kun",
           earnImg: true,
           earnNum: "one",
-          openDate: this.getMiningTime("2021/04/12 00:00"),
-          dueDate: this.getRemainTime("2021/05/02 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: "QFEI",
-          yearEarn: apyArray["kun"] || "--",
-          started: new Date("2021/04/12 00:00") * 1,
-          expired: new Date("2021/05/02 00:00") * 1,
         },
         {
           miningName: "HELMET-KUN&nbsp;DLP",
           earn: "QHELMET",
           earnImg: false,
           earnNum: "one",
-          openDate: this.getMiningTime("2021/04/21 00:00"),
-          dueDate: this.getRemainTime("2021/05/11 00:00"),
           serialNext: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          started: new Date("2021/04/21 00:00") * 1,
-          expired: new Date("2021/05/10 00:00") * 1,
-          yearEarn: apyArray["qhelmet"] || "--",
         },
         {
           miningName: "HELMET-BNB&nbsp;LP <i class='v1'></i>",
           earnNum: "two",
           earn: "helmet_cake_v1",
           earnImg: true,
-          dueDate: this.getRemainTime("2021/04/25 17:00"),
-          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
           onePager: false,
-          yearEarn: apyArray["helmet_cake_v1"] || "--",
-          expired: new Date("2021/04/25 17:00") * 1,
         },
         {
           miningName: "HELMET-<i>hDODO</i>&nbsp;DLP",
           earn: "helmet_dodo",
           earnImg: true,
           earnNum: "two",
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
-          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
           onePager: "hDODO",
-          yearEarn: apyArray["helmet_dodo"] || "--",
         },
 
         {
@@ -781,26 +820,20 @@ export default {
           earn: "helmet_for",
           earnImg: true,
           earnNum: "two",
-          dueDate: this.getRemainTime("2021/03/20 00:00"),
-          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
           onePager: "hFOR",
-          yearEarn: apyArray["helmet_for"] || "--",
         },
         {
           miningName: "HELMET-<i>hBURGER</i>&nbsp;LP",
           earn: "helmet_burger",
           earnImg: true,
           earnNum: "two",
-          dueDate: this.getRemainTime("2021/03/07 00:00"),
-          openDate: "Mining",
           combo: true,
           info: true,
           earnName: "APR",
           onePager: "hBURGER",
-          yearEarn: apyArray["helmet_burger"] || "--",
         },
       ];
       this.miningList = arr;
@@ -884,7 +917,7 @@ export default {
           )
         ) * 100;
       let APY = helmetAPY + dodoAPR;
-      let startedTime = this.miningList[1].started;
+      let startedTime = this.timeArray.bhelmet_dodo.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_dodo = "--";
@@ -902,7 +935,6 @@ export default {
         ) * 100;
 
       this.apyArray.helmet = fixD(APY, 2);
-      this.miningList[3].yearEarn = fixD(APY, 2);
     },
     async BHELMET_XBURGER_APY() {
       let BHELMETHelmetValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
@@ -927,7 +959,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[3].started;
+      let startedTime = this.timeArray.bhelmet_xburger.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.bhelmet_xburger = "--";
@@ -972,7 +1004,7 @@ export default {
           )
         ) * 100;
       let APY = mdxAPY;
-      let startedTime = this.miningList[4].started;
+      let startedTime = this.timeArray.mdx.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.mdx = "--";
@@ -999,7 +1031,7 @@ export default {
           precision.times(stakeValue, supplyVolume)
         ) * 100;
 
-      let startedTime = this.miningList[5].started;
+      let startedTime = this.timeArray.QFEI.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.qfei = "--";
@@ -1026,7 +1058,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[6].started;
+      let startedTime = this.timeArray.kun.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.kun = "--";
@@ -1055,7 +1087,7 @@ export default {
             supplyVolume
           )
         ) * 100;
-      let startedTime = this.miningList[7].started;
+      let startedTime = this.timeArray.QHELMET.started;
       let nowTime = new Date() * 1;
       if (nowTime < startedTime) {
         this.apyArray.QHELMET = "--";

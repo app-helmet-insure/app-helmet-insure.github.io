@@ -173,18 +173,7 @@ export default {
     this.mointorAccountChange();
     // 显示状态弹框
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
-      const result = {
-        title: data.title,
-        conTit: data.conTit,
-        conText: data.conText,
-        activeTip: data.activeTip,
-        button: data.button,
-        layout: data.layout,
-        loading: data.loading,
-        buttonText: data.buttonText,
-        showDialog: data.showDialog,
-      };
-      this.statusData = result;
+      this.statusData = data;
       this.openStatusDialog();
       window.statusDialog = true;
     });
@@ -223,11 +212,14 @@ export default {
         title: "WARNING",
         layout: "layout1",
         activeTip: true,
+        activeTipText1: "",
+        activeTipText2: "",
         loading: false,
         button: true,
-        buttonText: "Confirm",
+        buttonText: "Change",
         showDialog: true,
-        conText: "Please Connect to Binance Smart Chain NetWork",
+        conText: "You need to change Binance Smart Chain NetWork",
+        action: "netWork",
       });
     },
     copy() {
@@ -283,7 +275,7 @@ export default {
     },
     monitorNetWorkChange() {
       if (window.ethereum) {
-        ethereum.on("networkChanged", (chainID) => {
+        ethereum.on("chainChanged", (chainID) => {
           window.chainID = chainID;
           this.$store.commit("SET_CHAINID", chainID);
           window.location.reload();

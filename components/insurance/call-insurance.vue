@@ -290,7 +290,7 @@ export default {
       if (!data.buyNum) {
         return;
       }
-      
+
       let datas;
       datas = {
         askID: data.id,
@@ -303,7 +303,8 @@ export default {
         _expiry: data._expiry,
         _collateral: getTokenName(data._collateral),
         showType: getTokenName(data._collateral),
-      };1
+      };
+      1;
       console.log(datas);
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
@@ -313,6 +314,8 @@ export default {
                   ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                   </span></p>`,
         activeTip: true,
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         loading: false,
         button: true,
         buttonText: "Confirm",

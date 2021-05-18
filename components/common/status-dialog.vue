@@ -22,10 +22,10 @@
       <h3 class="con-tit" v-if="data.conTit" v-html="data.conTit"></h3>
       <div class="con-text" v-if="data.conText" v-html="data.conText"></div>
       <div class="activeWarn" v-if="data.activeTip">
-        {{ $t("Tip.Active1") }}
+        {{ data.activeTipText1 }}
       </div>
       <div class="activeWarn" v-if="data.activeTip">
-        {{ $t("Tip.Active2") }}
+        {{ data.activeTipText2 }}
       </div>
       <div class="loading_wrap" v-if="data.loading">
         <i class="loading_img"></i>
@@ -53,6 +53,8 @@ export default {
           conText: "",
           layout: "",
           activeTip: false,
+          activeTipText1: "",
+          activeTipText2: "",
           loading: true,
           button: false,
           buttonText: "",
@@ -61,10 +63,32 @@ export default {
       },
     },
   },
+  mounted() {
+    console.log(this.data);
+  },
   methods: {
-    closeDialog() {
+    async closeDialog() {
       this.$bus.$emit("PROCESS_ACTION", this.data.showDialog);
       this.$emit("close");
+      if (this.data.action == "netWork") {
+        let ethereum = window.ethereum;
+        const data = [
+          {
+            chainId: "0x38",
+            chainName: "Binance Smart Chain",
+            nativeCurrency: {
+              name: "BNB",
+              symbol: "BNB",
+              decimals: 18,
+            },
+            rpcUrls: ["https://bsc-dataseed.binance.org/"],
+            blockExplorerUrls: ["https://bscscan.com/"],
+          },
+        ];
+        await ethereum
+          .request({ method: "wallet_addEthereumChain", params: data })
+          .catch();
+      }
     },
   },
 };
@@ -132,7 +156,7 @@ export default {
       padding: 30px;
       position: relative;
       z-index: 102;
-      min-height: 230px;
+      // min-height: 230px;
       border-radius: 8px;
       .layout1_title {
         display: flex;

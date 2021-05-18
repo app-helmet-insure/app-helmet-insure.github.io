@@ -199,6 +199,8 @@ export default {
           data._collateral
         }</span></p>`,
         activeTip: true,
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         loading: false,
         button: true,
         buttonText: "Confirm",

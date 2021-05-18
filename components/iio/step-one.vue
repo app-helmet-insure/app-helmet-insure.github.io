@@ -132,6 +132,8 @@ export default {
       let object = {
         title: "WARNING",
         layout: "layout1",
+        activeTipText1:'Please double check the price above，',
+        activeTipText2:'Helmet team will not cover your loss on this.',
         activeTip: true,
         loading: false,
         button: true,

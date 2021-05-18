@@ -295,6 +295,8 @@ export default {
         title: "WARNING",
         layout: "layout1",
         activeTip: true,
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         loading: false,
         button: true,
         buttonText: "Confirm",

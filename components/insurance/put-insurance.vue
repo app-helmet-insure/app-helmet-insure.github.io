@@ -330,6 +330,8 @@ export default {
                   ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
                   </span></p>`,
         activeTip: true,
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         loading: false,
         button: true,
         buttonText: "Confirm",

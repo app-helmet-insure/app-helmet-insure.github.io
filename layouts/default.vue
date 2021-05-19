@@ -46,6 +46,7 @@
       @close="closeStatusDialog"
     />
     <Airdrop />
+    <buyDialog />
   </div>
 </template>
 <script>
@@ -53,12 +54,8 @@ import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
 import Airdrop from "~/components/common/airdrop.vue";
+import buyDialog from "~/components/common/buy-dialog.vue";
 import { web3 } from "~/assets/utils/web3-obj.js";
-import {
-  getOptionCreatedLog,
-  getSellLog,
-  getBuyLog,
-} from "~/interface/order.js";
 import { getID } from "~/assets/utils/address-pool.js";
 import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import RiskWarning from "~/components/common/risk-warning.vue";
@@ -79,7 +76,7 @@ export default {
     RiskWarning,
     StatusDialog,
     Airdrop,
-    // MyPayaso,
+    buyDialog,
     WallectDownLoad,
   },
   data() {

@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide mass">
+        <div></div>
+      </div>
       <div class="swiper-slide shib">
         <div></div>
       </div>
@@ -129,6 +132,12 @@ export default {
         background-position: center;
       }
     }
+    .mass {
+      background: #d26c40;
+      > div {
+        background-image: url("../../assets/img/banner/mass_pc.png");
+      }
+    }
     .shib {
       background: #262724;
       > div {
@@ -187,6 +196,12 @@ export default {
       background: #7746b5;
       > div {
         background-image: url("../../assets/img/banner/nft_h5.png");
+      }
+    }
+    .mass {
+      background: #d26c40;
+      > div {
+        background-image: url("../../assets/img/banner/mass_h5.png");
       }
     }
     .shib {

@@ -243,4 +243,61 @@ export default {
             // },
         },
     },
+    wmass: {
+        name: 'WMASS',
+        Token: 'WMASS',
+        Time1: 'May.20th 21:00', //mining open
+        Time2: 'May.22nd 21:00', //active start
+        Time3: 'May.23rd 21:00', //active end
+        Time1UTC: '2021/05/20 21:00 UTC+8',
+        Time2UTC: '2021/05/22 21:00 UTC+8',
+        Time3UTC: '2021/05/23 21:00 UTC+8',
+        Collateral: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x5be604A1c1425fC639AD4f5d579853d9eF8C6ebC',
+        ActivePrice: 0.5,
+        ProjcetInformation: {
+            ProjectName: 'WMASS',
+            Distributing: 'May. 20th 21:00 SGT - May. 22nd 21:00 SGT',
+            Activating: 'May. 23rd 21:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1WMASS=0.35BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'WMASS',
+            Address: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
+            Supply: '142,857',
+            TotalSupply: '206,438,400',
+        },
+        About: [
+            'The MASS consensus engine aims to become the infrastructure layer to all blockchain. Based on Proof-of-Capacity consensus protocol, the MASS consensus engine creates a consensus layer that is permissionless, fair, energy efficient, secure, and universal, ensuring the fundamental security of all the chain above.',
+            'The MASS consensus originated from a paper done by MIT computer scientists, and the project is totally driven by community, with no pre-mining. ',
+            "MASS's mainnet was launched in 2019, and the network grows with about 300 PB hash rate within 2 years(For comparison, Filecoin has about 1000 PB hash rate in its network), and is supported by organizations such as HelloPool,Huobi, Fenbushi Capital, HashKey, NGC Capital, MPool etc.",
+            'Recently MASS community introduced WMASS to Binance Smart Chain, which is in BEP20 format and its value is 1:1 pegged to MASS. The purpose of WMASS is to introduce assets with real-world value to DeFi world, and hope we can coordinate with Pancake for some future development.',
+        ],
+        TokenDistribution: [],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://wmass.org/home',
+                show: 'wmass.org',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/massnetorg/',
+                show: 'https://twitter.com/massnetorg/',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/massnetorg',
+                show: 'https://t.me/massnetorg',
+            },
+            // Medium: {
+            //     type: 'Medium',
+            //     link: 'https://westarter.medium.com/',
+            //     show: 'https://westarter.medium.com/',
+            // },
+        },
+    },
 };

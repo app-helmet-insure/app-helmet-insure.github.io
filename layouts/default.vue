@@ -467,6 +467,31 @@ export default {
   flex-direction: column;
 }
 @media screen and (min-width: 750px) {
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    background-color: #f5f5f5;
+    height: 10px;
+    position: fixed;
+    bottom: 0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0.44, #fd7e14),
+      color-stop(0.72, #fd7e14),
+      color-stop(0.86, #fd7e14)
+    );
+  }
   .layout-container {
     > .contractAdress {
       width: 100%;

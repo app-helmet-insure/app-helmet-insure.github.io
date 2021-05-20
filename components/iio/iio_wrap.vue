@@ -268,7 +268,7 @@ export default {
           activatingTimeUTC: "2021/05/22 21:00 UTC+8",
           finishedTimeUTC: "2021/05/23 21:00 UTC+8",
           link: "https://wmass.org/home",
-          enterbutton: false,
+          enterbutton: true,
           open: true,
           sort: 0,
           active_page: 2,

@@ -254,7 +254,7 @@ export default {
         Time3UTC: '2021/05/23 21:00 UTC+8',
         Collateral: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        LongAdress: '0x5be604A1c1425fC639AD4f5d579853d9eF8C6ebC',
+        LongAdress: '0x1A95207f3e9E42E9d49C90D9E69d95Bb3Ab74A48',
         ActivePrice: 0.5,
         ProjcetInformation: {
             ProjectName: 'WMASS',

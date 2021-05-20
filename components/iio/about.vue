@@ -102,7 +102,7 @@
       <p v-for="(item, index) in About.About" :key="index + 'About'">
         {{ item }}
       </p>
-      <h3>Token Distribution</h3>
+      <h3 v-if="About.TokenDistribution.length">Token Distribution</h3>
       <p
         v-for="(item, index) in About.TokenDistribution"
         :key="index + 'TokenDistribution'"

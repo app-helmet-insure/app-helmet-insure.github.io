@@ -120,7 +120,7 @@ export default {
 
       let curPrice =
         this.activeInsurance == "WBNB"
-          ? this.indexPrice[activeInsurance] * this.BNB_BUSD
+          ? this.indexPrice[this.activeInsurance] * this.BNB_BUSD
           : this.indexPrice[this.activeInsurance];
       let number = (curPrice - putPrice) / (callPrice - putPrice);
       this.positionLeft = number * 100;

@@ -191,7 +191,9 @@ export default {
       if (newValue) {
         this.page = 0;
         this.limit = 10;
-        this.setList(newValue, this.currentCoin, this.currentType);
+        this.page_h5 = 0;
+        this.limit_h5 = 3;
+        this.setList(newValue);
       }
     },
     async setList(sell, coin, type) {
@@ -205,9 +207,18 @@ export default {
       // 当前保险的全部保单
       let putInsuranceList = [];
       if (sell) {
-        putInsuranceList = sell.filter(
-          (item) => item.longInfo._underlying.toLowerCase() == coinAddress
-        );
+        if (this.activeInsurance != "WBNB") {
+          putInsuranceList = sell.filter(
+            (item) => item.longInfo._underlying.toLowerCase() == coinAddress
+          );
+        } else {
+          putInsuranceList = sell.filter(
+            (item) =>
+              item.longInfo._underlying.toLowerCase() == coinAddress &&
+              item.longInfo._collateral.toLowerCase() ==
+                "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+          );
+        }
       }
       // 数据处理
       for (let i = 0; i < putInsuranceList.length; i++) {

@@ -168,7 +168,8 @@ export default {
     this.$store.commit("SET_CHAINID", window.chainID);
     this.getUserInfo();
     // 获取映射
-    this.$store.dispatch("setAllMap");
+    // this.$store.dispatch("setAllMap");
+    // console.log(1);
     this.monitorNetWorkChange();
     this.mointorAccountChange();
     // 显示状态弹框
@@ -270,7 +271,6 @@ export default {
     aboutInfoSellWatch(newValue) {
       if (newValue) {
         this.$store.dispatch("mapAboutInfoBuy");
-        this.$store.dispatch("getCountByType");
       }
     },
     monitorNetWorkChange() {

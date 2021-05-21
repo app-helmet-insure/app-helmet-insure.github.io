@@ -332,26 +332,31 @@ export default {
       let data = newValue || this.iioData;
       let nowTime = moment.now();
       data.forEach((item) => {
+        item.sort = 4;
         if (item.open) {
           let warnup = new Date(moment(item.warnupTimeUTC)) * 1;
           let distributing = new Date(moment(item.distributingTimeUTC)) * 1;
           let activating = new Date(moment(item.activatingTimeUTC)) * 1;
           let finished = new Date(moment(item.finishedTimeUTC)) * 1;
-          if (nowTime < warnup) {
-            item.status = "warmup";
-          }
-          if (nowTime > warnup && nowTime < distributing) {
-            item.status = "warmup";
-          }
           if (nowTime > distributing && nowTime < activating) {
             item.status = "distributing";
+            item.sort = 1;
           }
           if (nowTime > activating && nowTime < finished) {
             item.status = "activating";
+            item.sort = 2;
+          }
+          if (nowTime < warnup) {
+            item.status = "warmup";
+            item.sort = 3;
+          }
+          if (nowTime > warnup && nowTime < distributing) {
+            item.status = "warmup";
+            item.sort = 3;
           }
           if (nowTime > finished) {
             item.status = "finished";
-            item.sort = 1;
+            item.sort = 5;
             item.active_page = 1;
           }
         }

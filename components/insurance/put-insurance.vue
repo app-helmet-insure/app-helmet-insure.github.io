@@ -191,7 +191,9 @@ export default {
       if (newValue) {
         this.page = 0;
         this.limit = 10;
-        this.setList(newValue, this.currentCoin, this.currentType);
+        this.page_h5 = 0;
+        this.limit_h5 = 3;
+        this.setList(newValue);
       }
     },
     async setList(sell, coin, type) {

@@ -109,7 +109,6 @@ export const state = () => ({
     aboutInfoBuy: null,
     myAboutInfoBuy: null, // buyer是我的 aboutInfoBuy
     aboutInfoBuySeller: null, // seller是我的 aboutInfoBuy （为了用在【出租订单】）
-    totalInfo: null, //
     userInfo: {
         // 用户信息
         data: {
@@ -157,14 +156,14 @@ export const state = () => ({
 
     allDueDate: [
         {
-            BTCB: '2021/05/21 24:00',
-            ETH: '2021/05/21 24:00',
-            HELMET: '2021/05/21 24:00',
-            CAKE: '2021/05/21 24:00',
-            CTK: '2021/05/21 24:00',
-            BURGER: '2021/05/21 24:00',
-            WBNB: '2021/05/21 24:00',
-            MATH: '2021/05/21 24:00',
+            BTCB: '2021/06/21 24:00',
+            ETH: '2021/06/21 24:00',
+            HELMET: '2021/06/21 24:00',
+            CAKE: '2021/06/21 24:00',
+            CTK: '2021/06/21 24:00',
+            BURGER: '2021/06/21 24:00',
+            WBNB: '2021/06/21 24:00',
+            MATH: '2021/06/21 24:00',
             SHIB: '2021/06/21 24:00',
         },
     ],
@@ -181,27 +180,27 @@ export const state = () => ({
     strikePriceArray: [
         // 翻倍价格
         {
-            BTCB: 240,
-            ETH: 10,
-            HELMET: 0.008,
-            CAKE: 0.11,
-            CTK: 0.008,
-            BURGER: 0.044,
-            WBNB: 900,
-            MATH: 0.006,
+            BTCB: 206.874,
+            ETH: 14.0532,
+            HELMET: 0.0042,
+            CAKE: 0.103,
+            CTK: 0.0072,
+            BURGER: 0.039,
+            WBNB: 780,
+            MATH: 0.01,
             SHIB: '0.0000002326',
             COIN: '--',
         },
         // 腰斩价格
         {
-            BTCB: 60,
-            ETH: 2.5,
-            HELMET: 0.002,
-            CAKE: 0.025,
-            CTK: 0.0015,
-            BURGER: 0.011,
-            WBNB: 300,
-            MATH: 0.0015,
+            BTCB: 51.7185,
+            ETH: 3.5133,
+            HELMET: 0.001,
+            CAKE: 0.0515,
+            CTK: 0.0018,
+            BURGER: 0.0097,
+            WBNB: 195,
+            MATH: 0.0025,
             SHIB: '0.0000000581',
             COIN: '--',
         },
@@ -373,9 +372,7 @@ export const mutations = {
         state.myAboutInfoBuy = data.myAboutInfoBuy;
         state.aboutInfoBuySeller = data.aboutInfoBuySeller;
     },
-    SET_TOTAL_INFO(state, data) {
-        state.totalInfo = data;
-    },
+
     SET_USER_INFO(state, data) {
         state.userInfo = data;
     },
@@ -752,78 +749,6 @@ export const actions = {
             aboutInfoBuy,
             myAboutInfoBuy,
             aboutInfoBuySeller,
-        });
-    },
-
-    async getCountByType({ commit, state }, data) {
-        const aboutInfoSell = state.aboutInfoSell;
-        let expiry;
-        let current = new Date().getTime();
-        let _col;
-        let arr = [];
-        aboutInfoSell.forEach((item) => {
-            expiry = parseInt(item.longInfo._expiry) * 1000;
-            // 今天之后过期的卖单
-            if (expiry > current) {
-                // 抵押品
-                _col = newGetSymbol(item.longInfo._collateral, window.chainID);
-                arr.push({
-                    askID: item.askID,
-                    volume: fromWei(item.volume, _col),
-                    price: fromWei(item.price, _col),
-                    // 标的物
-                    _underlying: newGetSymbol(
-                        item.longInfo._underlying,
-                        window.chainID
-                    ),
-                    _collateral: _col,
-                    // 行权价
-                    _strikePrice: fromWei(item.longInfo._strikePrice, _col),
-                    // 到期日
-                    _expiry: expiry,
-                });
-            }
-        });
-        Promise.all(
-            arr.map(async (item) => {
-                const res = await asks(item.askID);
-                return {
-                    ...item,
-                    remain: fromWei(res.remain, item.settleToken),
-                };
-            })
-        ).then((res) => {
-            let und_arr = [];
-            let data_obj = {};
-            res.forEach((item) => {
-                let remain = mul(item.remain, item._strikePrice);
-                let count = mul(item.volume, item._strikePrice);
-                let min = accDiv(1, item._strikePrice);
-                let max = accDiv(1, item._strikePrice);
-                if (und_arr.includes(item._underlying)) {
-                    data_obj[item._underlying] = {
-                        remain: add(data_obj[item._underlying].remain, remain),
-                        count: add(data_obj[item._underlying].count, count),
-                        min:
-                            min < data_obj[item._underlying].min
-                                ? min
-                                : data_obj[item._underlying].min,
-                        max:
-                            max > data_obj[item._underlying].max
-                                ? max
-                                : data_obj[item._underlying].max,
-                    };
-                } else {
-                    data_obj[item._underlying] = {
-                        remain,
-                        count,
-                        min,
-                        max,
-                    };
-                    und_arr.push(item._underlying);
-                }
-            });
-            commit('SET_TOTAL_INFO', data_obj);
         });
     },
     setUserInfo({ commit, state }, data) {

@@ -3,19 +3,19 @@
     <div class="buy_dialog">
       <div class="buy_dialog_title">
         <span>Buy HELMET</span>
-        <i></i>
+        <i @click="handleClickClose"></i>
       </div>
       <div class="buy_dialog_select">
         <input type="text" />
         <span class="all">
           {{ $t("Table.ALL") }}
         </span>
-        <p class="selected">
-          <img src="" alt="" />
-          <span>BNB</span>
+        <p class="selected" @click="handleTokenList">
+          <img :src="activeImg" alt="" />
+          <span>{{ activeToken }}</span>
           <i></i>
         </p>
-        <div class="select_wrap">
+        <div class="select_wrap" v-if="showTokenList">
           <input
             class="select_search"
             placeholder="Search name or paste address"
@@ -27,9 +27,10 @@
                 class="select_token_item"
                 v-for="item in TokenList"
                 :key="item.symbol"
+                @click="handleCheckToken(item)"
               >
                 <p>
-                  <img :src="item.logoURI" alt="" />
+                  <img :v-lazy="item.logoURI" :src="item.logoURI" alt="" />
                   <span>{{ item.symbol }}</span>
                 </p>
                 <span>{{ item.symbol }}</span>
@@ -55,14 +56,41 @@
 
 <script>
 import tokenList from "~/assets/utils/tokenlist.json";
+import Swap from "~/assets/utils/swap.js";
+import VueLazyload from "vue-lazyload";
 export default {
+  components: {
+    VueLazyload,
+  },
   data() {
     return {
       buyDialog: true,
       TokenList: tokenList.tokens,
+      showTokenList: false,
+      activeImg:
+        "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png",
+      activeToken: "BNB",
     };
   },
-  mounted() {},
+  mounted() {
+    this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
+      this.buyDialog = res;
+    });
+  },
+  methods: {
+    handleClickClose() {
+      this.$bus.$emit("OPEN_BUY_DIALOG", false);
+    },
+    handleTokenList() {
+      this.showTokenList = true;
+    },
+    handleCheckToken(data) {
+      console.log(data);
+      this.activeImg = data.logoURI;
+      this.activeToken = data.symbol;
+      this.showTokenList = false;
+    },
+  },
 };
 </script>
 
@@ -122,9 +150,10 @@ export default {
     }
     > input {
       flex: 1;
+      width: 100px;
       height: 100%;
       background: transparent;
-      padding-left: 15px;
+      padding: 0 5px 0 10px;
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
@@ -142,7 +171,6 @@ export default {
       color: #17173a;
       display: flex;
       align-items: center;
-      margin-left: 10px;
       cursor: pointer;
       &:hover {
         background: #fffaf3;
@@ -153,11 +181,16 @@ export default {
       margin: 0 10px;
       display: flex;
       align-items: center;
-      padding: 0 2px;
+      padding: 0 4px;
       height: 24px;
       background: #f8f9fa;
       border-radius: 5px;
       cursor: pointer;
+      border: 1px solid transparent;
+      &:hover {
+        background: #fffaf3;
+        border: 1px solid #fd7e14;
+      }
       img {
         width: 18px;
         height: 18px;
@@ -258,6 +291,10 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      cursor: pointer;
+      &:hover {
+        background: #f7f7fa;
+      }
       p {
         padding-left: 20px;
         height: 100%;
@@ -277,7 +314,7 @@ export default {
         }
       }
       span {
-        margin-right: 20px;
+        padding-right: 20px;
         font-size: 14px;
         font-family: IBMPlexSans;
         color: #121212;

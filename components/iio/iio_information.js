@@ -11,6 +11,7 @@ export default {
         Collateral: '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x029A09ABE791a3Be60Aa64d569F4C34890f24097',
+        Decimals: 18,
         ActivePrice: 0.3,
         ProjcetInformation: {
             ProjectName: 'ChainSwap',
@@ -68,6 +69,7 @@ export default {
         Collateral: '0xd714d91A169127e11D8FAb3665d72E8b7ef9Dbe2',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x04adbe36c4d39e6ec799f69906a48d83f88dc268',
+        Decimals: 18,
         ActivePrice: 0.05,
         ProjcetInformation: {
             ProjectName: 'BlackHole Protocol',
@@ -134,6 +136,7 @@ export default {
         Collateral: '0x910651f81a605a6ef35d05527d24a72fecef8bf0',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x6942B960d5bC6ED07016d6142547cF496DdEc3f1',
+        Decimals: 18,
         ActivePrice: 0.25,
         ProjcetInformation: {
             ProjectName: 'WeStarter',
@@ -189,6 +192,7 @@ export default {
         Collateral: '0xbc194e6f748a222754C3E8b9946922c09E7d4e91',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x5be604A1c1425fC639AD4f5d579853d9eF8C6ebC',
+        Decimals: 18,
         ActivePrice: 0.5,
         ProjcetInformation: {
             ProjectName: 'Lever',
@@ -255,7 +259,8 @@ export default {
         Collateral: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x1A95207f3e9E42E9d49C90D9E69d95Bb3Ab74A48',
-        ActivePrice: 0.5,
+        Decimals: 8,
+        ActivePrice: 0.35,
         ProjcetInformation: {
             ProjectName: 'WMASS',
             Distributing: 'May. 20th 21:00 SGT - May. 22nd 21:00 SGT',
@@ -268,7 +273,7 @@ export default {
             TokenName: 'WMASS',
             Address: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
             Supply: '142,857',
-            TotalSupply: '206,438,400',
+            TotalSupply: '4,000,000',
         },
         About: [
             'The MASS consensus engine aims to become the infrastructure layer to all blockchain. Based on Proof-of-Capacity consensus protocol, the MASS consensus engine creates a consensus layer that is permissionless, fair, energy efficient, secure, and universal, ensuring the fundamental security of all the chain above.',

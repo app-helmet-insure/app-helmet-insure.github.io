@@ -44,7 +44,7 @@ export const ticketVol3 = async (ContractAdress, TicketAddress) => {
         });
 };
 // 可领取数量
-export const earned3 = async (ContractAdress, RewardAdress) => {
+export const earned3 = async (ContractAdress, RewardAdress, Decimals) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {
@@ -58,8 +58,8 @@ export const earned3 = async (ContractAdress, RewardAdress) => {
         .earned3(RewardAdress, account)
         .call()
         .then((res) => {
-            let unit = ContractAdress;
-            return window.WEB3.utils.fromWei(res, getWei(unit));
+            let result = Number(res) / Math.pow(10, Decimals);
+            return result;
         });
 };
 // 领取奖励

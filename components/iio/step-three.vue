@@ -187,7 +187,7 @@ export default {
         flag: true,
         approveAddress1: "FACTORY",
         approveAddress2: "",
-        unit: "",
+        unit: this.About.Decimals == 18 ? "" : this.About.Decimals,
         showVolume: this.AvailableVolume,
       };
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
@@ -206,6 +206,7 @@ export default {
         buttonText: "Confirm",
         showDialog: true,
       });
+      console.log(data);
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
           onExercise(data, data.flag);

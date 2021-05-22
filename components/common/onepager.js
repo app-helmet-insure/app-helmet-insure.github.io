@@ -138,4 +138,10 @@ export default {
         'The lifetime of iLEV is from May 7th 20:00 SGT — May 8th 20:00 SGT. ',
         'Please be sure to activate the iLEV within the validity period.',
     ],
+    iWMASS: [
+        'IIO WMASS Supply: $50,000 worth of WMASS',
+        'iWMASS activate/swap formula: 1 iWMASS+0.35BUSD Swap 1 WMASS',
+        'iWMASS Distribution: May 20th 21:00 SGT — May 22nd 21:00 SGT',
+        'Activate/swap iWMASS period: May 22nd 21:00 SGT — May 23rd 21:00 SGT.',
+    ],
 };

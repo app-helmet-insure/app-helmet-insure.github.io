@@ -1,4 +1,4 @@
-import { IIO, expERC20 } from './index.js';
+import { IIO, expERC20, Deposite } from './index.js';
 import {
     getAddress,
     getContract,
@@ -7,6 +7,26 @@ import {
 } from '~/assets/utils/address-pool.js';
 import bus from '~/assets/js/bus';
 import Message from '~/components/common/Message';
+export const getBalance = async (type, Decimals = 18) => {
+    // const WEB3 = await web3();
+    // const charID = await getID();
+    const charID = window.chainID;
+    let adress = type;
+    if (type.indexOf('0x') === -1) {
+        adress = getContract(type, charID);
+    }
+    if (!adress || !window.CURRENTADDRESS) {
+        return 0;
+    }
+    const deposite = await Deposite(adress);
+    return deposite.methods
+        .balanceOf(window.CURRENTADDRESS)
+        .call()
+        .then((res) => {
+            let result = Number(res) / Math.pow(10, Decimals);
+            return result;
+        });
+};
 // 是否购买门票
 export const applied3 = async (ContractAdress, RewardAdress) => {
     const charID = window.chainID;
@@ -44,7 +64,7 @@ export const ticketVol3 = async (ContractAdress, TicketAddress) => {
         });
 };
 // 可领取数量
-export const earned3 = async (ContractAdress, RewardAdress, Decimals) => {
+export const earned3 = async (ContractAdress, RewardAdress, Decimals = 18) => {
     const charID = window.chainID;
     const account = window.CURRENTADDRESS;
     if (ContractAdress.indexOf('0x') === -1) {

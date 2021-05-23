@@ -548,9 +548,9 @@ export default {
         },
         bhelmet_dodo: {
           openDate: this.getMiningTime("2021/05/10 12:00"),
-          dueDate: this.getRemainTime("2021/06/15 00:00"),
+          dueDate: this.getRemainTime("2021/05/24 00:00"),
           started: new Date("2021/05/10 12:00") * 1,
-          expired: new Date("2021/06/15 00:00") * 1,
+          expired: new Date("2021/05/24 00:00") * 1,
         },
         helmet: {
           dueDate: "Ongoing",

@@ -181,7 +181,11 @@ export default {
       // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
       // 可领取
-      let AvailableVolume = await earned3(pool_name, reward_name);
+      let AvailableVolume = await earned3(
+        pool_name,
+        reward_name,
+        this.About.Decimals
+      );
 
       this.showMsg.DepositeVolume = DepositeVolume;
       this.showMsg.DepositedVolume = DepositedVolume;
@@ -200,6 +204,7 @@ export default {
       if (this.claimLoading) {
         return;
       }
+      console.log(this.About);
       this.claimLoading = true;
       let Name = this.iioType.toUpperCase();
       let reward_name = `IIO_HELMETBNB_${Name}`;

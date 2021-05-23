@@ -69,13 +69,12 @@
 </template>
 
 <script>
-import { getBalance } from "~/interface/deposite.js";
+import { getBalance, applied3 } from "~/interface/iio.js";
 import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
 import Information from "./iio_information.js";
-import { applied3 } from "~/interface/iio.js";
 import moment from "moment";
 
 export default {
@@ -132,10 +131,12 @@ export default {
       }
     },
     async getBalance() {
-      let TicketAddress = "IIO_HELMETBNB_TICKET";
       let Name = this.iioType.toUpperCase();
       let RewardAddress = `IIO_HELMETBNB_${Name}`;
-      let AvailableVolume = await getBalance(RewardAddress);
+      let AvailableVolume = await getBalance(
+        RewardAddress,
+        this.About.Decimals
+      );
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"
       );
@@ -187,7 +188,7 @@ export default {
         flag: true,
         approveAddress1: "FACTORY",
         approveAddress2: "",
-        unit: "",
+        unit: this.About.Decimals == 18 ? "" : this.About.Decimals,
         showVolume: this.AvailableVolume,
       };
       this.$bus.$emit("OPEN_STATUS_DIALOG", {

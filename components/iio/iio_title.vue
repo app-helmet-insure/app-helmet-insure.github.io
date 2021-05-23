@@ -5,6 +5,14 @@
         <h3>{{ $t("Tip.IIOTip1") }}</h3>
         <p>{{ $t("Tip.IIOTip2") }}</p>
       </div>
+      <div class="iio_apply_now">
+        <p>Want to launch your own IIO with Helmet?</p>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSduUhQJnmmyukVA1jMGmFwnn4s_B00uq1GmLyd0CKARvJ6w0Q/viewform"
+          target="_blank"
+          ><i></i> Apply Now</a
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -30,6 +38,9 @@ export default {};
       background-repeat: no-repeat;
       background-size: 1026px 100%;
       background-position: center center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     &_text {
       h3 {
@@ -38,7 +49,7 @@ export default {};
         font-weight: 600;
         color: #ffffff;
         line-height: 32px;
-        padding: 40px 0 0 40px;
+        padding: 0 0 0 40px;
       }
       p {
         font-size: 16px;
@@ -48,12 +59,58 @@ export default {};
         margin: 11px 0 0 40px;
       }
     }
+    .iio_apply_now {
+      width: 348px;
+      height: 104px;
+      margin-right: 40px;
+      background-image: url("../../assets/img/iio/apply_bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+      > p {
+        font-size: 14px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 600;
+        color: rgba(23, 23, 58, 0.8);
+        line-height: 22px;
+        margin-top: 24px;
+        margin-left: 18px;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        margin-left: 18px;
+        width: 100px;
+        height: 28px;
+        background: #17173a;
+        border-radius: 3px;
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 15px;
+        i {
+          display: block;
+          width: 16px;
+          height: 16px;
+          background-image: url("../../assets/img/iio/add_bg.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          background-position: center center;
+        }
+        &:hover {
+          background: #2d2d4d;
+        }
+      }
+    }
   }
 }
 @media screen and (max-width: 750px) {
   .iio_title {
     width: 95%;
-    height: 120px;
+    height: 200px;
     background: #fe9f00;
     border-radius: 5px;
     margin: 0 auto;
@@ -64,10 +121,13 @@ export default {};
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     &_text {
       width: 100%;
-      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -86,6 +146,50 @@ export default {};
         color: #ffffff;
         line-height: 20px;
         margin: 8px 0 0 16px;
+      }
+    }
+    .iio_apply_now {
+      width: 320px;
+      height: 104px;
+      background-image: url("../../assets/img/iio/apply_bg.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center center;
+      > p {
+        font-size: 13px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 600;
+        color: rgba(23, 23, 58, 0.8);
+        line-height: 22px;
+        margin-top: 25px;
+        margin-left: 18px;
+      }
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+        margin-left: 18px;
+        width: 100px;
+        height: 28px;
+        background: #17173a;
+        border-radius: 3px;
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        line-height: 15px;
+        i {
+          width: 16px;
+          height: 16px;
+          background-image: url("../../assets/img/iio/add_bg.png");
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+          background-position: center center;
+        }
+        &:hover {
+          background: #2d2d4d;
+        }
       }
     }
   }

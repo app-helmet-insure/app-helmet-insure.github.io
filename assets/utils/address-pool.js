@@ -259,6 +259,10 @@ export const getTokenName = (address) => {
             return 'WAR';
         case '0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561':
             return 'SHIB';
+        case '0xbc194e6f748a222754c3e8b9946922c09e7d4e91':
+            return 'LEV';
+        case '0x7e396bfc8a2f84748701167c2d622f041a1d7a17':
+            return 'WMASS';
         default:
             return '--';
     }

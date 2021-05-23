@@ -309,7 +309,7 @@ export default {
         },
     },
     cryptotycoon: {
-        name: 'CTT',
+        name: 'CryptoTycoon',
         Token: 'CTT',
         Time1: 'May.23rd 21:00', //mining open
         Time2: 'May.25th 21:00', //active start
@@ -319,7 +319,7 @@ export default {
         Time3UTC: '2021/05/26 21:00 UTC+8',
         Collateral: '0x464863745ed3af8b9f8871f1082211c55f8f884d',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        LongAdress: '0x1A95207f3e9E42E9d49C90D9E69d95Bb3Ab74A48',
+        LongAdress: '0x364E9C57161BA03fcA5b1561FD7f388953FeBd94',
         Decimals: 18,
         ActivePrice: 30,
         ProjcetInformation: {
@@ -373,7 +373,7 @@ export default {
         },
     },
     coinwind: {
-        name: 'COW',
+        name: 'CoinWind',
         Token: 'COW',
         Time1: 'May.23rd 21:00', //mining open
         Time2: 'May.25th 22:00', //active start
@@ -381,10 +381,10 @@ export default {
         Time1UTC: '2021/05/23 21:00 UTC+8',
         Time2UTC: '2021/05/25 22:00 UTC+8',
         Time3UTC: '2021/05/26 22:00 UTC+8',
-        Collateral: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
+        Collateral: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        LongAdress: '0x1A95207f3e9E42E9d49C90D9E69d95Bb3Ab74A48',
-        Decimals: 9,
+        LongAdress: '0x6a79dd81c693476cf7194B4D33fEB94396CCe5Da',
+        Decimals: 18,
         ActivePrice: 0.5,
         ProjcetInformation: {
             ProjectName: 'COW',
@@ -396,7 +396,7 @@ export default {
         },
         TokenInformation: {
             TokenName: 'COW',
-            Address: '0x464863745ed3af8b9f8871f1082211c55f8f884d',
+            Address: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
             Supply: '100,000',
             TotalSupply: '100,000,000',
         },

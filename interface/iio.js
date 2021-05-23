@@ -111,7 +111,6 @@ export const getReward3 = async (type, RewardAdress) => {
             })
             .on('receipt', function(receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
-                bus.$emit(`RELOAD_DATA_${type}`);
                 bus.$emit('REFRESH_BALANCE');
                 if (window.statusDialog) {
                     bus.$emit('CLOSE_STATUS_DIALOG');
@@ -130,15 +129,9 @@ export const getReward3 = async (type, RewardAdress) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                    bus.$emit(`RELOAD_DATA_${type}`);
-                }, 1000);
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
-                bus.$emit(`RELOAD_DATA_${type}`);
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
             });

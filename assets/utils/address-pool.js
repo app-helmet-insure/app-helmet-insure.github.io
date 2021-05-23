@@ -263,6 +263,10 @@ export const getTokenName = (address) => {
             return 'LEV';
         case '0x7e396bfc8a2f84748701167c2d622f041a1d7a17':
             return 'WMASS';
+        case '0x464863745ed3af8b9f8871f1082211c55f8f884d':
+            return 'CTT';
+        case '0x422e3af98bc1de5a1838be31a56f75db4ad43730':
+            return 'COW';
         default:
             return '--';
     }

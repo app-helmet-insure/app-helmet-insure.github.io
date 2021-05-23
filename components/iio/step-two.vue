@@ -106,11 +106,6 @@ export default {
     this.About = Information[name];
     this.$bus.$on("CLAIM_LOADING_IIO_HELMETBNB_POOL", (data) => {
       this.claimLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_IIO_HELMETBNB_POOL", () => {
-      this.getBalance();
-    });
-    this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
     });
     this.getRewardTime();
@@ -170,6 +165,7 @@ export default {
       }
     },
     async getBalance() {
+      console.log(1);
       let Name = this.iioType.toUpperCase();
       let reward_name = `IIO_HELMETBNB_${Name}`;
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
@@ -204,7 +200,6 @@ export default {
       if (this.claimLoading) {
         return;
       }
-      console.log(this.About);
       this.claimLoading = true;
       let Name = this.iioType.toUpperCase();
       let reward_name = `IIO_HELMETBNB_${Name}`;

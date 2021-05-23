@@ -357,7 +357,9 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 5;
-            item.active_page = 1;
+            if (item.iio_name != "WMASS") {
+              item.active_page = 1;
+            }
           }
         }
       });

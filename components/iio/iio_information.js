@@ -323,7 +323,7 @@ export default {
         Decimals: 18,
         ActivePrice: 30,
         ProjcetInformation: {
-            ProjectName: 'CTT',
+            ProjectName: 'CryptoTycoon',
             Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
             Activating: 'May. 25th 21:00 SGT',
             ActivatePeriod: '24hours',

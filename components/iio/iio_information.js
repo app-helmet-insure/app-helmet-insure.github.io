@@ -1,3 +1,6 @@
+//  Time1: ==> mining open
+//  Time2: ==> active start
+//  Time3: ==> active end
 export default {
     chainswap: {
         name: 'ChainSwap',
@@ -373,11 +376,11 @@ export default {
         name: 'COW',
         Token: 'COW',
         Time1: 'May.23rd 21:00', //mining open
-        Time2: 'May.25th 21:00', //active start
-        Time3: 'May.26th 21:00', //active end
+        Time2: 'May.25th 22:00', //active start
+        Time3: 'May.26th 22:00', //active end
         Time1UTC: '2021/05/23 21:00 UTC+8',
-        Time2UTC: '2021/05/25 21:00 UTC+8',
-        Time3UTC: '2021/05/26 21:00 UTC+8',
+        Time2UTC: '2021/05/25 22:00 UTC+8',
+        Time3UTC: '2021/05/26 22:00 UTC+8',
         Collateral: '0x7e396BfC8a2f84748701167c2d622F041A1D7a17',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         LongAdress: '0x1A95207f3e9E42E9d49C90D9E69d95Bb3Ab74A48',
@@ -386,7 +389,7 @@ export default {
         ProjcetInformation: {
             ProjectName: 'COW',
             Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
-            Activating: 'May. 26th 21:00 SGT',
+            Activating: 'May. 25th 22:00 SGT - May. 26th 22:00 SGT',
             ActivatePeriod: '24hours',
             ActivatingxPrice: '1COW=0.5BUSD',
             TicketPrice: '1 Helmet',

@@ -325,7 +325,7 @@ export default {
         ProjcetInformation: {
             ProjectName: 'CTT',
             Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
-            Activating: 'May. 26th 21:00 SGT',
+            Activating: 'May. 25th 21:00 SGT',
             ActivatePeriod: '24hours',
             ActivatingxPrice: '1CTT=30BUSD',
             TicketPrice: '1 Helmet',
@@ -334,7 +334,7 @@ export default {
             TokenName: 'CTT',
             Address: '0x464863745ed3af8b9f8871f1082211c55f8f884d',
             Supply: '1,500',
-            TotalSupply: '100,000',
+            TotalSupply: '1,000,000',
         },
         About: [
             'CryptoTycoon is a monopoly game built on Binance Smart Chain (BSC). To participate in-game mining, players can spend BNB, BUSD, USDT and other BSC tokens in the game to get a chance to roll the dice and build different types of buildings on different grids.',

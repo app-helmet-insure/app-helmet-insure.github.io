@@ -144,4 +144,18 @@ export default {
         'iWMASS Distribution: May 20th 21:00 SGT — May 22nd 21:00 SGT',
         'Activate/swap iWMASS period: May 22nd 21:00 SGT — May 23rd 21:00 SGT.',
     ],
+    iCOW: [
+        'iCOW is the certificate to swap/activate for COW.',
+        'Only users who hold iCOW could get COW during May 25th 22:00 SGT — May 26th 22:00 SGT.(iCOW cannot be activated before/after that time period)',
+        'iCOW activate/swap formula: 1 iCOW+0.5BUSD  1 COW',
+        'The lifetime of iCOW is from May 25th 22:00 SGT — May 26th 22:00 SGT. ',
+        'Please be sure to activate iCOW within the ruled period.',
+    ],
+    iCTT: [
+        'iCTT is the certificate to swap/activate for CTT. ',
+        'Only users who hold iCTT could get CTT during May 25th 21:00 SGT — May 26th 21:00 SGT.(iCTT cannot be activated before/after that time period)',
+        'iCTT activate/swap formula: 1 iCTT+30BUSD 1 CTT',
+        'The lifetime of iCTT is from May 25th 21:00 SGT — May 26th 21:00 SGT. ',
+        'Please be sure to activate the iCTT within the validity period.',
+    ],
 };

@@ -1,3 +1,6 @@
+//  Time1: ==> mining open
+//  Time2: ==> active start
+//  Time3: ==> active end
 export default {
     chainswap: {
         name: 'ChainSwap',
@@ -302,6 +305,133 @@ export default {
             //     type: 'Medium',
             //     link: 'https://westarter.medium.com/',
             //     show: 'https://westarter.medium.com/',
+            // },
+        },
+    },
+    cryptotycoon: {
+        name: 'CryptoTycoon',
+        Token: 'CTT',
+        Time1: 'May.23rd 21:00', //mining open
+        Time2: 'May.25th 21:00', //active start
+        Time3: 'May.26th 21:00', //active end
+        Time1UTC: '2021/05/23 21:00 UTC+8',
+        Time2UTC: '2021/05/25 21:00 UTC+8',
+        Time3UTC: '2021/05/26 21:00 UTC+8',
+        Collateral: '0x464863745ed3af8b9f8871f1082211c55f8f884d',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x364E9C57161BA03fcA5b1561FD7f388953FeBd94',
+        Decimals: 18,
+        ActivePrice: 30,
+        ProjcetInformation: {
+            ProjectName: 'CryptoTycoon',
+            Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
+            Activating: 'May. 25th 21:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1CTT=30BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'CTT',
+            Address: '0x464863745ed3af8b9f8871f1082211c55f8f884d',
+            Supply: '1,500',
+            TotalSupply: '1,000,000',
+        },
+        About: [
+            'CryptoTycoon is a monopoly game built on Binance Smart Chain (BSC). To participate in-game mining, players can spend BNB, BUSD, USDT and other BSC tokens in the game to get a chance to roll the dice and build different types of buildings on different grids.',
+            'In order to ensure the game has a good deflation and dividend model, once a house or shop is constructed and cannot pay taxes on time, it will be removed. The total supply of CTT is 1 million, on-chain transfers will burn 5% of its transaction amount.',
+        ],
+        TokenDistribution: [
+            'Game operation: 750,000 CTT tokens (75%)',
+            'Institution investments: 30,000 CTT tokens (3%)',
+            'Community investors: 30,000 CTT tokens (3%)',
+            'IDO/IFO/IIO: 40,000 CTT tokens (4%).',
+            'Contributors: 50,000 CTT tokens (5%)',
+            'Active airdrops: 50,000 CTT tokens (5%)',
+            'Market making reserve: 50,000 CTT tokens (5%)',
+        ],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://cryptotycoon.finance/',
+                show: 'cryptotycoon.finance',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/CryptoTycoon_GP',
+                show: 'https://twitter.com/CryptoTycoon_GP',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/CryptoTycoonCTT',
+                show: 'https://t.me/CryptoTycoonCTT',
+            },
+            Medium: {
+                type: 'Medium',
+                link: 'https://cryptotycoon-gp.medium.com/',
+                show: 'https://cryptotycoon-gp.medium.com/',
+            },
+        },
+    },
+    coinwind: {
+        name: 'CoinWind',
+        Token: 'COW',
+        Time1: 'May.23rd 21:00', //mining open
+        Time2: 'May.25th 22:00', //active start
+        Time3: 'May.26th 22:00', //active end
+        Time1UTC: '2021/05/23 21:00 UTC+8',
+        Time2UTC: '2021/05/25 22:00 UTC+8',
+        Time3UTC: '2021/05/26 22:00 UTC+8',
+        Collateral: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x6a79dd81c693476cf7194B4D33fEB94396CCe5Da',
+        Decimals: 18,
+        ActivePrice: 0.5,
+        ProjcetInformation: {
+            ProjectName: 'COW',
+            Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
+            Activating: 'May. 25th 22:00 SGT - May. 26th 22:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1COW=0.5BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'COW',
+            Address: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+            Supply: '100,000',
+            TotalSupply: '100,000,000',
+        },
+        About: [
+            "CoinWind is a DeFi smart mining financial platform, which automatically matches pledged tokens to pairs through contracts, uses a minimum hedging free losing strategy to maximize users' income. Therefore, CoinWind effectively solves users' low single-token mining income, large LP mining lose, and other problems.",
+            'CoinWind aims to build a DeFi digital asset bank, launching a product that combines high-yield, safety, and reliability. CoinWind will manage and transfer different tokens deposited by users into different pools, then manage the funds of a certain token pool to participate in different liquidity mining according to different strategies. At last, make higher benefits for all users. CoinWind can effectively reduce the impermanence loss in liquidity mining through a combination strategy.',
+        ],
+        TokenDistribution: [
+            'Staking Rewards 65%',
+            'Team 15%',
+            'Investors 10%',
+            'Fundation 4%',
+            'IMO 3%',
+            'Marketing 2%',
+        ],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://www.coinwind.com',
+                show: 'www.coinwind.com',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/coinwind_com',
+                show: 'https://twitter.com/coinwind_com',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/CoinWind',
+                show: 'https://t.me/CoinWind',
+            },
+            // Medium: {
+            //     type: 'Medium',
+            //     link: 'https://cryptotycoon-gp.medium.com/',
+            //     show: 'https://cryptotycoon-gp.medium.com/',
             // },
         },
     },

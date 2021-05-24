@@ -4,7 +4,10 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line finshed_pc" v-if="item.earn == 'QFEI'">
+      <div
+        class="finshed_line finshed_pc"
+        v-if="item.earn == 'bhelmet_xburger'"
+      >
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -238,7 +241,10 @@
       </div>
     </div>
     <div v-for="item in miningList" :key="item.earn + '1'">
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'QFEI'">
+      <div
+        class="finshed_line finshed_h5"
+        v-if="item.earn == 'bhelmet_xburger'"
+      >
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -542,9 +548,9 @@ export default {
         },
         bhelmet_dodo: {
           openDate: this.getMiningTime("2021/05/10 12:00"),
-          dueDate: this.getRemainTime("2021/06/15 00:00"),
+          dueDate: this.getRemainTime("2021/05/24 00:00"),
           started: new Date("2021/05/10 12:00") * 1,
-          expired: new Date("2021/06/15 00:00") * 1,
+          expired: new Date("2021/05/24 00:00") * 1,
         },
         helmet: {
           dueDate: "Ongoing",
@@ -741,18 +747,6 @@ export default {
           onePager: false,
         },
         {
-          miningName: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
-          earn: "bhelmet_xburger",
-          earnImg: true,
-          earnNum: "two",
-          combo: true,
-          flash: false,
-          info: true,
-          earnName: "APR",
-          compound: false,
-          onePager: "hxBURGER",
-        },
-        {
           miningName: "HELMET-BNB&nbsp;MLP",
           earnNum: "two",
           earn: "mdx",
@@ -764,6 +758,19 @@ export default {
           earnName: "APR",
           onePager: false,
         },
+        {
+          miningName: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
+          earn: "bhelmet_xburger",
+          earnImg: true,
+          earnNum: "two",
+          combo: true,
+          flash: false,
+          info: true,
+          earnName: "APR",
+          compound: false,
+          onePager: "hxBURGER",
+        },
+
         {
           miningName: "FEI(BSC)&nbsp;POOL",
           earn: "QFEI",

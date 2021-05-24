@@ -2,119 +2,125 @@
   <div class="iio_wrap">
     <div class="iio_project">
       <div
+        class="iio_item_wrap"
         v-for="(item, index) in iioData"
         :key="item.iio_name"
-        class="iio_item"
-        :style="`--background:${item.background}; --animation_bg:${
-          item.status != 'finished' && item.open
-            ? 'linear-gradient(45deg,red,#ffaa2b 10%,#f3ff45 20%,#84ff7f 30%,#7bfdfb 40%,#5ee7fc 50%,#7fbbff 60%,#af88ff 70%,#d973fd 80%,#ff6fec 90%,red);'
-            : ''
-        }`"
       >
-        <img
-          v-if="item.open"
-          :src="require(`~/assets/img/iio/${item.status || 'finished'}.png`)"
-          alt=""
-          class="status"
-        />
-        <template v-if="item.coming">
+        <div
+          class="iio_item"
+          :style="`--background:${item.background}; --animation_bg:${
+            item.status != 'finished' && item.open
+              ? 'linear-gradient(45deg,red,#ffaa2b 10%,#f3ff45 20%,#84ff7f 30%,#7bfdfb 40%,#5ee7fc 50%,#7fbbff 60%,#af88ff 70%,#d973fd 80%,#ff6fec 90%,red);'
+              : ''
+          }`"
+        >
           <img
-            class="coming_img"
+            v-if="item.open"
+            :src="require(`~/assets/img/iio/${item.status || 'finished'}.png`)"
+            alt=""
+            class="status"
+          />
+          <template v-if="item.coming">
+            <img
+              class="coming_img"
+              :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
+              alt=""
+            />
+            <h3>
+              {{ item.iio_name }}<span>({{ item.swapUtil }})</span>
+            </h3>
+            <a :href="`https://${item.iio_webSite}`" target="_blank"
+              ><span>{{ item.iio_webSite }}</span
+              ><i></i
+            ></a>
+            <div class="text" v-if="item.active_page === 1">
+              <p>
+                <span>{{ $t("IIO.ExpiredText1") }}</span>
+                <span>{{ item.expired_burnt }}</span>
+              </p>
+              <p>
+                <span>{{ $t("IIO.ExpiredText2") }}</span>
+                <span>${{ item.expired_stake }}</span>
+              </p>
+              <p>
+                <span>{{ $t("IIO.ExpiredText3") }}</span>
+                <span>{{ item.expired_premium }} </span>
+              </p>
+              <p>
+                <span>{{ $t("IIO.ExpiredText4") }}</span>
+                <span>{{ item.expired_activating }}</span>
+              </p>
+            </div>
+            <div class="text" v-if="item.active_page === 2">
+              <p>
+                <span>{{
+                  $t("IIO.HomeText1", { name: `i${item.swapUtil}` })
+                }}</span
+                ><span>{{ item.showStart }}</span>
+              </p>
+              <p>
+                <span>{{
+                  $t("IIO.HomeText2", { name: `i${item.swapUtil}` })
+                }}</span
+                ><span>{{ item.showEnd }}</span>
+              </p>
+              <p>
+                <span>{{ $t("IIO.HomeText3") }}</span
+                ><span>{{ item.swapVolume }} {{ item.swapUtil }}</span>
+              </p>
+              <p>
+                <span>{{ $t("IIO.HomeText4") }}</span
+                ><span
+                  >1 {{ item.swapUtil }} = {{ item.stakeShare }}
+                  {{ item.stakeUtil }}</span
+                >
+              </p>
+            </div>
+
+            <button
+              v-if="item.status !== 'finished'"
+              @click="toDetails(index)"
+              :style="
+                item.status == 'finished' || !item.enterbutton
+                  ? 'background: #D5D5DB;pointer-events: none'
+                  : ''
+              "
+            >
+              {{ item.status == "finished" ? "Finished" : "Enter Pool" }}
+            </button>
+            <div v-else class="button_tab">
+              <span
+                @click="item.active_page = 1"
+                :class="item.active_page == 1 ? 'active_page' : ''"
+              >
+                <i></i>
+              </span>
+              <span
+                @click="item.active_page = 2"
+                :class="item.active_page == 2 ? 'active_page' : ''"
+              >
+                <i></i>
+              </span>
+            </div>
+          </template>
+          <img
+            class="soon_img"
+            v-if="!item.coming"
             :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
             alt=""
           />
-          <h3>
-            {{ item.iio_name }}<span>({{ item.swapUtil }})</span>
-          </h3>
-          <a :href="`https://${item.iio_webSite}`" target="_blank"
-            ><span>{{ item.iio_webSite }}</span
-            ><i></i
-          ></a>
-          <div class="text" v-if="item.active_page === 1">
-            <p>
-              <span>{{ $t("IIO.ExpiredText1") }}</span>
-              <span>{{ item.expired_burnt }}</span>
-            </p>
-            <p>
-              <span>{{ $t("IIO.ExpiredText2") }}</span>
-              <span>${{ item.expired_stake }}</span>
-            </p>
-            <p>
-              <span>{{ $t("IIO.ExpiredText3") }}</span>
-              <span>{{ item.expired_premium }} </span>
-            </p>
-            <p>
-              <span>{{ $t("IIO.ExpiredText4") }}</span>
-              <span>{{ item.expired_activating }}</span>
-            </p>
-          </div>
-          <div class="text" v-if="item.active_page === 2">
-            <p>
-              <span>{{
-                $t("IIO.HomeText1", { name: `i${item.swapUtil}` })
-              }}</span
-              ><span>{{ item.showStart }}</span>
-            </p>
-            <p>
-              <span>{{
-                $t("IIO.HomeText2", { name: `i${item.swapUtil}` })
-              }}</span
-              ><span>{{ item.showEnd }}</span>
-            </p>
-            <p>
-              <span>{{ $t("IIO.HomeText3") }}</span
-              ><span>{{ item.swapVolume }} {{ item.swapUtil }}</span>
-            </p>
-            <p>
-              <span>{{ $t("IIO.HomeText4") }}</span
-              ><span
-                >1 {{ item.swapUtil }} = {{ item.stakeShare }}
-                {{ item.stakeUtil }}</span
-              >
-            </p>
-          </div>
-
-          <button
-            v-if="item.status !== 'finished'"
-            @click="toDetails(index)"
-            :style="
-              item.status == 'finished' || !item.enterbutton
-                ? 'background: #D5D5DB;pointer-events: none'
-                : ''
-            "
-          >
-            {{ item.status == "finished" ? "Finished" : "Enter Pool" }}
-          </button>
-          <div v-else class="button_tab">
-            <span
-              @click="item.active_page = 1"
-              :class="item.active_page == 1 ? 'active_page' : ''"
-            >
-              <i></i>
-            </span>
-            <span
-              @click="item.active_page = 2"
-              :class="item.active_page == 2 ? 'active_page' : ''"
-            >
-              <i></i>
-            </span>
-          </div>
-        </template>
-        <img
-          class="soon_img"
-          v-if="!item.coming"
-          :src="require(`~/assets/img/iio/${item.iio_img}.png`)"
-          alt=""
-        />
+        </div>
       </div>
-      <div class="apply_iio">
-        <div class="add_iio"></div>
-        <p>Want to launch your own IIO with Helmet?</p>
-        <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSduUhQJnmmyukVA1jMGmFwnn4s_B00uq1GmLyd0CKARvJ6w0Q/viewform"
-          target="_blank"
-          >Apply Now</a
-        >
+      <div class="iio_item_wrap">
+        <div class="apply_iio">
+          <div class="add_iio"></div>
+          <p>Want to launch your own IIO with Helmet?</p>
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSduUhQJnmmyukVA1jMGmFwnn4s_B00uq1GmLyd0CKARvJ6w0Q/viewform"
+            target="_blank"
+            >Apply Now</a
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -238,18 +244,56 @@ export default {
           sort: 0,
         },
         {
-          iio_name: "2",
-          iio_img: "iio2",
-          coming: false,
-          open: false,
+          iio_name: "CryptoTycoon",
+          iio_img: "iio_ctt",
+          iio_webSite: "cryptotycoon.finance",
+          coming: true,
+          background: "#FA6400",
+          swapVolume: "1,500",
+          swapUtil: "CTT",
+          stakeUtil: "BUSD",
+          stakeShare: 30,
+          showStart: "May. 23rd 21:00 SGT",
+          showEnd: "May. 25th 21:00 SGT",
+          warnupTimeUTC: "2021/05/21 21:00 UTC+8",
+          distributingTimeUTC: "2021/05/23 21:00 UTC+8", //showStart
+          activatingTimeUTC: "2021/05/25 21:00 UTC+8", //showEnd
+          finishedTimeUTC: "2021/05/26 21:00 UTC+8",
+          link: "https://cryptotycoon.finance/",
+          enterbutton: true,
+          open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "0",
+          expired_stake: "0",
+          expired_premium: "0",
+          expired_activating: "0",
         },
         {
-          iio_name: "5",
-          iio_img: "iio5",
-          coming: false,
-          open: false,
+          iio_name: "CoinWind",
+          iio_img: "iio_cow",
+          iio_webSite: "www.coinwind.com",
+          coming: true,
+          background: "#08063D",
+          swapVolume: "100,000",
+          swapUtil: "COW",
+          stakeUtil: "BUSD",
+          stakeShare: 0.5,
+          showStart: "May. 23rd 21:00 SGT",
+          showEnd: "May. 25th 22:00 SGT",
+          warnupTimeUTC: "2021/05/21 21:00 UTC+8",
+          distributingTimeUTC: "2021/05/23 21:00 UTC+8", //showStart
+          activatingTimeUTC: "2021/05/25 22:00 UTC+8", //showEnd
+          finishedTimeUTC: "2021/05/26 22:00 UTC+8",
+          link: "https://www.coinwind.com",
+          enterbutton: true,
+          open: true,
           sort: 0,
+          active_page: 2,
+          expired_burnt: "0",
+          expired_stake: "0",
+          expired_premium: "0",
+          expired_activating: "0",
         },
         {
           iio_name: "WMASS",
@@ -272,10 +316,10 @@ export default {
           open: true,
           sort: 0,
           active_page: 2,
-          expired_burnt: "0",
-          expired_stake: "0",
-          expired_premium: "0",
-          expired_activating: "0",
+          expired_burnt: "484",
+          expired_stake: "5,468,799.20",
+          expired_premium: "86.17%",
+          expired_activating: "25.15%",
         },
       ],
     };
@@ -294,26 +338,31 @@ export default {
       let data = newValue || this.iioData;
       let nowTime = moment.now();
       data.forEach((item) => {
+        item.sort = 4;
         if (item.open) {
           let warnup = new Date(moment(item.warnupTimeUTC)) * 1;
           let distributing = new Date(moment(item.distributingTimeUTC)) * 1;
           let activating = new Date(moment(item.activatingTimeUTC)) * 1;
           let finished = new Date(moment(item.finishedTimeUTC)) * 1;
-          if (nowTime < warnup) {
-            item.status = "warmup";
-          }
-          if (nowTime > warnup && nowTime < distributing) {
-            item.status = "warmup";
-          }
           if (nowTime > distributing && nowTime < activating) {
             item.status = "distributing";
+            item.sort = 1;
           }
           if (nowTime > activating && nowTime < finished) {
             item.status = "activating";
+            item.sort = 2;
+          }
+          if (nowTime < warnup) {
+            item.status = "warmup";
+            item.sort = 3;
+          }
+          if (nowTime > warnup && nowTime < distributing) {
+            item.status = "warmup";
+            item.sort = 3;
           }
           if (nowTime > finished) {
             item.status = "finished";
-            item.sort = 1;
+            item.sort = 5;
             item.active_page = 1;
           }
         }
@@ -334,10 +383,29 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.iio_item_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (min-width: 750px) and (max-width: 1860px) {
+  .iio_item_wrap {
+    width: 33.3%;
+  }
+}
+@media screen and (min-width: 1860px) {
+  .iio_item_wrap {
+    width: 25%;
+  }
+}
+@media screen and (min-width: 2260px) {
+  .iio_item_wrap {
+    width: 20%;
+  }
+}
 @media screen and (min-width: 750px) {
   .iio_project {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
     .iio_item {
       width: 320px;

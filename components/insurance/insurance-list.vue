@@ -313,10 +313,6 @@ export default {
     async InitInsuanceData() {
       let InsuanceData = [
         {
-          InsuranceType: "COIN(BSC)",
-          InsuranceImg: "COIN",
-        },
-        {
           InsuranceType: "SHIB",
           InsuranceImg: "SHIB",
         },
@@ -351,6 +347,10 @@ export default {
         {
           InsuranceType: "MATH",
           InsuranceImg: "MATH",
+        },
+        {
+          InsuranceType: "COIN(BSC)",
+          InsuranceImg: "COIN",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];

@@ -208,9 +208,18 @@ export default {
       // 当前保险的全部保单
       let callInsuranceList;
       if (sell) {
-        callInsuranceList = sell.filter(
-          (item) => item.longInfo._collateral.toLowerCase() == coinAddress
-        );
+        if (this.activeInsurance != "WBNB") {
+          callInsuranceList = sell.filter(
+            (item) => item.longInfo._collateral.toLowerCase() == coinAddress
+          );
+        } else {
+          callInsuranceList = sell.filter(
+            (item) =>
+              item.longInfo._collateral.toLowerCase() == coinAddress &&
+              item.longInfo._underlying.toLowerCase() ==
+                "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+          );
+        }
       }
       // 数据处理
       for (let i = 0; i < callInsuranceList.length; i++) {
@@ -305,7 +314,6 @@ export default {
         showType: getTokenName(data._collateral),
       };
       1;
-      console.log(datas);
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",

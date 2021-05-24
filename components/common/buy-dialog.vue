@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      buyDialog: true,
+      buyDialog: false,
       TokenList: tokenList.tokens,
       showTokenList: false,
       activeImg:

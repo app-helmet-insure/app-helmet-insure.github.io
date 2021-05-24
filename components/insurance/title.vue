@@ -1,6 +1,12 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide cow">
+        <div></div>
+      </div>
+      <div class="swiper-slide ctt">
+        <div></div>
+      </div>
       <div class="swiper-slide mass">
         <div></div>
       </div>
@@ -8,13 +14,6 @@
         <div></div>
       </div>
       <div class="swiper-slide hfor">
-        <div></div>
-      </div>
-      <div class="swiper-slide nft">
-        <div></div>
-      </div>
-
-      <div class="swiper-slide xburger">
         <div></div>
       </div>
     </div>
@@ -145,9 +144,9 @@ export default {
       }
     }
     .nft {
-      background: #7746b5;
+      background: #412f63;
       > div {
-        background-image: url("../../assets/img/banner/nft_web.png");
+        background-image: url("../../assets/img/banner/ctt_web.png");
       }
     }
 
@@ -157,11 +156,16 @@ export default {
         background-image: url("../../assets/img/banner/hfor_web.png");
       }
     }
-
-    .xburger {
-      background: #ff9600;
+    .ctt {
+      background: #412f63;
       > div {
-        background-image: url("../../assets/img/banner/Xburger_web.png");
+        background-image: url("../../assets/img/banner/ctt_web.png");
+      }
+    }
+    .cow {
+      background: #367bee;
+      > div {
+        background-image: url("../../assets/img/banner/cow_pc.png");
       }
     }
     .imgbanner {
@@ -192,10 +196,10 @@ export default {
         background-position: center;
       }
     }
-    .nft {
-      background: #7746b5;
+    .ctt {
+      background: #412f63;
       > div {
-        background-image: url("../../assets/img/banner/nft_h5.png");
+        background-image: url("../../assets/img/banner/ctt_h5.png");
       }
     }
     .mass {
@@ -217,10 +221,10 @@ export default {
         background-image: url("../../assets/img/banner/hfor_h5.png");
       }
     }
-    .xburger {
-      background: #ff9600;
+    .cow {
+      background: #367bee;
       > div {
-        background-image: url("../../assets/img/banner/Xburger_h5.png");
+        background-image: url("../../assets/img/banner/cow_h5.png");
       }
     }
     .imgbanner {

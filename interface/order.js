@@ -651,7 +651,9 @@ export const onExercise = async (data, callBack, flag) => {
         order = await TokenOrder(data.long);
         long = await expERC20(data.long);
         if (data.unit) {
-            value = fixD(data.vol * Math.pow(10, data.unit));
+            value = BigNumber(
+                (data.vol * Math.pow(10, data.unit)).toString()
+            ).toFixed();
         } else {
             value = toWei(data.vol, data.token);
         }

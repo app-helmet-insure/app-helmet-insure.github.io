@@ -654,13 +654,11 @@ export const onExercise = async (data, callBack, flag) => {
         if (data.unit) {
             value = BigNumber(
                 (data.vol * Math.pow(10, data.unit)).toString()
-            ).toFixed();
+            ).toFixed(18);
         } else {
-            value = BigNumber(
-                (data.vol * Math.pow(10, 18)).toString()
-            ).toFixed();
+            value = toWei(fixD(data.vol, 12), data.token);
         }
-        console.log(data.vol);
+
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(

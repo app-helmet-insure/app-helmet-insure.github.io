@@ -10,6 +10,8 @@ import iio_abi from '~/abi/iio_abi.json';
 import nft_abi from '~/abi/nft_abi.json';
 import default_nft_abi from '~/abi/default_nft_abi.json';
 import nft_user_abi from '~/abi/nft_user_abi.json';
+import IPancakePair from '~/abi/IPancakePair.json';
+import IPancakeSwap from '~/abi/IPancakeSwap.json';
 import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 
 export const getCurrentAccount = async () => {
@@ -102,4 +104,10 @@ export const NFTContract = async (address) => {
 };
 export const NFTusers = async (address) => {
     return await new window.WEB3.eth.Contract(nft_user_abi.abi, address);
+};
+export const PairContract = async (address) => {
+    return await new window.WEB3.eth.Contract(IPancakePair.abi, address);
+};
+export const SwapContract = async (address) => {
+    return await new window.WEB3.eth.Contract(IPancakeSwap, address);
 };

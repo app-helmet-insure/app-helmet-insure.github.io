@@ -15,6 +15,7 @@ import bus from '~/assets/js/bus';
 import Notification from '~/components/common/Notification';
 import Message from '~/components/common/Message';
 import { getExerciseList } from '~/interface/event.js';
+import BigNumber from 'bignumber.js';
 const netObj = {
     1: '',
     3: 'ropsten.',
@@ -655,8 +656,11 @@ export const onExercise = async (data, callBack, flag) => {
                 (data.vol * Math.pow(10, data.unit)).toString()
             ).toFixed();
         } else {
-            value = toWei(data.vol, data.token);
+            value = BigNumber(
+                (data.vol * Math.pow(10, 18)).toString()
+            ).toFixed();
         }
+        console.log(data.vol);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(

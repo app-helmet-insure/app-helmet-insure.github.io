@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide paul">
+        <div></div>
+      </div>
       <div class="swiper-slide cow">
         <div></div>
       </div>
@@ -131,6 +134,12 @@ export default {
         background-position: center;
       }
     }
+    .paul {
+      background: #142632;
+      > div {
+        background-image: url("../../assets/img/banner/paul_web.png");
+      }
+    }
     .mass {
       background: #d26c40;
       > div {
@@ -194,6 +203,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .paul {
+      background: #142632;
+      > div {
+        background-image: url("../../assets/img/banner/paul_h5.png");
       }
     }
     .ctt {

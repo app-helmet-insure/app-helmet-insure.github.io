@@ -123,5 +123,17 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
 export const SwapToken = async (amount) => {
     let RouterAdress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
     const PairContracts = await PairContract(RouterAdress);
-    Pari
+    const account = window.CURRENTADDRESS;
+
+    let data = {
+        swapExactETHForTokens: amount,
+        amountOutMin: amount,
+        path: [],
+        to: account,
+        deadline: amount,
+    };
+    PairContracts.methods
+        .swapExactETHForTokens()
+        .send()
+        .on();
 };

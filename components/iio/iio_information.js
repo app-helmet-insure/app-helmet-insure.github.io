@@ -435,4 +435,64 @@ export default {
             // },
         },
     },
+    paulprotocol: {
+        name: 'CoinWind',
+        Token: 'PAUL',
+        Time1: 'May.27TH 21:00', //mining open
+        Time2: 'May.29th 21:00', //active start
+        Time3: 'May.30th 21:00', //active end
+        Time1UTC: '2021/05/27 21:00 UTC+8',
+        Time2UTC: '2021/05/29 21:00 UTC+8',
+        Time3UTC: '2021/05/30 21:00 UTC+8',
+        Collateral: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x6a79dd81c693476cf7194B4D33fEB94396CCe5Da',
+        Decimals: 18,
+        ActivePrice: 0.002,
+        ProjcetInformation: {
+            ProjectName: 'PAUL',
+            Distributing: 'May. 27th 21:00 SGT - May. 29th 21:00 SGT',
+            Activating: 'May. 30th 21:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1COW=0.002BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'PAUL',
+            Address: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+            Supply: '100,000,000',
+            TotalSupply: '10,000,000,000',
+        },
+        About: [
+            'We designed our foundational architecture based on the current cross-chain networks. It has introduced and modified based on the quoting system used by global top organizations in high-frequency automatic trading for single benchmark in multiple trading scenarios. Meanwhile, it uses pledged asset quoting and arbitrage validation to build its real-time quoting validation mechanism. In extreme situations, a relatively smooth price curve can be generated to predict the price fluctuation within small timeframe through statistical hypothesis-testing. In a market cycle, the quotes achieved in this way have higher practical value and effectiveness compared with existing oracle solutions, which can be better referenced by different Dapps. In terms of what kind of market data can be considered to be authentic and valid, we believe that only the market can determine the authenticity of the data. If a quote can be easily accepted by arbitragers from an off-chain centralized market, that means the current price error is still significant and the quote should not be adopted; otherwise the effectiveness of the data can be totally proven.',
+        ],
+        TokenDistribution: [
+            'A:Public Sale 5%',
+            'B:Liquidity Mining 30%',
+            'C:Quoter Rewards 55%',
+            'D:Community Governance Fund 10%',
+        ],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://www.paulprotocol.io',
+                show: 'www.paulprotocol.io',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/PaulProtocolV1',
+                show: 'https://twitter.com/PaulProtocolV1',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 'https://t.me/PaulProtocolV1Community',
+                show: 'https://t.me/PaulProtocolV1Community',
+            },
+            Medium: {
+                type: 'Medium',
+                link: 'https://paulprotocol.medium.com',
+                show: 'https://paulprotocol.medium.com',
+            },
+        },
+    },
 };

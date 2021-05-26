@@ -4,10 +4,7 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div
-        class="finshed_line finshed_pc"
-        v-if="item.earn == 'bhelmet_xburger'"
-      >
+      <div class="finshed_line finshed_pc" v-if="item.earn == 'bhelmet_dodo'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -241,10 +238,7 @@
       </div>
     </div>
     <div v-for="item in miningList" :key="item.earn + '1'">
-      <div
-        class="finshed_line finshed_h5"
-        v-if="item.earn == 'bhelmet_xburger'"
-      >
+      <div class="finshed_line finshed_h5" v-if="item.earn == 'bhelmet_dodo'">
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -721,17 +715,6 @@ export default {
           earnName: "APR",
           onePager: false,
         },
-
-        {
-          miningName: "HELMET-BNB&nbsp;DLP",
-          earnNum: "two",
-          earn: "bhelmet_dodo",
-          earnImg: true,
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
-        },
         {
           miningName: "HELMET&nbsp;POOL",
           earn: "helmet",
@@ -754,6 +737,16 @@ export default {
           dueDate: "Ongoing",
           openDate: "Mining",
           combo: false,
+          info: true,
+          earnName: "APR",
+          onePager: false,
+        },
+        {
+          miningName: "HELMET-BNB&nbsp;DLP",
+          earnNum: "two",
+          earn: "bhelmet_dodo",
+          earnImg: true,
+          combo: true,
           info: true,
           earnName: "APR",
           onePager: false,

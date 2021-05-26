@@ -135,7 +135,7 @@ export const toDeposite = async (type, data, flag, callBack) => {
     let num = data.amount;
     let cwei = getWei(type);
     let fix = cwei === 'lovelace' ? 6 : 18;
-    amount = window.WEB3.utils.toWei(fixD(String(amount), fix), cwei);
+    amount = toWei(amount);
     let adress = type;
     let adressLPT = type;
     if (type.indexOf('0x') === -1) {
@@ -146,7 +146,6 @@ export const toDeposite = async (type, data, flag, callBack) => {
         return;
     }
     let result;
-    console.log(amount);
     bus.$emit(`DEPOSITE_LOADING_${type}`, { status: true });
     try {
         const Contract = await expERC20(adressLPT);
@@ -228,7 +227,7 @@ export const toWithdraw = async (type, data, flag, callBack) => {
     let num = data.amount;
     let cwei = getWei(type);
     let fix = cwei === 'lovelace' ? 6 : 18;
-    amount = window.WEB3.utils.toWei(fixD(String(amount), fix), cwei);
+    amount = toWei(amount);
     let adress = type;
     let adressLPT = type;
     if (type.indexOf('0x') === -1) {

@@ -45,11 +45,13 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                 if (res) {
                     SwapContracts.methods
                         .getAmountOut(
-                            BigNumber(
-                                (
-                                    amount * Math.pow(10, token1.decimals)
-                                ).toString()
-                            ).toFixed(),
+                            token1.decimals == 18
+                                ? toWei(amount)
+                                : BigNumber(
+                                      (
+                                          amount * Math.pow(10, token1.decimals)
+                                      ).toString()
+                                  ).toFixed(),
                             res.reserve1,
                             res.reserve0
                         )
@@ -69,6 +71,7 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                 }
             });
     } catch (error) {
+        console.log(error, '###');
         const PairAdress = Pair.getAddress(TOKEN1, BNBTOKEN);
         const PairContracts = await PairContract(PairAdress);
         const SwapContracts = await SwapContract(RouterAdress);
@@ -99,6 +102,13 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                         )
                         .call()
                         .then((res1) => {
+                            console.log(
+                                BigNumber(
+                                    (
+                                        res1 / Math.pow(10, BNBTOKEN.decimals)
+                                    ).toString()
+                                ).toFixed(18)
+                            );
                             let amount = BigNumber(
                                 (
                                     res1 / Math.pow(10, BNBTOKEN.decimals)
@@ -123,6 +133,7 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                                     symbol: 'Helmet',
                                 },
                                 (result) => {
+                                    console.log(result);
                                     callback({
                                         amount: result.amount,
                                         router: true,

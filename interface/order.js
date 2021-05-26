@@ -332,10 +332,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
     } catch (error) {}
 };
 
-
-
-
-
 export const getExercise = async (buyer) => {
     let list = await getExerciseList();
     list = list.filter((item) => buyer == item.returnValues.buyer);

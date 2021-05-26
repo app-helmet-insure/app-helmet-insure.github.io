@@ -57,7 +57,8 @@ export const Payaso = async () => {
 
 // 期权工厂合约, 用于创建期权实例合约，铸造期权通证，销毁期权通证，并实现了行权和结算入口。
 export const Factory = async (adress) => {
-    return await new window.WEB3.eth.Contract(
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(
         factory_abi.abi,
         getContract('FACTORY', window.chainID)
     );
@@ -65,7 +66,8 @@ export const Factory = async (adress) => {
 
 // 期权市场，卖家挂单，买家吃单，并实现了买家行权和弃权入口。
 export const Order = async () => {
-    return await new window.WEB3.eth.Contract(
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(
         order_abi.abi,
         getContract('ORDER', window.chainID)
     );
@@ -88,26 +90,34 @@ export const TokenExpERC20 = async (address) => {
     return await new WEB3.eth.Contract(token_abi, address);
 };
 export const TokenOrder = async (address) => {
-    return await new window.WEB3.eth.Contract(order_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(order_abi.abi, address);
 };
 export const HelmetMining = async (address) => {
-    return await new window.WEB3.eth.Contract(helmet_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(helmet_abi.abi, address);
 };
 export const IIO = async (address) => {
-    return await new window.WEB3.eth.Contract(iio_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(iio_abi.abi, address);
 };
 export const NFT = async (address) => {
-    return await new window.WEB3.eth.Contract(nft_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(nft_abi.abi, address);
 };
 export const NFTContract = async (address) => {
-    return await new window.WEB3.eth.Contract(default_nft_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(default_nft_abi.abi, address);
 };
 export const NFTusers = async (address) => {
-    return await new window.WEB3.eth.Contract(nft_user_abi.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(nft_user_abi.abi, address);
 };
 export const PairContract = async (address) => {
-    return await new window.WEB3.eth.Contract(IPancakePair.abi, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(IPancakePair.abi, address);
 };
 export const SwapContract = async (address) => {
-    return await new window.WEB3.eth.Contract(IPancakeSwap, address);
+    const WEB3 = await web3();
+    return await new WEB3.eth.Contract(IPancakeSwap, address);
 };

@@ -84,6 +84,7 @@ import {
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import BigNumber from "bignumber.js";
 import { fromWei } from "~/assets/utils/web3-fun.js";
+import { web3 } from "~/assets/utils/web3-obj.js";
 export default {
   components: {
     VueLazyload,
@@ -124,6 +125,7 @@ export default {
     setTimeout(() => {
       this.HelmetPriceHigh(this.activeData);
       this.ApproveFlag(this.activeData);
+      clearTimeout();
     }, 1000);
   },
   computed: {
@@ -149,9 +151,11 @@ export default {
     async getBalance(newValue) {
       if (this.activeData.symbol == "BNB") {
         setTimeout(() => {
-          window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
-            this.Balance = fixD(fromWei(res), 4);
-          });
+          if (process.client) {
+            window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
+              this.Balance = fixD(fromWei(res), 4);
+            });
+          }
           clearTimeout();
         }, 1000);
       } else {
@@ -177,6 +181,7 @@ export default {
       }
     },
     async HelmetPriceHigh(newValue) {
+      console.log(newValue);
       let swapNumber;
       if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
         swapNumber = 0.01;

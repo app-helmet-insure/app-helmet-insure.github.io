@@ -25,7 +25,7 @@
             placeholder="Search name or paste address"
             v-model="searchToken"
           />
-          <p><span>Token name</span> <i>111</i></p>
+          <p><span>Token name</span> <i></i></p>
           <div class="select_token">
             <div class="select_token_list">
               <div
@@ -44,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="swap_balance">{{ $t("IIO.Balance") }}:{{ Balance }}</div>
+      <div class="swap_balance">{{ $t("IIO.Balance") }} : {{ Balance }}</div>
       <div class="swap_earn">
         <img src="~/assets/img/mining/serialnext_web.png" alt="" />
         <span>预计收到</span>
@@ -56,7 +56,9 @@
           >1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}</span
         >
       </p>
-      <button @click="SwapTokens">Confirm Swap</button>
+      <button @click="SwapTokens">
+        {{ ApprovedStatus ? "Confirm Swap" : "Approved" }}
+      </button>
       <p>
         <span>最低收到</span><span>{{ HelmetMinReward }}HELMET</span>
       </p>
@@ -71,7 +73,14 @@
 <script>
 import tokenList from "~/assets/utils/tokenlist.json";
 import VueLazyload from "vue-lazyload";
-import { SwapHelmet, SwapBNBforTokens } from "~/interface/swap.js";
+import {
+  SwapHelmet,
+  SwapBNBforTokens,
+  SwapTokensforTokens,
+  allowance,
+  approve,
+  BalanceOf,
+} from "~/interface/swap.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import BigNumber from "bignumber.js";
 import { fromWei } from "~/assets/utils/web3-fun.js";
@@ -104,15 +113,17 @@ export default {
       autoRounding,
       toRounding,
       SwapRouter: false,
+      ApprovedStatus: false,
     };
   },
   mounted() {
     this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
       this.buyDialog = res;
     });
-    this.getBalance();
+    this.getBalance(this.activeData);
     setTimeout(() => {
       this.HelmetPriceHigh(this.activeData);
+      this.ApproveFlag(this.activeData);
     }, 1000);
   },
   computed: {
@@ -135,7 +146,7 @@ export default {
     },
   },
   methods: {
-    getBalance() {
+    async getBalance(newValue) {
       if (this.activeData.symbol == "BNB") {
         setTimeout(() => {
           window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
@@ -143,6 +154,8 @@ export default {
           });
           clearTimeout();
         }, 1000);
+      } else {
+        this.Balance = fixD(await BalanceOf(newValue), 4);
       }
     },
     SwapParamsWatch(newValue) {
@@ -151,10 +164,19 @@ export default {
     activeDataWatch(newValue) {
       if (newValue) {
         this.HelmetPriceHigh(newValue);
+        this.ApproveFlag(newValue);
+        this.getBalance(newValue);
+      }
+    },
+    async ApproveFlag(newValue) {
+      let Approve = await allowance(newValue.address);
+      if (newValue.symbol != "BNB" && newValue.symbol != "WBNB") {
+        this.ApprovedStatus = Approve;
+      } else {
+        this.ApprovedStatus = true;
       }
     },
     async HelmetPriceHigh(newValue) {
-      console.log(newValue);
       let swapNumber;
       if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
         swapNumber = 0.01;
@@ -182,17 +204,29 @@ export default {
     },
     async SwapTokens() {
       let data = {
+        activeData: this.activeData,
         SwapNumber: this.swapNumber,
         MinReward: this.HelmetMinReward,
         SwapRouter: this.SwapRouter,
       };
-      if (this.activeData.symbol != "BNB") {
-        await SwapTokensforTokens(data, (res) => {
-          console.log(res);
-        });
+      if (this.ApprovedStatus) {
+        if (this.swapNumber <= 0) {
+          return;
+        }
+        if (this.activeData.symbol != "BNB") {
+          await SwapTokensforTokens(data, (res) => {
+            console.log(res);
+          });
+        } else {
+          await SwapBNBforTokens(data, (res) => {
+            console.log(res);
+          });
+        }
       } else {
-        await SwapBNBforTokens(data, (res) => {
-          console.log(res);
+        await approve(this.activeData, (res) => {
+          if (res == "swap_success") {
+            this.ApprovedStatus = true;
+          }
         });
       }
     },
@@ -453,10 +487,12 @@ export default {
         line-height: 17px;
       }
       i {
-        font-size: 12px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
+        width: 16px;
+        height: 16px;
+        display: block;
+        background: url("../../assets/img/icon/sort.png") center center
+          no-repeat;
+        background-size: 100% 100%;
         line-height: 17px;
       }
     }

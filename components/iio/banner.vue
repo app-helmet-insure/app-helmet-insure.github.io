@@ -85,6 +85,7 @@ export default {
     setTimeout(() => {
       this.getBalance();
       this.buyAppliedFlag();
+      clearTimeout();
     }, 1000);
   },
   methods: {

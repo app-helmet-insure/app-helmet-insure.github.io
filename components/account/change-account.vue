@@ -75,6 +75,7 @@ export default {
         this.$bus.$emit("REFRESH_ALL_DATA");
         this.$bus.$emit("REFRESH_MINING");
         this.$bus.$emit("REFRESH_BALANCE");
+        clearTimeout();
       }, 1000);
     },
     closeDialog() {

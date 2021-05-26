@@ -111,11 +111,13 @@ export default {
     this.getRewardTime();
     setTimeout(() => {
       this.getBalance();
+      clearTimeout();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
         this.getRewardTime();
       });
+      clearTimeout();
     }, 1000);
   },
   watch: {

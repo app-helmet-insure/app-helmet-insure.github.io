@@ -144,6 +144,7 @@ export default {
     setTimeout(() => {
       this.getCardBalance();
       this.getComposeEnable();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("GET_CARD_BALANCE", () => {
       this.getCardBalance();

@@ -120,6 +120,7 @@ export default {
     });
     setTimeout(() => {
       this.buyAppliedFlag();
+      clearTimeout();
     }, 1000);
   },
   methods: {

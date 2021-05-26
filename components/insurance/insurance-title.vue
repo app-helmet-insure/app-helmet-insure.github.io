@@ -111,6 +111,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.initEchart();
+      clearTimeout();
     }, 1000);
   },
   methods: {

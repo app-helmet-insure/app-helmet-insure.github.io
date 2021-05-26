@@ -139,6 +139,7 @@ export default {
         this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
         this.getPrice();
+        clearTimeout();
       }, 2000);
     },
     getPrice() {

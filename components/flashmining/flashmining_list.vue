@@ -401,11 +401,13 @@ export default {
     this.initFlashMiningData();
     setTimeout(() => {
       this.getAPY();
+      clearTimeout();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
         this.getAPY();
       });
+      clearTimeout();
     }, 20000);
   },
   computed: {

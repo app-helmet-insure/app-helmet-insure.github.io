@@ -284,6 +284,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.InitInsuanceData;
+      clearTimeout();
     }, 2000);
   },
   methods: {

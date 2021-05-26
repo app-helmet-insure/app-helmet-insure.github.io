@@ -73,7 +73,9 @@
       </button>
     </div>
     <div class="card_button" v-else>
-      <button class="one" @click="handleClickReward">{{ $t("NFT.getReward") }}</button>
+      <button class="one" @click="handleClickReward">
+        {{ $t("NFT.getReward") }}
+      </button>
     </div>
     <div class="card_tips">
       <img src="~/assets/img/nft/home_tip.png" alt="" />
@@ -127,6 +129,7 @@ export default {
       this.getRewardNumber();
       this.getUserCount();
       this.getDoraBalance();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("GET_CARD_BALANCE", () => {
       this.getRewardNumber();

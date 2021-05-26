@@ -274,6 +274,7 @@ export default {
       this.getMiningTime();
       this.getBalance();
       this.getProcess();
+      clearTimeout();
     }, 1000);
     if (!this.expired) {
       setInterval(() => {
@@ -287,6 +288,7 @@ export default {
         setTimeout(() => {
           this.getProcess();
         });
+        clearTimeout();
       }, 20000);
     }
     this.$bus.$on("REFRESH_MINING", (data) => {

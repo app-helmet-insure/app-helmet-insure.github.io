@@ -72,6 +72,7 @@ export default {
     this.About = Information[name];
     setTimeout(() => {
       this.getPassPortPrice();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getPassPortPrice();
@@ -132,8 +133,8 @@ export default {
       let object = {
         title: "WARNING",
         layout: "layout1",
-        activeTipText1:'Please double check the price above，',
-        activeTipText2:'Helmet team will not cover your loss on this.',
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         activeTip: true,
         loading: false,
         button: true,

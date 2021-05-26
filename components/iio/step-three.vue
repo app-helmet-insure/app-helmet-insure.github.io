@@ -99,12 +99,14 @@ export default {
     this.About = Information[name];
     setTimeout(() => {
       this.getBalance();
+      clearTimeout();
     }, 1000);
     this.getRewardTime();
     setInterval(() => {
       setTimeout(() => {
         this.getRewardTime();
       });
+      clearTimeout();
     }, 1000);
   },
   watch: {

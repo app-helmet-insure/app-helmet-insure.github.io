@@ -283,6 +283,7 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
+      clearTimeout();
     }, 1000);
   },
   watch: {

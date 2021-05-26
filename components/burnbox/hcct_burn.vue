@@ -272,12 +272,13 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
       this.getBalance();
     });
-  
+
     setTimeout(() => {
       this.getDownTime();
       this.getMiningTime();
       this.getBalance();
       this.getProcess();
+      clearTimeout();
     }, 1000);
     if (!this.expired) {
       setInterval(() => {
@@ -291,6 +292,7 @@ export default {
         setTimeout(() => {
           this.getProcess();
         });
+        clearTimeout();
       }, 20000);
     }
     this.$bus.$on("REFRESH_MINING", (data) => {
@@ -320,7 +322,7 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-   
+
     async getBalance() {
       let helmetType = "BURNHCCT_LPT";
       let type = "BURNHCCT";

@@ -80,6 +80,7 @@ export default {
     });
     setTimeout(() => {
       this.getRewardNumber();
+      clearTimeout();
     }, 1000);
   },
   methods: {

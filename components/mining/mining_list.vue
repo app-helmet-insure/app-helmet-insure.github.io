@@ -608,11 +608,13 @@ export default {
     setTimeout(() => {
       this.getAPY();
       this.getHelmetBalance();
+      clearTimeout();
     }, 1000);
     setInterval(() => {
       setTimeout(() => {
         this.getAPY();
       });
+      clearTimeout();
     }, 20000);
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i

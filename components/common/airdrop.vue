@@ -69,6 +69,7 @@ export default {
     });
     setTimeout(() => {
       this.getBalance();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("AIRDROP_DIALOG", (res) => {
       this.airdrop = res;

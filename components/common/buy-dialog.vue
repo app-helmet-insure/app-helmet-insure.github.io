@@ -6,15 +6,19 @@
         <i @click="handleClickClose"></i>
       </div>
       <div class="buy_dialog_select">
-        <input type="text" v-model="swapNumber" />
-        <span class="all">
-          {{ $t("Table.ALL") }}
-        </span>
-        <p class="selected" @click="handleTokenList">
-          <img :src="activeData.logoURI" alt="" />
-          <span>{{ activeData.symbol }}</span>
-          <i></i>
-        </p>
+        <div class="swapInput">
+          <input type="text" v-model="swapNumber" />
+          <div class="right">
+            <span class="all">
+              {{ $t("Table.ALL") }}
+            </span>
+            <p class="selected" @click="handleTokenList">
+              <img :src="activeData.logoURI" alt="" />
+              <span>{{ activeData.symbol }}</span>
+              <i></i>
+            </p>
+          </div>
+        </div>
         <div class="select_wrap" v-if="showTokenList">
           <input
             class="select_search"
@@ -40,11 +44,11 @@
           </div>
         </div>
       </div>
-      <div class="swap_balance">{{ $t("IIO.Balance") }}:11</div>
+      <div class="swap_balance">{{ $t("IIO.Balance") }}:{{ Balance }}</div>
       <div class="swap_earn">
         <img src="~/assets/img/mining/serialnext_web.png" alt="" />
         <span>预计收到</span>
-        <p>{{ toRounding(HelmetReward, 2) }}HELMET</p>
+        <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
       </div>
       <p>
         <span>Price</span
@@ -52,13 +56,12 @@
           >1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}</span
         >
       </p>
-      <button @click="SwapHelmetFunction">Confirm Swap</button>
+      <button @click="SwapTokens">Confirm Swap</button>
       <p>
-        <span>最低收到</span
-        ><span>{{ toRounding(HelmetMinReward, 4) }}HELMET</span>
+        <span>最低收到</span><span>{{ HelmetMinReward }}HELMET</span>
       </p>
       <p>
-        <span>手续费</span><span>{{ toRounding(HelmetFee, 4) }}BNB</span>
+        <span>手续费</span><span>{{ HelmetFee }}{{ activeData.symbol }}</span>
       </p>
       <span>该服务由 PANCAKE 提供支持</span>
     </div>
@@ -68,8 +71,10 @@
 <script>
 import tokenList from "~/assets/utils/tokenlist.json";
 import VueLazyload from "vue-lazyload";
-import { SwapHelmet } from "~/interface/swap.js";
+import { SwapHelmet, SwapBNBforTokens } from "~/interface/swap.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import BigNumber from "bignumber.js";
+import { fromWei } from "~/assets/utils/web3-fun.js";
 export default {
   components: {
     VueLazyload,
@@ -95,14 +100,20 @@ export default {
       HelmetReward: 0,
       HelmetMinReward: 0,
       HelmetFee: 0,
+      Balance: 0,
       autoRounding,
       toRounding,
+      SwapRouter: false,
     };
   },
   mounted() {
     this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
       this.buyDialog = res;
     });
+    this.getBalance();
+    setTimeout(() => {
+      this.HelmetPriceHigh(this.activeData);
+    }, 1000);
   },
   computed: {
     SwapParams() {
@@ -118,19 +129,45 @@ export default {
       handler: "SwapParamsWatch",
       immediate: true,
     },
+    activeData: {
+      handler: "activeDataWatch",
+      immediate: true,
+    },
   },
   methods: {
+    getBalance() {
+      if (this.activeData.symbol == "BNB") {
+        setTimeout(() => {
+          window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
+            this.Balance = fixD(fromWei(res), 4);
+          });
+          clearTimeout();
+        }, 1000);
+      }
+    },
     SwapParamsWatch(newValue) {
       this.SwapHelmetFunction();
     },
-    async HelmetPriceHigh() {},
-    async SwapHelmetFunction() {
-      if (!this.swapNumber) {
-        return;
+    activeDataWatch(newValue) {
+      if (newValue) {
+        this.HelmetPriceHigh(newValue);
+      }
+    },
+    async HelmetPriceHigh(newValue) {
+      console.log(newValue);
+      let swapNumber;
+      if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
+        swapNumber = 0.01;
+      } else if (newValue.symbol == "BTCB") {
+        swapNumber = 0.0001;
+      } else if (newValue.symbol == "ETH") {
+        swapNumber = 0.001;
+      } else {
+        swapNumber = 1;
       }
       await SwapHelmet(
-        this.swapNumber,
-        this.activeData,
+        swapNumber,
+        newValue,
         {
           address: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           chainId: 56,
@@ -139,14 +176,58 @@ export default {
           symbol: "Helmet",
         },
         (res) => {
-          this.HelmetReward = res.amount;
-          this.HelmetPrice = this.swapNumber / res.amount;
-          this.HelmetMinReward = res.amount * 0.995;
-          this.HelmetFee = res.router
-            ? this.swapNumber * (0.0025 + (1 - 0.0025) * 0.0025)
-            : this.swapNumber * 0.0025;
+          this.HelmetPrice = swapNumber / res.amount;
         }
       );
+    },
+    async SwapTokens() {
+      let data = {
+        SwapNumber: this.swapNumber,
+        MinReward: this.HelmetMinReward,
+        SwapRouter: this.SwapRouter,
+      };
+      if (this.activeData.symbol != "BNB") {
+        await SwapTokensforTokens(data, (res) => {
+          console.log(res);
+        });
+      } else {
+        await SwapBNBforTokens(data, (res) => {
+          console.log(res);
+        });
+      }
+    },
+    async SwapHelmetFunction() {
+      if (this.swapNumber > 0) {
+        await SwapHelmet(
+          this.swapNumber,
+          this.activeData,
+          {
+            address: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+            chainId: 56,
+            decimals: 18,
+            name: "Helmet.insure",
+            symbol: "Helmet",
+          },
+          (res) => {
+            this.HelmetReward = res.amount;
+            this.HelmetPrice = this.swapNumber / res.amount;
+            this.HelmetMinReward = BigNumber(
+              (res.amount * 0.995).toString()
+            ).toFixed(8);
+            this.SwapRouter = res.router;
+            this.HelmetFee = res.router
+              ? BigNumber(
+                  this.swapNumber * (0.0025 + (1 - 0.0025) * 0.0025).toString()
+                ).toFixed(8)
+              : BigNumber((this.swapNumber * 0.0025).toString()).toFixed(8);
+          }
+        );
+      } else {
+        this.HelmetPrice = 0;
+        this.HelmetReward = 0;
+        this.HelmetMinReward = 0;
+        this.HelmetFee = 0;
+      }
     },
     searchTokenWatch(newValue) {
       if (newValue) {
@@ -194,9 +275,17 @@ export default {
   left: 0;
   top: 0;
 }
+@media screen and(min-width:750px) {
+  .buy_dialog {
+    width: 360px;
+  }
+}
+@media screen and(max-width:750px) {
+  .buy_dialog {
+    width: 90%;
+  }
+}
 .buy_dialog {
-  width: 360px;
-  height: 399px;
   background: #ffffff;
   border-radius: 8px;
   position: absolute;
@@ -227,29 +316,41 @@ export default {
       top: 24px;
     }
   }
+  .right {
+    position: absolute;
+    right: 0;
+    align-items: center;
+    display: flex;
+    height: 100%;
+  }
   > .buy_dialog_select {
     margin-top: 20px;
     width: 100%;
     height: 40px;
-    border-radius: 5px;
-    border: 1px solid #e8e8eb;
-    display: flex;
-    align-items: center;
     position: relative;
-    &:hover {
-      border-color: #ff9600;
-    }
-    > input {
-      flex: 1;
-      width: 100px;
-      height: 100%;
-      background: transparent;
-      padding: 0 5px 0 10px;
-      font-size: 14px;
-      font-family: PingFangSC-Medium, PingFang SC;
-      font-weight: 500;
-      color: rgba(23, 23, 58, 0.7);
-      line-height: 20px;
+    .swapInput {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      > input {
+        border-radius: 5px;
+        flex: 1;
+        width: 100px;
+        height: 100%;
+        background: transparent;
+        padding: 0 5px 0 10px;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: rgba(23, 23, 58, 0.7);
+        border: 1px solid #e8e8eb;
+        line-height: 20px;
+        &:focus {
+          border-color: #ff9600;
+        }
+      }
     }
     .all {
       padding: 0 8px;
@@ -268,7 +369,7 @@ export default {
         border: 1px solid #fd7e14;
       }
     }
-    > .selected {
+    .selected {
       margin: 0 10px;
       display: flex;
       align-items: center;
@@ -278,6 +379,7 @@ export default {
       border-radius: 5px;
       cursor: pointer;
       border: 1px solid transparent;
+      right: 10px;
       &:hover {
         background: #fffaf3;
         border: 1px solid #fd7e14;

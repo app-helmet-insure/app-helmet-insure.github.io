@@ -9,7 +9,7 @@
         <div class="swapInput">
           <input type="text" v-model="swapNumber" />
           <div class="right">
-            <span class="all">
+            <span class="all" @click="swapNumber = Balance - HelmetFee">
               {{ $t("Table.ALL") }}
             </span>
             <p class="selected" @click="handleTokenList">
@@ -181,7 +181,6 @@ export default {
       }
     },
     async HelmetPriceHigh(newValue) {
-      console.log(newValue);
       let swapNumber;
       if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
         swapNumber = 0.01;
@@ -214,6 +213,7 @@ export default {
         MinReward: this.HelmetMinReward,
         SwapRouter: this.SwapRouter,
       };
+      console.log(this.SwapRouter);
       if (this.ApprovedStatus) {
         if (this.swapNumber <= 0) {
           return;
@@ -248,6 +248,7 @@ export default {
             symbol: "Helmet",
           },
           (res) => {
+            console.log(res);
             this.HelmetReward = res.amount;
             this.HelmetPrice = this.swapNumber / res.amount;
             this.HelmetMinReward = BigNumber(

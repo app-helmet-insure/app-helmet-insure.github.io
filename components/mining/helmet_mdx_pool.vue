@@ -262,14 +262,6 @@ export default {
     };
   },
   mounted() {
-    if (!this.expired) {
-      setInterval(() => {
-        setTimeout(() => {
-          // this.getDownTime();
-        });
-        clearTimeout();
-      }, 1000);
-    }
     this.$bus.$on("DEPOSITE_LOADING_HELMETMDXPOOL", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";

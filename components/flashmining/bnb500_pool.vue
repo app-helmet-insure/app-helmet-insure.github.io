@@ -274,12 +274,12 @@ export default {
   },
   mounted() {
     if (!this.expired) {
-      setInterval(() => {
-        setTimeout(() => {
-          this.getDownTime();
-        });
-        clearTimeout();
+      let timer = setInterval(() => {
+        this.getDownTime();
       }, 1000);
+      this.$once("hook:beforeDestroy", () => {
+        clearInterval(timer);
+      });
     }
     this.$bus.$on("DEPOSITE_LOADING_BNB500POOL", (data) => {
       this.stakeLoading = data.status;

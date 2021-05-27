@@ -109,14 +109,16 @@ export default {
       this.getBalance();
     });
     this.getRewardTime();
-    setTimeout(() => {
+    let timer1 = setTimeout(() => {
       this.getBalance();
     }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getRewardTime();
-      });
+    let timer2 = setInterval(() => {
+      this.getRewardTime();
     }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    });
   },
   watch: {
     iioType: {

@@ -118,9 +118,12 @@ export default {
     this.$bus.$on("GET_FLAG", () => {
       this.buyAppliedFlag();
     });
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       this.buyAppliedFlag();
     }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
   },
   methods: {
     WatchIIOType(newValue, oldValue) {

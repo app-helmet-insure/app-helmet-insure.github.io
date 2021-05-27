@@ -277,8 +277,6 @@ export default {
       }, 20000);
       this.$once("hook:beforeDestroy", () => {
         clearInterval(timer1);
-      });
-      this.$once("hook:beforeDestroy", () => {
         clearInterval(timer2);
       });
     }
@@ -286,7 +284,6 @@ export default {
       this.getBalance();
     });
   },
-  destroyed() {},
   methods: {
     copyAdress(e, text) {
       let _this = this;

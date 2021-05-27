@@ -259,7 +259,6 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHCTK", () => {
       this.getBalance();
     });
-
     this.getDownTime();
     this.getMiningTime();
     this.getBalance();
@@ -274,8 +273,6 @@ export default {
       }, 20000);
       this.$once("hook:beforeDestroy", () => {
         clearInterval(timer1);
-      });
-      this.$once("hook:beforeDestroy", () => {
         clearInterval(timer2);
       });
     }

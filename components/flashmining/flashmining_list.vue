@@ -399,14 +399,13 @@ export default {
   },
   mounted() {
     this.initFlashMiningData();
-    setTimeout(() => {
+    this.getAPY();
+    let timer = setInterval(() => {
       this.getAPY();
-    }, 1000);
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
     }, 20000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
   },
   computed: {
     indexArray() {

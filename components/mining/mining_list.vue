@@ -607,12 +607,12 @@ export default {
     this.initMiningData();
     this.getAPY();
     this.getHelmetBalance();
-    setInterval(() => {
-      setTimeout(() => {
-        this.getAPY();
-      });
-      clearTimeout();
+    let timer = setInterval(() => {
+      this.getAPY();
     }, 20000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
     );

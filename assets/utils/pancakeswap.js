@@ -12,8 +12,10 @@ import { getDefaultProvider } from '@ethersproject/providers';
 import IPancakePair from '~/abi/IPancakePair.json';
 import { web3 } from '~/assets/utils/web3-obj.js';
 export const pancakeswap = async (token1, token2) => {
-    const address1 = getAddress(token1, 56);
-    const address2 = getAddress(token2, 56);
+    const charID = window.chainID || 56;
+
+    const address1 = getAddress(token1, charID);
+    const address2 = getAddress(token2, charID);
     const TOKEN1 = new Token(
         window.chainID,
         address1,

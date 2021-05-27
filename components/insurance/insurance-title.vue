@@ -109,9 +109,12 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       this.initEchart();
     }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
   },
   methods: {
     initEchart() {

@@ -281,15 +281,13 @@ export default {
         ethereum.on("accountsChanged", async (account) => {
           let userInfo = await mateMaskInfo(account[0], "MetaMask");
           this.$store.dispatch("setUserInfo", userInfo);
-          setTimeout(() => {
-            this.getBannerData();
-            this.getBalance();
-            this.getIndexPirce();
-            this.$bus.$emit("REFRESH_ALL_DATA");
-            this.$bus.$emit("REFRESH_MINING");
-            this.$bus.$emit("GET_CARD_BALANCE");
-            this.$bus.$emit("NFT_WINDOW_STATUS");
-          }, 200);
+          this.getBannerData();
+          this.getBalance();
+          this.getIndexPirce();
+          this.$bus.$emit("REFRESH_ALL_DATA");
+          this.$bus.$emit("REFRESH_MINING");
+          this.$bus.$emit("GET_CARD_BALANCE");
+          this.$bus.$emit("NFT_WINDOW_STATUS");
         });
       }
     },

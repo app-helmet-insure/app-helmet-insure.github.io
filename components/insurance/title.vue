@@ -61,7 +61,7 @@ export default {
       this.$router.push("/mining");
     },
     init() {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         var mySwiper = new Swiper(".swiper-container", {
           loop: true,
           spaceBetween: 0,
@@ -79,6 +79,9 @@ export default {
           },
         });
       }, 100);
+      this.$once("hook:beforeDestroy", () => {
+        clearTimeout(timer);
+      });
     },
   },
 };

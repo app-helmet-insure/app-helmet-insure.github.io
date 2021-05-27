@@ -82,10 +82,13 @@ export default {
       this.getBalance();
       this.buyAppliedFlag();
     });
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       this.getBalance();
       this.buyAppliedFlag();
     }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
   },
   methods: {
     WatchIIOType(newValue, oldValue) {

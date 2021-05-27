@@ -278,8 +278,6 @@ export default {
       }, 20000);
       this.$once("hook:beforeDestroy", () => {
         clearInterval(timer1);
-      });
-      this.$once("hook:beforeDestroy", () => {
         clearInterval(timer2);
       });
     }

@@ -73,7 +73,9 @@
       </button>
     </div>
     <div class="card_button" v-else>
-      <button class="one" @click="handleClickReward">{{ $t("NFT.getReward") }}</button>
+      <button class="one" @click="handleClickReward">
+        {{ $t("NFT.getReward") }}
+      </button>
     </div>
     <div class="card_tips">
       <img src="~/assets/img/nft/home_tip.png" alt="" />
@@ -120,7 +122,7 @@ export default {
     };
   },
   mounted() {
-    setTimeout(() => {
+    let timer1 = setTimeout(() => {
       this.getNeedCliam();
       this.getNeedCliam10();
       this.getDoraBalance();
@@ -136,11 +138,12 @@ export default {
       this.getDoraBalance();
     });
     this.getRemainTime();
-    setInterval(() => {
-      setTimeout(() => {
-        this.getRemainTime();
-      }, 1000);
-      clearTimeout();
+    let timer2 = setInterval(() => {
+      this.getRemainTime();
+    });
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
     });
   },
   methods: {

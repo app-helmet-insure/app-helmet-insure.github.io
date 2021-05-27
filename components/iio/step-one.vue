@@ -70,7 +70,7 @@ export default {
   mounted() {
     let name = this.$route.params.id;
     this.About = Information[name];
-    setTimeout(() => {
+    let timer1 = setTimeout(() => {
       this.getPassPortPrice();
     }, 1000);
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
@@ -82,12 +82,13 @@ export default {
       this.buyLoading = false;
     });
     this.getRewardTime();
-    setInterval(() => {
-      setTimeout(() => {
-        this.getRewardTime();
-      });
-      clearTimeout();
+    let timer2 = setInterval(() => {
+      this.getRewardTime();
     }, 1000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    });
   },
   watch: {
     iioType: {
@@ -132,8 +133,8 @@ export default {
       let object = {
         title: "WARNING",
         layout: "layout1",
-        activeTipText1:'Please double check the price above，',
-        activeTipText2:'Helmet team will not cover your loss on this.',
+        activeTipText1: "Please double check the price above，",
+        activeTipText2: "Helmet team will not cover your loss on this.",
         activeTip: true,
         loading: false,
         button: true,

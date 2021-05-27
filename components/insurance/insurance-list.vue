@@ -282,9 +282,12 @@ export default {
     },
   },
   mounted() {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       this.InitInsuanceData;
     }, 2000);
+    this.$once("hook:beforeDestroy", () => {
+      clearTimeout(timer);
+    });
   },
   methods: {
     buyInsurance_h5(insuranceType) {

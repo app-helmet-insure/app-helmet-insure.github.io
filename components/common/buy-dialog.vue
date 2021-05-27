@@ -2,12 +2,12 @@
   <div class="mask" v-if="buyDialog">
     <div class="buy_dialog">
       <div class="buy_dialog_title">
-        <span>Buy HELMET</span>
+        <span>{{ $t("SwapHelmet.BuyHelmet") }}</span>
         <i @click="handleClickClose"></i>
       </div>
       <div class="buy_dialog_select">
         <div class="swapInput">
-          <input type="text" v-model="swapNumber" />
+          <input type="number" v-model="swapNumber" />
           <div class="right">
             <span
               class="all"
@@ -43,7 +43,7 @@
                   <img :v-lazy="item.logoURI" :src="item.logoURI" alt="" />
                   <span>{{ item.symbol }}</span>
                 </p>
-                <span>{{ item.symbol }}</span>
+                <!-- <span>{{ item.symbol }}</span> -->
               </div>
             </div>
           </div>
@@ -52,7 +52,7 @@
       <div class="swap_balance">{{ $t("IIO.Balance") }} : {{ Balance }}</div>
       <div class="swap_earn">
         <img src="~/assets/img/mining/serialnext_web.png" alt="" />
-        <span>预计收到</span>
+        <span>{{ $t("SwapHelmet.ExEarn") }}</span>
         <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
       </div>
       <p>
@@ -65,12 +65,20 @@
         {{ ApprovedStatus ? "Confirm Swap" : "Approved" }}
       </button>
       <p>
-        <span>最低收到</span><span>{{ HelmetMinReward }}HELMET</span>
+        <span>{{ $t("SwapHelmet.MinEarn") }}</span
+        ><span>{{ HelmetMinReward }}HELMET</span>
       </p>
       <p>
-        <span>手续费</span><span>{{ HelmetFee }}{{ activeData.symbol }}</span>
+        <span>{{ $t("SwapHelmet.Fee") }}</span
+        ><span>{{ HelmetFee }}{{ activeData.symbol }}</span>
       </p>
-      <span>该服务由 PANCAKE 提供支持</span>
+      <span>
+        <a
+          href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+          target="_blank"
+          >{{ $t("SwapHelmet.Server") }}</a
+        >
+      </span>
     </div>
   </div>
 </template>
@@ -279,6 +287,8 @@ export default {
       if (newValue) {
         this.ShowList = this.TokenList;
         this.ShowList = this.filterList(newValue);
+      } else {
+        this.ShowList = this.TokenList;
       }
     },
     handleClickClose() {
@@ -645,6 +655,9 @@ export default {
     font-weight: 400;
     color: #b6b9bc;
     line-height: 17px;
+    a {
+      color: #b6b9bc;
+    }
   }
 }
 </style>

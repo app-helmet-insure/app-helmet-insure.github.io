@@ -13,6 +13,14 @@
     "ConnectWrong": "Wrong Network",
     "ConnectWallet": "CONNECT WALLET"
   },
+  "SwapHelmet": {
+    "BuyHelmet": "Buy Helmet",
+    "ExEarn": "Estimated",
+    "Price": "Price",
+    "MinEarn": "Minimum received",
+    "Fee": "Fee",
+    "Server": "Powered By PANCAKE "
+  },
   "Banner": {
     "ClosedPolicy": "Policy Category",
     "LongValue": "Policy Creation",

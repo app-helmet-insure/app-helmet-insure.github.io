@@ -275,18 +275,19 @@ export const SwapTokensforTokens = async (
 export const allowance = async (TokenAdress) => {
     let RouterAdress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';
     const ApproveContracts = await PairContract(TokenAdress);
-    if (!process.client) {
-        return ApproveContracts.methods
-            .allowance(window.CURRENTADDRESS, RouterAdress)
-            .call()
-            .then((res) => {
-                if (res > 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-    }
+    const WEB3 = await new web3();
+    let account = await WEB3.eth.getAccounts();
+    account = account[0];
+    return ApproveContracts.methods
+        .allowance(account, RouterAdress)
+        .call()
+        .then((res) => {
+            if (res > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 };
 export const approve = async (data, callback) => {
     let RouterAdress = '0x10ed43c718714eb63d5aa57b78b54704e256024e';

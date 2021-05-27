@@ -17,7 +17,6 @@ import { getAddress, getContract, getID } from '~/assets/utils/address-pool.js';
 export const getCurrentAccount = async () => {
     return web3().then((res) => res.currentProvider.selectedAddress);
 };
-
 export const Univ2 = async () => {
     const WEB3 = await web3();
     const charID = await getID();

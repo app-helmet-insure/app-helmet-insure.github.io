@@ -13,6 +13,14 @@
     "ConnectWrong": "网络错误",
     "ConnectWallet": "连接钱包"
   },
+  "SwapHelmet": {
+    "BuyHelmet": "购买HELMET",
+    "ExEarn": "预计收到",
+    "Price": "价格",
+    "MinEarn": "最低收到",
+    "Fee": "手续费",
+    "Server": "该服务由 PANCAKE 提供支持"
+  },
   "Banner": {
     "ClosedPolicy": "支持保险种类",
     "LongValue": "LONG当前总价值",
@@ -225,7 +233,7 @@
     "Suprice": "手气爆棚",
     "open": "开奖",
     "getReward": "领取",
-    "Finished":"已结束",
+    "Finished": "已结束",
     "OpenOne": "查看卡片",
     "OpenTen": "查看我的十张卡片",
     "Text1": " 我在 Helmet 抽 {card_Name} NFT 盲盒, 快来和我交换. 集齐 8 个 NFT 可瓜分奖池。当前奖池金额：{num} Helmet; 活动地址:",

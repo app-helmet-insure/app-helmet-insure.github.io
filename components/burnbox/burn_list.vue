@@ -407,12 +407,14 @@ export default {
         template = {
           day: day > 9 ? day : "0" + day,
           hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
         };
         return template;
       } else {
         template = {
           day: "00",
           hour: "00",
+          minute: "00",
         };
         return "Expired";
       }
@@ -822,9 +824,6 @@ export default {
                   &:last-of-type {
                     display: none;
                   }
-
-
-
                 }
               }
               &:nth-of-type(2) {

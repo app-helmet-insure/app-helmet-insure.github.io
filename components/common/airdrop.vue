@@ -64,9 +64,9 @@ export default {
     setInterval(() => {
       setTimeout(() => {
         this.getBalance();
-      }, 1000);
+      });
       clearTimeout();
-    });
+    }, 60000);
     setTimeout(() => {
       this.getBalance();
     }, 1000);

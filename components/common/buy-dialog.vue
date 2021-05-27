@@ -9,7 +9,12 @@
         <div class="swapInput">
           <input type="text" v-model="swapNumber" />
           <div class="right">
-            <span class="all" @click="swapNumber = Balance - HelmetFee">
+            <span
+              class="all"
+              @click="
+                swapNumber = Balance - HelmetFee > 0 ? Balance - HelmetFee : 0
+              "
+            >
               {{ $t("Table.ALL") }}
             </span>
             <p class="selected" @click="handleTokenList">
@@ -217,16 +222,20 @@ export default {
         }
         if (this.activeData.symbol != "BNB") {
           await SwapTokensforTokens(data, (res) => {
-            console.log(res);
+            if (res.status == "swap_success") {
+              this.handleClickClose();
+            }
           });
         } else {
           await SwapBNBforTokens(data, (res) => {
-            console.log(res);
+            if (res.status == "swap_success") {
+              this.handleClickClose();
+            }
           });
         }
       } else {
         await approve(this.activeData, (res) => {
-          if (res == "swap_success") {
+          if (res == "approve_success") {
             this.ApprovedStatus = true;
           }
         });

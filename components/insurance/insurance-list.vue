@@ -284,7 +284,6 @@ export default {
   mounted() {
     let timer = setTimeout(() => {
       this.InitInsuanceData;
-      clearTimeout();
     }, 2000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);
@@ -317,12 +316,12 @@ export default {
     async InitInsuanceData() {
       let InsuanceData = [
         {
-          InsuranceType: "SHIB",
-          InsuranceImg: "SHIB",
-        },
-        {
           InsuranceType: "HELMET",
           InsuranceImg: "HELMET",
+        },
+        {
+          InsuranceType: "SHIB",
+          InsuranceImg: "SHIB",
         },
         {
           InsuranceType: "ETH",
@@ -368,6 +367,7 @@ export default {
           Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000) > 0
             ? Math.ceil((new Date(InsuranceTime) * 1 - nowTime) / 86400000)
             : 0;
+
         // 保险周期
         InsuanceData[i].InsuranceDate = InsuranceTime
           ? InsuranceTime.replace(reg, "-")
@@ -382,7 +382,6 @@ export default {
         InsuanceData[i].InsurancePriceBUSD =
           InsurancePriceBNB[InsuanceData[i]["InsuranceType"]] * WBNB_BUSD_Price;
       }
-      InsuanceData[0].InsuranceDay = 30;
       this.InsuanceData = InsuanceData;
       this.$forceUpdate();
     },

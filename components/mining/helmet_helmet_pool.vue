@@ -250,11 +250,11 @@ export default {
       // 总Helmet
       let totalHelmet = await totalSupply(helmetType);
 
-      this.balance.Deposite = fixD(Deposite, 4);
-      this.balance.Withdraw = fixD(Withdraw, 4);
-      this.balance.Helmet = fixD(Helmet, 8);
-      this.balance.Cake = fixD(Cake, 8);
-      this.balance.TotalLPT = fixD(TotalLPT, 4);
+      this.balance.Deposite = Deposite;
+      this.balance.Withdraw = Withdraw;
+      this.balance.Helmet = Helmet;
+      this.balance.Cake = Cake;
+      this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
       this.textList[0].num = fixD(33057.57 * 7, 2) + " HELMET";
       // this.textList[3].num = addCommom(Deposite, 4)

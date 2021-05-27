@@ -63,7 +63,6 @@ export default {
     });
     let timer = setTimeout(() => {
       this.getBalance();
-      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

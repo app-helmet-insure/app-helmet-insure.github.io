@@ -360,7 +360,6 @@ export default {
       let Helmet = await CangetPAYA(type);
       //  可领取Cake
       let Cake = await CangetUNI(type);
-      console.log(Withdraw);
       // 赋值
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;

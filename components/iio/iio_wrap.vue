@@ -382,7 +382,14 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 5;
-            item.active_page = 1;
+            if (
+              item.iio_name == "CryptoTycoon" ||
+              item.iio_name == "CoinWind"
+            ) {
+              item.active_page = 2;
+            } else {
+              item.active_page = 1;
+            }
           }
         }
       });

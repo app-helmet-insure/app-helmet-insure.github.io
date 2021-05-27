@@ -137,13 +137,13 @@
         </div>
         <div class="menu_item">
           <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
-            <svg class="hot" aria-hidden="true">
+            <!-- <svg class="hot" aria-hidden="true">
               <use
                 :href="`#icon-${
                   routeObj.name.includes('nft') ? 'new1' : 'new'
                 }`"
               ></use>
-            </svg>
+            </svg> -->
             <svg class="icon svg-icon" aria-hidden="true">
               <use xlink:href="#icon-nft"></use>
             </svg>

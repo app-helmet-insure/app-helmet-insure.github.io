@@ -39,6 +39,17 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
         const PairAdress = Pair.getAddress(TOKEN1, TOKEN2);
         const PairContracts = await PairContract(PairAdress);
         const SwapContracts = await SwapContract(RouterAdress);
+        let TokenArray = await PairContracts.methods
+            .token0()
+            .call()
+            .then((res) => {
+                return res;
+            });
+        let Reserves =
+            TokenArray.toLowerCase() ==
+            '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8'
+                ? true
+                : false;
         await PairContracts.methods
             .getReserves()
             .call()
@@ -53,8 +64,8 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                                           amount * Math.pow(10, token1.decimals)
                                       ).toString()
                                   ).toFixed(),
-                            res.reserve1,
-                            res.reserve0
+                            Reserves ? res.reserve1 : res.reserve0,
+                            Reserves ? res.reserve0 : res.reserve1
                         )
                         .call()
                         .then((result) => {
@@ -82,7 +93,8 @@ export const SwapHelmet = async (amount, token1, token2, callback) => {
                 return res;
             });
         let Reserves =
-            TokenArray == '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'
+            TokenArray.toLowerCase() ==
+            '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
                 ? true
                 : false;
         await PairContracts.methods
@@ -265,10 +277,7 @@ export const allowance = async (TokenAdress) => {
     const ApproveContracts = await PairContract(TokenAdress);
     if (!process.client) {
         return ApproveContracts.methods
-            .allowance(
-                window.CURRENTADDRESS,
-                RouterAdress
-            )
+            .allowance(window.CURRENTADDRESS, RouterAdress)
             .call()
             .then((res) => {
                 if (res > 0) {
@@ -299,7 +308,7 @@ export const approve = async (data, callback) => {
                     conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${data.symbol} to HELMET</a>`,
                 });
-                callback('swap_approve');
+                callback('approve_success');
             })
             .on('receipt', (receipt) => {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -312,7 +321,7 @@ export const approve = async (data, callback) => {
                     buttonText: 'Confirm',
                     showDialog: false,
                 });
-                callback('swap_success');
+                callback('approve_success');
             })
             .on('error', (err) => {
                 bus.$emit('CLOSE_STATUS_DIALOG');

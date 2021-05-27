@@ -74,7 +74,7 @@
     </div>
     <div class="card_button" v-else>
       <button class="one" @click="handleClickReward">
-        {{ $t("NFT.getReward") }}
+        {{ $t("NFT.Finished") }}
       </button>
     </div>
     <div class="card_tips">

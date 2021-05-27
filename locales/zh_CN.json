@@ -225,6 +225,7 @@
     "Suprice": "手气爆棚",
     "open": "开奖",
     "getReward": "领取",
+    "Finished":"已结束",
     "OpenOne": "查看卡片",
     "OpenTen": "查看我的十张卡片",
     "Text1": " 我在 Helmet 抽 {card_Name} NFT 盲盒, 快来和我交换. 集齐 8 个 NFT 可瓜分奖池。当前奖池金额：{num} Helmet; 活动地址:",

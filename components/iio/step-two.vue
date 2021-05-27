@@ -111,7 +111,6 @@ export default {
     this.getRewardTime();
     let timer1 = setTimeout(() => {
       this.getBalance();
-      clearTimeout();
     }, 1000);
     let timer2 = setInterval(() => {
       this.getRewardTime();

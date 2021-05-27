@@ -165,14 +165,16 @@ export default {
   methods: {
     async getBalance(newValue) {
       if (this.activeData.symbol == "BNB") {
-        setTimeout(() => {
+        let timer = setTimeout(() => {
           if (process.client) {
             window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
               this.Balance = fixD(fromWei(res), 4);
             });
           }
-          clearTimeout();
         }, 1000);
+        this.$once("hook:beforeDestroy", () => {
+          clearTimeout(timer);
+        });
       } else {
         this.Balance = fixD(await BalanceOf(newValue), 4);
       }
@@ -196,7 +198,6 @@ export default {
       }
     },
     async HelmetPriceHigh(newValue) {
-      console.log(1);
       let swapNumber;
       if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
         swapNumber = 0.01;

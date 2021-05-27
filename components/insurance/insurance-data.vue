@@ -37,11 +37,7 @@
               <span>{{ $t("Banner.HelmetPcice") }}</span>
               <span>
                 $ {{ isLogin ? helmetPrice : "--" }}
-                <a
-                  href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-                  target="_blank"
-                  >Buy</a
-                ></span
+                <a @click="handleClickBuy">Buy</a></span
               >
             </label>
             <span>
@@ -128,6 +124,9 @@ export default {
     }
   },
   methods: {
+    handleClickBuy() {
+      this.$bus.$emit("OPEN_BUY_DIALOG", true);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
@@ -140,6 +139,7 @@ export default {
         this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
         this.$store.dispatch("getValidBorrowing"); //获取 有效成交
         this.getPrice();
+        clearTimeout();
       }, 2000);
       this.$once("hook:beforeDestroy", () => {
         clearTimeout(timer);

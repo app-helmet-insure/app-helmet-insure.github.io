@@ -129,6 +129,7 @@ export default {
       this.getRewardNumber();
       this.getUserCount();
       this.getDoraBalance();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("GET_CARD_BALANCE", () => {
       this.getRewardNumber();

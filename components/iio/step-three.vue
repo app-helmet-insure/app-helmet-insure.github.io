@@ -99,6 +99,7 @@ export default {
     this.About = Information[name];
     let timer1 = setTimeout(() => {
       this.getBalance();
+      clearTimeout();
     }, 1000);
     this.getRewardTime();
     let timer2 = setInterval(() => {

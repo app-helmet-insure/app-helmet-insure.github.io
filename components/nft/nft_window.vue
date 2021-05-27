@@ -80,6 +80,7 @@ export default {
     });
     let timer = setTimeout(() => {
       this.getRewardNumber();
+      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

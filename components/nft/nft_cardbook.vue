@@ -144,6 +144,7 @@ export default {
     let timer = setTimeout(() => {
       this.getCardBalance();
       this.getComposeEnable();
+      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

@@ -111,6 +111,7 @@ export default {
   mounted() {
     let timer = setTimeout(() => {
       this.initEchart();
+      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

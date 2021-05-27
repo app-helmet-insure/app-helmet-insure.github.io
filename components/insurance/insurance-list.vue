@@ -284,6 +284,7 @@ export default {
   mounted() {
     let timer = setTimeout(() => {
       this.InitInsuanceData;
+      clearTimeout();
     }, 2000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

@@ -72,6 +72,7 @@ export default {
     this.About = Information[name];
     let timer1 = setTimeout(() => {
       this.getPassPortPrice();
+      clearTimeout();
     }, 1000);
     this.$bus.$on("REFRESH_IIO_HELMETBNB_POOL", () => {
       this.getPassPortPrice();

@@ -120,6 +120,7 @@ export default {
     });
     let timer = setTimeout(() => {
       this.buyAppliedFlag();
+      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);

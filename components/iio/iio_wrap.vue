@@ -283,10 +283,10 @@ export default {
           open: true,
           sort: 0,
           active_page: 2,
-          expired_burnt: "0",
-          expired_stake: "0",
-          expired_premium: "0",
-          expired_activating: "0",
+          expired_burnt: "584",
+          expired_stake: "9,043,142.79",
+          expired_premium: "93.17%",
+          expired_activating: "83.55%",
         },
         {
           iio_name: "CoinWind",
@@ -309,10 +309,10 @@ export default {
           open: true,
           sort: 0,
           active_page: 2,
-          expired_burnt: "0",
-          expired_stake: "0",
-          expired_premium: "0",
-          expired_activating: "0",
+          expired_burnt: "491",
+          expired_stake: "9,498,855.80",
+          expired_premium: "211.84%",
+          expired_activating: "85.5%",
         },
         {
           iio_name: "WMASS",
@@ -382,14 +382,7 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 5;
-            if (
-              item.iio_name == "CryptoTycoon" ||
-              item.iio_name == "CoinWind"
-            ) {
-              item.active_page = 2;
-            } else {
-              item.active_page = 1;
-            }
+            item.active_page = 1;
           }
         }
       });

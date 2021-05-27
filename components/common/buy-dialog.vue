@@ -66,11 +66,11 @@
       </button>
       <p>
         <span>{{ $t("SwapHelmet.MinEarn") }}</span
-        ><span>{{ HelmetMinReward }}HELMET</span>
+        ><span>{{ toRounding(HelmetMinReward, 8) }}HELMET</span>
       </p>
       <p>
         <span>{{ $t("SwapHelmet.Fee") }}</span
-        ><span>{{ HelmetFee }}{{ activeData.symbol }}</span>
+        ><span>{{ toRounding(HelmetFee, 8) }}{{ activeData.symbol }}</span>
       </p>
       <span>
         <a
@@ -156,6 +156,11 @@ export default {
       handler: "activeDataWatch",
       immediate: true,
     },
+    swapNumber(newValue) {
+      if (!newValue) {
+        this.HelmetPriceHigh(this.activeData);
+      }
+    },
   },
   methods: {
     async getBalance(newValue) {
@@ -191,6 +196,7 @@ export default {
       }
     },
     async HelmetPriceHigh(newValue) {
+      console.log(1);
       let swapNumber;
       if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
         swapNumber = 0.01;
@@ -272,8 +278,8 @@ export default {
             this.HelmetFee = res.router
               ? BigNumber(
                   this.swapNumber * (0.0025 + (1 - 0.0025) * 0.0025).toString()
-                ).toFixed(8)
-              : BigNumber((this.swapNumber * 0.0025).toString()).toFixed(8);
+                ).toFixed()
+              : BigNumber((this.swapNumber * 0.0025).toString()).toFixed();
           }
         );
       } else {

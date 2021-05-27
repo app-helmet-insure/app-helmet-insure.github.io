@@ -198,10 +198,8 @@ export const applyReward3 = async (data, callBack) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit(`REFRESH_${data.ContractAdress}`);
-                    bus.$emit('CLOSE_LOADING_STATUS');
-                }, 1000);
+                bus.$emit(`REFRESH_${data.ContractAdress}`);
+                bus.$emit('CLOSE_LOADING_STATUS');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');

@@ -189,20 +189,11 @@
 <script>
 import {
   totalSupply,
-  balanceOf,
   getLPTOKEN,
   CangetPAYA,
-  CangetUNI,
   getPAYA,
-  exitStake,
-  getLastTime,
-  approveStatus,
   getBalance,
   toDeposite,
-  getMined,
-  WithdrawAvailable,
-  getAllHelmet,
-  Rewards,
 } from "~/interface/deposite";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
@@ -272,26 +263,25 @@ export default {
     this.$bus.$on("RELOAD_DATA_BURNHCCT", () => {
       this.getBalance();
     });
-  
-    setTimeout(() => {
-      this.getDownTime();
-      this.getMiningTime();
-      this.getBalance();
-      this.getProcess();
-    }, 1000);
+
+    this.getDownTime();
+    this.getMiningTime();
+    this.getBalance();
+    this.getProcess();
     if (!this.expired) {
-      setInterval(() => {
-        setTimeout(() => {
-          this.getDownTime();
-          this.getMiningTime();
-        });
-        clearTimeout();
+      let timer1 = setInterval(() => {
+        this.getDownTime();
+        this.getMiningTime();
       }, 1000);
-      setInterval(() => {
-        setTimeout(() => {
-          this.getProcess();
-        });
+      let timer2 = setInterval(() => {
+        this.getProcess();
       }, 20000);
+      this.$once("hook:beforeDestroy", () => {
+        clearInterval(timer1);
+      });
+      this.$once("hook:beforeDestroy", () => {
+        clearInterval(timer2);
+      });
     }
     this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
@@ -320,7 +310,7 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-   
+
     async getBalance() {
       let helmetType = "BURNHCCT_LPT";
       let type = "BURNHCCT";

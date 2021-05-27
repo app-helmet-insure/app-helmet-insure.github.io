@@ -10,9 +10,10 @@ import { getAddress, getWei_2 } from './address-pool';
 import { getNetwork } from '@ethersproject/networks';
 import { getDefaultProvider } from '@ethersproject/providers';
 import IPancakePair from '~/abi/IPancakePair.json';
+import { web3 } from '~/assets/utils/web3-obj.js';
 export const pancakeswap = async (token1, token2) => {
-    const address1 = getAddress(token1, window.chainID);
-    const address2 = getAddress(token2, window.chainID);
+    const address1 = getAddress(token1, 56);
+    const address2 = getAddress(token2, 56);
     const TOKEN1 = new Token(
         window.chainID,
         address1,
@@ -27,13 +28,14 @@ export const pancakeswap = async (token1, token2) => {
         token2,
         token2
     );
+    const WEB3 = await web3();
     try {
         // 获取交易对地址
         const address = Pair.getAddress(TOKEN1, TOKEN2);
         // 获取Provider
         let provider = getDefaultProvider(getNetwork('56'));
         // 获取合约方法
-        const Contracts = await new window.WEB3.eth.Contract(
+        const Contracts = await new WEB3.eth.Contract(
             IPancakePair.abi,
             address,
             provider

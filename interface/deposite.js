@@ -62,12 +62,10 @@ export const compound = async (address, type) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                    bus.$emit('REFRESH_BALANCE');
-                    bus.$emit(`RELOAD_DATA_${type}`);
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
+                bus.$emit('REFRESH_BALANCE');
+                bus.$emit(`RELOAD_DATA_${type}`);
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -199,10 +197,8 @@ export const toDeposite = async (type, data, flag, callBack) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`DEPOSITE_LOADING_${type}`, { status: false });
@@ -302,10 +298,8 @@ export const toWithdraw = async (type, data, flag, callBack) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -432,10 +426,8 @@ export const getPAYA = async (type) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
@@ -495,10 +487,8 @@ export const getDoubleReward = async (type) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`CLAIM_LOADING_${type}`);
@@ -725,10 +715,8 @@ export const exitStake = async (type) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                    bus.$emit('REFRESH_MINING');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
+                bus.$emit('REFRESH_MINING');
             })
             .on('error', function(error, receipt) {
                 bus.$emit(`EXIT_LOADING_${type}`);

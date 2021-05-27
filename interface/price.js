@@ -74,9 +74,7 @@ export const recruit = async (address, num) => {
                         // duration: 0,
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('GET_BALANCE');
-                }, 1000);
+                bus.$emit('GET_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');

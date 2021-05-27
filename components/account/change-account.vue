@@ -71,11 +71,9 @@ export default {
         account.substr(2, 4) +
         "..." +
         account.substr(-5);
-      setTimeout(() => {
-        this.$bus.$emit("REFRESH_ALL_DATA");
-        this.$bus.$emit("REFRESH_MINING");
-        this.$bus.$emit("REFRESH_BALANCE");
-      }, 1000);
+      this.$bus.$emit("REFRESH_ALL_DATA");
+      this.$bus.$emit("REFRESH_MINING");
+      this.$bus.$emit("REFRESH_BALANCE");
     },
     closeDialog() {
       this.$emit("close");

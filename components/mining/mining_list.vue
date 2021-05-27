@@ -605,14 +605,13 @@ export default {
       this.claimLoading = false;
     });
     this.initMiningData();
-    setTimeout(() => {
-      this.getAPY();
-      this.getHelmetBalance();
-    }, 1000);
+    this.getAPY();
+    this.getHelmetBalance();
     setInterval(() => {
       setTimeout(() => {
         this.getAPY();
       });
+      clearTimeout();
     }, 20000);
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i

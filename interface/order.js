@@ -111,10 +111,8 @@ export const onIssueSell = async (data_, callBack) => {
                         // duration: 0,
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                    bus.$emit('REFRESH_BALANCE');
-                }, 1000);
+                bus.$emit('REFRESH_ALL_DATA');
+                bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -218,10 +216,8 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                    bus.$emit('REFRESH_BALANCE');
-                }, 1000);
+                bus.$emit('REFRESH_ALL_DATA');
+                bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -315,10 +311,8 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ALL_DATA');
-                    bus.$emit('REFRESH_BALANCE');
-                }, 1000);
+                bus.$emit('REFRESH_ALL_DATA');
+                bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -484,9 +478,7 @@ export const claim = async () => {
                         type: 'success',
                     });
                 }
-                setTimeout(() => {
-                    bus.$emit('REFRESH_ASSETS');
-                }, 1000);
+                bus.$emit('REFRESH_ASSETS');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
@@ -653,12 +645,12 @@ export const onExercise = async (data, callBack, flag) => {
         long = await expERC20(data.long);
         if (data.unit) {
             value = BigNumber(
-                (data.vol * Math.pow(10, data.unit)).toString()
-            ).toFixed(18);
+                (data.vol * Math.pow(10, data.unit) + '').toString()
+            ).toFixed();
         } else {
             value = toWei(fixD(data.vol, 12), data.token);
         }
-
+        console.log(data.vol, value);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -732,9 +724,7 @@ export const onExercise = async (data, callBack, flag) => {
                     type: 'success',
                 });
             }
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-            }, 1000);
+            bus.$emit('REFRESH_ALL_DATA');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
@@ -830,9 +820,7 @@ export const onCancel = async (askID, callBack) => {
                 buttonText: 'Confirm',
                 showDialog: false,
             });
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-            }, 1000);
+            bus.$emit('REFRESH_ALL_DATA');
         })
         .on('error', (err, receipt) => {
             callBack('failed');
@@ -865,10 +853,8 @@ export const onWaive = async (data) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {})
         .on('receipt', function(receipt) {
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-                bus.$emit('ONWAIVE_END', data.bidID);
-            }, 1000);
+            bus.$emit('REFRESH_ALL_DATA');
+            bus.$emit('ONWAIVE_END', data.bidID);
         })
         .on('error', (err, receipt) => {
             bus.$emit('ONWAIVE_END', data.bidID);
@@ -894,14 +880,9 @@ export const RePrice = async (data) => {
             bus.$emit('CLONE_REPRICE');
         })
         .on('receipt', function(receipt) {
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-            }, 1000);
-
-            //onReceiptChange(receipt);
+            bus.$emit('REFRESH_ALL_DATA');
         })
         .on('error', (err, receipt) => {
             bus.$emit('CLONE_REPRICE');
-            //onReceiptChange(receipt);
         });
 };

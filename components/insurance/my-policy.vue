@@ -1424,6 +1424,7 @@ export default {
         "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
         "SHIBh"
       );
+      console.log(volume);
       let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x224b33139a377a62d4BaD3D58cEDb7807AE228eB");
@@ -1434,7 +1435,7 @@ export default {
           buyer: myAddress,
           price: "Airdrop",
           Rent: "Airdrop",
-          volume: volume,
+          volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1626105600000)).format(
             "YYYY/MM/DD HH:mm:ss"

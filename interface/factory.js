@@ -80,10 +80,8 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                     // duration: 0,
                 });
             }
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-                bus.$emit('REFRESH_BALANCE');
-            }, 1000);
+            bus.$emit('REFRESH_ALL_DATA');
+            bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
@@ -146,10 +144,8 @@ export const settle = async (short, data) => {
                     // duration: 0,
                 });
             }
-            setTimeout(() => {
-                bus.$emit('REFRESH_ALL_DATA');
-                bus.$emit('REFRESH_BALANCE');
-            }, 1000);
+            bus.$emit('REFRESH_ALL_DATA');
+            bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
@@ -216,9 +212,7 @@ export const onExercise = async (data, callBack) => {
                     // duration: 0,
                 });
             }
-            setTimeout(() => {
-                bus.$emit('REFRESH_BALANCE');
-            }, 1000);
+            bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');

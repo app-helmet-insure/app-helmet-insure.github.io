@@ -247,13 +247,15 @@ export default {
     };
   },
   mounted() {
-    setInterval(() => {
-      setTimeout(() => {
-        this.getMiningTime();
-        this.getDownTime();
-      });
-      clearTimeout();
-    }, 1000);
+    if (!this.expired) {
+      setInterval(() => {
+        setTimeout(() => {
+          this.getMiningTime();
+          this.getDownTime();
+        });
+        clearTimeout();
+      }, 1000);
+    }
     this.$bus.$on("DEPOSITE_LOADING_BURGERHELMET", (data) => {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
@@ -270,9 +272,7 @@ export default {
     this.$bus.$on("REFRESH_MINING", (data) => {
       this.getBalance();
     });
-    setTimeout(() => {
-      this.getBalance();
-    }, 1000);
+    this.getBalance();
   },
   watch: {
     userInfo: {

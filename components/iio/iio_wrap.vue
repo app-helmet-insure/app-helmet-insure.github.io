@@ -247,11 +247,11 @@ export default {
           stakeUtil: "BUSD",
           stakeShare: 0.002,
           showStart: "May. 30th 21:00 SGT",
-          showEnd: "June. 01st 22:00 SGT",
+          showEnd: "June. 02nd 21:00 SGT",
           warnupTimeUTC: "2021/05/25 21:00 UTC+8",
           distributingTimeUTC: "2021/05/30 21:00 UTC+8", //showStart
-          activatingTimeUTC: "2021/06/01 22:00 UTC+8", //showEnd
-          finishedTimeUTC: "2021/06/02 22:00 UTC+8",
+          activatingTimeUTC: "2021/06/02 21:00 UTC+8", //showEnd
+          finishedTimeUTC: "2021/06/03 21:00 UTC+8",
           link: "https://www.paulprotocol.io",
           enterbutton: false,
           open: true,

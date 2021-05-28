@@ -70,12 +70,6 @@ export const compound = async (address, type) => {
             .on('error', function(error, receipt) {
                 bus.$emit('CLOSE_STATUS_DIALOG');
                 bus.$emit('REFRESH_BALANCE');
-                // if (error && error.message) {
-                //     Message({
-                //         message: error && error.message,
-                //         type: 'error',
-                //     });
-                // }
             });
     } catch {}
 };

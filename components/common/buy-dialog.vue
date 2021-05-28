@@ -56,7 +56,7 @@
         <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
       </div>
       <p>
-        <span>Price</span
+        <span>{{ $t("SwapHelmet.Price") }}</span
         ><span
           >1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}</span
         >
@@ -85,7 +85,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import tokenList from "~/assets/utils/tokenlist.json";
 import VueLazyload from "vue-lazyload";

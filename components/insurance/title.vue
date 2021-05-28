@@ -1,16 +1,13 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <a
+        class="swiper-slide dis"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
+        target="_blank"
+        ><div></div
+      ></a>
       <div class="swiper-slide paul">
-        <div></div>
-      </div>
-      <div class="swiper-slide cow">
-        <div></div>
-      </div>
-      <div class="swiper-slide ctt">
-        <div></div>
-      </div>
-      <div class="swiper-slide mass">
         <div></div>
       </div>
       <div class="swiper-slide shib">
@@ -143,10 +140,10 @@ export default {
         background-image: url("../../assets/img/banner/paul_web.png");
       }
     }
-    .mass {
-      background: #d26c40;
+    .dis {
+      background: #7289da;
       > div {
-        background-image: url("../../assets/img/banner/mass_pc.png");
+        background-image: url("../../assets/img/banner/dis_web.png");
       }
     }
     .shib {
@@ -155,29 +152,10 @@ export default {
         background-image: url("../../assets/img/banner/shib2_web.png");
       }
     }
-    .nft {
-      background: #412f63;
-      > div {
-        background-image: url("../../assets/img/banner/ctt_web.png");
-      }
-    }
-
     .hfor {
       background: #262724;
       > div {
         background-image: url("../../assets/img/banner/hfor_web.png");
-      }
-    }
-    .ctt {
-      background: #412f63;
-      > div {
-        background-image: url("../../assets/img/banner/ctt_web.png");
-      }
-    }
-    .cow {
-      background: #367bee;
-      > div {
-        background-image: url("../../assets/img/banner/cow_pc.png");
       }
     }
     .imgbanner {
@@ -214,18 +192,13 @@ export default {
         background-image: url("../../assets/img/banner/paul_h5.png");
       }
     }
-    .ctt {
-      background: #412f63;
+    .dis {
+      background: #7289da;
       > div {
-        background-image: url("../../assets/img/banner/ctt_h5.png");
+        background-image: url("../../assets/img/banner/dis.png");
       }
     }
-    .mass {
-      background: #d26c40;
-      > div {
-        background-image: url("../../assets/img/banner/mass_h5.png");
-      }
-    }
+
     .shib {
       background: #262724;
       > div {
@@ -239,12 +212,7 @@ export default {
         background-image: url("../../assets/img/banner/hfor_h5.png");
       }
     }
-    .cow {
-      background: #367bee;
-      > div {
-        background-image: url("../../assets/img/banner/cow_h5.png");
-      }
-    }
+
     .imgbanner {
       background-size: 100% 100%;
       background-repeat: no-repeat;

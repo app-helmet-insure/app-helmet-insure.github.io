@@ -6,11 +6,7 @@
         <span>HELMET is now on pancakeswap.</span>
         <span>Token Contract Address:</span>
         <span>0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
-        <a
-          href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-          target="_blank"
-          >Exchange now</a
-        >
+        <a @click="openBUY">Exchange now</a>
       </p>
       <svg class="close" aria-hidden="true" @click="TitleTextShow = false">
         <use xlink:href="#icon-close"></use>
@@ -189,6 +185,9 @@ export default {
     });
   },
   methods: {
+    openBUY() {
+      this.$bus.$emit("OPEN_BUY_DIALOG", true);
+    },
     closeNetWorkTip() {
       this.$bus.$emit("CLOSE_STATUS_DIALOG", (data) => {
         this.closeStatusDialog();

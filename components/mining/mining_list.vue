@@ -681,7 +681,7 @@ export default {
           combo: true,
           flash: false,
           info: true,
-          earnName: "APY",
+          earnName: "APR",
           compound: false,
           onePager: "hxBURGER",
           yearEarn: apyArray["bhelmet_xburger"] || "--",

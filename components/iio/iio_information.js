@@ -387,7 +387,7 @@ export default {
         Decimals: 18,
         ActivePrice: 0.5,
         ProjcetInformation: {
-            ProjectName: 'COW',
+            ProjectName: 'CoinWind',
             Distributing: 'May. 23rd 21:00 SGT - May. 25th 21:00 SGT',
             Activating: 'May. 25th 22:00 SGT - May. 26th 22:00 SGT',
             ActivatePeriod: '24hours',
@@ -436,30 +436,30 @@ export default {
         },
     },
     paulprotocol: {
-        name: 'CoinWind',
+        name: 'Paul Protocol',
         Token: 'PAUL',
-        Time1: 'May.27TH 21:00', //mining open
-        Time2: 'May.29th 21:00', //active start
-        Time3: 'May.30th 21:00', //active end
-        Time1UTC: '2021/05/27 21:00 UTC+8',
-        Time2UTC: '2021/05/29 21:00 UTC+8',
-        Time3UTC: '2021/05/30 21:00 UTC+8',
-        Collateral: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+        Time1: 'May.30th 21:00', //mining open
+        Time2: 'June.02nd 21:00', //active start
+        Time3: 'June.03rd 21:00', //active end
+        Time1UTC: '2021/05/30 21:00 UTC+8',
+        Time2UTC: '2021/06/02 21:00 UTC+8',
+        Time3UTC: '2021/06/03 21:00 UTC+8',
+        Collateral: '0x5f730952d4368324a45627d6f823a1ec96415442',
         Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        LongAdress: '0x6a79dd81c693476cf7194B4D33fEB94396CCe5Da',
+        LongAdress: '0x78B3856BFBb7d9732ed6eF74556AAa31E6E169aC',
         Decimals: 18,
         ActivePrice: 0.002,
         ProjcetInformation: {
-            ProjectName: 'PAUL',
-            Distributing: 'May. 27th 21:00 SGT - May. 29th 21:00 SGT',
-            Activating: 'May. 30th 21:00 SGT',
+            ProjectName: 'Paul Protocol',
+            Distributing: 'May. 30th 21:00 SGT - June. 01st 21:00 SGT',
+            Activating: 'June. 02nd 21:00 SGT - June. 03rd 21:00 SGT',
             ActivatePeriod: '24hours',
-            ActivatingxPrice: '1COW=0.002BUSD',
+            ActivatingxPrice: '1PAUL=0.002BUSD',
             TicketPrice: '1 Helmet',
         },
         TokenInformation: {
             TokenName: 'PAUL',
-            Address: '0x422e3af98bc1de5a1838be31a56f75db4ad43730',
+            Address: '0x5f730952d4368324a45627d6f823a1ec96415442',
             Supply: '100,000,000',
             TotalSupply: '10,000,000,000',
         },

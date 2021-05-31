@@ -237,7 +237,7 @@ export default {
           expired_activating: "86.67%",
         },
         {
-          iio_name: "Paul Protocol",
+          iio_name: "PaulProtocol",
           iio_img: "iio_paul",
           iio_webSite: "paulprotocol.io",
           coming: true,
@@ -253,7 +253,7 @@ export default {
           activatingTimeUTC: "2021/06/02 21:00 UTC+8", //showEnd
           finishedTimeUTC: "2021/06/03 21:00 UTC+8",
           link: "https://www.paulprotocol.io",
-          enterbutton: false,
+          enterbutton: true,
           open: true,
           sort: 0,
           active_page: 2,

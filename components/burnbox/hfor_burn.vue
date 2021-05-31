@@ -219,7 +219,7 @@ export default {
       list: {
         name: "HCCT Burning Box",
         endTime: "2021/05/28 00:00",
-        startTime: "2021/05/13 12:00",
+        startTime: "2021/05/13 14:00",
         bonusValue: 15000000000,
         DownTime: {
           day: "00",

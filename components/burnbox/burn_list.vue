@@ -37,16 +37,28 @@
         <section>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              <i>/</i>
+              {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              <i>/</i>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
+              <template v-if="item.dueDate.day != '00'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                <i>/</i>
+              </template>
+              <template>
+                {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+              </template>
+              <template v-if="item.dueDate.day == '00'">
+                {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
+              </template>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -148,16 +160,28 @@
         <div>
           <i></i>
           <p>
-            <span v-if="typeof item.dueDate == 'object'">
-              {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+            <span v-if="typeof item.openDate == 'object'">
+              {{ item.openDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+              <i>/</i>
+              {{ item.openDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+              <i>/</i>
+            </span>
+            <span v-else-if="typeof item.dueDate == 'object'">
+              <template v-if="item.dueDate.day != '00'">
+                {{ item.dueDate.day }}<b>{{ $t("Content.DayM") }}</b>
+                <i>/</i>
+              </template>
+              <template>
+                {{ item.dueDate.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>
+              </template>
+              <template v-if="item.dueDate.day == '00'">
+                {{ item.dueDate.minute }}<b>{{ $t("Content.MinM") }}</b>
+                <i>/</i>
+              </template>
             </span>
             <span v-else>
-              {{
-                item.dueDate == "Expired"
-                  ? $t("Insurance.Insurance_text22")
-                  : item.dueDate
-              }}
+              {{ item.dueDate }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
@@ -231,6 +255,7 @@ import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
 import HAUTOBURN from "~/components/burnbox/hauto_burn.vue";
 import BNB500BURN from "~/components/burnbox/bnb500_burn.vue";
 import HFORBURN from "~/components/burnbox/hfor_burn.vue";
+import moment from "moment";
 export default {
   components: {
     Wraper,
@@ -300,6 +325,7 @@ export default {
           earn: "SHIBh",
           bonus: 15000000000,
           dueDate: this.getRemainTime("2021/05/28 00:00"),
+          openDate: this.getMiningTime("2021/05/13 14:00"),
           icon: "hFOR",
         },
         {
@@ -307,6 +333,7 @@ export default {
           earn: "hTPT",
           bonus: 1000000,
           dueDate: this.getRemainTime("2021/04/12 00:00"),
+          openDate: this.getMiningTime("2021/04/05 00:00"),
           icon: "hAUTO",
         },
         {
@@ -314,6 +341,7 @@ export default {
           earn: "hTPT",
           bonus: 1000000,
           dueDate: this.getRemainTime("2021/04/12 00:00"),
+          openDate: this.getMiningTime("2021/04/05 00:00"),
           icon: "BNB500",
         },
         {
@@ -321,6 +349,7 @@ export default {
           earn: "hDODO",
           bonus: 10000,
           dueDate: this.getRemainTime("2021/03/23 00:00"),
+          openDate: this.getMiningTime("2021/03/16 00:00"),
           icon: "hCTK",
         },
         {
@@ -328,15 +357,41 @@ export default {
           earn: "HCCTII",
           bonus: 100000,
           dueDate: this.getRemainTime("2021/03/19 00:00"),
+          openDate: this.getMiningTime("2021/03/12 00:00"),
           icon: "HCCT",
         },
       ];
       this.burnList = arr;
     },
+    getMiningTime(time) {
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        return template;
+      } else {
+        return "Mining";
+      }
+    },
     getRemainTime(time) {
       let now = new Date() * 1;
       let dueDate = time;
-      dueDate = new Date(dueDate);
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
       let DonwTime = dueDate - now;
       let day = Math.floor(DonwTime / (24 * 3600000));
       let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
@@ -496,6 +551,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {
@@ -761,6 +819,9 @@ export default {
                   font-weight: bold;
                   color: #cfcfd2;
                   margin: 0 2px;
+                  &:last-of-type {
+                    display: none;
+                  }
                 }
               }
               &:nth-of-type(2) {

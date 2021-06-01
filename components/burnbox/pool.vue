@@ -1,19 +1,22 @@
 <template>
   <div class="burnbox">
-    <div class="burn_wrap">
+    <div
+      class="burn_wrap"
+      v-if="!activeFlag || (activeFlag && activeType == 'STAKE')"
+    >
       <div class="process">
         <div class="name">
           <span>{{ $t("Table.FireProcess") }}</span>
           <span style="display: flex">
-            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            <span>{{ isLogin ? rewards : "--" }}</span>
             /
-            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+            <span>{{ isLogin ? activeData.TOTAL_BONUS : "--" }}</span>
           </span>
         </div>
         <div class="control">
           <div class="control_wrap">
-            <div class="control_real" :style="`width:${list.process}%`">
-              <i class="fire" v-if="list.process != 0"></i>
+            <div class="control_real" :style="`width:${process}%`">
+              <i class="fire" v-if="process != 0"></i>
             </div>
           </div>
         </div>
@@ -29,7 +32,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ poolData.TOKEN_NAME }}
+          {{ activeData.TOKEN_NAME }}
         </span>
       </p>
       <div class="input">
@@ -43,7 +46,7 @@
           "
         />
         <p>
-          <span>{{ poolData.TOKEN_NAME }}</span
+          <span>{{ activeData.TOKEN_NAME }}</span
           >|<i @click="DepositeNum = balance.Deposite">{{ $t("Table.Max") }}</i>
         </p>
       </div>
@@ -51,10 +54,13 @@
         class="submit_burn"
         @click="toDeposite"
         :style="
-          expired ? 'background: #ccc !important; pointer-events: none' : ''
+          activeData.MING_TIME == 'Expired'
+            ? 'background: #ccc !important; pointer-events: none'
+            : ''
         "
       >
-        <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i
+        >{{ ApproveFlag ? "Approve" : $t("Table.Burn") }}
       </button>
       <div class="text">
         <p>
@@ -68,7 +74,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ poolData.TOKEN_NAME }}</span
+            &nbsp;{{ activeData.TOKEN_NAME }}</span
           >
         </p>
         <p>
@@ -82,7 +88,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ poolData.TOKEN_NAME }}</span
+            &nbsp;{{ activeData.TOKEN_NAME }}</span
           >
         </p>
         <p class="bigsize">
@@ -92,38 +98,43 @@
       </div>
 
       <div class="ContractAddress">
-        <span>{{ poolData.TOKEN_NAME }} {{ $t("Table.ContractAddress") }}</span>
+        <span
+          >{{ activeData.TOKEN_NAME }} {{ $t("Table.ContractAddress") }}</span
+        >
         <p>
-          {{ poolData.ONELPT_ADDRESS }}
+          {{ activeData.ONELPT_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, poolData.ONELPT_ADDRESS)"
+            @click="copyAdress($event, activeData.ONELPT_ADDRESS)"
           ></i>
         </p>
       </div>
     </div>
     <i></i>
-    <div class="claim_wrap">
+    <div
+      class="claim_wrap"
+      v-if="!activeFlag || (activeFlag && activeType == 'CLAIM')"
+    >
       <div class="process">
         <div class="name">
           <span>{{ $t("Table.FireProcess") }}</span>
           <span style="display: flex">
-            <span>{{ isLogin ? list.rewards : "--" }}</span>
+            <span>{{ isLogin ? rewards : "--" }}</span>
             /
-            <span>{{ isLogin ? list.bonusValue : "--" }}</span>
+            <span>{{ isLogin ? activeData.TOTAL_BONUS : "--" }}</span>
           </span>
         </div>
         <div class="control">
           <div class="control_wrap">
-            <div class="control_real" :style="`width:${list.process}%`">
-              <i class="fire" v-if="list.process != 0"></i>
+            <div class="control_real" :style="`width:${process}%`">
+              <i class="fire" v-if="process != 0"></i>
             </div>
           </div>
         </div>
       </div>
       <p>
-        <span>{{ poolData.earn }} {{ $t("Table.HELMETRewards") }}</span>
+        <span>{{ activeData.earn }} {{ $t("Table.HELMETRewards") }}</span>
         <span
           ><countTo
             v-if="isLogin"
@@ -132,7 +143,7 @@
             :duration="2000"
             :decimals="8"
           />
-          {{ poolData.earn }}</span
+          {{ activeData.earn }}</span
         >
       </p>
       <div class="input">
@@ -150,7 +161,7 @@
           style="border: 1px solid #fd7e14 !important"
         />
         <p>
-          <span>{{ poolData.REWARD_NAME }}</span
+          <span>{{ activeData.REWARD_NAME }}</span
           >|<i
             @click="WithdrawNum = balance.Earn"
             style="background: rgba(255, 150, 0, 0.1)"
@@ -165,14 +176,14 @@
       </button>
       <div class="ContractAddress">
         <span
-          >{{ poolData.REWARD_NAME }} {{ $t("Table.ContractAddress") }}</span
+          >{{ activeData.REWARD_NAME }} {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ poolData.REWARD_ADDRESS }}
+          {{ activeData.REWARD_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, poolData.REWARD_ADDRESS)"
+            @click="copyAdress($event, activeData.REWARD_ADDRESS)"
           ></i>
         </p>
       </div>
@@ -182,38 +193,25 @@
 
 <script>
 import {
-  totalSupply,
-  getLPTOKEN,
-  CangetPAYA,
-  getPAYA,
-  getBalance,
-  toDeposite,
-} from "~/interface/deposite";
-import { BalanceOf, TotalSupply, Earned } from "~/interface/read_contract.js";
+  BalanceOf,
+  TotalSupply,
+  Earned,
+  Allowance,
+} from "~/interface/read_contract.js";
+import { Stake, GetReward } from "~/interface/write_contract.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import countTo from "vue-count-to";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+import moment from "moment";
 export default {
-  props: ["poolData"],
+  props: ["activeData", "activeFlag", "activeType"],
   components: {
     countTo,
   },
   data() {
     return {
-      list: {
-        name: "hCTK Burning Box",
-        endTime: "2021/03/23 00:00",
-        startTime: "2021/03/16 00:00",
-        bonusValue: 10000,
-        DownTime: {
-          day: "00",
-          hour: "00",
-        },
-        rewards: 0,
-        process: 0,
-      },
       balance: {
         Deposite: 0,
         Withdraw: 0,
@@ -221,16 +219,18 @@ export default {
         TotalLPT: 0,
         Share: 0,
       },
+      process: 0,
+      rewards: 0,
       DepositeNum: "",
       MingTime: {
         hour: "00",
         minute: "00",
         second: "00",
       },
+      ApproveFlag: false,
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
-      actionType: "burn",
       isLogin: false,
       expired: false,
       openMining: false,
@@ -241,10 +241,11 @@ export default {
       handler: "userInfoWatch",
       immediate: true,
     },
-    poolData(newValue) {
-      console.log(newValue);
+    activeData(newValue) {
       if (newValue) {
         this.getBalance();
+        this.NeedApprove();
+        this.getProcess();
       }
     },
   },
@@ -258,32 +259,18 @@ export default {
       this.stakeLoading = data.status;
       this.DepositeNum = "";
     });
-    this.$bus.$on("CLAIM_LOADING_BURNHCTK", (data) => {
-      this.claimLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_BURNHCTK", () => {
-      this.getBalance();
-    });
-    this.getDownTime();
-    this.getMiningTime();
     this.getBalance();
     this.getProcess();
+    this.NeedApprove();
+    console.log(this.ApproveFlag);
     if (!this.expired) {
       let timer1 = setInterval(() => {
-        this.getDownTime();
-        this.getMiningTime();
-      }, 1000);
-      let timer2 = setInterval(() => {
         this.getProcess();
       }, 20000);
       this.$once("hook:beforeDestroy", () => {
         clearInterval(timer1);
-        clearInterval(timer2);
       });
     }
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
   },
   methods: {
     copyAdress(e, text) {
@@ -311,23 +298,23 @@ export default {
     async getBalance() {
       // 可抵押数量
       let Deposite = await BalanceOf(
-        this.poolData.STAKE_ADDRESS,
-        this.poolData.STAKE_DECIMALS
+        this.activeData.STAKE_ADDRESS,
+        this.activeData.STAKE_DECIMALS
       );
       // 可赎回数量
       let Withdraw = await BalanceOf(
-        this.poolData.POOL_ADDRESS,
-        this.poolData.STAKE_DECIMALS
+        this.activeData.POOL_ADDRESS,
+        this.activeData.STAKE_DECIMALS
       );
       // 总抵押
       let TotalLPT = await TotalSupply(
-        this.poolData.POOL_ADDRESS,
-        this.poolData.STAKE_DECIMALS
+        this.activeData.POOL_ADDRESS,
+        this.activeData.STAKE_DECIMALS
       );
       // 可领取Helmet
       let Helmet = await Earned(
-        this.poolData.POOL_ADDRESS,
-        this.poolData.REWARD_DECIMALS
+        this.activeData.POOL_ADDRESS,
+        this.activeData.REWARD_DECIMALS
       );
       // 总Helmet
       this.balance.Deposite = Deposite;
@@ -336,83 +323,23 @@ export default {
       this.balance.TotalLPT = fixD(TotalLPT, 8);
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
     },
-    //   获取矿池结束倒计时
-    getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.endTime;
-      dueDate = new Date(dueDate) * 1;
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template = {};
-      if (dueDate > now) {
-        template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
-      } else {
-        template = {
-          day: "00",
-          hour: "00",
-        };
-        this.expired = true;
-        this.actionType = "claim";
-      }
-      this.list.DownTime = template;
-    },
-    getMiningTime() {
-      let now = new Date() * 1;
-      let dueDate = "2021/03/16 00:00";
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      hour = hour + day * 24;
-      let template = {};
-      if (dueDate < now) {
-        template = {
-          hour: "00",
-          minute: "00",
-          second: "00",
-        };
-        this.openMining = true;
-      } else {
-        template = {
-          hour: hour > 9 ? hour : "0" + hour,
-          minute: minute > 9 ? minute : "0" + minute,
-          second: second > 9 ? second : "0" + second,
-        };
-      }
-      this.MingTime = template;
-    },
     getProcess() {
-      let now = new Date() * 1;
-      let startTime = new Date(this.list.startTime) * 1;
-      let endTime = new Date(this.list.endTime) * 1;
+      let now = moment.now();
+      let startTime = new Date(moment(this.activeData.START_TIME)) * 1;
+      let endTime = new Date(moment(this.activeData.END_TIME)) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-
-      if (this.expired) {
-        this.list.process = 100;
-        this.list.rewards = this.list.bonusValue;
+      console.log(process);
+      if (this.activeData.MING_TIME == "Expired") {
+        this.process = 100;
+        this.rewards = this.activeData.TOTAL_BONUS;
       } else {
-        this.list.process = process > 0 ? fixD(process * 100, 2) : 0;
-        this.list.rewards = process > 0 ? fixD(process * 10000, 4) : 0;
+        this.process = process > 0 ? fixD(process * 100, 2) : 0;
+        this.rewards =
+          process > 0 ? fixD(process * this.activeData.TOTAL_BONUS, 4) : 0;
       }
     },
     // 抵押
-    toDeposite() {
+    async toDeposite() {
       if (!this.DepositeNum) {
         return;
       }
@@ -420,8 +347,19 @@ export default {
         return;
       }
       this.stakeLoading = true;
-      let type = "BURNHCTK";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      let ContractAddress = this.activeData.POOL_ADDRESS;
+      let DepositeVolume = this.DepositeNum;
+      let Decimals = this.activeData.STAKE_DECIMALS;
+      await Stake(
+        { ContractAddress, DepositeVolume, Decimals },
+        (status) => {}
+      );
+    },
+    async NeedApprove() {
+      let SpenderAddress = this.activeData.POOL_ADDRESS;
+      let TokenAddress = this.activeData.STAKE_ADDRESS;
+      let flag = await Allowance(TokenAddress, SpenderAddress);
+      this.ApproveFlag = flag;
     },
     // 结算Paya
     async toClaim() {
@@ -429,8 +367,13 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let type = "BURNHCTK";
-      let res = await getPAYA(type);
+      let ContractAddress = this.activeData.POOL_ADDRESS;
+      await GetReward(ContractAddress, (res) => {
+        if (res == "success" || res == "error") {
+          this.getBalance();
+          this.claimLoading = false;
+        }
+      });
     },
   },
 };

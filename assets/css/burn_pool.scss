@@ -28,7 +28,6 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         cursor: pointer;
-        margin-left: 4px;
         flex-shrink: 0;
     }
 }
@@ -37,6 +36,7 @@
         padding: 40px 0;
         display: flex;
         justify-content: space-evenly;
+        border-top: 1px solid #e8e8eb;
         > i {
             display: block;
             width: 1px;

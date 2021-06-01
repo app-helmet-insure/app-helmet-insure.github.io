@@ -1,4 +1,5 @@
 import MiningABI from '~/abi/deposite_abi.json';
+import ApproveABI from '~/abi/IPancakePair.json';
 import {
     Contract,
     getAccounts,
@@ -47,16 +48,25 @@ export const Earned = async (ContractAddress, Decimals) => {
         .call()
         .then((res) => {
             if (DecimalsUnit) {
-                console.log(
-                    DecimalsUnit,
-                    ContractAddress,
-                    Decimals,
-                    fromWei(res, DecimalsUnit)
-                );
                 return fromWei(res, DecimalsUnit);
             } else {
                 let powNumber = new BigNumber(10).pow(Decimals).toString();
                 return new BigNumber(res).div(powNumber).toString();
+            }
+        });
+};
+export const Allowance = async (TokenAddress, SpenderAddress) => {
+    let Contracts = await Contract(ApproveABI.abi, TokenAddress);
+    let Account = await getAccounts();
+    return Contracts.methods
+        .allowance(Account, SpenderAddress)
+        .call()
+        .then((res) => {
+            console.log(res);
+            if (Number(res) > 0) {
+                return false;
+            } else {
+                return true;
             }
         });
 };

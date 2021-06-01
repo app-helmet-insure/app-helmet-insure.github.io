@@ -2,7 +2,11 @@
   <div class="wraper" v-if="wraperFlag">
     <PHeader></PHeader>
     <div class="wraper_slot">
-      <slot></slot>
+      <slot
+        :activeData="activeData"
+        :activeFlag="activeFlag"
+        :activeType="activeType"
+      ></slot>
     </div>
   </div>
 </template>
@@ -10,6 +14,7 @@
 <script>
 import PHeader from "~/components/common/header.vue";
 export default {
+  props: ["activeData", "activeFlag", "activeType"],
   components: {
     PHeader,
   },

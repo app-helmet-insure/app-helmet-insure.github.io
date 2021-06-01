@@ -267,6 +267,8 @@ export const getTokenName = (address) => {
             return 'CTT';
         case '0x422e3af98bc1de5a1838be31a56f75db4ad43730':
             return 'COW';
+        case '0x5f730952d4368324a45627d6f823a1ec96415442':
+            return 'PAUL';
         default:
             return '--';
     }

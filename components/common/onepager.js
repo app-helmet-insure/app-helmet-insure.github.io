@@ -158,4 +158,11 @@ export default {
         'The lifetime of iCTT is from May 25th 21:00 SGT — May 26th 21:00 SGT. ',
         'Please be sure to activate the iCTT within the validity period.',
     ],
+    iPAUL: [
+        'IIO PAUL Supply: 100,000,000',
+        'iPAUL activate/swap formula: 1 iPAUL+0.002 BUSD Swap 1 PAUL',
+        'iPAUL Distribution: May 30th 21:00 SGT - June 1st 21:00 SGT',
+        'Activate/swap iPAUL period: June 2nd 21:00 SGT - June 3rd 21:00 SGT',
+        'IIO Ticket: 1 $HELMET',
+    ],
 };

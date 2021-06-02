@@ -133,7 +133,7 @@ export default {
 
       .title {
         font-size: 20px;
-        color: $bg-d;
+        color: #101010;
       }
       .close {
         display: inline-block;
@@ -269,7 +269,7 @@ export default {
 
       .title {
         font-size: 20px;
-        color: $bg-d;
+        color: #101010;
       }
       .close {
         display: inline-block;

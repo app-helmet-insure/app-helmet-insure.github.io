@@ -192,7 +192,7 @@ export default {
       }
       > .title {
         font-size: 20px;
-        color: $bg-d;
+        color: #101010;
         text-align: left;
         padding-bottom: 16px;
       }
@@ -222,7 +222,7 @@ export default {
         }
       }
       .con-tit {
-        color: $bg-d;
+        color: #101010;
         font-size: 16px;
         font-weight: 500;
         margin-top: 16px;
@@ -238,7 +238,7 @@ export default {
       .con-text {
         margin-top: 12px;
         font-size: 14px;
-        color: $bg-d;
+        color: #101010;
         p {
           color: #fd7e14;
         }
@@ -356,7 +356,7 @@ export default {
       }
       > .title {
         font-size: 20px;
-        color: $bg-d;
+        color: #101010;
         text-align: left;
         padding-bottom: 16px;
       }
@@ -386,7 +386,7 @@ export default {
         }
       }
       .con-tit {
-        color: $bg-d;
+        color: #101010;
         font-size: 16px;
         font-weight: 500;
         margin-top: 16px;
@@ -402,7 +402,7 @@ export default {
       .con-text {
         margin-top: 12px;
         font-size: 14px;
-        color: $bg-d;
+        color: #101010;
         p {
           color: #fd7e14;
         }

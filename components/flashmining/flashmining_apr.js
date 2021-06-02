@@ -3,6 +3,8 @@ import { pancakeswap } from '~/assets/utils/pancakeswap.js';
 import { burgerswaplpt } from '~/assets/utils/burgerswap.js';
 import { TotalSupply, BalanceOf } from '~/interface/read_contract.js';
 export const GetPoolAPR = async ({
+    OPEN_TIME,
+    MING_TIME,
     SWAP_TYPE,
     MINING_DAY,
     TOTAL_REWARDS,
@@ -40,5 +42,13 @@ export const GetPoolAPR = async ({
     let NUMBERATOR = TOEKNHELMET * (TOTAL_REWARDS / MINING_DAY) * 365; // Numerator
     let DENOMINATOR = ((HELMETVALUE * 2) / STAKEVOLUME) * POOLVOLUME; // Denominator
     let APR = (NUMBERATOR / DENOMINATOR) * 100;
-    return APR;
+    if (MING_TIME == 'Finished') {
+        return '--';
+    }
+    if (OPEN_TIME == 'Mining') {
+        return APR + '%';
+    }
+    if (OPEN_TIME != 'Mining') {
+        return 'Infinity';
+    }
 };

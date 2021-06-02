@@ -66,9 +66,7 @@
             <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
           </section>
           <section>
-            <span>{{
-              item.MING_TIME == "Finished" ? "--" : item.yearEarn + "%"
-            }}</span>
+            <span>{{ item.REWARD_YEAR }}</span>
             <span>APR</span>
           </section>
           <section>
@@ -154,9 +152,7 @@
       </section>
       <section>
         <p>
-          <span>{{
-            item.MING_TIME == "Finished" ? "--" : item.yearEarn + "%"
-          }}</span>
+          <span>{{ item.REWARD_YEAR }}</span>
           <span>APR</span>
         </p>
         <div>
@@ -245,7 +241,7 @@ import Wraper from "~/components/common/wraper.vue";
 import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
-import { pancakeswapv1 } from "~/assets/utils/pancakeswapv1.js";
+import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
 import PHeader from "~/components/common/header.vue";
 import POOL from "./pool.vue";
@@ -260,37 +256,16 @@ export default {
   data() {
     return {
       miningList: [],
-      apyArray: {},
       showActiveFlash: false,
       activeFlash: "",
       TradeType: "",
       activeType: "",
       activeData: {},
-      activeBurn: "",
       activeFlag: "",
-      apyArray: {
-        hxBURGER: 0,
-        hTPT: 0,
-        hDODO: 0,
-        hMATH: 0,
-        hAUTO: 0,
-        hCTK: 0,
-        HCCT: 0,
-      },
     };
   },
   mounted() {
     this.initFlashMiningData();
-    // this.getAPY();
-    let timer = setInterval(() => {
-      // this.getAPY();
-    }, 20000);
-    this.$once("hook:beforeDestroy", () => {
-      clearTimeout(timer);
-    });
-    this.miningList.forEach((item) => {
-      let res = GetPoolAPR(item);
-    });
   },
   computed: {
     indexArray() {
@@ -316,30 +291,6 @@ export default {
         return;
       }
     },
-    StakeMiningH5(MiningType) {
-      this.activeType = "STAKE";
-      this.TradeType = "STAKE";
-      this.showActiveFlash = true;
-      this.activeFlash = MiningType;
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    ClaimMiningH5(MiningType) {
-      this.activeType = "CLAIM";
-      this.TradeType = "CLAIM";
-      this.showActiveFlash = true;
-      this.activeFlash = MiningType;
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    StakeMining(MiningType) {
-      this.activeType = "STAKE";
-      this.showActiveFlash = true;
-      this.activeFlash = MiningType;
-    },
-    ClaimMining(MiningType) {
-      this.activeType = "CLAIM";
-      this.showActiveFlash = true;
-      this.activeFlash = MiningType;
-    },
     HandleClickAction(PoolData, Action, Flag = false) {
       this.showActiveFlash = true;
       this.activeData = PoolData;
@@ -355,7 +306,7 @@ export default {
         this.initFlashMiningData();
       }
     },
-    initFlashMiningData() {
+    async initFlashMiningData() {
       let arr = [
         {
           POOL_NAME: "<i>hxBURGER</i>&nbsp;Pool",
@@ -518,6 +469,11 @@ export default {
           MINING_DAY: 7,
         },
       ];
+      for (let i = 0; i < arr.length; i++) {
+        let item = arr[i];
+        let res = await GetPoolAPR(item);
+        item.REWARD_YEAR = res;
+      }
       this.miningList = arr;
     },
     getRemainTime(time) {
@@ -573,231 +529,6 @@ export default {
         return template;
       } else {
         return "Mining";
-      }
-    },
-    getAPY() {
-      this.GET_HAUTO_POOL_APY();
-      this.GET_BNB500_POOL_APY();
-      this.GET_HCTK_POOL_APY();
-      this.GET_HDODO_POOL_APY();
-      this.GET_HMATH_POOL_APY();
-      this.GET_HCCT_POOL_APY();
-      this.GET_HTPT_POOL_APY();
-      this.GET_HXBURGER_POOL_APY();
-    },
-    async GET_HXBURGER_POOL_APY() {
-      let HAUTOHELMET = await burgerswaplpt("HXBURGER", "HELMET", 18); //Hlemt价格
-      let HctkVolume = await totalSupply("HXBURGERPOOL"); //数量
-      let LptVolume = await totalSupply("HXBURGERPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HXBURGERPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(20000, 20), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      let startedTime = this.miningList[0].started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.miningList[0].yearEarn = "Infinity";
-      } else {
-        // this.apyArray.hxBURGER = "--";
-        // this.miningList[0].yearEarn = "--";
-        this.apyArray.hxBURGER = fixD(APY, 2);
-        this.miningList[0].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HTPT_POOL_APY() {
-      let HAUTOHELMET = await pancakeswapv1("HTPT", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HTPTPOOL"); //数量
-      let LptVolume = await totalSupply("HTPTPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HTPTPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(2000000, 21), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-
-      let startedTime = this.miningList[1].started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.miningList[1].yearEarn = "Infinity";
-      } else {
-        this.apyArray.hTPT = fixD(APY, 2);
-        this.miningList[1].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HDODO_POOL_APY() {
-      let HCTKHELMET = await pancakeswapv1("HDODO", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HDODOPOOL"); //数量
-      let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCTKHELMET, precision.divide(40000, 15), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[2].yearEarn = "--";
-      } else {
-        this.apyArray.hDODO = fixD(APY, 2);
-        this.miningList[2].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HMATH_POOL_APY() {
-      let HMATHHELMET = await pancakeswapv1("HMATH", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HMATHPOOL"); //数量
-      let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HMATHHELMET, precision.divide(30000, 15), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[3].yearEarn = "--";
-      } else {
-        this.apyArray.hMATH = fixD(APY, 2);
-        this.miningList[3].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HAUTO_POOL_APY() {
-      let HAUTOHELMET = await pancakeswapv1("HAUTO", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
-      let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(10, 14), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[4].yearEarn = "--";
-      } else {
-        this.apyArray.hAUTO = fixD(APY, 2);
-        this.miningList[4].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_BNB500_POOL_APY() {
-      let HCTKHELMET = await pancakeswapv1("BNB500", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("BNB500POOL"); //数量
-      let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCTKHELMET, precision.divide(1000, 10), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[5].yearEarn = "--";
-      } else {
-        this.apyArray.BNB500 = fixD(APY, 2);
-        this.miningList[5].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HCCT_POOL_APY() {
-      let HCCTHELMET = await pancakeswapv1("HCCT", "HELMET");
-      let HcctVolume = await totalSupply("HCCTPOOL");
-      let LptVolume = await totalSupply("HCCTPOOL_LPT");
-      let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCCTHELMET, 16000, 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HcctVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[6].yearEarn = "--";
-      } else {
-        this.apyArray.HCCT = fixD(APY, 2);
-        this.miningList[6].yearEarn = fixD(APY, 2);
-      }
-    },
-    async GET_HCTK_POOL_APY() {
-      let HCTKHELMET = await pancakeswapv1("HCTK", "HELMET"); //Hlemt价格
-      let HctkVolume = await totalSupply("HCTKPOOL"); //数量
-      let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
-      let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
-      // APY = 年产量*helmet价格/抵押价值
-      let APY = fixD(
-        precision.times(
-          precision.divide(
-            precision.times(HCTKHELMET, precision.divide(70000, 21), 365),
-            precision.times(
-              precision.divide(precision.times(HelmetValue, 2), LptVolume),
-              HctkVolume
-            )
-          ),
-          100
-        ),
-        2
-      );
-      if (this.expired) {
-        this.miningList[7].yearEarn = "--";
-      } else {
-        this.apyArray.HCTK = fixD(APY, 2);
-        this.miningList[7].yearEarn = fixD(APY, 2);
       }
     },
   },

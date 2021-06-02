@@ -27,7 +27,6 @@ export const pancakeswapv1 = async (
     try {
         // 获取交易对地址
         const address = Pair.getAddress(TOKEN1, TOKEN2);
-        console.log(address);
         // 获取合约方法
         const Contracts = await PairContract(address);
         // 获取getReserves

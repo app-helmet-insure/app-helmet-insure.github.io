@@ -3,159 +3,126 @@
     <div class="flashmining_title">
       <h3>{{ $t("Header.FlashMining") }}</h3>
     </div>
-    <div
-      class="mining_item"
-      v-for="(item, index) in miningList"
-      :key="item.earn"
-    >
-      <img
-        class="link_flash"
-        src="~/assets/img/flashmining/flash_link.png"
-        alt=""
-        v-if="index != 0"
-      />
+
+    <div class="flash_pc_wrap">
       <div
-        :class="
-          activeFlash == item.earn && showActiveFlash
-            ? 'activeFlash flash_show'
-            : 'flash_show'
-        "
+        class="mining_item"
+        v-for="(item, index) in miningList"
+        :key="item.TOKEN_NAME"
       >
         <img
-          :src="require(`~/assets/img/flashmining/${item.earn}.png`)"
+          class="link_flash"
+          src="~/assets/img/flashmining/flash_link.png"
           alt=""
+          v-if="index != 0"
         />
-        <section>
-          <span
-            class="onePager"
-            v-html="item.miningName"
-            @click="hadnleShowOnePager($event, item.earn)"
-          ></span>
-          <span>{{ item.desc }}</span>
-        </section>
-        <section>
-          <p>
-            {{ $t("Table.EarnList") }}
-            <span>
-              {{ item.earn }}
-            </span>
-          </p>
-        </section>
-        <section>
-          <i></i>
-          <p>
-            <span v-if="typeof timeArray[item.earn].openDate == 'object'">
-              {{ timeArray[item.earn].openDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ timeArray[item.earn].openDate.minute
-              }}<b>{{ $t("Content.MinM") }}</b>
-            </span>
-            <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
-              {{ timeArray[item.earn].dueDate.day
-              }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ timeArray[item.earn].dueDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ timeArray[item.earn].dueDate }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
-          </p>
-        </section>
-        <section>
-          <span>{{ item.weekly }}</span>
-          <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
-        </section>
-        <section>
-          <span>{{
-            timeArray[item.earn].dueDate == "Finished"
-              ? "--"
-              : item.yearEarn + "%"
-          }}</span>
-          <span>APR</span>
-        </section>
-        <section>
-          <button
-            @click="StakeMining(item.earn)"
-            :class="
-              activeFlash == item.earn &&
-              showActiveFlash &&
-              activeType == 'STAKE'
-                ? 'activeButton stakeFlash'
-                : 'stakeFlash'
-            "
+        <div
+          :class="
+            activeFlash == item.TOKEN_NAME && showActiveFlash
+              ? 'activeFlash flash_show'
+              : 'flash_show'
+          "
+        >
+          <img
+            :src="require(`~/assets/img/flashmining/${item.REWARD_NAME}.png`)"
+            alt=""
+          />
+          <section>
+            <span
+              class="onePager"
+              v-html="item.POOL_NAME"
+              @click="hadnleShowOnePager($event, item.REWARD_NAME)"
+            ></span>
+            <span>{{ item.POOL_DESC }}</span>
+          </section>
+          <section>
+            <p>
+              {{ $t("Table.EarnList") }}
+              <span>
+                {{ item.REWARD_NAME }}
+              </span>
+            </p>
+          </section>
+          <section>
+            <i></i>
+            <p>
+              <span v-if="typeof item.OPEN_TIME == 'object'">
+                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>{{ item.OPEN_TIME.minute
+                }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.MING_TIME == 'object'">
+                {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.MING_TIME }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </section>
+          <section>
+            <span>{{ item.REWARD_WEEKLY }}</span>
+            <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
+          </section>
+          <section>
+            <span>{{
+              item.MING_TIME == "Finished" ? "--" : item.yearEarn + "%"
+            }}</span>
+            <span>APR</span>
+          </section>
+          <section>
+            <button
+              @click="HandleClickAction(item, 'STAKE')"
+              :class="
+                activeFlash == item.TOKEN_NAME &&
+                showActiveFlash &&
+                activeType == 'STAKE'
+                  ? 'activeButton stakeFlash'
+                  : 'stakeFlash'
+              "
+            >
+              {{ $t("Insurance.Insurance_text23") }}
+              <i class="selectDown"></i>
+            </button>
+            <button
+              @click="HandleClickAction(item, 'CLAIM')"
+              :class="
+                activeFlash == item.TOKEN_NAME &&
+                showActiveFlash &&
+                activeType == 'CLAIM'
+                  ? 'activeButton claimFlash'
+                  : 'claimFlash'
+              "
+            >
+              {{ $t("Table.Claim") }}
+              <i class="selectDown"></i>
+            </button>
+          </section>
+        </div>
+        <div
+          class="flash_detail"
+          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+        >
+          <svg
+            class="close"
+            aria-hidden="true"
+            @click="showActiveFlash = false"
           >
-            {{ $t("Insurance.Insurance_text23") }}
-            <i class="selectDown"></i>
-          </button>
-          <button
-            @click="ClaimMining(item.earn)"
-            :class="
-              activeFlash == item.earn &&
-              showActiveFlash &&
-              activeType == 'CLAIM'
-                ? 'activeButton claimFlash'
-                : 'claimFlash'
-            "
-          >
-            {{ $t("Table.Claim") }}
-            <i class="selectDown"></i>
-          </button>
-        </section>
-      </div>
-      <div
-        class="flash_detail"
-        v-if="showActiveFlash && activeFlash == item.earn"
-      >
-        <svg class="close" aria-hidden="true" @click="showActiveFlash = false">
-          <use xlink:href="#icon-close"></use>
-        </svg>
-        <Hxburgerpool
-          v-if="activeFlash == 'hxBURGER' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></Hxburgerpool>
-        <HtptPool
-          v-if="activeFlash == 'hTPT' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HtptPool>
-        <HdodoPool
-          v-if="activeFlash == 'hDODO' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HdodoPool>
-        <HmathPool
-          v-if="activeFlash == 'hMATH' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HmathPool>
-        <HautoPool
-          v-if="activeFlash == 'hAUTO' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HautoPool>
-        <Bnb500Pool
-          v-if="activeFlash == 'BNB500' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></Bnb500Pool>
-        <HctkPool
-          v-if="activeFlash == 'hCTK' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HctkPool>
-        <HcctPool
-          v-if="activeFlash == 'HCCT' && showActiveFlash"
-          :activeType="activeType"
-          :TradeType="'ALL'"
-        ></HcctPool>
+            <use xlink:href="#icon-close"></use>
+          </svg>
+          <POOL
+            :activeData="activeData"
+            :activeFlag="activeFlag"
+            :activeType="activeType"
+          />
+        </div>
       </div>
     </div>
     <div
       class="mining_item_h5"
       v-for="(item, index) in miningList"
-      :key="item.earn + '1'"
+      :key="item.TOKEN_NAME + '1'"
     >
       <img
         class="link_flash"
@@ -166,65 +133,61 @@
       <section>
         <div>
           <img
-            :src="require(`~/assets/img/flashmining/${item.earn}.png`)"
+            :src="require(`~/assets/img/flashmining/${item.REWARD_NAME}.png`)"
             alt=""
           />
           <p>
             <span
               class="onePager"
-              v-html="item.miningName"
-              @click="hadnleShowOnePager($event, item.earn)"
+              v-html="item.POOL_NAME"
+              @click="hadnleShowOnePager($event, item.REWARD_NAME)"
             ></span>
-            <span>{{ item.desc }}</span>
+            <span>{{ item.POOL_DESC }}</span>
           </p>
         </div>
         <p>
           {{ $t("Table.EarnList") }}
           <span>
-            {{ item.earn }}
+            {{ item.REWARD_NAME }}
           </span>
         </p>
       </section>
       <section>
         <p>
           <span>{{
-            timeArray[item.earn].dueDate == "Finished"
-              ? "--"
-              : item.yearEarn + "%"
+            item.MING_TIME == "Finished" ? "--" : item.yearEarn + "%"
           }}</span>
           <span>APR</span>
         </p>
         <div>
           <i></i>
           <p>
-            <span v-if="typeof timeArray[item.earn].openDate == 'object'">
-              {{ timeArray[item.earn].openDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ timeArray[item.earn].openDate.minute
-              }}<b>{{ $t("Content.MinM") }}</b>
+            <span v-if="typeof item.OPEN_TIME == 'object'">
+              {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
+              >{{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
             </span>
-            <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
-              {{ timeArray[item.earn].dueDate.day
-              }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ timeArray[item.earn].dueDate.hour
-              }}<b>{{ $t("Content.HourM") }}</b>
+            <span v-else-if="typeof item.MING_TIME == 'object'">
+              {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+              >{{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
             </span>
             <span v-else>
-              {{ timeArray[item.earn].dueDate }}
+              {{ item.MING_TIME }}
             </span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </div>
       </section>
       <section>
-        <span>{{ item.weekly }}</span>
+        <span>{{ item.REWARD_WEEKLY }}</span>
         <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
       </section>
       <section>
         <button
-          @click="StakeMiningH5(item.earn)"
+          @click="HandleClickAction(item, 'STAKE', true)"
           :class="
-            activeFlash == item.earn && showActiveFlash && activeType == 'STAKE'
+            activeFlash == item.TOKEN_NAME &&
+            showActiveFlash &&
+            activeType == 'STAKE'
               ? 'activeButton stakeFlash'
               : 'stakeFlash'
           "
@@ -232,9 +195,11 @@
           {{ $t("Insurance.Insurance_text23") }}
         </button>
         <button
-          @click="ClaimMiningH5(item.earn)"
+          @click="HandleClickAction(item, 'CLAIM', true)"
           :class="
-            activeFlash == item.earn && showActiveFlash && activeType == 'CLAIM'
+            activeFlash == item.TOKEN_NAME &&
+            showActiveFlash &&
+            activeType == 'CLAIM'
               ? 'activeButton claimFlash'
               : 'claimFlash'
           "
@@ -242,61 +207,36 @@
           {{ $t("Table.Claim") }}
         </button>
       </section>
-    </div>
-    <Wraper>
-      <div class="wraper_title">
-        <h3>
-          {{
-            activeType == "STAKE"
-              ? $t("Insurance.Insurance_text23")
-              : $t("Table.Claim")
-          }}
-        </h3>
-        <svg class="icon close" aria-hidden="true" @click="close_wraper">
-          <use xlink:href="#icon-close"></use>
-        </svg>
+      <div
+        class="wraper_title"
+        v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+      >
+        <PHeader></PHeader>
+        <div class="wraper">
+          <div class="wraper_header">
+            <h3 class="">
+              {{
+                activeType == "STAKE"
+                  ? $t("Insurance.Insurance_text23")
+                  : $t("Table.Claim")
+              }}
+            </h3>
+            <svg
+              class="close"
+              aria-hidden="true"
+              @click="showActiveFlash = false"
+            >
+              <use xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+          <POOL
+            :activeData="activeData"
+            :activeFlag="activeFlag"
+            :activeType="activeType"
+          />
+        </div>
       </div>
-      <Hxburgerpool
-        v-if="activeFlash == 'hxBURGER'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></Hxburgerpool>
-      <HtptPool
-        v-if="activeFlash == 'hTPT'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HtptPool>
-      <HdodoPool
-        v-if="activeFlash == 'hDODO'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HdodoPool>
-      <HmathPool
-        v-if="activeFlash == 'hMATH'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HmathPool>
-      <HautoPool
-        v-if="activeFlash == 'hAUTO'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HautoPool>
-      <Bnb500Pool
-        v-if="activeFlash == 'BNB500'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></Bnb500Pool>
-      <HctkPool
-        v-if="activeFlash == 'hCTK'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HctkPool>
-      <HcctPool
-        v-if="activeFlash == 'HCCT'"
-        :activeType="activeType"
-        :TradeType="activeType"
-      ></HcctPool>
-    </Wraper>
+    </div>
   </div>
 </template>
 
@@ -305,37 +245,29 @@ import Wraper from "~/components/common/wraper.vue";
 import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
+import { pancakeswapv1 } from "~/assets/utils/pancakeswapv1.js";
 import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
-import Hxburgerpool from "~/components/flashmining/hxburger_pool.vue";
-import HtptPool from "~/components/flashmining/htpt_pool.vue";
-import HcctPool from "~/components/flashmining/hcct_pool.vue";
-import HctkPool from "~/components/flashmining/hctk_pool.vue";
-import Bnb500Pool from "~/components/flashmining/bnb500_pool.vue";
-import HautoPool from "~/components/flashmining/hauto_pool.vue";
-import HmathPool from "~/components/flashmining/hmath_pool.vue";
-import HdodoPool from "~/components/flashmining/hdodo_pool.vue";
+import PHeader from "~/components/common/header.vue";
+import POOL from "./pool.vue";
+import { GetPoolAPR } from "./flashmining_apr.js";
 import moment from "moment";
 export default {
   components: {
+    POOL,
     Wraper,
-    Hxburgerpool,
-    HtptPool,
-    HcctPool,
-    HctkPool,
-    Bnb500Pool,
-    HautoPool,
-    HmathPool,
-    HdodoPool,
+    PHeader,
   },
   data() {
     return {
       miningList: [],
       apyArray: {},
-      activeType: "",
       showActiveFlash: false,
       activeFlash: "",
       TradeType: "",
+      activeType: "",
+      activeData: {},
+      activeBurn: "",
+      activeFlag: "",
       apyArray: {
         hxBURGER: 0,
         hTPT: 0,
@@ -345,66 +277,19 @@ export default {
         hCTK: 0,
         HCCT: 0,
       },
-      timeArray: {
-        hxBURGER: {
-          dueDate: this.getRemainTime("2021/05/12 00:00"),
-          openDate: this.getMiningTime("2021/04/22 00:00"),
-          expired: new Date("2021/05/12 00:00") * 1,
-          started: new Date("2021/04/22 00:00") * 1,
-        },
-        hTPT: {
-          dueDate: this.getRemainTime("2021/04/26 00:00"),
-          openDate: this.getMiningTime("2021/04/06 00:00"),
-          expired: new Date("2021/04/26 00:00") * 1,
-          started: new Date("2021/04/06 00:00") * 1,
-        },
-        hDODO: {
-          dueDate: this.getRemainTime("2021/03/31 12:00"),
-          openDate: this.getMiningTime("2021/03/24 00:00"),
-          expired: new Date("2021/03/31 12:00") * 1,
-          expired: new Date("2021/03/24 12:00") * 1,
-        },
-        hMATH: {
-          dueDate: this.getRemainTime("2021/03/18 00:00"),
-          openDate: this.getRemainTime("2021/03/11 00:00"),
-          expired: new Date("2021/03/18 00:00") * 1,
-          started: new Date("2021/03/11 12:00") * 1,
-        },
-        hAUTO: {
-          dueDate: this.getRemainTime("2021/03/09 00:00"),
-          openDate: this.getRemainTime("2021/03/02 00:00"),
-          expired: new Date("2021/03/29 00:00") * 1,
-          started: new Date("2021/03/02 12:00") * 1,
-        },
-        BNB500: {
-          dueDate: this.getRemainTime("2021/02/29 00:00"),
-          openDate: this.getRemainTime("2021/02/22 00:00"),
-          expired: new Date("2021/02/29 00:00") * 1,
-          started: new Date("2021/02/22 12:00") * 1,
-        },
-        hCTK: {
-          dueDate: this.getRemainTime("2021/02/28 00:00"),
-          openDate: this.getRemainTime("2021/02/21 00:00"),
-          expired: new Date("2021/02/28 00:00") * 1,
-          started: new Date("2021/02/21 12:00") * 1,
-        },
-        HCCT: {
-          dueDate: this.getRemainTime("2021/02/13 00:00"),
-          openDate: this.getRemainTime("2021/02/06 00:00"),
-          expired: new Date("2021/02/13 00:00") * 1,
-          started: new Date("2021/02/06 12:00") * 1,
-        },
-      },
     };
   },
   mounted() {
     this.initFlashMiningData();
-    this.getAPY();
+    // this.getAPY();
     let timer = setInterval(() => {
-      this.getAPY();
+      // this.getAPY();
     }, 20000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);
+    });
+    this.miningList.forEach((item) => {
+      let res = GetPoolAPR(item);
     });
   },
   computed: {
@@ -455,6 +340,13 @@ export default {
       this.showActiveFlash = true;
       this.activeFlash = MiningType;
     },
+    HandleClickAction(PoolData, Action, Flag = false) {
+      this.showActiveFlash = true;
+      this.activeData = PoolData;
+      this.activeType = Action;
+      this.activeFlag = Flag;
+      this.activeFlash = PoolData.TOKEN_NAME;
+    },
     close_wraper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
@@ -464,55 +356,166 @@ export default {
       }
     },
     initFlashMiningData() {
-      let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "<i>hxBURGER</i>&nbsp;Pool",
-          desc: "By hTPT-Helmet LPT",
-          earn: "hxBURGER",
-          weekly: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          POOL_NAME: "<i>hxBURGER</i>&nbsp;Pool",
+          POOL_DESC: "By hTPT-Helmet LPT",
+          TOKEN_NAME: "hTPT",
+          REWARD_NAME: "hxBURGER",
+          START_TIME: "2021/04/22 14:00 UTC+8",
+          END_TIME: "2021/05/12 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/04/22 14:00"),
+          MING_TIME: this.getRemainTime("2021/05/12 00:00"),
+          REWARD_WEEKLY: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          POOL_ADDRESS: "0x40052013B8c019E999276885467AC156e86Fd1bD",
+          STAKE_ADDRESS: "0x413da4890ab12b1a7e01d0bb7fc5cf6cadf5d565",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+          REWARD_ADDRESS: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
+          SWAP_TYPE: "BURGER",
+          TOTAL_REWARDS: 20000,
+          MINING_DAY: 20,
         },
         {
-          miningName: "<i>hTPT</i>&nbsp;Pool",
-          desc: "By hDODO-Helmet LPT",
-          earn: "hTPT",
-          weekly: fixD((2000000 / 21) * 7, 2) + " hTPT",
+          POOL_NAME: "<i>hTPT</i>&nbsp;Pool",
+          POOL_DESC: "By hDODO-Helmet LPT",
+          TOKEN_NAME: "hDODO",
+          REWARD_NAME: "hTPT",
+          START_TIME: "2021/04/06 00:00 UTC+8",
+          END_TIME: "2021/04/26 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/04/06 00:00"),
+          MING_TIME: this.getRemainTime("2021/04/26 00:00"),
+          REWARD_WEEKLY: fixD((2000000 / 21) * 7, 2) + " hTPT",
+          POOL_ADDRESS: "0xe71B586Be2c053E22a44556A7526B02428a943B0",
+          STAKE_ADDRESS: "0x762D63a230C4e1EB2673cB5C4FadC5B68b3074c7",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 4,
+          ONELPT_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+          REWARD_ADDRESS: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 2000000,
+          MINING_DAY: 20,
         },
         {
-          miningName: "<i>hDODO</i>&nbsp;Pool",
-          desc: "By hMATH-Helmet LPT",
-          earn: "hDODO",
-          weekly: fixD((40000 / 15) * 7, 2) + " hDODO",
+          POOL_NAME: "<i>hDODO</i>&nbsp;Pool",
+          POOL_DESC: "By hMATH-Helmet LPT",
+          TOKEN_NAME: "hMATH",
+          REWARD_NAME: "hDODO",
+          START_TIME: "2021/03/24 00:00 UTC+8",
+          END_TIME: "2021/03/31 12:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/03/24 00:00"),
+          MING_TIME: this.getRemainTime("2021/03/31 12:00"),
+          REWARD_WEEKLY: fixD((40000 / 15) * 7, 2) + " hDODO",
+          POOL_ADDRESS: "0xc68CB0a3c5Cab3C9521E124Eff97A503c45bE9E4",
+          STAKE_ADDRESS: "0xc840de3a061A73467bc98acD9A32aA3a281A380C",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
+          REWARD_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 40000,
+          MINING_DAY: 7,
         },
         {
-          miningName: "<i>hMATH</i>&nbsp;Pool",
-          desc: "By hAUTO-Helmet LPT",
-          earn: "hMATH",
-          weekly: fixD((30000 / 15) * 7, 2) + " hMATH",
+          POOL_NAME: "<i>hMATH</i>&nbsp;Pool",
+          POOL_DESC: "By hAUTO-Helmet LPT",
+          TOKEN_NAME: "hAUTO",
+          REWARD_NAME: "hMATH",
+          START_TIME: "2021/03/11 00:00 UTC+8",
+          END_TIME: "2021/03/18 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/03/11 00:00"),
+          MING_TIME: this.getRemainTime("2021/03/18 00:00"),
+          REWARD_WEEKLY: fixD((30000 / 15) * 7, 2) + " hMATH",
+          POOL_ADDRESS: "0x630179cd153a009b4b864A5A5a3Ac5A0E70804Da",
+          STAKE_ADDRESS: "0xB6F84EaD91Fb6d70B8f1E87759E7c95c440DD80C",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112",
+          REWARD_ADDRESS: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 30000,
+          MINING_DAY: 7,
         },
         {
-          miningName: "<i>hAUTO</i>&nbsp;Pool",
-          desc: "By BNB500-Helmet LPT",
-          earn: "hAUTO",
-          weekly: fixD((10 / 14) * 7, 2) + " hAUTO",
+          POOL_NAME: "<i>hAUTO</i>&nbsp;Pool",
+          POOL_DESC: "By BNB500-Helmet LPT",
+          TOKEN_NAME: "BNB500",
+          REWARD_NAME: "hAUTO",
+          START_TIME: "2021/03/02 00:00 UTC+8",
+          END_TIME: "2021/03/09 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/03/02 00:00"),
+          MING_TIME: this.getRemainTime("2021/03/09 00:00:00"),
+          REWARD_WEEKLY: fixD((10 / 14) * 7, 2) + " hAUTO",
+          POOL_ADDRESS: "0xe4a5d7cb5A9EbDC4370D0b4EBBd0C1656099b293",
+          STAKE_ADDRESS: "0x6A829c3870Ab4ce228Cdf359E6F72295ef472F9d",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
+          REWARD_ADDRESS: "0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 10,
+          MINING_DAY: 7,
         },
         {
-          miningName: "<i>BNB500</i>&nbsp;Pool",
-          desc: "By hCTK-Helmet LPT",
-          earn: "BNB500",
-          weekly: fixD((1000 / 10) * 7, 2) + " BNB500",
+          POOL_NAME: "<i>BNB500</i>&nbsp;Pool",
+          POOL_DESC: "By hCTK-Helmet LPT",
+          TOKEN_NAME: "hCTK",
+          REWARD_NAME: "BNB500",
+          START_TIME: "2021/02/22 00:00 UTC+8",
+          END_TIME: "2021/02/29 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/02/22 00:00"),
+          MING_TIME: this.getRemainTime("2021/02/29 00:00"),
+          REWARD_WEEKLY: fixD((1000 / 10) * 7, 2) + " BNB500",
+          POOL_ADDRESS: "0x6F131e8e5a93ac3Ae71FDdbbE1122cB69AF9Fc71",
+          STAKE_ADDRESS: "0x9a6fCD063cA5a9bB31b9f8eE86eCB6476b981280",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x936909e72951A19a5e1d75A109B0D34f06f39838",
+          REWARD_ADDRESS: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 1000,
+          MINING_DAY: 7,
         },
         {
-          miningName: "<i>hCTK</i>&nbsp;Pool",
-          desc: "By HCCT-Helmet LPT",
-          earn: "hCTK",
-          weekly: fixD((70000 / 21) * 7, 2) + " hCTK",
+          POOL_NAME: "<i>hCTK</i>&nbsp;Pool",
+          POOL_DESC: "By HCCT-Helmet LPT",
+          TOKEN_NAME: "HCCT",
+          REWARD_NAME: "hCTK",
+          START_TIME: "2021/02/21 00:00 UTC+8",
+          END_TIME: "2021/02/28 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/02/21 00:00"),
+          MING_TIME: this.getRemainTime("2021/02/28 00:00"),
+          REWARD_WEEKLY: fixD((70000 / 21) * 7, 2) + " hCTK",
+          POOL_ADDRESS: "0xaF0e8747FA54b3E000FF1a0F87AF2DB4F1B7Fd87",
+          STAKE_ADDRESS: "0xcBbD24DBbF6a487370211bb8B58C3b43C4C32b9E",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 6,
+          ONELPT_ADDRESS: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
+          REWARD_ADDRESS: "0x936909e72951A19a5e1d75A109B0D34f06f39838",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 70000,
+          MINING_DAY: 7,
         },
         {
-          miningName: "<i>HCCT</i>&nbsp;Pool",
-          desc: "By LONG-Helmet LPT",
-          earn: "HCCT",
-          weekly: fixD(16000 * 7, 2) + " HCCT",
+          POOL_NAME: "<i>HCCT</i>&nbsp;Pool",
+          POOL_DESC: "By LONG-Helmet LPT",
+          TOKEN_NAME: "LONG",
+          REWARD_NAME: "HCCT",
+          START_TIME: "2021/02/06 00:00 UTC+8",
+          END_TIME: "2021/02/13 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/02/06 00:00"),
+          MING_TIME: this.getRemainTime("2021/02/13 00:00"),
+          REWARD_WEEKLY: fixD(16000 * 7, 2) + " HCCT",
+          POOL_ADDRESS: "0xB6ED9f3dCA5CeaaB25F24a377Ed2e47Ecb7dCA5D",
+          STAKE_ADDRESS: "0x2ec7FC5A00d4E785821fc8D195291c970d79F0bF",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x17934fef9fc93128858e9945261524ab0581612e",
+          REWARD_ADDRESS: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
+          SWAP_TYPE: "PANCAKEV1",
+          TOTAL_REWARDS: 16000,
+          MINING_DAY: 7,
         },
       ];
       this.miningList = arr;
@@ -613,7 +616,7 @@ export default {
       }
     },
     async GET_HTPT_POOL_APY() {
-      let HAUTOHELMET = await pancakeswap("HTPT", "HELMET"); //Hlemt价格
+      let HAUTOHELMET = await pancakeswapv1("HTPT", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HTPTPOOL"); //数量
       let LptVolume = await totalSupply("HTPTPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HTPTPOOL_LPT", true);
@@ -643,7 +646,7 @@ export default {
       }
     },
     async GET_HDODO_POOL_APY() {
-      let HCTKHELMET = await pancakeswap("HDODO", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswapv1("HDODO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HDODOPOOL"); //数量
       let LptVolume = await totalSupply("HDODOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HDODOPOOL_LPT", true);
@@ -669,7 +672,7 @@ export default {
       }
     },
     async GET_HMATH_POOL_APY() {
-      let HMATHHELMET = await pancakeswap("HMATH", "HELMET"); //Hlemt价格
+      let HMATHHELMET = await pancakeswapv1("HMATH", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HMATHPOOL"); //数量
       let LptVolume = await totalSupply("HMATHPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HMATHPOOL_LPT", true);
@@ -695,7 +698,7 @@ export default {
       }
     },
     async GET_HAUTO_POOL_APY() {
-      let HAUTOHELMET = await pancakeswap("HAUTO", "HELMET"); //Hlemt价格
+      let HAUTOHELMET = await pancakeswapv1("HAUTO", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HAUTOPOOL"); //数量
       let LptVolume = await totalSupply("HAUTOPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HAUTOPOOL_LPT", true);
@@ -721,7 +724,7 @@ export default {
       }
     },
     async GET_BNB500_POOL_APY() {
-      let HCTKHELMET = await pancakeswap("BNB500", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswapv1("BNB500", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("BNB500POOL"); //数量
       let LptVolume = await totalSupply("BNB500POOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "BNB500POOL_LPT", true);
@@ -747,7 +750,7 @@ export default {
       }
     },
     async GET_HCCT_POOL_APY() {
-      let HCCTHELMET = await pancakeswap("HCCT", "HELMET");
+      let HCCTHELMET = await pancakeswapv1("HCCT", "HELMET");
       let HcctVolume = await totalSupply("HCCTPOOL");
       let LptVolume = await totalSupply("HCCTPOOL_LPT");
       let HelmetValue = await balanceOf("HELMET", "HCCTPOOL_LPT", true);
@@ -772,7 +775,7 @@ export default {
       }
     },
     async GET_HCTK_POOL_APY() {
-      let HCTKHELMET = await pancakeswap("HCTK", "HELMET"); //Hlemt价格
+      let HCTKHELMET = await pancakeswapv1("HCTK", "HELMET"); //Hlemt价格
       let HctkVolume = await totalSupply("HCTKPOOL"); //数量
       let LptVolume = await totalSupply("HCTKPOOL_LPT"); //发行
       let HelmetValue = await balanceOf("HELMET", "HCTKPOOL_LPT", true);
@@ -857,9 +860,7 @@ export default {
       left: 6px;
       top: -21px;
     }
-    .activeFlash {
-      border-bottom: 1px solid #e8e8eb;
-    }
+
     .flash_show {
       width: 100%;
       height: 70px;
@@ -1331,17 +1332,29 @@ export default {
     }
   }
   .wraper_title {
-    height: 44px;
-    line-height: 44px;
-    padding: 0 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .close {
-      width: 24px;
-      height: 24px;
-      fill: #000;
-      cursor: pointer;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: #f8f9fa;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    .wraper {
+      flex: 1;
+      overflow-y: scroll;
+      .wraper_header {
+        height: 44px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .close {
+        width: 24px;
+        height: 24px;
+        fill: #000;
+        cursor: pointer;
+      }
     }
   }
 }

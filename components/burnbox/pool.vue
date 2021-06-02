@@ -60,7 +60,7 @@
         "
       >
         <i :class="stakeLoading ? 'loading_pic' : ''"></i
-        >{{ ApproveFlag ? "Approve" : $t("Table.Burn") }}
+        >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.Burn") }}
       </button>
       <div class="text">
         <p>
@@ -198,7 +198,7 @@ import {
   Earned,
   Allowance,
 } from "~/interface/read_contract.js";
-import { Stake, GetReward } from "~/interface/write_contract.js";
+import { Stake, GetReward, Approve } from "~/interface/write_contract.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import countTo from "vue-count-to";
@@ -222,18 +222,11 @@ export default {
       process: 0,
       rewards: 0,
       DepositeNum: "",
-      MingTime: {
-        hour: "00",
-        minute: "00",
-        second: "00",
-      },
       ApproveFlag: false,
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
       isLogin: false,
-      expired: false,
-      openMining: false,
     };
   },
   watch: {
@@ -255,15 +248,10 @@ export default {
     },
   },
   mounted() {
-    this.$bus.$on("DEPOSITE_LOADING_BURNHCTK", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
     this.getBalance();
     this.getProcess();
     this.NeedApprove();
-    console.log(this.ApproveFlag);
-    if (!this.expired) {
+    if (!this.activeData.MING_TIME == "Expired") {
       let timer1 = setInterval(() => {
         this.getProcess();
       }, 20000);
@@ -316,7 +304,6 @@ export default {
         this.activeData.POOL_ADDRESS,
         this.activeData.REWARD_DECIMALS
       );
-      // 总Helmet
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
       this.balance.Earn = Helmet;
@@ -346,14 +333,27 @@ export default {
       if (this.stakeLoading) {
         return;
       }
-      this.stakeLoading = true;
       let ContractAddress = this.activeData.POOL_ADDRESS;
+      let StakeAddress = this.activeData.STAKE_ADDRESS;
+      let TokenSymbol = this.activeData.TOKEN_NAME;
       let DepositeVolume = this.DepositeNum;
       let Decimals = this.activeData.STAKE_DECIMALS;
-      await Stake(
-        { ContractAddress, DepositeVolume, Decimals },
-        (status) => {}
-      );
+      this.stakeLoading = true;
+      if (this.ApproveFlag) {
+        await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
+          if (res == "success") {
+            this.NeedApprove();
+            this.stakeLoading = false;
+          }
+        });
+      } else {
+        await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.stakeLoading = false;
+          }
+        });
+      }
     },
     async NeedApprove() {
       let SpenderAddress = this.activeData.POOL_ADDRESS;
@@ -361,7 +361,6 @@ export default {
       let flag = await Allowance(TokenAddress, SpenderAddress);
       this.ApproveFlag = flag;
     },
-    // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
         return;

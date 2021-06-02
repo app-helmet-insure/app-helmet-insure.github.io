@@ -317,7 +317,7 @@ export const approve = async (data, callback) => {
                     conTit: 'Please Confirm the transaction in your wallet',
                     conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${data.symbol} to HELMET</a>`,
                 });
-                callback('approve_success');
+                callback('approve_pendding');
             })
             .on('receipt', (receipt) => {
                 bus.$emit('CLOSE_STATUS_DIALOG');

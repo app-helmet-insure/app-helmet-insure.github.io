@@ -236,21 +236,11 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
-import HCCTBURN from "~/components/burnbox/hcct_burn.vue";
-import HCTKBURN from "~/components/burnbox/hctk_burn.vue";
-import HAUTOBURN from "~/components/burnbox/hauto_burn.vue";
-import BNB500BURN from "~/components/burnbox/bnb500_burn.vue";
-import HFORBURN from "~/components/burnbox/hfor_burn.vue";
 import POOL from "./pool.vue";
 import moment from "moment";
 export default {
   components: {
     Wraper,
-    HCCTBURN,
-    HCTKBURN,
-    HAUTOBURN,
-    BNB500BURN,
-    HFORBURN,
     POOL,
     PHeader,
   },

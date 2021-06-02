@@ -153,7 +153,8 @@
     "RedemptionReward": "Withdraw and Claim",
     "NumberSubscriptions": "Input buying amount",
     "Subscribe": "Confirm",
-    "LoadingWallet": "Loading the wallet data"
+    "LoadingWallet": "Loading the wallet data",
+    "Approve": "Approve"
   },
   "IIO": {
     "BuyTokenTicket": "BUY Ticket",

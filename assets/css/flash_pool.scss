@@ -12,6 +12,7 @@
         font-weight: 550;
     }
     i {
+        flex-shrink: 0;
         display: inline-block;
         width: 12px;
         height: 12px;
@@ -19,7 +20,6 @@
         background-repeat: no-repeat;
         background-size: 100% 100%;
         cursor: pointer;
-        margin-left: 4px;
     }
 }
 .addToken {
@@ -90,6 +90,7 @@
         }
         .deposit,
         .withdraw {
+            width: 380px;
             .title {
                 display: flex;
                 justify-content: space-between;

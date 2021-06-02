@@ -8,12 +8,14 @@ import {
     fromWei,
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
-export const BalanceOf = async (ContractAddress, Decimals) => {
+export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
-    let Account = await getAccounts();
+    if (!TokenAddress) {
+        TokenAddress = await getAccounts();
+    }
     let DecimalsUnit = getDecimals(Decimals);
     return Contracts.methods
-        .balanceOf(Account)
+        .balanceOf(TokenAddress)
         .call()
         .then((res) => {
             if (DecimalsUnit) {
@@ -62,7 +64,6 @@ export const Allowance = async (TokenAddress, SpenderAddress) => {
         .allowance(Account, SpenderAddress)
         .call()
         .then((res) => {
-            console.log(res);
             if (Number(res) > 0) {
                 return false;
             } else {

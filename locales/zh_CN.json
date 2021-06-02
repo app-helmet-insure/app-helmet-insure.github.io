@@ -153,7 +153,8 @@
     "RedemptionReward": "赎回领取奖励",
     "NumberSubscriptions": "请输入认购张数",
     "Subscribe": "认购",
-    "LoadingWallet": "loading the wallet data"
+    "LoadingWallet": "loading the wallet data",
+    "Approve": "授权"
   },
   "IIO": {
     "BuyTokenTicket": "购买门票",

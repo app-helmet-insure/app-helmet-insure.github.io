@@ -5,6 +5,7 @@ import {
     getWei,
     getID,
 } from '~/assets/utils/address-pool.js';
+import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import bus from '~/assets/js/bus';
 import Message from '~/components/common/Message';
 export const getBalance = async (type, Decimals = 18) => {
@@ -23,8 +24,13 @@ export const getBalance = async (type, Decimals = 18) => {
         .balanceOf(window.CURRENTADDRESS)
         .call()
         .then((res) => {
-            let result = Number(res) / Math.pow(10, Decimals);
-            return result;
+            if (Decimals != 18) {
+                let result = Number(res) / Math.pow(10, Decimals);
+                return result;
+            } else {
+                let result = fromWei(res);
+                return result;
+            }
         });
 };
 // 是否购买门票

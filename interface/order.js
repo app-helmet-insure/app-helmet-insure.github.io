@@ -547,7 +547,7 @@ export const onExercise = async (data, callBack, flag) => {
                 (data.vol * Math.pow(10, data.unit) + '').toString()
             ).toFixed();
         } else {
-            value = toWei(fixD(data.vol, 12), data.token);
+            value = toWei(data.vol);
         }
         console.log(data.vol, value);
         // 一键判断是否需要授权，给予无限授权

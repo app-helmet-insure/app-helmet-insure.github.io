@@ -124,6 +124,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 .mask {
   width: 100%;
   height: 100%;
@@ -137,7 +138,9 @@ export default {
   color: #fd7e14;
   margin-top: 8px;
   a span {
-    color: #17173a;
+    @include themeify {
+      background: themed("color-17173a");
+    }
   }
   p {
     display: flex;
@@ -186,7 +189,9 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 8px;
     padding: 30px 20px;
     > p {
@@ -197,7 +202,9 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 20px;
       }
       > i {
@@ -220,14 +227,18 @@ export default {
           font-size: 14px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
-          color: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          }
           line-height: 14px;
         }
         &:nth-of-type(2) {
           font-size: 14px;
           font-family: IBMPlexSans-Bold, IBMPlexSans;
           font-weight: bold;
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           line-height: 14px;
         }
       }
@@ -236,12 +247,16 @@ export default {
       margin-top: 20px;
       width: 100%;
       height: 40px;
-      background: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       border-radius: 5px;
       font-size: 14px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       line-height: 18px;
       display: flex;
       align-items: center;
@@ -259,7 +274,9 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 14px;
       }
     }
@@ -280,7 +297,9 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     width: 98%;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 8px;
     padding: 20px 16px;
     > p {
@@ -291,7 +310,9 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 20px;
       }
       i {
@@ -314,14 +335,18 @@ export default {
           font-size: 14px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
-          color: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          }
           line-height: 14px;
         }
         &:nth-of-type(2) {
           font-size: 14px;
           font-family: IBMPlexSans-Bold, IBMPlexSans;
           font-weight: bold;
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           line-height: 14px;
         }
       }
@@ -330,12 +355,16 @@ export default {
       margin-top: 20px;
       width: 100%;
       height: 40px;
-      background: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       border-radius: 5px;
       font-size: 14px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       line-height: 18px;
       display: flex;
       align-items: center;
@@ -353,7 +382,9 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 14px;
       }
     }

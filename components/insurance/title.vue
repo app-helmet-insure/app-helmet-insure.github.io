@@ -84,6 +84,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "~/assets/css/base.scss";
 .swiper-pagination {
   display: flex;
   align-items: center;
@@ -110,11 +111,14 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .swiper-container {
     width: 100%;
     height: 180px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 10px;
     overflow: hidden;
     min-width: 1026px;
@@ -168,7 +172,9 @@ export default {
   .swiper-container {
     width: 96%;
     height: 160px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 10px;
     min-width: 320px;
     .swiper-wrapper {

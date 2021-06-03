@@ -1,6 +1,6 @@
 <template>
   <div class="flash_pool">
-    <div class="deposit">
+    <div class="deposit" v-if="TradeType == 'STAKE' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.DAvailable") }}：</span>
         <p>
@@ -106,7 +106,7 @@
       </div>
     </div>
     <i></i>
-    <div class="withdraw">
+    <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
         <p>
@@ -222,6 +222,7 @@ import countTo from "vue-count-to";
 import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
 export default {
+  props: ["TradeType"],
   components: {
     countTo,
   },

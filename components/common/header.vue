@@ -244,22 +244,24 @@ export default {
         border-radius: 50%;
         @include themeify {
           background: themed("color-14b465");
+          border: 2px solid themed("color-ffffff");
         }
         margin-left: 4px;
-        border: 2px solid #fff;
       }
     }
     .connect-wallet-btn {
       min-width: 140px;
       height: 40px;
-      background: #17173a;
       border-radius: 5px;
       display: block;
       padding: 0px 10px;
-      color: #ffffff;
       line-height: 40px;
-      &:hover {
-        background: #2c2c2c;
+      @include themeify {
+        background: themed("color-17173a");
+        color: themed("color-ffffff");
+        &:hover {
+          background: themed("color-2c2c2c");
+        }
       }
     }
   }
@@ -270,7 +272,9 @@ export default {
     margin: 20px auto;
     min-width: 1026px;
     height: 80px;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     .logo {
       display: none;
     }
@@ -294,7 +298,9 @@ export default {
   .header-container {
     justify-content: space-between;
     padding: 12px 10px 50px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     .logo {
       display: flex;
       align-items: center;

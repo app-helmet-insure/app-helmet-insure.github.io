@@ -86,7 +86,9 @@ export default {
     .mining_container {
       width: 100%;
       padding: 0 10px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
     }
   }
 }

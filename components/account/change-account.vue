@@ -136,7 +136,9 @@ export default {
 @media screen and (min-width: 750px) {
   .change-account-block {
     padding: 30px 56px 56px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     z-index: 102;
   }
 }
@@ -144,7 +146,9 @@ export default {
   .change-account-block {
     width: 96%;
     padding: 8px 16px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     z-index: 102;
   }
 }
@@ -202,7 +206,9 @@ export default {
       border: 2px solid rgba(253, 126, 20, 0.2);
       display: flex;
       align-items: center;
-      background: #fff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       height: 48px;
       padding: 0px 16px;
       margin-top: 20px;
@@ -210,7 +216,9 @@ export default {
       .address-text {
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 18px;
         padding-left: 8px;
         font-weight: 550;
@@ -231,20 +239,26 @@ export default {
         justify-content: space-between;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         font-weight: 550;
         margin-top: 16px;
         padding: 0px 16px 0 36px;
         cursor: pointer;
         border-radius: 5px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         img {
           width: 30px;
           height: 30px;
         }
         &:hover {
           border: 2px solid rgba(253, 126, 20, 0.3);
-          background: #fff;
+          @include themeify {
+            background: themed("color-ffffff");
+          }
         }
       }
     }

@@ -1,9 +1,12 @@
+@import './base.scss';
 .ContractAddress {
     font-size: 14px;
     color: #fd7e14;
     margin-top: 8px;
     a span {
-        color: #17173a;
+        @include themeify {
+            color: themed('color-17173a');
+        }
     }
     p {
         display: flex;
@@ -98,7 +101,9 @@
             display: block;
             width: 1px;
             height: auto;
-            background: #e8e8eb;
+            @include themeify {
+                color: themed('color-e8e8eb');
+            }
         }
         > div {
             width: 420px;
@@ -110,14 +115,21 @@
                 > span {
                     font-size: 14px;
                     font-weight: 500;
-                    color: rgba(23, 23, 58, 0.75);
+                    @include themeify {
+                        color: lighten(
+                            $color: themed('color-17173a'),
+                            $amount: 0.75
+                        );
+                    }
                     line-height: 14px;
                 }
                 p {
                     font-size: 14px;
                     font-family: IBMPlexSans-Bold, IBMPlexSans;
                     font-weight: bold;
-                    color: #17173a;
+                    @include themeify {
+                        color: themed('color-17173a');
+                    }
                     line-height: 14px;
                 }
             }
@@ -126,11 +138,13 @@
                 input {
                     width: 100%;
                     height: 40px;
-                    background: transparent;
                     padding: 0 100px 0 12px;
-                    color: #17173a;
+                    background: transparent;
+                    @include themeify {
+                        color: themed('color-17173a');
+                        border: 1px solid themed('color-e8e8eb');
+                    }
                     border-radius: 5px;
-                    border: 1px solid #e8e8eb;
                 }
                 .input {
                     margin-top: 4px;
@@ -146,13 +160,15 @@
                         right: 15px;
                         font-size: 12px;
                         cursor: pointer;
-                        color: #17173a;
-                        background: #f8f9fa;
+                        @include themeify {
+                            color: themed('color-17173a');
+                            background: themed('color-f8f9fa');
+                            border: 1px solid themed('color-e8e8eb');
+                        }
                         border-radius: 5px;
-                        border: 1px solid #e8e8eb;
                         &:hover {
-                            background: #fffaf3;
-                            border: 1px solid #fd7e14;
+                            border: 1px solid #fd7e14 !important;
+                            color: #fd7e14 !important;
                         }
                     }
                 }
@@ -211,14 +227,21 @@
                         &:nth-of-type(1) {
                             font-size: 14px;
                             font-family: PingFangSC-Regular, PingFang SC;
-                            color: rgba(23, 23, 58, 0.7);
+                            @include themeify {
+                                color: lighten(
+                                    $color: themed('color-17173a'),
+                                    $amount: 0.7
+                                );
+                            }
                             line-height: 14px;
                         }
                         &:nth-of-type(2) {
                             display: flex;
                             font-size: 14px;
                             font-family: IBMPlexSans;
-                            color: #17173a;
+                            @include themeify {
+                                color: themed('color-17173a');
+                            }
                             line-height: 14px;
                         }
                     }
@@ -235,13 +258,20 @@
                     > span {
                         &:nth-of-type(1) {
                             font-size: 14px;
-                            color: rgba(23, 23, 58, 0.7);
+                            @include themeify {
+                                color: lighten(
+                                    $color: themed('color-17173a'),
+                                    $amount: 0.7
+                                );
+                            }
                             line-height: 14px;
                         }
                         &:nth-of-type(2) {
                             font-size: 14px;
                             font-family: IBMPlexSans;
-                            color: #17173a;
+                            @include themeify {
+                                color: themed('color-17173a');
+                            }
                             line-height: 14px;
                         }
                     }
@@ -272,7 +302,9 @@
         > div {
             padding: 28px 17px;
             width: 100%;
-            background: #ffffff;
+            @include themeify {
+                background: themed('color-ffffff');
+            }
             box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
             border-radius: 5px;
             .title {
@@ -283,14 +315,21 @@
                 > span {
                     font-size: 14px;
                     font-weight: 500;
-                    color: rgba(23, 23, 58, 0.75);
+                    @include themeify {
+                        color: lighten(
+                            $color: themed('color-17173a'),
+                            $amount: 0.75
+                        );
+                    }
                     line-height: 14px;
                 }
                 p {
                     font-size: 14px;
                     font-family: IBMPlexSans-Bold, IBMPlexSans;
                     font-weight: bold;
-                    color: #17173a;
+                    @include themeify {
+                        color: themed('color-17173a');
+                    }
                     line-height: 14px;
                 }
             }
@@ -301,9 +340,11 @@
                     height: 40px;
                     background: transparent;
                     padding: 0 100px 0 12px;
-                    color: #17173a;
+                    @include themeify {
+                        color: themed('color-17173a');
+                        border: 1px solid themed('color-e8e8eb');
+                    }
                     border-radius: 5px;
-                    border: 1px solid #e8e8eb;
                 }
                 .input {
                     margin-top: 4px;
@@ -319,12 +360,16 @@
                         right: 15px;
                         font-size: 12px;
                         cursor: pointer;
-                        color: #17173a;
-                        background: #f8f9fa;
+                        @include themeify {
+                            color: themed('color-17173a');
+                            background: themed('color-f8f9fa');
+                            border: 1px solid themed('color-e8e8eb');
+                        }
                         border-radius: 5px;
-                        border: 1px solid #e8e8eb;
                         &:hover {
-                            background: #fffaf3;
+                            @include themeify {
+                                background: themed('color-fffaf3');
+                            }
                             border: 1px solid #fd7e14;
                         }
                     }
@@ -384,14 +429,21 @@
                         &:nth-of-type(1) {
                             font-size: 14px;
                             font-family: PingFangSC-Regular, PingFang SC;
-                            color: rgba(23, 23, 58, 0.7);
+                            @include themeify {
+                                color: lighten(
+                                    $color: themed('color-17173a'),
+                                    $amount: 0.7
+                                );
+                            }
                             line-height: 14px;
                         }
                         &:nth-of-type(2) {
                             display: flex;
                             font-size: 14px;
                             font-family: IBMPlexSans;
-                            color: #17173a;
+                            @include themeify {
+                                color: themed('color-17173a');
+                            }
                             line-height: 14px;
                         }
                     }
@@ -408,13 +460,20 @@
                     > span {
                         &:nth-of-type(1) {
                             font-size: 14px;
-                            color: rgba(23, 23, 58, 0.7);
+                            @include themeify {
+                                color: lighten(
+                                    $color: themed('color-17173a'),
+                                    $amount: 0.7
+                                );
+                            }
                             line-height: 14px;
                         }
                         &:nth-of-type(2) {
                             font-size: 14px;
                             font-family: IBMPlexSans;
-                            color: #17173a;
+                            @include themeify {
+                                color: themed('color-17173a');
+                            }
                             line-height: 14px;
                         }
                     }

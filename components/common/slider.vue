@@ -1,7 +1,6 @@
 <template>
   <div
     :class="sliderShowFlag ? 'openSlider slider' : 'closeSlider slider'"
-    @touchmove.prevent.self
     @click.self="CloseMask"
   >
     <div class="slider_wrap">
@@ -262,6 +261,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .openSlider {
     display: block;
@@ -273,6 +273,9 @@ export default {
     position: relative;
     width: 260px;
     height: calc(100vh - 50px);
+    @include themeify {
+      background-color: themed("color-ffffff");
+    }
     background-image: url("../../assets/img/slider/slider_logo_bg.png");
     background-repeat: no-repeat;
     background-size: 100% 135px;
@@ -362,18 +365,24 @@ export default {
           display: flex;
           align-items: center;
           > a {
-            height: 50px;
+            height: 40px;
             padding-left: 40px;
             width: 100%;
             display: flex;
             align-items: center;
             font-size: 14px;
             font-family: HelveticaNeue;
-            color: rgba(23, 23, 58, 0.8);
+            @include themeify {
+              color: lighten($color: themed("color-17173a"), $amount: 0.8);
+            }
             line-height: 20px;
             font-weight: normal;
+            border-radius: 5px;
             &:hover {
-              color: #17173a;
+              @include themeify {
+                background: themed("color-17173a");
+                color: themed("color-ffffff");
+              }
             }
           }
           .child_active {
@@ -381,9 +390,13 @@ export default {
             height: 40px;
             background: #fd7e14;
             border-radius: 5px;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             &:hover {
-              color: #fff;
+              @include themeify {
+                color: themed("color-ffffff");
+              }
             }
           }
         }
@@ -400,7 +413,9 @@ export default {
       border-radius: 5px;
       overflow: hidden;
       > a {
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: themed("slider_icon");
+        }
         display: block;
         height: 50px;
         display: flex;
@@ -420,7 +435,9 @@ export default {
           font-size: 12px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
-          color: #ffffff;
+          @include themeify {
+            color: themed("color-ffffff");
+          }
           line-height: 12px;
         }
         .hot {
@@ -436,21 +453,32 @@ export default {
           margin-right: 16px;
           display: block;
           flex-shrink: 0;
+          @include themeify {
+            fill: themed("slider_icon");
+          }
         }
         .right {
           width: 24px;
           height: 24px;
           position: absolute;
-          fill: #17173a;
+          @include themeify {
+            fill: themed("slider_icon");
+          }
           right: 20px;
         }
         &:hover {
-          color: #17173a;
+          @include themeify {
+            color: themed("slider_icon_hover");
+          }
           > .icon {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("slider_icon_hover");
+            }
           }
           > .right {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("slider_icon_hover");
+            }
           }
         }
       }
@@ -460,23 +488,33 @@ export default {
       height: 50px;
       background: #fd7e14;
       border-radius: 5px;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       .num {
         background: #ff9c4b;
       }
       .icon {
         width: 24px;
         height: 24px;
-        fill: #fff !important;
+        @include themeify {
+          fill: themed("color-ffffff") !important;
+        }
       }
       .right {
         transform: rotate(90deg) !important;
-        fill: #fff !important;
+        @include themeify {
+          fill: themed("color-ffffff") !important;
+        }
       }
       &:hover {
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         .icon {
-          fill: #fff;
+          @include themeify {
+            fill: themed("color-ffffff");
+          }
         }
       }
     }
@@ -504,14 +542,18 @@ export default {
         margin-right: 8px;
         height: 30px;
         padding: 0 8px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("slider_icon");
+        }
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         &:hover {
-          background: rgba(23, 23, 58, 0.3);
+          @include themeify {
+            background: themed("slider_icon_hover");
+          }
         }
         &:last-of-type {
           margin: 0;
@@ -525,7 +567,9 @@ export default {
       height: 64px;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid #e8e8eb;
+      @include themeify {
+        border-bottom: 1px solid themed("color-e8e8eb");
+      }
       a {
         margin-right: 20px;
         &:last-of-type {
@@ -534,9 +578,13 @@ export default {
         .icon {
           width: 24px;
           height: 24px;
-          fill: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            fill: themed("slider_icon");
+          }
           &:hover {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("slider_icon_hover");
+            }
           }
         }
       }
@@ -570,7 +618,9 @@ export default {
       position: relative;
       flex-direction: column;
       flex-shrink: 0;
-      background: #ffffff;
+      @include themeify {
+        background-color: themed("color-ffffff");
+      }
       background-image: url("../../assets/img/slider/slider_logo_bg_h5.png");
       background-repeat: no-repeat;
       background-size: 100% 93px;
@@ -623,11 +673,13 @@ export default {
             align-items: center;
             font-size: 12px;
             font-family: HelveticaNeue;
-            color: rgba(23, 23, 58, 0.8);
+            @include themeify {
+              color: lighten($color: themed("color-17173a"), $amount: 0.8);
+            }
             line-height: 20px;
             font-weight: normal;
             &:hover {
-              color: #17173a;
+              background: #fd7e14;
             }
           }
           .child_active {
@@ -635,7 +687,9 @@ export default {
             height: 30px;
             background: #fd7e14;
             border-radius: 5px;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             &:hover {
               color: #fff;
             }
@@ -654,7 +708,9 @@ export default {
       border-radius: 5px;
       overflow: hidden;
       > a {
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         display: block;
         height: 40px;
         display: flex;
@@ -674,7 +730,9 @@ export default {
           font-size: 12px;
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
-          color: #ffffff;
+          @include themeify {
+            color: themed("color-ffffff");
+          }
           line-height: 12px;
         }
         .hot {
@@ -689,22 +747,31 @@ export default {
           height: 20px;
           margin-right: 8px;
           display: block;
-          fill: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            fill: themed("color-17173a");
+          }
         }
         .right {
           position: absolute;
           right: 20px;
           width: 20px;
           height: 20px;
-          fill: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            fill: themed("color-17173a");
+          }
         }
         &:hover {
-          color: #17173a;
+          background: #fd7e14;
+
           > .icon {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("color-ffffff");
+            }
           }
           > .right {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("color-ffffff");
+            }
           }
         }
       }
@@ -714,7 +781,9 @@ export default {
       height: 4 0px;
       background: #fd7e14;
       border-radius: 5px;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       .num {
         background: #ff9c4b;
       }
@@ -728,7 +797,9 @@ export default {
         fill: #fff !important;
       }
       &:hover {
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         .icon {
           fill: #fff;
         }
@@ -758,14 +829,18 @@ export default {
         margin-right: 8px;
         height: 30px;
         padding: 0 8px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         &:hover {
-          background: rgba(23, 23, 58, 0.3);
+          @include themeify {
+            background: themed("color-fffaf3");
+          }
         }
         &:last-of-type {
           margin: 0;
@@ -779,7 +854,9 @@ export default {
       height: 36px;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid #e8e8eb;
+      @include themeify {
+        border: 1px solid themed("color-e8e8eb");
+      }
       padding-bottom: 20px;
       a {
         margin-right: 20px;
@@ -787,8 +864,13 @@ export default {
           width: 20px;
           height: 20px;
           fill: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            fill: themed("color-f8f9fa");
+          }
           &:hover {
-            fill: #17173a;
+            @include themeify {
+              fill: themed("color-fffaf3");
+            }
           }
         }
         &:last-of-type {

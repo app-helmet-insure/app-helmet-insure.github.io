@@ -152,7 +152,9 @@ export default {
       min-width: 400px;
     }
     .status-dialog-content {
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       padding: 30px;
       position: relative;
       z-index: 102;
@@ -256,7 +258,9 @@ export default {
         button {
           min-width: 141px;
           height: 40px;
-          background: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           border-radius: 5px;
           min-width: 96px;
           height: 32px;
@@ -264,7 +268,9 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #2c2c2c;
+            @include themeify {
+              background: themed("color-2c2c2c");
+            }
           }
         }
       }
@@ -315,7 +321,9 @@ export default {
       align-items: center;
     }
     .status-dialog-content {
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       padding: 30px;
       position: relative;
       z-index: 102;
@@ -420,7 +428,9 @@ export default {
         button {
           min-width: 141px;
           height: 40px;
-          background: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           border-radius: 5px;
           min-width: 96px;
           height: 32px;
@@ -428,7 +438,9 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #2c2c2c;
+            @include themeify {
+              background: themed("color-2c2c2c");
+            }
           }
         }
       }

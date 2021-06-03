@@ -341,6 +341,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .insurance_list {
     position: relative;
@@ -365,10 +366,14 @@ export default {
       }
       thead {
         width: 100%;
-        background: #f7f7fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         tr {
           height: 40px;
-          color: rgba(23, 23, 58, 0.4);
+          @include themeify {
+            color: lighten($color: themed("color-17173a"), $amount: 0.4);
+          }
           td {
             line-height: 40px;
             font-size: 14px;
@@ -390,7 +395,9 @@ export default {
             line-height: 60px;
             font-size: 14px;
             font-weight: bold;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             display: flex;
             align-items: center;
             &:nth-of-type(4) {
@@ -413,7 +420,9 @@ export default {
             button {
               padding: 0 20px;
               height: 32px;
-              background: #17173a;
+              @include themeify {
+                background: themed("color-17173a");
+              }
               color: #fff;
               border-radius: 3px;
             }
@@ -437,7 +446,9 @@ export default {
     .list_item_H5 {
       width: 100%;
       padding: 14px 0;
-      border-bottom: 1px solid #e8e8eb;
+      @include themeify {
+        border: 1px solid themed("color-e8e8eb");
+      }
       section {
         &:nth-of-type(1) {
           display: flex;
@@ -450,13 +461,17 @@ export default {
               &:nth-of-type(1) {
                 font-size: 12px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: rgba(23, 23, 58, 0.5);
+                @include themeify {
+                  color: lighten($color: themed("color-17173a"), $amount: 0.5);
+                }
               }
               &:nth-of-type(2) {
                 margin-top: 4px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -470,11 +485,15 @@ export default {
             flex: 1;
             height: 40px;
             border-radius: 5px;
-            border: 1px solid #e8e8eb;
+            @include themeify {
+              border: 1px solid themed("color-e8e8eb");
+            }
             padding-left: 10px;
             &::placeholder {
               font-family: IBMPlexSans;
-              color: rgba(23, 23, 58, 0.4);
+              @include themeify {
+                color: lighten($color: themed("color-17173a"), $amount: 0.4);
+              }
             }
           }
           button {
@@ -483,8 +502,10 @@ export default {
             padding: 0 16px;
             font-size: 14px;
             font-family: IBMPlexSans;
-            color: #ffffff;
-            background: #17173a;
+            @include themeify {
+              color: themed("color-ffffff");
+              background: themed("color-17173a");
+            }
             line-height: 18px;
             border-radius: 5px;
           }

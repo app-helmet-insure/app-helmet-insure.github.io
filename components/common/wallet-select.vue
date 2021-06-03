@@ -108,10 +108,14 @@ export default {
         justify-content: center;
         padding: 0px 16px;
         border-right: 1px solid #ededf0;
-        background: #f7f7fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         &:hover {
           cursor: pointer;
-          background: #fff;
+          @include themeify {
+            background: themed("color-ffffff");
+          }
           span {
             color: #fd7e14;
           }
@@ -166,7 +170,9 @@ export default {
         }
         span {
           font-size: 14px;
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           margin-top: 20px;
         }
       }

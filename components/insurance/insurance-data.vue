@@ -215,14 +215,18 @@ export default {
           label {
             font-size: 16px;
             font-family: PingFangSC-Regular, PingFang SC;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             line-height: 16px;
           }
           span {
             font-size: 24px;
             font-family: NotoSansOriya-Bold, NotoSansOriya;
             font-weight: bold;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             line-height: 24px;
             margin-top: 16px;
           }
@@ -243,7 +247,9 @@ export default {
                 &:nth-of-type(1) {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
-                  color: #ffffff;
+                  @include themeify {
+                    color: themed("color-ffffff");
+                  }
                   line-height: 16px;
                   margin-top: 0;
                 }
@@ -251,7 +257,9 @@ export default {
                   font-size: 24px;
                   font-family: NotoSansOriya-Bold, NotoSansOriya;
                   font-weight: bold;
-                  color: #ffffff;
+                  @include themeify {
+                    color: themed("color-ffffff");
+                  }
                   line-height: 24px;
                   margin-top: 16px;
                 }
@@ -259,7 +267,9 @@ export default {
                   display: block;
                   width: 38px;
                   height: 20px;
-                  background: #ffffff;
+                  @include themeify {
+                    background: themed("color-ffffff");
+                  }
                   border-radius: 5px;
                   font-size: 14px;
                   font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -276,7 +286,9 @@ export default {
               font-size: 12px;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
-              color: #ffffff;
+              @include themeify {
+                color: themed("color-ffffff");
+              }
               line-height: 12px;
               bottom: 12px;
               display: flex;
@@ -290,7 +302,9 @@ export default {
                 background-size: 100% 100%;
               }
               a {
-                color: #ffffff;
+                @include themeify {
+                  color: themed("color-ffffff");
+                }
                 text-decoration: underline;
               }
             }
@@ -365,14 +379,18 @@ export default {
           label {
             font-size: 16px;
             font-family: PingFangSC-Regular, PingFang SC;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             line-height: 16px;
           }
           span {
             font-size: 24px;
             font-family: NotoSansOriya-Bold, NotoSansOriya;
             font-weight: bold;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
             line-height: 24px;
             margin-top: 16px;
           }
@@ -393,7 +411,9 @@ export default {
                 &:nth-of-type(1) {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
-                  color: #ffffff;
+                  @include themeify {
+                    color: themed("color-ffffff");
+                  }
                   line-height: 16px;
                   margin-top: 0;
                 }
@@ -401,7 +421,9 @@ export default {
                   font-size: 24px;
                   font-family: NotoSansOriya-Bold, NotoSansOriya;
                   font-weight: bold;
-                  color: #ffffff;
+                  @include themeify {
+                    color: themed("color-ffffff");
+                  }
                   line-height: 24px;
                   margin-top: 16px;
                 }
@@ -409,7 +431,9 @@ export default {
                   display: block;
                   width: 38px;
                   height: 20px;
-                  background: #ffffff;
+                  @include themeify {
+                    background: themed("color-ffffff");
+                  }
                   border-radius: 5px;
                   font-size: 14px;
                   font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -426,7 +450,9 @@ export default {
               font-size: 12px;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
-              color: #ffffff;
+              @include themeify {
+                color: themed("color-ffffff");
+              }
               line-height: 12px;
               bottom: 12px;
               display: flex;
@@ -440,7 +466,9 @@ export default {
                 background-size: 100% 100%;
               }
               a {
-                color: #ffffff;
+                @include themeify {
+                  color: themed("color-ffffff");
+                }
                 text-decoration: underline;
               }
             }

@@ -93,7 +93,9 @@
     ._n-input
     .el-input__inner {
     height: 0.78125rem;
-    background: #fff;
+    @include themeify {
+        background: themed('color-ffffff');
+    }
     border: 1px solid #2c3035;
     border-radius: 0.17188rem;
     color: #212833;

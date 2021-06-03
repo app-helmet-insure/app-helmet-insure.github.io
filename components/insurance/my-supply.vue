@@ -533,7 +533,9 @@ export default {
       height: 90px;
       margin-top: 10px;
       display: flex;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       align-items: center;
@@ -606,7 +608,9 @@ export default {
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  background: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -630,7 +634,9 @@ export default {
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  background: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -645,13 +651,19 @@ export default {
             width: 100px;
             padding: 0px 10px;
             height: 36px;
-            background: #f8f9fa;
+            @include themeify {
+              background: themed("color-f8f9fa");
+            }
             border-radius: 5px;
-            border: 1px solid #e8e8eb;
+            @include themeify {
+              border: 1px solid themed("color-e8e8eb");
+            }
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            color: #17173a;
+            @include themeify {
+              background: themed("color-17173a");
+            }
             line-height: 24px;
             font-weight: 500;
             display: flex;
@@ -700,7 +712,9 @@ export default {
       flex-direction: column;
       margin-top: 10px;
       display: flex;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 20px 16px;
@@ -773,7 +787,9 @@ export default {
                 margin-top: 4px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  background: themed("color-17173a");
+                }
                 line-height: 14px;
                 font-weight: 500;
               }
@@ -799,7 +815,9 @@ export default {
                 margin-top: 4px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  background: themed("color-17173a");
+                }
                 line-height: 14px;
                 font-weight: 500;
               }
@@ -813,16 +831,22 @@ export default {
             width: 100%;
             height: 36px;
             border-radius: 5px;
-            background: #17173a;
+            @include themeify {
+              background: themed("color-17173a");
+            }
             font-size: 14px;
-            border: 1px solid #e8e8eb;
+            @include themeify {
+              border: 1px solid themed("color-e8e8eb");
+            }
             font-family: HelveticaNeue;
             line-height: 24px;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            @include themeify {
+              color: themed("color-ffffff");
+            }
           }
         }
       }

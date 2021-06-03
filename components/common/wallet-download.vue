@@ -151,7 +151,9 @@ export default {
       background: #fd7e14;
       font-size: 14px;
       font-weight: 500;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       line-height: 32px;
       text-align: center;
     }
@@ -171,7 +173,9 @@ export default {
   .wallet-download {
     min-width: 320px;
     width: 90%;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 10px;
     padding: 16px 20px;
   }
@@ -220,7 +224,9 @@ export default {
       background: #fd7e14;
       font-size: 14px;
       font-weight: 500;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       line-height: 32px;
       text-align: center;
     }

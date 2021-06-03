@@ -5,10 +5,10 @@
   </div>
 </template>
 <script>
-import { fixInput } from '~/assets/js/util.js'
+import { fixInput } from "~/assets/js/util.js";
 
 export default {
-  name: 'p-input',
+  name: "p-input",
   props: {
     value: {
       type: [String, Number],
@@ -16,57 +16,57 @@ export default {
     },
     right: {
       type: [String, Number],
-      default: '',
+      default: "",
     },
     placeholder: {
       type: String,
-      default: '',
+      default: "",
     },
     type: {
       type: String,
-      default: 'text',
+      default: "text",
     },
     fix: {
       type: [String, Number],
-      default: '',
+      default: "",
     },
     maxValue: {
       type: [String, Number],
-      default: '',
+      default: "",
     },
   },
   data() {
     return {
       svalue: this.value,
-    }
+    };
   },
   watch: {
     svalue(newVal, oldVal) {
       if (newVal !== oldVal) {
-        this.$emit('input', newVal)
+        this.$emit("input", newVal);
       }
     },
     value(newVal) {
       if (Number(newVal) > Number(this.maxValue)) {
-        this.svalue = this.maxValue
+        this.svalue = this.maxValue;
       } else {
         if (this.fix) {
-          this.svalue = fixInput(newVal, this.fix)
+          this.svalue = fixInput(newVal, this.fix);
         } else {
-          this.svalue = newVal
+          this.svalue = newVal;
         }
       }
     },
   },
   methods: {
     handleClickToBuy() {
-      this.$emit('numChange')
+      this.$emit("numChange");
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .p-input-block {
     display: flex;
@@ -77,7 +77,9 @@ export default {
     position: relative;
     input::-webkit-input-placeholder {
       font-size: 14px;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+      }
     }
     > input {
       border: 1px solid #cfcfd2;
@@ -99,10 +101,16 @@ export default {
       height: 100%;
       font-size: 14px;
       font-weight: bold;
-      color: #ffffff;
-      background: #17173a;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
+      @include themeify {
+        background: themed("color-17173a");
+      }
       &:hover {
-        background: #2c2c2c;
+        @include themeify {
+          background: themed("color-2c2c2c");
+        }
       }
     }
   }
@@ -117,7 +125,9 @@ export default {
     position: relative;
     input::-webkit-input-placeholder {
       font-size: 14px;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+      }
     }
     > input {
       border: 1px solid #cfcfd2;
@@ -139,10 +149,16 @@ export default {
       height: 100%;
       font-size: 14px;
       font-weight: bold;
-      color: #ffffff;
-      background: #17173a;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
+      @include themeify {
+        background: themed("color-17173a");
+      }
       &:hover {
-        background: #2c2c2c;
+        @include themeify {
+          background: themed("color-2c2c2c");
+        }
       }
     }
   }

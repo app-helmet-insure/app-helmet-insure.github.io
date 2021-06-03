@@ -426,6 +426,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .icon {
     width: 20px;
@@ -443,14 +444,18 @@ export default {
           &:nth-of-type(1) {
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
-            color: rgba(23, 23, 58, 0.5);
+            @include themeify {
+              color: lighten($color: themed("color-17173a"), $amount: 0.5);
+            }
             line-height: 14px;
           }
           &:nth-of-type(2) {
             font-size: 16px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
             font-weight: 600;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 16px;
             margin-top: 12px;
           }
@@ -459,7 +464,9 @@ export default {
       > span {
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 14px;
       }
       > button {
@@ -468,7 +475,8 @@ export default {
         height: 40px;
         border-radius: 5px;
         font-size: 14px;
-        color: #ffffff;
+        color: #fff;
+        font-weight: 600;
         margin-top: 20px;
       }
       .call {
@@ -493,11 +501,18 @@ export default {
       align-items: center;
       font-size: 14px;
       position: relative;
+      > input {
+        color: themed("color-17173a");
+      }
       .info {
         position: absolute;
         display: flex;
         align-items: center;
         left: 40px;
+        height: 100%;
+        width: 30px;
+        justify-content: center;
+        margin-top: 4px;
         > i {
           margin: 0 4px 0 2px;
           cursor: pointer;
@@ -515,20 +530,24 @@ export default {
         > p {
           display: none;
           padding: 5px 8px;
-          background: #1d1d1d;
+          @include themeify {
+            background: themed("color-1d1d1d");
+            color: themed("color-f8f9fa");
+          }
           min-width: 340px;
           position: absolute;
           top: -55px;
           font-size: 14px;
-          color: #f7f7fa;
           border-radius: 3px;
           left: -10px;
           z-index: 9;
           i {
-            border: 5px solid #1d1d1d;
-            border-bottom-color: transparent;
-            border-left-color: transparent;
-            border-right-color: transparent;
+            @include themeify {
+              border-top: 5px solid themed("color-1d1d1d");
+            }
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
             position: absolute;
             left: 15px;
             bottom: -10px;
@@ -541,7 +560,9 @@ export default {
       .option {
         position: absolute;
         width: 100%;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         top: calc(100% + 7px);
         z-index: 1;
         .opfocus {
@@ -553,6 +574,9 @@ export default {
           justify-content: center;
           height: 40px;
           cursor: pointer;
+          @include themeify {
+            color: themed("color-000000");
+          }
           i {
             display: inline-block;
             width: 16px;
@@ -564,7 +588,9 @@ export default {
             left: 60%;
           }
           &:hover {
-            background: #f7f7fa;
+            @include themeify {
+              background: themed("color-e8e8eb");
+            }
           }
         }
       }
@@ -572,16 +598,20 @@ export default {
         cursor: pointer;
         width: 100%;
         height: 40px;
-        border: 2px solid #e8e8eb;
         padding: 0 30px 0 65px;
         border-radius: 5px;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-ffffff");
+          border: 2px solid themed("color-e8e8eb");
+        }
       }
       .left {
         position: absolute;
-        color: rgba(23, 23, 58, 0.4);
+        @include themeify {
+          color: themed("color-ededf0");
+        }
         left: 12px;
         font-weight: 600;
       }
@@ -603,7 +633,10 @@ export default {
       width: 370px;
       height: 40px;
       border-radius: 5px;
-      border: 2px solid #e8e8eb;
+      @include themeify {
+        background: themed("color-ffffff");
+        border: 2px solid themed("color-e8e8eb");
+      }
       display: flex;
       align-items: center;
       position: relative;
@@ -613,13 +646,18 @@ export default {
         padding-left: 10px;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-ffffff");
+          color: themed("color-17173a");
+        }
       }
       .text {
         position: absolute;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         right: 62px;
       }
       .max {
@@ -628,12 +666,18 @@ export default {
         padding: 0px 8px;
         min-width: 40px;
         height: 24px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+          border: 1px solid themed("color-e8e8eb");
+          color: themed("color-17173a");
+        }
+        &:hover {
+          border: 1px solid themed("color-fd7e14") !important;
+          color: themed("color-fd7e14") !important;
+        }
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
         font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
-        color: #17173a;
         display: flex;
         align-items: center;
         cursor: pointer;
@@ -644,7 +688,9 @@ export default {
       display: block;
       width: 1px;
       height: auto;
-      background: #e8e8eb;
+      @include themeify {
+        background: themed("color-e8e8eb");
+      }
     }
   }
 }
@@ -667,14 +713,18 @@ export default {
           &:nth-of-type(1) {
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
-            color: rgba(23, 23, 58, 0.5);
+            @include themeify {
+              color: lighten($color: themed("color-17173a"), $amount: 0.5);
+            }
             line-height: 14px;
           }
           &:nth-of-type(2) {
             font-size: 16px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
             font-weight: 600;
-            color: #17173a;
+            @include themeify {
+              background: themed("color-17173a");
+            }
             line-height: 16px;
             margin-top: 12px;
           }
@@ -683,7 +733,9 @@ export default {
       > span {
         font-size: 12px;
         font-family: IBMPlexSans;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 14px;
       }
       > button {
@@ -692,7 +744,8 @@ export default {
         height: 40px;
         border-radius: 5px;
         font-size: 14px;
-        color: #ffffff;
+        font-weight: 600;
+        color: #fff;
         margin-top: 20px;
       }
       .call {
@@ -717,11 +770,18 @@ export default {
       align-items: center;
       font-size: 14px;
       position: relative;
+      > input {
+        color: themed("color-17173a");
+      }
       .info {
         position: absolute;
         display: flex;
         align-items: center;
         left: 42px;
+        height: 100%;
+        width: 30px;
+        margin-top: 4px;
+        justify-content: center;
         > i {
           display: flex;
           cursor: pointer;
@@ -739,20 +799,24 @@ export default {
         > p {
           display: none;
           padding: 5px 8px;
-          background: #1d1d1d;
           min-width: 260px;
           position: absolute;
           top: -55px;
           font-size: 14px;
-          color: #f7f7fa;
+          @include themeify {
+            color: themed("color-f8f9fa");
+            background: themed("color-1d1d1d");
+          }
           border-radius: 3px;
           left: -10px;
           z-index: 9;
           i {
-            border: 5px solid #1d1d1d;
-            border-bottom-color: transparent;
-            border-left-color: transparent;
-            border-right-color: transparent;
+            @include themeify {
+              border-top: 5px solid themed("color-1d1d1d");
+            }
+            border-bottom: 5px solid transparent;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
             position: absolute;
             left: 15px;
             bottom: -10px;
@@ -765,7 +829,9 @@ export default {
       .option {
         position: absolute;
         width: 100%;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         top: calc(100% + 7px);
         z-index: 1;
         .opfocus {
@@ -777,6 +843,9 @@ export default {
           justify-content: center;
           height: 40px;
           cursor: pointer;
+          @include themeify {
+            color: themed("color-000000");
+          }
           i {
             display: inline-block;
             width: 16px;
@@ -788,7 +857,9 @@ export default {
             left: 60%;
           }
           &:hover {
-            background: #f7f7fa;
+            @include themeify {
+              background: themed("color-e8e8eb");
+            }
           }
         }
       }
@@ -801,11 +872,15 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-ffffff");
+        }
       }
       .left {
         position: absolute;
-        color: rgba(23, 23, 58, 0.4);
+        @include themeify {
+          color: themed("color-ededf0");
+        }
         left: 12px;
         font-weight: 600;
       }
@@ -827,23 +902,31 @@ export default {
       width: 100%;
       height: 40px;
       border-radius: 5px;
-      border: 2px solid #e8e8eb;
       display: flex;
       align-items: center;
       position: relative;
+      @include themeify {
+        background: themed("color-ffffff");
+        border: 2px solid themed("color-e8e8eb");
+      }
       input {
         width: 100%;
         height: 100%;
         padding-left: 10px;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-ffffff");
+          color: themed("color-17173a");
+        }
       }
       .text {
         position: absolute;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         right: 62px;
       }
       .max {
@@ -852,12 +935,18 @@ export default {
         padding: 0px 8px;
         min-width: 40px;
         height: 24px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+          border: 1px solid themed("color-e8e8eb");
+          color: themed("color-17173a");
+        }
+        &:hover {
+          border: 1px solid themed("color-fd7e14") !important;
+          color: themed("color-fd7e14") !important;
+        }
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
         font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
-        color: #17173a;
         display: flex;
         align-items: center;
         cursor: pointer;

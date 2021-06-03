@@ -81,6 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .langauage {
     height: 100%;
@@ -93,13 +94,17 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color: rgba(23, 23, 58, 0.7);
+      @include themeify {
+        color: lighten($color: themed("color-17173a"), $amount: 0.7);
+      }
       cursor: pointer;
       height: 32px;
       align-items: center;
       text-align: left;
       &:hover {
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         border-radius: 5px;
       }
     }
@@ -107,14 +112,18 @@ export default {
       display: none;
       width: 120px;
       padding: 10px 15px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
       border-radius: 5px 5px 0px 0px;
       position: absolute;
       bottom: 45px;
       li {
         &:hover {
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border-radius: 5px;
         }
         width: 100%;
@@ -126,7 +135,9 @@ export default {
         line-height: 32px;
         cursor: pointer;
         &:hover {
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
         }
       }
     }
@@ -149,13 +160,17 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color: rgba(23, 23, 58, 0.7);
+      @include themeify {
+        color: lighten($color: themed("color-17173a"), $amount: 0.7);
+      }
       cursor: pointer;
       height: 32px;
       align-items: center;
       text-align: left;
       &:hover {
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         border-radius: 5px;
       }
     }
@@ -163,14 +178,18 @@ export default {
       display: none;
       width: 120px;
       padding: 10px 15px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
       border-radius: 5px 5px 0px 0px;
       position: absolute;
       bottom: 45px;
       li {
         &:hover {
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border-radius: 5px;
         }
         width: 100%;
@@ -182,7 +201,9 @@ export default {
         line-height: 32px;
         cursor: pointer;
         &:hover {
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
         }
       }
     }

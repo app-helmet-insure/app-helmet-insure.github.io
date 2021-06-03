@@ -26,19 +26,19 @@
 </template>
 <script>
 export default {
-  name: 'p-dialog',
+  name: "p-dialog",
   props: {
     title: {
       type: String,
-      default: 'Tips',
+      default: "Tips",
     },
     leftBtnText: {
       type: String,
-      default: 'Cancel',
+      default: "Cancel",
     },
     rightBtnText: {
       type: String,
-      default: 'Confirm',
+      default: "Confirm",
     },
     cansubmit: {
       type: Boolean,
@@ -55,17 +55,17 @@ export default {
   },
   methods: {
     closeDialog() {
-      this.$emit('close')
+      this.$emit("close");
     },
     confirmDialog() {
-      this.$emit('confirm')
-      this.closeDialog()
+      this.$emit("confirm");
+      this.closeDialog();
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .p-dialog-content {
     width: 496px;
@@ -93,19 +93,23 @@ export default {
   align-items: center;
   z-index: 100;
   .p-dialog-content {
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     padding: 20px 30px;
     position: relative;
     z-index: 102;
     .title {
       font-size: 16px;
-      color: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
     }
     .close {
       display: block;
       width: 20px;
       height: 20px;
-      background: url('../../assets/img/icon/guanbi.png') center center
+      background: url("../../assets/img/icon/guanbi.png") center center
         no-repeat;
       background-size: 100% 100%;
       cursor: pointer;

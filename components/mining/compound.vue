@@ -56,6 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 .compound_mask {
   width: 100%;
   height: 100%;
@@ -85,7 +86,9 @@ export default {
 @media screen and (min-width: 750px) {
   .compound {
     width: 368px !important;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     position: absolute;
     left: 50%;
     top: 50%;
@@ -100,7 +103,9 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 19px;
       }
       i {
@@ -140,10 +145,14 @@ export default {
       }
       .black {
         border: 1px solid #17173a;
-        background: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         font-size: 14px;
         font-weight: 500;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
       }
     }
   }
@@ -151,7 +160,9 @@ export default {
 @media screen and (max-width: 750px) {
   .compound {
     width: 90% !important;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     position: absolute;
     left: 50%;
     top: 50%;
@@ -166,7 +177,9 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 19px;
       }
       i {
@@ -206,10 +219,14 @@ export default {
       }
       .black {
         border: 1px solid #17173a;
-        background: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         font-size: 14px;
         font-weight: 500;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
       }
     }
   }

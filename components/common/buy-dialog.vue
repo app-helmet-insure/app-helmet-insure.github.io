@@ -333,6 +333,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 .mask {
   width: 100%;
   height: 100%;
@@ -352,7 +353,9 @@ export default {
   }
 }
 .buy_dialog {
-  background: #ffffff;
+  @include themeify {
+    background: themed("color-ffffff");
+  }
   border-radius: 8px;
   position: absolute;
   left: 50%;
@@ -366,7 +369,9 @@ export default {
       font-size: 16px;
       font-family: IBMPlexSans-Bold, IBMPlexSans;
       font-weight: bold;
-      color: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       line-height: 20px;
     }
     i {
@@ -410,8 +415,12 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
-        border: 1px solid #e8e8eb;
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
+        @include themeify {
+          border: 1px solid themed("color-e8e8eb");
+        }
         line-height: 20px;
         &:focus {
           border-color: #ff9600;
@@ -421,12 +430,18 @@ export default {
     .all {
       padding: 0 8px;
       height: 24px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
-      border: 1px solid #e8e8eb;
+      @include themeify {
+        border: 1px solid themed("color-e8e8eb");
+      }
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;
-      color: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -441,7 +456,9 @@ export default {
       align-items: center;
       padding: 0 4px;
       height: 24px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
       cursor: pointer;
       border: 1px solid transparent;
@@ -476,7 +493,9 @@ export default {
   .select_wrap {
     width: 100%;
     height: 240px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     box-shadow: 0px 2px 4px 0px rgba(23, 23, 58, 0.2);
     border-radius: 5px;
     position: absolute;
@@ -493,14 +512,20 @@ export default {
       height: 40px;
       border-radius: 5px;
       font-size: 14px;
-      border: 1px solid #e8e8eb;
+      @include themeify {
+        border: 1px solid themed("color-e8e8eb");
+      }
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+      }
       line-height: 20px;
       padding: 0 10px;
       &::placeholder {
-        color: rgba(23, 23, 58, 0.4);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        }
       }
       &:focus {
         border: 1px solid #ff9600;
@@ -515,7 +540,9 @@ export default {
         font-size: 12px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 17px;
       }
       i {
@@ -554,7 +581,9 @@ export default {
       justify-content: space-between;
       cursor: pointer;
       &:hover {
-        background: #f7f7fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
       }
       p {
         padding-left: 20px;
@@ -588,7 +617,9 @@ export default {
   > .swap_balance {
     font-size: 12px;
     font-family: PingFangSC-Regular, PingFang SC;
-    color: rgba(23, 23, 58, 0.7);
+    @include themeify {
+      color: lighten($color: themed("color-17173a"), $amount: 0.7);
+    }
     line-height: 12px;
     margin-top: 4px;
   }
@@ -596,7 +627,9 @@ export default {
     margin-top: 20px;
     width: 100%;
     height: 80px;
-    background: #f7f7fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -619,7 +652,9 @@ export default {
       font-size: 16px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       line-height: 22px;
     }
   }
@@ -632,14 +667,18 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 600;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        }
         line-height: 12px;
       }
       &:nth-child(2) {
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 12px;
       }
     }
@@ -653,7 +692,9 @@ export default {
     font-size: 14px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
-    color: #ffffff;
+    @include themeify {
+      color: themed("color-ffffff");
+    }
     line-height: 18px;
   }
   > span {

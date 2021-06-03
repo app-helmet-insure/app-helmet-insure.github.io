@@ -14,7 +14,7 @@ module.exports = {
             'Helmet.insure is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.',
         keywords: 'HELMET BSC binance insurance',
         bodyAttrs: {
-            class: 'light',
+            class: 'dark',
         },
         meta: [
             { charset: 'utf-8' },

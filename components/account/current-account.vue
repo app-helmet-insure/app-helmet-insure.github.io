@@ -128,7 +128,9 @@ export default {
       border-radius: 8px;
       padding: 30px 40px;
       position: relative;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       z-index: 102;
 
       .title {
@@ -196,7 +198,9 @@ export default {
           height: 48px;
           display: flex;
           align-items: center;
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border: 2px solid #e8e8eb;
           border-radius: 5px;
           padding-left: 16px;
@@ -206,7 +210,9 @@ export default {
           cursor: pointer;
           &:hover {
             border: 2px solid rgba(253, 126, 20, 0.3);
-            background: #fff;
+            @include themeify {
+              background: themed("color-ffffff");
+            }
           }
         }
         .switchWallet {
@@ -216,7 +222,9 @@ export default {
           height: 48px;
           display: flex;
           align-items: center;
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border: 2px solid #e8e8eb;
           border-radius: 5px;
           padding-left: 16px;
@@ -226,18 +234,24 @@ export default {
           cursor: pointer;
           &:hover {
             border: 2px solid rgba(253, 126, 20, 0.3);
-            background: #fff;
+            @include themeify {
+              background: themed("color-ffffff");
+            }
           }
         }
         > button {
           margin-top: 30px;
           width: 100%;
           height: 42px;
-          background: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           border-radius: 5px;
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #ffffff;
+          @include themeify {
+            color: themed("color-ffffff");
+          }
           line-height: 18px;
         }
       }
@@ -264,7 +278,9 @@ export default {
       border-radius: 8px;
       padding: 30px 20px;
       position: relative;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       z-index: 102;
 
       .title {
@@ -331,7 +347,9 @@ export default {
           height: 48px;
           display: flex;
           align-items: center;
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border: 2px solid #e8e8eb;
           border-radius: 5px;
           padding-left: 16px;
@@ -341,7 +359,9 @@ export default {
           cursor: pointer;
           &:hover {
             border: 2px solid rgba(253, 126, 20, 0.3);
-            background: #fff;
+            @include themeify {
+              background: themed("color-ffffff");
+            }
           }
         }
         .switchWallet {
@@ -350,7 +370,9 @@ export default {
           height: 48px;
           display: flex;
           align-items: center;
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("color-f8f9fa");
+          }
           border: 2px solid #e8e8eb;
           border-radius: 5px;
           padding-left: 16px;
@@ -360,18 +382,24 @@ export default {
           cursor: pointer;
           &:hover {
             border: 2px solid rgba(253, 126, 20, 0.3);
-            background: #fff;
+            @include themeify {
+              background: themed("color-ffffff");
+            }
           }
         }
         > button {
           margin-top: 30px;
           width: 100%;
           height: 42px;
-          background: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           border-radius: 5px;
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #ffffff;
+          @include themeify {
+            color: themed("color-ffffff");
+          }
           line-height: 18px;
         }
       }

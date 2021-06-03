@@ -165,7 +165,10 @@ export default {
     .wrong {
       min-width: 171px;
       height: 36px;
-      background: #dc3545;
+      @include themeify {
+        background: themed("color-dc3545");
+      }
+      // background: #dc3545;
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -174,12 +177,16 @@ export default {
       .wrongnetwork {
         width: 24px;
         height: 24px;
-        fill: #fff;
+        @include themeify {
+          fill: themed("color-ffffff");
+        }
       }
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 22px;
       }
     }
@@ -194,7 +201,9 @@ export default {
       height: 100%;
       display: flex;
       align-items: center;
-      background: #fd7e14;
+      @include themeify {
+        background: themed("color-fd7e14");
+      }
       padding: 0 10px;
       img {
         width: 30px;
@@ -206,19 +215,25 @@ export default {
         height: 20px;
         font-size: 16px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 20px;
         font-family: Helvetica;
       }
     }
     .wallet-address {
       min-width: 116px;
-      background: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       padding: 0px 10px;
       height: 100%;
       display: flex;
       align-items: center;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       cursor: pointer;
       font-weight: 600;
       font-family: Helvetica;
@@ -227,7 +242,9 @@ export default {
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background-color: #14b465;
+        @include themeify {
+          background: themed("color-14b465");
+        }
         margin-left: 4px;
         border: 2px solid #fff;
       }

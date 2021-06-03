@@ -303,6 +303,7 @@ export default {
         showDialog: true,
       };
       let data = item;
+      console.log(data, data.longBalance);
       if (data.longBalance != 0) {
         object.conText = `<p>Settlement ${addCommom(data.longBalance)} ${
           data._collateral

@@ -139,7 +139,7 @@ export default {
   margin-top: 8px;
   a span {
     @include themeify {
-      background: themed("color-17173a");
+      color: themed("color-17173a");
     }
   }
   p {
@@ -203,7 +203,7 @@ export default {
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 20px;
       }
@@ -237,7 +237,7 @@ export default {
           font-family: IBMPlexSans-Bold, IBMPlexSans;
           font-weight: bold;
           @include themeify {
-            background: themed("color-17173a");
+            color: themed("color-17173a");
           }
           line-height: 14px;
         }
@@ -248,7 +248,7 @@ export default {
       width: 100%;
       height: 40px;
       @include themeify {
-        background: themed("color-17173a");
+        color: themed("color-17173a");
       }
       border-radius: 5px;
       font-size: 14px;
@@ -311,7 +311,7 @@ export default {
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 20px;
       }
@@ -345,7 +345,7 @@ export default {
           font-family: IBMPlexSans-Bold, IBMPlexSans;
           font-weight: bold;
           @include themeify {
-            background: themed("color-17173a");
+            color: themed("color-17173a");
           }
           line-height: 14px;
         }
@@ -356,7 +356,7 @@ export default {
       width: 100%;
       height: 40px;
       @include themeify {
-        background: themed("color-17173a");
+        color: themed("color-17173a");
       }
       border-radius: 5px;
       font-size: 14px;

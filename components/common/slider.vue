@@ -748,7 +748,7 @@ export default {
           margin-right: 8px;
           display: block;
           @include themeify {
-            fill: themed("color-17173a");
+            fill: themed("slider_icon");
           }
         }
         .right {
@@ -757,7 +757,7 @@ export default {
           width: 20px;
           height: 20px;
           @include themeify {
-            fill: themed("color-17173a");
+            fill: themed("slider_icon");
           }
         }
         &:hover {
@@ -765,12 +765,12 @@ export default {
 
           > .icon {
             @include themeify {
-              fill: themed("color-ffffff");
+              fill: themed("slider_icon_hover");
             }
           }
           > .right {
             @include themeify {
-              fill: themed("color-ffffff");
+              fill: themed("slider_icon_hover");
             }
           }
         }
@@ -830,7 +830,7 @@ export default {
         height: 30px;
         padding: 0 8px;
         @include themeify {
-          background: themed("color-f8f9fa");
+          background: themed("slider_icon");
         }
         border-radius: 10px;
         display: flex;
@@ -839,7 +839,7 @@ export default {
         cursor: pointer;
         &:hover {
           @include themeify {
-            background: themed("color-fffaf3");
+            background: themed("slider_icon_hover");
           }
         }
         &:last-of-type {
@@ -863,13 +863,12 @@ export default {
         .icon {
           width: 20px;
           height: 20px;
-          fill: rgba(23, 23, 58, 0.7);
           @include themeify {
-            fill: themed("color-f8f9fa");
+            fill: themed("slider_icon");
           }
           &:hover {
             @include themeify {
-              fill: themed("color-fffaf3");
+              fill: themed("slider_icon_hover");
             }
           }
         }

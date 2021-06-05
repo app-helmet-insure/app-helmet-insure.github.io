@@ -161,7 +161,6 @@ export default {
   },
 
   async mounted() {
-    console.log(localStorage);
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -197,6 +196,7 @@ export default {
     });
     let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
+    localStorage.setItem("themes", themes);
     this.$store.dispatch("setThemes", themes);
     this.canShow = true;
   },

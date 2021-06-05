@@ -186,6 +186,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .stepOne {
     width: 420px;
@@ -193,7 +194,9 @@ export default {
     .step_title {
       font-size: 18px;
       font-weight: 600;
-      color: #121212;
+      @include themeify {
+        color: themed("color-121212");
+      }
     }
     .step_action {
       > .step_buy {
@@ -204,9 +207,13 @@ export default {
         span {
           font-size: 14px;
           line-height: 14px;
-          color: #121212;
+          @include themeify {
+            color: themed("color-121212");
+          }
           i {
-            color: rgba(23, 23, 58, 0.4);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 60%);
+            }
           }
         }
         a {
@@ -232,14 +239,18 @@ export default {
           font-size: 20px;
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 500;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 25px;
         }
         span {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: rgba(23, 23, 58, 0.4);
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 60%);
+          }
           line-height: 20px;
           margin-top: 4px;
         }
@@ -255,20 +266,28 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         &:hover {
-          background: #2c2c2c;
+          @include themeify {
+            background: themed("color-2c2c2c");
+          }
         }
       }
       .text {
         margin-top: 4px;
         font-size: 14px;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       .tips {
         margin-top: 8px;
         font-size: 14px;
-        color: rgba(23, 23, 58, 0.4);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 60%);
+        }
         text-align: center;
       }
     }
@@ -292,7 +311,9 @@ export default {
           font-size: 12px;
           color: #121212;
           i {
-            color: rgba(23, 23, 58, 0.4);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 60%);
+            }
           }
         }
         a {
@@ -316,14 +337,18 @@ export default {
           font-size: 20px;
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 500;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 25px;
         }
         span {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: rgba(23, 23, 58, 0.4);
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 60%);
+          }
           line-height: 20px;
           margin-top: 4px;
         }
@@ -339,21 +364,29 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         &:hover {
-          background: #2c2c2c;
+          @include themeify {
+            background: themed("color-2c2c2c");
+          }
         }
       }
       .text {
         margin-top: 4px;
         font-size: 12px;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       .tips {
         margin-top: 8px;
         font-size: 12px;
         text-align: center;
-        color: rgba(23, 23, 58, 0.4);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 60%);
+        }
       }
     }
   }

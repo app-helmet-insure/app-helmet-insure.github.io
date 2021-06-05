@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-container">
+  <div class="layout-container" v-if="canShow">
     <div class="contractAdress" v-if="TitleTextShow">
       <i></i>
       <p>
@@ -88,6 +88,7 @@ export default {
       },
       showStatusDialog: false,
       TitleTextShow: true,
+      canShow: false,
     };
   },
   computed: {
@@ -130,6 +131,9 @@ export default {
     localeList() {
       return this.$store.state.localeList;
     },
+    storeThemes() {
+      return this.$store.state.themes;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -148,8 +152,14 @@ export default {
         this.showNetWorkTip();
       }
     },
+    storeThemes(newValue) {
+      document.body.setAttribute("class", newValue);
+      localStorage.setItem("themes", newValue);
+    },
   },
+
   async mounted() {
+    console.log(localStorage);
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -183,6 +193,10 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
+    let themes = localStorage.themes;
+    document.body.setAttribute("class", themes);
+    this.$store.dispatch("setThemes", themes);
+    this.canShow = true;
   },
   methods: {
     openBUY() {
@@ -434,6 +448,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+@import "~/assets/css/base.scss";
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -446,6 +461,9 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
+  @include themeify {
+    background: themed("color-f8f9fa");
+  }
 }
 @media screen and (min-width: 750px) {
   ::-webkit-scrollbar-track {
@@ -478,14 +496,16 @@ export default {
       width: 100%;
       min-width: 1026px;
       height: 50px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+        color: themed("color-17173a");
+      }
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 14px;
       font-family: Helvetica;
-      color: #17173a;
       font-weight: 600;
       i {
         display: block;
@@ -516,18 +536,20 @@ export default {
         align-items: center;
         justify-content: center;
         height: 32px;
-        background: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+          color: themed("color-ffffff");
+          &:hover {
+            background: themed("color-2c2c2c");
+          }
+        }
         border-radius: 5px;
         padding: 0 10px;
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #ffffff;
         line-height: 24px;
         text-decoration: underline;
         margin-left: 17px;
-        &:hover {
-          background: #2c2c2c;
-        }
       }
     }
     .content {
@@ -538,7 +560,9 @@ export default {
         overflow-y: scroll;
         flex: 1;
         height: calc(100vh - 50px);
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         min-width: 1026px;
         // padding: 0 12%;
         margin: 0 auto;
@@ -555,12 +579,14 @@ export default {
       padding: 10px;
       width: 100%;
       height: 112px;
-      background: #fff;
+      @include themeify {
+        background: themed("color-ffffff");
+        box-shadow: 0px 1px 0px 0px themed("color-e8e8eb");
+      }
       font-size: 12px;
       color: #fd7e14;
       line-height: 20px;
       display: flex;
-      box-shadow: 0px 1px 0px 0px #e8e8eb;
       position: relative;
       i {
         display: block;
@@ -582,18 +608,22 @@ export default {
           font-size: 12px;
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 550;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 16px;
         }
         a {
           min-width: 111px;
           height: 32px;
-          background: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+            color: themed("color-ffffff");
+          }
           border-radius: 5px;
           padding: 0 10px;
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #ffffff;
           text-align: center;
           line-height: 32px;
           text-decoration: underline;
@@ -602,7 +632,7 @@ export default {
       .close {
         width: 24px;
         height: 24px;
-        fill: rgba(23, 23, 58, 0.45);
+        fill: #eee;
         position: absolute;
         right: 10px;
         top: 10px;

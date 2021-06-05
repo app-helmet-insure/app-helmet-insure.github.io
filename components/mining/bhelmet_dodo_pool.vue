@@ -31,7 +31,10 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            'disable_button b_button')
+          "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmDeposit") }}
@@ -164,7 +167,10 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            'disable_button o_button')
+          "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}

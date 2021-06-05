@@ -238,6 +238,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .h5_about {
     display: none;
@@ -245,7 +246,9 @@ export default {
   .iio_about {
     width: 1200px;
     margin: 0 auto 40px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     padding: 40px 0;
     &_table {
       width: 960px;
@@ -257,7 +260,9 @@ export default {
         width: 50%;
         border-collapse: collapse;
         tr {
-          border: 1px solid #e8e8eb;
+          @include themeify {
+            border: 1px solid themed("color-e8e8eb");
+          }
         }
         &:nth-of-type(2) {
           tr {
@@ -269,6 +274,9 @@ export default {
           text-align: left;
           height: 64px;
           padding: 0 20px;
+          @include themeify {
+            color: themed("color-17173a");
+          }
         }
         td {
           width: 50%;
@@ -307,7 +315,9 @@ export default {
               float: right;
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #17173a;
+              @include themeify {
+                color: themed("color-17173a");
+              }
             }
           }
         }
@@ -320,14 +330,18 @@ export default {
         font-size: 16px;
         font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 22px;
         margin-top: 30px;
       }
       p {
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 22px;
         margin-top: 15px;
       }
@@ -350,18 +364,24 @@ export default {
           margin-left: 12px;
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 24px;
         }
         a {
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 24px;
           text-decoration: underline;
           margin-left: 4px;
           &:hover {
-            color: rgba(23, 23, 58, 0.7);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
           }
         }
       }
@@ -374,20 +394,26 @@ export default {
   }
   .iio_about {
     width: 100%;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     padding: 40px 16px;
     &_table {
       width: 100%;
       margin: 0 auto;
       table {
-        border: 1px solid #e8e8eb;
+        @include themeify {
+          border: 1px solid themed("color-e8e8eb");
+        }
         border-collapse: collapse;
         border-radius: 5px;
         &:nth-of-type(2) {
           margin-top: 20px;
         }
         tr {
-          border: 1px solid #e8e8eb;
+          @include themeify {
+            border: 1px solid themed("color-e8e8eb");
+          }
         }
         .none {
           display: none;
@@ -398,6 +424,9 @@ export default {
         text-align: left;
         height: 64px;
         padding: 0 20px;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       td {
         width: 50%;
@@ -446,7 +475,9 @@ export default {
             float: right;
             font-size: 14px;
             font-family: IBMPlexSans;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
           }
         }
         i {
@@ -466,14 +497,18 @@ export default {
         font-size: 16px;
         font-family: PingFangSC-Semibold, PingFang SC;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 22px;
         margin-top: 30px;
       }
       p {
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 22px;
         margin-top: 15px;
       }
@@ -487,6 +522,11 @@ export default {
       flex-direction: column;
       margin: 0px auto 0;
       flex-shrink: 0;
+      > svg {
+        @include themeify {
+          fill: themed("color-ffffff");
+        }
+      }
       p {
         display: flex;
         align-items: center;
@@ -495,18 +535,24 @@ export default {
           margin-left: 12px;
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 24px;
         }
         a {
           font-size: 14px;
           font-family: IBMPlexSans;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           line-height: 24px;
           text-decoration: underline;
           margin-left: 4px;
           &:hover {
-            color: rgba(23, 23, 58, 0.7);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
           }
         }
       }

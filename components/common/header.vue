@@ -1,13 +1,16 @@
 <template>
   <div class="header-container">
     <div class="logo">
-      <img src="~/assets/img/helmet/header_logo.png" alt="" />
+      <img
+        :src="require(`~/assets/img/helmet/header_logo_${storeThemes}.png`)"
+        alt=""
+      />
       <div class="more" @click="handleShowMask">
-        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+        <svg width="24px" height="24px" class="menu">
           <path
             d="M3,4 L21,4 L21,6 L3,6 L3,4 Z M3,19 L21,19 L21,21 L3,21 L3,19 Z M11,14 L21,14 L21,16 L11,16 L11,14 Z M11,9 L21,9 L21,11 L11,11 L11,9 Z M7,12.5 L3,16 L3,9 L7,12.5 Z"
             id="形状"
-            fill="#17173A"
+            fill-opacity="0.87"
             fill-rule="nonzero"
           ></path>
         </svg>
@@ -15,7 +18,10 @@
     </div>
     <div class="account">
       <div class="airdrop_web airdrop" @click="handleClickAirdrop">
-        <img src="~/assets/img/icon/airdrop.png" alt="" />
+        <img
+          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
+          alt=""
+        />
       </div>
       <a
         v-if="!userInfo.data.isLogin"
@@ -57,7 +63,10 @@
         @back="openCurrentAccount"
       ></ChangeAccount>
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
-        <img src="~/assets/img/icon/airdrop.png" alt="" />
+        <img
+          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -100,6 +109,9 @@ export default {
     ChainID() {
       let chainID = this.$store.state.chainID;
       return chainID;
+    },
+    storeThemes() {
+      return this.$store.state.themes;
     },
   },
   watch: {
@@ -165,7 +177,10 @@ export default {
     .wrong {
       min-width: 171px;
       height: 36px;
-      background: #dc3545;
+      @include themeify {
+        background: themed("color-dc3545");
+      }
+      // background: #dc3545;
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -174,12 +189,16 @@ export default {
       .wrongnetwork {
         width: 24px;
         height: 24px;
-        fill: #fff;
+        @include themeify {
+          fill: themed("color-ffffff");
+        }
       }
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 22px;
       }
     }
@@ -194,7 +213,9 @@ export default {
       height: 100%;
       display: flex;
       align-items: center;
-      background: #fd7e14;
+      @include themeify {
+        background: themed("color-fd7e14");
+      }
       padding: 0 10px;
       img {
         width: 30px;
@@ -206,19 +227,25 @@ export default {
         height: 20px;
         font-size: 16px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 20px;
         font-family: Helvetica;
       }
     }
     .wallet-address {
       min-width: 116px;
-      background: #17173a;
+      @include themeify {
+        background: themed("color-17173a");
+      }
       padding: 0px 10px;
       height: 100%;
       display: flex;
       align-items: center;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       cursor: pointer;
       font-weight: 600;
       font-family: Helvetica;
@@ -227,22 +254,26 @@ export default {
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background-color: #14b465;
+        @include themeify {
+          background: themed("color-14b465");
+          border: 2px solid themed("color-ffffff");
+        }
         margin-left: 4px;
-        border: 2px solid #fff;
       }
     }
     .connect-wallet-btn {
       min-width: 140px;
       height: 40px;
-      background: #17173a;
       border-radius: 5px;
       display: block;
       padding: 0px 10px;
-      color: #ffffff;
       line-height: 40px;
-      &:hover {
-        background: #2c2c2c;
+      @include themeify {
+        background: themed("color-17173a");
+        color: themed("color-ffffff");
+        &:hover {
+          background: themed("color-2c2c2c");
+        }
       }
     }
   }
@@ -253,7 +284,9 @@ export default {
     margin: 20px auto;
     min-width: 1026px;
     height: 80px;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     .logo {
       display: none;
     }
@@ -277,7 +310,9 @@ export default {
   .header-container {
     justify-content: space-between;
     padding: 12px 10px 50px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     .logo {
       display: flex;
       align-items: center;
@@ -290,6 +325,11 @@ export default {
         width: 24px;
         height: 24px;
         cursor: pointer;
+        svg {
+          @include themeify {
+            fill: themed("color-17173a");
+          }
+        }
       }
     }
     .account {

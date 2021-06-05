@@ -27,7 +27,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 .iio_container {
-  background: #f7f7fa;
+  @include themeify {
+    background: themed("color-f8f9fa");
+  }
 }
 </style>

@@ -53,6 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 .onepager_mask {
   position: fixed;
   left: 0;
@@ -83,7 +84,9 @@ export default {
 @media screen and (min-width: 750px) {
   .onepager_wrapper {
     width: 627px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     position: absolute;
     left: 50%;
     top: 50%;
@@ -130,7 +133,9 @@ export default {
       p {
         margin: 10px 0;
         font-size: 14px;
-        color: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         line-height: 28px;
       }
     }
@@ -141,7 +146,9 @@ export default {
     width: 90%;
     height: 80%;
     max-height: 550px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     position: absolute;
     left: 50%;
     top: 50%;
@@ -189,7 +196,9 @@ export default {
         p {
           margin: 10px 0;
           font-size: 14px;
-          color: #17173a;
+          @include themeify {
+            background: themed("color-17173a");
+          }
           line-height: 28px;
         }
       }

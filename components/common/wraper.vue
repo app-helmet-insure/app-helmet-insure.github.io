@@ -28,6 +28,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 @media screen and(min-width:750px) {
   .wraper {
     display: none;
@@ -40,7 +41,9 @@ export default {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     overflow: hidden;
     z-index: 12;
     display: flex;

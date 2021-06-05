@@ -41,9 +41,9 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            expired ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -132,7 +132,7 @@
           />
           <span
             @click="WithdrawNum = balance.Withdraw"
-            style="background: rgba(255, 150, 0, 0.1)"
+            style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</span
           >
         </div>
@@ -164,9 +164,9 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i

@@ -20,3 +20,18 @@ $bg-c: #161616;
 $bg-w: #ffffff;
 $bg-a: #1d1d1d;
 $bg-d: #101010;
+@import './themes.scss'; // 引入_themes.scss
+
+@mixin themeify {
+    @each $theme-name, $theme-map in $themes {
+        $theme-map: $theme-map !global;
+        // body[data-theme=#{$theme-name}] & {
+        body.#{$theme-name} & {
+            @content;
+        }
+    }
+}
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}

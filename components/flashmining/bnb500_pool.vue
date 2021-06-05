@@ -1,6 +1,6 @@
 <template>
   <div class="flash_pool">
-    <div class="deposit">
+    <div class="deposit" v-if="TradeType == 'STAKE' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.DAvailable") }}：</span>
         <p>
@@ -41,9 +41,9 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            expired ? 'disable_button b_button ' : '')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -106,7 +106,7 @@
       </div>
     </div>
     <i></i>
-    <div class="withdraw">
+    <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
         <p>
@@ -133,7 +133,7 @@
           <!-- <input name="withdraw" type="text" v-model="WithdrawNum" /> -->
           <span
             @click="WithdrawNum = balance.Withdraw"
-            style="background: rgba(255, 150, 0, 0.1)"
+            style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</span
           >
         </div>
@@ -165,9 +165,9 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -222,6 +222,7 @@ import countTo from "vue-count-to";
 import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
 export default {
+  props: ["TradeType"],
   components: {
     countTo,
   },

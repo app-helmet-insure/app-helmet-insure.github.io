@@ -90,6 +90,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 @media screen and(min-width:750px) {
   .iio_details {
     width: 100%;
@@ -99,7 +100,9 @@ export default {
       font-size: 30px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 40px;
     }
   }
@@ -107,7 +110,9 @@ export default {
     > .qus {
       width: 100%;
       height: 60px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       display: flex;
@@ -133,7 +138,9 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 14px;
         margin-left: 20px;
       }
@@ -145,16 +152,22 @@ export default {
     }
     > .aws {
       min-height: 100px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 0 20px;
       .text {
-        border-top: 1px solid #e8e8e8;
+        @include themeify {
+          border-top: 1px solid themed("color-e8e8e8");
+        }
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.8);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 20%);
+        }
         line-height: 20px;
         padding: 15px 0 15px 44px;
         display: flex;
@@ -169,13 +182,16 @@ export default {
 @media screen and(max-width:750px) {
   .iio_details {
     width: 96%;
-    margin: 0 auto 50px;
+    margin: 0 auto;
+    padding-bottom: 50px;
     h3 {
       margin-top: 30px;
       font-size: 30px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 40px;
     }
   }
@@ -183,8 +199,10 @@ export default {
     > .qus {
       width: 100%;
       height: 60px;
-      background: #ffffff;
-      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      @include themeify {
+        background: themed("color-ffffff");
+      }
+      box-shadow: 0px 4px 8px 0px rgba(21, 2, 2, 0.02);
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -209,7 +227,9 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 20px;
         margin-left: 20px;
       }
@@ -221,16 +241,22 @@ export default {
     }
     > .aws {
       min-height: 100px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 0 20px;
       .text {
-        border-top: 1px solid #e8e8e8;
+        @include themeify {
+          border-top: 1px solid themed("color-e8e8e8");
+        }
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.8);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 20%);
+        }
         line-height: 20px;
         padding: 15px 0 15px 0;
         display: flex;

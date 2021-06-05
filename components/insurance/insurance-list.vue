@@ -56,16 +56,12 @@
             <button
               @click="buyPutInsurance(item.InsuranceType)"
               :class="
-                activeInsurance == item.InsuranceType &&
+                (activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'PUT'
                   ? 'activeButton buyPutInsurance'
-                  : 'buyPutInsurance'
-              "
-              :style="
-                item.InsuranceImg == 'COIN'
-                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
-                  : ''
+                  : 'buyPutInsurance',
+                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
               "
             >
               {{ $t("Insurance.Insurance_text6") }}
@@ -74,16 +70,12 @@
             <button
               @click="buyCallInsurance(item.InsuranceType)"
               :class="
-                activeInsurance == item.InsuranceType &&
+                (activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'CALL'
                   ? 'activeButton buyCallInsurance'
-                  : 'buyCallInsurance'
-              "
-              :style="
-                item.InsuranceImg == 'COIN'
-                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
-                  : ''
+                  : 'buyCallInsurance',
+                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
               "
             >
               {{ $t("Insurance.Insurance_text7") }}
@@ -92,16 +84,12 @@
             <button
               @click="issueInsurance(item.InsuranceType)"
               :class="
-                activeInsurance == item.InsuranceType &&
+                (activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'SELL'
                   ? 'activeButton issueInsurance'
-                  : 'issueInsurance'
-              "
-              :style="
-                item.InsuranceImg == 'COIN'
-                  ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
-                  : ''
+                  : 'issueInsurance',
+                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
               "
             >
               {{ $t("Insurance.Insurance_text8") }}
@@ -172,21 +160,13 @@
         <section>
           <button
             @click="buyInsurance_h5(item.InsuranceType)"
-            :style="
-              item.InsuranceImg == 'COIN'
-                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
-                : ''
-            "
+            :class="item.InsuranceImg == 'COIN' ? 'disable_insurance' : ''"
           >
             {{ $t("Insurance.Insurance_text24") }}
           </button>
           <button
             @click="issueInsurance_h5(item.InsuranceType)"
-            :style="
-              item.InsuranceImg == 'COIN'
-                ? 'background: #F8F9FA !important;color: rgba(23, 23, 58, 0.2); pointer-events: none'
-                : ''
-            "
+            :class="item.InsuranceImg == 'COIN' ? 'disable_insurance' : ''"
           >
             {{ $t("Insurance.Insurance_text8") }}
           </button>
@@ -405,6 +385,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .insurance_list {
     width: 100%;
@@ -431,7 +412,9 @@ export default {
     h3 {
       font-size: 18px;
       font-family: Helvetica;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 24px;
     }
     span {
@@ -444,7 +427,9 @@ export default {
   .insurance_type > .insurance_text {
     font-size: 14px;
     font-family: Sathu;
-    color: rgba(23, 23, 58, 0.5);
+    @include themeify {
+      color: darken($color: themed("color-17173a"), $amount: 50%);
+    }
     line-height: 14px;
     display: flex;
     align-items: center;
@@ -472,9 +457,16 @@ export default {
     width: 100%;
     margin-top: 10px;
     padding: 0 20px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     .activeInsurance {
-      border-bottom: 1px solid #e8e8eb;
+      @include themeify {
+        border-bottom: 1px solid themed("color-e8e8eb");
+      }
     }
     .insurance_show {
       height: 70px;
@@ -495,7 +487,9 @@ export default {
           span {
             font-size: 16px;
             font-family: Helvetica;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 24px;
             font-weight: 600;
           }
@@ -509,14 +503,18 @@ export default {
             &:nth-of-type(1) {
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #17173a;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 14px;
               font-weight: 500;
             }
             &:nth-of-type(2) {
               font-size: 12px;
               font-family: IBMPlexSans;
-              color: rgba(23, 23, 58, 0.45);
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 55%);
+              }
               line-height: 12px;
               margin-top: 4px;
             }
@@ -545,7 +543,9 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
                 font-weight: 500;
               }
@@ -553,7 +553,9 @@ export default {
                 margin-top: 4px;
                 font-size: 12px;
                 font-family: IBMPlexSans;
-                color: rgba(23, 23, 58, 0.45);
+                @include themeify {
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
+                }
                 line-height: 12px;
               }
             }
@@ -565,10 +567,12 @@ export default {
           justify-content: flex-end;
           min-width: 420px;
           .activeButton {
-            border: 2px solid #fd7e14;
-            padding: 0px 9px;
-            color: #fd7e14;
-            background: #fffaf3;
+            border: 2px solid #fd7e14 !important;
+            padding: 0px 9px !important;
+            color: #fd7e14 !important;
+            @include themeify {
+              background: themed("color-fffaf3");
+            }
             i {
               border-right: 5px solid transparent;
               border-top: 6px solid #fd7e14;
@@ -579,13 +583,15 @@ export default {
           button {
             padding: 0px 10px;
             height: 40px;
-            background: #f8f9fa;
+            @include themeify {
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
+            }
             border-radius: 5px;
-            border: 1px solid #e8e8eb;
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            color: #17173a;
             line-height: 18px;
             font-weight: 500;
             display: flex;
@@ -598,21 +604,23 @@ export default {
             &:hover {
               padding: 0px 9px;
               height: 40px;
-              border: 2px solid #fd7e14;
-              color: #fd7e14;
-              background: #fffaf3;
+              border: 2px solid #fd7e14 !important;
+              color: #fd7e14 !important;
+              @include themeify {
+                background: themed("color-fffaf3");
+              }
               i {
                 border-right: 5px solid transparent;
                 border-top: 6px solid #fd7e14;
                 border-left: 5px solid transparent;
               }
             }
-
             i {
               position: relative;
               margin-left: 6px;
               border-right: 5px solid transparent;
-              border-top: 6px solid rgba(23, 23, 58, 0.6);
+              border-top: 6px solid
+                darken($color: themed("color-17173a"), $amount: 0.6);
               border-left: 5px solid transparent;
               &::after {
                 content: "";
@@ -620,9 +628,17 @@ export default {
                 top: -6px;
                 left: -3px;
                 border-right: 3px solid transparent;
-                border-top: 4px solid #f8f9fa;
+                @include themeify {
+                  border-top: 4px solid themed("color-f8f9fa");
+                }
                 border-left: 3px solid transparent;
               }
+            }
+          }
+          .disable_insurance {
+            @include themeify {
+              color: themed("insure_button_disable");
+              pointer-events: none;
             }
           }
         }
@@ -645,7 +661,9 @@ export default {
 @media screen and (max-width: 750px) {
   .insurance_list {
     width: 100%;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     padding: 20px 10px 50px;
     .insurance_detail {
       display: none;
@@ -676,7 +694,7 @@ export default {
     .close {
       width: 24px;
       height: 24px;
-      fill: #000;
+      fill: #ccc;
       cursor: pointer;
     }
   }
@@ -692,7 +710,9 @@ export default {
       flex: 1;
       font-size: 14px;
       font-family: Sathu;
-      color: rgba(23, 23, 58, 0.5);
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 50%);
+      }
       line-height: 14px;
       &:nth-of-type(1) {
         margin-right: 20px;
@@ -705,7 +725,9 @@ export default {
   .insurance_item_H5 {
     width: 100%;
     padding: 16px 10px 20px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
     margin-top: 12px;
@@ -727,7 +749,9 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans-Medium, IBMPlexSans;
             font-weight: 600;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 24px;
           }
         }
@@ -742,13 +766,17 @@ export default {
             &:nth-of-type(1) {
               font-size: 12px;
               font-family: IBMPlexSans;
-              color: #17173a;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 12px;
             }
             &:nth-of-type(2) {
               font-size: 12px;
               font-family: IBMPlexSans;
-              color: rgba(23, 23, 58, 0.45);
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 55%);
+              }
               line-height: 12px;
             }
           }
@@ -762,16 +790,21 @@ export default {
           flex: 1;
           min-width: 108px;
           height: 32px;
-          background: #f8f9fa;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
           border-radius: 5px;
-          border: 1px solid #e8e8eb;
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
-          color: #17173a;
+
           line-height: 24px;
           &:focus {
+            @include themeify {
+              background: themed("color-fffaf3");
+            }
             border: 2px solid #fd7e14;
-            background: #fffaf3;
             color: #fd7e14;
           }
           &:nth-of-type(1) {
@@ -781,6 +814,12 @@ export default {
             margin-left: 20px;
           }
         }
+        .disable_insurance {
+          @include themeify {
+            color: themed("insure_button_disable");
+            pointer-events: none;
+          }
+        }
       }
     }
   }
@@ -788,7 +827,9 @@ export default {
     display: flex;
     height: 32px;
     margin: 16px 10px;
-    background: #e8e8eb;
+    @include themeify {
+      background: themed("color-e8e8eb");
+    }
     border-radius: 8px;
     align-items: center;
     padding: 0 2px;
@@ -800,7 +841,9 @@ export default {
       font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: rgba(23, 23, 58, 0.5);
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 50%);
+      }
     }
     .activeAction {
       flex: 1;
@@ -808,20 +851,26 @@ export default {
       align-items: center;
       justify-content: center;
       height: 28px;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       border-radius: 7px;
       text-align: center;
       border: 1px solid rgba(0, 0, 0, 0.04);
       font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
   }
   .activePage {
     margin: 0 10px;
     padding: 17px 18px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
   }

@@ -39,21 +39,23 @@
   </div>
 </template>
 <script>
-import Langauage from '~/components/common/langauage.vue'
-import '~/assets/svg/iconfont.js'
+import Langauage from "~/components/common/langauage.vue";
+import "~/assets/svg/iconfont.js";
 export default {
-  props: ['padding'],
-  name: 'p-footer',
+  props: ["padding"],
+  name: "p-footer",
   components: { Langauage },
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '~/assets/css/base.scss';
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .footer-container {
     width: 100%;
     height: 240px;
-    background: #17173a;
+    @include themeify {
+      background: themed("color-17173a");
+    }
     display: flex;
     flex-direction: column;
     min-width: 1200px;
@@ -104,7 +106,9 @@ export default {
   .footer-container {
     width: 100%;
     height: 218px;
-    background: #17173a;
+    @include themeify {
+      background: themed("color-17173a");
+    }
     display: flex;
     flex-direction: column;
     .footer_top {

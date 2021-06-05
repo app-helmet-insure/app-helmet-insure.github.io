@@ -267,7 +267,7 @@ export default {
           width: 1px;
           height: 10px;
           @include themeify {
-            background: themed("color-e8e8eb");
+            background: themed("price_line");
           }
         }
         p {
@@ -285,7 +285,7 @@ export default {
           }
           line-height: 12px;
           @include themeify {
-            background: themed("color-f8f9fa");
+            background: themed("insure_button");
           }
           text-align: center;
           &:after {
@@ -295,7 +295,9 @@ export default {
             bottom: -4px;
             transform: translateX(-50%);
             border-right: 4px solid transparent;
-            border-top: 5px solid #f8f9fa;
+            @include themeify {
+              border-top: 5px solid themed("insure_button");
+            }
             border-left: 4px solid transparent;
           }
           span {

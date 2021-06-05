@@ -113,7 +113,10 @@
       v-if="(showList.length < 1 && !isLoading) || !isLogin"
     >
       <div>
-        <img src="~/assets/img/helmet/nodata.png" alt="" />
+        <img
+          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
+          alt=""
+        />
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
@@ -177,6 +180,9 @@ export default {
     },
     userInfo() {
       return this.$store.state.userInfo;
+    },
+    storeThemes() {
+      return this.$store.state.themes;
     },
   },
   watch: {

@@ -134,6 +134,9 @@ export default {
     .activeWarn {
       margin-top: 10px;
       font-size: 14px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);
@@ -321,6 +324,9 @@ export default {
     .activeWarn {
       margin-top: 10px;
       font-size: 14px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);

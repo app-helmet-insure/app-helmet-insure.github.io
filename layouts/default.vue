@@ -153,8 +153,10 @@ export default {
       }
     },
     storeThemes(newValue) {
-      document.body.setAttribute("class", newValue);
-      localStorage.setItem("themes", newValue);
+      if (newValue) {
+        document.body.setAttribute("class", newValue);
+        localStorage.setItem("themes", newValue);
+      }
     },
   },
 
@@ -193,7 +195,7 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-    let themes = localStorage.themes;
+    let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
     this.$store.dispatch("setThemes", themes);
     this.canShow = true;

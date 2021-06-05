@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="sliderShowFlag ? 'openSlider slider' : 'closeSlider slider'"
+    :class="
+      sliderShowFlag
+        ? `openSlider slider' ${storeThemes}slider`
+        : `closeSlider slider storeThemes + ${storeThemes}slider`
+    "
     @click.self="CloseMask"
   >
     <div class="slider_wrap">
@@ -276,6 +280,7 @@ export default {
     changeThemes(value) {
       this.$store.dispatch("setThemes", value);
       window.localStorage.setItem("themes", value);
+      document.body.setAttribute("class", value);
     },
     CloseMask() {
       this.sliderShowFlag = false;
@@ -308,7 +313,6 @@ export default {
     @include themeify {
       background-color: themed("color-ffffff");
     }
-    background-image: url("../../assets/img/slider/slider_logo_bg.png");
     background-repeat: no-repeat;
     background-size: 100% 135px;
     padding: 70px 20px 30px;
@@ -322,7 +326,12 @@ export default {
       height: 100%;
     }
   }
-
+  .darkslider {
+    background-image: url("../../assets/img/slider/slider_logo_bg_dark.png");
+  }
+  .lightslider {
+    background-image: url("../../assets/img/slider/slider_logo_bg_light.png");
+  }
   @keyframes rotation_0 {
     from {
       -webkit-transform: rotate(180deg);

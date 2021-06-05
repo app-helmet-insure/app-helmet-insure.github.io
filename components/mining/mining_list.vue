@@ -4,11 +4,14 @@
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
     <div v-for="item in miningList" :key="item.earn">
-      <div class="finshed_line finshed_pc" v-if="item.earn == 'bhelmet_dodo'">
+      <div
+        :class="['finshed_line', 'finshed_pc']"
+        v-if="item.earn == 'bhelmet_dodo'"
+      >
         <p></p>
-        <i></i>
+        <i :class="storeThemes + '_star'"></i>
         <span>Finished</span>
-        <i></i>
+        <i :class="storeThemes + '_star'"></i>
         <p></p>
       </div>
       <div class="mining_item">
@@ -23,7 +26,9 @@
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                timeArray[item.earn].dueDate == 'Finished' ? 'expired' : 'web'
+                timeArray[item.earn].dueDate == 'Finished'
+                  ? 'expired_' + storeThemes
+                  : 'web'
               }.png`)
             "
             alt=""
@@ -35,7 +40,7 @@
             :src="
               require(`~/assets/img/mining/${
                 timeArray[item.earn].dueDate == 'Finished'
-                  ? 'serial_web_expired'
+                  ? 'serial_web_expired_' + storeThemes
                   : 'serial_web'
               }.png`)
             "
@@ -48,7 +53,7 @@
             :src="
               require(`~/assets/img/mining/${
                 timeArray[item.earn].dueDate == 'Finished'
-                  ? 'serialnext_web_expired'
+                  ? 'serialnext_web_expired_' + storeThemes
                   : 'serialnext_web'
               }.png`)
             "
@@ -251,7 +256,9 @@
           class="combo_img"
           :src="
             require(`~/assets/img/mining/combo_${
-              timeArray[item.earn].dueDate == 'Finished' ? 'expired' : 'web'
+              timeArray[item.earn].dueDate == 'Finished'
+                ? 'expired_' + storeThemes
+                : 'web'
             }.png`)
           "
           alt=""
@@ -263,7 +270,7 @@
           :src="
             require(`~/assets/img/mining/${
               timeArray[item.earn].dueDate == 'Finished'
-                ? 'serial_web_expired'
+                ? 'serial_web_expired_' + storeThemes
                 : 'serial_web'
             }.png`)
           "
@@ -276,7 +283,7 @@
           :src="
             require(`~/assets/img/mining/${
               timeArray[item.earn].dueDate == 'Finished'
-                ? 'serialnext_web_expired'
+                ? 'serialnext_web_expired_' + storeThemes
                 : 'serialnext_web'
             }.png`)
           "
@@ -635,11 +642,19 @@ export default {
     HELMET_BUSD() {
       return this.$store.state.HELMET_BUSD;
     },
+    storeThemes() {
+      return this.$store.state.themes;
+    },
   },
   watch: {
     apyArray: {
       handler: "apyArrayWatch",
       immediate: true,
+    },
+    storeThemes(newValue) {
+      if (newValue) {
+        this.initMiningData();
+      }
     },
   },
   methods: {
@@ -702,7 +717,7 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: "HELMET-BNB&nbsp;LP <i class='v2'></i>",
+          miningName: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
           earnNum: "two",
           earn: "helmet_cake_v2",
           earnImg: true,
@@ -794,7 +809,7 @@ export default {
           onePager: false,
         },
         {
-          miningName: "HELMET-BNB&nbsp;LP <i class='v1'></i>",
+          miningName: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
           earnNum: "two",
           earn: "helmet_cake_v1",
           earnImg: true,
@@ -1280,8 +1295,10 @@ export default {
 .onePager {
   display: flex;
   align-items: center;
-  .v1,
-  .v2 {
+  .v1_light,
+  .v2_light,
+  .v1_dark,
+  .v2_dark {
     border: none;
     display: inline-block;
     margin-left: 4px;
@@ -1293,11 +1310,17 @@ export default {
       border: none;
     }
   }
-  .v1 {
-    background-image: url("../../assets/img/mining/v1_icon.png");
+  .v1_light {
+    background-image: url("../../assets/img/mining/v1_icon_light.png");
   }
-  .v2 {
-    background-image: url("../../assets/img/mining/v2_icon.png");
+  .v2_light {
+    background-image: url("../../assets/img/mining/v2_icon_light.png");
+  }
+  .v1_dark {
+    background-image: url("../../assets/img/mining/v1_icon_dark.png");
+  }
+  .v2_dark {
+    background-image: url("../../assets/img/mining/v2_icon_dark.png");
   }
 }
 </style>
@@ -1329,9 +1352,14 @@ export default {
     display: block;
     width: 16px;
     height: 16px;
-    background-image: url("../../assets/img/mining/finished.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+  }
+  .light_star {
+    background-image: url("../../assets/img/mining/finished_light.png");
+  }
+  .dark_star {
+    background-image: url("../../assets/img/mining/finished_dark.png");
   }
 }
 

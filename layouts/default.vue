@@ -151,10 +151,6 @@ export default {
         this.showNetWorkTip();
       }
     },
-    storeThemes: {
-      handler: "storeThemesWathc",
-      immediate: true,
-    },
   },
   async mounted() {
     // 是否阅读过【风险提示】
@@ -190,15 +186,13 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-    let themes = window.localStorage.themes || this.storeThemes || "light";
-    this.$store.dispatch("setThemes", themes);
-    document.body.setAttribute("class", themes);
+    this.initTheme();
   },
   methods: {
-    storeThemesWathc(newValue) {
-      if (newValue && process.client) {
-        document.body.setAttribute("class", newValue);
-      }
+    initTheme() {
+      let themes = window.localStorage.themes || this.storeThemes || "light";
+      this.$store.dispatch("setThemes", themes);
+      document.body.setAttribute("class", themes);
     },
     openBUY() {
       this.$bus.$emit("OPEN_BUY_DIALOG", true);

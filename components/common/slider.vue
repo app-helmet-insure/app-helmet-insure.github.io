@@ -2,7 +2,7 @@
   <div
     :class="
       sliderShowFlag
-        ? `openSlider slider' ${storeThemes}slider`
+        ? `openSlider slider ${storeThemes}slider`
         : `closeSlider slider storeThemes + ${storeThemes}slider`
     "
     @click.self="CloseMask"
@@ -275,12 +275,13 @@ export default {
     $route() {
       this.$route.path !== "/";
     },
+    storeThemes(newValue) {
+      console.log(newValue);
+    },
   },
   methods: {
     changeThemes(value) {
       this.$store.dispatch("setThemes", value);
-      window.localStorage.setItem("themes", value);
-      document.body.setAttribute("class", value);
     },
     CloseMask() {
       this.sliderShowFlag = false;

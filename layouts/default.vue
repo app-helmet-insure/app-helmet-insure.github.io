@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-container">
+  <div class="layout-container" v-if="canShow">
     <div class="contractAdress" v-if="TitleTextShow">
       <i></i>
       <p>
@@ -88,6 +88,7 @@ export default {
       },
       showStatusDialog: false,
       TitleTextShow: true,
+      canShow: false,
     };
   },
   computed: {
@@ -151,8 +152,14 @@ export default {
         this.showNetWorkTip();
       }
     },
+    storeThemes(newValue) {
+      document.body.setAttribute("class", newValue);
+      localStorage.setItem("themes", newValue);
+    },
   },
+
   async mounted() {
+    console.log(localStorage);
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.showRiskWarning = true;
@@ -186,14 +193,12 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-    this.initTheme();
+    let themes = localStorage.themes;
+    document.body.setAttribute("class", themes);
+    this.$store.dispatch("setThemes", themes);
+    this.canShow = true;
   },
   methods: {
-    initTheme() {
-      let themes = window.localStorage.themes || this.storeThemes || "light";
-      this.$store.dispatch("setThemes", themes);
-      document.body.setAttribute("class", themes);
-    },
     openBUY() {
       this.$bus.$emit("OPEN_BUY_DIALOG", true);
     },

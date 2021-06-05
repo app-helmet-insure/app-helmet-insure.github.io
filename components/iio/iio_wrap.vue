@@ -382,6 +382,8 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 5;
+          }
+          if (nowTime > finished + 86400000 * 2) {
             item.active_page = 1;
           }
         }

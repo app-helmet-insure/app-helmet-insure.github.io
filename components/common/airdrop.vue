@@ -228,7 +228,7 @@ export default {
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.7);
+            color: darken($color: themed("color-17173a"), $amount: 30%);
           }
           line-height: 14px;
         }
@@ -248,21 +248,24 @@ export default {
       width: 100%;
       height: 40px;
       @include themeify {
-        color: themed("color-17173a");
+        background: themed("black_button");
+        color: themed("black_button_text");
       }
       border-radius: 5px;
       font-size: 14px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
-      @include themeify {
-        color: themed("color-ffffff");
-      }
       line-height: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       i {
         margin-right: 4px;
+      }
+      &:hover {
+        @include themeify {
+          background: themed("black_button_hover");
+        }
       }
     }
     .smltext {
@@ -275,7 +278,7 @@ export default {
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          color: darken($color: themed("color-17173a"), $amount: 30%);
         }
         line-height: 14px;
       }
@@ -336,7 +339,7 @@ export default {
           font-family: PingFangSC-Medium, PingFang SC;
           font-weight: 500;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.7);
+            color: darken($color: themed("color-17173a"), $amount: 30%);
           }
           line-height: 14px;
         }
@@ -383,7 +386,7 @@ export default {
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          color: darken($color: themed("color-17173a"), $amount: 30%);
         }
         line-height: 14px;
       }

@@ -400,7 +400,7 @@ export default {
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.5);
+          color: darken($color: themed("color-17173a"), $amount: 50%);
         }
         line-height: 14px;
         margin-top: 16px;
@@ -471,7 +471,7 @@ export default {
             font-family: IBMPlexSans-Bold, IBMPlexSans;
             font-weight: bold;
             @include themeify {
-              background: themed("color-17173a");
+              color: themed("color-17173a");
             }
             line-height: 14px;
           }
@@ -484,10 +484,15 @@ export default {
             padding: 0 20px;
             height: 32px;
             @include themeify {
-              background: themed("color-17173a");
+              color: themed("black_button_text");
+              background: themed("black_button");
             }
             border-radius: 3px;
-            color: #fff;
+            &:hover {
+              @include themeify {
+                background: themed("black_button_hover");
+              }
+            }
           }
         }
       }
@@ -578,7 +583,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.5);
+                color: darken($color: themed("color-17173a"), $amount: 50%);
               }
               line-height: 14px;
             }
@@ -588,7 +593,7 @@ export default {
               font-family: IBMPlexSans-Bold, IBMPlexSans;
               font-weight: 500;
               @include themeify {
-                background: themed("color-17173a");
+                color: themed("color-17173a");
               }
               line-height: 14px;
             }
@@ -601,10 +606,16 @@ export default {
             width: 100%;
             height: 40px;
             @include themeify {
-              background: themed("color-17173a");
+              color: themed("black_button_text");
+              background: themed("black_button");
             }
             border-radius: 3px;
             color: #fff;
+            &:hover {
+              @include themeify {
+                background: themed("black_button_hover");
+              }
+            }
           }
         }
       }

@@ -38,7 +38,7 @@ export default {};
         font-family: IBMPlexSans-SemiBold, IBMPlexSans;
         font-weight: 600;
         @include themeify {
-          color: themed("color-ffffff");
+          color: #fff;
         }
         line-height: 32px;
         padding: 40px 0 0 40px;
@@ -47,7 +47,7 @@ export default {};
         font-size: 16px;
         font-family: IBMPlexSans;
         @include themeify {
-          color: themed("color-ffffff");
+          color: #fff;
         }
         line-height: 20px;
         margin: 11px 0 0 40px;
@@ -78,7 +78,7 @@ export default {};
         font-family: IBMPlexSans-SemiBold, IBMPlexSans;
         font-weight: 600;
         @include themeify {
-          color: themed("color-ffffff");
+          color: #fff;
         }
         padding: 12px 0 0 16px;
       }
@@ -87,7 +87,7 @@ export default {};
         font-size: 12px;
         font-family: IBMPlexSans;
         @include themeify {
-          color: themed("color-ffffff");
+          color: #fff;
         }
         line-height: 20px;
         margin: 8px 0 0 16px;

@@ -445,7 +445,7 @@ export default {
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.5);
+              color: darken($color: themed("color-17173a"), $amount: 50%);
             }
             line-height: 14px;
           }
@@ -465,7 +465,7 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          color: darken($color: themed("color-17173a"), $amount: 30%);
         }
         line-height: 14px;
       }
@@ -667,8 +667,8 @@ export default {
         min-width: 40px;
         height: 24px;
         @include themeify {
-          background: themed("color-f8f9fa");
-          border: 1px solid themed("color-e8e8eb");
+          background: themed("insure_button");
+          border: 1px solid themed("insure_button_border");
           color: themed("color-17173a");
         }
         &:hover {
@@ -714,7 +714,7 @@ export default {
             font-size: 14px;
             font-family: PingFangSC-Regular, PingFang SC;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.5);
+              color: darken($color: themed("color-17173a"), $amount: 50%);
             }
             line-height: 14px;
           }
@@ -734,7 +734,7 @@ export default {
         font-size: 12px;
         font-family: IBMPlexSans;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.7);
+          color: darken($color: themed("color-17173a"), $amount: 30%);
         }
         line-height: 14px;
       }

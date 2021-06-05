@@ -239,7 +239,7 @@ export default {
       width: 466px;
       font-size: 14px;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        color: darken($color: themed("color-17173a"), $amount: 60%);
       }
       margin-top: 20px;
       span {
@@ -266,7 +266,7 @@ export default {
               font-size: 14px;
               line-height: 14px;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.4);
+                color: darken($color: themed("color-17173a"), $amount: 60%);
               }
             }
             &:nth-of-type(2) {
@@ -319,7 +319,7 @@ export default {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.4);
+                  color: darken($color: themed("color-17173a"), $amount: 60%);
                 }
                 line-height: 14px;
               }
@@ -372,7 +372,7 @@ export default {
       width: 100%;
       font-size: 12px;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        color: darken($color: themed("color-17173a"), $amount: 60%);
       }
       margin-top: 20px;
       line-height: 20px;
@@ -396,7 +396,7 @@ export default {
             &:nth-of-type(1) {
               font-size: 12px;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.4);
+                color: darken($color: themed("color-17173a"), $amount: 60%);
               }
               line-height: 16px;
             }
@@ -451,7 +451,7 @@ export default {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.4);
+                  color: darken($color: themed("color-17173a"), $amount: 60%);
                 }
                 line-height: 14px;
               }

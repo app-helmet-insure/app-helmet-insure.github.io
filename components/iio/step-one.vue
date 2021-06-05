@@ -212,7 +212,7 @@ export default {
           }
           i {
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.4);
+              color: darken($color: themed("color-17173a"), $amount: 60%);
             }
           }
         }
@@ -249,7 +249,7 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.4);
+            color: darken($color: themed("color-17173a"), $amount: 60%);
           }
           line-height: 20px;
           margin-top: 4px;
@@ -286,7 +286,7 @@ export default {
         margin-top: 8px;
         font-size: 14px;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.4);
+          color: darken($color: themed("color-17173a"), $amount: 60%);
         }
         text-align: center;
       }
@@ -312,7 +312,7 @@ export default {
           color: #121212;
           i {
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.4);
+              color: darken($color: themed("color-17173a"), $amount: 60%);
             }
           }
         }
@@ -347,7 +347,7 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.4);
+            color: darken($color: themed("color-17173a"), $amount: 60%);
           }
           line-height: 20px;
           margin-top: 4px;
@@ -385,7 +385,7 @@ export default {
         font-size: 12px;
         text-align: center;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.4);
+          color: darken($color: themed("color-17173a"), $amount: 60%);
         }
       }
     }

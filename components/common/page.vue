@@ -131,12 +131,11 @@ export default {
     align-items: center;
     justify-content: center;
     margin: 0 5px;
-
+    background: transparent;
     font-weight: 500;
     cursor: pointer;
     @include themeify {
       color: themed("color-17173a");
-      background: themed("color-ffffff");
     }
   }
   .page_active {

@@ -83,12 +83,17 @@ export default {
 
 <style lang="scss">
 @import "~/assets/css/base.scss";
-.icon {
-  @include themeify {
-    fill: themed("slider_icon");
+.langauage {
+  > span {
+    .icon {
+      @include themeify {
+        fill: themed("media_icon");
+      }
+      margin-right: 10px;
+    }
   }
-  margin-right: 4px;
 }
+
 @media screen and (min-width: 750px) {
   .langauage {
     height: 100%;
@@ -104,7 +109,7 @@ export default {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        color: darken($color: themed("color-17173a"), $amount: 30%);
       }
       cursor: pointer;
       height: 32px;
@@ -122,7 +127,7 @@ export default {
       width: 120px;
       padding: 10px 8px;
       @include themeify {
-        background: themed("slider_icon");
+        background: themed("lang_icon");
       }
       box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
       border-radius: 5px 5px 0px 0px;
@@ -131,7 +136,7 @@ export default {
       li {
         &:hover {
           @include themeify {
-            background: themed("slider_icon_hover");
+            background: themed("lang_icon_hover");
           }
           border-radius: 5px;
         }
@@ -170,7 +175,7 @@ export default {
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.7);
+        color: darken($color: themed("color-17173a"), $amount: 30%);
       }
       cursor: pointer;
       height: 32px;
@@ -188,7 +193,7 @@ export default {
       width: 120px;
       padding: 10px 8px;
       @include themeify {
-        background: themed("slider_icon");
+        background: themed("media_icon");
       }
       box-shadow: 0px 0px 6px 0px rgba(122, 127, 130, 0.2);
       border-radius: 5px 5px 0px 0px;
@@ -197,7 +202,7 @@ export default {
       li {
         &:hover {
           @include themeify {
-            background: themed("slider_icon_hover");
+            background: themed("media_icon_hover");
           }
           border-radius: 5px;
         }

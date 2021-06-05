@@ -216,7 +216,7 @@ export default {
             font-size: 16px;
             font-family: PingFangSC-Regular, PingFang SC;
             @include themeify {
-              color: themed("color-ffffff");
+              color: #fff;
             }
             line-height: 16px;
           }
@@ -225,7 +225,7 @@ export default {
             font-family: NotoSansOriya-Bold, NotoSansOriya;
             font-weight: bold;
             @include themeify {
-              color: themed("color-ffffff");
+              color: #fff;
             }
             line-height: 24px;
             margin-top: 16px;
@@ -248,7 +248,7 @@ export default {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
                   @include themeify {
-                    color: themed("color-ffffff");
+                    color: #fff;
                   }
                   line-height: 16px;
                   margin-top: 0;
@@ -258,7 +258,7 @@ export default {
                   font-family: NotoSansOriya-Bold, NotoSansOriya;
                   font-weight: bold;
                   @include themeify {
-                    color: themed("color-ffffff");
+                    color: #fff;
                   }
                   line-height: 24px;
                   margin-top: 16px;
@@ -268,7 +268,7 @@ export default {
                   width: 38px;
                   height: 20px;
                   @include themeify {
-                    background: themed("color-ffffff");
+                    background: #fff;
                   }
                   border-radius: 5px;
                   font-size: 14px;
@@ -287,7 +287,7 @@ export default {
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
               @include themeify {
-                color: themed("color-ffffff");
+                color: #fff;
               }
               line-height: 12px;
               bottom: 12px;
@@ -303,7 +303,7 @@ export default {
               }
               a {
                 @include themeify {
-                  color: themed("color-ffffff");
+                  color: #fff;
                 }
                 text-decoration: underline;
               }
@@ -380,7 +380,7 @@ export default {
             font-size: 16px;
             font-family: PingFangSC-Regular, PingFang SC;
             @include themeify {
-              color: themed("color-ffffff");
+              color: #fff;
             }
             line-height: 16px;
           }
@@ -389,7 +389,7 @@ export default {
             font-family: NotoSansOriya-Bold, NotoSansOriya;
             font-weight: bold;
             @include themeify {
-              color: themed("color-ffffff");
+              color: #fff;
             }
             line-height: 24px;
             margin-top: 16px;
@@ -412,7 +412,7 @@ export default {
                   font-size: 16px;
                   font-family: PingFangSC-Regular, PingFang SC;
                   @include themeify {
-                    color: themed("color-ffffff");
+                    color: #fff;
                   }
                   line-height: 16px;
                   margin-top: 0;
@@ -422,7 +422,7 @@ export default {
                   font-family: NotoSansOriya-Bold, NotoSansOriya;
                   font-weight: bold;
                   @include themeify {
-                    color: themed("color-ffffff");
+                    color: #fff;
                   }
                   line-height: 24px;
                   margin-top: 16px;
@@ -432,7 +432,7 @@ export default {
                   width: 38px;
                   height: 20px;
                   @include themeify {
-                    background: themed("color-ffffff");
+                    background: #fff;
                   }
                   border-radius: 5px;
                   font-size: 14px;
@@ -451,7 +451,7 @@ export default {
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
               @include themeify {
-                color: themed("color-ffffff");
+                color: #fff;
               }
               line-height: 12px;
               bottom: 12px;
@@ -467,7 +467,7 @@ export default {
               }
               a {
                 @include themeify {
-                  color: themed("color-ffffff");
+                  color: #fff;
                 }
                 text-decoration: underline;
               }

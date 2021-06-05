@@ -320,7 +320,7 @@ button:disabled {
     text-align: center;
     font-size: 12px;
     @include themeify {
-        color: lighten($color: themed('color-17173a'), $amount: 0.4);
+        color: darken($color: themed('color-17173a'), $amount: 60%);
     }
 }
 

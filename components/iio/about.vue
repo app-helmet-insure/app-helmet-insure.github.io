@@ -380,7 +380,7 @@ export default {
           margin-left: 4px;
           &:hover {
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.7);
+              color: darken($color: themed("color-17173a"), $amount: 30%);
             }
           }
         }
@@ -551,7 +551,7 @@ export default {
           margin-left: 4px;
           &:hover {
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.7);
+              color: darken($color: themed("color-17173a"), $amount: 30%);
             }
           }
         }

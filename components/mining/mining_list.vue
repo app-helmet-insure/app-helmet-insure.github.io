@@ -1320,7 +1320,7 @@ export default {
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
     @include themeify {
-      color: lighten($color: themed("color-17173a"), $amount: 0.4);
+      color: darken($color: themed("color-17173a"), $amount: 60%);
     }
     line-height: 20px;
     margin: 0 16px;
@@ -1385,7 +1385,7 @@ export default {
     position: relative;
     .activeMining {
       @include themeify {
-        border: 1px solid themed("color-e8e8eb");
+        border-bottom: 1px solid themed("color-e8e8eb");
       }
     }
     .combo_img {
@@ -1434,21 +1434,24 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.45);
+              color: darken($color: themed("color-17173a"), $amount: 45%);
             }
             line-height: 18px;
             display: flex;
             align-items: center;
           }
           span {
+            @include themeify {
+              background: themed("mining_earn");
+              color: darken($color: themed("color-17173a"), $amount: 45%);
+            }
+            padding: 2px 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             min-width: 57px;
             height: 28px;
-            @include themeify {
-              color: themed("color-17173a");
-            }
+
             border-radius: 5px;
             padding: 0 11px;
             margin-left: 4px;
@@ -1480,6 +1483,10 @@ export default {
             flex-direction: column;
             > span {
               &:nth-of-type(1) {
+                @include themeify {
+                  background: themed("mining_earn");
+                }
+                padding: 0 4px;
                 display: flex;
                 align-items: center;
                 align-self: flex-start;
@@ -1511,7 +1518,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 45%);
                 }
                 line-height: 12px;
               }
@@ -1535,7 +1542,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 45%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -1551,9 +1558,9 @@ export default {
             padding: 0px 10px;
             height: 36px;
             @include themeify {
-              background: themed("color-f8f9fa");
-              color: themed("color-17173a");
-              border: 1px solid themed("color-e8e8eb");
+              background: themed("insure_button");
+              color: themed("insure_button_text");
+              border: 1px solid themed("insure_button_border");
             }
             border-radius: 5px;
             margin-left: 20px;
@@ -1577,12 +1584,24 @@ export default {
               }
             }
             i {
+              position: relative;
               @include themeify {
                 border-top: 6px solid themed("color-17173a");
               }
               margin-left: 6px;
               border-right: 5px solid transparent;
               border-left: 5px solid transparent;
+              &::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -3px;
+                border-right: 3px solid transparent;
+                @include themeify {
+                  border-top: 4px solid themed("color-f8f9fa");
+                }
+                border-left: 3px solid transparent;
+              }
             }
           }
           .activeButton {
@@ -1662,7 +1681,7 @@ export default {
     position: relative;
     .activeMining {
       @include themeify {
-        border: 1px solid themed("color-e8e8eb");
+        border-bottom: 1px solid themed("color-e8e8eb");
       }
     }
     .combo_img {
@@ -1704,7 +1723,7 @@ export default {
           font-size: 14px;
           font-family: IBMPlexSans;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.45);
+            color: darken($color: themed("color-17173a"), $amount: 55%);
           }
           line-height: 18px;
           font-weight: normal;
@@ -1750,7 +1769,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
             }
           }
@@ -1804,7 +1823,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 12px;
               }
@@ -1824,17 +1843,13 @@ export default {
           flex: 1;
           height: 36px;
           @include themeify {
-            background: themed("color-f8f9fa");
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
           }
           border-radius: 5px;
-          @include themeify {
-            border: 1px solid themed("color-e8e8eb");
-          }
           font-size: 14px;
           font-family: HelveticaNeue;
-          @include themeify {
-            background: themed("color-17173a");
-          }
           border: 2px solid transparent;
           line-height: 24px;
           font-weight: 500;

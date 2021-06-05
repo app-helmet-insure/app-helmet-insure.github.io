@@ -131,7 +131,7 @@ export default {
       position: absolute;
       right: 12px;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        color: darken($color: themed("color-17173a"), $amount: 60%);
       }
     }
   }

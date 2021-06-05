@@ -104,7 +104,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 19px;
       }
@@ -178,7 +178,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 19px;
       }

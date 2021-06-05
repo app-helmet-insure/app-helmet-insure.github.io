@@ -78,7 +78,7 @@ export default {
     input::-webkit-input-placeholder {
       font-size: 14px;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        color: darken($color: themed("color-17173a"), $amount: 60%);
       }
     }
     > input {
@@ -126,7 +126,7 @@ export default {
     input::-webkit-input-placeholder {
       font-size: 14px;
       @include themeify {
-        color: lighten($color: themed("color-17173a"), $amount: 0.4);
+        color: darken($color: themed("color-17173a"), $amount: 60%);
       }
     }
     > input {

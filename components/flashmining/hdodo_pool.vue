@@ -41,9 +41,9 @@
       <div class="button line_b">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            expired ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -132,7 +132,7 @@
           />
           <span
             @click="WithdrawNum = balance.Withdraw"
-            style="background: rgba(255, 150, 0, 0.1)"
+            style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</span
           >
         </div>
@@ -164,9 +164,9 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -263,10 +263,10 @@ export default {
       fixD,
       isLogin: false,
       expired: false,
-      openMining: false,
     };
   },
   mounted() {
+    console.log(this.expired);
     if (!this.expired) {
       let timer = setInterval(() => {
         this.getDownTime();
@@ -342,9 +342,6 @@ export default {
       });
     },
     getDownTime() {
-      if (!this.openMining) {
-        return;
-      }
       let now = new Date() * 1;
       let dueDate = this.list.dueDate;
       dueDate = new Date(dueDate);

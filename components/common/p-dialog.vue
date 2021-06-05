@@ -102,7 +102,7 @@ export default {
     .title {
       font-size: 16px;
       @include themeify {
-        background: themed("color-17173a");
+        color: themed("color-17173a");
       }
     }
     .close {

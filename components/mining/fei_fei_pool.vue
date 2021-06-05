@@ -31,9 +31,9 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            expired ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -152,9 +152,9 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i

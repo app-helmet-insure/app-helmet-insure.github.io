@@ -78,7 +78,9 @@ export default {
   position: fixed;
   background-color: $bg-w;
   text-align: left;
-  color: #101010;
+  @include themeify {
+    color: themed("color-17173a");
+  }
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);

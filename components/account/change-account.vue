@@ -144,7 +144,7 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .change-account-block {
-    width: 96%;
+    width: 90%;
     padding: 8px 16px;
     @include themeify {
       background: themed("color-ffffff");
@@ -200,7 +200,7 @@ export default {
       width: 320px;
     }
     @media screen and (max-width: 750px) {
-      width: 96%;
+      width: 90%;
     }
     .current-account {
       border: 2px solid rgba(253, 126, 20, 0.2);
@@ -217,7 +217,7 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 18px;
         padding-left: 8px;
@@ -240,16 +240,16 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans;
         @include themeify {
-          background: themed("color-17173a");
+          background: themed("color-f8f9fa");
+          border: 2px solid themed("insure_input_border");
+          color: themed("color-17173a");
         }
         font-weight: 550;
         margin-top: 16px;
         padding: 0px 16px 0 36px;
         cursor: pointer;
         border-radius: 5px;
-        @include themeify {
-          background: themed("color-f8f9fa");
-        }
+
         img {
           width: 30px;
           height: 30px;

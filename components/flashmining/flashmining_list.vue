@@ -865,7 +865,7 @@ export default {
     }
     .activeFlash {
       @include themeify {
-        border: 1px solid themed("color-e8e8eb");
+        border-bottom: 1px solid themed("color-e8e8eb");
       }
     }
     .flash_show {
@@ -899,7 +899,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -914,12 +914,12 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.45);
+              color: darken($color: themed("color-17173a"), $amount: 55%);
             }
             line-height: 18px;
             > span {
               @include themeify {
-                background: themed("color-f8f9fa");
+                background: themed("mining_earn");
               }
               border-radius: 5px;
               display: flex;
@@ -989,7 +989,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 12px;
               }
@@ -1013,7 +1013,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -1037,7 +1037,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -1064,18 +1064,14 @@ export default {
             padding: 0px 10px;
             height: 36px;
             @include themeify {
-              background: themed("color-f8f9fa");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
             }
             border-radius: 5px;
-            @include themeify {
-              border: 1px solid themed("color-e8e8eb");
-            }
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            @include themeify {
-              color: themed("color-17173a");
-            }
             line-height: 18px;
             font-weight: 500;
             display: flex;
@@ -1104,6 +1100,17 @@ export default {
                 border-top: 6px solid themed("color-17173a");
               }
               border-left: 5px solid transparent;
+              &::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -3px;
+                border-right: 3px solid transparent;
+                @include themeify {
+                  border-top: 4px solid themed("color-f8f9fa");
+                }
+                border-left: 3px solid transparent;
+              }
             }
           }
         }
@@ -1159,7 +1166,7 @@ export default {
     }
     .activeFlash {
       @include themeify {
-        border: 1px solid themed("color-e8e8eb");
+        border-bottom: 1px solid themed("color-e8e8eb");
       }
     }
 
@@ -1192,7 +1199,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 14px;
                 margin-top: 2px;
@@ -1206,7 +1213,7 @@ export default {
           font-size: 14px;
           font-family: IBMPlexSans;
           @include themeify {
-            color: lighten($color: themed("color-17173a"), $amount: 0.45);
+            color: darken($color: themed("color-17173a"), $amount: 55%);
           }
           line-height: 18px;
           > span {
@@ -1250,7 +1257,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -1306,7 +1313,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 12px;
               }
@@ -1331,7 +1338,7 @@ export default {
             font-size: 12px;
             font-family: IBMPlexSans;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.45);
+              color: darken($color: themed("color-17173a"), $amount: 55%);
             }
             line-height: 12px;
             margin-top: 4px;
@@ -1351,19 +1358,15 @@ export default {
         }
         button {
           min-width: 148px;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
           height: 36px;
-          @include themeify {
-            background: themed("color-f8f9fa");
-          }
           border-radius: 5px;
-          @include themeify {
-            border: 1px solid themed("color-e8e8eb");
-          }
           font-size: 14px;
           font-family: HelveticaNeue;
-          @include themeify {
-            color: themed("color-17173a");
-          }
           line-height: 18px;
           font-weight: 500;
           display: flex;

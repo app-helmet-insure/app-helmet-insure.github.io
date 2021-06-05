@@ -166,7 +166,7 @@ export default {
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.8);
+          color: darken($color: themed("color-17173a"), $amount: 20%);
         }
         line-height: 20px;
         padding: 15px 0 15px 44px;
@@ -255,7 +255,7 @@ export default {
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.8);
+          color: darken($color: themed("color-17173a"), $amount: 20%);
         }
         line-height: 20px;
         padding: 15px 0 15px 0;

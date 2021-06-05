@@ -1,18 +1,16 @@
 <template>
   <div class="header-container">
     <div class="logo">
-      <img src="~/assets/img/helmet/header_logo.png" alt="" />
+      <img
+        :src="require(`~/assets/img/helmet/header_logo_${storeThemes}.png`)"
+        alt=""
+      />
       <div class="more" @click="handleShowMask">
-        <svg
-          width="24px"
-          height="24px"
-          viewBox="0 0 24 24"
-          version="1.1"
-          class="icon"
-        >
+        <svg width="24px" height="24px" class="menu">
           <path
             d="M3,4 L21,4 L21,6 L3,6 L3,4 Z M3,19 L21,19 L21,21 L3,21 L3,19 Z M11,14 L21,14 L21,16 L11,16 L11,14 Z M11,9 L21,9 L21,11 L11,11 L11,9 Z M7,12.5 L3,16 L3,9 L7,12.5 Z"
             id="形状"
+            fill-opacity="0.87"
             fill-rule="nonzero"
           ></path>
         </svg>
@@ -20,7 +18,10 @@
     </div>
     <div class="account">
       <div class="airdrop_web airdrop" @click="handleClickAirdrop">
-        <img src="~/assets/img/icon/airdrop.png" alt="" />
+        <img
+          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
+          alt=""
+        />
       </div>
       <a
         v-if="!userInfo.data.isLogin"
@@ -62,7 +63,10 @@
         @back="openCurrentAccount"
       ></ChangeAccount>
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
-        <img src="~/assets/img/icon/airdrop.png" alt="" />
+        <img
+          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
+          alt=""
+        />
       </div>
     </div>
   </div>
@@ -105,6 +109,9 @@ export default {
     ChainID() {
       let chainID = this.$store.state.chainID;
       return chainID;
+    },
+    storeThemes() {
+      return this.$store.state.themes;
     },
   },
   watch: {
@@ -318,9 +325,9 @@ export default {
         width: 24px;
         height: 24px;
         cursor: pointer;
-        .icon {
+        svg {
           @include themeify {
-            // background: themed("color-17173A");
+            fill: themed("color-17173a");
           }
         }
       }

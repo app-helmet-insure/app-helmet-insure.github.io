@@ -49,11 +49,8 @@
         </p>
       </div>
       <button
-        class="submit_burn"
+        :class="expired ? 'disable_button submit_burn' : 'submit_burn'"
         @click="toDeposite"
-        :style="
-          expired ? 'background: #ccc !important; pointer-events: none' : ''
-        "
       >
         <i :class="stakeLoading ? 'loading_pic' : ''"></i>{{ $t("Table.Burn") }}
       </button>
@@ -155,7 +152,7 @@
         <p>
           <span>hDODO</span>|<i
             @click="WithdrawNum = balance.Earn"
-            style="background: rgba(255, 150, 0, 0.1)"
+            style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</i
           >
         </p>

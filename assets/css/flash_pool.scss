@@ -103,9 +103,9 @@
                     font-size: 14px;
                     font-weight: 500;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.75
+                            $amount: 25%
                         );
                     }
                     line-height: 14px;
@@ -145,18 +145,25 @@
                         border: 1px solid #fd7e14;
                     }
                     span {
+                        display: flex;
+                        align-items: center;
+                        padding: 4px 8px;
+                        min-height: 24px;
                         position: absolute;
-                        display: block;
-                        right: 12px;
-                        padding: 6px 8px;
-                        border-radius: 6px;
+                        right: 15px;
                         font-size: 12px;
-                        color: #fd7e14;
                         cursor: pointer;
-                        border: 1px solid transparent;
+                        @include themeify {
+                            color: themed('color-17173a');
+                            background: themed('insure_button');
+                            border: 1px solid themed('insure_button_border');
+                        }
+                        border-radius: 5px;
                         &:hover {
-                            color: #ff8200;
-                            border: 1px solid #fd7e14;
+                            @include themeify {
+                                background: themed('color-fffaf3');
+                            }
+                            border: 1px solid #fd7e14 !important;
                         }
                     }
                 }
@@ -173,9 +180,9 @@
                     align-items: center;
                     font-size: 14px;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.4
+                            $amount: 30%
                         );
                     }
                     margin-top: 8px;
@@ -237,9 +244,9 @@
                     font-size: 14px;
                     font-weight: 500;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.75
+                            $amount: 25%
                         );
                     }
                     line-height: 14px;
@@ -279,17 +286,25 @@
                         border: 1px solid #fd7e14;
                     }
                     span {
+                        display: flex;
+                        align-items: center;
+                        padding: 4px 8px;
+                        min-height: 24px;
                         position: absolute;
-                        display: block;
-                        right: 12px;
-                        padding: 6px 8px;
-                        border: 1px solid #fd7e14;
-                        border-radius: 6px;
+                        right: 15px;
                         font-size: 12px;
-                        color: #fd7e14;
                         cursor: pointer;
+                        @include themeify {
+                            color: themed('color-17173a');
+                            background: themed('insure_button');
+                            border: 1px solid themed('insure_button_border');
+                        }
+                        border-radius: 5px;
                         &:hover {
-                            color: #ff8200;
+                            @include themeify {
+                                background: themed('color-fffaf3');
+                            }
+                            border: 1px solid #fd7e14;
                         }
                     }
                 }
@@ -309,9 +324,9 @@
                     align-items: center;
                     font-size: 14px;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.4
+                            $amount: 30%
                         );
                     }
                     margin-top: 8px;

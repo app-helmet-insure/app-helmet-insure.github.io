@@ -116,9 +116,9 @@
                     font-size: 14px;
                     font-weight: 500;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.75
+                            $amount: 25%
                         );
                     }
                     line-height: 14px;
@@ -162,8 +162,8 @@
                         cursor: pointer;
                         @include themeify {
                             color: themed('color-17173a');
-                            background: themed('color-f8f9fa');
-                            border: 1px solid themed('color-e8e8eb');
+                            background: themed('insure_button');
+                            border: 1px solid themed('insure_button_border');
                         }
                         border-radius: 5px;
                         &:hover {
@@ -228,9 +228,9 @@
                             font-size: 14px;
                             font-family: PingFangSC-Regular, PingFang SC;
                             @include themeify {
-                                color: lighten(
+                                color: darken(
                                     $color: themed('color-17173a'),
-                                    $amount: 0.7
+                                    $amount: 30%
                                 );
                             }
                             line-height: 14px;
@@ -259,9 +259,9 @@
                         &:nth-of-type(1) {
                             font-size: 14px;
                             @include themeify {
-                                color: lighten(
+                                color: darken(
                                     $color: themed('color-17173a'),
-                                    $amount: 0.7
+                                    $amount: 30%
                                 );
                             }
                             line-height: 14px;
@@ -316,9 +316,9 @@
                     font-size: 14px;
                     font-weight: 500;
                     @include themeify {
-                        color: lighten(
+                        color: darken(
                             $color: themed('color-17173a'),
-                            $amount: 0.75
+                            $amount: 25%
                         );
                     }
                     line-height: 14px;
@@ -362,8 +362,8 @@
                         cursor: pointer;
                         @include themeify {
                             color: themed('color-17173a');
-                            background: themed('color-f8f9fa');
-                            border: 1px solid themed('color-e8e8eb');
+                            background: themed('insure_button');
+                            border: 1px solid themed('insure_button_border');
                         }
                         border-radius: 5px;
                         &:hover {
@@ -430,9 +430,9 @@
                             font-size: 14px;
                             font-family: PingFangSC-Regular, PingFang SC;
                             @include themeify {
-                                color: lighten(
+                                color: darken(
                                     $color: themed('color-17173a'),
-                                    $amount: 0.7
+                                    $amount: 30%
                                 );
                             }
                             line-height: 14px;
@@ -461,9 +461,9 @@
                         &:nth-of-type(1) {
                             font-size: 14px;
                             @include themeify {
-                                color: lighten(
+                                color: darken(
                                     $color: themed('color-17173a'),
-                                    $amount: 0.7
+                                    $amount: 30%
                                 );
                             }
                             line-height: 14px;

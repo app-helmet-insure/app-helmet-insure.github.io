@@ -149,7 +149,7 @@ $td-gap: 16px;
                         margin-right: 4px;
                     }
                     &:hover {
-                        background: lighten($color: $main-color, $amount: 5);
+                        background: darken($color: $main-color, $amount: 50%);
                     }
                 }
                 > button {
@@ -168,7 +168,7 @@ $td-gap: 16px;
                         margin-right: 4px;
                     }
                     &:hover {
-                        background: lighten($color: $main-color, $amount: 5);
+                        background: darken($color: $main-color, $amount: 50%);
                     }
                     &:disabled {
                         background: rgba($main-color, 0.8);
@@ -269,14 +269,10 @@ $td-gap: 16px;
         align-items: center;
         justify-content: center;
         margin: 0 5px;
-        @include themeify {
-            background: themed('color-17173a');
-        }
         font-weight: 500;
         cursor: pointer;
     }
     .page_active {
-        background: #ededf0;
         border-radius: 3px;
     }
     div {
@@ -295,7 +291,6 @@ $td-gap: 16px;
             .icon {
                 width: 20px;
                 height: 20px;
-                fill: #17173a;
             }
         }
 
@@ -323,7 +318,7 @@ $td-gap: 16px;
             text-align: center;
             font-size: 12px;
             @include themeify {
-                color: lighten($color: themed('color-17173a'), $amount: 0.4);
+                color: darken($color: themed('color-17173a'), $amount: 60%);
             }
         }
     }
@@ -380,32 +375,41 @@ $td-gap: 16px;
     padding: 0 16px;
     height: 40px;
     @include themeify {
-        background: themed('color-17173a');
-        color: themed('color-ffffff');
+        background: themed('black_button');
+        color: themed('black_button_text');
     }
     font-size: 14px;
     font-weight: bold;
-
     &:hover {
         @include themeify {
-            background: themed('color-2c2c2c');
+            background: themed('black_button_hover');
         }
     }
+}
+.disable_button {
+    min-width: 88px;
+    padding: 0 16px;
+    height: 40px;
+    @include themeify {
+        background: themed('disable_button') !important;
+        color: themed('disable_button_text') !important;
+    }
+    font-size: 14px;
+    pointer-events: none;
+    font-weight: bold;
 }
 .b_b_button {
     padding: 0 34px;
     height: 40px;
     @include themeify {
-        background: themed('color-17173a');
+        background: themed('black_button');
+        color: themed('black_button_text');
     }
     font-size: 14px;
     font-weight: bold;
-    @include themeify {
-        color: themed('color-ffffff');
-    }
     &:hover {
         @include themeify {
-            background: themed('color-2c2c2c');
+            background: themed('black_button_hover');
         }
     }
 }

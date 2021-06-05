@@ -130,6 +130,9 @@ export default {
     localeList() {
       return this.$store.state.localeList;
     },
+    storeThemes() {
+      return this.$store.state.themes;
+    },
   },
   watch: {
     longMapAndSellMap: {
@@ -147,6 +150,10 @@ export default {
       } else {
         this.showNetWorkTip();
       }
+    },
+    storeThemes: {
+      handler: "storeThemesWathc",
+      immediate: true,
     },
   },
   async mounted() {
@@ -183,8 +190,16 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
+    let themes = window.localStorage.themes || this.storeThemes || "light";
+    this.$store.dispatch("setThemes", themes);
+    document.body.setAttribute("class", themes);
   },
   methods: {
+    storeThemesWathc(newValue) {
+      if (newValue && process.client) {
+        document.body.setAttribute("class", newValue);
+      }
+    },
     openBUY() {
       this.$bus.$emit("OPEN_BUY_DIALOG", true);
     },
@@ -447,6 +462,9 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
+  @include themeify {
+    background: themed("color-f8f9fa");
+  }
 }
 @media screen and (min-width: 750px) {
   ::-webkit-scrollbar-track {

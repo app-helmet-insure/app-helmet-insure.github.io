@@ -549,7 +549,9 @@ export default {
             span {
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #787878;
+              @include themeify {
+                color: themed("media_icon");
+              }
               line-height: 14px;
               &:nth-of-type(1) {
                 width: 90px;
@@ -602,14 +604,16 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  background: themed("color-17173a");
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
               }
@@ -628,14 +632,16 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  background: themed("color-17173a");
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
               }
@@ -652,18 +658,17 @@ export default {
             padding: 0px 10px;
             height: 36px;
             @include themeify {
-              background: themed("color-f8f9fa");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
+            }
+            &:hover {
+              border: 1px solid themed("color-fd7e14") !important;
             }
             border-radius: 5px;
-            @include themeify {
-              border: 1px solid themed("color-e8e8eb");
-            }
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            @include themeify {
-              background: themed("color-17173a");
-            }
             line-height: 24px;
             font-weight: 500;
             display: flex;
@@ -726,7 +731,9 @@ export default {
             span {
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #787878;
+              @include themeify {
+                color: themed("media_icon");
+              }
               line-height: 14px;
               &:nth-of-type(1) {
                 width: 90px;
@@ -780,7 +787,9 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
@@ -788,7 +797,7 @@ export default {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  background: themed("color-17173a");
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
                 font-weight: 500;
@@ -808,7 +817,9 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
@@ -816,7 +827,7 @@ export default {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  background: themed("color-17173a");
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
                 font-weight: 500;
@@ -832,21 +843,20 @@ export default {
             height: 36px;
             border-radius: 5px;
             @include themeify {
-              background: themed("color-17173a");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
+            }
+            &:hover {
+              border: 1px solid themed("color-fd7e14") !important;
             }
             font-size: 14px;
-            @include themeify {
-              border: 1px solid themed("color-e8e8eb");
-            }
             font-family: HelveticaNeue;
             line-height: 24px;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            @include themeify {
-              color: themed("color-ffffff");
-            }
           }
         }
       }

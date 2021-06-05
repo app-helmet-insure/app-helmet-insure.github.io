@@ -505,12 +505,12 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.45);
+              color: darken($color: themed("color-17173a"), $amount: 55%);
             }
             line-height: 18px;
             > span {
               @include themeify {
-                background: themed("color-f8f9fa");
+                background: themed("mining_earn");
               }
               border-radius: 5px;
               display: flex;
@@ -551,14 +551,13 @@ export default {
                 align-items: center;
                 align-self: flex-start;
                 @include themeify {
-                  background: themed("color-f8f9fa");
+                  background: themed("mining_earn");
+                  color: themed("color-17173a");
                 }
                 border-radius: 3px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
+
                 line-height: 14px;
                 font-weight: 600;
                 height: 18px;
@@ -582,7 +581,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 12px;
               }
@@ -606,7 +605,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -632,19 +631,18 @@ export default {
           button {
             padding: 0px 10px;
             height: 36px;
+
             @include themeify {
-              background: themed("color-f8f9fa");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
             }
             border-radius: 5px;
-            @include themeify {
-              border: 1px solid themed("color-e8e8eb");
-            }
+
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            @include themeify {
-              color: themed("color-17173a");
-            }
+
             line-height: 24px;
             font-weight: 500;
             display: flex;
@@ -673,6 +671,17 @@ export default {
                 border-top: 6px solid themed("color-17173a");
               }
               border-left: 5px solid transparent;
+              &::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -3px;
+                border-right: 3px solid transparent;
+                @include themeify {
+                  border-top: 4px solid themed("color-f8f9fa");
+                }
+                border-left: 3px solid transparent;
+              }
             }
           }
         }
@@ -768,12 +777,12 @@ export default {
             font-size: 14px;
             font-family: IBMPlexSans;
             @include themeify {
-              color: lighten($color: themed("color-17173a"), $amount: 0.45);
+              color: darken($color: themed("color-17173a"), $amount: 55%);
             }
             line-height: 18px;
             > span {
               @include themeify {
-                background: themed("color-f8f9fa");
+                background: themed("mining_earn");
               }
               border-radius: 5px;
               display: flex;
@@ -814,7 +823,7 @@ export default {
               font-size: 12px;
               font-family: IBMPlexSans;
               @include themeify {
-                color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                color: darken($color: themed("color-17173a"), $amount: 55%);
               }
               line-height: 12px;
               margin-top: 4px;
@@ -842,7 +851,7 @@ export default {
                 align-items: center;
                 align-self: flex-start;
                 @include themeify {
-                  background: themed("color-f8f9fa");
+                  background: themed("mining_earn");
                 }
                 border-radius: 3px;
                 font-size: 14px;
@@ -873,7 +882,7 @@ export default {
                 font-size: 12px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: lighten($color: themed("color-17173a"), $amount: 0.45);
+                  color: darken($color: themed("color-17173a"), $amount: 55%);
                 }
                 line-height: 12px;
               }
@@ -901,18 +910,16 @@ export default {
           min-width: 148px;
           height: 36px;
           @include themeify {
-            background: themed("color-f8f9fa");
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
           }
           border-radius: 5px;
-          @include themeify {
-            border: 1px solid themed("color-e8e8eb");
-          }
+
           margin-left: 20px;
           font-size: 14px;
           font-family: HelveticaNeue;
-          @include themeify {
-            color: themed("color-17173a");
-          }
+
           line-height: 24px;
           font-weight: 500;
           display: flex;

@@ -53,6 +53,7 @@ export const state = () => ({
     ],
     locale: 'en_US',
     chainID: 56,
+    themes: 'light',
     localeList: [
         {
             key: 'en_US',
@@ -348,6 +349,9 @@ export const mutations = {
     SET_LONG_MAP(state, data) {
         state.longMap = data;
     },
+    SET_THEMES(state, data) {
+        state.themes = data;
+    },
     SET_CHAINID(state, data) {
         state.chainID = data;
     },
@@ -477,6 +481,9 @@ export const actions = {
     //         store.commit('SET_LANG', req.locale);
     //     }
     // },
+    setThemes({ commit }, data) {
+        commit('SET_THEMES', data);
+    },
     setLanguage({ commit }, data) {
         commit('SET_LANG', data);
     },

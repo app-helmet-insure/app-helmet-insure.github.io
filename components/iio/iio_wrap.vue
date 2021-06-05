@@ -504,12 +504,12 @@ export default {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
           @include themeify {
-            color: lighten($color: #fff, $amount: 0.6);
+            color: darken($color: #fff, $amount: 0.6);
           }
           line-height: 14px;
           text-decoration: underline;
           &:hover {
-            color: lighten($color: #fff, $amount: 0.8);
+            color: darken($color: #fff, $amount: 20%);
           }
         }
         i {
@@ -540,7 +540,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: lighten($color: #fff, $amount: 0.8);
+              color: darken($color: #fff, $amount: 20%);
               line-height: 14px;
             }
             &:nth-of-type(2) {
@@ -565,7 +565,7 @@ export default {
         color: #fff;
         line-height: 20px;
         &:hover {
-          background: lighten($color: #fff, $amount: 0.4);
+          background: darken($color: #fff, $amount: 60%);
         }
       }
       > .button_tab {
@@ -639,7 +639,7 @@ export default {
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.8);
+          color: darken($color: themed("color-17173a"), $amount: 20%);
         }
         line-height: 30px;
       }
@@ -884,7 +884,7 @@ export default {
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
         @include themeify {
-          color: lighten($color: themed("color-17173a"), $amount: 0.8);
+          color: darken($color: themed("color-17173a"), $amount: 20%);
         }
         line-height: 30px;
       }

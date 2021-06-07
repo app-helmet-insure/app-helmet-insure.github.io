@@ -134,7 +134,7 @@ export default {
         margin: 10px 0;
         font-size: 14px;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         line-height: 28px;
       }
@@ -197,7 +197,7 @@ export default {
           margin: 10px 0;
           font-size: 14px;
           @include themeify {
-            background: themed("color-17173a");
+            color: themed("color-17173a");
           }
           line-height: 28px;
         }

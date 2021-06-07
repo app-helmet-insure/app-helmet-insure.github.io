@@ -346,7 +346,7 @@ export default {
       }
       let ContractAddress = this.activeData.POOL_ADDRESS;
       let StakeAddress = this.activeData.STAKE_ADDRESS;
-      let TokenSymbol = this.activeData.TOKEN_NAME;
+      let TokenSymbol = this.activeData.STAKE_SYMBOL;
       let DepositeVolume = this.DepositeNum;
       let Decimals = this.activeData.STAKE_DECIMALS;
       this.stakeLoading = true;

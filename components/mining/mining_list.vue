@@ -75,7 +75,7 @@
 
           <section>
             <span
-              class="ONE_PAGER"
+              class="onePager"
               v-html="item.POOL_NAME"
               @click="hadnleShowOnePager($event, item.ONE_PAGER)"
             ></span>
@@ -321,7 +321,7 @@
         />
         <section>
           <span
-            class="ONE_PAGER"
+            class="onePager"
             v-html="item.POOL_NAME"
             @click="hadnleShowOnePager($event, item.ONE_PAGER)"
           ></span>
@@ -759,6 +759,7 @@ export default {
       let arr = [
         {
           POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
+          STAKE_SYMBOL: "HELMET-BNB LP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v2",
           REARD_IMGSHOW: true,
@@ -768,9 +769,20 @@ export default {
           iio: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
+          POOL_ADDRESS: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
+          STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
+          ONELPT_ADDRESS: "",
+          REWARD_ADDRESS: "",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
+          TOTAL_REWARDS: 20000,
+          MINING_DAY: 20,
         },
         {
           POOL_NAME: "HELMET&nbsp;POOL",
+          STAKE_SYMBOL: "HELMET",
           REARD_VOLUME: "one",
           REWARD_NAME: "helmet",
           REARD_IMGSHOW: true,
@@ -784,6 +796,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;MLP",
+          STAKE_SYMBOL: "HELMET-BNB MLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "mdx",
           REARD_IMGSHOW: true,
@@ -795,6 +808,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;DLP",
+          STAKE_SYMBOL: "HELMET-BNB DLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "bhelmet_dodo",
           REARD_IMGSHOW: true,
@@ -808,6 +822,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
+          STAKE_SYMBOL: "HELMET-hxBURGER BLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "bhelmet_xburger",
           REARD_IMGSHOW: true,
@@ -824,6 +839,7 @@ export default {
 
         {
           POOL_NAME: "FEI(BSC)&nbsp;POOL",
+          STAKE_SYMBOL: "FEI",
           REARD_VOLUME: "one",
           REWARD_NAME: "QFEI",
           REARD_IMGSHOW: false,
@@ -837,6 +853,7 @@ export default {
         },
         {
           POOL_NAME: "<i>QFEI</i>-QSD&nbsp;DLP",
+          STAKE_SYMBOL: "QFEI-QSD DLP",
           REARD_VOLUME: "one",
           REWARD_NAME: "kun",
           REARD_IMGSHOW: true,
@@ -850,6 +867,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-KUN&nbsp;DLP",
+          STAKE_SYMBOL: "HELMET-KUN DLP",
           REARD_VOLUME: "one",
           REWARD_NAME: "QHELMET",
           REARD_IMGSHOW: false,
@@ -863,6 +881,7 @@ export default {
         },
         {
           POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
+          STAKE_SYMBOL: "HELMET-BNB LP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v1",
           REARD_IMGSHOW: true,
@@ -876,6 +895,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-<i>hDODO</i>&nbsp;DLP",
+          STAKE_SYMBOL: "HELMET-hDODO DLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_dodo",
           REARD_IMGSHOW: true,
@@ -890,6 +910,7 @@ export default {
 
         {
           POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LP",
+          STAKE_SYMBOL: "HELMET-hFOR LP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_for",
           REARD_IMGSHOW: true,
@@ -903,6 +924,7 @@ export default {
         },
         {
           POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LP",
+          STAKE_SYMBOL: "HELMET-hBURGER LP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_burger",
           REARD_IMGSHOW: true,

@@ -36,7 +36,9 @@
           @click="toDeposite"
           :class="
             (stakeLoading ? 'disable b_button' : 'b_button',
-            expired ? 'disable_button b_button' : 'b_button')
+            this.activeData.MING_TIME == 'Finished'
+              ? 'disable_button b_button'
+              : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -163,7 +165,9 @@
           @click="toClaim"
           :class="
             (claimLoading ? 'disable o_button' : 'o_button',
-            expired ? 'disable_button o_button' : 'o_button')
+            this.activeData.MING_TIME == 'Finished'
+              ? 'disable_button o_button'
+              : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -201,6 +205,13 @@ import {
   getBalance,
   toDeposite,
 } from "~/interface/deposite";
+import {
+  BalanceOf,
+  TotalSupply,
+  Earned,
+  Allowance,
+} from "~/interface/read_contract.js";
+import { Stake, GetReward, Approve, Exit } from "~/interface/write_contract.js";
 import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
@@ -214,31 +225,6 @@ export default {
   },
   data() {
     return {
-      list: {
-        name: "HELMET-hDODO DLP",
-        dueDate: "2021/05/10 00:00",
-        DownTime: {
-          day: "00",
-          hour: "00",
-          minute: "00",
-          second: "00",
-        },
-      },
-      textList: [
-        {
-          text: this.$t("Table.RewardsDistribution") + `（weekly）`,
-          num: 0,
-          color: "#00B900",
-          unit: "",
-          num1: 0,
-        },
-        {
-          text: this.$t("Table.PoolAPR"),
-          num: 0,
-          color: "#00B900",
-          unit: "",
-        },
-      ],
       balance: {
         Deposite: 0,
         Withdraw: 0,
@@ -255,34 +241,10 @@ export default {
       helmetPrice: 0,
       MingTime: "",
       isLogin: false,
-      expired: false,
     };
   },
   mounted() {
-    if (!this.expired) {
-      let timer = setInterval(() => {
-        this.getDownTime();
-      }, 1000);
-      this.$once("hook:beforeDestroy", () => {
-        clearInterval(timer);
-      });
-    }
-    this.$bus.$on("DEPOSITE_LOADING_QHELMETPOOL", (data) => {
-      this.stakeLoading = data.status;
-      this.DepositeNum = "";
-    });
-    this.$bus.$on("CLAIM_LOADING_QHELMETPOOL", (data) => {
-      this.claimLoading = false;
-    });
-    this.$bus.$on("EXIT_LOADING_QHELMETPOOL", (data) => {
-      this.exitLoading = false;
-    });
-    this.$bus.$on("RELOAD_DATA_QHELMETPOOL", () => {
-      this.getBalance();
-    });
-    this.$bus.$on("REFRESH_MINING", (data) => {
-      this.getBalance();
-    });
+    this.NeedApprove();
     this.getBalance();
   },
   watch: {
@@ -291,7 +253,10 @@ export default {
       immediate: true,
     },
     activeData(newValue) {
-      console.log(newValue);
+      if (newValue) {
+        this.NeedApprove();
+        this.getBalance();
+      }
     },
   },
   computed: {
@@ -330,35 +295,6 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    getDownTime() {
-      let now = new Date() * 1;
-      let dueDate = this.list.dueDate;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template;
-
-      if (dueDate > now) {
-        template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-        };
-      } else {
-        template = {
-          day: "00",
-          hour: "00",
-        };
-        this.expired = true;
-      }
-      this.list.DownTime = template;
-    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -377,17 +313,26 @@ export default {
       });
     },
     async getBalance() {
-      let helmetType = "QHELMETPOOL_LPT";
-      let type = "QHELMETPOOL";
       // 可抵押数量
-      let Deposite = await getBalance(helmetType);
+      let Deposite = await BalanceOf(
+        this.activeData.STAKE_ADDRESS,
+        this.activeData.STAKE_DECIMALS
+      );
       // 可赎回数量
-      let Withdraw = await getLPTOKEN(type);
+      let Withdraw = await BalanceOf(
+        this.activeData.POOL_ADDRESS,
+        this.activeData.STAKE_DECIMALS
+      );
       // 总抵押
-      let TotalLPT = await totalSupply(type);
+      let TotalLPT = await TotalSupply(
+        this.activeData.POOL_ADDRESS,
+        this.activeData.STAKE_DECIMALS
+      );
       // 可领取Helmet
-      let Helmet = await CangetPAYA(type);
-      console.log(Deposite);
+      let Helmet = await Earned(
+        this.activeData.POOL_ADDRESS,
+        this.activeData.REWARD_DECIMALS
+      );
       // 赋值
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
@@ -407,14 +352,25 @@ export default {
       let type = "QHELMETPOOL";
       toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
+    async NeedApprove() {
+      let SpenderAddress = this.activeData.POOL_ADDRESS;
+      let TokenAddress = this.activeData.STAKE_ADDRESS;
+      let flag = await Allowance(TokenAddress, SpenderAddress);
+      this.ApproveFlag = flag;
+    },
     // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
         return;
       }
       this.claimLoading = true;
-      let type = "QHELMETPOOL";
-      let res = await getPAYA(type);
+      let ContractAddress = this.activeData.POOL_ADDRESS;
+      await GetReward(ContractAddress, (res) => {
+        if (res == "success" || res == "error") {
+          this.getBalance();
+          this.claimLoading = false;
+        }
+      });
     },
     // 退出
     async toExit() {
@@ -422,8 +378,13 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let type = "QHELMETPOOL";
-      let res = await exitStake(type);
+      let ContractAddress = this.activeData.POOL_ADDRESS;
+      await Exit(ContractAddress, (res) => {
+        if (res == "success" || res == "error") {
+          this.getBalance();
+          this.exitLoading = false;
+        }
+      });
     },
   },
 };

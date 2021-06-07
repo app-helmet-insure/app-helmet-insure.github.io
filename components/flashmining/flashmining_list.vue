@@ -318,6 +318,7 @@ export default {
           POOL_NAME: "<i>hxBURGER</i>&nbsp;Pool",
           POOL_DESC: "By hTPT-Helmet LPT",
           TOKEN_NAME: "hTPT",
+          STAKE_SYMBOL: "hTPT-Helmet LPT",
           REWARD_NAME: "hxBURGER",
           START_TIME: "2021/04/22 14:00 UTC+8",
           END_TIME: "2021/05/12 00:00 UTC+8",
@@ -338,6 +339,7 @@ export default {
           POOL_NAME: "<i>hTPT</i>&nbsp;Pool",
           POOL_DESC: "By hDODO-Helmet LPT",
           TOKEN_NAME: "hDODO",
+          STAKE_SYMBOL: "hDODO-Helmet LPT",
           REWARD_NAME: "hTPT",
           START_TIME: "2021/04/06 00:00 UTC+8",
           END_TIME: "2021/04/26 00:00 UTC+8",
@@ -358,6 +360,7 @@ export default {
           POOL_NAME: "<i>hDODO</i>&nbsp;Pool",
           POOL_DESC: "By hMATH-Helmet LPT",
           TOKEN_NAME: "hMATH",
+          STAKE_SYMBOL: "hMATH-Helmet LPT",
           REWARD_NAME: "hDODO",
           START_TIME: "2021/03/24 00:00 UTC+8",
           END_TIME: "2021/03/31 12:00 UTC+8",
@@ -378,6 +381,7 @@ export default {
           POOL_NAME: "<i>hMATH</i>&nbsp;Pool",
           POOL_DESC: "By hAUTO-Helmet LPT",
           TOKEN_NAME: "hAUTO",
+          STAKE_SYMBOL: "hAUTO-Helmet LPT",
           REWARD_NAME: "hMATH",
           START_TIME: "2021/03/11 00:00 UTC+8",
           END_TIME: "2021/03/18 00:00 UTC+8",
@@ -398,6 +402,7 @@ export default {
           POOL_NAME: "<i>hAUTO</i>&nbsp;Pool",
           POOL_DESC: "By BNB500-Helmet LPT",
           TOKEN_NAME: "BNB500",
+          STAKE_SYMBOL: "BNB500-Helmet LPT",
           REWARD_NAME: "hAUTO",
           START_TIME: "2021/03/02 00:00 UTC+8",
           END_TIME: "2021/03/09 00:00 UTC+8",
@@ -418,6 +423,7 @@ export default {
           POOL_NAME: "<i>BNB500</i>&nbsp;Pool",
           POOL_DESC: "By hCTK-Helmet LPT",
           TOKEN_NAME: "hCTK",
+          STAKE_SYMBOL: "hCTK-Helmet LPT",
           REWARD_NAME: "BNB500",
           START_TIME: "2021/02/22 00:00 UTC+8",
           END_TIME: "2021/02/29 00:00 UTC+8",
@@ -438,6 +444,7 @@ export default {
           POOL_NAME: "<i>hCTK</i>&nbsp;Pool",
           POOL_DESC: "By HCCT-Helmet LPT",
           TOKEN_NAME: "HCCT",
+          STAKE_SYMBOL: "HCCT-Helmet LPT",
           REWARD_NAME: "hCTK",
           START_TIME: "2021/02/21 00:00 UTC+8",
           END_TIME: "2021/02/28 00:00 UTC+8",
@@ -458,6 +465,7 @@ export default {
           POOL_NAME: "<i>HCCT</i>&nbsp;Pool",
           POOL_DESC: "By LONG-Helmet LPT",
           TOKEN_NAME: "LONG",
+          STAKE_SYMBOL: "LONG-Helmet LPT",
           REWARD_NAME: "HCCT",
           START_TIME: "2021/02/06 00:00 UTC+8",
           END_TIME: "2021/02/13 00:00 UTC+8",
@@ -556,7 +564,7 @@ export default {
     }
     &:hover {
       color: #fd7e14;
-      border-bottom: 2px dotted #fd7e14;
+      border-bottom: 2px dotted #fd7e14 !important;
     }
   }
 }

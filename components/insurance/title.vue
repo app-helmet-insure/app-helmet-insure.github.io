@@ -1,15 +1,15 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide dark">
+        <div></div>
+      </div>
       <a
         class="swiper-slide dis"
         href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
         target="_blank"
         ><div></div
       ></a>
-      <div class="swiper-slide paul">
-        <div></div>
-      </div>
       <div class="swiper-slide shib">
         <div></div>
       </div>
@@ -61,7 +61,7 @@ export default {
       let timer = setTimeout(() => {
         var mySwiper = new Swiper(".swiper-container", {
           loop: true,
-          spaceBetween: 0,
+          spaceBetween: 50,
           autoplay: {
             delay: 5000,
             disableOnInteraction: false,
@@ -84,6 +84,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "~/assets/css/base.scss";
 .swiper-pagination {
   display: flex;
   align-items: center;
@@ -110,11 +111,14 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .swiper-container {
     width: 100%;
     height: 180px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 10px;
     overflow: hidden;
     min-width: 1026px;
@@ -134,10 +138,10 @@ export default {
         background-position: center;
       }
     }
-    .paul {
-      background: #142632;
+    .dark {
+      background: #ffe9ce;
       > div {
-        background-image: url("../../assets/img/banner/paul_web.png");
+        background-image: url("../../assets/img/banner/darkmode_pc.png");
       }
     }
     .dis {
@@ -168,7 +172,9 @@ export default {
   .swiper-container {
     width: 96%;
     height: 160px;
-    background: #ffffff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 10px;
     min-width: 320px;
     .swiper-wrapper {
@@ -186,10 +192,10 @@ export default {
         background-position: center;
       }
     }
-    .paul {
-      background: #142632;
+    .dark {
+      background: #ffe9ce;
       > div {
-        background-image: url("../../assets/img/banner/paul_h5.png");
+        background-image: url("../../assets/img/banner/darkmode_h5.png");
       }
     }
     .dis {

@@ -157,7 +157,9 @@ export default {
     transition: opacity 0.3s, transform 0.4s, top 0.4s;
     font-size: 14px;
     font-family: IBMPlexSans;
-    color: #ffffff;
+    @include themeify {
+      color: themed("color-ffffff");
+    }
     line-height: 28px;
     &.ex-message-info {
       /* @include themeify {
@@ -239,7 +241,9 @@ export default {
     top: 0;
     transform: translateX(-50%);
     transition: opacity 0.3s, transform 0.4s, top 0.4s;
-    color: #ffffff;
+    @include themeify {
+      color: themed("color-ffffff");
+    }
     &.ex-message-info {
       /* @include themeify {
       background: rgba(themed('color-info'), 0.08);

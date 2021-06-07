@@ -99,7 +99,10 @@
       v-if="(showList.length < 1 && !isLoading) || !isLogin"
     >
       <div>
-        <img src="~/assets/img/helmet/nodata.png" alt="" />
+        <img
+          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
+          alt=""
+        />
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
@@ -165,6 +168,9 @@ export default {
     },
     userInfo() {
       return this.$store.state.userInfo;
+    },
+    storeThemes() {
+      return this.$store.state.themes;
     },
   },
   watch: {
@@ -341,159 +347,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (min-width: 750px) {
-  .insurance_list {
-    position: relative;
-    > div {
-      display: none;
-    }
-    table {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      tr {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-        align-items: center;
-        td {
-          width: 100px;
-          white-space: nowrap;
-        }
-      }
-      thead {
-        width: 100%;
-        background: #f7f7fa;
-        tr {
-          height: 40px;
-          color: rgba(23, 23, 58, 0.4);
-          td {
-            line-height: 40px;
-            font-size: 14px;
-          }
-          .option {
-            text-align: right;
-          }
-        }
-      }
-      tbody {
-        width: 100%;
-        tr {
-          width: 100%;
-          box-shadow: 0px 1px 0px 0px #ededf0;
-          td {
-            white-space: nowrap;
-            width: 100px;
-            height: 60px;
-            line-height: 60px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #17173a;
-            display: flex;
-            align-items: center;
-            &:nth-of-type(4) {
-              input {
-                border-radius: 5px;
-                width: 160px;
-                height: 32px;
-                border: 1px solid #eee;
-                padding: 0 10px;
-                &:focus {
-                  border: 1px solid #fd7e14;
-                  width: 160px;
-                }
-              }
-            }
-          }
-          .option {
-            text-align: right;
-            display: inline;
-            button {
-              padding: 0 20px;
-              height: 32px;
-              background: #17173a;
-              color: #fff;
-              border-radius: 3px;
-            }
-          }
-        }
-      }
-    }
-  }
-  .insurance_list_H5 {
-    display: none;
-  }
-}
-@media screen and (max-width: 750px) {
-  .insurance_list {
-    display: none;
-  }
-  .insurance_list_H5 {
-    > h3 {
-      margin: 20px 0;
-    }
-    .list_item_H5 {
-      width: 100%;
-      padding: 14px 0;
-      border-bottom: 1px solid #e8e8eb;
-      section {
-        &:nth-of-type(1) {
-          display: flex;
-          align-items: center;
-          p {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            span {
-              &:nth-of-type(1) {
-                font-size: 12px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                color: rgba(23, 23, 58, 0.5);
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                color: #17173a;
-                line-height: 14px;
-              }
-            }
-          }
-        }
-        &:nth-of-type(2) {
-          display: flex;
-          align-items: center;
-          margin-top: 16px;
-          input {
-            flex: 1;
-            height: 40px;
-            border-radius: 5px;
-            border: 1px solid #e8e8eb;
-            padding-left: 10px;
-            &::placeholder {
-              font-family: IBMPlexSans;
-              color: rgba(23, 23, 58, 0.4);
-            }
-          }
-          button {
-            margin-left: 13px;
-            height: 40px;
-            padding: 0 16px;
-            font-size: 14px;
-            font-family: IBMPlexSans;
-            color: #ffffff;
-            background: #17173a;
-            line-height: 18px;
-            border-radius: 5px;
-          }
-        }
-      }
-    }
-    .noData {
-      height: 100% !important;
-    }
-  }
-}
+@import "~/assets/css/insurance_list.scss";
 </style>

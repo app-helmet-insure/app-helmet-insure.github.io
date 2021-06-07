@@ -44,11 +44,11 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            this.activeData.MING_TIME == 'Finished'
-              ? 'background: #ccc !important; pointer-events: none'
-              : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            this.activeData.MING_TIME == 'Expired'
+              ? 'disable_button b_button'
+              : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -143,7 +143,7 @@
           />
           <span
             @click="WithdrawNum = balance.Withdraw"
-            style="background: rgba(255, 150, 0, 0.1)"
+            style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</span
           >
         </div>
@@ -178,11 +178,11 @@
         </p>
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            this.activeData.MING_TIME == 'Finished'
-              ? 'background: #ccc !important; pointer-events: none'
-              : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            this.activeData.MING_TIME == 'Expired'
+              ? 'disable_button o_button'
+              : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -201,6 +201,12 @@
             @click="copyAdress($event, activeData.REWARD_ADDRESS)"
           ></i>
         </p>
+      </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HXBURGER', 'hxBurger')">
+          Add hxBURGER to MetaMask
+        </p>
+        <i></i>
       </div>
     </div>
   </div>

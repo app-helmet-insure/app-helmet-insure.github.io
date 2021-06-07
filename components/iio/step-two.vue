@@ -240,6 +240,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
+@import "~/assets/css/base.scss";
 .disable {
   pointer-events: none;
 }
@@ -289,7 +290,9 @@ export default {
       .step_title {
         font-size: 18px;
         font-weight: 600;
-        color: #121212;
+        @include themeify {
+          color: themed("color-121212");
+        }
       }
       .step_details {
         margin-top: 12px;
@@ -302,12 +305,16 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 14px;
-              color: #17173a;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 20px;
             }
             &:nth-of-type(2) {
               font-size: 14px;
-              color: #121212;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 20px;
               display: flex;
               align-items: center;
@@ -327,16 +334,20 @@ export default {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+          background: themed("color-121212");
+        }
         display: flex;
         align-items: center;
         justify-content: center;
         &:hover {
-          background: #2c2c2c;
+          @include themeify {
+            background: themed("color-2c2c2c");
+          }
         }
       }
     }
@@ -350,7 +361,9 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         display: flex;
         align-items: center;
         justify-content: center;
@@ -374,12 +387,16 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
           }
           &:nth-of-type(2) {
             font-size: 14px;
-            color: #121212;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
             font-weight: 600;
           }
@@ -398,7 +415,9 @@ export default {
       display: flex;
       width: 1px;
       height: 246px;
-      background: #e8e8eb;
+      @include themeify {
+        background: themed("color-e8e8eb");
+      }
       margin: 0 80px;
     }
   }
@@ -435,13 +454,17 @@ export default {
     .step_title {
       font-size: 14px;
       font-weight: 600;
-      color: #121212;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .step_action {
       > span {
         font-size: 14px;
         font-weight: 600;
-        color: #121212;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         display: block;
         margin-top: 20px;
       }
@@ -453,7 +476,9 @@ export default {
           align-items: center;
           span {
             font-size: 12px;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
           }
         }
         .input {
@@ -467,7 +492,9 @@ export default {
             height: 100%;
             border-radius: 5px;
             border: 1px solid #cfcfd2;
-            background: #f7f7fa;
+            @include themeify {
+              background: themed("color-f8f9fa");
+            }
             padding-left: 12px;
             &:focus {
               height: 39px;
@@ -478,7 +505,9 @@ export default {
           span {
             position: absolute;
             font-size: 14px;
-            color: #121212;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             right: 15px;
             cursor: pointer;
           }
@@ -495,12 +524,16 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
           }
           &:nth-of-type(2) {
             font-size: 14px;
-            color: #121212;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
           }
         }
@@ -522,12 +555,16 @@ export default {
       border-radius: 3px;
       font-size: 14px;
       font-weight: 600;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       display: flex;
       align-items: center;
       justify-content: center;
       &:hover {
-        background: #2c2c2c;
+        @include themeify {
+          background: themed("color-2c2c2c");
+        }
       }
     }
     .getReward {
@@ -538,7 +575,9 @@ export default {
       border-radius: 3px;
       font-size: 14px;
       font-weight: 600;
-      color: #ffffff;
+      @include themeify {
+        color: themed("color-ffffff");
+      }
       display: flex;
       align-items: center;
       justify-content: center;
@@ -563,12 +602,16 @@ export default {
         span {
           &:nth-of-type(1) {
             font-size: 14px;
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
           }
           &:nth-of-type(2) {
             font-size: 14px;
-            color: #121212;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             line-height: 20px;
             font-weight: 600;
           }

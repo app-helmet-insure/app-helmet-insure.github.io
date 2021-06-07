@@ -134,6 +134,9 @@ export default {
     .activeWarn {
       margin-top: 10px;
       font-size: 14px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);
@@ -152,7 +155,9 @@ export default {
       min-width: 400px;
     }
     .status-dialog-content {
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       padding: 30px;
       position: relative;
       z-index: 102;
@@ -162,6 +167,11 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        > span {
+          @include themeify {
+            color: themed("color-17173a");
+          }
+        }
         > .close {
           display: inline-block;
           width: 20px;
@@ -176,6 +186,11 @@ export default {
       .layout2_title {
         height: 50px;
         line-height: 50px;
+        > span {
+          @include themeify {
+            color: themed("color-17173a");
+          }
+        }
         > .close {
           position: absolute;
           display: inline-block;
@@ -192,7 +207,9 @@ export default {
       }
       > .title {
         font-size: 20px;
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         text-align: left;
         padding-bottom: 16px;
       }
@@ -222,7 +239,9 @@ export default {
         }
       }
       .con-tit {
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         font-size: 16px;
         font-weight: 500;
         margin-top: 16px;
@@ -238,7 +257,9 @@ export default {
       .con-text {
         margin-top: 12px;
         font-size: 14px;
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         p {
           color: #fd7e14;
         }
@@ -256,7 +277,9 @@ export default {
         button {
           min-width: 141px;
           height: 40px;
-          background: #17173a;
+          @include themeify {
+            background: themed("black_button");
+          }
           border-radius: 5px;
           min-width: 96px;
           height: 32px;
@@ -264,7 +287,9 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #2c2c2c;
+            @include themeify {
+              background: themed("black_button_hover");
+            }
           }
         }
       }
@@ -299,6 +324,9 @@ export default {
     .activeWarn {
       margin-top: 10px;
       font-size: 14px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .mask {
       background-color: rgba(0, 0, 0, 0.8);
@@ -315,17 +343,23 @@ export default {
       align-items: center;
     }
     .status-dialog-content {
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       padding: 30px;
       position: relative;
       z-index: 102;
-      min-height: 230px;
       border-radius: 8px;
       width: 96%;
       .layout1_title {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        > span {
+          @include themeify {
+            color: themed("color-17173a");
+          }
+        }
         > .close {
           display: inline-block;
           width: 20px;
@@ -340,6 +374,11 @@ export default {
       .layout2_title {
         height: 50px;
         line-height: 50px;
+        > span {
+          @include themeify {
+            color: themed("color-17173a");
+          }
+        }
         > .close {
           position: absolute;
           display: inline-block;
@@ -356,7 +395,9 @@ export default {
       }
       > .title {
         font-size: 20px;
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         text-align: left;
         padding-bottom: 16px;
       }
@@ -386,7 +427,9 @@ export default {
         }
       }
       .con-tit {
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         font-size: 16px;
         font-weight: 500;
         margin-top: 16px;
@@ -402,7 +445,9 @@ export default {
       .con-text {
         margin-top: 12px;
         font-size: 14px;
-        color: $bg-d;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         p {
           color: #fd7e14;
         }
@@ -420,7 +465,9 @@ export default {
         button {
           min-width: 141px;
           height: 40px;
-          background: #17173a;
+          @include themeify {
+            background: themed("black_button");
+          }
           border-radius: 5px;
           min-width: 96px;
           height: 32px;
@@ -428,7 +475,9 @@ export default {
           color: #fff;
           font-size: 14px;
           &:hover {
-            background: #2c2c2c;
+            @include themeify {
+              background: themed("black_button_hover");
+            }
           }
         }
       }

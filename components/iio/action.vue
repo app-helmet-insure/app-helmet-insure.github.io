@@ -145,6 +145,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .action_wrap {
     width: 1200px;
@@ -194,7 +195,9 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #22292f;
+        @include themeify {
+          color: themed("color-1d1d1d");
+        }
         text-align: center;
       }
     }
@@ -226,7 +229,9 @@ export default {
     margin-bottom: 10px;
     width: 100%;
     padding: 60px 0;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     position: relative;
   }
 }
@@ -280,7 +285,9 @@ export default {
       span {
         font-size: 16px;
         font-weight: 600;
-        color: #22292f;
+        @include themeify {
+          color: themed("color-1d1d1d");
+        }
       }
     }
     .active_step {
@@ -308,7 +315,9 @@ export default {
     margin-top: 28px;
     width: 100%;
     padding: 20px 12px 30px;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     border-radius: 3px;
   }
   .step_content {

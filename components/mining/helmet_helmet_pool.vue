@@ -133,6 +133,10 @@
           >{{ $t("Table.Compound") }}
         </button>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HELMET')">Add HELMET to MetaMask</p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>
@@ -153,6 +157,8 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
+import { getAddress } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -229,6 +235,16 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, unit) {
+      let tokenAddress = getAddress(token);
+      let data = {
+        tokenAddress: tokenAddress,
+        tokenSymbol: token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

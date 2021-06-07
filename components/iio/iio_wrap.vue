@@ -257,10 +257,10 @@ export default {
           open: true,
           sort: 0,
           active_page: 2,
-          expired_burnt: "0",
-          expired_stake: "0",
-          expired_premium: "0",
-          expired_activating: "0",
+          expired_burnt: "431",
+          expired_stake: "10,064,505.48",
+          expired_premium: "137.39%",
+          expired_activating: "44.50%",
         },
         {
           iio_name: "CryptoTycoon",
@@ -382,6 +382,8 @@ export default {
           if (nowTime > finished) {
             item.status = "finished";
             item.sort = 5;
+          }
+          if (nowTime > finished + 86400000 * 2) {
             item.active_page = 1;
           }
         }
@@ -402,6 +404,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 .iio_item_wrap {
   display: flex;
   align-items: center;
@@ -488,7 +491,7 @@ export default {
         font-size: 28px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: #ffffff;
+        color: #fff;
         line-height: 28px;
         span {
           font-size: 22px;
@@ -502,11 +505,13 @@ export default {
         span {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
-          color: rgba(255, 255, 255, 0.6);
+          @include themeify {
+            color: darken($color: #fff, $amount: 0.6);
+          }
           line-height: 14px;
           text-decoration: underline;
           &:hover {
-            color: #fff;
+            color: darken($color: #fff, $amount: 20%);
           }
         }
         i {
@@ -537,14 +542,14 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: rgba(255, 255, 255, 0.8);
+              color: darken($color: #fff, $amount: 20%);
               line-height: 14px;
             }
             &:nth-of-type(2) {
               font-size: 14px;
               font-family: IBMPlexSans-Medium, IBMPlexSans;
               font-weight: 500;
-              color: #ffffff;
+              color: #fff;
               line-height: 14px;
             }
           }
@@ -559,10 +564,10 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        color: #fff;
         line-height: 20px;
         &:hover {
-          background: rgba(255, 255, 255, 0.4);
+          background: darken($color: #fff, $amount: 60%);
         }
       }
       > .button_tab {
@@ -572,7 +577,7 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        color: #fff;
         line-height: 20px;
         display: flex;
         align-items: center;
@@ -600,7 +605,7 @@ export default {
             width: 40px;
             height: 3px;
             border-radius: 2px;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.4) !important;
           }
         }
       }
@@ -635,7 +640,9 @@ export default {
         font-size: 20px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.8);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 20%);
+        }
         line-height: 30px;
       }
       > a {
@@ -643,12 +650,16 @@ export default {
         margin-top: 20px;
         width: 180px;
         height: 48px;
-        background: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         border-radius: 5px;
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 48px;
         text-align: center;
 
@@ -724,7 +735,7 @@ export default {
         font-size: 28px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: #ffffff;
+        color: #fff;
         line-height: 28px;
         span {
           font-size: 22px;
@@ -781,7 +792,7 @@ export default {
               font-size: 14px;
               font-family: IBMPlexSans-Medium, IBMPlexSans;
               font-weight: 500;
-              color: #ffffff;
+              color: #fff;
               line-height: 14px;
             }
           }
@@ -796,7 +807,7 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        color: #fff;
         line-height: 20px;
         &:hover {
           background: rgba(255, 255, 255, 0.4);
@@ -809,7 +820,9 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 20px;
         display: flex;
         align-items: center;
@@ -872,7 +885,9 @@ export default {
         font-size: 20px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.8);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 20%);
+        }
         line-height: 30px;
       }
       > a {
@@ -880,12 +895,16 @@ export default {
         margin-top: 20px;
         width: 180px;
         height: 48px;
-        background: #17173a;
+        @include themeify {
+          background: themed("color-17173a");
+        }
         border-radius: 5px;
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         line-height: 48px;
         text-align: center;
 

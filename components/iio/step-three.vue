@@ -140,6 +140,7 @@ export default {
         RewardAddress,
         this.About.Decimals
       );
+      console.log(AvailableVolume);
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"
       );
@@ -222,6 +223,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
+@import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .stepThree {
     width: 420px;
@@ -229,12 +231,16 @@ export default {
     .step_title {
       font-size: 18px;
       font-weight: 600;
-      color: #121212;
+      @include themeify {
+        color: themed("color-121212");
+      }
     }
     > p {
       width: 466px;
       font-size: 14px;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 60%);
+      }
       margin-top: 20px;
       span {
         margin: 0 3px;
@@ -259,13 +265,17 @@ export default {
             &:nth-of-type(1) {
               font-size: 14px;
               line-height: 14px;
-              color: rgba(23, 23, 58, 0.4);
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 60%);
+              }
             }
             &:nth-of-type(2) {
               margin-top: 8px;
               font-size: 16px;
               font-weight: bold;
-              color: #121212;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 18px;
             }
           }
@@ -273,7 +283,9 @@ export default {
       }
       .rewardDetail {
         width: 100%;
-        background: #f8f9fa;
+        @include themeify {
+          color: themed("color-f8f9fa");
+        }
         margin-top: 16px;
         padding: 12px 10px;
         display: flex;
@@ -306,14 +318,18 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: rgba(23, 23, 58, 0.4);
+                @include themeify {
+                  color: darken($color: themed("color-17173a"), $amount: 60%);
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans-Bold, IBMPlexSans;
                 font-weight: bold;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -324,13 +340,19 @@ export default {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
+        @include themeify {
+          background: themed("color-121212");
+        }
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         &:hover {
-          background: #2c2c2c;
+          @include themeify {
+            background: themed("color-2c2c2c");
+          }
         }
       }
     }
@@ -342,12 +364,16 @@ export default {
     .step_title {
       font-size: 14px;
       font-weight: 600;
-      color: #121212;
+      @include themeify {
+        color: themed("color-121212");
+      }
     }
     > p {
       width: 100%;
       font-size: 12px;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 60%);
+      }
       margin-top: 20px;
       line-height: 20px;
       i {
@@ -369,14 +395,18 @@ export default {
           span {
             &:nth-of-type(1) {
               font-size: 12px;
-              color: rgba(23, 23, 58, 0.4);
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 60%);
+              }
               line-height: 16px;
             }
             &:nth-of-type(2) {
               margin-top: 8px;
               font-size: 14px;
               font-weight: bold;
-              color: #121212;
+              @include themeify {
+                color: themed("color-17173a");
+              }
               line-height: 14px;
             }
           }
@@ -384,7 +414,9 @@ export default {
       }
       .rewardDetail {
         width: 100%;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+        }
         margin-top: 16px;
         padding: 12px 10px;
         display: flex;
@@ -418,14 +450,18 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: rgba(23, 23, 58, 0.4);
+                @include themeify {
+                  color: darken($color: themed("color-17173a"), $amount: 60%);
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans-Bold, IBMPlexSans;
                 font-weight: bold;
-                color: #17173a;
+                @include themeify {
+                  background: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -440,9 +476,13 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        color: #ffffff;
+        @include themeify {
+          color: themed("color-ffffff");
+        }
         &:hover {
-          background: #2c2c2c;
+          @include themeify {
+            background: themed("color-2c2c2c");
+          }
         }
       }
     }

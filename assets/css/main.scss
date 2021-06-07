@@ -40,7 +40,9 @@ button {
 }
 html,
 body {
-    color: #17173a;
+    @include themeify {
+        background: themed('color-17173a');
+    }
     // min-width: 1280px;
 }
 a {
@@ -147,7 +149,7 @@ $td-gap: 16px;
                         margin-right: 4px;
                     }
                     &:hover {
-                        background: lighten($color: $main-color, $amount: 5);
+                        background: darken($color: $main-color, $amount: 50%);
                     }
                 }
                 > button {
@@ -166,7 +168,7 @@ $td-gap: 16px;
                         margin-right: 4px;
                     }
                     &:hover {
-                        background: lighten($color: $main-color, $amount: 5);
+                        background: darken($color: $main-color, $amount: 50%);
                     }
                     &:disabled {
                         background: rgba($main-color, 0.8);
@@ -267,12 +269,10 @@ $td-gap: 16px;
         align-items: center;
         justify-content: center;
         margin: 0 5px;
-        color: #17173a;
         font-weight: 500;
         cursor: pointer;
     }
     .page_active {
-        background: #ededf0;
         border-radius: 3px;
     }
     div {
@@ -291,7 +291,6 @@ $td-gap: 16px;
             .icon {
                 width: 20px;
                 height: 20px;
-                fill: #17173a;
             }
         }
 
@@ -318,7 +317,9 @@ $td-gap: 16px;
         p {
             text-align: center;
             font-size: 12px;
-            color: rgba(23, 23, 58, 0.4);
+            @include themeify {
+                color: darken($color: themed('color-17173a'), $amount: 60%);
+            }
         }
     }
 }
@@ -335,7 +336,9 @@ $td-gap: 16px;
     }
     .main_container {
         width: 100%;
-        background: #f8f9fa;
+        @include themeify {
+            background: themed('color-f8f9fa');
+        }
     }
 }
 @media screen and (min-width: 750px) {
@@ -360,7 +363,9 @@ $td-gap: 16px;
     background: #fd7e14;
     font-size: 14px;
     font-weight: bold;
-    color: #ffffff;
+    @include themeify {
+        color: themed('color-ffffff');
+    }
     &:hover {
         background: #ffa000;
     }
@@ -369,22 +374,42 @@ $td-gap: 16px;
     min-width: 88px;
     padding: 0 16px;
     height: 40px;
-    background: #17173a;
+    @include themeify {
+        background: themed('black_button');
+        color: themed('black_button_text');
+    }
     font-size: 14px;
     font-weight: bold;
-    color: #ffffff;
     &:hover {
-        background: #2c2c2c;
+        @include themeify {
+            background: themed('black_button_hover');
+        }
     }
+}
+.disable_button {
+    min-width: 88px;
+    padding: 0 16px;
+    height: 40px;
+    @include themeify {
+        background: themed('disable_button') !important;
+        color: themed('disable_button_text') !important;
+    }
+    font-size: 14px;
+    pointer-events: none;
+    font-weight: bold;
 }
 .b_b_button {
     padding: 0 34px;
     height: 40px;
-    background: #17173a;
+    @include themeify {
+        background: themed('black_button');
+        color: themed('black_button_text');
+    }
     font-size: 14px;
     font-weight: bold;
-    color: #ffffff;
     &:hover {
-        background: #2c2c2c;
+        @include themeify {
+            background: themed('black_button_hover');
+        }
     }
 }

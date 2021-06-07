@@ -38,12 +38,11 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
     const factory = await getFactory();
     const wei = await getWei(opt._collateral);
     let fix = wei === 'lovelace' ? 6 : 18;
-    const fixedVolume = fixD(volume, fix);
     // const address = window.CURRENTADDRESS;
     const address = window.CURRENTADDRESS;
     // return;
     return factory.methods
-        .burn(longOrshort, toWei(fixedVolume, opt._collateral))
+        .burn(longOrshort, toWei(volume, opt._collateral))
         .send({ from: address })
         .on('transactionHash', (hash) => {
             bus.$emit('CLOSE_STATUS_DIALOG');

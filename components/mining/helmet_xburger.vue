@@ -31,9 +31,9 @@
       <div class="button">
         <button
           @click="toDeposite"
-          :class="stakeLoading ? 'disable b_button' : 'b_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            expired ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -91,6 +91,12 @@
             "
           ></i>
         </p>
+      </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HXBURGER', 'hxBURGER')">
+          Add hxBURGER to MetaMask
+        </p>
+        <i></i>
       </div>
     </div>
     <i></i>
@@ -164,9 +170,9 @@
 
         <button
           @click="toClaim"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
-          :style="
-            expired ? 'background: #ccc !important; pointer-events: none' : ''
+          :class="
+            (claimLoading ? 'disable o_button' : 'o_button',
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -185,6 +191,10 @@
             "
           ></i>
         </p>
+      </div>
+      <div class="addToken">
+        <p @click="addTokenFn('XBURGER', 'xBURGER')">Add xBURGER to MetaMask</p>
+        <i></i>
       </div>
     </div>
   </div>
@@ -206,6 +216,8 @@ import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -296,6 +308,16 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName = "", unit) {
+      let tokenAddress = getAddress(token) || getContract(token);
+      let data = {
+        tokenAddress: tokenAddress,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

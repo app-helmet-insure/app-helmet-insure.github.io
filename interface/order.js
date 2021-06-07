@@ -542,14 +542,14 @@ export const onExercise = async (data, callBack, flag) => {
         Contract = await expERC20(adress);
         order = await TokenOrder(data.long);
         long = await expERC20(data.long);
-        if (data.unit) {
+        if (data.unit && data.unit != 12) {
             value = BigNumber(
                 (data.vol * Math.pow(10, data.unit) + '').toString()
             ).toFixed();
         } else {
-            value = toWei(fixD(data.vol, 12), data.token);
+            value = toWei(data.vol, data.token);
         }
-        console.log(data.vol, value);
+        console.log(data, value);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(

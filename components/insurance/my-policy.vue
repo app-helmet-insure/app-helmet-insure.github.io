@@ -113,7 +113,10 @@
       v-if="(showList.length < 1 && !isLoading) || !isLogin"
     >
       <div>
-        <img src="~/assets/img/helmet/nodata.png" alt="" />
+        <img
+          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
+          alt=""
+        />
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
@@ -177,6 +180,9 @@ export default {
     },
     userInfo() {
       return this.$store.state.userInfo;
+    },
+    storeThemes() {
+      return this.$store.state.themes;
     },
   },
   watch: {
@@ -393,7 +399,6 @@ export default {
           result.push(resultItem);
         }
       }
-
       result = result.sort(function (a, b) {
         return b.id - a.id;
       });
@@ -415,55 +420,89 @@ export default {
       let xhBURGERolicy = await this.xhBURGERolicy();
       let SHIBHRolicy = await this.SHIBHRolicy();
       if (cakePolicy) {
-        result.push(cakePolicy);
+        if (cakePolicy["sort"] != 1 && cakePolicy["sort"] != 3) {
+          result.push(cakePolicy);
+        }
       }
       if (hcctPolicy) {
-        result.push(hcctPolicy);
+        if (hcctPolicy["sort"] != 1 && hcctPolicy["sort"] != 3) {
+          result.push(hcctPolicy);
+        }
       }
       if (hctkPolicy) {
-        result.push(hctkPolicy);
+        if (hctkPolicy["sort"] != 1 && hctkPolicy["sort"] != 3) {
+          result.push(hctkPolicy);
+        }
       }
       if (hburgerPolicy) {
-        result.push(hburgerPolicy);
+        if (hburgerPolicy["sort"] != 1 && hburgerPolicy["sort"] != 3) {
+          result.push(hburgerPolicy);
+        }
       }
       if (lishiPolicy) {
-        result.push(lishiPolicy);
+        if (lishiPolicy["sort"] != 1 && lishiPolicy["sort"] != 3) {
+          result.push(lishiPolicy);
+        }
       }
       if (BNB500Policy) {
-        result.push(BNB500Policy);
+        if (BNB500Policy["sort"] != 1 && BNB500Policy["sort"] != 3) {
+          result.push(BNB500Policy);
+        }
       }
       if (hAUTOPolicy) {
-        result.push(hAUTOPolicy);
+        if (hAUTOPolicy["sort"] != 1 && hAUTOPolicy["sort"] != 3) {
+          result.push(hAUTOPolicy);
+        }
       }
       if (hMATHPolicy) {
-        result.push(hMATHPolicy);
+        if (hMATHPolicy["sort"] != 1 && hMATHPolicy["sort"] != 3) {
+          result.push(hMATHPolicy);
+        }
       }
       if (hFORPolicy) {
-        result.push(hFORPolicy);
+        if (hFORPolicy["sort"] != 1 && hFORPolicy["sort"] != 3) {
+          result.push(hFORPolicy);
+        }
       }
       if (HCCTIIPolicy) {
-        result.push(HCCTIIPolicy);
+        if (HCCTIIPolicy["sort"] != 1 && HCCTIIPolicy["sort"] != 3) {
+          result.push(HCCTIIPolicy);
+        }
       }
       if (hDODOPolicy) {
-        result.push(hDODOPolicy);
+        if (hDODOPolicy["sort"] != 1 && hDODOPolicy["sort"] != 3) {
+          result.push(hDODOPolicy);
+        }
       }
       if (hTPTPolicy) {
-        result.push(hTPTPolicy);
+        if (hTPTPolicy["sort"] != 1 && hTPTPolicy["sort"] != 3) {
+          result.push(hTPTPolicy);
+        }
       }
       if (QFEIPolicy) {
-        result.push(QFEIPolicy);
+        if (QFEIPolicy["sort"] != 1 && QFEIPolicy["sort"] != 3) {
+          result.push(QFEIPolicy);
+        }
       }
       if (bHELMETPolicy) {
-        result.push(bHELMETPolicy);
+        if (bHELMETPolicy["sort"] != 1 && bHELMETPolicy["sort"] != 3) {
+          result.push(bHELMETPolicy);
+        }
       }
       if (qHELMETPolicy) {
-        result.push(qHELMETPolicy);
+        if (qHELMETPolicy["sort"] != 1 && qHELMETPolicy["sort"] != 3) {
+          result.push(qHELMETPolicy);
+        }
       }
       if (xhBURGERolicy) {
-        result.push(xhBURGERolicy);
+        if (xhBURGERolicy["sort"] != 1 && xhBURGERolicy["sort"] != 3) {
+          result.push(xhBURGERolicy);
+        }
       }
       if (SHIBHRolicy) {
-        result.push(SHIBHRolicy);
+        if (SHIBHRolicy["sort"] != 1 && SHIBHRolicy["sort"] != 3) {
+          result.push(SHIBHRolicy);
+        }
       }
       result = result.sort(function (a, b) {
         return a.sort - b.sort;
@@ -494,7 +533,6 @@ export default {
     // 行权
     toActive(item) {
       let data;
-      console.log(item);
       if (item.type == "Call") {
         data = {
           token: getTokenName(item._underlying),
@@ -701,6 +739,11 @@ export default {
           showVolume: volume,
           TypeCoin: getTokenName("0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929"),
         };
+        console.log(
+          resultItem._expiry < currentTime,
+          resultItem._expiry,
+          currentTime
+        );
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
@@ -1024,6 +1067,7 @@ export default {
           showVolume: volume,
           TypeCoin: getTokenName("0x658a109c5900bc6d2357c87549b651670e5b0539"),
         };
+        console.log(resultItem._expiry, currentTime);
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
@@ -1424,7 +1468,7 @@ export default {
         "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
         "SHIBh"
       );
-      console.log(volume);
+
       let currentTime = new Date().getTime();
       if (fixD(volume, 8) != 0) {
         let Token = getTokenName("0x224b33139a377a62d4BaD3D58cEDb7807AE228eB");
@@ -1519,7 +1563,9 @@ export default {
       height: 90px;
       margin-top: 10px;
       display: flex;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       align-items: center;
@@ -1534,7 +1580,9 @@ export default {
             span {
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #787878;
+              @include themeify {
+                color: themed("media_icon");
+              }
               line-height: 14px;
               &:nth-of-type(1) {
                 width: 90px;
@@ -1588,13 +1636,17 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -1613,13 +1665,17 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
               }
             }
@@ -1633,19 +1689,24 @@ export default {
           button {
             padding: 0px 10px;
             height: 36px;
-            background: #f8f9fa;
+            @include themeify {
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
+            }
             border-radius: 5px;
-            border: 1px solid #e8e8eb;
             margin-left: 20px;
             font-size: 14px;
             font-family: HelveticaNeue;
-            color: #17173a;
             line-height: 24px;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
             min-width: 92px;
+            &:hover {
+              border: 1px solid themed("color-fd7e14") !important;
+            }
           }
         }
       }
@@ -1681,7 +1742,9 @@ export default {
       flex-direction: column;
       margin-top: 10px;
       display: flex;
-      background: #ffffff;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 20px 16px;
@@ -1693,7 +1756,9 @@ export default {
             span {
               font-size: 14px;
               font-family: IBMPlexSans;
-              color: #787878;
+              @include themeify {
+                color: themed("media_icon");
+              }
               line-height: 14px;
               &:nth-of-type(1) {
                 width: 90px;
@@ -1747,14 +1812,18 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 margin-top: 4px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
                 font-weight: 500;
               }
@@ -1773,14 +1842,18 @@ export default {
               &:nth-of-type(1) {
                 font-size: 14px;
                 font-family: PingFangSC-Regular, PingFang SC;
-                color: #787878;
+                @include themeify {
+                  color: themed("media_icon");
+                }
                 line-height: 14px;
               }
               &:nth-of-type(2) {
                 margin-top: 4px;
                 font-size: 14px;
                 font-family: IBMPlexSans;
-                color: #17173a;
+                @include themeify {
+                  color: themed("color-17173a");
+                }
                 line-height: 14px;
                 font-weight: 500;
               }
@@ -1794,16 +1867,21 @@ export default {
             width: 100%;
             height: 36px;
             border-radius: 5px;
-            background: #17173a;
+            @include themeify {
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
+              color: themed("insure_button_text");
+            }
             font-size: 14px;
-            border: 1px solid #e8e8eb;
             font-family: HelveticaNeue;
             line-height: 24px;
             font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
+            &:hover {
+              border: 1px solid themed("color-fd7e14") !important;
+            }
           }
         }
       }

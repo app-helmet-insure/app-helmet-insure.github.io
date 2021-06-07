@@ -92,6 +92,12 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HELMETDODOPOOL_LPT', 'DLP')">
+          Add DODO-DLP to MetaMask
+        </p>
+        <i></i>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -215,7 +221,7 @@ import { fixD } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
-import { getAddress } from "~/assets/utils/address-pool.js";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeType", "TradeType"],
@@ -294,11 +300,11 @@ export default {
     },
   },
   methods: {
-    async addTokenFn(token, unit) {
-      let tokenAddress = getAddress(token);
+    async addTokenFn(token, tokenName = "", unit) {
+      let tokenAddress = getAddress(token) || getContract(token);
       let data = {
         tokenAddress: tokenAddress,
-        tokenSymbol: token,
+        tokenSymbol: tokenName || token,
         tokenDecimals: unit || 18,
         tokenImage: "",
       };

@@ -76,6 +76,12 @@
           >
         </section>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HELMETBNB1_LPT', 'Cake-LP')">
+          Add Cake-LP to MetaMask
+        </p>
+        <i></i>
+      </div>
     </div>
     <i></i>
     <div class="withdraw" v-if="TradeType == 'CLAIM' || TradeType == 'ALL'">
@@ -154,6 +160,10 @@
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('CAKE')">Add Cake to MetaMask</p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>
@@ -176,6 +186,8 @@ import {
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import countTo from "vue-count-to";
+import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeType", "TradeType"],
   components: {
@@ -253,6 +265,16 @@ export default {
     },
   },
   methods: {
+    async addTokenFn(token, tokenName = "", unit) {
+      let tokenAddress = getAddress(token) || getContract(token);
+      let data = {
+        tokenAddress: tokenAddress,
+        tokenSymbol: tokenName || token,
+        tokenDecimals: unit || 18,
+        tokenImage: "",
+      };
+      await addToken(data);
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;

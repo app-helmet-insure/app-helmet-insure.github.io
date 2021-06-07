@@ -10,7 +10,7 @@
     >
       <img
         class="link_flash"
-        src="~/assets/img/flashmining/flash_link.png"
+        :src="require(`~/assets/img/flashmining/flash_link_${storeThemes}.png`)"
         alt=""
         v-if="index != 0"
       />
@@ -159,7 +159,7 @@
     >
       <img
         class="link_flash"
-        src="~/assets/img/flashmining/flash_link.png"
+        :src="require(`~/assets/img/flashmining/flash_link_${storeThemes}.png`)"
         alt=""
         v-if="index != 0"
       />
@@ -408,6 +408,9 @@ export default {
     });
   },
   computed: {
+    storeThemes() {
+      return this.$store.state.themes;
+    },
     indexArray() {
       return this.$store.state.allIndexPrice;
     },

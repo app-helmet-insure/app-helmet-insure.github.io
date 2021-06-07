@@ -194,7 +194,6 @@ export default {
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
-    // localStorage.removeItem("themes");
     let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
     localStorage.setItem("themes", themes);

@@ -814,7 +814,7 @@ export default {
     }
     &:hover {
       color: #fd7e14;
-      border-bottom: 2px dotted #fd7e14;
+      border-bottom: 2px dotted #fd7e14 !important;
     }
   }
 }

@@ -1299,7 +1299,7 @@ export default {
   .v2_light,
   .v1_dark,
   .v2_dark {
-    border: none;
+    border: none !important;
     display: inline-block;
     margin-left: 4px;
     width: 16px;
@@ -1307,7 +1307,7 @@ export default {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     &:hover {
-      border: none;
+      border: none !important;
     }
   }
   .v1_light {

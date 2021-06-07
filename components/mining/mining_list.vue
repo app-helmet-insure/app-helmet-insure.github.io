@@ -3,10 +3,15 @@
     <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
-    <div v-for="item in miningList" :key="item.earn">
+    <POOL
+      :activeData="activeData"
+      :activeFlag="activeFlag"
+      :activeType="activeType"
+    />
+    <div v-for="item in miningList" :key="item.REWARD_NAME">
       <div
         :class="['finshed_line', 'finshed_pc']"
-        v-if="item.earn == 'bhelmet_dodo'"
+        v-if="item.REWARD_NAME == 'bhelmet_dodo'"
       >
         <p></p>
         <i :class="storeThemes + '_star'"></i>
@@ -17,7 +22,7 @@
       <div class="mining_item">
         <div
           :class="
-            activeMining == item.earn && showActiveMining
+            activeMining == item.REWARD_NAME && showActiveMining
               ? 'activeMining mining_show'
               : 'mining_show'
           "
@@ -26,39 +31,39 @@
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                timeArray[item.earn].dueDate == 'Finished'
+                timeArray[item.REWARD_NAME].dueDate == 'Finished'
                   ? 'expired_' + storeThemes
                   : 'web'
               }.png`)
             "
             alt=""
-            v-if="item.combo"
+            v-if="item.COMBO_FLAG"
           />
           <img
             class="combo_img"
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${
-                timeArray[item.earn].dueDate == 'Finished'
+                timeArray[item.REWARD_NAME].dueDate == 'Finished'
                   ? 'serial_web_expired_' + storeThemes
                   : 'serial_web'
               }.png`)
             "
             alt=""
-            v-if="item.serial"
+            v-if="item.SERIAL_FLAG"
           />
           <img
             class="combo_img"
             style="width: 32px; height: 32px; left: 10px"
             :src="
               require(`~/assets/img/mining/${
-                timeArray[item.earn].dueDate == 'Finished'
+                timeArray[item.REWARD_NAME].dueDate == 'Finished'
                   ? 'serialnext_web_expired_' + storeThemes
                   : 'serialnext_web'
               }.png`)
             "
             alt=""
-            v-if="item.serialNext"
+            v-if="item.SERIAL_NEXT_FLAG"
           />
           <img
             class="combo_img"
@@ -70,9 +75,9 @@
 
           <section>
             <span
-              class="onePager"
-              v-html="item.miningName"
-              @click="hadnleShowOnePager($event, item.onePager)"
+              class="ONE_PAGER"
+              v-html="item.POOL_NAME"
+              @click="hadnleShowOnePager($event, item.ONE_PAGER)"
             ></span>
           </section>
           <section>
@@ -80,19 +85,19 @@
               {{ $t("Table.EarnList") }}
               <span>
                 <img
-                  v-if="item.earnImg"
+                  v-if="item.REARD_IMGSHOW"
                   :src="
                     require(`~/assets/img/mining/${
-                      timeArray[item.earn].dueDate == 'Finished'
-                        ? item.earn + '_expired'
-                        : item.earn
+                      timeArray[item.REWARD_NAME].dueDate == 'Finished'
+                        ? item.REWARD_NAME + '_expired'
+                        : item.REWARD_NAME
                     }.png`)
                   "
-                  :class="item.earnNum"
+                  :class="item.REARD_VOLUME"
                   alt=""
                 />
                 <template v-else style="color: #17173a">{{
-                  item.earn
+                  item.REWARD_NAME
                 }}</template>
               </span>
             </p>
@@ -100,50 +105,60 @@
           <section>
             <i></i>
             <p>
-              <span v-if="typeof timeArray[item.earn].openDate == 'object'">
-                {{ timeArray[item.earn].openDate.hour
+              <span
+                v-if="typeof timeArray[item.REWARD_NAME].openDate == 'object'"
+              >
+                {{ timeArray[item.REWARD_NAME].openDate.hour
                 }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ timeArray[item.earn].openDate.minute
+                {{ timeArray[item.REWARD_NAME].openDate.minute
                 }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
-                <template v-if="timeArray[item.earn].dueDate.day != '00'">
-                  {{ timeArray[item.earn].dueDate.day
+              <span
+                v-else-if="
+                  typeof timeArray[item.REWARD_NAME].dueDate == 'object'
+                "
+              >
+                <template
+                  v-if="timeArray[item.REWARD_NAME].dueDate.day != '00'"
+                >
+                  {{ timeArray[item.REWARD_NAME].dueDate.day
                   }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ timeArray[item.earn].dueDate.hour
+                  {{ timeArray[item.REWARD_NAME].dueDate.hour
                   }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="timeArray[item.earn].dueDate.day == '00'">
-                  {{ timeArray[item.earn].dueDate.minute
+                <template
+                  v-if="timeArray[item.REWARD_NAME].dueDate.day == '00'"
+                >
+                  {{ timeArray[item.REWARD_NAME].dueDate.minute
                   }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ timeArray[item.earn].dueDate }}
+                {{ timeArray[item.REWARD_NAME].dueDate }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
           </section>
           <section>
             <span>{{
-              timeArray[item.earn].dueDate == "Finished"
+              timeArray[item.REWARD_NAME].dueDate == "Finished"
                 ? "--"
-                : apyArray[item.earn] + "%"
+                : apyArray[item.REWARD_NAME] + "%"
             }}</span>
-            <span>{{ item.earnName }}</span>
+            <span>{{ item.REWARD_TYPE }}</span>
           </section>
           <section>
             <button
-              @click="StakeMining(item.earn)"
+              @click="HandleClickAction(item, 'STAKE')"
               :class="
-                activeMining == item.earn &&
+                activeMining == item.REWARD_NAME &&
                 showActiveMining &&
                 activeType == 'STAKE'
                   ? 'activeButton stakeMining'
@@ -154,9 +169,9 @@
               <i class="selectDown"></i>
             </button>
             <button
-              @click="ClaimMining(item.earn)"
+              @click="ClaimMining(item.REWARD_NAME)"
               :class="
-                activeMining == item.earn &&
+                activeMining == item.REWARD_NAME &&
                 showActiveMining &&
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
@@ -170,7 +185,7 @@
         </div>
         <div
           class="mining_detail"
-          v-if="showActiveMining && activeMining == item.earn"
+          v-if="showActiveMining && activeMining == item.REWARD_NAME"
         >
           <svg
             class="close"
@@ -242,8 +257,11 @@
         </div>
       </div>
     </div>
-    <div v-for="item in miningList" :key="item.earn + '1'">
-      <div class="finshed_line finshed_h5" v-if="item.earn == 'bhelmet_dodo'">
+    <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
+      <div
+        class="finshed_line finshed_h5"
+        v-if="item.REWARD_NAME == 'bhelmet_dodo'"
+      >
         <p></p>
         <i></i>
         <span>Finished</span>
@@ -256,39 +274,39 @@
           class="combo_img"
           :src="
             require(`~/assets/img/mining/combo_${
-              timeArray[item.earn].dueDate == 'Finished'
+              timeArray[item.REWARD_NAME].dueDate == 'Finished'
                 ? 'expired_' + storeThemes
                 : 'web'
             }.png`)
           "
           alt=""
-          v-if="item.combo"
+          v-if="item.COMBO_FLAG"
         />
         <img
           class="combo_img"
           style="width: 116px"
           :src="
             require(`~/assets/img/mining/${
-              timeArray[item.earn].dueDate == 'Finished'
+              timeArray[item.REWARD_NAME].dueDate == 'Finished'
                 ? 'serial_web_expired_' + storeThemes
                 : 'serial_web'
             }.png`)
           "
           alt=""
-          v-if="item.serial"
+          v-if="item.SERIAL_FLAG"
         />
         <img
           class="combo_img"
           style="width: 32px; height: 32px; left: 10px"
           :src="
             require(`~/assets/img/mining/${
-              timeArray[item.earn].dueDate == 'Finished'
+              timeArray[item.REWARD_NAME].dueDate == 'Finished'
                 ? 'serialnext_web_expired_' + storeThemes
                 : 'serialnext_web'
             }.png`)
           "
           alt=""
-          v-if="item.serialNext"
+          v-if="item.SERIAL_NEXT_FLAG"
         /><img
           class="combo_img"
           style="
@@ -303,62 +321,74 @@
         />
         <section>
           <span
-            class="onePager"
-            v-html="item.miningName"
-            @click="hadnleShowOnePager($event, item.onePager)"
+            class="ONE_PAGER"
+            v-html="item.POOL_NAME"
+            @click="hadnleShowOnePager($event, item.ONE_PAGER)"
           ></span>
           <p>
             {{ $t("Table.EarnList") }}
             <span>
               <img
-                v-if="item.earnImg"
-                :src="require(`~/assets/img/mining/${item.earn}.png`)"
-                :class="item.earnNum"
+                v-if="item.REARD_IMGSHOW"
+                :src="require(`~/assets/img/mining/${item.REWARD_NAME}.png`)"
+                :class="item.REARD_VOLUME"
                 alt=""
               />
-              <template v-else style="color: #17173a">{{ item.earn }}</template>
+              <template v-else style="color: #17173a">{{
+                item.REWARD_NAME
+              }}</template>
             </span>
           </p>
         </section>
         <section>
           <p>
             <span>{{
-              timeArray[item.earn].dueDate == "Finished"
+              timeArray[item.REWARD_NAME].dueDate == "Finished"
                 ? "--"
-                : apyArray[item.earn] + "%"
+                : apyArray[item.REWARD_NAME] + "%"
             }}</span>
-            <span>{{ item.earnName }}</span>
+            <span>{{ item.REWARD_TYPE }}</span>
           </p>
           <div>
             <i></i>
             <p>
-              <span v-if="typeof timeArray[item.earn].openDate == 'object'">
-                {{ timeArray[item.earn].openDate.hour
+              <span
+                v-if="typeof timeArray[item.REWARD_NAME].openDate == 'object'"
+              >
+                {{ timeArray[item.REWARD_NAME].openDate.hour
                 }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ timeArray[item.earn].openDate.minute
+                {{ timeArray[item.REWARD_NAME].openDate.minute
                 }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span v-else-if="typeof timeArray[item.earn].dueDate == 'object'">
-                <template v-if="timeArray[item.earn].dueDate.day != '00'">
-                  {{ timeArray[item.earn].dueDate.day
+              <span
+                v-else-if="
+                  typeof timeArray[item.REWARD_NAME].dueDate == 'object'
+                "
+              >
+                <template
+                  v-if="timeArray[item.REWARD_NAME].dueDate.day != '00'"
+                >
+                  {{ timeArray[item.REWARD_NAME].dueDate.day
                   }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ timeArray[item.earn].dueDate.hour
+                  {{ timeArray[item.REWARD_NAME].dueDate.hour
                   }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template v-if="timeArray[item.earn].dueDate.day == '00'">
-                  {{ timeArray[item.earn].dueDate.minute
+                <template
+                  v-if="timeArray[item.REWARD_NAME].dueDate.day == '00'"
+                >
+                  {{ timeArray[item.REWARD_NAME].dueDate.minute
                   }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ timeArray[item.earn].dueDate }}
+                {{ timeArray[item.REWARD_NAME].dueDate }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
@@ -366,9 +396,9 @@
         </section>
         <section>
           <button
-            @click="StakeMiningH5(item.earn)"
+            @click="StakeMiningH5(item.REWARD_NAME)"
             :class="
-              activeMining == item.earn &&
+              activeMining == item.REWARD_NAME &&
               showActiveMining &&
               activeType == 'STAKE'
                 ? 'activeButton stakeMining'
@@ -383,9 +413,9 @@
             >{{ $t("Table.Compound") }}
           </button>
           <button
-            @click="ClaimMiningH5(item.earn)"
+            @click="ClaimMiningH5(item.REWARD_NAME)"
             :class="
-              activeMining == item.earn &&
+              activeMining == item.REWARD_NAME &&
               showActiveMining &&
               activeType == 'CLAIM'
                 ? 'activeButton claimMining'
@@ -504,11 +534,13 @@ import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
 import HelmetXburgerPool from "~/components/mining/helmet_xburger.vue";
+import POOL from "./pool.vue";
 import moment from "moment";
 
 export default {
   components: {
     Wraper,
+    POOL,
     HelmetHelmetPool,
     HelmetBnb1Pool,
     HelmetMdxPool,
@@ -605,6 +637,8 @@ export default {
       TradeType: "", //H5 tradingType
       claimLoading: false,
       HelmetBalance: 0,
+      activeData: {},
+      activeFlag: "",
     };
   },
   mounted() {
@@ -658,13 +692,13 @@ export default {
     },
   },
   methods: {
-    hadnleShowOnePager(e, onePager) {
-      if (e.target.tagName === "I" && onePager) {
-        let Earn = onePager;
+    hadnleShowOnePager(e, ONE_PAGER) {
+      if (e.target.tagName === "I" && ONE_PAGER) {
+        let Earn = ONE_PAGER;
         this.$bus.$emit("OPEN_ONEPAGER", {
           showFlag: true,
-          title: `What is $${onePager}?`,
-          text: onePager,
+          title: `What is $${ONE_PAGER}?`,
+          text: ONE_PAGER,
         });
       } else {
         return;
@@ -682,6 +716,13 @@ export default {
         number: this.HelmetBalance,
         pool: "HELMETPOOL",
       });
+    },
+    HandleClickAction(PoolData, Action, Flag = false) {
+      this.showActiveMining = true;
+      this.activeData = PoolData;
+      this.activeType = Action;
+      this.activeFlag = Flag;
+      this.activeMining = PoolData.TOKEN_NAME;
     },
     StakeMiningH5(MiningType) {
       this.activeType = "STAKE";
@@ -717,137 +758,161 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          miningName: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
-          earnNum: "two",
-          earn: "helmet_cake_v2",
-          earnImg: true,
-          dueDate: "Ongoing",
-          openDate: "Mining",
-          combo: true,
-          info: true,
+          POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_cake_v2",
+          REARD_IMGSHOW: true,
+          MING_TIME: "Ongoing",
+          OPEN_TIME: "Mining",
+          COMBO_FLAG: true,
           iio: true,
-          earnName: "APR",
-          onePager: false,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: "HELMET&nbsp;POOL",
-          earn: "helmet",
-          earnImg: true,
-          earnNum: "one",
-          dueDate: "Ongoing",
-          openDate: "Mining",
-          combo: false,
+          POOL_NAME: "HELMET&nbsp;POOL",
+          REARD_VOLUME: "one",
+          REWARD_NAME: "helmet",
+          REARD_IMGSHOW: true,
+          MING_TIME: "Ongoing",
+          OPEN_TIME: "Mining",
+          COMBO_FLAG: false,
           flash: false,
-          info: true,
-          earnName: "APY",
+          REWARD_TYPE: "APY",
           compound: true,
-          onePager: false,
+          ONE_PAGER: false,
         },
         {
-          miningName: "HELMET-BNB&nbsp;MLP",
-          earnNum: "two",
-          earn: "mdx",
-          earnImg: true,
-          dueDate: "Ongoing",
-          openDate: "Mining",
-          combo: false,
-          info: true,
-          earnName: "APR",
-          onePager: false,
+          POOL_NAME: "HELMET-BNB&nbsp;MLP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "mdx",
+          REARD_IMGSHOW: true,
+          MING_TIME: "Ongoing",
+          OPEN_TIME: "Mining",
+          COMBO_FLAG: false,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: "HELMET-BNB&nbsp;DLP",
-          earnNum: "two",
-          earn: "bhelmet_dodo",
-          earnImg: true,
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
+          POOL_NAME: "HELMET-BNB&nbsp;DLP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "bhelmet_dodo",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/05/10 12:00"),
+          MING_TIME: this.getRemainTime("2021/05/24 00:00"),
+          START_TIME: "2021/05/10 12:00 UTC+8",
+          END_TIME: "2021/05/24 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
-          earn: "bhelmet_xburger",
-          earnImg: true,
-          earnNum: "two",
-          combo: true,
+          POOL_NAME: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "bhelmet_xburger",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/05/02 12:00"),
+          MING_TIME: this.getRemainTime("2021/05/22 00:00"),
+          START_TIME: "2021/05/02 12:00 UTC+8",
+          END_TIME: "2021/05/22 00:00 UTC+8",
+          COMBO_FLAG: true,
           flash: false,
-          info: true,
-          earnName: "APR",
+          REWARD_TYPE: "APR",
           compound: false,
-          onePager: "hxBURGER",
+          ONE_PAGER: "hxBURGER",
         },
 
         {
-          miningName: "FEI(BSC)&nbsp;POOL",
-          earn: "QFEI",
-          earnImg: false,
-          earnNum: "one",
-          serial: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
+          POOL_NAME: "FEI(BSC)&nbsp;POOL",
+          REARD_VOLUME: "one",
+          REWARD_NAME: "QFEI",
+          REARD_IMGSHOW: false,
+          OPEN_TIME: this.getMiningTime("2021/04/10 00:00"),
+          MING_TIME: this.getRemainTime("2021/04/17 00:00"),
+          START_TIME: "2021/04/10 00:00 UTC+8",
+          END_TIME: "2021/04/17 00:00 UTC+8",
+          SERIAL_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: "<i>QFEI</i>-QSD&nbsp;DLP",
-          earn: "kun",
-          earnImg: true,
-          earnNum: "one",
-          serialNext: true,
-          info: true,
-          earnName: "APR",
-          onePager: "QFEI",
+          POOL_NAME: "<i>QFEI</i>-QSD&nbsp;DLP",
+          REARD_VOLUME: "one",
+          REWARD_NAME: "kun",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/04/12 00:00"),
+          MING_TIME: this.getRemainTime("2021/05/02 00:00"),
+          START_TIME: "2021/04/12 00:00 UTC+8",
+          END_TIME: "2021/05/02 00:00 UTC+8",
+          SERIAL_NEXT_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "QFEI",
         },
         {
-          miningName: "HELMET-KUN&nbsp;DLP",
-          earn: "QHELMET",
-          earnImg: false,
-          earnNum: "one",
-          serialNext: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
+          POOL_NAME: "HELMET-KUN&nbsp;DLP",
+          REARD_VOLUME: "one",
+          REWARD_NAME: "QHELMET",
+          REARD_IMGSHOW: false,
+          OPEN_TIME: this.getMiningTime("2021/04/21 00:00"),
+          MING_TIME: this.getRemainTime("2021/05/11 00:00"),
+          START_TIME: "2021/04/21 00:00 UTC+8",
+          END_TIME: "2021/05/10 00:00 UTC+8",
+          SERIAL_NEXT_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
-          earnNum: "two",
-          earn: "helmet_cake_v1",
-          earnImg: true,
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: false,
+          POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_cake_v1",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: "Mining",
+          MING_TIME: this.getRemainTime("2021/04/25 17:00"),
+          START_TIME: "",
+          END_TIME: "2021/04/25 17:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: false,
         },
         {
-          miningName: "HELMET-<i>hDODO</i>&nbsp;DLP",
-          earn: "helmet_dodo",
-          earnImg: true,
-          earnNum: "two",
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: "hDODO",
+          POOL_NAME: "HELMET-<i>hDODO</i>&nbsp;DLP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_dodo",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: "Mining",
+          MING_TIME: this.getRemainTime("2021/04/10 00:00"),
+          START_TIME: "",
+          END_TIME: "2021/04/10 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hDODO",
         },
 
         {
-          miningName: "HELMET-<i>hFOR</i>&nbsp;LP",
-          earn: "helmet_for",
-          earnImg: true,
-          earnNum: "two",
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: "hFOR",
+          POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_for",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: "Mining",
+          MING_TIME: this.getRemainTime("2021/03/20 00:00"),
+          START_TIME: "",
+          END_TIME: "2021/03/20 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hFOR",
         },
         {
-          miningName: "HELMET-<i>hBURGER</i>&nbsp;LP",
-          earn: "helmet_burger",
-          earnImg: true,
-          earnNum: "two",
-          combo: true,
-          info: true,
-          earnName: "APR",
-          onePager: "hBURGER",
+          POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_burger",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: "Mining",
+          MING_TIME: this.getRemainTime("2021/03/07 00:00"),
+          START_TIME: "",
+          END_TIME: "2021/03/07 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hBURGER",
         },
       ];
       this.miningList = arr;
@@ -1292,7 +1357,7 @@ export default {
 };
 </script>
 <style  lang='scss'>
-.onePager {
+.ONE_PAGER {
   display: flex;
   align-items: center;
   .v1_light,

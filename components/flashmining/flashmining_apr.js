@@ -15,6 +15,9 @@ export const GetPoolAPR = async ({
     REWARD_NAME,
     REWARD_DECIMALS,
 }) => {
+    if (MING_TIME == 'Finished') {
+        return '--';
+    }
     let TOEKNHELMET;
     let HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'; //helmet adress
     let HELMET_NAME = 'HELMET';
@@ -42,9 +45,6 @@ export const GetPoolAPR = async ({
     let NUMBERATOR = TOEKNHELMET * (TOTAL_REWARDS / MINING_DAY) * 365; // Numerator
     let DENOMINATOR = ((HELMETVALUE * 2) / STAKEVOLUME) * POOLVOLUME; // Denominator
     let APR = (NUMBERATOR / DENOMINATOR) * 100;
-    if (MING_TIME == 'Finished') {
-        return '--';
-    }
     if (OPEN_TIME == 'Mining') {
         return APR + '%';
     }

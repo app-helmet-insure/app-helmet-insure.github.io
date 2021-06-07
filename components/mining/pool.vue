@@ -1,5 +1,5 @@
 <template>
-  <div class="flash_pool">
+  <div class="mining_pool">
     <div
       class="deposit"
       v-if="!activeFlag || (activeFlag && activeType == 'STAKE')"
@@ -15,7 +15,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          LPT
+          DLP
         </p>
       </div>
       <div class="content">
@@ -24,21 +24,11 @@
             name="deposit"
             type="text"
             v-model="DepositeNum"
-            :style="
-              DepositeNum == balance.Deposite
-                ? 'border: 1px solid #fd7e14 !important'
-                : ''
-            "
+            :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
-          <span
-            @click="DepositeNum = balance.Deposite"
-            :style="
-              DepositeNum == balance.Deposite
-                ? 'background: rgba(255, 150, 0, 0.1);'
-                : ''
-            "
-            >{{ $t("Table.Max") }}</span
-          >
+          <span @click="DepositeNum = balance.Deposite">{{
+            $t("Insurance.Insurance_text18")
+          }}</span>
         </div>
       </div>
       <div class="button">
@@ -46,13 +36,11 @@
           @click="toDeposite"
           :class="
             (stakeLoading ? 'disable b_button' : 'b_button',
-            this.activeData.MING_TIME == 'Finished'
-              ? 'disable_button b_button'
-              : 'b_button')
+            expired ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
-          >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.ConfirmDeposit") }}
+          >{{ $t("Table.ConfirmDeposit") }}
         </button>
         <p>
           <span>{{ $t("Table.MyDeposits") }}</span>
@@ -62,10 +50,10 @@
               :startVal="Number(0)"
               :endVal="Number(balance.Withdraw)"
               :duration="2000"
-              :decimals="8"
+              :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;DLP</span
           >
         </p>
         <p>
@@ -76,44 +64,43 @@
               :startVal="Number(0)"
               :endVal="Number(balance.TotalLPT)"
               :duration="2000"
-              :decimals="8"
+              :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;LPT</span
+            &nbsp;DLP</span
           >
         </p>
-        <p>
-          <span>{{ $t("Table.MyPoolShare") }}：</span>
-          <span> {{ isLogin ? balance.Share : "--" }} %</span>
-        </p>
+
+        <section>
+          <p>
+            <span>{{ $t("Table.MyPoolShare") }}：</span>
+            <span> {{ isLogin ? balance.Share : "--" }} %</span>
+          </p>
+          <a
+            href="https://app.dodoex.io/liquidity?poolAddress=0xd7eed218538b3fa3e20d24f43100790f0d03538a"
+            target="_blank"
+            >From <i class="dodo"></i>Get HELMET-KUN DLP</a
+          >
+        </section>
       </div>
-      <a
-        :href="`https://exchange.pancakeswap.finance/#/add/${activeData.ONELPT_ADDRESS}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
-        target="_blank"
-        >From <i class="pancake"></i>Get {{ activeData.TOKEN_NAME }}-HELMET
-        LPT</a
-      >
       <div class="ContractAddress">
-        <span
-          >{{ activeData.TOKEN_NAME }} {{ $t("Table.ContractAddress") }}</span
-        >
+        <span>KUN {{ $t("Table.ContractAddress") }}</span>
         <p>
-          {{ activeData.ONELPT_ADDRESS.toLowerCase() }}
+          0x1a2fb0af670d0234c2857fad35b789f8cb725584
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.ONELPT_ADDRESS)"
+            @click="
+              copyAdress($event, '0x1a2fb0af670d0234c2857fad35b789f8cb725584')
+            "
           ></i>
         </p>
       </div>
       <div class="addToken">
-        <p @click="addTokenFn('HTPT', 'hTPT', 4)">
-          Add {{ activeData.TOKEN_NAME }} to MetaMask
-        </p>
+        <p @click="addTokenFn('KUN')">Add KUN to MetaMask</p>
         <i></i>
       </div>
     </div>
-    <i></i>
     <div
       class="withdraw"
       v-if="!activeFlag || (activeFlag && activeType == 'CLAIM')"
@@ -129,7 +116,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          LPT
+          DLP
         </p>
       </div>
       <div class="content">
@@ -139,13 +126,11 @@
             type="text"
             v-model="balance.Withdraw"
             disabled
-            style="border: 1px solid #fd7e14 !important"
+            :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <span
-            @click="WithdrawNum = balance.Withdraw"
-            style="border: 1px solid #fd7e14"
-            >{{ $t("Table.Max") }}</span
-          >
+          <span @click="WithdrawNum = balance.Withdraw">{{
+            $t("Insurance.Insurance_text18")
+          }}</span>
         </div>
       </div>
       <div class="button">
@@ -158,31 +143,27 @@
           {{ $t("Table.ClaimRewards") }}
         </button>
         <p>
-          <span>
-            {{ activeData.REWARD_NAME }}
+          <span
+            ><i @click="hadnleShowOnePager($event, 'QHELMET')">QHELMET</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
-            <span>
-              <countTo
-                v-if="isLogin"
-                :startVal="Number(0)"
-                :endVal="Number(balance.hCTK)"
-                :duration="2000"
-                :decimals="8"
-              />
-              <span v-else>--</span>
-              {{ activeData.REWARD_NAME }}</span
-            >
-          </span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Helmet)"
+              :duration="2000"
+              :decimals="8"
+            />
+            <span v-else>--</span>
+            QHELMET</span
+          >
         </p>
         <button
           @click="toClaim"
           :class="
             (claimLoading ? 'disable o_button' : 'o_button',
-            this.activeData.MING_TIME == 'Finished'
-              ? 'disable_button o_button'
-              : 'o_button')
+            expired ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
@@ -190,22 +171,20 @@
         </button>
       </div>
       <div class="ContractAddress">
-        <span
-          >{{ activeData.REWARD_NAME }} {{ $t("Table.ContractAddress") }}</span
-        >
+        <span>QHELMET {{ $t("Table.ContractAddress") }}</span>
         <p>
-          {{ activeData.REWARD_ADDRESS.toLowerCase() }}
+          0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.REWARD_ADDRESS)"
+            @click="
+              copyAdress($event, '0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99')
+            "
           ></i>
         </p>
       </div>
       <div class="addToken">
-        <p @click="addTokenFn('HXBURGER', 'hxBurger')">
-          Add hxBURGER to MetaMask
-        </p>
+        <p @click="addTokenFn('QHELMET', 'QHelmet')">Add QHELMET to MetaMask</p>
         <i></i>
       </div>
     </div>
@@ -214,17 +193,19 @@
 
 <script>
 import {
-  BalanceOf,
-  TotalSupply,
-  Earned,
-  Allowance,
-} from "~/interface/read_contract.js";
-import { Stake, GetReward, Approve, Exit } from "~/interface/write_contract.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+  totalSupply,
+  getLPTOKEN,
+  CangetPAYA,
+  getPAYA,
+  exitStake,
+  getBalance,
+  toDeposite,
+} from "~/interface/deposite";
+import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import { getAddress, getContract } from "~/assets/utils/address-pool.js";
+import { getAddress } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeData", "activeFlag", "activeType"],
@@ -233,11 +214,36 @@ export default {
   },
   data() {
     return {
+      list: {
+        name: "HELMET-hDODO DLP",
+        dueDate: "2021/05/10 00:00",
+        DownTime: {
+          day: "00",
+          hour: "00",
+          minute: "00",
+          second: "00",
+        },
+      },
+      textList: [
+        {
+          text: this.$t("Table.RewardsDistribution") + `（weekly）`,
+          num: 0,
+          color: "#00B900",
+          unit: "",
+          num1: 0,
+        },
+        {
+          text: this.$t("Table.PoolAPR"),
+          num: 0,
+          color: "#00B900",
+          unit: "",
+        },
+      ],
       balance: {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
-        hCTK: 0,
+        Cake: 0,
         TotalLPT: 0,
         Share: 0,
       },
@@ -246,14 +252,38 @@ export default {
       stakeLoading: false,
       claimLoading: false,
       exitLoading: false,
-      fixD,
+      helmetPrice: 0,
+      MingTime: "",
       isLogin: false,
-      ApproveFlag: false,
+      expired: false,
     };
   },
   mounted() {
+    if (!this.expired) {
+      let timer = setInterval(() => {
+        this.getDownTime();
+      }, 1000);
+      this.$once("hook:beforeDestroy", () => {
+        clearInterval(timer);
+      });
+    }
+    this.$bus.$on("DEPOSITE_LOADING_QHELMETPOOL", (data) => {
+      this.stakeLoading = data.status;
+      this.DepositeNum = "";
+    });
+    this.$bus.$on("CLAIM_LOADING_QHELMETPOOL", (data) => {
+      this.claimLoading = false;
+    });
+    this.$bus.$on("EXIT_LOADING_QHELMETPOOL", (data) => {
+      this.exitLoading = false;
+    });
+    this.$bus.$on("RELOAD_DATA_QHELMETPOOL", () => {
+      this.getBalance();
+    });
+    this.$bus.$on("REFRESH_MINING", (data) => {
+      this.getBalance();
+    });
     this.getBalance();
-    this.NeedApprove();
   },
   watch: {
     userInfo: {
@@ -261,10 +291,7 @@ export default {
       immediate: true,
     },
     activeData(newValue) {
-      if (newValue) {
-        this.getBalance();
-        this.NeedApprove();
-      }
+      console.log(newValue);
     },
   },
   computed: {
@@ -278,19 +305,59 @@ export default {
   methods: {
     async addTokenFn(token, tokenName, unit) {
       let tokenAddress = getAddress(token);
-      let tokenAddress1 = getContract(token);
       let data = {
-        tokenAddress: tokenAddress || tokenAddress1,
+        tokenAddress: tokenAddress,
         tokenSymbol: tokenName || token,
         tokenDecimals: unit || 18,
         tokenImage: "",
       };
       await addToken(data);
     },
+    hadnleShowOnePager(e, onePager) {
+      if (e.target.tagName === "I" && onePager) {
+        let Earn = onePager;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${onePager}?`,
+          text: onePager,
+        });
+      } else {
+        return;
+      }
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
+    },
+    getDownTime() {
+      let now = new Date() * 1;
+      let dueDate = this.list.dueDate;
+      dueDate = new Date(dueDate);
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+        };
+      } else {
+        template = {
+          day: "00",
+          hour: "00",
+        };
+        this.expired = true;
+      }
+      this.list.DownTime = template;
     },
     copyAdress(e, text) {
       let _this = this;
@@ -310,80 +377,44 @@ export default {
       });
     },
     async getBalance() {
+      let helmetType = "QHELMETPOOL_LPT";
+      let type = "QHELMETPOOL";
       // 可抵押数量
-      let Deposite = await BalanceOf(
-        this.activeData.STAKE_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
+      let Deposite = await getBalance(helmetType);
       // 可赎回数量
-      let Withdraw = await BalanceOf(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
+      let Withdraw = await getLPTOKEN(type);
       // 总抵押
-      let TotalLPT = await TotalSupply(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
+      let TotalLPT = await totalSupply(type);
       // 可领取Helmet
-      let Helmet = await Earned(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.REWARD_DECIMALS
-      );
+      let Helmet = await CangetPAYA(type);
+      console.log(Deposite);
+      // 赋值
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
-      this.balance.hCTK = Helmet;
+      this.balance.Helmet = Helmet;
       this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
     },
     // 抵押
-    async toDeposite() {
+    toDeposite() {
       if (!this.DepositeNum) {
         return;
       }
       if (this.stakeLoading) {
         return;
       }
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      let StakeAddress = this.activeData.STAKE_ADDRESS;
-      let TokenSymbol = this.activeData.TOKEN_NAME;
-      let DepositeVolume = this.DepositeNum;
-      let Decimals = this.activeData.STAKE_DECIMALS;
       this.stakeLoading = true;
-      if (this.ApproveFlag) {
-        await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
-          if (res == "success") {
-            this.NeedApprove();
-            this.stakeLoading = false;
-          }
-        });
-      } else {
-        await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
-          if (res == "success" || res == "error") {
-            this.getBalance();
-            this.stakeLoading = false;
-          }
-        });
-      }
+      let type = "QHELMETPOOL";
+      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
     },
-    async NeedApprove() {
-      let SpenderAddress = this.activeData.POOL_ADDRESS;
-      let TokenAddress = this.activeData.STAKE_ADDRESS;
-      let flag = await Allowance(TokenAddress, SpenderAddress);
-      this.ApproveFlag = flag;
-    },
+    // 结算Paya
     async toClaim() {
       if (this.claimLoading) {
         return;
       }
       this.claimLoading = true;
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      await GetReward(ContractAddress, (res) => {
-        if (res == "success" || res == "error") {
-          this.getBalance();
-          this.claimLoading = false;
-        }
-      });
+      let type = "QHELMETPOOL";
+      let res = await getPAYA(type);
     },
     // 退出
     async toExit() {
@@ -391,17 +422,12 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      await Exit(ContractAddress, (res) => {
-        if (res == "success" || res == "error") {
-          this.getBalance();
-          this.exitLoading = false;
-        }
-      });
+      let type = "QHELMETPOOL";
+      let res = await exitStake(type);
     },
   },
 };
 </script>
-<style lang="scss" soped>
-@import "../../assets/css/flash_pool.scss";
+<style lang='scss'scoped>
+@import "../../assets/css/mining_pool.scss";
 </style>

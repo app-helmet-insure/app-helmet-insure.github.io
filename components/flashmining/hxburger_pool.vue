@@ -186,6 +186,12 @@
           ></i>
         </p>
       </div>
+      <div class="addToken">
+        <p @click="addTokenFn('HXBURGER', 'hxBurger')">
+          Add hxBURGER to MetaMask
+        </p>
+        <i></i>
+      </div>
     </div>
   </div>
 </template>

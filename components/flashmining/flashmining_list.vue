@@ -809,7 +809,9 @@ export default {
 .onePager {
   > i {
     cursor: pointer;
-    border-bottom: 2px dotted rgba(23, 23, 58, 0.45);
+    @include themeify {
+      border-bottom: 2px dotted themed("color-17173a");
+    }
     &:hover {
       color: #fd7e14;
       border-bottom: 2px dotted #fd7e14;

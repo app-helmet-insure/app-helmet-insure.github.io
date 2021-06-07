@@ -1005,7 +1005,7 @@ export default {
         ) * 100;
       let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
       let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 1693.44;
+      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 677.38;
       let supplyVolume1 = await balanceOf(
         "HELMETMDXPOOL_LPT",
         "0xc48fe252aa631017df253578b1405ea399728a50",

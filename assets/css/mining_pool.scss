@@ -176,43 +176,47 @@
             }
             .button {
                 section {
-                    a {
-                        margin-top: 4px;
-                        font-size: 14px;
-                        font-weight: 500;
-                        color: #fd7e14;
-                        line-height: 20px;
-                        display: flex;
-                        align-items: center;
-                        i {
-                            display: block;
-                            width: 20px;
-                            height: 20px;
-                            background-repeat: no-repeat;
-                            background-size: 100% 100%;
-                            margin: 0 2px;
+                    div {
+                        > .jump_text {
+                            a {
+                                margin-top: 4px;
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: #fd7e14;
+                                line-height: 20px;
+                                display: flex;
+                                align-items: center;
+                                i {
+                                    display: block;
+                                    width: 20px;
+                                    height: 20px;
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
+                                    margin: 0 2px;
+                                }
+                                .pancake {
+                                    background-image: url('../../assets/img/icon/pancake@2x.png');
+                                }
+                                .dodo {
+                                    background-image: url('../../assets/img/icon/dodo@2x.png');
+                                }
+                                .chainswap {
+                                    background-image: url('../../assets/img/icon/chainswap@2x.png');
+                                }
+                                .qian {
+                                    background-image: url('../../assets/img/icon/qian@2x.png');
+                                }
+                                .mdx {
+                                    background-image: url('../../assets/img/icon/mdx@2x.png');
+                                }
+                                .burger {
+                                    background-image: url('../../assets/img/icon/burgerswap@2x.png');
+                                }
+                            }
+                            .H5_link {
+                                display: none;
+                            }
                         }
-                        .pancake {
-                            background-image: url('../../assets/img/icon/pancake@2x.png');
-                        }
-                        .dodo {
-                            background-image: url('../../assets/img/icon/dodo@2x.png');
-                        }
-                        .chainswap {
-                            background-image: url('../../assets/img/icon/chainswap@2x.png');
-                        }
-                        .qian {
-                            background-image: url('../../assets/img/icon/qian@2x.png');
-                        }
-                        .mdx {
-                            background-image: url('../../assets/img/icon/mdx@2x.png');
-                        }
-                        .burger {
-                            background-image: url('../../assets/img/icon/burgerswap@2x.png');
-                        }
-                    }
-                    .H5_link {
-                        display: none;
                     }
                 }
             }
@@ -378,43 +382,47 @@
             }
             .button {
                 section {
-                    a {
-                        margin-top: 8px;
-                        font-size: 14px;
-                        font-weight: 500;
-                        color: #fd7e14;
-                        line-height: 20px;
-                        display: flex;
-                        align-items: center;
-                        i {
-                            display: block;
-                            width: 20px;
-                            height: 20px;
-                            background-repeat: no-repeat;
-                            background-size: 100% 100%;
-                            margin: 0 2px;
+                    div {
+                        .jump_text {
+                            a {
+                                margin-top: 8px;
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: #fd7e14;
+                                line-height: 20px;
+                                display: flex;
+                                align-items: center;
+                                i {
+                                    display: block;
+                                    width: 20px;
+                                    height: 20px;
+                                    background-repeat: no-repeat;
+                                    background-size: 100% 100%;
+                                    margin: 0 2px;
+                                }
+                                .pancake {
+                                    background-image: url('../../assets/img/icon/pancake@2x.png');
+                                }
+                                .dodo {
+                                    background-image: url('../../assets/img/icon/dodo@2x.png');
+                                }
+                                .chainswap {
+                                    background-image: url('../../assets/img/icon/chainswap@2x.png');
+                                }
+                                .qian {
+                                    background-image: url('../../assets/img/icon/qian@2x.png');
+                                }
+                                .mdx {
+                                    background-image: url('../../assets/img/icon/mdx@2x.png');
+                                }
+                                .burger {
+                                    background-image: url('../../assets/img/icon/burgerswap@2x.png');
+                                }
+                            }
+                            .PC_link {
+                                display: none !important;
+                            }
                         }
-                        .pancake {
-                            background-image: url('../../assets/img/icon/pancake@2x.png');
-                        }
-                        .dodo {
-                            background-image: url('../../assets/img/icon/dodo@2x.png');
-                        }
-                        .chainswap {
-                            background-image: url('../../assets/img/icon/chainswap@2x.png');
-                        }
-                        .qian {
-                            background-image: url('../../assets/img/icon/qian@2x.png');
-                        }
-                        .mdx {
-                            background-image: url('../../assets/img/icon/mdx@2x.png');
-                        }
-                        .burger {
-                            background-image: url('../../assets/img/icon/burgerswap@2x.png');
-                        }
-                    }
-                    .PC_link {
-                        display: none !important;
                     }
                 }
             }

@@ -304,9 +304,6 @@ export default {
       this.activeFlag = Flag;
       this.activeFlash = PoolData.TOKEN_NAME;
     },
-    close_wraper() {
-      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
-    },
     apyArrayWatch(newValue) {
       if (newValue) {
         this.initFlashMiningData();

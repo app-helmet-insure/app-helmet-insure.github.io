@@ -3,11 +3,6 @@
     <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
-    <POOL
-      :activeData="activeData"
-      :activeFlag="activeFlag"
-      :activeType="activeType"
-    />
     <div v-for="item in miningList" :key="item.REWARD_NAME">
       <div
         :class="['finshed_line', 'finshed_pc']"
@@ -169,7 +164,7 @@
               <i class="selectDown"></i>
             </button>
             <button
-              @click="ClaimMining(item.REWARD_NAME)"
+              @click="HandleClickAction(item, 'CLAIM')"
               :class="
                 activeMining == item.REWARD_NAME &&
                 showActiveMining &&
@@ -194,65 +189,10 @@
           >
             <use xlink:href="#icon-close"></use>
           </svg>
-          <HelmetBnbPool
-            v-if="activeMining == 'helmet_cake_v1' && showActiveMining"
+          <POOL
+            :activeData="activeData"
+            :activeFlag="activeFlag"
             :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetBnb1Pool
-            v-if="activeMining == 'helmet_cake_v2' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetMdxPool
-            v-if="activeMining == 'mdx' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <BhelmetDodoPool
-            v-if="activeMining == 'bhelmet_dodo' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetDodoPool
-            v-if="activeMining == 'helmet_dodo' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <FeiFeiPool
-            v-if="activeMining == 'QFEI' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <QfeiQsdPool
-            v-if="activeMining == 'kun' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetKunPool
-            v-if="activeMining == 'QHELMET' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetHelmetPool
-            v-if="activeMining == 'helmet' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetForPool
-            v-if="activeMining == 'helmet_for' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetBurgerPool
-            v-if="activeMining == 'helmet_burger' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
-          />
-          <HelmetXburgerPool
-            v-if="activeMining == 'bhelmet_xburger' && showActiveMining"
-            :activeType="activeType"
-            :TradeType="'ALL'"
           />
         </div>
       </div>
@@ -396,7 +336,7 @@
         </section>
         <section>
           <button
-            @click="StakeMiningH5(item.REWARD_NAME)"
+            @click="HandleClickAction(item, 'STAKE', true)"
             :class="
               activeMining == item.REWARD_NAME &&
               showActiveMining &&
@@ -413,7 +353,7 @@
             >{{ $t("Table.Compound") }}
           </button>
           <button
-            @click="ClaimMiningH5(item.REWARD_NAME)"
+            @click="HandleClickAction(item, 'CLAIM', true)"
             :class="
               activeMining == item.REWARD_NAME &&
               showActiveMining &&
@@ -427,82 +367,35 @@
           </button>
         </section>
       </div>
-    </div>
-    <div class="h5_wrap">
-      <Wraper>
-        <div class="wraper_title">
-          <h3>
-            {{
-              activeType == "STAKE"
-                ? $t("Insurance.Insurance_text23")
-                : $t("Table.Claim")
-            }}
-          </h3>
-          <svg class="icon close" aria-hidden="true" @click="close_wraper">
-            <use xlink:href="#icon-close"></use>
-          </svg>
+      <div
+        class="wraper_title"
+        v-if="showActiveMining && activeMining == item.REWARD_NAME"
+      >
+        <PHeader></PHeader>
+        <div class="wraper">
+          <div class="wraper_header">
+            <h3 class="">
+              {{
+                activeType == "STAKE"
+                  ? $t("Insurance.Insurance_text23")
+                  : $t("Table.Claim")
+              }}
+            </h3>
+            <svg
+              class="close"
+              aria-hidden="true"
+              @click="showActiveMining = false"
+            >
+              <use xlink:href="#icon-close"></use>
+            </svg>
+          </div>
+          <POOL
+            :activeData="activeData"
+            :activeFlag="activeFlag"
+            :activeType="activeType"
+          />
         </div>
-        <HelmetBnbPool
-          v-if="activeMining == 'helmet_cake_v1'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetBnb1Pool
-          v-if="activeMining == 'helmet_cake_v2'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetMdxPool
-          v-if="activeMining == 'mdx'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <BhelmetDodoPool
-          v-if="activeMining == 'bhelmet_dodo'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetXburgerPool
-          v-if="activeMining == 'bhelmet_xburger'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetDodoPool
-          v-if="activeMining == 'helmet_dodo'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <FeiFeiPool
-          v-if="activeMining == 'QFEI'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <QfeiQsdPool
-          v-if="activeMining == 'kun'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetKunPool
-          v-if="activeMining == 'QHELMET'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetHelmetPool
-          v-if="activeMining == 'helmet'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetForPool
-          v-if="activeMining == 'helmet_for'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-        <HelmetBurgerPool
-          v-if="activeMining == 'helmet_burger'"
-          :activeType="activeType"
-          :TradeType="activeType"
-        />
-      </Wraper>
+      </div>
     </div>
   </div>
 </template>
@@ -522,37 +415,15 @@ import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { burgerswaptoken } from "~/assets/utils/burgerswap.js";
 import { dodoswap } from "~/assets/utils/dodoswap.js";
 import { fixD } from "~/assets/js/util.js";
-import HelmetBnbPool from "~/components/mining/helmet_bnb_pool.vue";
-import HelmetBnb1Pool from "~/components/mining/helmet_bnb1_pool.vue";
-import HelmetMdxPool from "~/components/mining/helmet_mdx_pool.vue";
-import BhelmetDodoPool from "~/components/mining/bhelmet_dodo_pool.vue";
-import HelmetForPool from "~/components/mining/helmet_for_pool.vue";
-import HelmetKunPool from "~/components/mining/helmet_kun_pool.vue";
-import FeiFeiPool from "~/components/mining/fei_fei_pool.vue";
-import QfeiQsdPool from "~/components/mining/qfei_qsd_pool.vue";
-import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
-import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
-import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
-import HelmetXburgerPool from "~/components/mining/helmet_xburger.vue";
 import POOL from "./pool.vue";
 import moment from "moment";
+import PHeader from "~/components/common/header.vue";
 
 export default {
   components: {
     Wraper,
     POOL,
-    HelmetHelmetPool,
-    HelmetBnb1Pool,
-    HelmetMdxPool,
-    BhelmetDodoPool,
-    HelmetKunPool,
-    FeiFeiPool,
-    QfeiQsdPool,
-    HelmetBurgerPool,
-    HelmetForPool,
-    HelmetBnbPool,
-    HelmetDodoPool,
-    HelmetXburgerPool,
+    PHeader,
   },
   data() {
     return {
@@ -642,9 +513,6 @@ export default {
     };
   },
   mounted() {
-    this.$bus.$on("CLAIM_LOADING_HELMETPOOL", (data) => {
-      this.claimLoading = false;
-    });
     this.initMiningData();
     this.getAPY();
     this.getHelmetBalance();
@@ -722,32 +590,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeMining = PoolData.TOKEN_NAME;
-    },
-    StakeMiningH5(MiningType) {
-      this.activeType = "STAKE";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    ClaimMiningH5(MiningType) {
-      this.activeType = "CLAIM";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    StakeMining(MiningType) {
-      this.activeType = "STAKE";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
-    },
-    ClaimMining(MiningType) {
-      this.activeType = "CLAIM";
-      this.showActiveMining = true;
-      this.activeMining = MiningType;
-    },
-    close_wraper() {
-      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
+      this.activeMining = PoolData.REWARD_NAME;
     },
     async getHelmetBalance() {
       let type = "HELMETPOOL";
@@ -769,16 +612,17 @@ export default {
           iio: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "CAKE",
           PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
           POOL_ADDRESS: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
           STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
-          ONELPT_ADDRESS: "",
-          REWARD_ADDRESS: "",
           STAKE_DECIMALS: 18,
-          REWARD_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
-          TOTAL_REWARDS: 20000,
-          MINING_DAY: 20,
+          JUMP1_TEXT:
+            "<a href=https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
         },
         {
           POOL_NAME: "HELMET&nbsp;POOL",
@@ -793,6 +637,14 @@ export default {
           REWARD_TYPE: "APY",
           compound: true,
           ONE_PAGER: false,
+          LEFT_ADDRESS: "",
+          REWARD1_SYMBOL: "HELMET",
+          POOL_ADDRESS: "0x279a073c491c873df040b05cc846a3c47252b52c",
+          STAKE_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;MLP",
@@ -805,6 +657,21 @@ export default {
           COMBO_FLAG: false,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD2_SYMBOL: "MDX",
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "MDX",
+            ADDTOKEN_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHT_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B",
+          STAKE_ADDRESS: "0x83d8E2E030cD820dfdD94723c3bcf2BC52e1701A",
+          STAKE_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "MDEX",
+          JUMP1_TEXT:
+            "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;DLP",
@@ -819,6 +686,28 @@ export default {
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD1_SYMBOL: "BHELMET",
+          REWARD2_SYMBOL: "DODO",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "BHELMET",
+            ADDTOKEN_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "DODO",
+            ADDTOKEN_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHT_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          PROXY_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
+          POOL_ADDRESS: "0x14b5E6158864a2F5E04C52F1858185b64aEddAf6",
+          STAKE_ADDRESS: "0x9CE69450FDCc3b6058F7c430ef0A8C051b2300c6",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "DODO",
+          JUMP1_TEXT:
+            "<a href=https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234' target='_blank'>From <i class='dodo'></i>Get HELMET-BNB DLP</a>",
         },
         {
           POOL_NAME: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
@@ -835,6 +724,29 @@ export default {
           REWARD_TYPE: "APR",
           compound: false,
           ONE_PAGER: "hxBURGER",
+          REWARD1_SYMBOL: "BHELMET",
+          REWARD2_SYMBOL: "xBURGER",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hxBURGER",
+            ADDTOKEN_ADDRESS: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "xBURGER",
+            ADDTOKEN_ADDRESS: "0xAFE24E29Da7E9b3e8a25c9478376B6AD6AD788dD",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
+          RIGHT_ADDRESS: "0xAFE24E29Da7E9b3e8a25c9478376B6AD6AD788dD",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0xD23B7cD539f7FB4f27EbEDEB2c56a791639C38Fb",
+          STAKE_ADDRESS: "0xCf8F78E34135168230969124CF56A37Ae5e8bD4D",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "BURGER",
+          JUMP1_TEXT:
+            "<a href='https://burgerswap.org/trade/pool?from=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8&to=0xCa7597633927A98B800738eD5CD2933a74a80e8c' target='_blank' >From <i class='burger'></i>Get HELMET-hxBURGER BLP</a>",
         },
 
         {
@@ -850,6 +762,27 @@ export default {
           SERIAL_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD1_SYMBOL: "QFEI",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "FEI",
+            ADDTOKEN_ADDRESS: "0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "QFEI",
+            ADDTOKEN_ADDRESS: "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31",
+          RIGHT_ADDRESS: "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0xf1569d9b3aeCA99a2774Ac66731b707C1249642A",
+          STAKE_ADDRESS: "0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          SWAP_TYPE: "DODO",
+          JUMP1_TEXT:
+            "<a href='https://www.chainswap.exchange/' target='_blank'>Swap FEI(ETH) to BSC By <i class='chainswap'></i> ChainSwap</a>",
         },
         {
           POOL_NAME: "<i>QFEI</i>-QSD&nbsp;DLP",
@@ -864,6 +797,29 @@ export default {
           SERIAL_NEXT_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: "QFEI",
+          REWARD1_SYMBOL: "KUN",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "QSD",
+            ADDTOKEN_ADDRESS: "0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "KUN",
+            ADDTOKEN_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2",
+          RIGHT_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0x10ebD347A44a40BEE9BDFb0E4c809F82f3d4C2f9",
+          STAKE_ADDRESS: "0x14616328f4Ce3082187B4f1Ee4863DA5516B178A",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          SWAP_TYPE: "DODO",
+          JUMP1_TEXT:
+            "<a href='https://app.dodoex.io/liquidity?poolAddress=0x14616328f4Ce3082187B4f1Ee4863DA5516B178A' target='_blank' >From <i class='dodo'></i>Get QFEI-QSD DLP</a>",
+          JUMP2_TEXT:
+            " <a href='https://bsc.qian.finance/chemix/' target='_blank'>&nbsp;Or From <i class='qian'></i> Mint QSD</a>",
         },
         {
           POOL_NAME: "HELMET-KUN&nbsp;DLP",
@@ -878,6 +834,27 @@ export default {
           SERIAL_NEXT_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD1_SYMBOL: "QHELMET",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "KUN",
+            ADDTOKEN_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "QHELMET",
+            ADDTOKEN_ADDRESS: "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
+          RIGHT_ADDRESS: "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0x76c415ececd88f76d6e6b5401a82b5ba075819f4",
+          STAKE_ADDRESS: "0xd7eed218538b3fa3e20d24f43100790f0d03538a",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          SWAP_TYPE: "DODO",
+          JUMP1_TEXT:
+            "<a href='https://app.dodoex.io/liquidity?poolAddress=0xd7eed218538b3fa3e20d24f43100790f0d03538a' target='_blank' >From <i class='dodo'></i>Get HELMET-KUN DLP</a>",
         },
         {
           POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
@@ -892,6 +869,27 @@ export default {
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "CAKE",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "Cake-LP",
+            ADDTOKEN_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "HELMET",
+            ADDTOKEN_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
+          POOL_ADDRESS: "0xb22425206D40605E9bE5a5460786DBaB5aBA9485",
+          STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV1",
+          JUMP1_TEXT:
+            "<a href='https://v1exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-BNB LPT(V1 Old)</a>",
         },
         {
           POOL_NAME: "HELMET-<i>hDODO</i>&nbsp;DLP",
@@ -906,8 +904,30 @@ export default {
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: "hDODO",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "DODO",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hDODO",
+            ADDTOKEN_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "DODO",
+            ADDTOKEN_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+          RIGHT_ADDRESS: "",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0x041C1BF8E085e4987404b88441599EE6d1bCD684",
+          STAKE_ADDRESS: "0x7F6ea24c10E32C8a5fd1c9b2C1239340671460cC",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "DODO",
+          JUMP1_TEXT:
+            "<a href='https://app.dodoex.io/liquidity?poolAddress=0x7f6ea24c10e32c8a5fd1c9b2c1239340671460cc' target='_blank' >From <i class='dodo'></i>Get HELMET-hDODO DLP</a>",
         },
-
         {
           POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LP",
           STAKE_SYMBOL: "HELMET-hFOR LP",
@@ -921,6 +941,29 @@ export default {
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: "hFOR",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "FOR",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "HFOR",
+            ADDTOKEN_ADDRESS: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "FOR",
+            ADDTOKEN_ADDRESS: "0x658a109c5900bc6d2357c87549b651670e5b0539",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
+          RIGHT_ADDRESS: "",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0x2295876146ED2A4C8c391ca09dFD9b42329D22a9",
+          STAKE_ADDRESS: "0xc3f103b7f36690c70b4a682c760fe3b8951cefd1",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV1",
+          JUMP1_TEXT:
+            "<a href='https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-hFOR LPT</a>",
         },
         {
           POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LP",
@@ -935,6 +978,29 @@ export default {
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: "hBURGER",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "BURGER",
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hBURGER",
+            ADDTOKEN_ADDRESS: "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "BURGER",
+            ADDTOKEN_ADDRESS: "0xAe9269f27437f0fcBC232d39Ec814844a51d6b8f",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          LEFT_ADDRESS: "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa",
+          RIGHT_ADDRESS: "",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0x9216508886fEA6bF9334a59F9C90411fc6c400e5",
+          STAKE_ADDRESS: "0x7a0068a1896F82D8F47086E3f2CE3CcEA75d5493",
+          STAKE_DECIMALS: 18,
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV1",
+          JUMP1_TEXT:
+            "<a href='https://burgerswap.org/trade/pool?from=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8&to=0xCa7597633927A98B800738eD5CD2933a74a80e8c' target='_blank' >From <i class='burger'></i>Get HELMET-hxBURGER BLP</a>",
         },
       ];
       this.miningList = arr;
@@ -981,7 +1047,6 @@ export default {
         precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
         precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
-      console.log(cakeapy, helmetapy);
       let APY = (cakeapy + helmetapy) * 100;
 
       this.apyArray.helmet_cake_v2 = fixD(APY, 2);
@@ -1498,11 +1563,6 @@ export default {
     display: flex;
     flex-direction: column;
     position: relative;
-    .activeMining {
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
-    }
     .combo_img {
       position: absolute;
       width: 156px;
@@ -1769,20 +1829,6 @@ export default {
   .mining_title {
     display: none;
   }
-  .wraper_title {
-    height: 44px;
-    line-height: 44px;
-    padding: 0 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .close {
-      width: 24px;
-      height: 24px;
-      fill: #ccc;
-      cursor: pointer;
-    }
-  }
   .mining_item_h5 {
     width: 100%;
     padding: 24px 10px;
@@ -1794,11 +1840,6 @@ export default {
     margin-bottom: 10px;
     border-radius: 5px;
     position: relative;
-    .activeMining {
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
-    }
     .combo_img {
       position: absolute;
       width: 156px;
@@ -1973,6 +2014,32 @@ export default {
           justify-content: center;
           box-sizing: border-box;
         }
+      }
+    }
+  }
+  .wraper_title {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: #f8f9fa;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    .wraper {
+      flex: 1;
+      overflow-y: scroll;
+      .wraper_header {
+        height: 44px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .close {
+        width: 24px;
+        height: 24px;
+        fill: #ccc;
+        cursor: pointer;
       }
     }
   }

@@ -96,6 +96,43 @@ export const GetReward = async (ContractAddress, callback) => {
             });
     } catch (error) {}
 };
+export const GetDoubleReward = async (ContractAddress, callback) => {
+    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    let Account = await getAccounts();
+    try {
+        Contracts.methods
+            .getDoubleReward()
+            .send({ from: Account })
+            .on('transactionHash', (hash) => {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+                });
+            })
+            .on('receipt', (receipt) => {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Transation submitted',
+                    layout: 'layout2',
+                    buttonText: 'Confirm',
+                    conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                    button: true,
+                    buttonText: 'Confirm',
+                    showDialog: false,
+                });
+                callback('success');
+            })
+            .on('error', (error) => {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                callback('error');
+            });
+    } catch (error) {}
+};
 export const Exit = async (ContractAddress, callback) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();

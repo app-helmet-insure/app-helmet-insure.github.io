@@ -15,7 +15,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          DLP
+          {{ getLptType() }}
         </p>
       </div>
       <div class="content">
@@ -55,7 +55,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;DLP</span
+            &nbsp;{{ getLptType() }}</span
           >
         </p>
         <p>
@@ -69,37 +69,46 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;DLP</span
+            &nbsp;{{ getLptType() }}</span
           >
         </p>
-
         <section>
           <p>
             <span>{{ $t("Table.MyPoolShare") }}：</span>
             <span> {{ isLogin ? balance.Share : "--" }} %</span>
           </p>
-          <a
-            href="https://app.dodoex.io/liquidity?poolAddress=0xd7eed218538b3fa3e20d24f43100790f0d03538a"
-            target="_blank"
-            >From <i class="dodo"></i>Get HELMET-KUN DLP</a
-          >
+          <div style="display: flex">
+            <p
+              class="jump_text"
+              v-html="activeData.JUMP1_TEXT"
+              v-if="activeData.JUMP1_TEXT"
+            ></p>
+            <p
+              class="jump_text"
+              v-html="activeData.JUMP2_TEXT"
+              v-if="activeData.JUMP2_TEXT"
+            ></p>
+          </div>
         </section>
       </div>
-      <div class="ContractAddress">
-        <span>KUN {{ $t("Table.ContractAddress") }}</span>
+      <div class="ContractAddress" v-if="activeData.LEFTTOKEN">
+        <span
+          >{{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }}
+          {{ $t("Table.ContractAddress") }}</span
+        >
         <p>
-          0x1a2fb0af670d0234c2857fad35b789f8cb725584
+          {{ activeData.LEFTTOKEN.ADDTOKEN_ADDRESS }}
           <i
             class="copy"
             id="copy_default"
-            @click="
-              copyAdress($event, '0x1a2fb0af670d0234c2857fad35b789f8cb725584')
-            "
+            @click="copyAdress($event, activeData.LEFTTOKEN.ADDTOKEN_ADDRESS)"
           ></i>
         </p>
       </div>
-      <div class="addToken">
-        <p @click="addTokenFn('KUN')">Add KUN to MetaMask</p>
+      <div class="addToken" v-if="activeData.LEFTTOKEN">
+        <p @click="addTokenFn(activeData.LEFTTOKEN)">
+          Add {{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
+        </p>
         <i></i>
       </div>
     </div>
@@ -118,7 +127,6 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          DLP
         </p>
       </div>
       <div class="content">
@@ -144,21 +152,42 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <p>
+        <p v-if="activeData.REWARD1_SYMBOL">
           <span
-            ><i @click="hadnleShowOnePager($event, 'QHELMET')">QHELMET</i>
+            ><i @click="hadnleShowOnePager($event, 'QHELMET')">{{
+              activeData.REWARD1_SYMBOL
+            }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Helmet)"
+              :endVal="Number(balance.Reward1)"
               :duration="2000"
               :decimals="8"
             />
             <span v-else>--</span>
-            QHELMET</span
+            {{ activeData.REWARD1_SYMBOL }}</span
+          >
+        </p>
+        <p v-if="activeData.REWARD2_SYMBOL">
+          <span
+            ><i @click="hadnleShowOnePager($event, 'QHELMET')">{{
+              activeData.REWARD2_SYMBOL
+            }}</i>
+            {{ $t("Table.HELMETRewards") }}：</span
+          >
+          <span>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(balance.Reward2)"
+              :duration="2000"
+              :decimals="8"
+            />
+            <span v-else>--</span>
+            {{ activeData.REWARD2_SYMBOL }}</span
           >
         </p>
         <button
@@ -174,21 +203,24 @@
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
-      <div class="ContractAddress">
-        <span>QHELMET {{ $t("Table.ContractAddress") }}</span>
+      <div class="ContractAddress" v-if="activeData.RIGHTTOKEN">
+        <span
+          >{{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }}
+          {{ $t("Table.ContractAddress") }}</span
+        >
         <p>
-          0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99
+          {{ activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS }}
           <i
             class="copy"
             id="copy_default"
-            @click="
-              copyAdress($event, '0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99')
-            "
+            @click="copyAdress($event, activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS)"
           ></i>
         </p>
       </div>
-      <div class="addToken">
-        <p @click="addTokenFn('QHELMET', 'QHelmet')">Add QHELMET to MetaMask</p>
+      <div class="addToken" v-if="activeData.RIGHTTOKEN">
+        <p @click="addTokenFn(activeData.RIGHTTOKEN)">
+          Add {{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
+        </p>
         <i></i>
       </div>
     </div>
@@ -197,21 +229,19 @@
 
 <script>
 import {
-  totalSupply,
-  getLPTOKEN,
-  CangetPAYA,
-  getPAYA,
-  exitStake,
-  getBalance,
-  toDeposite,
-} from "~/interface/deposite";
-import {
   BalanceOf,
   TotalSupply,
   Earned,
+  Earned2,
   Allowance,
 } from "~/interface/read_contract.js";
-import { Stake, GetReward, Approve, Exit } from "~/interface/write_contract.js";
+import {
+  Stake,
+  GetReward,
+  GetDoubleReward,
+  Approve,
+  Exit,
+} from "~/interface/write_contract.js";
 import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
@@ -228,7 +258,8 @@ export default {
       balance: {
         Deposite: 0,
         Withdraw: 0,
-        Helmet: 0,
+        Reward1: 0,
+        Reward2: 0,
         Cake: 0,
         TotalLPT: 0,
         Share: 0,
@@ -268,12 +299,27 @@ export default {
     },
   },
   methods: {
-    async addTokenFn(token, tokenName, unit) {
-      let tokenAddress = getAddress(token);
+    getLptType() {
+      let SWAP_TYPE = this.activeData.SWAP_TYPE;
+      switch (SWAP_TYPE) {
+        case "PANCAKEV1":
+          return "LP";
+        case "PANCAKEV2":
+          return "LP";
+        case "BURGER":
+          return "BLP";
+        case "DODO":
+          return "DLP";
+        case "MDEX":
+          return "MLP";
+      }
+    },
+    async addTokenFn(options) {
+      console.log(options);
       let data = {
-        tokenAddress: tokenAddress,
-        tokenSymbol: tokenName || token,
-        tokenDecimals: unit || 18,
+        tokenAddress: options.ADDTOKEN_ADDRESS,
+        tokenSymbol: options.ADDTOKEN_SYMBOL,
+        tokenDecimals: options.ADDTOKEN_DECIMALS,
         tokenImage: "",
       };
       await addToken(data);
@@ -329,28 +375,53 @@ export default {
         this.activeData.STAKE_DECIMALS
       );
       // 可领取Helmet
-      let Helmet = await Earned(
+      let Reward1 = await Earned(
         this.activeData.POOL_ADDRESS,
-        this.activeData.REWARD_DECIMALS
+        this.activeData.REWARD1_DECIMALS
       );
+      if (this.activeData.REWARD2_SYMBOL) {
+        let Reward2 = await Earned2(
+          this.activeData.POOL_ADDRESS,
+          this.activeData.REWARD2_DECIMALS
+        );
+        this.balance.Reward2 = Reward2;
+      }
       // 赋值
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
-      this.balance.Helmet = Helmet;
+      this.balance.Reward1 = Reward1;
       this.balance.TotalLPT = TotalLPT;
       this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
     },
     // 抵押
-    toDeposite() {
+    async toDeposite() {
       if (!this.DepositeNum) {
         return;
       }
       if (this.stakeLoading) {
         return;
       }
+      let ContractAddress = this.activeData.POOL_ADDRESS;
+      let StakeAddress = this.activeData.STAKE_ADDRESS;
+      let TokenSymbol = this.activeData.STAKE_SYMBOL;
+      let DepositeVolume = this.DepositeNum;
+      let Decimals = this.activeData.STAKE_DECIMALS;
       this.stakeLoading = true;
-      let type = "QHELMETPOOL";
-      toDeposite(type, { amount: this.DepositeNum }, true, (status) => {});
+      if (this.ApproveFlag) {
+        await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
+          if (res == "success") {
+            this.NeedApprove();
+            this.stakeLoading = false;
+          }
+        });
+      } else {
+        await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.stakeLoading = false;
+          }
+        });
+      }
     },
     async NeedApprove() {
       let SpenderAddress = this.activeData.POOL_ADDRESS;
@@ -365,12 +436,22 @@ export default {
       }
       this.claimLoading = true;
       let ContractAddress = this.activeData.POOL_ADDRESS;
-      await GetReward(ContractAddress, (res) => {
-        if (res == "success" || res == "error") {
-          this.getBalance();
-          this.claimLoading = false;
-        }
-      });
+      let RewardVolume = this.activeData.REWARD_VOLUME;
+      if (RewardVolume == "one") {
+        await GetReward(ContractAddress, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.claimLoading = false;
+          }
+        });
+      } else {
+        await GetDoubleReward(ContractAddress, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.claimLoading = false;
+          }
+        });
+      }
     },
     // 退出
     async toExit() {
@@ -389,6 +470,48 @@ export default {
   },
 };
 </script>
+<style lang='scss'>
+.jump_text {
+  a {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fd7e14;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    i {
+      display: block;
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      margin: 0 4px;
+    }
+    .pancake {
+      background-image: url("../../assets/img/icon/pancake@2x.png");
+    }
+    .dodo {
+      background-image: url("../../assets/img/icon/dodo@2x.png");
+    }
+    .chainswap {
+      background-image: url("../../assets/img/icon/chainswap@2x.png");
+    }
+    .qian {
+      background-image: url("../../assets/img/icon/qian@2x.png");
+    }
+    .mdx {
+      background-image: url("../../assets/img/icon/mdx@2x.png");
+    }
+    .burger {
+      background-image: url("../../assets/img/icon/burgerswap@2x.png");
+    }
+  }
+  .H5_link {
+    display: none;
+  }
+}
+</style>
 <style lang='scss'scoped>
 @import "../../assets/css/mining_pool.scss";
 </style>

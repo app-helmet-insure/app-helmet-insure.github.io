@@ -165,4 +165,12 @@ export default {
         'Activate/swap iPAUL period: June 2nd 21:00 SGT - June 3rd 21:00 SGT',
         'IIO Ticket: 1 $HELMET',
     ],
+    hWINGS: [
+        'It is $WINGS cover miss out policy ( CALL Option of $WINGS).',
+        'The reasonable activate price: 1 $WINGS=9 BUSD.',
+        'For example, if $WINGS hit 10 BUSD, you could swap 9BUSD+1 $hWINGS to 1 $WINGS, and get net 1 BUSD profit.',
+        'Total supply: 7500',
+        'Expire date: July, 10th, 2021',
+        ' Do not trade heavily on $hWINGS, b/c if $WINGS fail to hit 9BUSD, $hWING would just be used as short-term mining shovel and a souvenir token.',
+    ],
 };

@@ -35,15 +35,16 @@ export const GetPoolAPR = async ({
             HELLMET_DECIMALS
         );
     }
-    let POOLVOLUME = await TotalSupply(POOL_ADDRESS, REWARD_DECIMALS); //pool totalsupply
-    let STAKEVOLUME = await TotalSupply(STAKE_ADDRESS, STAKE_DECIMALS); // lpt totalsupply
+    let POOL_STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, REWARD_DECIMALS); //pool totalsupply
+    let TOTAL_LPT_VOLUME = await TotalSupply(STAKE_ADDRESS, STAKE_DECIMALS); // lpt totalsupply
     let HELMETVALUE = await BalanceOf(
         STAKE_ADDRESS,
         HELLMET_DECIMALS,
         HELMET_ADDRESS
     );
     let NUMBERATOR = TOEKNHELMET * (TOTAL_REWARDS / MINING_DAY) * 365; // Numerator
-    let DENOMINATOR = ((HELMETVALUE * 2) / STAKEVOLUME) * POOLVOLUME; // Denominator
+    let DENOMINATOR =
+        ((HELMETVALUE * 2) / TOTAL_LPT_VOLUME) * POOL_STAKE_VOLUME; // Denominator
     let APR = (NUMBERATOR / DENOMINATOR) * 100;
     if (OPEN_TIME == 'Mining') {
         return APR + '%';

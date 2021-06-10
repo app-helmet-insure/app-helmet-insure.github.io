@@ -418,7 +418,7 @@ import { fixD } from "~/assets/js/util.js";
 import POOL from "./pool.vue";
 import moment from "moment";
 import PHeader from "~/components/common/header.vue";
-
+import { GetPoolAPR } from "./mining_apr.js";
 export default {
   components: {
     Wraper,
@@ -516,6 +516,7 @@ export default {
     this.initMiningData();
     this.getAPY();
     this.getHelmetBalance();
+    GetPoolAPR(this.miningList[0]);
     let timer = setInterval(() => {
       this.getAPY();
     }, 20000);
@@ -612,14 +613,23 @@ export default {
           iio: true,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
-          REWARD1_SYMBOL: "HELMET",
-          REWARD2_SYMBOL: "CAKE",
+          POOL_PID: "0x11e",
+          TOKEN1_DECIMALS: 18,
+          TOKEN1_SYMBOL: "HELMET",
+          TOKEN1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          TOKEN2_DECIMALS: 18,
+          TOKEN2_SYMBOL: "WBNB",
+          TOKEN2_ADDRESS: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
           PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
           POOL_ADDRESS: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
           STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
-          STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
+          REWARD1_SYMBOL: "HELMET",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
           REWARD2_DECIMALS: 18,
+          REWARD2_SYMBOL: "CAKE",
+          REWARD2_ADDRESS: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+          STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
             "<a href=https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
@@ -641,7 +651,7 @@ export default {
           REWARD1_SYMBOL: "HELMET",
           POOL_ADDRESS: "0x279a073c491c873df040b05cc846a3c47252b52c",
           STAKE_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-          REWARD_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
@@ -667,6 +677,8 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B",
           STAKE_ADDRESS: "0x83d8E2E030cD820dfdD94723c3bcf2BC52e1701A",
+          REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          REWARD2_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
           STAKE_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
           SWAP_TYPE: "MDEX",
@@ -702,6 +714,8 @@ export default {
           PROXY_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
           POOL_ADDRESS: "0x14b5E6158864a2F5E04C52F1858185b64aEddAf6",
           STAKE_ADDRESS: "0x9CE69450FDCc3b6058F7c430ef0A8C051b2300c6",
+          REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          REWARD2_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -741,6 +755,8 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0xD23B7cD539f7FB4f27EbEDEB2c56a791639C38Fb",
           STAKE_ADDRESS: "0xCf8F78E34135168230969124CF56A37Ae5e8bD4D",
+          REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          REWARD2_ADDRESS: "0xAFE24E29Da7E9b3e8a25c9478376B6AD6AD788dD",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -778,6 +794,7 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0xf1569d9b3aeCA99a2774Ac66731b707C1249642A",
           STAKE_ADDRESS: "0x219Cf9729BB21BBe8dD2101C8B6ec21c03dd0F31",
+          REWARD1_ADDRESS: "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           SWAP_TYPE: "DODO",
@@ -810,9 +827,9 @@ export default {
           },
           LEFT_ADDRESS: "0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2",
           RIGHT_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
-          PROXY_ADDRESS: "",
           POOL_ADDRESS: "0x10ebD347A44a40BEE9BDFb0E4c809F82f3d4C2f9",
           STAKE_ADDRESS: "0x14616328f4Ce3082187B4f1Ee4863DA5516B178A",
+          REWARD1_ADDRESS: "0x1a2fb0af670d0234c2857fad35b789f8cb725584",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           SWAP_TYPE: "DODO",
@@ -850,6 +867,7 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0x76c415ececd88f76d6e6b5401a82b5ba075819f4",
           STAKE_ADDRESS: "0xd7eed218538b3fa3e20d24f43100790f0d03538a",
+          REWARD1_ADDRESS: "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           SWAP_TYPE: "DODO",
@@ -884,6 +902,8 @@ export default {
           PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
           POOL_ADDRESS: "0xb22425206D40605E9bE5a5460786DBaB5aBA9485",
           STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -921,6 +941,8 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0x041C1BF8E085e4987404b88441599EE6d1bCD684",
           STAKE_ADDRESS: "0x7F6ea24c10E32C8a5fd1c9b2C1239340671460cC",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -958,6 +980,8 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0x2295876146ED2A4C8c391ca09dFD9b42329D22a9",
           STAKE_ADDRESS: "0xc3f103b7f36690c70b4a682c760fe3b8951cefd1",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x658a109c5900bc6d2357c87549b651670e5b0539",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -995,6 +1019,8 @@ export default {
           PROXY_ADDRESS: "",
           POOL_ADDRESS: "0x9216508886fEA6bF9334a59F9C90411fc6c400e5",
           STAKE_ADDRESS: "0x7a0068a1896F82D8F47086E3f2CE3CcEA75d5493",
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0xAe9269f27437f0fcBC232d39Ec814844a51d6b8f",
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           REWARD2_DECIMALS: 18,
@@ -1048,7 +1074,6 @@ export default {
         precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
       let APY = (cakeapy + helmetapy) * 100;
-
       this.apyArray.helmet_cake_v2 = fixD(APY, 2);
     },
 

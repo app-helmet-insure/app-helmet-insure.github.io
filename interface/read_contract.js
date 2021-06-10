@@ -1,5 +1,6 @@
 import MiningABI from '~/abi/deposite_abi.json';
 import ApproveABI from '~/abi/IPancakePair.json';
+import PoolABI from '~/abi/pool_abi.json';
 import {
     Contract,
     getAccounts,
@@ -8,6 +9,7 @@ import {
     fromWei,
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
+// Balanceof
 export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
     if (!TokenAddress) {
@@ -26,6 +28,7 @@ export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
             }
         });
 };
+// TotalSupply
 export const TotalSupply = async (ContractAddress, Decimals) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
     let DecimalsUnit = getDecimals(Decimals);
@@ -41,6 +44,7 @@ export const TotalSupply = async (ContractAddress, Decimals) => {
             }
         });
 };
+// Pool Reward
 export const Earned = async (ContractAddress, Decimals) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
@@ -57,6 +61,7 @@ export const Earned = async (ContractAddress, Decimals) => {
             }
         });
 };
+// Pool Reward2
 export const Earned2 = async (ContractAddress, Decimals) => {
     let Contracts = await Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
@@ -73,6 +78,37 @@ export const Earned2 = async (ContractAddress, Decimals) => {
             }
         });
 };
+// Total daily output
+export const TotalAllocPoint = async (ContractAddress) => {
+    let Contracts = await Contract(PoolABI, ContractAddress);
+    return Contracts.methods
+        .totalAllocPoint()
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+// Daily output
+export const PoolInfo = async (ContractAddress, PoolPid) => {
+    let Contracts = await Contract(PoolABI, ContractAddress);
+    return Contracts.methods
+        .poolInfo(PoolPid)
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+// Cake per block
+export const CakePerBlock = async (ContractAddress) => {
+    let Contracts = await Contract(PoolABI, ContractAddress);
+    return Contracts.methods
+        .cakePerBlock()
+        .call()
+        .then((res) => {
+            return res;
+        });
+};
+// Number of Approve
 export const Allowance = async (TokenAddress, SpenderAddress) => {
     let Contracts = await Contract(ApproveABI.abi, TokenAddress);
     let Account = await getAccounts();
@@ -85,5 +121,48 @@ export const Allowance = async (TokenAddress, SpenderAddress) => {
             } else {
                 return true;
             }
+        });
+};
+// Number of Approve to Pool
+export const PoolAllowance = async (
+    TokenAddress,
+    FarmAddress,
+    SpenderAddress,
+    TokenDecimals
+) => {
+    let Contracts = await Contract(ApproveABI.abi, TokenAddress);
+    let DecimalsUnit = getDecimals(TokenDecimals);
+    return Contracts.methods
+        .allowance(FarmAddress, SpenderAddress)
+        .call()
+        .then((res) => {
+            if (DecimalsUnit) {
+                return fromWei(res, DecimalsUnit);
+            } else {
+                let powNumber = new BigNumber(10).pow(Decimals).toString();
+                return new BigNumber(res).div(powNumber).toString();
+            }
+        });
+};
+
+export const Rewards = async (Contractaddress, address) => {
+    let Contracts = await Contract(MiningABI.abi, Contractaddress);
+    if (address == 0) {
+        address = '0x0000000000000000000000000000000000000000';
+    }
+    return Contracts.methods
+        .rewards(address)
+        .call()
+        .then((res) => {
+            return fromWei(res);
+        });
+};
+export const RewardsDuration = async (ContractAddress) => {
+    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    return Contracts.methods
+        .rewardsDuration()
+        .call()
+        .then((res) => {
+            return res;
         });
 };

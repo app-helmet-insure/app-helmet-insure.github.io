@@ -1,8 +1,3 @@
-//! moment.js
-
-//! moment.js locale configuration
-
-
 /*
 object-assign
 (c) Sindre Sorhus
@@ -101,6 +96,11 @@ PERFORMANCE OF THIS SOFTWARE.
  * @copyright Chen, Yi-Cyuan 2015-2018
  * @license MIT
  */
+
+
+//! moment.js
+
+//! moment.js locale configuration
 
 
 /*!

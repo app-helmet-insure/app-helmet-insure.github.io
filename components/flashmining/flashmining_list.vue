@@ -312,6 +312,27 @@ export default {
     async initFlashMiningData() {
       let arr = [
         {
+          POOL_NAME: "<i>hWINGS</i>&nbsp;Pool",
+          POOL_DESC: "By SHIBh-Helmet LPT",
+          TOKEN_NAME: "SHIBh",
+          STAKE_SYMBOL: "SHIBh-Helmet LPT",
+          REWARD_NAME: "hWINGS",
+          START_TIME: "2021/06/11 00:00 UTC+8",
+          END_TIME: "2021/06/25 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/11 00:00"),
+          MING_TIME: this.getRemainTime("2021/06/25 00:00"),
+          REWARD_WEEKLY: fixD((7500 / 14) * 7, 2) + " hWINGS",
+          POOL_ADDRESS: "0x1CaB756c4B46B44a3012E74F1023ae972c1b1b60",
+          STAKE_ADDRESS: "0x12fdd0aed56fb61fbf242ac783da600b322f64e6",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
+          SWAP_TYPE: "PANCAKEV2",
+          TOTAL_REWARDS: 7500,
+          MINING_DAY: 14,
+        },
+        {
           POOL_NAME: "<i>hxBURGER</i>&nbsp;Pool",
           POOL_DESC: "By hTPT-Helmet LPT",
           TOKEN_NAME: "hTPT",

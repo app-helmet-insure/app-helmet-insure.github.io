@@ -1,6 +1,7 @@
 import { pancakeswapv1 } from '~/assets/utils/pancakeswapv1.js';
-import { pancakeswap } from '~/assets/utils/pancakeswap.js';
+import { pancakeswapv2 } from '~/assets/utils/pancakeswapv2.js';
 import { burgerswaplpt } from '~/assets/utils/burgerswap.js';
+import { fixD } from '~/assets/js/util.js';
 import { TotalSupply, BalanceOf } from '~/interface/read_contract.js';
 export const GetPoolAPR = async ({
     OPEN_TIME,
@@ -35,17 +36,28 @@ export const GetPoolAPR = async ({
             HELLMET_DECIMALS
         );
     }
+    if (SWAP_TYPE == 'PANCAKEV2') {
+        TOEKNHELMET = await pancakeswapv2(
+            REWARD_ADDRESS,
+            REWARD_NAME,
+            REWARD_DECIMALS,
+            HELMET_ADDRESS,
+            HELMET_NAME,
+            HELLMET_DECIMALS
+        );
+    }
     let POOL_STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, REWARD_DECIMALS); //pool totalsupply
     let TOTAL_LPT_VOLUME = await TotalSupply(STAKE_ADDRESS, STAKE_DECIMALS); // lpt totalsupply
     let HELMETVALUE = await BalanceOf(
-        STAKE_ADDRESS,
+        HELMET_ADDRESS,
         HELLMET_DECIMALS,
-        HELMET_ADDRESS
+        STAKE_ADDRESS
     );
     let NUMBERATOR = TOEKNHELMET * (TOTAL_REWARDS / MINING_DAY) * 365; // Numerator
     let DENOMINATOR =
         ((HELMETVALUE * 2) / TOTAL_LPT_VOLUME) * POOL_STAKE_VOLUME; // Denominator
-    let APR = (NUMBERATOR / DENOMINATOR) * 100;
+    let APR = fixD((NUMBERATOR / DENOMINATOR) * 100, 2);
+    console.log(HELMETVALUE, TOTAL_LPT_VOLUME, POOL_STAKE_VOLUME);
     if (OPEN_TIME == 'Mining') {
         return APR + '%';
     }

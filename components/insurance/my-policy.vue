@@ -1538,8 +1538,8 @@ export default {
           id: 17,
           bidID: 17,
           buyer: myAddress,
-          price: "1",
-          Rent: "1",
+          price: 1,
+          Rent: 1 * volume,
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1625932800000)).format(

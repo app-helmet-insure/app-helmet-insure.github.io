@@ -239,6 +239,11 @@
             :activeType="activeType"
             :TradeType="'ALL'"
           />
+          <HelmetWingPool
+            v-if="activeMining == 'helmet_wings' && showActiveMining"
+            :activeType="activeType"
+            :TradeType="'ALL'"
+          />
         </div>
       </div>
     </div>
@@ -472,6 +477,11 @@
           :activeType="activeType"
           :TradeType="activeType"
         />
+        <HelmetWingPool
+          v-if="activeMining == 'helmet_wings'"
+          :activeType="activeType"
+          :TradeType="activeType"
+        />
       </Wraper>
     </div>
   </div>
@@ -504,6 +514,7 @@ import HelmetHelmetPool from "~/components/mining/helmet_helmet_pool.vue";
 import HelmetBurgerPool from "~/components/mining/helmet_burger_pool.vue";
 import HelmetDodoPool from "~/components/mining/helmet_dodo_pool.vue";
 import HelmetXburgerPool from "~/components/mining/helmet_xburger.vue";
+import HelmetWingPool from "~/components/mining/helmet_wings.vue";
 import moment from "moment";
 
 export default {
@@ -521,6 +532,7 @@ export default {
     HelmetBnbPool,
     HelmetDodoPool,
     HelmetXburgerPool,
+    HelmetWingPool,
   },
   data() {
     return {
@@ -537,8 +549,15 @@ export default {
         helmet_for: 0,
         helmet_burger: 0,
         bhelmet_xburger: 0,
+        helmet_wings: 0,
       },
       timeArray: {
+        helmet_wings: {
+          openDate: this.getMiningTime("2021/06/12 00:00"),
+          dueDate: this.getRemainTime("2021/06/26 00:00"),
+          started: new Date("2021/06/12 00:00") * 1,
+          expired: new Date("2021/06/26 00:00") * 1,
+        },
         helmet_cake_v2: {
           dueDate: "Ongoing",
           openDate: "Mining",
@@ -756,6 +775,18 @@ export default {
           onePager: false,
         },
         {
+          miningName: "HELMET-<i>hWINGS</i>&nbsp;LP",
+          earn: "helmet_wings",
+          earnImg: true,
+          earnNum: "two",
+          combo: true,
+          flash: false,
+          info: true,
+          earnName: "APR",
+          compound: false,
+          onePager: "hWINGS",
+        },
+        {
           miningName: "HELMET-BNB&nbsp;DLP",
           earnNum: "two",
           earn: "bhelmet_dodo",
@@ -765,6 +796,7 @@ export default {
           earnName: "APR",
           onePager: false,
         },
+
         {
           miningName: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
           earn: "bhelmet_xburger",
@@ -866,8 +898,45 @@ export default {
       this.HELMET_hBURGER_LP_APY();
       this.HELMET_MDX_LP_APY();
       this.BHELMET_XBURGER_APY();
+      4;
+      this.HELMET_hWINGS_DLP_APY();
     },
-
+    async HELMET_hWINGS_DLP_APY() {
+      let lptBnbValue = await pancakeswap("WINGS", "WBNB");
+      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
+      let WINGSHELMET = lptBnbValue * lptHelmetValue;
+      console.log(WINGSHELMET);
+      let allVolume = WINGSHELMET * 4500;
+      //总抵押
+      let supplyVolume = await totalSupply("HELMETWINGS"); //数量
+      // 总发行
+      let stakeVolue = await totalSupply("HELMETWINGS_LPT"); //数量
+      // 抵押总价值
+      let stakeValue = await balanceOf("HELMET", "HELMETWINGS_LPT", true);
+      let burgerApy = precision.divide(
+        precision.times(precision.divide(allVolume, 14), 365),
+        precision.times(
+          precision.divide(precision.times(stakeValue, 2), stakeVolue),
+          supplyVolume
+        )
+      );
+      let helmetApy = precision.divide(
+        precision.times(precision.divide(30000, 14), 365),
+        precision.times(
+          precision.divide(precision.times(stakeValue, 2), stakeVolue),
+          supplyVolume
+        )
+      );
+      let APY = precision.plus(burgerApy, helmetApy) * 100;
+      let startedTime = this.timeArray.helmet_wings.started;
+      let nowTime = new Date() * 1;
+      console.log(APY);
+      if (nowTime < startedTime) {
+        this.apyArray.helmet_wings = "Infinity";
+      } else {
+        this.apyArray.helmet_wings = fixD(APY, 2);
+      }
+    },
     async HELMET_BNB_LP_V2_APY() {
       this.helmetPrice = this.indexArray[1]["HELMET"];
       let cakePrice = this.$store.state.CAKE_BUSD;
@@ -894,7 +963,6 @@ export default {
         precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
         precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
       );
-      console.log(cakeapy, helmetapy);
       let APY = (cakeapy + helmetapy) * 100;
 
       this.apyArray.helmet_cake_v2 = fixD(APY, 2);

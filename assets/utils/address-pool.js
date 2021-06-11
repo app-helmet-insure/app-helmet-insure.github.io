@@ -271,6 +271,8 @@ export const getTokenName = (address) => {
             return 'COW';
         case '0x5f730952d4368324a45627d6f823a1ec96415442':
             return 'PAUL';
+        case '0x0487b824c8261462f88940f97053e65bdb498446':
+            return 'WINGS';
         default:
             return '--';
     }

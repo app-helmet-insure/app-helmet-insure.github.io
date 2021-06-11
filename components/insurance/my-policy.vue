@@ -419,6 +419,12 @@ export default {
       let qHELMETPolicy = await this.qHELMETPolicy();
       let xhBURGERolicy = await this.xhBURGERolicy();
       let SHIBHRolicy = await this.SHIBHRolicy();
+      let HWINGSRolicy = await this.HWINGSRolicy();
+      if (HWINGSRolicy) {
+        if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
+          result.push(HWINGSRolicy);
+        }
+      }
       if (cakePolicy) {
         if (cakePolicy["sort"] != 1 && cakePolicy["sort"] != 3) {
           result.push(cakePolicy);
@@ -1499,6 +1505,60 @@ export default {
           showVolume: volume,
           unit: 12,
           TypeCoin: getTokenName("0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async HWINGSRolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026"
+      );
+
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x34508EA9ec327ff3b98A2F10eEDc2950875bf026");
+        let resultItem;
+        resultItem = {
+          id: 17,
+          bidID: 17,
+          buyer: myAddress,
+          price: "1",
+          Rent: "1",
+          volume: volume.toString(),
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1625932800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x0487b824c8261462f88940f97053e65bdb498446",
+          _strikePrice: 9,
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1625932800000,
+          transfer: true,
+          longAdress: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
+          type: "Call",
+          symbol: "hWINGS",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 9,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x0487b824c8261462f88940f97053e65bdb498446"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

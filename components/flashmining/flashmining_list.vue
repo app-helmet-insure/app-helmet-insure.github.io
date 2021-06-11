@@ -619,7 +619,7 @@ export default {
       let APY = fixD(
         precision.times(
           precision.divide(
-            precision.times(HAUTOHELMET, precision.divide(20000, 20), 365),
+            precision.times(HAUTOHELMET, precision.divide(7500, 14), 365),
             precision.times(
               precision.divide(precision.times(HelmetValue, 2), LptVolume),
               HctkVolume
@@ -1459,6 +1459,9 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     .close {
       width: 24px;
       height: 24px;

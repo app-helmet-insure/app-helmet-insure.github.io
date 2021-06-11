@@ -340,6 +340,10 @@ export default {
           expired_premium: "86.17%",
           expired_activating: "25.15%",
         },
+        {
+          iio_name: "MARS",
+          iio_img: "iio1",
+        },
       ],
     };
   },

@@ -341,8 +341,30 @@ export default {
           expired_activating: "25.15%",
         },
         {
-          iio_name: "MARS",
-          iio_img: "iio1",
+          iio_name: "Marsecosystem",
+          iio_img: "iio_xms",
+          iio_webSite: "marsdao.finance",
+          coming: true,
+          background: "#FA6400",
+          swapVolume: "603,865",
+          swapUtil: "XMS",
+          stakeUtil: "BUSD",
+          stakeShare: 0.0828,
+          showStart: "June. 13th 21:00 SGT",
+          showEnd: "June. 14th 18:00 SGT",
+          warnupTimeUTC: "2021/06/13 21:00 UTC+8",
+          distributingTimeUTC: "2021/06/13 21:00 UTC+8",
+          activatingTimeUTC: "2021/06/14 18:00 UTC+8",
+          finishedTimeUTC: "2021/06/15 18:00 UTC+8",
+          link: "https://marsdao.finance/home",
+          enterbutton: false,
+          open: true,
+          sort: 0,
+          active_page: 2,
+          expired_burnt: "0",
+          expired_stake: "0",
+          expired_premium: "0",
+          expired_activating: "0",
         },
       ],
     };
@@ -546,7 +568,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: darken($color: #fff, $amount: 20%);
+              color: #fff;
               line-height: 14px;
             }
             &:nth-of-type(2) {
@@ -789,7 +811,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: rgba(255, 255, 255, 0.8);
+              color: #fff;
               line-height: 14px;
             }
             &:nth-of-type(2) {

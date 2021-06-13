@@ -48,18 +48,14 @@ export default {};
         font-size: 24px;
         font-family: IBMPlexSans-SemiBold, IBMPlexSans;
         font-weight: 600;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         line-height: 32px;
         padding: 0 0 0 40px;
       }
       p {
         font-size: 16px;
         font-family: IBMPlexSans;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         line-height: 20px;
         margin: 11px 0 0 40px;
       }
@@ -94,9 +90,7 @@ export default {};
         font-size: 12px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         line-height: 15px;
         i {
           display: block;
@@ -130,7 +124,6 @@ export default {};
       background-position: center center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
     }
     &_text {
@@ -143,18 +136,14 @@ export default {};
         font-size: 18px;
         font-family: IBMPlexSans-SemiBold, IBMPlexSans;
         font-weight: 600;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         padding: 0px 0 0 16px;
       }
       p {
         width: 329px;
         font-size: 12px;
         font-family: IBMPlexSans;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         line-height: 20px;
         margin: 8px 0 0 16px;
       }
@@ -166,6 +155,8 @@ export default {};
       background-repeat: no-repeat;
       background-size: 100% 100%;
       background-position: center center;
+      margin-left: 16px;
+      margin-top: 5px;
       > p {
         font-size: 13px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -188,9 +179,7 @@ export default {};
         font-size: 12px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        @include themeify {
-          color: #fff;
-        }
+        color: #fff;
         line-height: 15px;
         i {
           width: 16px;

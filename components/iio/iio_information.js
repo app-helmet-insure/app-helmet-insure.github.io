@@ -436,7 +436,7 @@ export default {
         },
     },
     paulprotocol: {
-        name: 'Paul Protocol',
+        name: 'PaulProtocol',
         Token: 'PAUL',
         Time1: 'May.30th 21:00', //mining open
         Time2: 'June.02nd 21:00', //active start
@@ -492,6 +492,67 @@ export default {
                 type: 'Medium',
                 link: 'https://paulprotocol.medium.com',
                 show: 'https://paulprotocol.medium.com',
+            },
+        },
+    },
+    marsecosystem: {
+        name: 'Mars Ecosystem',
+        Token: 'XMS',
+        Time1: 'June.13th 21:00', //mining open
+        Time2: 'June.14th 18:00', //active start
+        Time3: 'June.15th 18:00', //active end
+        Time1UTC: '2021/06/13 21:00 UTC+8',
+        Time2UTC: '2021/06/14 18:00 UTC+8',
+        Time3UTC: '2021/06/15 18:00 UTC+8',
+        Collateral: '0x7859B01BbF675d67Da8cD128a50D155cd881B576',
+        Underlying: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        LongAdress: '0x0d3D52bDF2F1872ceC172730855b04681C1E036A',
+        Decimals: 18,
+        ActivePrice: 0.0828,
+        ProjcetInformation: {
+            ProjectName: 'Mars Ecosystem',
+            Distributing: 'June. 13th 21:00 SGT - June. 14th 18:00 SGT',
+            Activating: 'June. 14th 18:00 SGT - June. 15th 18:00 SGT',
+            ActivatePeriod: '24hours',
+            ActivatingxPrice: '1PAUL=0.0828BUSD',
+            TicketPrice: '1 Helmet',
+        },
+        TokenInformation: {
+            TokenName: 'XMS',
+            Address: '0x7859b01bbf675d67da8cd128a50d155cd881b576',
+            Supply: '603,865',
+            TotalSupply: '1,000,000,000',
+        },
+        About: [
+            'Mars Ecosystem is  a new decentralized Stablecoin paradigm, which solves the fundamental problem of Stablecoin Protocols (the Positive Externality Problem) by internalizing the positive externality: it integrates the creation and the use of stablecoin into one ecosystem. The whole project will be launched at the beginning of June 2021, and meanwhile will also be available soon for trading on a growing number of exchanges besides Mars Swap.',
+        ],
+        TokenDistribution: [
+            'Investors 8%',
+            'IDO 2%',
+            'Team 10%',
+            'DAO Treasury (Market Making, Operations, Marketing, Partnerships, etc.) 15%',
+            'Community Incentives (Liquidity Mining, Trade Mining, Airdrops, etc.) 65%',
+        ],
+        Media: {
+            Website: {
+                type: 'Website',
+                link: 'https://marsecosystem.com/',
+                show: 'marsecosystem.com',
+            },
+            Twitter: {
+                type: 'Twitter',
+                link: 'https://twitter.com/MarsEcosystem',
+                show: 'https://twitter.com/MarsEcosystem',
+            },
+            Telegram: {
+                type: 'Telegram (EN)',
+                link: 't.me/mars_ecosystem',
+                show: 't.me/mars_ecosystem',
+            },
+            Medium: {
+                type: 'Medium',
+                link: 'https://mars-ecosystem.medium.com',
+                show: 'https://mars-ecosystem.medium.com',
             },
         },
     },

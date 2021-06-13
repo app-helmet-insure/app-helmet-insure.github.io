@@ -514,7 +514,7 @@ export default {
             Distributing: 'June. 13th 21:00 SGT - June. 14th 18:00 SGT',
             Activating: 'June. 14th 18:00 SGT - June. 15th 18:00 SGT',
             ActivatePeriod: '24hours',
-            ActivatingxPrice: '1PAUL=0.0828BUSD',
+            ActivatingxPrice: '1XMS=0.0828BUSD',
             TicketPrice: '1 Helmet',
         },
         TokenInformation: {

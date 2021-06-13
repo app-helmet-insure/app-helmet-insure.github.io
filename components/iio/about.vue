@@ -444,7 +444,9 @@ export default {
             float: left;
             font-size: 14px;
             font-family: IBMPlexSans;
-            color: rgba(23, 23, 58, 0.6);
+            @include themeify {
+              color: themed("color-17173a");
+            }
           }
           &:nth-of-type(2) {
             display: flex;

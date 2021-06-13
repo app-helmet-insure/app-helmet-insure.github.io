@@ -127,7 +127,6 @@ export default {
 @media screen and (min-width: 750px) {
   .iio_banner {
     width: 100%;
-    height: 420px;
     background: url("../../assets/img/iio/iio_header_bg.png") no-repeat;
     background-size: 100% 100%;
   }
@@ -176,6 +175,7 @@ export default {
     margin-top: 120px;
     position: relative;
     right: 0;
+    margin-bottom: 44px;
     .wrap {
       display: flex;
       align-items: center;

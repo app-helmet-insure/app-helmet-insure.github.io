@@ -273,6 +273,8 @@ export const getTokenName = (address) => {
             return 'PAUL';
         case '0x0487b824c8261462f88940f97053e65bdb498446':
             return 'WINGS';
+        case '0x7859b01bbf675d67da8cd128a50d155cd881b576':
+            return 'XMS';
         default:
             return '--';
     }

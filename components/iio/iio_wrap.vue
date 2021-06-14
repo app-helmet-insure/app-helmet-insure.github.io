@@ -356,7 +356,7 @@ export default {
           distributingTimeUTC: "2021/06/13 21:00 UTC+8",
           activatingTimeUTC: "2021/06/14 18:00 UTC+8",
           finishedTimeUTC: "2021/06/15 18:00 UTC+8",
-          link: "https://marsdao.finance/home",
+          link: "https://marsecosystem.com/",
           enterbutton: true,
           open: true,
           sort: 0,

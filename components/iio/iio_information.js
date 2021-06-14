@@ -537,7 +537,7 @@ export default {
             Website: {
                 type: 'Website',
                 link: 'https://marsecosystem.com/',
-                show: 'marsecosystem.com',
+                show: 'https://marsecosystem.com',
             },
             Twitter: {
                 type: 'Twitter',

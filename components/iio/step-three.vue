@@ -284,7 +284,7 @@ export default {
       .rewardDetail {
         width: 100%;
         @include themeify {
-          color: themed("color-f8f9fa");
+          background: themed("color-f8f9fa");
         }
         margin-top: 16px;
         padding: 12px 10px;
@@ -319,7 +319,7 @@ export default {
                 font-size: 14px;
                 font-family: IBMPlexSans;
                 @include themeify {
-                  color: darken($color: themed("color-17173a"), $amount: 60%);
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
               }
@@ -341,17 +341,15 @@ export default {
         width: 100%;
         height: 40px;
         @include themeify {
-          background: themed("color-121212");
+          background: themed("black_button");
         }
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         &:hover {
           @include themeify {
-            background: themed("color-2c2c2c");
+            background: themed("black_button_hover");
           }
         }
       }
@@ -460,7 +458,7 @@ export default {
                 font-family: IBMPlexSans-Bold, IBMPlexSans;
                 font-weight: bold;
                 @include themeify {
-                  background: themed("color-17173a");
+                  color: themed("color-17173a");
                 }
                 line-height: 14px;
               }
@@ -472,16 +470,16 @@ export default {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
+        @include themeify {
+          background: themed("black_button");
+        }
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         &:hover {
           @include themeify {
-            background: themed("color-2c2c2c");
+            background: themed("black_button_hover");
           }
         }
       }

@@ -222,7 +222,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                console.log(1);
                 if (error && error.message) {
                     Message({
                         message: error && error.message,

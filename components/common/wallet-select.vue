@@ -38,7 +38,6 @@ export default {
     selectWallet(item) {
       this.$store.dispatch("setWalletType", item);
       if (item === "MetaMask") {
-        console.log(111);
         try {
           window.ethereum
             .request({ method: "eth_requestAccounts" })

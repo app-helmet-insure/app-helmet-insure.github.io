@@ -281,7 +281,6 @@ export default {
             symbol: "Helmet",
           },
           (res) => {
-            console.log(res);
             this.HelmetReward = res.amount;
             this.HelmetPrice = this.swapNumber / res.amount;
             this.HelmetMinReward = BigNumber(

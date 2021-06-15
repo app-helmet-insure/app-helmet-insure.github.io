@@ -340,6 +340,32 @@ export default {
           expired_premium: "86.17%",
           expired_activating: "25.15%",
         },
+        {
+          iio_name: "MarsEcosystem",
+          iio_img: "iio_xms",
+          iio_webSite: "marsecosystem.com",
+          coming: true,
+          background: "#FA6400",
+          swapVolume: "603,865",
+          swapUtil: "XMS",
+          stakeUtil: "BUSD",
+          stakeShare: 0.0828,
+          showStart: "June. 13th 21:00 SGT",
+          showEnd: "June. 14th 18:00 SGT",
+          warnupTimeUTC: "2021/06/13 21:00 UTC+8",
+          distributingTimeUTC: "2021/06/13 21:00 UTC+8",
+          activatingTimeUTC: "2021/06/14 18:00 UTC+8",
+          finishedTimeUTC: "2021/06/15 18:00 UTC+8",
+          link: "https://marsecosystem.com/",
+          enterbutton: true,
+          open: true,
+          sort: 0,
+          active_page: 2,
+          expired_burnt: "0",
+          expired_stake: "0",
+          expired_premium: "0",
+          expired_activating: "0",
+        },
       ],
     };
   },
@@ -505,13 +531,11 @@ export default {
         span {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
-          @include themeify {
-            color: darken($color: #fff, $amount: 0.6);
-          }
+          color: #fff;
           line-height: 14px;
           text-decoration: underline;
           &:hover {
-            color: darken($color: #fff, $amount: 20%);
+            color: rgba(255, 255, 255, 0.8);
           }
         }
         i {
@@ -542,7 +566,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: darken($color: #fff, $amount: 20%);
+              color: #fff;
               line-height: 14px;
             }
             &:nth-of-type(2) {
@@ -567,7 +591,7 @@ export default {
         color: #fff;
         line-height: 20px;
         &:hover {
-          background: darken($color: #fff, $amount: 60%);
+          background: rgba(255, 255, 255, 0.2);
         }
       }
       > .button_tab {
@@ -640,9 +664,6 @@ export default {
         font-size: 20px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 20%);
-        }
         line-height: 30px;
       }
       > a {
@@ -650,16 +671,12 @@ export default {
         margin-top: 20px;
         width: 180px;
         height: 48px;
-        @include themeify {
-          background: themed("color-17173a");
-        }
+        background: #17173a;
         border-radius: 5px;
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         line-height: 48px;
         text-align: center;
 
@@ -785,7 +802,7 @@ export default {
               font-size: 14px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: rgba(255, 255, 255, 0.8);
+              color: #fff;
               line-height: 14px;
             }
             &:nth-of-type(2) {
@@ -820,9 +837,7 @@ export default {
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         line-height: 20px;
         display: flex;
         align-items: center;
@@ -885,9 +900,7 @@ export default {
         font-size: 20px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 20%);
-        }
+        color: #17173a;
         line-height: 30px;
       }
       > a {
@@ -895,19 +908,14 @@ export default {
         margin-top: 20px;
         width: 180px;
         height: 48px;
-        @include themeify {
-          background: themed("color-17173a");
-        }
+        background: #17173a;
         border-radius: 5px;
         font-size: 16px;
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         line-height: 48px;
         text-align: center;
-
         &:hover {
           background: #2d2d4d;
         }

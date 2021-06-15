@@ -70,6 +70,7 @@ export default {
   mounted() {
     let name = this.$route.params.id;
     this.About = Information[name];
+    console.log(this.About);
     let timer1 = setTimeout(() => {
       this.getPassPortPrice();
       clearTimeout();
@@ -212,7 +213,7 @@ export default {
           }
           i {
             @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 60%);
+              color: themed("color-17173a");
             }
           }
         }
@@ -240,7 +241,7 @@ export default {
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 500;
           @include themeify {
-            color: themed("color-17173a");
+            color: themed("iio_text1");
           }
           line-height: 25px;
         }
@@ -249,7 +250,7 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 60%);
+            color: themed("iio_text1");
           }
           line-height: 20px;
           margin-top: 4px;
@@ -262,16 +263,16 @@ export default {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
+        color: #ffffff;
         @include themeify {
-          color: themed("color-ffffff");
+          background: themed("black_button");
         }
         &:hover {
           @include themeify {
-            background: themed("color-2c2c2c");
+            background: themed("black_button_hover");
           }
         }
       }
@@ -286,7 +287,7 @@ export default {
         margin-top: 8px;
         font-size: 14px;
         @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 60%);
+          color: themed("color-17173a");
         }
         text-align: center;
       }
@@ -299,7 +300,9 @@ export default {
     .step_title {
       font-size: 14px;
       font-weight: 600;
-      color: #121212;
+      @include themeify {
+        color: themed("color-121212");
+      }
     }
     .step_action {
       > .step_buy {
@@ -309,10 +312,12 @@ export default {
         margin-top: 20px;
         span {
           font-size: 12px;
-          color: #121212;
+          @include themeify {
+            color: themed("color-121212");
+          }
           i {
             @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 60%);
+              color: themed("color-17173a");
             }
           }
         }
@@ -338,7 +343,7 @@ export default {
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 500;
           @include themeify {
-            color: themed("color-17173a");
+            color: themed("iio_text1");
           }
           line-height: 25px;
         }
@@ -347,7 +352,7 @@ export default {
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 60%);
+            color: themed("iio_text1");
           }
           line-height: 20px;
           margin-top: 4px;
@@ -360,16 +365,16 @@ export default {
         margin-top: 20px;
         width: 100%;
         height: 40px;
-        background: #121212;
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
+        color: #fff;
         @include themeify {
-          color: themed("color-ffffff");
+          background: themed("black_button");
         }
         &:hover {
           @include themeify {
-            background: themed("color-2c2c2c");
+            background: themed("black_button_hover");
           }
         }
       }
@@ -385,7 +390,7 @@ export default {
         font-size: 12px;
         text-align: center;
         @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 60%);
+          color: themed("color-17173a");
         }
       }
     }

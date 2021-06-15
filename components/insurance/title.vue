@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide mars">
+        <div></div>
+      </div>
       <div class="swiper-slide dark">
         <div></div>
       </div>
@@ -138,6 +141,12 @@ export default {
         background-position: center;
       }
     }
+    .mars {
+      background: #1e2327;
+      > div {
+        background-image: url("../../assets/img/banner/mars_web.png");
+      }
+    }
     .dark {
       background: #ffe9ce;
       > div {
@@ -190,6 +199,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .mars {
+      background: #1e2327;
+      > div {
+        background-image: url("../../assets/img/banner/mars_h5.png");
       }
     }
     .dark {

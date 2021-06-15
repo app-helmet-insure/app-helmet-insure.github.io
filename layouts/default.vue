@@ -245,7 +245,6 @@ export default {
       this.$emit("close");
     },
     async getBannerData() {
-      console.log(1);
       this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
       this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
       this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet

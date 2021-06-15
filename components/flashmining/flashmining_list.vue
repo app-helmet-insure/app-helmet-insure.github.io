@@ -331,6 +331,7 @@ export default {
           SWAP_TYPE: "PANCAKEV2",
           TOTAL_REWARDS: 7500,
           MINING_DAY: 14,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hxBURGER</i>&nbsp;Pool",
@@ -352,6 +353,7 @@ export default {
           SWAP_TYPE: "BURGER",
           TOTAL_REWARDS: 20000,
           MINING_DAY: 20,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hTPT</i>&nbsp;Pool",
@@ -373,6 +375,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 2000000,
           MINING_DAY: 20,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hDODO</i>&nbsp;Pool",
@@ -394,6 +397,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 40000,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hMATH</i>&nbsp;Pool",
@@ -415,6 +419,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 30000,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hAUTO</i>&nbsp;Pool",
@@ -436,6 +441,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 10,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>BNB500</i>&nbsp;Pool",
@@ -457,6 +463,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 1000,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>hCTK</i>&nbsp;Pool",
@@ -478,6 +485,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 70000,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "<i>HCCT</i>&nbsp;Pool",
@@ -499,6 +507,7 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 16000,
           MINING_DAY: 7,
+          REWARD_YEAR: "Infinity",
         },
       ];
 

@@ -167,7 +167,6 @@ export default {
       }
     },
     async getBalance() {
-      console.log(1);
       let Name = this.iioType.toUpperCase();
       let reward_name = `IIO_HELMETBNB_${Name}`;
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
@@ -337,16 +336,16 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
+        color: #fff;
         @include themeify {
-          color: themed("color-ffffff");
-          background: themed("color-121212");
+          background: themed("black_button");
         }
         display: flex;
         align-items: center;
         justify-content: center;
         &:hover {
           @include themeify {
-            background: themed("color-2c2c2c");
+            background: themed("black_button_hover");
           }
         }
       }
@@ -361,9 +360,7 @@ export default {
         border-radius: 5px;
         font-size: 14px;
         font-weight: 600;
-        @include themeify {
-          color: themed("color-ffffff");
-        }
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -455,7 +452,7 @@ export default {
       font-size: 14px;
       font-weight: 600;
       @include themeify {
-        color: themed("color-17173a");
+        color: themed("color-121212");
       }
     }
     .step_action {
@@ -551,19 +548,19 @@ export default {
       margin-top: 20px;
       width: 100%;
       height: 40px;
-      background: #121212;
       border-radius: 3px;
       font-size: 14px;
       font-weight: 600;
+      color: #fff;
       @include themeify {
-        color: themed("color-ffffff");
+        background: themed("black_button");
       }
       display: flex;
       align-items: center;
       justify-content: center;
       &:hover {
         @include themeify {
-          background: themed("color-2c2c2c");
+          background: themed("black_button_hover");
         }
       }
     }
@@ -575,9 +572,7 @@ export default {
       border-radius: 3px;
       font-size: 14px;
       font-weight: 600;
-      @include themeify {
-        color: themed("color-ffffff");
-      }
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;

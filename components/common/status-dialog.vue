@@ -63,9 +63,6 @@ export default {
       },
     },
   },
-  mounted() {
-    console.log(this.data);
-  },
   methods: {
     async closeDialog() {
       this.$bus.$emit("PROCESS_ACTION", this.data.showDialog);

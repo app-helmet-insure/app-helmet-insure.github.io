@@ -26,9 +26,7 @@
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                timeArray[item.REWARD_NAME].dueDate == 'Finished'
-                  ? 'expired_' + storeThemes
-                  : 'web'
+                item.MING_TIME == 'Finished' ? 'expired_' + storeThemes : 'web'
               }.png`)
             "
             alt=""
@@ -39,7 +37,7 @@
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${
-                timeArray[item.REWARD_NAME].dueDate == 'Finished'
+                item.MING_TIME == 'Finished'
                   ? 'serial_web_expired_' + storeThemes
                   : 'serial_web'
               }.png`)
@@ -52,7 +50,7 @@
             style="width: 32px; height: 32px; left: 10px"
             :src="
               require(`~/assets/img/mining/${
-                timeArray[item.REWARD_NAME].dueDate == 'Finished'
+                item.MING_TIME == 'Finished'
                   ? 'serialnext_web_expired_' + storeThemes
                   : 'serialnext_web'
               }.png`)
@@ -83,7 +81,7 @@
                   v-if="item.REARD_IMGSHOW"
                   :src="
                     require(`~/assets/img/mining/${
-                      timeArray[item.REWARD_NAME].dueDate == 'Finished'
+                      item.MING_TIME == 'Finished'
                         ? item.REWARD_NAME + '_expired'
                         : item.REWARD_NAME
                     }.png`)
@@ -100,53 +98,34 @@
           <section>
             <i></i>
             <p>
-              <span
-                v-if="typeof timeArray[item.REWARD_NAME].openDate == 'object'"
-              >
-                {{ timeArray[item.REWARD_NAME].openDate.hour
-                }}<b>{{ $t("Content.HourM") }}</b>
+              <span v-if="typeof item.OPEN_TIME == 'object'">
+                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ timeArray[item.REWARD_NAME].openDate.minute
-                }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span
-                v-else-if="
-                  typeof timeArray[item.REWARD_NAME].dueDate == 'object'
-                "
-              >
-                <template
-                  v-if="timeArray[item.REWARD_NAME].dueDate.day != '00'"
-                >
-                  {{ timeArray[item.REWARD_NAME].dueDate.day
-                  }}<b>{{ $t("Content.DayM") }}</b>
+              <span v-else-if="typeof item.MING_TIME == 'object'">
+                <template v-if="item.MING_TIME.day != '00'">
+                  {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ timeArray[item.REWARD_NAME].dueDate.hour
-                  }}<b>{{ $t("Content.HourM") }}</b>
+                  {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template
-                  v-if="timeArray[item.REWARD_NAME].dueDate.day == '00'"
-                >
-                  {{ timeArray[item.REWARD_NAME].dueDate.minute
-                  }}<b>{{ $t("Content.MinM") }}</b>
+                <template v-if="item.MING_TIME.day == '00'">
+                  {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ timeArray[item.REWARD_NAME].dueDate }}
+                {{ item.MING_TIME }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
           </section>
           <section>
-            <span>{{
-              timeArray[item.REWARD_NAME].dueDate == "Finished"
-                ? "--"
-                : apyArray[item.REWARD_NAME] + "%"
-            }}</span>
+            <span>{{ item.REWARD_YEAR }}</span>
             <span>{{ item.REWARD_TYPE }}</span>
           </section>
           <section>
@@ -214,9 +193,7 @@
           class="combo_img"
           :src="
             require(`~/assets/img/mining/combo_${
-              timeArray[item.REWARD_NAME].dueDate == 'Finished'
-                ? 'expired_' + storeThemes
-                : 'web'
+              item.MING_TIME == 'Finished' ? 'expired_' + storeThemes : 'web'
             }.png`)
           "
           alt=""
@@ -227,7 +204,7 @@
           style="width: 116px"
           :src="
             require(`~/assets/img/mining/${
-              timeArray[item.REWARD_NAME].dueDate == 'Finished'
+              item.MING_TIME == 'Finished'
                 ? 'serial_web_expired_' + storeThemes
                 : 'serial_web'
             }.png`)
@@ -240,7 +217,7 @@
           style="width: 32px; height: 32px; left: 10px"
           :src="
             require(`~/assets/img/mining/${
-              timeArray[item.REWARD_NAME].dueDate == 'Finished'
+              item.MING_TIME == 'Finished'
                 ? 'serialnext_web_expired_' + storeThemes
                 : 'serialnext_web'
             }.png`)
@@ -282,53 +259,34 @@
         </section>
         <section>
           <p>
-            <span>{{
-              timeArray[item.REWARD_NAME].dueDate == "Finished"
-                ? "--"
-                : apyArray[item.REWARD_NAME] + "%"
-            }}</span>
+            <span>{{ item.REWARD_YEAR }}</span>
             <span>{{ item.REWARD_TYPE }}</span>
           </p>
           <div>
             <i></i>
             <p>
-              <span
-                v-if="typeof timeArray[item.REWARD_NAME].openDate == 'object'"
-              >
-                {{ timeArray[item.REWARD_NAME].openDate.hour
-                }}<b>{{ $t("Content.HourM") }}</b>
+              <span v-if="typeof item.OPEN_TIME == 'object'">
+                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
                 <i>/</i>
-                {{ timeArray[item.REWARD_NAME].openDate.minute
-                }}<b>{{ $t("Content.MinM") }}</b>
+                {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
                 <i>/</i>
               </span>
-              <span
-                v-else-if="
-                  typeof timeArray[item.REWARD_NAME].dueDate == 'object'
-                "
-              >
-                <template
-                  v-if="timeArray[item.REWARD_NAME].dueDate.day != '00'"
-                >
-                  {{ timeArray[item.REWARD_NAME].dueDate.day
-                  }}<b>{{ $t("Content.DayM") }}</b>
+              <span v-else-if="typeof item.MING_TIME == 'object'">
+                <template v-if="item.MING_TIME.day != '00'">
+                  {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
                   <i>/</i>
                 </template>
                 <template>
-                  {{ timeArray[item.REWARD_NAME].dueDate.hour
-                  }}<b>{{ $t("Content.HourM") }}</b>
+                  {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
                   <i>/</i>
                 </template>
-                <template
-                  v-if="timeArray[item.REWARD_NAME].dueDate.day == '00'"
-                >
-                  {{ timeArray[item.REWARD_NAME].dueDate.minute
-                  }}<b>{{ $t("Content.MinM") }}</b>
+                <template v-if="item.MING_TIME.day == '00'">
+                  {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
                   <i>/</i>
                 </template>
               </span>
               <span v-else>
-                {{ timeArray[item.REWARD_NAME].dueDate }}
+                {{ item.MING_TIME }}
               </span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
@@ -348,7 +306,7 @@
           >
             {{ $t("Table.Stakeing") }}
           </button>
-          <button @click="toCompound" v-if="item.compound">
+          <button @click="toCompound" v-if="item.COMPOUND">
             <i :class="claimLoading ? 'loading_pic' : ''"></i
             >{{ $t("Table.Compound") }}
           </button>
@@ -427,80 +385,6 @@ export default {
   },
   data() {
     return {
-      apyArray: {
-        helmet_cake_v2: 0,
-        mdx: 0,
-        bhelmet_dodo: 0,
-        helmet: 0,
-        QFEI: 0,
-        kun: 0,
-        QHELMET: 0,
-        helmet_cake_v1: 0,
-        helmet_dodo: 0,
-        helmet_for: 0,
-        helmet_burger: 0,
-        bhelmet_xburger: 0,
-      },
-      timeArray: {
-        helmet_cake_v2: {
-          dueDate: "Ongoing",
-          openDate: "Mining",
-        },
-        mdx: {
-          dueDate: "Ongoing",
-          openDate: "Mining",
-        },
-        bhelmet_dodo: {
-          openDate: this.getMiningTime("2021/05/10 12:00"),
-          dueDate: this.getRemainTime("2021/05/24 00:00"),
-          started: new Date("2021/05/10 12:00") * 1,
-          expired: new Date("2021/05/24 00:00") * 1,
-        },
-        helmet: {
-          dueDate: "Ongoing",
-          openDate: "Mining",
-        },
-        bhelmet_xburger: {
-          openDate: this.getMiningTime("2021/05/02 12:00"),
-          dueDate: this.getRemainTime("2021/05/22 00:00"),
-          started: new Date("2021/05/02 12:00") * 1,
-          expired: new Date("2021/05/22 00:00") * 1,
-        },
-        QFEI: {
-          openDate: this.getMiningTime("2021/04/10 00:00"),
-          dueDate: this.getRemainTime("2021/04/17 00:00"),
-          started: new Date("2021/04/10 00:00") * 1,
-          expired: new Date("2021/04/17 00:00") * 1,
-        },
-        kun: {
-          openDate: this.getMiningTime("2021/04/12 00:00"),
-          dueDate: this.getRemainTime("2021/05/02 00:00"),
-          started: new Date("2021/04/12 00:00") * 1,
-          expired: new Date("2021/05/02 00:00") * 1,
-        },
-        QHELMET: {
-          openDate: this.getMiningTime("2021/04/21 00:00"),
-          dueDate: this.getRemainTime("2021/05/11 00:00"),
-          started: new Date("2021/04/21 00:00") * 1,
-          expired: new Date("2021/05/10 00:00") * 1,
-        },
-        helmet_cake_v1: {
-          dueDate: this.getRemainTime("2021/04/25 17:00"),
-          openDate: "Mining",
-        },
-        helmet_dodo: {
-          dueDate: this.getRemainTime("2021/04/10 00:00"),
-          openDate: "Mining",
-        },
-        helmet_for: {
-          dueDate: this.getRemainTime("2021/03/20 00:00"),
-          openDate: "Mining",
-        },
-        helmet_burger: {
-          dueDate: this.getRemainTime("2021/03/07 00:00"),
-          openDate: "Mining",
-        },
-      },
       miningList: [],
       activeType: "",
       showActiveMining: false,
@@ -514,15 +398,8 @@ export default {
   },
   mounted() {
     this.initMiningData();
-    this.getAPY();
+    this.GetPoolItemAPR();
     this.getHelmetBalance();
-    GetPoolAPR(this.miningList[0]);
-    let timer = setInterval(() => {
-      this.getAPY();
-    }, 20000);
-    this.$once("hook:beforeDestroy", () => {
-      clearTimeout(timer);
-    });
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
     );
@@ -542,18 +419,11 @@ export default {
     indexArray() {
       return this.$store.state.allIndexPrice;
     },
-    HELMET_BUSD() {
-      return this.$store.state.HELMET_BUSD;
-    },
     storeThemes() {
       return this.$store.state.themes;
     },
   },
   watch: {
-    apyArray: {
-      handler: "apyArrayWatch",
-      immediate: true,
-    },
     storeThemes(newValue) {
       if (newValue) {
         this.initMiningData();
@@ -571,11 +441,6 @@ export default {
         });
       } else {
         return;
-      }
-    },
-    apyArrayWatch(newValue) {
-      if (newValue) {
-        this.initMiningData();
       }
     },
     // 复投
@@ -633,6 +498,8 @@ export default {
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
             "<a href=https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
+          APRTYPE: "CakeDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "HELMET&nbsp;POOL",
@@ -645,7 +512,7 @@ export default {
           COMBO_FLAG: false,
           flash: false,
           REWARD_TYPE: "APY",
-          compound: true,
+          COMPOUND: true,
           ONE_PAGER: false,
           LEFT_ADDRESS: "",
           REWARD1_SYMBOL: "HELMET",
@@ -655,6 +522,8 @@ export default {
           STAKE_DECIMALS: 18,
           REWARD1_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
+          APRTYPE: "CompoundPoolAPY",
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;MLP",
@@ -667,23 +536,74 @@ export default {
           COMBO_FLAG: false,
           REWARD_TYPE: "APR",
           ONE_PAGER: false,
+          POOL_PID: "0x38",
+          TOKEN1_DECIMALS: 18,
+          TOKEN1_SYMBOL: "HELMET",
+          TOKEN1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          TOKEN2_DECIMALS: 18,
+          TOKEN2_SYMBOL: "WBNB",
+          TOKEN2_ADDRESS: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
           REWARD2_SYMBOL: "MDX",
+          REWARD2_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
+          REWARD2_DECIMALS: 18,
           RIGHTTOKEN: {
             ADDTOKEN_SYMBOL: "MDX",
             ADDTOKEN_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
             ADDTOKEN_DECIMALS: 18,
           },
           RIGHT_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
-          PROXY_ADDRESS: "",
+          PROXY_ADDRESS: "0xc48fe252aa631017df253578b1405ea399728a50",
           POOL_ADDRESS: "0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B",
           STAKE_ADDRESS: "0x83d8E2E030cD820dfdD94723c3bcf2BC52e1701A",
           REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
-          REWARD2_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
           STAKE_DECIMALS: 18,
-          REWARD2_DECIMALS: 18,
           SWAP_TYPE: "MDEX",
           JUMP1_TEXT:
             "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
+          APRTYPE: "MdexDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
+        },
+        {
+          POOL_NAME: "HELMET-hWINGS&nbsp;LP",
+          STAKE_SYMBOL: "HELMET-hWINGS MLP",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_wings",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/06/12 00:00"),
+          MING_TIME: this.getRemainTime("2021/06/26 00:00"),
+          START_TIME: "2021/06/12 00:00 UTC+8",
+          END_TIME: "2021/06/26 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hWINGS",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "WINGS",
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x0487b824c8261462f88940f97053e65bdb498446",
+          REWARD1_VOLUME: 30000,
+          REWARD2_VOLUME: 4500,
+          LEFTTTOKEN: {
+            ADDTOKEN_SYMBOL: "hWINGS",
+            ADDTOKEN_ADDRESS: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "WINGS",
+            ADDTOKEN_ADDRESS: "0x0487b824c8261462f88940f97053e65bdb498446",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHT_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
+          PROXY_ADDRESS: "",
+          POOL_ADDRESS: "0xBAd52954a2397A9A04c44440039904B0E1Cb8d0f",
+          STAKE_ADDRESS: "0x0ea990871e99c83c9800f7266e3b9c612dd68623",
+          STAKE_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
+          JUMP1_TEXT:
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LP</a>",
+          APRTYPE: "hTokenDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
         },
         {
           POOL_NAME: "HELMET-BNB&nbsp;DLP",
@@ -711,7 +631,7 @@ export default {
             ADDTOKEN_DECIMALS: 18,
           },
           RIGHT_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
-          PROXY_ADDRESS: "0x67ee3Cb086F8a16f34beE3ca72FAD36F7Db929e2",
+          PROXY_ADDRESS: "0x14b5E6158864a2F5E04C52F1858185b64aEddAf6",
           POOL_ADDRESS: "0x14b5E6158864a2F5E04C52F1858185b64aEddAf6",
           STAKE_ADDRESS: "0x9CE69450FDCc3b6058F7c430ef0A8C051b2300c6",
           REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
@@ -723,6 +643,7 @@ export default {
           JUMP1_TEXT:
             "<a href=https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234' target='_blank'>From <i class='dodo'></i>Get HELMET-BNB DLP</a>",
         },
+
         {
           POOL_NAME: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
           STAKE_SYMBOL: "HELMET-hxBURGER BLP",
@@ -736,7 +657,6 @@ export default {
           COMBO_FLAG: true,
           flash: false,
           REWARD_TYPE: "APR",
-          compound: false,
           ONE_PAGER: "hxBURGER",
           REWARD1_SYMBOL: "BHELMET",
           REWARD2_SYMBOL: "xBURGER",
@@ -1032,382 +952,14 @@ export default {
       this.miningList = arr;
       this.$forceUpdate();
     },
-    getAPY() {
-      this.HELMET_BNB_LP_V1_APY();
-      this.HELMET_BNB_LP_V2_APY();
-      this.HELMET_hDODO_DLP_APY();
-      this.BHELMET_DODO_LP_APY();
-      this.FEI_POOL_APY();
-      this.QFEI_QSD_DLP_APY();
-      this.HELMET_KUN_DLP_APY();
-      this.HELMET_POOL_APY();
-      this.HELMET_hFOR_LP_APY();
-      this.HELMET_hBURGER_LP_APY();
-      this.HELMET_MDX_LP_APY();
-      this.BHELMET_XBURGER_APY();
-    },
-
-    async HELMET_BNB_LP_V2_APY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB1_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB1");
-      let helmetReward = await Rewards("HELMETBNB1", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB1_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB1_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB1")) / 86400;
-      let dayHelmet = totalHelmet;
-      let helmetapy = precision.divide(
-        precision.times(
-          this.helmetPrice,
-          precision.minus(HelmetAllowance, helmetReward),
-          365
-        ),
-        precision.times(miningTime, bnbValue)
-      );
-      let cakeapy = precision.divide(
-        precision.times(precision.divide(cakePrice, bnbPrice), 1200000),
-        precision.times(precision.divide(bnbValue, totalHelmet), cakeValue)
-      );
-      let APY = (cakeapy + helmetapy) * 100;
-      this.apyArray.helmet_cake_v2 = fixD(APY, 2);
-    },
-
-    async BHELMET_DODO_LP_APY() {
-      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
-      let allVolume = lptBnbValue * 12000 * 36;
-      //总抵押
-      let supplyVolume = await totalSupply("HELMETDODOPOOL"); //数量
-      let supplyVolumedodo = await totalSupply(
-        "0x38E02C8AB552DEE3a79E32eB4665ceae538fD145"
-      ); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("HELMETDODOPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "HELMETDODOPOOL_LPT");
-      // （1+日产量/总质押量）^365
-      let helmetAPY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 36), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let lptBnbValue1 = await pancakeswap("USDT", "WBNB");
-      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = 36 * 5000 * (lptBnbValue1 * lptHelmetValue1);
-      let dodoAPR =
-        precision.divide(
-          precision.times(precision.divide(stakeValue1, 36), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolumedodo
-          )
-        ) * 100;
-      let APY = helmetAPY + dodoAPR;
-      let startedTime = this.timeArray.bhelmet_dodo.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.bhelmet_dodo = "--";
-      } else {
-        this.apyArray.bhelmet_dodo = fixD(APY, 2);
+    async GetPoolItemAPR() {
+      let arr = this.miningList;
+      for (let i = 0; i < arr.length; i++) {
+        let item = arr[i];
+        let res = await GetPoolAPR(item);
+        item.REWARD_YEAR = res;
       }
-    },
-    async HELMET_POOL_APY() {
-      let HelmetVolume = await totalSupply("HELMETPOOL");
-      // （1+日产量/总质押量）^365
-      let APY =
-        Math.pow(
-          precision.plus(1, precision.divide(33057.57, HelmetVolume)),
-          365
-        ) * 100;
-
-      this.apyArray.helmet = fixD(APY, 2);
-    },
-    async BHELMET_XBURGER_APY() {
-      let BHELMETHelmetValue = (await pancakeswap("BHELMET", "HELMET")) * 60000;
-      let XBURGERBnbValue = await burgerswaptoken(
-        "0xeE679fACDaC1A80e05e1F749Ac451b98c4A33B0e"
-      );
-      let BNBHELMETValue = await pancakeswap("WBNB", "HELMET");
-      let XBURGERHELMETValue = XBURGERBnbValue * BNBHELMETValue * 2500;
-      // XBURGER/WBNB
-      let RewardValue = BHELMETHelmetValue + XBURGERHELMETValue;
-      let supplyVolume = await totalSupply("XBURGERBHELMET"); //数量
-      let stakeVolue = await totalSupply("XBURGERBHELMET_LPT"); //数量
-      let stakeValue = await balanceOf(
-        "HELMET",
-        "0xFC63E62e950fAFC056C8024B20d1899154e55340"
-      );
-      let APY =
-        precision.divide(
-          precision.times(precision.divide(RewardValue, 20), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let startedTime = this.timeArray.bhelmet_xburger.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.bhelmet_xburger = "--";
-      } else {
-        this.apyArray.bhelmet_xburger = fixD(APY, 2);
-        // this.apyArray.bhelmet_xburger = "--";
-      }
-    },
-    async HELMET_MDX_LP_APY() {
-      let lptBnbValue = await pancakeswap("BHELMET", "HELMET");
-      let DODOHELMET = lptBnbValue;
-      let allVolume = DODOHELMET * 180000;
-      //总抵押
-      let supplyVolume = await totalSupply("HELMETMDXPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("HELMETMDXPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "HELMETMDXPOOL_LPT");
-      // （1+日产量/总质押量）^365
-      let helmetAPY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 30), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let lptBnbValue1 = await pancakeswap("MDX", "WBNB");
-      let lptHelmetValue1 = await pancakeswap("WBNB", "HELMET");
-      let stakeValue1 = lptBnbValue1 * lptHelmetValue1 * 30 * 677.38;
-      let supplyVolume1 = await balanceOf(
-        "HELMETMDXPOOL_LPT",
-        "0xc48fe252aa631017df253578b1405ea399728a50",
-        true
-      );
-      let mdxAPY =
-        precision.divide(
-          precision.times(precision.divide(stakeValue1, 30), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume1
-          )
-        ) * 100;
-      let APY = mdxAPY;
-      let startedTime = this.timeArray.mdx.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.mdx = "--";
-      } else {
-        this.apyArray.mdx = fixD(APY, 2);
-      }
-    },
-    async FEI_POOL_APY() {
-      let lptBnbValue = await pancakeswap("QFEI", "QSD");
-      let DODOHELMET = lptBnbValue;
-      let allVolume = DODOHELMET * 200000;
-      //总抵押
-      let supplyVolume = await totalSupply("FEIPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("FEIPOOL_LPT"); //数量
-      // 抵押总价值
-      let lptBnbValue1 = await pancakeswap("FEI", "WBNB");
-      let lptHelmetValue1 = await pancakeswap("WBNB", "QSD");
-      let stakeValue = lptBnbValue1 * lptHelmetValue1;
-      // （1+日产量/总质押量）^365
-      let APY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 7), 365),
-          precision.times(stakeValue, supplyVolume)
-        ) * 100;
-
-      let startedTime = this.timeArray.QFEI.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.qfei = "--";
-      } else {
-        this.apyArray.qfei = fixD(APY, 2);
-      }
-    },
-    async QFEI_QSD_DLP_APY() {
-      let lptBnbValue = await pancakeswap("KUN", "WBNB");
-      let lptHelmetValue = await pancakeswap("WBNB", "QSD");
-      let DODOHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = DODOHELMET * 150000;
-      //总抵押
-      let supplyVolume = await totalSupply("KUNPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("KUNPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("QSD", "KUNPOOL_LPT");
-      let APY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 20), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let startedTime = this.timeArray.kun.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.kun = "--";
-      } else {
-        this.apyArray.kun = fixD(APY, 2);
-      }
-    },
-    async HELMET_KUN_DLP_APY() {
-      let lptBnbValue = await pancakeswap("QHELMET", "QSD");
-      let HelmetWBNBValue = await pancakeswap("HELMET", "WBNB");
-      let WBNBUSDValue = await pancakeswap("WBNB", "USDT");
-      let HelmetUsdtValue = HelmetWBNBValue * WBNBUSDValue;
-      let allVolume = lptBnbValue * 60000;
-      //总抵押
-      let supplyVolume = await totalSupply("QHELMETPOOL"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("QHELMETPOOL_LPT"); //数量
-      // 抵押总价值
-      let stakeValue =
-        (await balanceOf("HELMET", "QHELMETPOOL_LPT")) * HelmetUsdtValue;
-      let APY =
-        precision.divide(
-          precision.times(precision.divide(allVolume, 20), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        ) * 100;
-      let startedTime = this.timeArray.QHELMET.started;
-      let nowTime = new Date() * 1;
-      if (nowTime < startedTime) {
-        this.apyArray.QHELMET = "--";
-      } else {
-        this.apyArray.QHELMET = fixD(APY, 2);
-      }
-    },
-    async HELMET_BNB_LP_V1_APY() {
-      this.helmetPrice = this.indexArray[1]["HELMET"];
-      let cakePrice = this.$store.state.CAKE_BUSD;
-      let bnbPrice = this.$store.state.BNB_BUSD;
-      // 总LPT
-      let totalHelmet = await totalSupply("HELMETBNB_LPT");
-      let HelmetAllowance = await getAllHelmet("HELMET", "FARM", "HELMETBNB");
-      let helmetReward = await Rewards("HELMETBNB", "0");
-      // BNB总价值
-      let bnbValue = (await balanceOf("WBNB", "HELMETBNB_LPT")) * 2;
-      // BNB总价值不翻倍
-      let cakeValue = await balanceOf("HELMETBNB_LPT", "CAKEHELMET", true);
-      let miningTime = (await RewardsDuration("HELMETBNB")) / 86400;
-      let dayHelmet = totalHelmet;
-      let helmetapy = precision.divide(
-        precision.times(
-          this.helmetPrice,
-          precision.minus(HelmetAllowance, helmetReward),
-          365
-        ),
-        precision.times(miningTime, bnbValue)
-      );
-      let cakeapy = precision.divide(
-        precision.times(cakePrice, 1200000),
-        precision.times(
-          precision.divide(bnbValue, totalHelmet),
-          cakeValue,
-          bnbPrice
-        )
-      );
-      let APY = helmetapy * 100;
-      this.apyArray.helmet_cake_v1 = fixD(APY, 2);
-    },
-    async HELMET_hDODO_DLP_APY() {
-      let lptBnbValue = await pancakeswap("DODO", "WBNB");
-      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
-      let DODOHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = DODOHELMET * 10000;
-      //总抵押
-      let supplyVolume = await totalSupply("DODOHELMET"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("DODOHELMET_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "DODOHELMET_LPT", true);
-      let burgerApy = precision.divide(
-        precision.times(precision.divide(allVolume, 21), 365),
-        precision.times(
-          precision.divide(precision.times(stakeValue, 2), stakeVolue),
-          supplyVolume
-        )
-      );
-      let helmetApy = precision.divide(
-        precision.times(precision.divide(25000, 21), 365),
-        precision.times(
-          precision.divide(precision.times(stakeValue, 2), stakeVolue),
-          supplyVolume
-        )
-      );
-
-      let APY = precision.plus(burgerApy, helmetApy) * 100;
-      this.apyArray.helmet_dodo = fixD(APY, 2);
-    },
-    async HELMET_hFOR_LP_APY() {
-      let lptBnbValue = await pancakeswap("FOR", "WBNB");
-      let lptHelmetValue = await pancakeswap("WBNB", "HELMET");
-      let FORHELMET = lptBnbValue * lptHelmetValue;
-      let allVolume = FORHELMET * 182010;
-      //总抵押
-      let supplyVolume = await totalSupply("FORHELMET"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("FORHELMET_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "FORHELMET_LPT", true);
-      let forApy = precision.divide(
-        precision.times(precision.divide(allVolume, 15), 365),
-        precision.times(
-          precision.divide(precision.times(stakeValue, 2), stakeVolue),
-          supplyVolume
-        )
-      );
-      let helmetApy = precision.divide(
-        precision.times(precision.divide(10000, 15), 365),
-        precision.times(
-          precision.divide(precision.times(stakeValue, 2), stakeVolue),
-          supplyVolume
-        )
-      );
-
-      let APY = precision.plus(forApy, helmetApy) * 100;
-      this.apyArray.helmet_for = fixD(APY, 2);
-    },
-    async HELMET_hBURGER_LP_APY() {
-      let burgebnbrValue = await pancakeswap("BURGER", "WBNB");
-      let bnbhelmetValue = await pancakeswap("WBNB", "HELMET");
-      let burgerHelmet = burgebnbrValue * bnbhelmetValue;
-      let allVolume = burgerHelmet * 15000;
-      //总抵押
-      let supplyVolume = await totalSupply("BURGERHELMET"); //数量
-      // 总发行
-      let stakeVolue = await totalSupply("BURGERHELMET_LPT"); //数量
-      // 抵押总价值
-      let stakeValue = await balanceOf("HELMET", "BURGERHELMET_LPT", true);
-      let burgerApy = precision.divide(
-        precision.times(precision.divide(allVolume, 25), 365),
-        precision.times(
-          precision.divide(precision.times(stakeValue, 2), stakeVolue),
-          supplyVolume
-        )
-      );
-      let helmetApy = fixD(
-        precision.divide(
-          precision.times(precision.divide(75000, 25), 365),
-          precision.times(
-            precision.divide(precision.times(stakeValue, 2), stakeVolue),
-            supplyVolume
-          )
-        )
-      );
-      let APY = precision.plus(burgerApy, helmetApy) * 100;
-      this.apyArray.helmet_burger = fixD(APY, 2);
+      this.$forceUpdate();
     },
     getMiningTime(time) {
       let now = new Date() * 1;
@@ -1476,7 +1028,7 @@ export default {
   .v2_light,
   .v1_dark,
   .v2_dark {
-    border: none;
+    border: none !important;
     display: inline-block;
     margin-left: 4px;
     width: 16px;
@@ -1484,7 +1036,7 @@ export default {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     &:hover {
-      border: none;
+      border: none !important;
     }
   }
   .v1_light {

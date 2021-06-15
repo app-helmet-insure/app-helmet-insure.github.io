@@ -112,7 +112,14 @@ export default {
     h3 {
       text-align: center;
       height: 24px;
-      background: linear-gradient(180deg, #ffffff 0%, #ffcb82 150%);
+      @include themeify {
+        background: linear-gradient(
+          180deg,
+          themed("color-ffffff") 0%,
+          themed("onepager_title") 150%
+        );
+        color: themed("color-17173a");
+      }
       align-self: center;
       transform: translateY(10px);
       padding: 0 10px;
@@ -174,7 +181,14 @@ export default {
     h3 {
       text-align: center;
       height: 24px;
-      background: linear-gradient(180deg, #ffffff 0%, #ffcb82 150%);
+      @include themeify {
+        background: linear-gradient(
+          180deg,
+          themed("color-ffffff") 0%,
+          themed("onepager_title") 150%
+        );
+        color: themed("color-17173a");
+      }
       align-self: center;
       transform: translateY(10px);
       padding: 0 10px;

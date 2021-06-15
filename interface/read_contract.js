@@ -1,6 +1,7 @@
 import MiningABI from '~/abi/deposite_abi.json';
 import ApproveABI from '~/abi/IPancakePair.json';
-import PoolABI from '~/abi/pool_abi.json';
+import CakePoolABI from '~/abi/cake_pool_abi.json';
+import MdexPoolABI from '~/abi/mdex_pool_abi.json';
 import {
     Contract,
     getAccounts,
@@ -80,17 +81,17 @@ export const Earned2 = async (ContractAddress, Decimals) => {
 };
 // Total daily output
 export const TotalAllocPoint = async (ContractAddress) => {
-    let Contracts = await Contract(PoolABI, ContractAddress);
+    let Contracts = await Contract(CakePoolABI, ContractAddress);
     return Contracts.methods
         .totalAllocPoint()
         .call()
         .then((res) => {
-            return res;
+            return fromWei(res);
         });
 };
 // Daily output
 export const PoolInfo = async (ContractAddress, PoolPid) => {
-    let Contracts = await Contract(PoolABI, ContractAddress);
+    let Contracts = await Contract(CakePoolABI, ContractAddress);
     return Contracts.methods
         .poolInfo(PoolPid)
         .call()
@@ -100,12 +101,22 @@ export const PoolInfo = async (ContractAddress, PoolPid) => {
 };
 // Cake per block
 export const CakePerBlock = async (ContractAddress) => {
-    let Contracts = await Contract(PoolABI, ContractAddress);
+    let Contracts = await Contract(CakePoolABI, ContractAddress);
     return Contracts.methods
         .cakePerBlock()
         .call()
         .then((res) => {
-            return res;
+            return fromWei(res);
+        });
+};
+// Mdex per block
+export const MdexPerBlock = async (ContractAddress) => {
+    let Contracts = await Contract(MdexPoolABI, ContractAddress);
+    return Contracts.methods
+        .mdxPerBlock()
+        .call()
+        .then((res) => {
+            return fromWei(res);
         });
 };
 // Number of Approve

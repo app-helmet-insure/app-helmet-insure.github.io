@@ -341,7 +341,7 @@ export default {
           expired_activating: "25.15%",
         },
         {
-          iio_name: "Marsecosystem",
+          iio_name: "MarsEcosystem",
           iio_img: "iio_xms",
           iio_webSite: "marsecosystem.com",
           coming: true,

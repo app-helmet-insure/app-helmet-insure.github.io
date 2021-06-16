@@ -460,6 +460,7 @@ export default {
         {
           POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
           STAKE_SYMBOL: "HELMET-BNB LP",
+          STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v2",
           REARD_IMGSHOW: true,
@@ -495,6 +496,7 @@ export default {
         {
           POOL_NAME: "HELMET&nbsp;POOL",
           STAKE_SYMBOL: "HELMET",
+          STAKE_UNIT: "HELMET",
           REARD_VOLUME: "one",
           REWARD_NAME: "helmet",
           REARD_IMGSHOW: true,
@@ -519,6 +521,7 @@ export default {
         {
           POOL_NAME: "HELMET-BNB&nbsp;MLP",
           STAKE_SYMBOL: "HELMET-BNB MLP",
+          STAKE_UNIT: "MLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "mdx",
           REARD_IMGSHOW: true,
@@ -557,6 +560,7 @@ export default {
         {
           POOL_NAME: "HELMET-<i>hWINGS</i>&nbsp;LP",
           STAKE_SYMBOL: "HELMET-hWINGS MLP",
+          STAKE_UNIT: "MLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_wings",
           REARD_IMGSHOW: true,
@@ -599,6 +603,7 @@ export default {
         {
           POOL_NAME: "HELMET-BNB&nbsp;DLP",
           STAKE_SYMBOL: "HELMET-BNB DLP",
+          STAKE_UNIT: "DLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "bhelmet_dodo",
           REARD_IMGSHOW: true,
@@ -639,6 +644,7 @@ export default {
         {
           POOL_NAME: "HELMET-<i>hxBURGER</i>&nbsp;BLP",
           STAKE_SYMBOL: "HELMET-hxBURGER BLP",
+          STAKE_UNIT: "BLP",
           REARD_VOLUME: "two",
           REWARD_NAME: "bhelmet_xburger",
           REARD_IMGSHOW: true,
@@ -681,6 +687,7 @@ export default {
         {
           POOL_NAME: "FEI(BSC)&nbsp;POOL",
           STAKE_SYMBOL: "FEI",
+          STAKE_UNIT: "FEI",
           REARD_VOLUME: "one",
           REWARD_NAME: "QFEI",
           REARD_IMGSHOW: false,
@@ -718,6 +725,7 @@ export default {
         {
           POOL_NAME: "<i>QFEI</i>-QSD&nbsp;DLP",
           STAKE_SYMBOL: "QFEI-QSD DLP",
+          STAKE_UNIT: "DPT",
           REARD_VOLUME: "one",
           REWARD_NAME: "kun",
           REARD_IMGSHOW: true,
@@ -756,6 +764,7 @@ export default {
         {
           POOL_NAME: "HELMET-KUN&nbsp;DLP",
           STAKE_SYMBOL: "HELMET-KUN DLP",
+          STAKE_UNIT: "DPT",
           REARD_VOLUME: "one",
           REWARD_NAME: "QHELMET",
           REARD_IMGSHOW: false,
@@ -793,6 +802,7 @@ export default {
         {
           POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
           STAKE_SYMBOL: "HELMET-BNB LP",
+          STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v1",
           REARD_IMGSHOW: true,
@@ -831,6 +841,7 @@ export default {
         {
           POOL_NAME: "HELMET-<i>hDODO</i>&nbsp;DLP",
           STAKE_SYMBOL: "HELMET-hDODO DLP",
+          STAKE_UNIT: "DPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_dodo",
           REARD_IMGSHOW: true,
@@ -871,6 +882,7 @@ export default {
         {
           POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LP",
           STAKE_SYMBOL: "HELMET-hFOR LP",
+          STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_for",
           REARD_IMGSHOW: true,
@@ -911,6 +923,7 @@ export default {
         {
           POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LP",
           STAKE_SYMBOL: "HELMET-hBURGER LP",
+          STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_burger",
           REARD_IMGSHOW: true,

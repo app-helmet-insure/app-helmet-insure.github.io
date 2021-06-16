@@ -15,7 +15,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ getLptType() }}
+          {{ activeData.STAKE_UNIT }}
         </p>
       </div>
       <div class="content">
@@ -55,7 +55,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ getLptType() }}</span
+            &nbsp;{{ activeData.STAKE_UNIT }}</span
           >
         </p>
         <p>
@@ -69,7 +69,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ getLptType() }}</span
+            &nbsp;{{ activeData.STAKE_UNIT }}</span
           >
         </p>
         <section>
@@ -127,6 +127,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
+          {{ activeData.STAKE_UNIT }}
         </p>
       </div>
       <div class="content">

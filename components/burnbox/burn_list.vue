@@ -1036,7 +1036,9 @@ export default {
     width: 100%;
     height: 100vh;
     position: fixed;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     top: 0;
     left: 0;
     z-index: 99;

@@ -359,19 +359,8 @@
 </template>
 
 <script>
-import {
-  totalSupply,
-  balanceOf,
-  getAllHelmet,
-  Rewards,
-  RewardsDuration,
-  CangetPAYA,
-} from "~/interface/deposite";
+import { Earned } from "~/interface/read_contract.js";
 import Wraper from "~/components/common/wraper.vue";
-import precision from "~/assets/js/precision.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { burgerswaptoken } from "~/assets/utils/burgerswap.js";
-import { dodoswap } from "~/assets/utils/dodoswap.js";
 import { fixD } from "~/assets/js/util.js";
 import POOL from "./pool.vue";
 import moment from "moment";
@@ -448,7 +437,7 @@ export default {
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
         number: this.HelmetBalance,
-        pool: "HELMETPOOL",
+        poolAddress: "0x279a073c491c873df040b05cc846a3c47252b52c",
       });
     },
     HandleClickAction(PoolData, Action, Flag = false) {
@@ -459,8 +448,10 @@ export default {
       this.activeMining = PoolData.REWARD_NAME;
     },
     async getHelmetBalance() {
-      let type = "HELMETPOOL";
-      let Helmet = await CangetPAYA(type);
+      let Helmet = await Earned(
+        "0x279a073c491c873df040b05cc846a3c47252b52c",
+        18
+      );
       this.HelmetBalance = Helmet;
     },
     initMiningData() {
@@ -1607,7 +1598,9 @@ export default {
     width: 100%;
     height: 100vh;
     position: fixed;
-    background: #f8f9fa;
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     top: 0;
     left: 0;
     z-index: 99;

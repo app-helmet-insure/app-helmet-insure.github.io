@@ -1,12 +1,3 @@
-// import { setCookie, getCookie } from '~/assets/js/cookie';
-import { CangetUNI, CangetPAYA } from '~/interface/deposite.js';
-import {
-    getOptionCreatedLog,
-    getSellLog,
-    getBuyLog,
-    getMint,
-    getRePrice,
-} from '~/interface/order.js';
 import {
     getLongList,
     getSellList,
@@ -15,14 +6,10 @@ import {
     getMintList,
     getLongValues,
 } from '~/interface/event.js';
-import { getProgress } from '~/interface/price.js';
 import {
     getID,
     newGetSymbol,
     getTokenName,
-    getAddress,
-    getContract,
-    dealWithStrikePrice,
 } from '~/assets/utils/address-pool.js';
 import Web3 from 'web3';
 import { toWei, fromWei } from '~/assets/utils/web3-fun.js';

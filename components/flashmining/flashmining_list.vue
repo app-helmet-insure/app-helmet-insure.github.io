@@ -240,7 +240,6 @@
 
 <script>
 import Wraper from "~/components/common/wraper.vue";
-import { totalSupply, balanceOf } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
 import precision from "~/assets/js/precision.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
@@ -1272,7 +1271,9 @@ export default {
     width: 100%;
     height: 100vh;
     position: fixed;
-    background: #f8f9fa;
+     @include themeify {
+            background: themed("color-f8f9fa");
+          }
     top: 0;
     left: 0;
     z-index: 99;

@@ -218,6 +218,9 @@
             }
         }
     }
+    .activeInput {
+        border: 1px solid #fd7e14 !important;
+    }
 }
 @media screen and (max-width: 750px) {
     .ContractAddress {
@@ -366,5 +369,8 @@
                 }
             }
         }
+    }
+    .activeInput {
+        border: 1px solid #fd7e14 !important;
     }
 }

@@ -392,26 +392,6 @@ export const claim = async () => {
     }
     return result;
 };
-// 有效交易总量
-export const frequency = async (address) => {
-    let charID = window.charID;
-    let adress = address;
-    if (adress.indexOf('0x') === -1) {
-        adress = getContract(address, charID);
-    }
-    const order = await Order();
-    if (!adress) {
-        return 0;
-    }
-    return order.methods
-        .frequency()
-        .call()
-        .then((res) => {
-            let tocurrcy = adress;
-            return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
-        });
-};
-
 export const bids = async (bidID, type = 'default', token = 'default') => {
     // const WEB3 = await web3();
     // console.log(bidID)
@@ -424,8 +404,6 @@ export const bids = async (bidID, type = 'default', token = 'default') => {
 
     return order.methods.bids(bidID).call();
 };
-
-export const getMySellLog = async (callback) => {};
 
 export const getBalance = async (type, currcy) => {
     // const WEB3 = await web3();

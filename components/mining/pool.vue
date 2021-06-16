@@ -97,7 +97,7 @@
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.LEFTTOKEN.ADDTOKEN_ADDRESS }}
+          {{ activeData.LEFTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
@@ -138,9 +138,9 @@
             disabled
             :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <span @click="WithdrawNum = balance.Withdraw">{{
+          <!-- <span @click="WithdrawNum = balance.Withdraw">{{
             $t("Insurance.Insurance_text18")
-          }}</span>
+          }}</span> -->
         </div>
       </div>
       <div class="button">
@@ -190,11 +190,22 @@
             {{ activeData.REWARD2_SYMBOL }}</span
           >
         </p>
+        <!-- compound -->
         <button
+          v-if="activeData.COMPOUND"
+          @click="toCompound"
+          :class="claimLoading ? 'disable o_button' : 'o_button'"
+        >
+          <i :class="claimLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.Compound") }}
+        </button>
+        <!-- claim -->
+        <button
+          v-else
           @click="toClaim"
           :class="
             (claimLoading ? 'disable o_button' : 'o_button',
-            this.activeData.MING_TIME == 'Finished'
+            activeData.MING_TIME == 'Finished'
               ? 'disable_button o_button'
               : 'o_button')
           "
@@ -209,7 +220,7 @@
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS }}
+          {{ activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
@@ -277,6 +288,9 @@ export default {
   mounted() {
     this.NeedApprove();
     this.getBalance();
+    this.$bus.$on("GET_BALANCE", () => {
+      this.getBalance();
+    });
   },
   watch: {
     userInfo: {
@@ -314,8 +328,8 @@ export default {
           return "MLP";
       }
     },
+
     async addTokenFn(options) {
-      console.log(options);
       let data = {
         tokenAddress: options.ADDTOKEN_ADDRESS,
         tokenSymbol: options.ADDTOKEN_SYMBOL,
@@ -452,6 +466,13 @@ export default {
           }
         });
       }
+    },
+    toCompound() {
+      this.$bus.$emit("OPEN_COMPOUND", {
+        title: "Compound HELMET Earned",
+        number: this.balance.Reward1,
+        poolAddress: this.activeData.POOL_ADDRESS,
+      });
     },
     // 退出
     async toExit() {

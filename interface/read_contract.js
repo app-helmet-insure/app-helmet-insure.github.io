@@ -8,6 +8,8 @@ import {
     getDecimals,
     toWei,
     fromWei,
+    BlockNumber,
+    getBlockNumber,
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
 // Balanceof
@@ -114,6 +116,17 @@ export const MdexPerBlock = async (ContractAddress) => {
     let Contracts = await Contract(MdexPoolABI, ContractAddress);
     return Contracts.methods
         .mdxPerBlock()
+        .call()
+        .then((res) => {
+            return fromWei(res);
+        });
+};
+// Mdex Reward
+export const Reward = async (ContractAddress) => {
+    let Contracts = await Contract(MdexPoolABI, ContractAddress);
+    let BlockNumber = await getBlockNumber();
+    return Contracts.methods
+        .reward(BlockNumber)
         .call()
         .then((res) => {
             return fromWei(res);

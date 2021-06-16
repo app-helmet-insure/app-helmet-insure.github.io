@@ -97,13 +97,16 @@
         padding: 40px 0;
         display: flex;
         justify-content: space-evenly;
+        @include themeify {
+            border-top: 1px solid themed('insure_button_border');
+        }
         border-top: 1px solid #e8e8eb;
         > i {
             display: block;
             width: 1px;
             height: auto;
             @include themeify {
-                color: themed('color-e8e8eb');
+                background: themed('insure_button_border');
             }
         }
         > div {

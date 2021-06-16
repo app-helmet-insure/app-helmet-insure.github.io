@@ -3,12 +3,14 @@ import { pancakeswapv2 } from '~/assets/utils/pancakeswapv2.js';
 import { pancakeswap } from '~/assets/utils/pancakeswap.js';
 import { burgerswaplpt } from '~/assets/utils/burgerswap.js';
 import { fixD } from '~/assets/js/util.js';
+
 import {
     Contract,
     getAccounts,
     getDecimals,
     toWei,
     fromWei,
+    getBlockNumber,
 } from '~/interface/common_contract.js';
 import {
     TotalSupply,
@@ -20,14 +22,15 @@ import {
     PoolAllowance,
     Rewards,
     RewardsDuration,
+    Reward,
 } from '~/interface/read_contract.js';
 import BigNumber from 'bignumber.js';
 export const GetPoolAPR = async (poolData) => {
     let { MING_TIME, OPEN_TIME } = poolData;
-    let APR = await getAPRMethods(poolData);
     if (MING_TIME == 'Finished') {
         return '--';
     }
+    let APR = await getAPRMethods(poolData);
     if (OPEN_TIME == 'Mining') {
         return fixD(APR, 2) + '%';
     }
@@ -147,7 +150,8 @@ const MdexDoublePoolAPR = async ({
     // total alloc of pool
     let POOL_TOTAL_ALLOC_POINT = await TotalAllocPoint(PROXY_ADDRESS);
     // cake per block
-    let MDEX_PER_BLOCK = await MdexPerBlock(PROXY_ADDRESS);
+    // let MDEX_PER_BLOCK = await MdexPerBlock(PROXY_ADDRESS);
+    let MDEX_PER_BLOCK = await Reward(PROXY_ADDRESS);
     // alloc of pool
     let POOL_ALLOC_POINT = await PoolInfo(PROXY_ADDRESS, POOL_PID);
     POOL_ALLOC_POINT = fromWei(POOL_ALLOC_POINT.allocPoint);
@@ -155,7 +159,7 @@ const MdexDoublePoolAPR = async ({
     let DecimalsUnit2 = getDecimals(REWARD2_DECIMALS);
     // dayily reward
     let DAYILY_REWARD2 =
-        (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (MDEX_PER_BLOCK * 14400) +
+        (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (MDEX_PER_BLOCK * 28800) +
         '';
     // reward2 value to bnb
     let REWARD2_BNB_VALUE = await GetTokenForBNBValue(

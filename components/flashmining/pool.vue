@@ -24,11 +24,7 @@
             name="deposit"
             type="text"
             v-model="DepositeNum"
-            :style="
-              DepositeNum == balance.Deposite
-                ? 'border: 1px solid #fd7e14 !important'
-                : ''
-            "
+            :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
           <span
             @click="DepositeNum = balance.Deposite"
@@ -93,22 +89,23 @@
         >From <i class="pancake"></i>Get {{ activeData.TOKEN_NAME }}-HELMET
         LPT</a
       >
-      <div class="ContractAddress">
+      <div class="ContractAddress" v-if="activeData.LEFTTOKEN">
         <span
-          >{{ activeData.TOKEN_NAME }} {{ $t("Table.ContractAddress") }}</span
+          >{{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }}
+          {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.ONELPT_ADDRESS.toLowerCase() }}
+          {{ activeData.LEFTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.ONELPT_ADDRESS)"
+            @click="copyAdress($event, activeData.LEFTTOKEN.ADDTOKEN_ADDRESS)"
           ></i>
         </p>
       </div>
-      <div class="addToken">
-        <p @click="addTokenFn('HTPT', 'hTPT', 4)">
-          Add {{ activeData.TOKEN_NAME }} to MetaMask
+      <div class="addToken" v-if="activeData.LEFTTOKEN">
+        <p @click="addTokenFn(activeData.LEFTTOKEN)">
+          Add {{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
         </p>
         <i></i>
       </div>
@@ -139,13 +136,13 @@
             type="text"
             v-model="balance.Withdraw"
             disabled
-            style="border: 1px solid #fd7e14 !important"
+            :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <span
+          <!-- <span
             @click="WithdrawNum = balance.Withdraw"
             style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</span
-          >
+          > -->
         </div>
       </div>
       <div class="button">
@@ -189,22 +186,23 @@
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
-      <div class="ContractAddress">
+      <div class="ContractAddress" v-if="activeData.RIGHTTOKEN">
         <span
-          >{{ activeData.REWARD_NAME }} {{ $t("Table.ContractAddress") }}</span
+          >{{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }}
+          {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.REWARD_ADDRESS.toLowerCase() }}
+          {{ activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.REWARD_ADDRESS)"
+            @click="copyAdress($event, activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS)"
           ></i>
         </p>
       </div>
-      <div class="addToken">
-        <p @click="addTokenFn('HXBURGER', 'hxBurger')">
-          Add hxBURGER to MetaMask
+      <div class="addToken" v-if="activeData.RIGHTTOKEN">
+        <p @click="addTokenFn(activeData.RIGHTTOKEN)">
+          Add {{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
         </p>
         <i></i>
       </div>
@@ -276,13 +274,11 @@ export default {
     },
   },
   methods: {
-    async addTokenFn(token, tokenName, unit) {
-      let tokenAddress = getAddress(token);
-      let tokenAddress1 = getContract(token);
+    async addTokenFn(options) {
       let data = {
-        tokenAddress: tokenAddress || tokenAddress1,
-        tokenSymbol: tokenName || token,
-        tokenDecimals: unit || 18,
+        tokenAddress: options.ADDTOKEN_ADDRESS,
+        tokenSymbol: options.ADDTOKEN_SYMBOL,
+        tokenDecimals: options.ADDTOKEN_DECIMALS,
         tokenImage: "",
       };
       await addToken(data);

@@ -119,24 +119,9 @@ export const state = () => ({
         },
         status: 0,
     },
-    hatList: [], // 矿工帽列表'
     walletType: '', // 钱包类型
-    currentAllId: {
-        currentClaimId: '', // 当前结算ID
-        currentCancelId: '',
-    },
-
     showDialog: {
         showMask: false,
-        showPayaso: false,
-    },
-    assets: {
-        validBorrowing: 0,
-        totalHelmet: 0,
-        balanceMine: 0,
-        myPaya: 0,
-        payaSettle: 0,
-        claimAbleHelmet: 0,
     },
     BNB_BUSD: 0,
     CAKE_BUSD: 0,
@@ -144,17 +129,6 @@ export const state = () => ({
     helmetVarieties: 0, // 已经成交的保险品种的种类
     totalHelmetsBorrowedVolume: 0, // 保险交易过的资金量  （保单数量累加， vol 用抵押物处理）
     longTokenCreatedVolume: 0, // 24小时Long token 铸造量
-    approveList: {
-        HELMET_BNB: false,
-        BNB_HELMET: false,
-        CAKE_BNB: false,
-        BNB_CAKE: false,
-        CTK_BNB: false,
-        BNB_CTK: false,
-        FOR_BNB: false,
-        BNB_FOR: false,
-    },
-
     allDueDate: [
         {
             BTCB: '2021/06/21 24:00',
@@ -168,16 +142,6 @@ export const state = () => ({
             SHIB: '2021/06/21 24:00',
         },
     ],
-    echartIndexArray: {
-        BTCB: 0,
-        ETH: 0,
-        HELMET: 0,
-        CAKE: 0,
-        CTK: 0,
-        BURGER: 0,
-        WBNB: 0,
-        MATH: 0,
-    },
     strikePriceArray: [
         // 翻倍价格
         {
@@ -393,41 +357,6 @@ export const mutations = {
     SET_MASK_DIALOG(state, data) {
         state.showDialog.showMask = data;
     },
-    SET_PAYASO_DIALOG(state, data) {
-        state.showDialog.showPayaso = data;
-    },
-    SET_ASSETS_VALUE(state, data) {
-        if (data.frequency) {
-            state.assets.validBorrowing = data.frequency;
-        }
-        if (data.totalHelmet) {
-            state.assets.totalHelmet = data.totalHelmet;
-        }
-        if (data.balanceMine) {
-            state.assets.balanceMine = data.balanceMine;
-        }
-        if (data.myPaya) {
-            state.assets.myPaya = data.myPaya;
-        }
-        if (data.payaSettle) {
-            state.assets.payaSettle = data.payaSettle;
-        }
-        if (data.claimAbleHelmet) {
-            state.assets.claimAbleHelmet = data.claimAbleHelmet;
-        }
-    },
-    SET_ETH_DAI_LPT(state, data) {
-        state.ETH_DAI_LPT = data;
-    },
-    SET_DAI_ETH(state, data) {
-        state.DAI_ETH = data;
-    },
-    SET_MY_UNI(state, data) {
-        state.myUNI = data;
-    },
-    SET_MY_PAYA(state, data) {
-        state.myPAYA = data;
-    },
     SET_HELMET_VARIETIES(state, data) {
         // 将对应的key存进去
         state.helmetVarieties = data;
@@ -440,16 +369,9 @@ export const mutations = {
         // 24小时Long token 铸造量
         state.longTokenCreatedVolume = data;
     },
-    // 授权列表
-    SET_APPROVE_LIST(state, data) {
-        state.approveList = data;
-    },
     // 保存所有指数价格
     SET_ALL_INDEX_PRICE(state, data) {
         state.allIndexPrice = data;
-    },
-    SET_ECHART_INDEX_PRICE(state, data) {
-        state.echartIndexArray = data;
     },
     SET_ALL_HELMET_PRICE(state, data) {
         state.allHelmetPrice = data;
@@ -489,9 +411,6 @@ export const actions = {
     },
     setMaskDialog({ commit }, data) {
         commit('SET_MASK_DIALOG', data);
-    },
-    setPayasoDialog({ commit }, data) {
-        commit('SET_PAYASO_DIALOG', data);
     },
     // 设置钱包类型
     setWalletType({ commit }, data) {
@@ -760,105 +679,5 @@ export const actions = {
     },
     setUserInfo({ commit, state }, data) {
         commit('SET_USER_INFO', data);
-    },
-    // 有效成交
-    async getValidBorrowing({ commit, state }, data) {
-        let res = await frequency('HELMET');
-        commit('SET_ASSETS_VALUE', { frequency: res });
-    },
-    //Helmet总发行量
-    async getTotalHelmet({ commit, state }, data) {
-        let res = await totalSupply('HELMET');
-        commit('SET_ASSETS_VALUE', { totalHelmet: res });
-    },
-    //Helmet矿山余额
-    async getBalanceMine({ commit, state }, data) {
-        let res = await BalanceMine('HELMET', 'FARM');
-        commit('SET_ASSETS_VALUE', { balanceMine: res });
-    },
-    // 可结算helmet
-    async getClaimAbleHelmet({ commit, state }, data) {
-        let res = await claimable(
-            'ORDER',
-            '0x0000000000000000000000000000000000000000'
-        );
-        commit('SET_ASSETS_VALUE', { claimAbleHelmet: res });
-    },
-    // 我的PAYA
-    async getMyPayaso({ commit, state }, data) {
-        let res = await MyPayaso('PAYA');
-        commit('SET_ASSETS_VALUE', { myPaya: res });
-    },
-    // 待结算PAYA
-    async getPayaSettle({ commit, state }, data) {
-        let res = await claimable('PAYA');
-        commit('SET_ASSETS_VALUE', { payaSettle: res });
-    },
-    async getmyPAYA({ commit }, data) {
-        let res = await CangetPAYA(data);
-        commit('SET_MY_PAYA', res);
-    },
-    async getmyUNI({ commit }, data) {
-        let DAI = await CangetUNI('ETH_DAI');
-        let USDT = await CangetUNI('ETH_USDT');
-        let USDC = await CangetUNI('ETH_USDC');
-        let WBTC = await CangetUNI('ETH_WBTC');
-        let res = DAI + USDT + USDC + WBTC;
-        commit('SET_MY_UNI', res);
-    },
-    // 获取矿工帽列表  und 抵押物， col 标的物
-    async getHatList({ commit, state }) {
-        const list = state.notExpriedAbountInfoSell || [];
-        let item;
-        const result = [];
-        let status = '';
-        let sort = 0;
-        let _strikePrice;
-        let resultItem;
-        for (let i = 0; i < list.length; i++) {
-            item = list[i];
-            // 标的物
-            const _collateral = getTokenName(item.longInfo._collateral);
-            // 抵押物
-            const _underlying = getTokenName(item.longInfo._underlying);
-            // if (und && col) { // 抵押物，标的物双筛选
-            let res = await asks(item.askID, 'sync', _collateral);
-            // if (res === '0') {
-            if (Number(res) == 0) {
-                status = 'sellout';
-                sort = 1;
-            } else {
-                status = 'onsell';
-                sort = 2;
-            }
-            _strikePrice = fromWei(item.longInfo._strikePrice, _collateral);
-            // _strikePrice = dealWithStrikePrice(_strikePrice, _collateral);
-            resultItem = {
-                askID: item.askID,
-                seller: item.seller,
-                long: item.long,
-                _collateral,
-                price: fromWei(item.price, _collateral),
-                volume: fromWei(item.volume, _collateral),
-                settleToken: getTokenName(item.settleToken),
-                _underlying,
-                _strikePrice,
-                // _strikePrice: fromWei(
-                //     item.longInfo._strikePrice,
-                //     _collateral
-                // ),
-                _expiry: parseInt(item.longInfo._expiry * 1000),
-                count: item.longInfo.count,
-                remain: res,
-                status,
-                sort,
-                buyNum: '',
-            };
-            result.push(resultItem);
-        }
-        const sortResult = JSON.parse(JSON.stringify(result)).sort((a1, a2) => {
-            return a2.sort - a1.sort;
-        });
-        commit('SET_HAT_LIST', sortResult);
     },
 };

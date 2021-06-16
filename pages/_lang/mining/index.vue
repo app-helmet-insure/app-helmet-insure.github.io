@@ -18,8 +18,6 @@
 <script>
 import MiningTitle from "~/components/mining/mining_title.vue";
 import MiningList from "~/components/mining/mining_list.vue";
-import Deposite from "~/components/mining/deposite-dialog.vue";
-import Withdraw from "~/components/mining/withdraw-dialog.vue";
 import Onepager from "~/components/common/onepager.vue";
 import Compound from "~/components/mining/compound.vue";
 export default {
@@ -27,8 +25,6 @@ export default {
   components: {
     MiningTitle,
     MiningList,
-    Deposite,
-    Withdraw,
     Onepager,
     Compound,
   },

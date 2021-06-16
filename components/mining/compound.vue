@@ -23,14 +23,15 @@
 </template>
 
 <script>
-import { compound } from "~/interface/deposite";
+import { Compound } from "~/interface/write_contract.js";
 export default {
   data() {
     return {
       showFlag: false,
       title: "Compound HELMET Earned",
       number: 0,
-      pool: "",
+      poolAddress: "",
+      tokenDecimals: "",
     };
   },
   mounted() {
@@ -38,7 +39,7 @@ export default {
       this.showFlag = true;
       this.title = data.title;
       this.number = data.number;
-      this.pool = data.pool;
+      this.poolAddress = data.poolAddress;
     });
     this.$bus.$on("CLOSE_COMPOUND", () => {
       this.showFlag = false;
@@ -49,7 +50,12 @@ export default {
       this.$bus.$emit("CLOSE_COMPOUND");
     },
     async confirm() {
-      await compound(this.pool, this.pool);
+      await Compound(this.poolAddress, (res) => {
+        if (res == "success" || res == "error") {
+          this.$bus.$emit("CLOSE_COMPOUND");
+          this.$bus.$emit("GET_BALANCE");
+        }
+      });
     },
   },
 };

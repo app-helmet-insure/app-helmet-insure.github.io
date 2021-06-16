@@ -84,22 +84,6 @@ export default {
       // 保险交易过的资金量
       return this.$store.state.totalHelmetsBorrowedVolume;
     },
-    longTokenCreatedVolume() {
-      // 24小时Long token 铸造量
-      return this.$store.state.longTokenCreatedVolume;
-    },
-    totalHelmet() {
-      return this.$store.state.assets.totalHelmet;
-    },
-    balanceMine() {
-      return this.$store.state.assets.balanceMine;
-    },
-    claimAbleHelmet() {
-      return this.$store.state.assets.claimAbleHelmet;
-    },
-    frequency() {
-      return this.$store.state.assets.validBorrowing;
-    },
     indexArray() {
       let list = this.$store.state.allIndexPrice;
       return list;
@@ -134,10 +118,6 @@ export default {
     },
     async getBannerData() {
       let timer = setTimeout(() => {
-        this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
-        this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
-        this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
-        this.$store.dispatch("getValidBorrowing"); //获取 有效成交
         this.getPrice();
         clearTimeout();
       }, 2000);

@@ -331,6 +331,16 @@ export default {
           SWAP_TYPE: "PANCAKEV2",
           TOTAL_REWARDS: 7500,
           MINING_DAY: 14,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "SHIBh",
+            ADDTOKEN_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+            ADDTOKEN_DECIMALS: 12,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hWINGS",
+            ADDTOKEN_ADDRESS: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -353,6 +363,16 @@ export default {
           SWAP_TYPE: "BURGER",
           TOTAL_REWARDS: 20000,
           MINING_DAY: 20,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hTPT",
+            ADDTOKEN_ADDRESS: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+            ADDTOKEN_DECIMALS: 4,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hxBURGER",
+            ADDTOKEN_ADDRESS: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -375,6 +395,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 2000000,
           MINING_DAY: 20,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hDODO",
+            ADDTOKEN_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hTPT",
+            ADDTOKEN_ADDRESS: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
+            ADDTOKEN_DECIMALS: 4,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -397,6 +427,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 40000,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hMATH",
+            ADDTOKEN_ADDRESS: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hTPT",
+            ADDTOKEN_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -419,6 +459,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 30000,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hAUTO",
+            ADDTOKEN_ADDRESS: "0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hMATH",
+            ADDTOKEN_ADDRESS: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -441,6 +491,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 10,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "BNB500",
+            ADDTOKEN_ADDRESS: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hAUTO",
+            ADDTOKEN_ADDRESS: "0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -463,6 +523,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 1000,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hCTK",
+            ADDTOKEN_ADDRESS: "0x936909e72951A19a5e1d75A109B0D34f06f39838",
+            ADDTOKEN_DECIMALS: 6,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "BNB500",
+            ADDTOKEN_ADDRESS: "0xe204c4c21c6ed90e37cb06cb94436614f3208d58",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -485,6 +555,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 70000,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "HCCT",
+            ADDTOKEN_ADDRESS: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hCTK",
+            ADDTOKEN_ADDRESS: "0x936909e72951A19a5e1d75A109B0D34f06f39838",
+            ADDTOKEN_DECIMALS: 6,
+          },
           REWARD_YEAR: "Infinity",
         },
         {
@@ -507,6 +587,16 @@ export default {
           SWAP_TYPE: "PANCAKEV1",
           TOTAL_REWARDS: 16000,
           MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "LONG",
+            ADDTOKEN_ADDRESS: "0x17934fef9fc93128858e9945261524ab0581612e",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "HCCT",
+            ADDTOKEN_ADDRESS: "0xf1be411556e638790dcdecd5b0f8f6d778f2dfd5",
+            ADDTOKEN_DECIMALS: 18,
+          },
           REWARD_YEAR: "Infinity",
         },
       ];

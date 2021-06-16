@@ -39,11 +39,7 @@
         <input
           type="text"
           v-model="DepositeNum"
-          :style="
-            DepositeNum == balance.Deposite
-              ? 'border: 1px solid #fd7e14 !important'
-              : ''
-          "
+          :class="activeType == 'STAKE' ? 'activeInput' : ''"
         />
         <p>
           <span>{{ activeData.TOKEN_NAME }}</span
@@ -151,21 +147,21 @@
           type="text"
           v-model="balance.Earn"
           disabled
-          style="border: 1px solid #fd7e14 !important"
+          :class="activeType == 'CLAIM' ? 'activeInput' : ''"
         />
         <input
           v-else
           type="text"
           disabled
-          style="border: 1px solid #fd7e14 !important"
+          :class="activeType == 'CLAIM' ? 'activeInput' : ''"
         />
         <p>
-          <span>{{ activeData.REWARD_NAME }}</span
-          >|<i
+          <span>{{ activeData.REWARD_NAME }}</span>
+          <!-- |<i
             @click="WithdrawNum = balance.Earn"
             style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</i
-          >
+          > -->
         </p>
       </div>
 

@@ -146,7 +146,6 @@ export default {
     },
     ChainID(newValue) {
       if (newValue == 56) {
-        this.getBannerData();
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();
@@ -244,12 +243,6 @@ export default {
     closeDialog() {
       this.$emit("close");
     },
-    async getBannerData() {
-      this.$store.dispatch("getTotalHelmet"); //获取 Helmet 总量
-      this.$store.dispatch("getBalanceMine"); //获取 Helmet 矿山余额
-      this.$store.dispatch("getClaimAbleHelmet"); //获取 所有待结算 Helmet
-      this.$store.dispatch("getValidBorrowing"); //获取 有效成交
-    },
     openStatusDialog() {
       this.showStatusDialog = true;
     },
@@ -292,7 +285,6 @@ export default {
         ethereum.on("accountsChanged", async (account) => {
           let userInfo = await mateMaskInfo(account[0], "MetaMask");
           this.$store.dispatch("setUserInfo", userInfo);
-          this.getBannerData();
           this.getBalance();
           this.getIndexPirce();
           this.$bus.$emit("REFRESH_ALL_DATA");
@@ -353,7 +345,6 @@ export default {
       // bnb
       let callIndexPirce = {};
       let putIndexPirce = {};
-      let echartIndexArray = {};
       // helmet
       let bnbbusd = await pancakeswap("WBNB", "BUSD");
       let cakebusd = await pancakeswap("CAKE", "BUSD");
@@ -373,8 +364,6 @@ export default {
 
         let key = list[i];
         callIndexPirce[key] = px;
-        let key1 = list[i];
-        echartIndexArray[key1] = indexPx;
       }
       for (let i = 0; i < list.length; i++) {
         let px;
@@ -439,7 +428,6 @@ export default {
       arr.push(callIndexPirce);
       arr.push(putIndexPirce);
       this.$store.commit("SET_ALL_INDEX_PRICE", arr);
-      this.$store.commit("SET_ECHART_INDEX_PRICE", echartIndexArray);
       this.$store.commit("SET_BNB_BUSD", bnbbusd);
       this.$store.commit("SET_CAKE_BUSD", cakebusd);
       this.$store.commit("SET_HELMET_BUSD", helmetbusd);

@@ -9,6 +9,12 @@ export const getAccounts = async () => {
     let account = await WEB3.eth.getAccounts();
     return (account = account[0]);
 };
+export const getBlockNumber = async () => {
+    const WEB3 = await new web3();
+    let blockNumber = await WEB3.eth.getBlockNumber();
+    console.log(blockNumber);
+    return blockNumber;
+};
 export const getDecimals = (Decimals) => {
     switch (Decimals) {
         case 0:

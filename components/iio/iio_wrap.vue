@@ -361,10 +361,10 @@ export default {
           open: true,
           sort: 0,
           active_page: 2,
-          expired_burnt: "0",
-          expired_stake: "0",
-          expired_premium: "0",
-          expired_activating: "0",
+          expired_burnt: "237",
+          expired_stake: "4,606,500.90",
+          expired_premium: "0%",
+          expired_activating: "88.54%",
         },
       ],
     };
@@ -409,7 +409,12 @@ export default {
             item.status = "finished";
             item.sort = 5;
           }
-          if (nowTime > finished + 86400000 * 2) {
+          if (
+            item.expired_burnt &&
+            item.expired_stake &&
+            item.expired_premium &&
+            item.expired_activating
+          ) {
             item.active_page = 1;
           }
         }

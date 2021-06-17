@@ -181,7 +181,7 @@
                     }
                     i {
                         display: inline-block;
-                        padding: 6px 8px;
+                        padding: 4px 8px;
                         border-radius: 6px;
                         @include themeify {
                             color: themed('color-17173a');
@@ -200,7 +200,7 @@
                     }
                 }
             }
-            .text {
+            > .text {
                 display: flex;
                 align-items: center;
                 flex-direction: column;
@@ -332,7 +332,7 @@
                     }
                     i {
                         display: inline-block;
-                        padding: 6px 8px;
+                        padding: 4px 8px;
                         border-radius: 6px;
                         @include themeify {
                             color: themed('color-17173a');
@@ -559,10 +559,6 @@
                 display: flex;
                 align-items: center;
                 flex-direction: column;
-                @include themeify {
-                    border: 1px solid themed('color-e8e8eb');
-                }
-                padding-bottom: 20px;
                 > p {
                     display: flex;
                     margin-top: 14px;

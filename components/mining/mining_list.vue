@@ -559,8 +559,8 @@ export default {
         },
         {
           POOL_NAME: "HELMET-<i>hWINGS</i>&nbsp;LP",
-          STAKE_SYMBOL: "HELMET-hWINGS MLP",
-          STAKE_UNIT: "MLP",
+          STAKE_SYMBOL: "HELMET-hWINGS LP",
+          STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_wings",
           REARD_IMGSHOW: true,

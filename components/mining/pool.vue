@@ -27,7 +27,7 @@
             :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
           <span @click="DepositeNum = balance.Deposite">{{
-            $t("Insurance.Insurance_text18")
+            $t("Table.Max")
           }}</span>
         </div>
       </div>

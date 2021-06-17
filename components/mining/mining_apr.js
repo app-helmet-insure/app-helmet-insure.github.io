@@ -71,7 +71,7 @@ const CakeDoublePoolAPR = async ({
 }) => {
     // stake balance of pool
     let HELMET_FARM = '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699';
-    let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
+    let STAKE_VOLUME = await BalanceOf(STAKE_ADDRESS, 18, PROXY_ADDRESS);
     let TOTAL_VOLUME = await TotalSupply(STAKE_ADDRESS, 18);
     // total alloc of pool
     let POOL_TOTAL_ALLOC_POINT = await TotalAllocPoint(PROXY_ADDRESS);
@@ -121,9 +121,12 @@ const CakeDoublePoolAPR = async ({
     );
     let NUMBERATOR_REWARD1 = 365 * REWARD1_BNB_VALUE * DAYILY_REWARD1;
     let NUMBERATOR_REWARD2 = 365 * REWARD2_BNB_VALUE * DAYILY_REWARD2;
-    let DENOMINATOR = VOLUME_OF_STAKE * STAKE_BNB_VALUE;
-    let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR;
-    let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR;
+    let DENOMINATOR_REWARD1 = VOLUME_OF_STAKE * STAKE_BNB_VALUE;
+    let DENOMINATOR_REWARD2 =
+        ((VOLUME_OF_STAKE * STAKE_BNB_VALUE) / TOTAL_VOLUME) * STAKE_VOLUME;
+    let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR_REWARD1;
+    let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR_REWARD2;
+    console.log(APR_REWARD1);
     let APR = (APR_REWARD1 + APR_REWARD2) * 100;
     return APR;
 };
@@ -145,7 +148,7 @@ const MdexDoublePoolAPR = async ({
 }) => {
     // stake balance of pool
     let HELMET_FARM = '0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699';
-    let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
+    let STAKE_VOLUME = await BalanceOf(STAKE_ADDRESS, 18, PROXY_ADDRESS);
     let TOTAL_VOLUME = await TotalSupply(STAKE_ADDRESS, 18);
     // total alloc of pool
     let POOL_TOTAL_ALLOC_POINT = await TotalAllocPoint(PROXY_ADDRESS);
@@ -176,8 +179,11 @@ const MdexDoublePoolAPR = async ({
         TOKEN1_SYMBOL,
         TOKEN1_DECIMALS
     );
+    console.log(REWARD2_BNB_VALUE, STAKE_BNB_VALUE);
+
     let NUMBERATOR_REWARD2 = 365 * REWARD2_BNB_VALUE * DAYILY_REWARD2;
-    let DENOMINATOR = VOLUME_OF_STAKE * STAKE_BNB_VALUE;
+    let DENOMINATOR =
+        ((VOLUME_OF_STAKE * STAKE_BNB_VALUE) / TOTAL_VOLUME) * STAKE_VOLUME;
     let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR;
     let APR = APR_REWARD2 * 100;
     return APR;

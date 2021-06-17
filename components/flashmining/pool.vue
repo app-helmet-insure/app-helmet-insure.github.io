@@ -26,15 +26,9 @@
             v-model="DepositeNum"
             :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
-          <span
-            @click="DepositeNum = balance.Deposite"
-            :style="
-              DepositeNum == balance.Deposite
-                ? 'background: rgba(255, 150, 0, 0.1);'
-                : ''
-            "
-            >{{ $t("Table.Max") }}</span
-          >
+          <span @click="DepositeNum = balance.Deposite">{{
+            $t("Table.Max")
+          }}</span>
         </div>
       </div>
       <div class="button">

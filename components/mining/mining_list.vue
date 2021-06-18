@@ -495,7 +495,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href=https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
+            "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
           APRTYPE: "CakeDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
@@ -643,7 +643,7 @@ export default {
           REWARD2_DECIMALS: 18,
           SWAP_TYPE: "DODO",
           JUMP1_TEXT:
-            "<a href=https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234' target='_blank'>From <i class='dodo'></i>Get HELMET-BNB DLP</a>",
+            "<a href='https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234' target='_blank'>From <i class='dodo'></i>Get HELMET-BNB DLP</a>",
           REWARD_YEAR: "Infinity",
         },
 

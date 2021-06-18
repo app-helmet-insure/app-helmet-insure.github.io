@@ -3,7 +3,7 @@
     <div class="burn_title">
       <h3>{{ $t("Table.BurnMining") }}</h3>
     </div>
-    <div class="burn_pc_wrap">
+    <div class="burn_web">
       <div class="burn_item" v-for="item in burnList" :key="item.POOL_NAME">
         <div class="burn_show">
           <img
@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-    <div class="burn_h5_wrap">
+    <div class="burn_h5">
       <div
         class="burn_item_h5"
         v-for="item in burnList"
@@ -422,6 +422,9 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
+  .burn_h5 {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;
@@ -698,6 +701,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .burn_web {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;

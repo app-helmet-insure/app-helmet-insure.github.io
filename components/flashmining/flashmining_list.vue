@@ -3,7 +3,7 @@
     <div class="flashmining_title">
       <h3>{{ $t("Header.FlashMining") }}</h3>
     </div>
-    <div class="flash_pc_wrap">
+    <div class="flash_web">
       <div
         class="mining_item"
         v-for="(item, index) in miningList"
@@ -119,119 +119,124 @@
         </div>
       </div>
     </div>
-    <div
-      class="mining_item_h5"
-      v-for="(item, index) in miningList"
-      :key="item.TOKEN_NAME + '1'"
-    >
-      <img
-        class="link_flash"
-        :src="require(`~/assets/img/flashmining/flash_link_${storeThemes}.png`)"
-        alt=""
-        v-if="index != 0"
-      />
-      <section>
-        <div>
-          <img
-            :src="require(`~/assets/img/flashmining/${item.REWARD_NAME}.png`)"
-            alt=""
-          />
-          <p>
-            <span
-              class="onePager"
-              v-html="item.POOL_NAME"
-              @click="hadnleShowOnePager($event, item.REWARD_NAME)"
-            ></span>
-            <span>{{ item.POOL_DESC }}</span>
-          </p>
-        </div>
-        <p>
-          {{ $t("Table.EarnList") }}
-          <span>
-            {{ item.REWARD_NAME }}
-          </span>
-        </p>
-      </section>
-      <section>
-        <p>
-          <span>{{ item.REWARD_YEAR }}</span>
-          <span>APR</span>
-        </p>
-        <div>
-          <i></i>
-          <p>
-            <span v-if="typeof item.OPEN_TIME == 'object'">
-              {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b> <i>/</i
-              >{{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-            </span>
-            <span v-else-if="typeof item.MING_TIME == 'object'">
-              {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
-              >{{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-            </span>
-            <span v-else>
-              {{ item.MING_TIME }}
-            </span>
-            <span>{{ $t("Table.MIningCutdown") }}</span>
-          </p>
-        </div>
-      </section>
-      <section>
-        <span>{{ item.REWARD_WEEKLY }}</span>
-        <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
-      </section>
-      <section>
-        <button
-          @click="HandleClickAction(item, 'STAKE', true)"
-          :class="
-            activeFlash == item.TOKEN_NAME &&
-            showActiveFlash &&
-            activeType == 'STAKE'
-              ? 'activeButton stakeFlash'
-              : 'stakeFlash'
-          "
-        >
-          {{ $t("Insurance.Insurance_text23") }}
-        </button>
-        <button
-          @click="HandleClickAction(item, 'CLAIM', true)"
-          :class="
-            activeFlash == item.TOKEN_NAME &&
-            showActiveFlash &&
-            activeType == 'CLAIM'
-              ? 'activeButton claimFlash'
-              : 'claimFlash'
-          "
-        >
-          {{ $t("Table.Claim") }}
-        </button>
-      </section>
+    <div class="flash_h5">
       <div
-        class="wraper_title"
-        v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+        class="mining_item_h5"
+        v-for="(item, index) in miningList"
+        :key="item.TOKEN_NAME + '1'"
       >
-        <PHeader></PHeader>
-        <div class="wraper">
-          <div class="wraper_header">
-            <h3 class="">
-              {{
-                activeType == "STAKE"
-                  ? $t("Insurance.Insurance_text23")
-                  : $t("Table.Claim")
-              }}
-            </h3>
-            <svg
-              class="close"
-              aria-hidden="true"
-              @click="showActiveFlash = false"
-            >
-              <use xlink:href="#icon-close"></use>
-            </svg>
+        <img
+          class="link_flash"
+          :src="
+            require(`~/assets/img/flashmining/flash_link_${storeThemes}.png`)
+          "
+          alt=""
+          v-if="index != 0"
+        />
+        <section>
+          <div>
+            <img
+              :src="require(`~/assets/img/flashmining/${item.REWARD_NAME}.png`)"
+              alt=""
+            />
+            <p>
+              <span
+                class="onePager"
+                v-html="item.POOL_NAME"
+                @click="hadnleShowOnePager($event, item.REWARD_NAME)"
+              ></span>
+              <span>{{ item.POOL_DESC }}</span>
+            </p>
           </div>
-          <POOL
-            :activeData="activeData"
-            :activeFlag="activeFlag"
-            :activeType="activeType"
-          />
+          <p>
+            {{ $t("Table.EarnList") }}
+            <span>
+              {{ item.REWARD_NAME }}
+            </span>
+          </p>
+        </section>
+        <section>
+          <p>
+            <span>{{ item.REWARD_YEAR }}</span>
+            <span>APR</span>
+          </p>
+          <div>
+            <i></i>
+            <p>
+              <span v-if="typeof item.OPEN_TIME == 'object'">
+                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                <i>/</i>{{ item.OPEN_TIME.minute
+                }}<b>{{ $t("Content.MinM") }}</b>
+              </span>
+              <span v-else-if="typeof item.MING_TIME == 'object'">
+                {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b> <i>/</i
+                >{{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+              </span>
+              <span v-else>
+                {{ item.MING_TIME }}
+              </span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </div>
+        </section>
+        <section>
+          <span>{{ item.REWARD_WEEKLY }}</span>
+          <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
+        </section>
+        <section>
+          <button
+            @click="HandleClickAction(item, 'STAKE', true)"
+            :class="
+              activeFlash == item.TOKEN_NAME &&
+              showActiveFlash &&
+              activeType == 'STAKE'
+                ? 'activeButton stakeFlash'
+                : 'stakeFlash'
+            "
+          >
+            {{ $t("Insurance.Insurance_text23") }}
+          </button>
+          <button
+            @click="HandleClickAction(item, 'CLAIM', true)"
+            :class="
+              activeFlash == item.TOKEN_NAME &&
+              showActiveFlash &&
+              activeType == 'CLAIM'
+                ? 'activeButton claimFlash'
+                : 'claimFlash'
+            "
+          >
+            {{ $t("Table.Claim") }}
+          </button>
+        </section>
+        <div
+          class="wraper_title"
+          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+        >
+          <PHeader></PHeader>
+          <div class="wraper">
+            <div class="wraper_header">
+              <h3 class="">
+                {{
+                  activeType == "STAKE"
+                    ? $t("Insurance.Insurance_text23")
+                    : $t("Table.Claim")
+                }}
+              </h3>
+              <svg
+                class="close"
+                aria-hidden="true"
+                @click="showActiveFlash = false"
+              >
+                <use xlink:href="#icon-close"></use>
+              </svg>
+            </div>
+            <POOL
+              :activeData="activeData"
+              :activeFlag="activeFlag"
+              :activeType="activeType"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -688,6 +693,9 @@ export default {
 <style lang="scss" scoped >
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
+  .flash_h5 {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;
@@ -1002,6 +1010,9 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .flash_web {
+    display: none;
+  }
   .icon {
     width: 20px;
     height: 20px;
@@ -1271,9 +1282,9 @@ export default {
     width: 100%;
     height: 100vh;
     position: fixed;
-     @include themeify {
-            background: themed("color-f8f9fa");
-          }
+    @include themeify {
+      background: themed("color-f8f9fa");
+    }
     top: 0;
     left: 0;
     z-index: 99;

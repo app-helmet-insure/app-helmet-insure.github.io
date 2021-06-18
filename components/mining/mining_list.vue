@@ -3,25 +3,197 @@
     <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
     </div>
-    <div v-for="item in miningList" :key="item.REWARD_NAME">
-      <div
-        :class="['finshed_line', 'finshed_pc']"
-        v-if="item.REWARD_NAME == 'bhelmet_dodo'"
-      >
-        <p></p>
-        <i :class="storeThemes + '_star'"></i>
-        <span>Finished</span>
-        <i :class="storeThemes + '_star'"></i>
-        <p></p>
-      </div>
-      <div class="mining_item">
+    <div class="mining_web">
+      <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
-          :class="
-            activeMining == item.REWARD_NAME && showActiveMining
-              ? 'activeMining mining_show'
-              : 'mining_show'
-          "
+          :class="['finshed_line', 'finshed_pc']"
+          v-if="item.REWARD_NAME == 'bhelmet_dodo'"
         >
+          <p></p>
+          <i :class="storeThemes + '_star'"></i>
+          <span>Finished</span>
+          <i :class="storeThemes + '_star'"></i>
+          <p></p>
+        </div>
+        <div class="mining_item">
+          <div
+            :class="
+              activeMining == item.REWARD_NAME && showActiveMining
+                ? 'activeMining mining_show'
+                : 'mining_show'
+            "
+          >
+            <img
+              class="combo_img"
+              :src="
+                require(`~/assets/img/mining/combo_${
+                  item.MING_TIME == 'Finished'
+                    ? 'expired_' + storeThemes
+                    : 'web'
+                }.png`)
+              "
+              alt=""
+              v-if="item.COMBO_FLAG"
+            />
+            <img
+              class="combo_img"
+              style="width: 116px"
+              :src="
+                require(`~/assets/img/mining/${
+                  item.MING_TIME == 'Finished'
+                    ? 'serial_web_expired_' + storeThemes
+                    : 'serial_web'
+                }.png`)
+              "
+              alt=""
+              v-if="item.SERIAL_FLAG"
+            />
+            <img
+              class="combo_img"
+              style="width: 32px; height: 32px; left: 10px"
+              :src="
+                require(`~/assets/img/mining/${
+                  item.MING_TIME == 'Finished'
+                    ? 'serialnext_web_expired_' + storeThemes
+                    : 'serialnext_web'
+                }.png`)
+              "
+              alt=""
+              v-if="item.SERIAL_NEXT_FLAG"
+            />
+            <img
+              class="combo_img"
+              style="width: 83px; height: 28px; left: 376px"
+              src="~/assets/img/mining/iiostark.png"
+              alt=""
+              v-if="item.iio"
+            />
+
+            <section>
+              <span
+                class="onePager"
+                v-html="item.POOL_NAME"
+                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
+              ></span>
+            </section>
+            <section>
+              <p>
+                {{ $t("Table.EarnList") }}
+                <span>
+                  <img
+                    v-if="item.REARD_IMGSHOW"
+                    :src="
+                      require(`~/assets/img/mining/${
+                        item.MING_TIME == 'Finished'
+                          ? item.REWARD_NAME + '_expired'
+                          : item.REWARD_NAME
+                      }.png`)
+                    "
+                    :class="item.REARD_VOLUME"
+                    alt=""
+                  />
+                  <template v-else style="color: #17173a">{{
+                    item.REWARD_NAME
+                  }}</template>
+                </span>
+              </p>
+            </section>
+            <section>
+              <i></i>
+              <p>
+                <span v-if="typeof item.OPEN_TIME == 'object'">
+                  {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                  {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </span>
+                <span v-else-if="typeof item.MING_TIME == 'object'">
+                  <template v-if="item.MING_TIME.day != '00'">
+                    {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
+                    <i>/</i>
+                  </template>
+                  <template>
+                    {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                    <i>/</i>
+                  </template>
+                  <template v-if="item.MING_TIME.day == '00'">
+                    {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
+                    <i>/</i>
+                  </template>
+                </span>
+                <span v-else>
+                  {{ item.MING_TIME }}
+                </span>
+                <span>{{ $t("Table.MIningCutdown") }}</span>
+              </p>
+            </section>
+            <section>
+              <span>{{ item.REWARD_YEAR }}</span>
+              <span>{{ item.REWARD_TYPE }}</span>
+            </section>
+            <section>
+              <button
+                @click="HandleClickAction(item, 'STAKE')"
+                :class="
+                  activeMining == item.REWARD_NAME &&
+                  showActiveMining &&
+                  activeType == 'STAKE'
+                    ? 'activeButton stakeMining'
+                    : 'stakeMining'
+                "
+              >
+                {{ $t("Table.Stakeing") }}
+                <i class="selectDown"></i>
+              </button>
+              <button
+                @click="HandleClickAction(item, 'CLAIM')"
+                :class="
+                  activeMining == item.REWARD_NAME &&
+                  showActiveMining &&
+                  activeType == 'CLAIM'
+                    ? 'activeButton claimMining'
+                    : 'claimMining'
+                "
+              >
+                {{ $t("Table.Claim") }}
+                <i class="selectDown"></i>
+              </button>
+            </section>
+          </div>
+          <div
+            class="mining_detail"
+            v-if="showActiveMining && activeMining == item.REWARD_NAME"
+          >
+            <svg
+              class="close"
+              aria-hidden="true"
+              @click="showActiveMining = false"
+            >
+              <use xlink:href="#icon-close"></use>
+            </svg>
+            <POOL
+              :activeData="activeData"
+              :activeFlag="activeFlag"
+              :activeType="activeType"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mining_h5">
+      <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
+        <div
+          class="finshed_line finshed_h5"
+          v-if="item.REWARD_NAME == 'bhelmet_dodo'"
+        >
+          <p></p>
+          <i></i>
+          <span>Finished</span>
+          <i></i>
+          <p></p>
+        </div>
+
+        <div class="mining_item_h5">
           <img
             class="combo_img"
             :src="
@@ -57,35 +229,30 @@
             "
             alt=""
             v-if="item.SERIAL_NEXT_FLAG"
-          />
-          <img
+          /><img
             class="combo_img"
-            style="width: 83px; height: 28px; left: 376px"
+            style="
+              width: 83px;
+              height: 28px;
+              left: 100%;
+              transform: translateX(-100%);
+            "
             src="~/assets/img/mining/iiostark.png"
             alt=""
             v-if="item.iio"
           />
-
           <section>
             <span
               class="onePager"
               v-html="item.POOL_NAME"
               @click="hadnleShowOnePager($event, item.ONE_PAGER)"
             ></span>
-          </section>
-          <section>
             <p>
               {{ $t("Table.EarnList") }}
               <span>
                 <img
                   v-if="item.REARD_IMGSHOW"
-                  :src="
-                    require(`~/assets/img/mining/${
-                      item.MING_TIME == 'Finished'
-                        ? item.REWARD_NAME + '_expired'
-                        : item.REWARD_NAME
-                    }.png`)
-                  "
+                  :src="require(`~/assets/img/mining/${item.REWARD_NAME}.png`)"
                   :class="item.REARD_VOLUME"
                   alt=""
                 />
@@ -96,41 +263,43 @@
             </p>
           </section>
           <section>
-            <i></i>
             <p>
-              <span v-if="typeof item.OPEN_TIME == 'object'">
-                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                <i>/</i>
-                {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                <i>/</i>
-              </span>
-              <span v-else-if="typeof item.MING_TIME == 'object'">
-                <template v-if="item.MING_TIME.day != '00'">
-                  {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
-                  <i>/</i>
-                </template>
-                <template>
-                  {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                  <i>/</i>
-                </template>
-                <template v-if="item.MING_TIME.day == '00'">
-                  {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                  <i>/</i>
-                </template>
-              </span>
-              <span v-else>
-                {{ item.MING_TIME }}
-              </span>
-              <span>{{ $t("Table.MIningCutdown") }}</span>
+              <span>{{ item.REWARD_YEAR }}</span>
+              <span>{{ item.REWARD_TYPE }}</span>
             </p>
-          </section>
-          <section>
-            <span>{{ item.REWARD_YEAR }}</span>
-            <span>{{ item.REWARD_TYPE }}</span>
+            <div>
+              <i></i>
+              <p>
+                <span v-if="typeof item.OPEN_TIME == 'object'">
+                  {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                  <i>/</i>
+                  {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
+                  <i>/</i>
+                </span>
+                <span v-else-if="typeof item.MING_TIME == 'object'">
+                  <template v-if="item.MING_TIME.day != '00'">
+                    {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
+                    <i>/</i>
+                  </template>
+                  <template>
+                    {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
+                    <i>/</i>
+                  </template>
+                  <template v-if="item.MING_TIME.day == '00'">
+                    {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
+                    <i>/</i>
+                  </template>
+                </span>
+                <span v-else>
+                  {{ item.MING_TIME }}
+                </span>
+                <span>{{ $t("Table.MIningCutdown") }}</span>
+              </p>
+            </div>
           </section>
           <section>
             <button
-              @click="HandleClickAction(item, 'STAKE')"
+              @click="HandleClickAction(item, 'STAKE', true)"
               :class="
                 activeMining == item.REWARD_NAME &&
                 showActiveMining &&
@@ -138,12 +307,16 @@
                   ? 'activeButton stakeMining'
                   : 'stakeMining'
               "
+              style="margin-right: 10px"
             >
               {{ $t("Table.Stakeing") }}
-              <i class="selectDown"></i>
+            </button>
+            <button @click="toCompound" v-if="item.COMPOUND">
+              <i :class="claimLoading ? 'loading_pic' : ''"></i
+              >{{ $t("Table.Compound") }}
             </button>
             <button
-              @click="HandleClickAction(item, 'CLAIM')"
+              @click="HandleClickAction(item, 'CLAIM', true)"
               :class="
                 activeMining == item.REWARD_NAME &&
                 showActiveMining &&
@@ -151,207 +324,40 @@
                   ? 'activeButton claimMining'
                   : 'claimMining'
               "
+              style="margin-left: 10px"
             >
               {{ $t("Table.Claim") }}
-              <i class="selectDown"></i>
             </button>
           </section>
         </div>
         <div
-          class="mining_detail"
+          class="wraper_title"
           v-if="showActiveMining && activeMining == item.REWARD_NAME"
         >
-          <svg
-            class="close"
-            aria-hidden="true"
-            @click="showActiveMining = false"
-          >
-            <use xlink:href="#icon-close"></use>
-          </svg>
-          <POOL
-            :activeData="activeData"
-            :activeFlag="activeFlag"
-            :activeType="activeType"
-          />
-        </div>
-      </div>
-    </div>
-    <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
-      <div
-        class="finshed_line finshed_h5"
-        v-if="item.REWARD_NAME == 'bhelmet_dodo'"
-      >
-        <p></p>
-        <i></i>
-        <span>Finished</span>
-        <i></i>
-        <p></p>
-      </div>
-
-      <div class="mining_item_h5">
-        <img
-          class="combo_img"
-          :src="
-            require(`~/assets/img/mining/combo_${
-              item.MING_TIME == 'Finished' ? 'expired_' + storeThemes : 'web'
-            }.png`)
-          "
-          alt=""
-          v-if="item.COMBO_FLAG"
-        />
-        <img
-          class="combo_img"
-          style="width: 116px"
-          :src="
-            require(`~/assets/img/mining/${
-              item.MING_TIME == 'Finished'
-                ? 'serial_web_expired_' + storeThemes
-                : 'serial_web'
-            }.png`)
-          "
-          alt=""
-          v-if="item.SERIAL_FLAG"
-        />
-        <img
-          class="combo_img"
-          style="width: 32px; height: 32px; left: 10px"
-          :src="
-            require(`~/assets/img/mining/${
-              item.MING_TIME == 'Finished'
-                ? 'serialnext_web_expired_' + storeThemes
-                : 'serialnext_web'
-            }.png`)
-          "
-          alt=""
-          v-if="item.SERIAL_NEXT_FLAG"
-        /><img
-          class="combo_img"
-          style="
-            width: 83px;
-            height: 28px;
-            left: 100%;
-            transform: translateX(-100%);
-          "
-          src="~/assets/img/mining/iiostark.png"
-          alt=""
-          v-if="item.iio"
-        />
-        <section>
-          <span
-            class="onePager"
-            v-html="item.POOL_NAME"
-            @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-          ></span>
-          <p>
-            {{ $t("Table.EarnList") }}
-            <span>
-              <img
-                v-if="item.REARD_IMGSHOW"
-                :src="require(`~/assets/img/mining/${item.REWARD_NAME}.png`)"
-                :class="item.REARD_VOLUME"
-                alt=""
-              />
-              <template v-else style="color: #17173a">{{
-                item.REWARD_NAME
-              }}</template>
-            </span>
-          </p>
-        </section>
-        <section>
-          <p>
-            <span>{{ item.REWARD_YEAR }}</span>
-            <span>{{ item.REWARD_TYPE }}</span>
-          </p>
-          <div>
-            <i></i>
-            <p>
-              <span v-if="typeof item.OPEN_TIME == 'object'">
-                {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                <i>/</i>
-                {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                <i>/</i>
-              </span>
-              <span v-else-if="typeof item.MING_TIME == 'object'">
-                <template v-if="item.MING_TIME.day != '00'">
-                  {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
-                  <i>/</i>
-                </template>
-                <template>
-                  {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                  <i>/</i>
-                </template>
-                <template v-if="item.MING_TIME.day == '00'">
-                  {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                  <i>/</i>
-                </template>
-              </span>
-              <span v-else>
-                {{ item.MING_TIME }}
-              </span>
-              <span>{{ $t("Table.MIningCutdown") }}</span>
-            </p>
+          <PHeader></PHeader>
+          <div class="wraper">
+            <div class="wraper_header">
+              <h3 class="">
+                {{
+                  activeType == "STAKE"
+                    ? $t("Insurance.Insurance_text23")
+                    : $t("Table.Claim")
+                }}
+              </h3>
+              <svg
+                class="close"
+                aria-hidden="true"
+                @click="showActiveMining = false"
+              >
+                <use xlink:href="#icon-close"></use>
+              </svg>
+            </div>
+            <POOL
+              :activeData="activeData"
+              :activeFlag="activeFlag"
+              :activeType="activeType"
+            />
           </div>
-        </section>
-        <section>
-          <button
-            @click="HandleClickAction(item, 'STAKE', true)"
-            :class="
-              activeMining == item.REWARD_NAME &&
-              showActiveMining &&
-              activeType == 'STAKE'
-                ? 'activeButton stakeMining'
-                : 'stakeMining'
-            "
-            style="margin-right: 10px"
-          >
-            {{ $t("Table.Stakeing") }}
-          </button>
-          <button @click="toCompound" v-if="item.COMPOUND">
-            <i :class="claimLoading ? 'loading_pic' : ''"></i
-            >{{ $t("Table.Compound") }}
-          </button>
-          <button
-            @click="HandleClickAction(item, 'CLAIM', true)"
-            :class="
-              activeMining == item.REWARD_NAME &&
-              showActiveMining &&
-              activeType == 'CLAIM'
-                ? 'activeButton claimMining'
-                : 'claimMining'
-            "
-            style="margin-left: 10px"
-          >
-            {{ $t("Table.Claim") }}
-          </button>
-        </section>
-      </div>
-      <div
-        class="wraper_title"
-        v-if="showActiveMining && activeMining == item.REWARD_NAME"
-      >
-        <PHeader></PHeader>
-        <div class="wraper">
-          <div class="wraper_header">
-            <h3 class="">
-              {{
-                activeType == "STAKE"
-                  ? $t("Insurance.Insurance_text23")
-                  : $t("Table.Claim")
-              }}
-            </h3>
-            <svg
-              class="close"
-              aria-hidden="true"
-              @click="showActiveMining = false"
-            >
-              <use xlink:href="#icon-close"></use>
-            </svg>
-          </div>
-          <POOL
-            :activeData="activeData"
-            :activeFlag="activeFlag"
-            :activeType="activeType"
-          />
         </div>
       </div>
     </div>
@@ -458,8 +464,8 @@ export default {
       let apyArray = this.apyArray;
       let arr = [
         {
-          POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v2_${this.storeThemes}></i>`,
-          STAKE_SYMBOL: "HELMET-BNB LP",
+          POOL_NAME: `HELMET-BNB&nbsp;LPT <i class=v2_${this.storeThemes}></i>`,
+          STAKE_SYMBOL: "HELMET-BNB LPT",
           STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v2",
@@ -558,8 +564,8 @@ export default {
           REWARD_YEAR: "Infinity",
         },
         {
-          POOL_NAME: "HELMET-<i>hWINGS</i>&nbsp;LP",
-          STAKE_SYMBOL: "HELMET-hWINGS LP",
+          POOL_NAME: "HELMET-<i>hWINGS</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hWINGS LPT",
           STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_wings",
@@ -596,7 +602,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LP</a>",
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LPT</a>",
           APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
@@ -800,8 +806,8 @@ export default {
           REWARD_YEAR: "Infinity",
         },
         {
-          POOL_NAME: `HELMET-BNB&nbsp;LP <i class=v1_${this.storeThemes}></i>`,
-          STAKE_SYMBOL: "HELMET-BNB LP",
+          POOL_NAME: `HELMET-BNB&nbsp;LPT <i class=v1_${this.storeThemes}></i>`,
+          STAKE_SYMBOL: "HELMET-BNB LPT",
           STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_cake_v1",
@@ -816,7 +822,7 @@ export default {
           REWARD1_SYMBOL: "HELMET",
           REWARD2_SYMBOL: "CAKE",
           LEFTTOKEN: {
-            ADDTOKEN_SYMBOL: "Cake-LP",
+            ADDTOKEN_SYMBOL: "Cake-LPT",
             ADDTOKEN_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
             ADDTOKEN_DECIMALS: 18,
           },
@@ -880,8 +886,8 @@ export default {
           REWARD_YEAR: "Infinity",
         },
         {
-          POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LP",
-          STAKE_SYMBOL: "HELMET-hFOR LP",
+          POOL_NAME: "HELMET-<i>hFOR</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hFOR LPT",
           STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_for",
@@ -921,8 +927,8 @@ export default {
           REWARD_YEAR: "Infinity",
         },
         {
-          POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LP",
-          STAKE_SYMBOL: "HELMET-hBURGER LP",
+          POOL_NAME: "HELMET-<i>hBURGER</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hBURGER LPT",
           STAKE_UNIT: "LPT",
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_burger",
@@ -1106,10 +1112,7 @@ export default {
 }
 
 @media screen and (min-width: 750px) {
-  .h5_wrap {
-    display: none;
-  }
-  .finshed_h5 {
+  .mining_h5 {
     display: none;
   }
   .icon {
@@ -1119,9 +1122,6 @@ export default {
   .mining_list {
     width: 100%;
     margin: 0 auto;
-    .mining_item_h5 {
-      display: none;
-    }
   }
   .mining_title {
     display: flex;
@@ -1398,7 +1398,7 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .finshed_pc {
+  .mining_web {
     display: none;
   }
   .icon {
@@ -1412,9 +1412,6 @@ export default {
       background: themed("color-f8f9fa");
     }
     padding-bottom: 50px;
-    .mining_item {
-      display: none;
-    }
   }
   .mining_title {
     display: none;

@@ -1,8 +1,3 @@
-//! moment.js
-
-//! moment.js locale configuration
-
-
 /*!
   * vue-router v3.5.1
   * (c) 2021 Evan You
@@ -67,7 +62,7 @@ object-assign
  */
 
 /*!
- * vue-i18n v8.24.4 
+ * vue-i18n v8.24.5 
  * (c) 2021 kazuya kawaguchi
  * Released under the MIT License.
  */
@@ -120,3 +115,7 @@ PERFORMANCE OF THIS SOFTWARE.
  * @copyright Chen, Yi-Cyuan 2015-2018
  * @license MIT
  */
+
+//! moment.js
+
+//! moment.js locale configuration

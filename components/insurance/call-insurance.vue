@@ -156,7 +156,7 @@ export default {
     };
   },
   mounted() {
-    this.getList();
+    // this.getList();
   },
   computed: {
     aboutInfoSell() {

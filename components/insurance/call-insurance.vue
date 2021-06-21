@@ -136,6 +136,7 @@ import ClipboardJS from "clipboard";
 import Page from "~/components/common/page.vue";
 import InsuranceTitle from "./insurance-title";
 import { getAddress } from "~/assets/utils/address-pool.js";
+import { getInsuranceList } from "~/interface/event.js";
 export default {
   components: {
     InsuranceTitle,
@@ -153,6 +154,9 @@ export default {
       insuranceList: [],
       isLoading: true,
     };
+  },
+  mounted() {
+    this.getList();
   },
   computed: {
     aboutInfoSell() {
@@ -203,8 +207,15 @@ export default {
         this.setList(newValue);
       }
     },
+    getList() {
+      getInsuranceList().then((res) => {
+        let InsuranceList = res.data.data.options;
+        console.log(InsuranceList);
+      });
+    },
     async setList(sell) {
       this.isLoading = true;
+
       let item, resultItem;
       let resultList = [];
       // 当前时间

@@ -222,6 +222,7 @@ import PutInsurance from "./put-insurance";
 import CallInsurance from "./call-insurance";
 import IssueInsurance from "./issue-insurance";
 import Wraper from "~/components/common/wraper.vue";
+
 export default {
   components: {
     PutInsurance,

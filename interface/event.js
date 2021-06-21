@@ -11,6 +11,7 @@ import token_abi from '~/abi/token_abi.json';
 import helmet_abi from '~/abi/helmet_abi.json';
 import precision from '~/assets/js/precision.js';
 import { fixDEAdd } from '~/assets/js/util.js';
+import moment from 'moment';
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -246,5 +247,43 @@ export const getExerciseList = async function() {
             item.returnValues = returnValues;
         });
         return data;
+    });
+};
+//get Insurance
+export const getInsuranceList = async function(callback) {
+    return Axios({
+        method: 'post',
+        url:
+            'https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure',
+        data: {
+            query: `{
+                options {
+                  id
+                  creator
+                  collateral
+                  underlying
+                  strikePrice
+                  expiry
+                  long
+                  short
+                  asks {
+                    askID
+                    seller
+                    volume
+                    settleToken
+                    price
+                    isCancel
+                    binds {
+                      bidID
+                      askID
+                      buyer
+                      volume
+                      amount
+                    }
+                  }
+                }
+              }
+              `,
+        },
     });
 };

@@ -57,7 +57,6 @@ export const GetPoolAPR = async ({
     let DENOMINATOR =
         ((HELMETVALUE * 2) / TOTAL_LPT_VOLUME) * POOL_STAKE_VOLUME; // Denominator
     let APR = fixD((NUMBERATOR / DENOMINATOR) * 100, 2);
-    console.log(HELMETVALUE, TOTAL_LPT_VOLUME, POOL_STAKE_VOLUME);
     if (OPEN_TIME == 'Mining') {
         return APR + '%';
     }

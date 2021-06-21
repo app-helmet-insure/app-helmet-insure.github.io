@@ -64,7 +64,7 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.TotalLPT)"
+              :endVal="Number(balance.Staking)"
               :duration="2000"
               :decimals="8"
             />
@@ -158,7 +158,7 @@
               <countTo
                 v-if="isLogin"
                 :startVal="Number(0)"
-                :endVal="Number(balance.hCTK)"
+                :endVal="Number(balance.Rewards)"
                 :duration="2000"
                 :decimals="8"
               />
@@ -212,11 +212,10 @@ import {
   Allowance,
 } from "~/interface/read_contract.js";
 import { Stake, GetReward, Approve, Exit } from "~/interface/write_contract.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
 export default {
   props: ["activeData", "activeFlag", "activeType"],
@@ -229,8 +228,8 @@ export default {
         Deposite: 0,
         Withdraw: 0,
         Helmet: 0,
-        hCTK: 0,
-        TotalLPT: 0,
+        Rewards: 0,
+        Staking: 0,
         Share: 0,
       },
       DepositeNum: "",
@@ -243,7 +242,7 @@ export default {
       ApproveFlag: false,
     };
   },
-  mounted() {
+  async mounted() {
     this.getBalance();
     this.NeedApprove();
   },
@@ -311,20 +310,20 @@ export default {
         this.activeData.STAKE_DECIMALS
       );
       // 总抵押
-      let TotalLPT = await TotalSupply(
+      let Staking = await TotalSupply(
         this.activeData.POOL_ADDRESS,
         this.activeData.STAKE_DECIMALS
       );
-      // 可领取Helmet
+      // 可领取
       let Helmet = await Earned(
         this.activeData.POOL_ADDRESS,
         this.activeData.REWARD_DECIMALS
       );
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
-      this.balance.hCTK = Helmet;
-      this.balance.TotalLPT = TotalLPT;
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.balance.Rewards = Helmet;
+      this.balance.Staking = Staking;
+      this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
     },
     // 抵押
     async toDeposite() {

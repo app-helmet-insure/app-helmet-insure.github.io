@@ -118,8 +118,12 @@ export const getWei = (token) => {
             return 4; //4
         case 'HTPT':
             return 4; //4
-        case 'SHIB':
+        case 'SHIBH':
             return 'microether';
+        case 'SHIBh':
+            return 'microether';
+        case 'SHIB':
+            return 'ether';
         case 30:
             return 'tether';
         default:

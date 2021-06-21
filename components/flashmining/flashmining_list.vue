@@ -742,11 +742,6 @@ export default {
       left: 6px;
       top: -21px;
     }
-    .activeFlash {
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
-    }
     .flash_show {
       width: 100%;
       height: 70px;

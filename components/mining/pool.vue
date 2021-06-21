@@ -64,7 +64,7 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.TotalLPT)"
+              :endVal="Number(balance.Staking)"
               :duration="2000"
               :decimals="4"
             />
@@ -273,7 +273,7 @@ export default {
         Reward1: 0,
         Reward2: 0,
         Cake: 0,
-        TotalLPT: 0,
+        Staking: 0,
         Share: 0,
       },
       DepositeNum: "",
@@ -314,22 +314,6 @@ export default {
     },
   },
   methods: {
-    getLptType() {
-      let SWAP_TYPE = this.activeData.SWAP_TYPE;
-      switch (SWAP_TYPE) {
-        case "PANCAKEV1":
-          return "LP";
-        case "PANCAKEV2":
-          return "LP";
-        case "BURGER":
-          return "BLP";
-        case "DODO":
-          return "DLP";
-        case "MDEX":
-          return "MLP";
-      }
-    },
-
     async addTokenFn(options) {
       let data = {
         tokenAddress: options.ADDTOKEN_ADDRESS,
@@ -385,7 +369,7 @@ export default {
         this.activeData.STAKE_DECIMALS
       );
       // 总抵押
-      let TotalLPT = await TotalSupply(
+      let Staking = await TotalSupply(
         this.activeData.POOL_ADDRESS,
         this.activeData.STAKE_DECIMALS
       );
@@ -405,8 +389,8 @@ export default {
       this.balance.Deposite = Deposite;
       this.balance.Withdraw = Withdraw;
       this.balance.Reward1 = Reward1;
-      this.balance.TotalLPT = TotalLPT;
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+      this.balance.Staking = Staking;
+      this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
     },
     // 抵押
     async toDeposite() {

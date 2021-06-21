@@ -2,7 +2,7 @@ import MiningABI from '~/abi/deposite_abi.json';
 import ApproveABI from '~/abi/IPancakePair.json';
 import CompoundABI from '~/abi/helmet_abi.json';
 import {
-    Contract,
+    Web3Contract,
     getAccounts,
     getDecimals,
     toWei,
@@ -15,7 +15,7 @@ export const Stake = async (
     { ContractAddress, DepositeVolume, Decimals },
     callback
 ) => {
-    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
     let DecimalsUnit = getDecimals(Decimals);
     if (DecimalsUnit) {
@@ -61,7 +61,7 @@ export const Stake = async (
     } catch (error) {}
 };
 export const GetReward = async (ContractAddress, callback) => {
-    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
     try {
         Contracts.methods
@@ -98,7 +98,7 @@ export const GetReward = async (ContractAddress, callback) => {
     } catch (error) {}
 };
 export const GetDoubleReward = async (ContractAddress, callback) => {
-    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
     try {
         Contracts.methods
@@ -135,7 +135,7 @@ export const GetDoubleReward = async (ContractAddress, callback) => {
     } catch (error) {}
 };
 export const Exit = async (ContractAddress, callback) => {
-    let Contracts = await Contract(MiningABI.abi, ContractAddress);
+    let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
     let Account = await getAccounts();
     try {
         Contracts.methods
@@ -172,7 +172,7 @@ export const Exit = async (ContractAddress, callback) => {
     } catch (error) {}
 };
 export const Compound = async (ContractAddress, callback) => {
-    let Contracts = await Contract(CompoundABI.abi, ContractAddress);
+    let Contracts = await Web3Contract(CompoundABI.abi, ContractAddress);
     let Account = await getAccounts();
     try {
         Contracts.methods
@@ -214,7 +214,7 @@ export const Approve = async (
     TokenSymbol,
     callback
 ) => {
-    let Contracts = await Contract(ApproveABI.abi, TokenAddress);
+    let Contracts = await Web3Contract(ApproveABI.abi, TokenAddress);
     let Account = await getAccounts();
     try {
         Contracts.methods

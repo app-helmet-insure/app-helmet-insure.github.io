@@ -250,7 +250,7 @@ export const getExerciseList = async function() {
     });
 };
 //get Insurance
-export const getInsuranceList = async function(callback) {
+export const getInsuranceList = async function() {
     return Axios({
         method: 'post',
         url:

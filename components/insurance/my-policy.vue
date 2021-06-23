@@ -420,6 +420,7 @@ export default {
       let xhBURGERolicy = await this.xhBURGERolicy();
       let SHIBHRolicy = await this.SHIBHRolicy();
       let HWINGSRolicy = await this.HWINGSRolicy();
+      let HMTRGolicy = await this.HMTRGolicy();
       if (HWINGSRolicy) {
         if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
           result.push(HWINGSRolicy);
@@ -508,6 +509,11 @@ export default {
       if (SHIBHRolicy) {
         if (SHIBHRolicy["sort"] != 1 && SHIBHRolicy["sort"] != 3) {
           result.push(SHIBHRolicy);
+        }
+      }
+      if (HMTRGolicy) {
+        if (HMTRGolicy["sort"] != 1 && HMTRGolicy["sort"] != 3) {
+          result.push(HMTRGolicy);
         }
       }
       result = result.sort(function (a, b) {
@@ -1559,6 +1565,60 @@ export default {
           outPriceUnit: "BUSD",
           showVolume: volume,
           TypeCoin: getTokenName("0x0487b824c8261462f88940f97053e65bdb498446"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async HMTRGolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0xa561926e81decb74b3d11e14680b3f6d1c5012bd"
+      );
+
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0xa561926e81decb74b3d11e14680b3f6d1c5012bd");
+        let resultItem;
+        resultItem = {
+          id: 17,
+          bidID: 17,
+          buyer: myAddress,
+          price: 1,
+          Rent: 1 * volume,
+          volume: volume.toString(),
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1626969600000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f",
+          _strikePrice: 9,
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1626969600000,
+          transfer: true,
+          longAdress: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
+          type: "Call",
+          symbol: "hMTRG",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 4.7,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

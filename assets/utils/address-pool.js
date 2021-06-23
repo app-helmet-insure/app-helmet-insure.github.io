@@ -279,6 +279,8 @@ export const getTokenName = (address) => {
             return 'WINGS';
         case '0x7859b01bbf675d67da8cd128a50d155cd881b576':
             return 'XMS';
+        case '0xbd2949f67dcdc549c6ebe98696449fa79d988a9f':
+            return 'MTRG';
         default:
             return '--';
     }

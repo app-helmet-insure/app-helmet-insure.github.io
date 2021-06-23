@@ -180,4 +180,12 @@ export default {
         'The lifetime of iXMS is from May 14th 18:00 SGT — May 15TH 18:00 SGT. ',
         'Please be sure to activate the iXMS within the validity period.',
     ],
+    hMTRG: [
+        'It is $MTRG cover miss out policy (CALL Option of $MTRG). ',
+        'The reasonable activate price: 1 $MTRG=4.7 BUSD.',
+        'For example, if $MTRG hit 6 BUSD before expiration date, you could swap 4.7BUSD+1 $hMTRG to 1 $MTRG, and get net 1.3 BUSD profit.',
+        'Total supply: 8333',
+        'Expire date: July 22nd 24:00 SGT Helmet team took Helmet as premium for supporting $hMTRG policy creating.',
+        'Do not trade heavily on $hMTRG, b/c if $MTRG fail to hit 4.7 BUSD, $hMTRG would just be used as short-term mining shovel and a souvenir token.',
+    ],
 };

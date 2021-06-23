@@ -7,7 +7,7 @@
       <div
         class="mining_item"
         v-for="(item, index) in miningList"
-        :key="item.TOKEN_NAME"
+        :key="item.REWARD_NAME"
       >
         <img
           class="link_flash"
@@ -75,7 +75,7 @@
             <button
               @click="HandleClickAction(item, 'STAKE')"
               :class="
-                activeFlash == item.TOKEN_NAME &&
+                activeFlash == item.REWARD_NAME &&
                 showActiveFlash &&
                 activeType == 'STAKE'
                   ? 'activeButton stakeFlash'
@@ -88,7 +88,7 @@
             <button
               @click="HandleClickAction(item, 'CLAIM')"
               :class="
-                activeFlash == item.TOKEN_NAME &&
+                activeFlash == item.REWARD_NAME &&
                 showActiveFlash &&
                 activeType == 'CLAIM'
                   ? 'activeButton claimFlash'
@@ -102,7 +102,7 @@
         </div>
         <div
           class="flash_detail"
-          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+          v-if="showActiveFlash && activeFlash == item.REWARD_NAME"
         >
           <svg
             class="close"
@@ -187,7 +187,7 @@
           <button
             @click="HandleClickAction(item, 'STAKE', true)"
             :class="
-              activeFlash == item.TOKEN_NAME &&
+              activeFlash == item.REWARD_NAME &&
               showActiveFlash &&
               activeType == 'STAKE'
                 ? 'activeButton stakeFlash'
@@ -199,7 +199,7 @@
           <button
             @click="HandleClickAction(item, 'CLAIM', true)"
             :class="
-              activeFlash == item.TOKEN_NAME &&
+              activeFlash == item.REWARD_NAME &&
               showActiveFlash &&
               activeType == 'CLAIM'
                 ? 'activeButton claimFlash'
@@ -211,7 +211,7 @@
         </section>
         <div
           class="wraper_title"
-          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+          v-if="showActiveFlash && activeFlash == item.REWARD_NAME"
         >
           <PHeader></PHeader>
           <div class="wraper">
@@ -306,7 +306,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeFlash = PoolData.TOKEN_NAME;
+      this.activeFlash = PoolData.REWARD_NAME;
     },
     apyArrayWatch(newValue) {
       if (newValue) {
@@ -315,6 +315,38 @@ export default {
     },
     async initFlashMiningData() {
       let arr = [
+        {
+          POOL_NAME: "<i>hMTRG</i>&nbsp;Pool",
+          POOL_DESC: "By SHIBh-Helmet LPT",
+          TOKEN_NAME: "SHIBh",
+          STAKE_SYMBOL: "SHIBh-Helmet LPT",
+          REWARD_NAME: "hMTRG",
+          START_TIME: "2021/06/11 00:00 UTC+8",
+          END_TIME: "2021/06/25 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/24 00:00"),
+          MING_TIME: this.getRemainTime("2021/06/30 00:00"),
+          REWARD_WEEKLY: fixD((8000 / 7) * 7, 2) + " hWINGS",
+          POOL_ADDRESS: "0x784a1507c2D2e90C3842929E06625b0D4e881071",
+          STAKE_ADDRESS: "0x12fdd0aed56fb61fbf242ac783da600b322f64e6",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
+          SWAP_TYPE: "PANCAKEV2",
+          TOTAL_REWARDS: 8000,
+          MINING_DAY: 14,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "SHIBh",
+            ADDTOKEN_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+            ADDTOKEN_DECIMALS: 12,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hMTRG",
+            ADDTOKEN_ADDRESS: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          REWARD_YEAR: "Infinity",
+        },
         {
           POOL_NAME: "<i>hWINGS</i>&nbsp;Pool",
           POOL_DESC: "By SHIBh-Helmet LPT",

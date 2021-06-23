@@ -1595,8 +1595,8 @@ export default {
         let Token = getTokenName("0xa561926e81decb74b3d11e14680b3f6d1c5012bd");
         let resultItem;
         resultItem = {
-          id: 17,
-          bidID: 17,
+          id: 18,
+          bidID: 18,
           buyer: myAddress,
           price: 1,
           Rent: 1 * volume,
@@ -1606,7 +1606,7 @@ export default {
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f",
-          _strikePrice: 9,
+          _strikePrice: 4.7,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1626969600000,
           transfer: true,
@@ -1621,7 +1621,7 @@ export default {
           TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
         };
         if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
+          resultItem["status"] = "Expired"; 
           resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {

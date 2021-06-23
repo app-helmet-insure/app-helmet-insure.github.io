@@ -269,7 +269,6 @@ export default {
               });
             }
           }
-          console.log(1111111);
           this.showList = this.insuranceList.sort(function (a, b) {
             console.log(a, b);
             return b.show_price - a.show_price;

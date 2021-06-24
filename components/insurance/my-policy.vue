@@ -421,6 +421,12 @@ export default {
       let SHIBHRolicy = await this.SHIBHRolicy();
       let HWINGSRolicy = await this.HWINGSRolicy();
       let HMTRGolicy = await this.HMTRGolicy();
+      let HBABYolicy = await this.HBABYolicy();
+      if (HBABYolicy) {
+        if (HBABYolicy["sort"] != 1 && HBABYolicy["sort"] != 3) {
+          result.push(HBABYolicy);
+        }
+      }
       if (HWINGSRolicy) {
         if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
           result.push(HWINGSRolicy);
@@ -1598,8 +1604,8 @@ export default {
           id: 18,
           bidID: 18,
           buyer: myAddress,
-          price: 1,
-          Rent: 1 * volume,
+          price: "--",
+          Rent: "--" ,
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1626969600000)).format(
@@ -1621,7 +1627,7 @@ export default {
           TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
         };
         if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired"; 
+          resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {
@@ -1635,6 +1641,61 @@ export default {
         return resultItem;
       }
     },
+    async HBABYolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624"
+      );
+
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624");
+        let resultItem;
+        resultItem = {
+          id: 19,
+          bidID: 19,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--" * volume,
+          volume: volume.toString(),
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1627228800000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657",
+          _strikePrice: 0.4,
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1627228800000,
+          transfer: true,
+          longAdress: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
+          type: "Call",
+          symbol: "hBABY",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 0.4,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+
     handleClickChagePage(index) {
       index = index - 1;
       this.page = index;

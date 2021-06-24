@@ -281,6 +281,8 @@ export const getTokenName = (address) => {
             return 'XMS';
         case '0xbd2949f67dcdc549c6ebe98696449fa79d988a9f':
             return 'MTRG';
+        case '0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657':
+            return 'BABY';
         default:
             return '--';
     }

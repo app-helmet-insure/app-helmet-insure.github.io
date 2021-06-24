@@ -283,12 +283,28 @@ export default {
     initBurnBox() {
       let arr = [
         {
+          POOL_NAME: "<i>BHELMET</i>&nbsp;Burning&nbsp;Box",
+          REWARD_NAME: "hBABY",
+          TOTAL_BONUS: 60000,
+          START_TIME: "2021/06/25 00:00 UTC+8",
+          END_TIME: "2021/07/08 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/25 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/08 00:00"),
+          TOKEN_NAME: "BHELMET",
+          STAKE_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          POOL_ADDRESS: "0xA8e5F1Ad35D7980c7c1B71A177ECF84a3Ab30ba9",
+          ONELPT_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          REWARD_ADDRESS: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
+        },
+        {
           POOL_NAME: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "SHIBh",
           TOTAL_BONUS: 15000000000,
           START_TIME: "2021/05/13 00:00 UTC+8",
           END_TIME: "2021/05/28 00:00 UTC+8",
-          OPEN_TIME: this.getMiningTime("2021/05/13 14:00"),
+          OPEN_TIME: this.getMiningTime("2021/05/13 00:00"),
           MING_TIME: this.getRemainTime("2021/05/28 00:00"),
           TOKEN_NAME: "hFOR",
           STAKE_ADDRESS: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
@@ -724,7 +740,7 @@ export default {
     margin-top: 10px;
     padding: 10px 10px 18px;
     @include themeify {
-      background: themed("color-ffffff");
+      color: themed("color-ffffff");
     }
     border-radius: 5px;
     display: flex;
@@ -1057,6 +1073,9 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       .close {
         width: 24px;

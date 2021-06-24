@@ -200,7 +200,6 @@ export default {
       immediate: true,
     },
   },
-
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
@@ -751,11 +750,6 @@ export default {
           showVolume: volume,
           TypeCoin: getTokenName("0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929"),
         };
-        console.log(
-          resultItem._expiry < currentTime,
-          resultItem._expiry,
-          currentTime
-        );
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
@@ -1079,7 +1073,6 @@ export default {
           showVolume: volume,
           TypeCoin: getTokenName("0x658a109c5900bc6d2357c87549b651670e5b0539"),
         };
-        console.log(resultItem._expiry, currentTime);
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
@@ -1621,7 +1614,7 @@ export default {
           TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
         };
         if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired"; 
+          resultItem["status"] = "Expired";
           resultItem["sort"] = 2;
           resultItem["dueDate"] = "Expired";
         } else {

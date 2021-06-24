@@ -1,7 +1,10 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide mars">
+      <div class="swiper-slide mtrg">
+        <div></div>
+      </div>
+      <div class="swiper-slide baby">
         <div></div>
       </div>
       <div class="swiper-slide dark">
@@ -14,9 +17,6 @@
         ><div></div
       ></a>
       <div class="swiper-slide shib">
-        <div></div>
-      </div>
-      <div class="swiper-slide hfor">
         <div></div>
       </div>
     </div>
@@ -141,12 +141,19 @@ export default {
         background-position: center;
       }
     }
-    .mars {
-      background: #1e2327;
+    .mtrg {
+      background: #000622;
       > div {
-        background-image: url("../../assets/img/banner/mars_web.png");
+        background-image: url("../../assets/img/banner/mtrg_web.png");
       }
     }
+    .baby {
+      background: #c5edfa;
+      > div {
+        background-image: url("../../assets/img/banner/babyswap_web.png");
+      }
+    }
+
     .dark {
       background: #ffe9ce;
       > div {
@@ -163,12 +170,6 @@ export default {
       background: #262724;
       > div {
         background-image: url("../../assets/img/banner/shib2_web.png");
-      }
-    }
-    .hfor {
-      background: #262724;
-      > div {
-        background-image: url("../../assets/img/banner/hfor_web.png");
       }
     }
     .imgbanner {
@@ -201,10 +202,16 @@ export default {
         background-position: center;
       }
     }
-    .mars {
-      background: #1e2327;
+    .mtrg {
+      background: #000622;
       > div {
-        background-image: url("../../assets/img/banner/mars_h5.png");
+        background-image: url("../../assets/img/banner/mtrg_h5.png");
+      }
+    }
+    .baby {
+      background: #c5edfa;
+      > div {
+        background-image: url("../../assets/img/banner/babyswap_h5.png");
       }
     }
     .dark {
@@ -224,13 +231,6 @@ export default {
       background: #262724;
       > div {
         background-image: url("../../assets/img/banner/shib2_h5.png");
-      }
-    }
-
-    .hfor {
-      background: #262724;
-      > div {
-        background-image: url("../../assets/img/banner/hfor_h5.png");
       }
     }
 

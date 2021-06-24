@@ -123,7 +123,7 @@
       <div
         class="mining_item_h5"
         v-for="(item, index) in miningList"
-        :key="item.TOKEN_NAME + '1'"
+        :key="item.REWARD_NAME + '1'"
       >
         <img
           class="link_flash"
@@ -246,9 +246,6 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import { fixD } from "~/assets/js/util.js";
-import precision from "~/assets/js/precision.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
 import PHeader from "~/components/common/header.vue";
 import POOL from "./pool.vue";
 import { GetPoolAPR } from "./flashmining_apr.js";
@@ -334,7 +331,7 @@ export default {
           REWARD_ADDRESS: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
           SWAP_TYPE: "PANCAKEV2",
           TOTAL_REWARDS: 8000,
-          MINING_DAY: 14,
+          MINING_DAY: 7,
           LEFTTOKEN: {
             ADDTOKEN_SYMBOL: "SHIBh",
             ADDTOKEN_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",

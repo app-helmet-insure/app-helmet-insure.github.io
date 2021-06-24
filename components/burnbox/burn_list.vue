@@ -740,7 +740,7 @@ export default {
     margin-top: 10px;
     padding: 10px 10px 18px;
     @include themeify {
-      background: themed("color-ffffff");
+      color: themed("color-ffffff");
     }
     border-radius: 5px;
     display: flex;
@@ -1073,6 +1073,9 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       .close {
         width: 24px;

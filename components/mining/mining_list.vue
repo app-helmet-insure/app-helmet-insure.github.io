@@ -1647,6 +1647,9 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
       .close {
         width: 24px;

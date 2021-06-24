@@ -121,9 +121,7 @@
                     <i>/</i>
                   </template>
                 </span>
-                <span v-else>
-                  {{ item.MING_TIME }}
-                </span>
+                <span v-else> {{ item.MING_TIME }} </span>
                 <span>{{ $t("Table.MIningCutdown") }}</span>
               </p>
             </section>
@@ -568,9 +566,9 @@ export default {
           REARD_VOLUME: "two",
           REWARD_NAME: "helmet_mtrg",
           REARD_IMGSHOW: true,
-          OPEN_TIME: this.getMiningTime("2021/06/24 00:00"),
+          OPEN_TIME: this.getMiningTime("2021/06/25 00:00"),
           MING_TIME: this.getRemainTime("2021/07/04 00:00"),
-          START_TIME: "2021/06/24 00:00 UTC+8",
+          START_TIME: "2021/06/25 00:00 UTC+8",
           END_TIME: "2021/07/04 00:00 UTC+8",
           COMBO_FLAG: true,
           REWARD_TYPE: "APR",
@@ -600,7 +598,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0xa561926e81DEcb74B3d11e14680B3F6D1c5012bD/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LPT</a>",
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0xa561926e81DEcb74B3d11e14680B3F6D1c5012bD/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hMTRG LPT</a>",
           APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
@@ -643,7 +641,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hMTRG LPT</a>",
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LPT</a>",
           APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },

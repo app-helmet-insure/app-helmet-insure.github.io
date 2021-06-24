@@ -283,6 +283,22 @@ export default {
     initBurnBox() {
       let arr = [
         {
+          POOL_NAME: "<i>BHELMET</i>&nbsp;Burning&nbsp;Box",
+          REWARD_NAME: "hBABY",
+          TOTAL_BONUS: 60000,
+          START_TIME: "2021/06/25 00:00 UTC+8",
+          END_TIME: "2021/07/08 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/25 14:00"),
+          MING_TIME: this.getRemainTime("2021/07/08 00:00"),
+          TOKEN_NAME: "BHELMET",
+          STAKE_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          POOL_ADDRESS: "0xA8e5F1Ad35D7980c7c1B71A177ECF84a3Ab30ba9",
+          ONELPT_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
+          REWARD_ADDRESS: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
+        },
+        {
           POOL_NAME: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "SHIBh",
           TOTAL_BONUS: 15000000000,

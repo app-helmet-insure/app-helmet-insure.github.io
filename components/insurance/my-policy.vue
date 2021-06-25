@@ -142,10 +142,18 @@ import {
   toRounding,
   fixDEAdd,
 } from "~/assets/js/util.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
 import { balanceOf, getBalance } from "~/interface/deposite";
+import { getInsuranceList } from "~/interface/event.js";
+import {
+  TokenDecimals,
+  getDecimals,
+  DecimalsFormWei,
+  fromWei,
+  AddressFormWei,
+  getAccounts,
+} from "~/interface/common_contract.js";
 import moment from "moment";
 import BigNumber from "bignumber.js";
 export default {
@@ -200,6 +208,9 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.getList();
+  },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
@@ -213,8 +224,96 @@ export default {
         this.setSettlementList(newValue);
       }
     },
+    async getList() {
+      let CurrentAccount = await getAccounts();
+      getInsuranceList().then((res) => {
+        let ReturnList = res.data.data.options;
+        let FixList = [];
+        let nowDate = parseInt(moment.now() / 1000);
+        ReturnList = ReturnList.filter((item) => {
+          if (item.asks.length > 0 && item.strikePrice.length > 2) {
+            return item;
+          }
+        });
+        ReturnList = ReturnList.forEach((item) => {
+          // 标的
+          let UnderlyingDecimals = TokenDecimals(item.underlying);
+          let UnderlyingSymbol = getTokenName(item.underlying);
+          // 抵押
+          let CollateralDecimals = TokenDecimals(item.collateral);
+          let CollateralSymbol = getTokenName(item.collateral);
+          // 执行
+          let StrikePriceDecimals =
+            18 + UnderlyingDecimals - CollateralDecimals;
+          if (UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+            item.outPriceUnit = "BNB";
+          } else {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+            item.outPriceUnit = "BNB";
+          }
+          if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+            item.outPriceUnit = "BUSD";
+          }
+          if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+            item.outPriceUnit = "BUSD";
+          }
+          item.show_expiry = moment(new Date(item.expiry * 1000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          );
+          let ResultItem = {
+            TypeCoin: item.TypeCoin,
+            expiry: item.expiry,
+            show_expiry: item.show_expiry,
+            id: item.id,
+            long: item.long,
+            outPriceUnit: item.outPriceUnit,
+            short: item.short,
+            strikePrice: item.strikePrice,
+            show_strikePrice: DecimalsFormWei(
+              item.strikePrice,
+              StrikePriceDecimals
+            ),
+            type: item.type,
+            collateral: item.collateral,
+            collateral_symbol: CollateralSymbol,
+            collateral_decimals: CollateralDecimals,
+            underlying: item.underlying,
+            underlying_symbol: UnderlyingSymbol,
+            underlying_decimals: UnderlyingDecimals,
+          };
+          item.asks.filter(async (item) => {
+            item.settleToken_symbol = getTokenName(item.settleToken);
+            item.show_price = fixD(
+              DecimalsFormWei(item.price, StrikePriceDecimals),
+              8
+            );
+            item.show_volume = fixD(
+              AddressFormWei(item.volume, ResultItem.collateral),
+              8
+            );
+            if (item.expiry < nowDate) {
+              item.status = "dated";
+            }
+            Object.assign(item, ResultItem);
+            console.log(item, CurrentAccount);
+            if (item.seller.toLowerCase() == CurrentAccount.toLowerCase()) {
+              FixList.push(item);
+            }
+          });
+        });
+        console.log(FixList);
+      });
+    },
     // 格式化数据
     async setSettlementList(list) {
+      return;
       this.isLoading = true;
       this.showList = [];
       let result = [];
@@ -1598,7 +1697,7 @@ export default {
           bidID: 18,
           buyer: myAddress,
           price: "--",
-          Rent: "--" ,
+          Rent: "--",
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1626969600000)).format(

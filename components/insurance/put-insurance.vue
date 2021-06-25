@@ -234,7 +234,6 @@ export default {
                 let CollateralDecimals = TokenDecimals(item.collateral);
                 // 执行
                 let StrikePriceDecimals = 18;
-                console.log(StrikePriceDecimals, item);
                 let ResultItem = {
                   expiry: item.expiry,
                   long: item.long,

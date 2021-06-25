@@ -24,14 +24,6 @@ export const pancakeswapv2 = async (
         TokenName2,
         TokenName2
     );
-    console.log(
-        TokenAddress1,
-        TokenName1,
-        TokenDecimals1,
-        TokenAddress2,
-        TokenName2,
-        TokenDecimals2
-    );
     try {
         // 获取交易对地址
         const address = Pair.getAddress(TOKEN1, TOKEN2);

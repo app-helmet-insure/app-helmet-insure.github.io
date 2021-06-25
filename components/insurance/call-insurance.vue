@@ -158,9 +158,6 @@ export default {
       fixD,
     };
   },
-  mounted() {
-    // this.getList();
-  },
   computed: {
     userInfo() {
       return this.$store.state.userInfo;

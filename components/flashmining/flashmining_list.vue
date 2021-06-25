@@ -7,7 +7,7 @@
       <div
         class="mining_item"
         v-for="(item, index) in miningList"
-        :key="item.TOKEN_NAME"
+        :key="item.REWARD_NAME"
       >
         <img
           class="link_flash"
@@ -64,7 +64,7 @@
             </p>
           </section>
           <section>
-            <span>{{ item.REWARD_WEEKLY }}</span>
+            <span>{{ item.REWARD_WEEKLY }} {{ item.REWARD_NAME }}</span>
             <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
           </section>
           <section>
@@ -75,7 +75,7 @@
             <button
               @click="HandleClickAction(item, 'STAKE')"
               :class="
-                activeFlash == item.TOKEN_NAME &&
+                activeFlash == item.REWARD_NAME &&
                 showActiveFlash &&
                 activeType == 'STAKE'
                   ? 'activeButton stakeFlash'
@@ -88,7 +88,7 @@
             <button
               @click="HandleClickAction(item, 'CLAIM')"
               :class="
-                activeFlash == item.TOKEN_NAME &&
+                activeFlash == item.REWARD_NAME &&
                 showActiveFlash &&
                 activeType == 'CLAIM'
                   ? 'activeButton claimFlash'
@@ -102,7 +102,7 @@
         </div>
         <div
           class="flash_detail"
-          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+          v-if="showActiveFlash && activeFlash == item.REWARD_NAME"
         >
           <svg
             class="close"
@@ -123,7 +123,7 @@
       <div
         class="mining_item_h5"
         v-for="(item, index) in miningList"
-        :key="item.TOKEN_NAME + '1'"
+        :key="item.REWARD_NAME + '1'"
       >
         <img
           class="link_flash"
@@ -180,14 +180,14 @@
           </div>
         </section>
         <section>
-          <span>{{ item.REWARD_WEEKLY }}</span>
+          <span>{{ item.REWARD_WEEKLY }} {{ item.REWARD_NAME }}</span>
           <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
         </section>
         <section>
           <button
             @click="HandleClickAction(item, 'STAKE', true)"
             :class="
-              activeFlash == item.TOKEN_NAME &&
+              activeFlash == item.REWARD_NAME &&
               showActiveFlash &&
               activeType == 'STAKE'
                 ? 'activeButton stakeFlash'
@@ -199,7 +199,7 @@
           <button
             @click="HandleClickAction(item, 'CLAIM', true)"
             :class="
-              activeFlash == item.TOKEN_NAME &&
+              activeFlash == item.REWARD_NAME &&
               showActiveFlash &&
               activeType == 'CLAIM'
                 ? 'activeButton claimFlash'
@@ -211,7 +211,7 @@
         </section>
         <div
           class="wraper_title"
-          v-if="showActiveFlash && activeFlash == item.TOKEN_NAME"
+          v-if="showActiveFlash && activeFlash == item.REWARD_NAME"
         >
           <PHeader></PHeader>
           <div class="wraper">
@@ -246,9 +246,6 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import { fixD } from "~/assets/js/util.js";
-import precision from "~/assets/js/precision.js";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
 import PHeader from "~/components/common/header.vue";
 import POOL from "./pool.vue";
 import { GetPoolAPR } from "./flashmining_apr.js";
@@ -306,7 +303,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeFlash = PoolData.TOKEN_NAME;
+      this.activeFlash = PoolData.REWARD_NAME;
     },
     apyArrayWatch(newValue) {
       if (newValue) {
@@ -315,6 +312,38 @@ export default {
     },
     async initFlashMiningData() {
       let arr = [
+        {
+          POOL_NAME: "<i>hMTRG</i>&nbsp;Pool",
+          POOL_DESC: "By SHIBh-Helmet LPT",
+          TOKEN_NAME: "SHIBh",
+          STAKE_SYMBOL: "SHIBh-Helmet LPT",
+          REWARD_NAME: "hMTRG",
+          START_TIME: "2021/06/24 00:00 UTC+8",
+          END_TIME: "2021/07/01 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/24 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/01 00:00"),
+          REWARD_WEEKLY: fixD((8000 / 7) * 7, 2),
+          POOL_ADDRESS: "0x784a1507c2D2e90C3842929E06625b0D4e881071",
+          STAKE_ADDRESS: "0x12fdd0aed56fb61fbf242ac783da600b322f64e6",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
+          SWAP_TYPE: "PANCAKEV2",
+          TOTAL_REWARDS: 8000,
+          MINING_DAY: 7,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "SHIBh",
+            ADDTOKEN_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+            ADDTOKEN_DECIMALS: 12,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hMTRG",
+            ADDTOKEN_ADDRESS: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          REWARD_YEAR: "Infinity",
+        },
         {
           POOL_NAME: "<i>hWINGS</i>&nbsp;Pool",
           POOL_DESC: "By SHIBh-Helmet LPT",
@@ -325,7 +354,7 @@ export default {
           END_TIME: "2021/06/25 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/06/11 00:00"),
           MING_TIME: this.getRemainTime("2021/06/25 00:00"),
-          REWARD_WEEKLY: fixD((7500 / 14) * 7, 2) + " hWINGS",
+          REWARD_WEEKLY: fixD((7500 / 14) * 7, 2),
           POOL_ADDRESS: "0x1CaB756c4B46B44a3012E74F1023ae972c1b1b60",
           STAKE_ADDRESS: "0x12fdd0aed56fb61fbf242ac783da600b322f64e6",
           STAKE_DECIMALS: 18,
@@ -357,7 +386,7 @@ export default {
           END_TIME: "2021/05/12 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/04/22 14:00"),
           MING_TIME: this.getRemainTime("2021/05/12 00:00"),
-          REWARD_WEEKLY: fixD((20000 / 20) * 7, 2) + " hxBURGER",
+          REWARD_WEEKLY: fixD((20000 / 20) * 7, 2),
           POOL_ADDRESS: "0x40052013B8c019E999276885467AC156e86Fd1bD",
           STAKE_ADDRESS: "0x413da4890ab12b1a7e01d0bb7fc5cf6cadf5d565",
           STAKE_DECIMALS: 18,
@@ -389,7 +418,7 @@ export default {
           END_TIME: "2021/04/26 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/04/06 00:00"),
           MING_TIME: this.getRemainTime("2021/04/26 00:00"),
-          REWARD_WEEKLY: fixD((2000000 / 21) * 7, 2) + " hTPT",
+          REWARD_WEEKLY: fixD((2000000 / 21) * 7, 2),
           POOL_ADDRESS: "0xe71B586Be2c053E22a44556A7526B02428a943B0",
           STAKE_ADDRESS: "0x762D63a230C4e1EB2673cB5C4FadC5B68b3074c7",
           STAKE_DECIMALS: 18,
@@ -421,7 +450,7 @@ export default {
           END_TIME: "2021/03/31 12:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/03/24 00:00"),
           MING_TIME: this.getRemainTime("2021/03/31 12:00"),
-          REWARD_WEEKLY: fixD((40000 / 15) * 7, 2) + " hDODO",
+          REWARD_WEEKLY: fixD((40000 / 15) * 7, 2),
           POOL_ADDRESS: "0xc68CB0a3c5Cab3C9521E124Eff97A503c45bE9E4",
           STAKE_ADDRESS: "0xc840de3a061A73467bc98acD9A32aA3a281A380C",
           STAKE_DECIMALS: 18,
@@ -453,7 +482,7 @@ export default {
           END_TIME: "2021/03/18 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/03/11 00:00"),
           MING_TIME: this.getRemainTime("2021/03/18 00:00"),
-          REWARD_WEEKLY: fixD((30000 / 15) * 7, 2) + " hMATH",
+          REWARD_WEEKLY: fixD((30000 / 15) * 7, 2),
           POOL_ADDRESS: "0x630179cd153a009b4b864A5A5a3Ac5A0E70804Da",
           STAKE_ADDRESS: "0xB6F84EaD91Fb6d70B8f1E87759E7c95c440DD80C",
           STAKE_DECIMALS: 18,
@@ -485,7 +514,7 @@ export default {
           END_TIME: "2021/03/09 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/03/02 00:00"),
           MING_TIME: this.getRemainTime("2021/03/09 00:00:00"),
-          REWARD_WEEKLY: fixD((10 / 14) * 7, 2) + " hAUTO",
+          REWARD_WEEKLY: fixD((10 / 14) * 7, 2),
           POOL_ADDRESS: "0xe4a5d7cb5A9EbDC4370D0b4EBBd0C1656099b293",
           STAKE_ADDRESS: "0x6A829c3870Ab4ce228Cdf359E6F72295ef472F9d",
           STAKE_DECIMALS: 18,
@@ -517,7 +546,7 @@ export default {
           END_TIME: "2021/02/29 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/02/22 00:00"),
           MING_TIME: this.getRemainTime("2021/02/29 00:00"),
-          REWARD_WEEKLY: fixD((1000 / 10) * 7, 2) + " BNB500",
+          REWARD_WEEKLY: fixD((1000 / 10) * 7, 2),
           POOL_ADDRESS: "0x6F131e8e5a93ac3Ae71FDdbbE1122cB69AF9Fc71",
           STAKE_ADDRESS: "0x9a6fCD063cA5a9bB31b9f8eE86eCB6476b981280",
           STAKE_DECIMALS: 18,
@@ -549,7 +578,7 @@ export default {
           END_TIME: "2021/02/28 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/02/21 00:00"),
           MING_TIME: this.getRemainTime("2021/02/28 00:00"),
-          REWARD_WEEKLY: fixD((70000 / 21) * 7, 2) + " hCTK",
+          REWARD_WEEKLY: fixD((70000 / 21) * 7, 2),
           POOL_ADDRESS: "0xaF0e8747FA54b3E000FF1a0F87AF2DB4F1B7Fd87",
           STAKE_ADDRESS: "0xcBbD24DBbF6a487370211bb8B58C3b43C4C32b9E",
           STAKE_DECIMALS: 18,
@@ -581,7 +610,7 @@ export default {
           END_TIME: "2021/02/13 00:00 UTC+8",
           OPEN_TIME: this.getMiningTime("2021/02/06 00:00"),
           MING_TIME: this.getRemainTime("2021/02/13 00:00"),
-          REWARD_WEEKLY: fixD(16000 * 7, 2) + " HCCT",
+          REWARD_WEEKLY: fixD(16000 * 7, 2),
           POOL_ADDRESS: "0xB6ED9f3dCA5CeaaB25F24a377Ed2e47Ecb7dCA5D",
           STAKE_ADDRESS: "0x2ec7FC5A00d4E785821fc8D195291c970d79F0bF",
           STAKE_DECIMALS: 18,

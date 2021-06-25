@@ -24,6 +24,14 @@ export const pancakeswapv2 = async (
         TokenName2,
         TokenName2
     );
+    console.log(
+        TokenAddress1,
+        TokenName1,
+        TokenDecimals1,
+        TokenAddress2,
+        TokenName2,
+        TokenDecimals2
+    );
     try {
         // 获取交易对地址
         const address = Pair.getAddress(TOKEN1, TOKEN2);
@@ -47,7 +55,6 @@ export const pancakeswapv2 = async (
         let Price = route.midPrice.toSignificant(6);
         return Price;
     } catch (error) {
-        console.log(error);
         return 0;
     }
 };

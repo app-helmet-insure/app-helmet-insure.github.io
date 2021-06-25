@@ -46,6 +46,8 @@ export const GetPoolAPR = async ({
             HELLMET_DECIMALS
         );
     }
+    console.log(TOEKNHELMET, REWARD_NAME);
+
     let POOL_STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, REWARD_DECIMALS); //pool totalsupply
     let TOTAL_LPT_VOLUME = await TotalSupply(STAKE_ADDRESS, STAKE_DECIMALS); // lpt totalsupply
     let HELMETVALUE = await BalanceOf(
@@ -53,6 +55,7 @@ export const GetPoolAPR = async ({
         HELLMET_DECIMALS,
         STAKE_ADDRESS
     );
+    console.log(HELMETVALUE, TOTAL_REWARDS, MINING_DAY, REWARD_NAME);
     let NUMBERATOR = TOEKNHELMET * (TOTAL_REWARDS / MINING_DAY) * 365; // Numerator
     let DENOMINATOR =
         ((HELMETVALUE * 2) / TOTAL_LPT_VOLUME) * POOL_STAKE_VOLUME; // Denominator

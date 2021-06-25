@@ -42,7 +42,7 @@
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmDeposit") }}
+          >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.ConfirmDeposit") }}
         </button>
         <p>
           <span>{{ $t("Table.MyDeposits") }}</span>
@@ -284,6 +284,7 @@ export default {
       helmetPrice: 0,
       MingTime: "",
       isLogin: false,
+      ApproveFlag: false,
     };
   },
   mounted() {
@@ -408,7 +409,7 @@ export default {
       this.stakeLoading = true;
       if (this.ApproveFlag) {
         await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
-          if (res == "success") {
+          if (res == "success" || res == "error") {
             this.NeedApprove();
             this.stakeLoading = false;
           }

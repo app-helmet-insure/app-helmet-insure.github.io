@@ -4,14 +4,14 @@
       <h3>{{ $t("Type.MyGuarantee") }}</h3>
     </div>
     <template v-if="isLogin">
-      <div class="policy_item" v-for="item in showList" :key="item.id">
+      <div class="policy_item" v-for="item in showList" :key="item.bidID">
         <section>
           <p>
-            <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+            <span>{{ $t("Table.ID") }}:{{ item.bidID }}</span>
             <span>{{ item.dueDate }}</span>
           </p>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
             {{ item.outPriceUnit }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
             <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
@@ -20,21 +20,21 @@
         <section>
           <p>
             <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
           </p>
           <p>
             <span>{{ $t("Table.Position") }}: </span>
-            <span>{{ fixD(item.volume, 8) }}</span>
+            <span>{{ item.buyVolume }}</span>
           </p>
         </section>
         <section>
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.price, 8) }} HELMET</span>
+            <span>{{ item.show_price }} HELMET</span>
           </p>
           <p>
             <span>{{ $t("Table.Premium") }}: </span>
-            <span>{{ fixD(item.Rent, 8) }} HELMET</span>
+            <span>{{ item.premium }} HELMET</span>
           </p>
         </section>
         <section>
@@ -53,16 +53,20 @@
       </div>
     </template>
     <template>
-      <div class="policy_item_H5" v-for="item in showList" :key="item.id + '1'">
+      <div
+        class="policy_item_H5"
+        v-for="item in showList"
+        :key="item.bidID + '1'"
+      >
         <section>
           <p>
-            <span>{{ $t("Table.ID") }}:{{ item.id }}</span>
+            <span>{{ $t("Table.ID") }}:{{ item.askID }}</span>
             <span>{{ item.dueDate }}</span>
           </p>
         </section>
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.outPrice }}
+            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
             {{ item.outPriceUnit }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
             <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
@@ -71,21 +75,21 @@
         <section>
           <p>
             <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.outPrice }} {{ item.outPriceUnit }}</span>
+            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
           </p>
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.price, 8) }} HELMET</span>
+            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
           </p>
         </section>
         <section>
           <p>
             <span>{{ $t("Table.Position") }}: </span>
-            <span>{{ fixD(item.volume, 8) }}</span>
+            <span>{{ fixD(item.buyVolume, 8) }}</span>
           </p>
           <p>
             <span>{{ $t("Table.Premium") }}: </span>
-            <span>{{ fixD(item.Rent, 8) }} HELMET</span>
+            <span>{{ item.premium }} HELMET</span>
           </p>
         </section>
         <section>
@@ -120,9 +124,9 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="guaranteeList.length > 10 && isLogin">
+    <section class="pages" v-if="FilterList.length > 10 && isLogin">
       <Page
-        :total="guaranteeList.length"
+        :total="FilterList.length"
         :limit="limit"
         :page="page + 1"
         @page-change="handleClickChagePage"
@@ -168,6 +172,7 @@ export default {
       toRounding: toRounding,
       showList: [],
       guaranteeList: [],
+      FilterList: [],
       getTokenName,
       fixD,
       page: 0,
@@ -194,48 +199,47 @@ export default {
     },
   },
   watch: {
-    myAboutInfoBuy: {
-      handler: "myAboutInfoBuyWatch",
-      immediate: true,
-    },
-    guaranteeList(newList) {
-      if (newList) {
-        this.showList = newList.slice(this.page * this.limit, this.limit);
-      }
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
     },
-  },
-  mounted() {
-    this.getList();
+    FilterList: {
+      handler: "fliterListWatch",
+      immediate: true,
+    },
   },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
+        this.getList();
       }
     },
-    myAboutInfoBuyWatch(newValue, old) {
+
+    fliterListWatch(newValue) {
+      console.log(newValue);
       if (newValue) {
-        this.page = 0;
-        this.limit = 10;
-        this.setSettlementList(newValue);
+        let list = newValue;
+        this.showList = list.slice(0, this.limit);
       }
     },
     async getList() {
+      this.isLoading = true;
       let CurrentAccount = await getAccounts();
       getInsuranceList().then((res) => {
         let ReturnList = res.data.data.options;
         let FixList = [];
         let nowDate = parseInt(moment.now() / 1000);
         ReturnList = ReturnList.filter((item) => {
-          if (item.asks.length > 0 && item.strikePrice.length > 2) {
+          if (
+            item.asks.length > 0 &&
+            item.strikePrice.length > 2 &&
+            Number(item.expiry) + 5184000 > nowDate
+          ) {
             return item;
           }
         });
-        ReturnList = ReturnList.forEach((item) => {
+        ReturnList.forEach((item) => {
           // 标的
           let UnderlyingDecimals = TokenDecimals(item.underlying);
           let UnderlyingSymbol = getTokenName(item.underlying);
@@ -249,20 +253,32 @@ export default {
             item.TypeCoin = CollateralSymbol;
             item.type = "Call";
             item.outPriceUnit = "BNB";
+            item.show_strikePrice = DecimalsFormWei(
+              item.strikePrice,
+              StrikePriceDecimals
+            );
           } else {
             item.TypeCoin = UnderlyingSymbol;
             item.type = "Put";
             item.outPriceUnit = "BNB";
+            item.show_strikePrice =
+              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
           }
           if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
             item.TypeCoin = CollateralSymbol;
             item.type = "Call";
             item.outPriceUnit = "BUSD";
+            item.show_strikePrice = DecimalsFormWei(
+              item.strikePrice,
+              StrikePriceDecimals
+            );
           }
           if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
             item.TypeCoin = UnderlyingSymbol;
             item.type = "Put";
             item.outPriceUnit = "BUSD";
+            item.show_strikePrice =
+              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
           }
           item.show_expiry = moment(new Date(item.expiry * 1000)).format(
             "YYYY/MM/DD HH:mm:ss"
@@ -274,12 +290,12 @@ export default {
             id: item.id,
             long: item.long,
             outPriceUnit: item.outPriceUnit,
+            show_strikePrice: fixD(
+              item.show_strikePrice,
+              item.TypeCoin == "SHIB" ? 10 : 4
+            ),
             short: item.short,
             strikePrice: item.strikePrice,
-            show_strikePrice: DecimalsFormWei(
-              item.strikePrice,
-              StrikePriceDecimals
-            ),
             type: item.type,
             collateral: item.collateral,
             collateral_symbol: CollateralSymbol,
@@ -288,344 +304,33 @@ export default {
             underlying_symbol: UnderlyingSymbol,
             underlying_decimals: UnderlyingDecimals,
           };
-          item.asks.filter(async (item) => {
-            item.settleToken_symbol = getTokenName(item.settleToken);
-            item.show_price = fixD(
-              DecimalsFormWei(item.price, StrikePriceDecimals),
+          item.asks.forEach((itemAsk) => {
+            itemAsk.settleToken_symbol = getTokenName(itemAsk.settleToken);
+            itemAsk.show_price = fixD(
+              DecimalsFormWei(itemAsk.price, StrikePriceDecimals),
               8
             );
-            item.show_volume = fixD(
-              AddressFormWei(item.volume, ResultItem.collateral),
-              8
-            );
-            if (item.expiry < nowDate) {
-              item.status = "dated";
-            }
-            Object.assign(item, ResultItem);
-            console.log(item, CurrentAccount);
-            if (item.seller.toLowerCase() == CurrentAccount.toLowerCase()) {
-              FixList.push(item);
-            }
+            let AskArray = Object.assign(ResultItem, itemAsk);
+            itemAsk.binds.forEach((itemBid) => {
+              itemBid.buyVolume =
+                item.type == "Call"
+                  ? DecimalsFormWei(itemBid.volume, CollateralDecimals)
+                  : fixD(
+                      DecimalsFormWei(itemBid.volume, UnderlyingDecimals) /
+                        this.strikePriceArray[1][ResultItem.underlying_symbol],
+                      8
+                    );
+              itemBid.premium = itemBid.buyVolume * ResultItem.show_price;
+              let AllItem = Object.assign(AskArray, itemBid);
+              if (AllItem.buyer.toLowerCase() == CurrentAccount.toLowerCase()) {
+                FixList.push(AllItem);
+              }
+            });
           });
         });
-        console.log(FixList);
+        this.FilterList = [...new Set(FixList)];
+        this.isLoading = false;
       });
-    },
-    // 格式化数据
-    async setSettlementList(list) {
-      return;
-      this.isLoading = true;
-      this.showList = [];
-      let result = [];
-      let item, resultItem, amount, InsurancePrice, Rent, downTime;
-      let currentTime = new Date().getTime();
-      let exerciseRes;
-      let bidIDArr;
-
-      for (let i = 0; i < list.length; i++) {
-        item = list[i];
-        let TokenFlag = getTokenName(item.sellInfo.longInfo._underlying);
-        let Token = getTokenName(item.sellInfo.longInfo._collateral);
-        if (item.new) {
-          // 保单价格
-          InsurancePrice = fromWei(item.newPrice, Token == "CTK" ? 30 : Token);
-        } else {
-          // 保单价格
-          InsurancePrice = fromWei(
-            item.sellInfo.price,
-            Token == "CTK" ? 30 : Token
-          );
-        }
-        if (
-          (TokenFlag == "WBNB" && Token != "BUSD") ||
-          (TokenFlag == "BUSD" && Token == "WBNB")
-        ) {
-          amount = fromWei(item.vol, Token);
-        } else {
-          amount = fixD(
-            precision.divide(
-              fromWei(item.vol, Token),
-              this.strikePriceArray[1][TokenFlag]
-            ),
-            8
-          );
-        }
-        // 保费
-        if (TokenFlag == "WBNB") {
-          item.TypeCoin = Token;
-          item.type = "Call";
-          item.outPriceUnit = "BNB";
-        } else {
-          item.TypeCoin = TokenFlag;
-          item.type = "Put";
-          item.outPriceUnit = "BNB";
-        }
-        if (TokenFlag == "BUSD" && Token == "WBNB") {
-          item.TypeCoin = Token;
-          item.type = "Call";
-          item.outPriceUnit = "BUSD";
-        }
-        if (Token == "BUSD" && TokenFlag == "WBNB") {
-          item.TypeCoin = TokenFlag;
-          item.type = "Put";
-          item.outPriceUnit = "BUSD";
-        }
-        Rent = precision.times(fromWei(item.vol, Token), InsurancePrice);
-        //倒计时
-        downTime = new Date(item.sellInfo.longInfo._expiry * 1000);
-        downTime = moment(downTime).format("YYYY/MM/DD HH:mm:ss");
-
-        if (item.type == "Call") {
-          resultItem = {
-            id: item.bidID,
-            bidID: item.bidID,
-            buyer: item.buyer,
-            amt: fromWei(item.amt),
-            price: InsurancePrice,
-            volume: amount,
-            Rent: Rent,
-            settleToken: item.sellInfo.settleToken,
-            dueDate: downTime,
-            _collateral: item.sellInfo.longInfo._collateral,
-            _strikePrice: fromWei(
-              item.sellInfo.longInfo._strikePrice,
-              Token == "CTK" ? 30 : Token
-            ),
-            _underlying: item.sellInfo.longInfo._underlying,
-            _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
-            long: item.sellInfo.long,
-            short: item.sellInfo.longInfo.short,
-            count: item.sellInfo.longInfo.count,
-            // outPrice: fromWei(
-            //   item.sellInfo.longInfo._strikePrice,
-            //   Token == "CTK" ? 30 : Token
-            // ),
-            type: item.type,
-            TypeCoin: item.TypeCoin,
-            outPriceUnit: item.outPriceUnit,
-            showVolume: fromWei(item.vol, Token),
-          };
-          if (resultItem["TypeCoin"] == "SHIB") {
-            resultItem["outPrice"] = fixD(
-              fromWei(
-                item.sellInfo.longInfo._strikePrice,
-                Token == "CTK" ? 30 : Token
-              ),
-              10
-            );
-          } else {
-            resultItem["outPrice"] = fixD(
-              fromWei(
-                item.sellInfo.longInfo._strikePrice,
-                Token == "CTK" ? 30 : Token
-              ),
-              4
-            );
-          }
-        } else {
-          resultItem = {
-            id: item.bidID,
-            bidID: item.bidID,
-            buyer: item.buyer,
-            amt: fromWei(item.amt),
-            price: InsurancePrice,
-            bnbAmount: amount,
-            volume: amount,
-            Rent: Rent,
-            settleToken: item.sellInfo.settleToken,
-            dueDate: downTime,
-            _collateral: item.sellInfo.longInfo._collateral,
-            _strikePrice: fromWei(
-              item.sellInfo.longInfo._strikePrice,
-              TokenFlag
-            ),
-            _underlying: item.sellInfo.longInfo._underlying,
-            _expiry: parseInt(item.sellInfo.longInfo._expiry) * 1000,
-            long: item.sellInfo.long,
-            short: item.sellInfo.longInfo.short,
-            count: item.sellInfo.longInfo.count,
-            // outPrice: toRounding(
-            //   precision.divide(
-            //     1,
-            //     fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
-            //   )
-            // ),
-            type: item.type,
-            TypeCoin: item.TypeCoin,
-            outPriceUnit: item.outPriceUnit,
-            showVolume: fromWei(item.vol, TokenFlag),
-          };
-          if (resultItem["TypeCoin"] == "SHIB") {
-            resultItem["outPrice"] = fixD(
-              precision.divide(
-                1,
-                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
-              ),
-              10
-            );
-          } else {
-            resultItem["outPrice"] = fixD(
-              precision.divide(
-                1,
-                fromWei(item.sellInfo.longInfo._strikePrice, TokenFlag)
-              ),
-              4
-            );
-          }
-        }
-        exerciseRes = await getExercise(resultItem.buyer);
-        bidIDArr = exerciseRes.map((eItem) => {
-          return eItem.returnValues.bidID;
-        });
-        if (bidIDArr.includes(resultItem.bidID)) {
-          resultItem["status"] = "Activated";
-          resultItem["sort"] = 1;
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        if (resultItem["sort"] != 1 && resultItem["sort"] != 3) {
-          result.push(resultItem);
-        }
-      }
-      result = result.sort(function (a, b) {
-        return b.id - a.id;
-      });
-      let cakePolicy = await this.CAKEPolicy();
-      let hcctPolicy = await this.HCCTPolicy();
-      let hctkPolicy = await this.HCTKPolicy();
-      let hburgerPolicy = await this.HBURGERPolicy();
-      let lishiPolicy = await this.LISHIPolicy();
-      let BNB500Policy = await this.BNB500Policy();
-      let hAUTOPolicy = await this.hAUTOPolicy();
-      let hMATHPolicy = await this.hMATHPolicy();
-      let hFORPolicy = await this.hFORPolicy();
-      let HCCTIIPolicy = await this.HCCTIIPolicy();
-      let hDODOPolicy = await this.hDODOPolicy();
-      let hTPTPolicy = await this.hTPTPolicy();
-      let QFEIPolicy = await this.QFEIPolicy();
-      let bHELMETPolicy = await this.bHELMETPolicy();
-      let qHELMETPolicy = await this.qHELMETPolicy();
-      let xhBURGERolicy = await this.xhBURGERolicy();
-      let SHIBHRolicy = await this.SHIBHRolicy();
-      let HWINGSRolicy = await this.HWINGSRolicy();
-      let HMTRGolicy = await this.HMTRGolicy();
-      let HBABYolicy = await this.HBABYolicy();
-      if (HBABYolicy) {
-        if (HBABYolicy["sort"] != 1 && HBABYolicy["sort"] != 3) {
-          result.push(HBABYolicy);
-        }
-      }
-      if (HWINGSRolicy) {
-        if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
-          result.push(HWINGSRolicy);
-        }
-      }
-      if (cakePolicy) {
-        if (cakePolicy["sort"] != 1 && cakePolicy["sort"] != 3) {
-          result.push(cakePolicy);
-        }
-      }
-      if (hcctPolicy) {
-        if (hcctPolicy["sort"] != 1 && hcctPolicy["sort"] != 3) {
-          result.push(hcctPolicy);
-        }
-      }
-      if (hctkPolicy) {
-        if (hctkPolicy["sort"] != 1 && hctkPolicy["sort"] != 3) {
-          result.push(hctkPolicy);
-        }
-      }
-      if (hburgerPolicy) {
-        if (hburgerPolicy["sort"] != 1 && hburgerPolicy["sort"] != 3) {
-          result.push(hburgerPolicy);
-        }
-      }
-      if (lishiPolicy) {
-        if (lishiPolicy["sort"] != 1 && lishiPolicy["sort"] != 3) {
-          result.push(lishiPolicy);
-        }
-      }
-      if (BNB500Policy) {
-        if (BNB500Policy["sort"] != 1 && BNB500Policy["sort"] != 3) {
-          result.push(BNB500Policy);
-        }
-      }
-      if (hAUTOPolicy) {
-        if (hAUTOPolicy["sort"] != 1 && hAUTOPolicy["sort"] != 3) {
-          result.push(hAUTOPolicy);
-        }
-      }
-      if (hMATHPolicy) {
-        if (hMATHPolicy["sort"] != 1 && hMATHPolicy["sort"] != 3) {
-          result.push(hMATHPolicy);
-        }
-      }
-      if (hFORPolicy) {
-        if (hFORPolicy["sort"] != 1 && hFORPolicy["sort"] != 3) {
-          result.push(hFORPolicy);
-        }
-      }
-      if (HCCTIIPolicy) {
-        if (HCCTIIPolicy["sort"] != 1 && HCCTIIPolicy["sort"] != 3) {
-          result.push(HCCTIIPolicy);
-        }
-      }
-      if (hDODOPolicy) {
-        if (hDODOPolicy["sort"] != 1 && hDODOPolicy["sort"] != 3) {
-          result.push(hDODOPolicy);
-        }
-      }
-      if (hTPTPolicy) {
-        if (hTPTPolicy["sort"] != 1 && hTPTPolicy["sort"] != 3) {
-          result.push(hTPTPolicy);
-        }
-      }
-      if (QFEIPolicy) {
-        if (QFEIPolicy["sort"] != 1 && QFEIPolicy["sort"] != 3) {
-          result.push(QFEIPolicy);
-        }
-      }
-      if (bHELMETPolicy) {
-        if (bHELMETPolicy["sort"] != 1 && bHELMETPolicy["sort"] != 3) {
-          result.push(bHELMETPolicy);
-        }
-      }
-      if (qHELMETPolicy) {
-        if (qHELMETPolicy["sort"] != 1 && qHELMETPolicy["sort"] != 3) {
-          result.push(qHELMETPolicy);
-        }
-      }
-      if (xhBURGERolicy) {
-        if (xhBURGERolicy["sort"] != 1 && xhBURGERolicy["sort"] != 3) {
-          result.push(xhBURGERolicy);
-        }
-      }
-      if (SHIBHRolicy) {
-        if (SHIBHRolicy["sort"] != 1 && SHIBHRolicy["sort"] != 3) {
-          result.push(SHIBHRolicy);
-        }
-      }
-      if (HMTRGolicy) {
-        if (HMTRGolicy["sort"] != 1 && HMTRGolicy["sort"] != 3) {
-          result.push(HMTRGolicy);
-        }
-      }
-      result = result.sort(function (a, b) {
-        return a.sort - b.sort;
-      });
-      this.isLoading = false;
-      this.guaranteeList = result;
-      this.showList = result.slice(this.page * this.limit, this.limit);
     },
     // 倒计时
     getDownTime(time) {
@@ -1792,7 +1497,7 @@ export default {
       index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.guaranteeList.slice(
+      let list = this.FilterList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
       );

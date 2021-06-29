@@ -97,7 +97,7 @@
     </div>
     <section
       class="noData"
-      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+      v-if="(FilterList.length < 1 && !isLoading) || !isLogin"
     >
       <div>
         <img
@@ -107,9 +107,9 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="insuranceList.length > 10 && isLogin">
+    <section class="pages" v-if="FilterList.length > 10 && isLogin">
       <Page
-        :total="insuranceList.length"
+        :total="FilterList.length"
         :limit="limit"
         :page="page + 1"
         @page-change="handleClickChagePage"
@@ -153,13 +153,11 @@ export default {
       page: 0,
       limit: 10,
       showList: [],
-      insuranceList: [],
+      FilterList: [],
       isLoading: true,
     };
   },
-  mounted() {
-    this.getList();
-  },
+
   computed: {
     aboutInfoSell() {
       let list = this.$store.state.aboutInfoSell;
@@ -184,6 +182,10 @@ export default {
       handler: "userInfoWatch",
       immediate: true,
     },
+    FilterList: {
+      handler: "fliterListWatch",
+      immediate: true,
+    },
   },
   methods: {
     userInfoWatch(newValue) {
@@ -196,7 +198,13 @@ export default {
         this.isLoading = false;
       }
     },
-    async getList() {
+    fliterListWatch(newValue) {
+      if (newValue) {
+        let list = newValue;
+        this.showList = list.slice(0, this.limit);
+      }
+    },
+    getList() {
       this.isLoading = true;
       // Current Insurance
       let coinAddress = getAddress(this.activeInsurance);
@@ -206,80 +214,84 @@ export default {
         // Map List
         getInsuranceList().then((res) => {
           if (res && res.data.data.options) {
-            let CallList;
-            let ShowList = [];
-            let InsuranceList = res.data.data.options;
+            let FixList = [];
+            let ReturnList = res.data.data.options;
             if (this.activeInsurance != "WBNB") {
-              CallList = InsuranceList.filter(
+              ReturnList = ReturnList.filter(
                 (item) =>
                   item.underlying.toLowerCase() == coinAddress &&
-                  Number(item.expiry) + 518400 > nowDate &&
+                  Number(item.expiry) + 2592000 > nowDate &&
                   item.asks.length
               );
             } else {
-              CallList = InsuranceList.filter(
+              ReturnList = ReturnList.filter(
                 (item) =>
                   item.underlying.toLowerCase() == coinAddress &&
                   item.collateral.toLowerCase() ==
                     "0xe9e7cea3dedca5984780bafc599bd69add087d56" &&
-                  Number(item.expiry) + 518400 > nowDate &&
+                  Number(item.expiry) + 2592000 > nowDate &&
                   item.asks.length
               );
             }
-            if (CallList.length) {
-              CallList.forEach((item) => {
-                // 标的
-                let UnderlyingDecimals = TokenDecimals(item.underlying);
-                // 抵押
-                let CollateralDecimals = TokenDecimals(item.collateral);
-                // 执行
-                let StrikePriceDecimals = 18;
-                let ResultItem = {
-                  expiry: item.expiry,
-                  long: item.long,
-                  short: item.short,
-                  show_strikePrice: fixD(
-                    DecimalsFormWei(item.strikePrice, StrikePriceDecimals),
-                    8
-                  ),
-                  strikePrice: item.strikePrice,
-                  collateral: item.collateral,
-                  collateral_symbol: getTokenName(item.collateral),
-                  collateral_decimals: getDecimals(CollateralDecimals),
-                  underlying: item.underlying,
-                  underlying_symbol: getTokenName(item.underlying),
-                  underlying_decimals: getDecimals(UnderlyingDecimals),
-                  currentInsurance: getTokenName(item.collateral),
-                };
-                item.asks.forEach(async (item) => {
-                  Object.assign(item, ResultItem);
-                  item.settleToken_symbol = getTokenName(item.settleToken);
-                  item.show_price = fixD(
-                    DecimalsFormWei(item.price, StrikePriceDecimals),
-                    8
-                  );
-                  let AsksInfo = await Asks(item.askID);
-                  item.show_volume = fixD(
-                    AddressFormWei(AsksInfo.remain, item.underlying) /
-                      this.strikePriceArray[1][item.underlying_symbol],
-                    8
-                  );
-                  item.show_ID =
-                    item.seller.substr(0, 2) +
-                    item.seller.substr(2, 3) +
-                    "..." +
-                    item.seller.substr(-4).toUpperCase();
-                  if (item.expiry < nowDate) {
-                    item.status = "dated";
-                    item.sort = 0;
-                  }
-                  ShowList.push(item);
+            ReturnList = ReturnList.forEach((item) => {
+              // 标的
+              let UnderlyingDecimals = TokenDecimals(item.underlying);
+              // 抵押
+              let CollateralDecimals = TokenDecimals(item.collateral);
+              // 执行
+              let StrikePriceDecimals = 18;
+              let ResultItem = {
+                expiry: item.expiry,
+                long: item.long,
+                short: item.short,
+                show_strikePrice: fixD(
+                  DecimalsFormWei(item.strikePrice, StrikePriceDecimals),
+                  8
+                ),
+                strikePrice: item.strikePrice,
+                collateral: item.collateral,
+                collateral_symbol: getTokenName(item.collateral),
+                collateral_decimals: getDecimals(CollateralDecimals),
+                underlying: item.underlying,
+                underlying_symbol: getTokenName(item.underlying),
+                underlying_decimals: getDecimals(UnderlyingDecimals),
+                currentInsurance: getTokenName(item.collateral),
+                sort: 1,
+              };
+              item.asks.forEach(async (item) => {
+                item.settleToken_symbol = getTokenName(item.settleToken);
+                item.show_price = fixD(
+                  DecimalsFormWei(item.price, StrikePriceDecimals),
+                  8
+                );
+                let AsksInfo = await Asks(item.askID);
+                item.show_volume = fixD(
+                  AddressFormWei(AsksInfo.remain, ResultItem.underlying) /
+                    this.strikePriceArray[1][ResultItem.underlying_symbol],
+                  8
+                );
+                item.show_ID =
+                  item.seller.substr(0, 2) +
+                  item.seller.substr(2, 3) +
+                  "..." +
+                  item.seller.substr(-4).toUpperCase();
+                if (item.expiry < nowDate) {
+                  item.status = "dated";
+                  item.sort = 0;
+                }
+                Object.assign(item, ResultItem);
+                FixList.push(item);
+                FixList = FixList.sort(function (a, b) {
+                  return Number(a.show_price) - Number(b.show_price);
                 });
-                this.showList = ShowList;
+                FixList = FixList.sort(function (a, b) {
+                  return b.sort - a.sort;
+                });
               });
-            }
+            });
+            this.FilterList = FixList;
+            this.isLoading = false;
           }
-          this.isLoading = false;
         });
       } catch (error) {
         console.log(error, "putInsurance");
@@ -290,7 +302,7 @@ export default {
       index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.insuranceList.slice(
+      let list = this.FilterList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
       );

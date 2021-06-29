@@ -283,6 +283,8 @@ export const getTokenName = (address) => {
             return 'MTRG';
         case '0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657':
             return 'BABY';
+        case '0x4131b87f74415190425ccd873048c708f8005823':
+            return 'BMXX';
         default:
             return '--';
     }

@@ -196,4 +196,12 @@ export default {
         'Expire date: July 25th 24:00 SGT Helmet team took 200,000 Helmet as premium for supporting $hBABY policy creating.',
         'Do not trade heavily on $hBABY, b/c if $BABY fail to hit 0.4 BUSD, $hBABY would just be used as short-term mining shovel and a souvenir token.',
     ],
+    hBMXX: [
+        'It is $BMXX cover miss out policy (CALL Option of $BMXX). ',
+        'The reasonable activate price: 1 $BMXX=20 BUSD.',
+        'For example, if $bMXX hit 30 BUSD before expiration date, you could swap 20 BUSD+1 $hbMXX to 1 $bMXX, and get net 10 BUSD profit.',
+        'Total supply: 3636',
+        'Expire date: July 29th 24:00 SGT Helmet team took 3636 Helmet as premium for supporting $hbMXX policy creating.',
+        'Do not trade heavily on $hbMXX, b/c if $bMXX fail to hit 20 BUSD, $hbMXX would just be used as short-term mining shovel and a souvenir token.',
+    ],
 };

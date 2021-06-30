@@ -165,6 +165,9 @@ export default {
     storeThemes() {
       return this.$store.state.themes;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
   watch: {
     userInfo: {
@@ -264,7 +267,6 @@ export default {
                   item.seller.substr(2, 3) +
                   "..." +
                   item.seller.substr(-4).toUpperCase();
-                console.log(ResultItem.expiry, nowDate, item);
                 if (
                   AsksInfo.show_volume == 0 ||
                   Number(ResultItem.expiry) < nowDate
@@ -306,13 +308,20 @@ export default {
       if (!data.buyNum || data.buyNum > data.show_volume) {
         return;
       }
-      let datas = data;
+      let datas = {
+        askID: data.askID,
+        buyNum: data.buyNum,
+        showNum: data.buyNum,
+        show_strikePrice: this.strikePriceArray[0][data.collateral_symbol],
+        currentInsurance: data.currentInsurance,
+        settleToken_symbol: data.settleToken_symbol,
+      };
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>Buy <span>${datas.show_volume} ${datas.currentInsurance}
+        conText: `<p>Buy <span>${datas.buyNum} ${data.currentInsurance}
                   </span> Policys, with the premium of <span>
-                  ${fixD(datas.show_price * datas.show_volume, 8)} ${
+                  ${fixD(data.show_price * datas.buyNum, 8)} ${
           datas.settleToken_symbol
         }
                   </span></p>`,
@@ -326,7 +335,11 @@ export default {
       });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          Buy(datas, (status) => {});
+          Buy(datas, (status) => {
+            if (status == "success") {
+              this.getList();
+            }
+          });
         }
         datas = {};
       });

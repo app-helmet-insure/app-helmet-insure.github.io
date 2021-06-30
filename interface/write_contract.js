@@ -12,6 +12,7 @@ import {
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
 import bus from '~/assets/js/bus';
+import { fixD } from '~/assets/js/util.js';
 let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
 
 export const Stake = async (
@@ -275,13 +276,9 @@ export const Buy = async (data, callback) => {
                     loading: true,
                     buttonText: 'Confirm',
                     conTit: 'Please Confirm the transaction in your wallet',
-                    conText: `<p>Buy <span>${data.show_volume} ${
-                        data.currentInsurance
-                    }
+                    conText: `<p>Buy <span>${data.showNum} ${data.currentInsurance}
                 </span> Policys, with the strike price of <span>
-                ${fixD(data.show_price * data.show_volume, 8)} ${
-                        data.settleToken_symbol
-                    }
+                ${data.show_strikePrice} ${data.settleToken_symbol}
                 </span></p>`,
                 });
             })
@@ -303,6 +300,7 @@ export const Buy = async (data, callback) => {
                         type: 'success',
                     });
                 }
+                callback('success');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
@@ -317,4 +315,45 @@ export const Buy = async (data, callback) => {
     } catch (error) {
         console.log('error', 'Buy');
     }
+};
+export const Cancel = async (askID, callBack) => {
+    // const WEB3 = await web3();
+    if (!askID) {
+        return;
+    }
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    let Account = await getAccounts();
+    if (!window.CURRENTADDRESS) {
+        return;
+    }
+    Contracts.methods
+        .cancel(askID)
+        .send({ from: Account })
+        .on('transactionHash', (hash) => {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `Cancel your Policy supplying order.`,
+            });
+        })
+        .on('receipt', function(receipt) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Transation submitted',
+                layout: 'layout2',
+                buttonText: 'Confirm',
+                conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                button: true,
+                buttonText: 'Confirm',
+                showDialog: false,
+            });
+            callBack('success');
+        })
+        .on('error', (err, receipt) => {
+            callBack('failed');
+        });
 };

@@ -141,6 +141,7 @@ import {
 import { Asks } from "~/interface/read_contract.js";
 import { Buy } from "~/interface/write_contract.js";
 import moment from "moment";
+import BigNumber from "bignumber.js";
 export default {
   components: {
     InsuranceTitle,
@@ -255,7 +256,7 @@ export default {
                 underlying: item.underlying,
                 underlying_symbol: getTokenName(item.underlying),
                 underlying_decimals: getDecimals(UnderlyingDecimals),
-                currentInsurance: getTokenName(item.collateral),
+                currentInsurance: getTokenName(item.underlying),
                 sort: 1,
               };
               item.asks.forEach(async (item) => {
@@ -312,20 +313,27 @@ export default {
       if (!data.buyNum || data.buyNum > data.show_volume) {
         return;
       }
+
       let RelBuyNumber =
         data.buyNum == data.show_volume
           ? AddressFormWei(data.volume, data.underlying)
           : data.buyNum * this.strikePriceArray[1][data.underlying_symbol];
-      var datas = JSON.parse(JSON.stringify(data));
-      datas.buyNum = RelBuyNumber;
+      let datas = {
+        askID: data.askID,
+        buyNum: BigNumber(RelBuyNumber + "").toFixed(),
+        showNum: data.buyNum,
+        show_strikePrice: this.strikePriceArray[1][data.underlying_symbol],
+        currentInsurance: data.currentInsurance,
+        settleToken_symbol: data.settleToken_symbol,
+      };
 
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>Buy <span>${datas.show_volume} ${datas.currentInsurance}
+        conText: `<p>Buy <span>${data.buyNum} ${data.currentInsurance}
                   </span> Policys, with the premium of <span>
-                  ${fixD(datas.show_price * datas.show_volume, 8)} ${
-          datas.settleToken_symbol
+                  ${fixD(data.show_price * datas.buyNum, 8)} ${
+          data.settleToken_symbol
         }
                   </span></p>`,
         activeTip: true,
@@ -338,7 +346,11 @@ export default {
       });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          Buy(datas, (status) => {});
+          Buy(datas, (status) => {
+            if (status == "success") {
+              this.getList();
+            }
+          });
         }
         datas = {};
       });

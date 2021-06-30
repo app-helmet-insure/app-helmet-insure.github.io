@@ -503,7 +503,7 @@ export const MyPayaso = async (address1) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const onExercise = async (data, callBack, flag) => {
+export const onExercise = async (data, flag, callBack) => {
     if (JSON.stringify(data) === '{}') {
         return false;
     }
@@ -562,6 +562,7 @@ export const onExercise = async (data, callBack, flag) => {
             }
         });
     }
+    console.log(value);
     // 一键判断是否需要授权，给予无限授权
     order.methods
         .exercise(data.flag ? value : data.bidID)
@@ -572,13 +573,11 @@ export const onExercise = async (data, callBack, flag) => {
                 layout: 'layout2',
                 loading: true,
                 conTit: 'Please Confirm the transaction in your wallet',
-                conText: `<p>You will swap<span> ${fixD(
-                    data._underlying_vol,
-                    8
-                )} ${data._underlying}</span> to <span> ${fixD(
-                    data.showVolume,
-                    8
-                )} ${data._collateral}</span></p>`,
+                conText: `<p>You will swap<span> ${fixD(data.buyVolume, 8)} ${
+                    data.totoken
+                }</span> to <span> ${fixD(data.show_strikePrice, 8)} ${
+                    data.token
+                }</span></p>`,
             });
         })
         .on('receipt', function(receipt) {
@@ -599,7 +598,7 @@ export const onExercise = async (data, callBack, flag) => {
                     type: 'success',
                 });
             }
-            bus.$emit('REFRESH_ALL_DATA');
+            callback('success');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');

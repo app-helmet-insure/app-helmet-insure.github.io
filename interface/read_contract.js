@@ -196,3 +196,7 @@ export const Asks = async (AskID) => {
     let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
     return Contracts.methods.asks(AskID).call();
 };
+export const Bids = async (BidID) => {
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    return Contracts.methods.bids(BidID).call();
+};

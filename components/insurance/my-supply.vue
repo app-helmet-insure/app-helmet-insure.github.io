@@ -164,6 +164,7 @@ import {
   getAccounts,
 } from "~/interface/common_contract.js";
 import { Asks } from "~/interface/read_contract.js";
+import { Cancel } from "~/interface/write_contract.js";
 import moment from "moment";
 export default {
   components: {
@@ -362,7 +363,6 @@ export default {
           });
         });
         this.FilterList = FixList;
-        console.log(this.FilterList);
         this.isLoading = false;
       });
     },
@@ -416,7 +416,12 @@ export default {
       });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          onCancel(data.id, (status) => {});
+          Cancel(data.askID, (status) => {
+            console.log(status);
+            if (status == "success") {
+              this.getList();
+            }
+          });
         }
         data = {};
       });

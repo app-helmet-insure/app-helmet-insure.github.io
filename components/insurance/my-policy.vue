@@ -24,17 +24,17 @@
           </p>
           <p>
             <span>{{ $t("Table.Position") }}: </span>
-            <span>{{ item.buyVolume }}</span>
+            <span>{{ fixD(item.buyVolume, 8) }}</span>
           </p>
         </section>
         <section>
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ item.show_price }} HELMET</span>
+            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
           </p>
           <p>
             <span>{{ $t("Table.Premium") }}: </span>
-            <span>{{ item.premium }} HELMET</span>
+            <span>{{ fixD(item.premium, 8) }} HELMET</span>
           </p>
         </section>
         <section>
@@ -160,6 +160,7 @@ import {
 } from "~/interface/common_contract.js";
 import moment from "moment";
 import BigNumber from "bignumber.js";
+import { Bids } from "~/interface/read_contract.js";
 export default {
   components: {
     Page,
@@ -217,21 +218,24 @@ export default {
     },
 
     fliterListWatch(newValue) {
-      console.log(newValue);
       if (newValue) {
         let list = newValue;
         this.showList = list.slice(0, this.limit);
       }
     },
-    async getList() {
+    getList() {
       this.isLoading = true;
-      let CurrentAccount = await getAccounts();
-      getInsuranceList().then((res) => {
+      getInsuranceList().then(async (res) => {
+        let CurrentAccount = await getAccounts();
         let ReturnList = res.data.data.options;
         let FixList = [];
         let nowDate = parseInt(moment.now() / 1000);
         ReturnList = ReturnList.filter((item) => {
-          if (item.asks.length > 0 && item.strikePrice.length > 2) {
+          if (
+            item.asks.length > 0 &&
+            item.strikePrice.length > 2 &&
+            Number(item.expiry) + 5814000 > nowDate
+          ) {
             return item;
           }
         });
@@ -308,25 +312,180 @@ export default {
             );
             let AskArray = Object.assign(ResultItem, itemAsk);
             itemAsk.binds.forEach((itemBid) => {
-              console.log(itemBid);
+              AskArray.bidID = itemBid.bidID;
               itemBid.buyVolume =
                 item.type == "Call"
                   ? DecimalsFormWei(itemBid.volume, CollateralDecimals)
                   : fixD(
                       DecimalsFormWei(itemBid.volume, UnderlyingDecimals) /
-                        this.strikePriceArray[1][ResultItem.underlying_symbol],
+                        ResultItem.show_strikePrice,
                       8
                     );
-              itemBid.premium = itemBid.buyVolume * ResultItem.show_price;
-              let AllItem = Object.assign(AskArray, itemBid);
-              FixList.push(AllItem);
+              itemBid.premium =
+                item.type == "Call"
+                  ? itemBid.buyVolume * ResultItem.show_price
+                  : itemBid.buyVolume *
+                    ResultItem.show_price *
+                    ResultItem.show_strikePrice;
+              let AllItem = Object.assign(itemBid, AskArray);
+              if (AllItem.buyer.toLowerCase() == CurrentAccount.toLowerCase()) {
+                FixList.push(AllItem);
+              }
             });
           });
         });
-        this.FilterList = [...new Set(FixList)].sort((a, b) => {
+        let List = [...new Set(FixList)].sort((a, b) => {
           return b.bidID - a.bidID;
         });
-        this.isLoading = false;
+        let arr = [];
+        let cakePolicy = await this.CAKEPolicy();
+        let hcctPolicy = await this.HCCTPolicy();
+        let hctkPolicy = await this.HCTKPolicy();
+        let hburgerPolicy = await this.HBURGERPolicy();
+        let lishiPolicy = await this.LISHIPolicy();
+        let BNB500Policy = await this.BNB500Policy();
+        let hAUTOPolicy = await this.hAUTOPolicy();
+        let hMATHPolicy = await this.hMATHPolicy();
+        let hFORPolicy = await this.hFORPolicy();
+        let HCCTIIPolicy = await this.HCCTIIPolicy();
+        let hDODOPolicy = await this.hDODOPolicy();
+        let hTPTPolicy = await this.hTPTPolicy();
+        let QFEIPolicy = await this.QFEIPolicy();
+        let bHELMETPolicy = await this.bHELMETPolicy();
+        let qHELMETPolicy = await this.qHELMETPolicy();
+        let xhBURGERolicy = await this.xhBURGERolicy();
+        let SHIBHRolicy = await this.SHIBHRolicy();
+        let HWINGSRolicy = await this.HWINGSRolicy();
+        let HMTRGolicy = await this.HMTRGolicy();
+        let HBABYolicy = await this.HBABYolicy();
+        let HBMXXolicy = await this.HBMXXolicy();
+        if (HBMXXolicy) {
+          if (HBMXXolicy["sort"] != 1 && HBMXXolicy["sort"] != 3) {
+            arr.push(HBMXXolicy);
+          }
+        }
+        if (HBABYolicy) {
+          if (HBABYolicy["sort"] != 1 && HBABYolicy["sort"] != 3) {
+            arr.push(HBABYolicy);
+          }
+        }
+        if (HWINGSRolicy) {
+          if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
+            arr.push(HWINGSRolicy);
+          }
+        }
+        if (cakePolicy) {
+          if (cakePolicy["sort"] != 1 && cakePolicy["sort"] != 3) {
+            arr.push(cakePolicy);
+          }
+        }
+        if (hcctPolicy) {
+          if (hcctPolicy["sort"] != 1 && hcctPolicy["sort"] != 3) {
+            arr.push(hcctPolicy);
+          }
+        }
+        if (hctkPolicy) {
+          if (hctkPolicy["sort"] != 1 && hctkPolicy["sort"] != 3) {
+            arr.push(hctkPolicy);
+          }
+        }
+        if (hburgerPolicy) {
+          if (hburgerPolicy["sort"] != 1 && hburgerPolicy["sort"] != 3) {
+            arr.push(hburgerPolicy);
+          }
+        }
+        if (lishiPolicy) {
+          if (lishiPolicy["sort"] != 1 && lishiPolicy["sort"] != 3) {
+            arr.push(lishiPolicy);
+          }
+        }
+        if (BNB500Policy) {
+          if (BNB500Policy["sort"] != 1 && BNB500Policy["sort"] != 3) {
+            arr.push(BNB500Policy);
+          }
+        }
+        if (hAUTOPolicy) {
+          if (hAUTOPolicy["sort"] != 1 && hAUTOPolicy["sort"] != 3) {
+            arr.push(hAUTOPolicy);
+          }
+        }
+        if (hMATHPolicy) {
+          if (hMATHPolicy["sort"] != 1 && hMATHPolicy["sort"] != 3) {
+            arr.push(hMATHPolicy);
+          }
+        }
+        if (hFORPolicy) {
+          if (hFORPolicy["sort"] != 1 && hFORPolicy["sort"] != 3) {
+            arr.push(hFORPolicy);
+          }
+        }
+        if (HCCTIIPolicy) {
+          if (HCCTIIPolicy["sort"] != 1 && HCCTIIPolicy["sort"] != 3) {
+            arr.push(HCCTIIPolicy);
+          }
+        }
+        if (hDODOPolicy) {
+          if (hDODOPolicy["sort"] != 1 && hDODOPolicy["sort"] != 3) {
+            arr.push(hDODOPolicy);
+          }
+        }
+        if (hTPTPolicy) {
+          if (hTPTPolicy["sort"] != 1 && hTPTPolicy["sort"] != 3) {
+            arr.push(hTPTPolicy);
+          }
+        }
+        if (QFEIPolicy) {
+          if (QFEIPolicy["sort"] != 1 && QFEIPolicy["sort"] != 3) {
+            arr.push(QFEIPolicy);
+          }
+        }
+        if (bHELMETPolicy) {
+          if (bHELMETPolicy["sort"] != 1 && bHELMETPolicy["sort"] != 3) {
+            arr.push(bHELMETPolicy);
+          }
+        }
+        if (qHELMETPolicy) {
+          if (qHELMETPolicy["sort"] != 1 && qHELMETPolicy["sort"] != 3) {
+            arr.push(qHELMETPolicy);
+          }
+        }
+        if (xhBURGERolicy) {
+          if (xhBURGERolicy["sort"] != 1 && xhBURGERolicy["sort"] != 3) {
+            arr.push(xhBURGERolicy);
+          }
+        }
+        if (SHIBHRolicy) {
+          if (SHIBHRolicy["sort"] != 1 && SHIBHRolicy["sort"] != 3) {
+            arr.push(SHIBHRolicy);
+          }
+        }
+        if (HMTRGolicy) {
+          if (HMTRGolicy["sort"] != 1 && HMTRGolicy["sort"] != 3) {
+            arr.push(HMTRGolicy);
+          }
+        }
+        List.map(async (item, index) => {
+          let BidsInfo = await Bids(item.bidID);
+          if (BidsInfo.remain == 0) {
+            item.status == "Activated";
+            item.sort = 1;
+          } else {
+            item.status == "Unactivated";
+            item.sort = 0;
+          }
+          if (Number(item.expiry) < nowDate) {
+            item.status = "Expired";
+            item.sort = 2;
+            item.show_expiry = "Expired";
+          }
+          if (BidsInfo.remain != 0) {
+            arr.push(item);
+          }
+          if (index == List.length - 1) {
+            this.FilterList = [...new Set(arr)];
+            this.isLoading = false;
+          }
+        });
       });
     },
     // 倒计时
@@ -353,47 +512,55 @@ export default {
       let data;
       if (item.type == "Call") {
         data = {
-          token: getTokenName(item._underlying),
-          _underlying_vol: precision.times(item._strikePrice, item.volume),
+          token: item.underlying_symbol || getTokenName(item._underlying),
+          totoken: item.collateral_symbol || getTokenName(item._collateral),
+          _underlying_vol: precision.times(item.show_strikePrice, item.volume),
           vol: item.volume,
           bidID: item.bidID,
           long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item._strikePrice), 12),
-          _underlying: getTokenName(item._underlying),
-          _collateral: getTokenName(item._collateral),
-          settleToken: getTokenName(item.settleToken),
+          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
+          _underlying: item.collateral_symbol || getTokenName(item._collateral),
+          _collateral: item.underlying_symbol || getTokenName(item._underlying),
+          settleToken:
+            item.settleToken_symbol || getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
           approveAddress1: item.approveAddress1,
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
           showVolume: item.showVolume,
+          show_strikePrice: item.show_strikePrice,
+          buyVolume: item.buyVolume,
         };
       } else {
         data = {
-          token: getTokenName(item._underlying),
+          token: item.collateral_symbol || getTokenName(item._collateral),
+          totoken: item.underlying_symbol || getTokenName(item._underlying),
           _underlying_vol: item.volume,
           vol: item.volume,
           bidID: item.bidID,
           long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item._strikePrice), 12),
-          _underlying: getTokenName(item._underlying),
-          _collateral: getTokenName(item._collateral),
-          settleToken: getTokenName(item.settleToken),
+          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
+          _underlying: item.collateral_symbol || getTokenName(item._collateral),
+          _collateral: item.underlying_symbol || getTokenName(item._underlying),
+          settleToken:
+            item.settleToken_symbol || getTokenName(item.settleToken),
           flag: item.transfer ? true : false,
           approveAddress1: item.approveAddress1,
           approveAddress2: item.approveAddress2,
           unit: item.unit ? item.unit : "",
           showVolume: item.volume * item.outPrice,
+          show_strikePrice: item.show_strikePrice,
+          buyVolume: item.buyVolume,
         };
       }
 
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>you will swap<span> ${fixD(data._underlying_vol, 8)} ${
-          data._underlying
-        }</span> to <span> ${fixD(data.showVolume, 8)} ${
-          data._collateral
+        conText: `<p>you will swap<span> ${fixD(data.buyVolume, 8)} ${
+          data.totoken
+        }</span> to <span> ${fixD(data.show_strikePrice, 8)} ${
+          data.token
         }</span></p>`,
         activeTip: true,
         activeTipText1: "Please double check the price above，",
@@ -405,7 +572,11 @@ export default {
       });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          onExercise(data, data.flag);
+          onExercise(data, data.flag, (status) => {
+            if (status == "success") {
+              this.getList();
+            }
+          });
         }
         data = {};
       });
@@ -426,15 +597,16 @@ export default {
           id: 1,
           bidID: 1,
           buyer: myAddress,
-          price: "Airdrop",
-          Rent: "Airdrop",
+          show_price: "Airdrop",
+          premium: "Airdrop",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1613404800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-          _strikePrice: fromWei(30000000000000000, Token),
+          show_strikePrice: 0.03,
+          _strikePrice: 0.03,
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1613404800000,
           transfer: true,
@@ -442,10 +614,11 @@ export default {
           symbol: "LONG",
           approveAddress1: "FACTORY",
           approveAddress2: "CAKELONG",
-          outPrice: fromWei(30000000000000000, Token),
+          outPrice: 0.03,
           outPriceUnit: "BNB",
           type: "Call",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"),
         };
         if (resultItem._expiry < currentTime) {
@@ -480,15 +653,16 @@ export default {
           id: 2,
           bidID: 2,
           buyer: myAddress,
-          price: 1,
-          Rent: volume * 10,
+          show_price: 1,
+          premium: volume * 10,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1613404800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-          _strikePrice: fromWei(10000000000000000000, Token),
+          show_strikePrice: 10,
+          _strikePrice: 10,
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1613404800000,
           transfer: true,
@@ -497,9 +671,10 @@ export default {
           symbol: "HCCT",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(10000000000000000000, Token),
+          outPrice: 10,
           outPriceUnit: "HELMET",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82"),
         };
         if (resultItem._expiry < currentTime) {
@@ -534,15 +709,16 @@ export default {
           id: 3,
           bidID: 3,
           buyer: myAddress,
-          price: 1.8343,
-          Rent: volume * 1.8343,
+          show_price: 1.8343,
+          premium: volume * 1.8343,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1613750400000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929",
-          _strikePrice: fromWei(2500000000000000000, Token),
+          show_strikePrice: 2.5,
+          _strikePrice: 2.5,
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1613750400000,
           transfer: true,
@@ -551,10 +727,11 @@ export default {
           symbol: "hCTK",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(2500000000000000000, Token),
+          outPrice: 2.5,
           outPriceUnit: "HELMET",
           unit: 6,
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929"),
         };
         if (resultItem._expiry < currentTime) {
@@ -588,15 +765,16 @@ export default {
           id: 4,
           bidID: 4,
           buyer: myAddress,
-          price: 1,
-          Rent: volume * 1,
+          show_price: 1,
+          premium: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1615226400000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xae9269f27437f0fcbc232d39ec814844a51d6b8f",
-          _strikePrice: fromWei(70000000000000000, Token),
+          show_strikePrice: 0.07,
+          _strikePrice: 0.07,
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1615226400000,
           transfer: true,
@@ -605,9 +783,10 @@ export default {
           symbol: "hBURGER",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(70000000000000000, Token),
+          outPrice: 0.07,
           outPriceUnit: "BNB",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xae9269f27437f0fcbc232d39ec814844a51d6b8f"),
         };
         if (resultItem._expiry < currentTime) {
@@ -641,15 +820,16 @@ export default {
           id: 5,
           bidID: 5,
           buyer: myAddress,
-          price: "redbag.png",
-          Rent: "redbag.png",
+          show_price: "redbag.png",
+          premium: "redbag.png",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1613577600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          _strikePrice: fromWei(100000000000000000, Token),
+          show_strikePrice: 0.1,
+          _strikePrice: 0.1,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1613577600000,
           transfer: true,
@@ -658,10 +838,11 @@ export default {
           symbol: "LiShi",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(100000000000000000, Token),
+          outPrice: 0.1,
           outPriceUnit: "BUSD",
           showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
@@ -695,15 +876,16 @@ export default {
           id: 5,
           bidID: 5,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1616256000000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-          _strikePrice: fromWei(500000000000000000000, Token),
+          show_strikePrice: 500,
+          _strikePrice: 500,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1616256000000,
           transfer: true,
@@ -712,10 +894,11 @@ export default {
           symbol: "BNB500",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(500000000000000000000, Token),
+          outPrice: 500,
           outPriceUnit: "BUSD",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"),
         };
         if (resultItem._expiry < currentTime) {
@@ -749,15 +932,16 @@ export default {
           id: 6,
           bidID: 6,
           buyer: myAddress,
-          price: 1000,
-          Rent: volume * 1000,
+          show_price: 1000,
+          premium: volume * 1000,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1616428800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xa184088a740c695e156f91f5cc086a06bb78b827",
-          _strikePrice: fromWei(42000000000000000000, Token),
+          show_strikePrice: 42,
+          _strikePrice: 42,
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1616601600000,
           transfer: true,
@@ -766,10 +950,11 @@ export default {
           symbol: "hAUTO",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(42000000000000000000, Token),
+          outPrice: 42,
           outPriceUnit: "BNB",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xa184088a740c695e156f91f5cc086a06bb78b827"),
         };
         if (resultItem._expiry < currentTime) {
@@ -803,15 +988,16 @@ export default {
           id: 7,
           bidID: 7,
           buyer: myAddress,
-          price: 1,
-          Rent: volume * 1,
+          show_price: 1,
+          premium: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1616428800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xf218184af829cf2b0019f8e6f0b2423498a36983",
-          _strikePrice: fromWei(14000000000000000, Token),
+          show_strikePrice: 0.014,
+          _strikePrice: 0.014,
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1616428800000,
           transfer: true,
@@ -820,10 +1006,11 @@ export default {
           symbol: "hMATH",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(14000000000000000, Token),
+          outPrice: 0.014,
           outPriceUnit: "BNB",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xf218184af829cf2b0019f8e6f0b2423498a36983"),
         };
         if (resultItem._expiry < currentTime) {
@@ -857,15 +1044,16 @@ export default {
           id: 8,
           bidID: 8,
           buyer: myAddress,
-          price: 0.1,
-          Rent: volume * 0.1,
+          show_price: 0.1,
+          premium: volume * 0.1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1617465600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x658a109c5900bc6d2357c87549b651670e5b0539",
-          _strikePrice: fromWei(250000000000000000, Token),
+          show_strikePrice: 0.25,
+          _strikePrice: 0.25,
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1617465600000,
           transfer: true,
@@ -874,10 +1062,11 @@ export default {
           symbol: "hFOR",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(250000000000000000, Token),
+          outPrice: 0.25,
           outPriceUnit: "HELMET",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x658a109c5900bc6d2357c87549b651670e5b0539"),
         };
         if (resultItem._expiry < currentTime) {
@@ -911,15 +1100,16 @@ export default {
           id: 9,
           bidID: 9,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1617897600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          _strikePrice: fromWei(100000000000000000, Token),
+          show_strikePrice: 0.1,
+          _strikePrice: 0.1,
           _underlying: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
           _expiry: 1617897600000,
           transfer: true,
@@ -928,10 +1118,11 @@ export default {
           symbol: "HCCTII",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(100000000000000000, Token),
+          outPrice: 0.1,
           outPriceUnit: "CAKE",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
@@ -965,15 +1156,16 @@ export default {
           id: 10,
           bidID: 10,
           buyer: myAddress,
-          price: 1,
-          Rent: volume * 1,
+          show_price: 1,
+          premium: volume * 1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1618416000000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
-          _strikePrice: fromWei(10000000000000000000, Token),
+          show_strikePrice: 10,
+          _strikePrice: 10,
           _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
           _expiry: 1618416000000,
           transfer: true,
@@ -982,10 +1174,11 @@ export default {
           symbol: "hDODO",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: fromWei(10000000000000000000, Token),
+          outPrice: 10,
           outPriceUnit: "HELMET",
           // showType: "img",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1020,14 +1213,15 @@ export default {
           id: 11,
           bidID: 11,
           buyer: myAddress,
-          price: 0.01,
-          Rent: volume * 0.01,
+          show_price: 0.01,
+          premium: volume * 0.01,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1620057600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xeca41281c24451168a37211f0bc2b8645af45092",
+          show_strikePrice: 0.06,
           _strikePrice: 0.06,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1620057600000,
@@ -1042,6 +1236,7 @@ export default {
           // showType: "img",
           unit: 4,
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xeca41281c24451168a37211f0bc2b8645af45092"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1075,14 +1270,15 @@ export default {
           id: 12,
           bidID: 12,
           buyer: myAddress,
-          price: 0.1,
-          Rent: volume * 0.1,
+          show_price: 0.1,
+          premium: volume * 0.1,
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1620576000000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
+          show_strikePrice: 1,
           _strikePrice: 1,
           _underlying: "0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31",
           _expiry: 1620576000000,
@@ -1095,6 +1291,7 @@ export default {
           outPrice: 1,
           outPriceUnit: "QSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1128,15 +1325,16 @@ export default {
           id: 13,
           bidID: 13,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1623772800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          _strikePrice: fromWei(1500000000000000000, Token),
+          show_strikePrice: 1.5,
+          _strikePrice: 1.5,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1623772800000,
           transfer: true,
@@ -1148,6 +1346,7 @@ export default {
           outPrice: 1.5,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1181,15 +1380,16 @@ export default {
           id: 14,
           bidID: 14,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1624118400000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          _strikePrice: fromWei(1500000000000000000, Token),
+          show_strikePrice: 1.5,
+          _strikePrice: 1.5,
           _underlying: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
           _expiry: 1624118400000,
           transfer: true,
@@ -1201,6 +1401,7 @@ export default {
           outPrice: 1.5,
           outPriceUnit: "QSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1234,15 +1435,16 @@ export default {
           id: 15,
           bidID: 15,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume,
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1621612800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd",
-          _strikePrice: fromWei(100000000000000000, Token),
+          show_strikePrice: 0.1,
+          _strikePrice: 0.1,
           _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
           _expiry: 1621612800000,
           transfer: true,
@@ -1254,6 +1456,7 @@ export default {
           outPrice: 0.1,
           outPriceUnit: "BNB",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1289,14 +1492,15 @@ export default {
           id: 16,
           bidID: 16,
           buyer: myAddress,
-          price: "Airdrop",
-          Rent: "Airdrop",
+          show_price: "Airdrop",
+          premium: "Airdrop",
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1626105600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          show_strikePrice: 0.000001,
           _strikePrice: 0.000001,
           _underlying: "0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561",
           _expiry: 1626105600000,
@@ -1309,6 +1513,7 @@ export default {
           outPrice: 0.000001,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           unit: 12,
           TypeCoin: getTokenName("0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561"),
         };
@@ -1344,14 +1549,15 @@ export default {
           id: 17,
           bidID: 17,
           buyer: myAddress,
-          price: 1,
-          Rent: 1 * volume,
+          show_price: 1,
+          premium: 1 * volume,
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1625932800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x0487b824c8261462f88940f97053e65bdb498446",
+          show_strikePrice: 9,
           _strikePrice: 9,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1625932800000,
@@ -1364,6 +1570,7 @@ export default {
           outPrice: 9,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x0487b824c8261462f88940f97053e65bdb498446"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1398,14 +1605,15 @@ export default {
           id: 18,
           bidID: 18,
           buyer: myAddress,
-          price: "--",
-          Rent: "--",
+          show_price: "--",
+          premium: "--",
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1626969600000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f",
+          show_strikePrice: 4.7,
           _strikePrice: 4.7,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1626969600000,
@@ -1418,6 +1626,7 @@ export default {
           outPrice: 4.7,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1452,14 +1661,15 @@ export default {
           id: 19,
           bidID: 19,
           buyer: myAddress,
-          price: "--",
-          Rent: "--" * volume,
+          show_price: "--",
+          premium: "--" * volume,
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1627228800000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657",
+          show_strikePrice: 0.4,
           _strikePrice: 0.4,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1627228800000,
@@ -1472,6 +1682,7 @@ export default {
           outPrice: 0.4,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657"),
         };
         if (resultItem._expiry < currentTime) {
@@ -1506,14 +1717,15 @@ export default {
           id: 19,
           bidID: 19,
           buyer: myAddress,
-          price: "--",
-          Rent: "--" * volume,
+          show_price: "--",
+          premium: "--" * volume,
           volume: volume.toString(),
           settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
           dueDate: moment(new Date(1627574400000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
           _collateral: "0x4131b87f74415190425ccd873048c708f8005823",
+          show_strikePrice: 20,
           _strikePrice: 20,
           _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
           _expiry: 1627574400000,
@@ -1526,6 +1738,7 @@ export default {
           outPrice: 20,
           outPriceUnit: "BUSD",
           showVolume: volume,
+          buyVolume: volume,
           TypeCoin: getTokenName("0x4131b87f74415190425ccd873048c708f8005823"),
         };
         if (resultItem._expiry < currentTime) {

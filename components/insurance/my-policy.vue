@@ -308,6 +308,7 @@ export default {
             );
             let AskArray = Object.assign(ResultItem, itemAsk);
             itemAsk.binds.forEach((itemBid) => {
+              console.log(itemBid);
               itemBid.buyVolume =
                 item.type == "Call"
                   ? DecimalsFormWei(itemBid.volume, CollateralDecimals)
@@ -318,13 +319,13 @@ export default {
                     );
               itemBid.premium = itemBid.buyVolume * ResultItem.show_price;
               let AllItem = Object.assign(AskArray, itemBid);
-              if (AllItem.buyer.toLowerCase() == CurrentAccount.toLowerCase()) {
-                FixList.push(AllItem);
-              }
+              FixList.push(AllItem);
             });
           });
         });
-        this.FilterList = [...new Set(FixList)];
+        this.FilterList = [...new Set(FixList)].sort((a, b) => {
+          return b.bidID - a.bidID;
+        });
         this.isLoading = false;
       });
     },

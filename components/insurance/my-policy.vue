@@ -231,11 +231,7 @@ export default {
         let FixList = [];
         let nowDate = parseInt(moment.now() / 1000);
         ReturnList = ReturnList.filter((item) => {
-          if (
-            item.asks.length > 0 &&
-            item.strikePrice.length > 2 &&
-            Number(item.expiry) + 5184000 > nowDate
-          ) {
+          if (item.asks.length > 0 && item.strikePrice.length > 2) {
             return item;
           }
         });
@@ -1476,6 +1472,60 @@ export default {
           outPriceUnit: "BUSD",
           showVolume: volume,
           TypeCoin: getTokenName("0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
+    async HBMXXolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44"
+      );
+
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44");
+        let resultItem;
+        resultItem = {
+          id: 19,
+          bidID: 19,
+          buyer: myAddress,
+          price: "--",
+          Rent: "--" * volume,
+          volume: volume.toString(),
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1627574400000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x4131b87f74415190425ccd873048c708f8005823",
+          _strikePrice: 20,
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1627574400000,
+          transfer: true,
+          longAdress: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
+          type: "Call",
+          symbol: "hBMXX",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 20,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          TypeCoin: getTokenName("0x4131b87f74415190425ccd873048c708f8005823"),
         };
         if (resultItem._expiry < currentTime) {
           resultItem["status"] = "Expired";

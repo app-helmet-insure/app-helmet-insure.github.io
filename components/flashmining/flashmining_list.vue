@@ -313,6 +313,38 @@ export default {
     async initFlashMiningData() {
       let arr = [
         {
+          POOL_NAME: "<i>hBMXX</i>&nbsp;Pool",
+          POOL_DESC: "By SHIBh-Helmet LPT",
+          TOKEN_NAME: "SHIBh",
+          STAKE_SYMBOL: "SHIBh-Helmet LPT",
+          REWARD_NAME: "hBMXX",
+          START_TIME: "2021/06/30 00:00 UTC+8",
+          END_TIME: "2021/07/13 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/06/30 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/13 00:00"),
+          REWARD_WEEKLY: fixD((3600 / 13) * 7, 2),
+          POOL_ADDRESS: "0xA93f7bAbaf1A0e95dC472eb7cD37C59ed009c728",
+          STAKE_ADDRESS: "0x12fdd0aed56fb61fbf242ac783da600b322f64e6",
+          STAKE_DECIMALS: 18,
+          REWARD_DECIMALS: 18,
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
+          SWAP_TYPE: "PANCAKEV2",
+          TOTAL_REWARDS: 3600,
+          MINING_DAY: 13,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "SHIBh",
+            ADDTOKEN_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+            ADDTOKEN_DECIMALS: 12,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "hBMXX",
+            ADDTOKEN_ADDRESS: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          REWARD_YEAR: "Infinity",
+        },
+        {
           POOL_NAME: "<i>hBABY</i>&nbsp;Pool",
           POOL_DESC: "By SHIBh-Helmet LPT",
           TOKEN_NAME: "SHIBh",

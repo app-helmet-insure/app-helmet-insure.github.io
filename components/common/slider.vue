@@ -104,7 +104,7 @@
               <use xlink:href="#icon-flashmining"></use>
             </svg>
             {{ $t("Header.FlashMining") }}
-            <i class="num">2</i>
+            <i class="num">3</i>
           </nuxt-link>
         </div>
         <div class="menu_item">

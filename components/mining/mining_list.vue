@@ -7,7 +7,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
           :class="['finshed_line', 'finshed_pc']"
-          v-if="item.REWARD_NAME == 'bhelmet_dodo'"
+          v-if="item.REWARD_NAME == 'helmet_wings'"
         >
           <p></p>
           <i :class="storeThemes + '_star'"></i>
@@ -182,7 +182,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
         <div
           class="finshed_line finshed_h5"
-          v-if="item.REWARD_NAME == 'bhelmet_dodo'"
+          v-if="item.REWARD_NAME == 'helmet_wings'"
         >
           <p></p>
           <i></i>
@@ -557,6 +557,90 @@ export default {
           JUMP1_TEXT:
             "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
           APRTYPE: "MdexDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
+        },
+        {
+          POOL_NAME: "HELMET-<i>hBMXX</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hBMXX LPT",
+          STAKE_UNIT: "LPT",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_bmxx",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/07/01 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/14 00:00"),
+          START_TIME: "2021/07/01 00:00 UTC+8",
+          END_TIME: "2021/07/14 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hBMXX",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "BMXX",
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x4131b87f74415190425ccd873048c708f8005823",
+          REWARD1_VOLUME: 37500,
+          REWARD2_VOLUME: 3272.46,
+          MINING_DAY: 13,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hBMXX",
+            ADDTOKEN_ADDRESS: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "BMXX",
+            ADDTOKEN_ADDRESS: "0x4131b87f74415190425ccd873048c708f8005823",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          POOL_ADDRESS: "0x088521b6207Cc083C252Eb44f232Ed418193eF25",
+          STAKE_ADDRESS: "0xdec93cf8345695094ea47b22dfe31d349190c5d0",
+          STAKE_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
+          JUMP1_TEXT:
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hBMXX LPT</a>",
+          APRTYPE: "hTokenDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
+        },
+        {
+          POOL_NAME: "HELMET-<i>hBABY</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hBABY LPT",
+          STAKE_UNIT: "LPT",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_baby",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/06/26 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/09 00:00"),
+          START_TIME: "2021/06/26 00:00 UTC+8",
+          END_TIME: "2021/07/09 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hBABY",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "BABY",
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
+          REWARD1_VOLUME: 37500,
+          REWARD2_VOLUME: 158931,
+          MINING_DAY: 13,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hBABY",
+            ADDTOKEN_ADDRESS: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "BABY",
+            ADDTOKEN_ADDRESS: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          POOL_ADDRESS: "0xe9499FBB0832a4C374165106e1EDe589B42Ba57E",
+          STAKE_ADDRESS: "0x5e9a2d9a54958bf3c35dad24f32bb54dac97f6c6",
+          STAKE_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
+          JUMP1_TEXT:
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hBABY LPT</a>",
+          APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
         {

@@ -1715,8 +1715,8 @@ export default {
         let Token = getTokenName("0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44");
         let resultItem;
         resultItem = {
-          id: 19,
-          bidID: 19,
+          id: 20,
+          bidID: 20,
           buyer: myAddress,
           price: "--",
           Rent: "--" * volume,

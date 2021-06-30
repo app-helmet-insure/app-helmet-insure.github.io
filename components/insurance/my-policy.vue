@@ -1735,7 +1735,7 @@ export default {
           symbol: "hBMXX",
           approveAddress1: "FACTORY",
           approveAddress2: "",
-          outPrice: 0.4,
+          outPrice: 20,
           outPriceUnit: "BUSD",
           showVolume: volume,
           TypeCoin: getTokenName("0x4131b87f74415190425ccd873048c708f8005823"),

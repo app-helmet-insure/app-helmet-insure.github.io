@@ -1,6 +1,9 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide bmxx">
+        <div></div>
+      </div>
       <div class="swiper-slide mtrg">
         <div></div>
       </div>
@@ -141,6 +144,12 @@ export default {
         background-position: center;
       }
     }
+    .bmxx {
+      background: #fff9ef;
+      > div {
+        background-image: url("../../assets/img/banner/bmxx_web.png");
+      }
+    }
     .mtrg {
       background: #000622;
       > div {
@@ -200,6 +209,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .bmxx {
+      background: #fff9ef;
+      > div {
+        background-image: url("../../assets/img/banner/bmxx_h5.png");
       }
     }
     .mtrg {

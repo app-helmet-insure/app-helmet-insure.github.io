@@ -216,6 +216,7 @@ export default {
         getInsuranceList().then((res) => {
           if (res && res.data.data.options) {
             let FixList = [];
+            let FixListPush = [];
             let ReturnList = res.data.data.options;
             if (this.activeInsurance != "WBNB") {
               ReturnList = ReturnList.filter(
@@ -257,7 +258,6 @@ export default {
                 underlying_symbol: getTokenName(item.underlying),
                 underlying_decimals: getDecimals(UnderlyingDecimals),
                 currentInsurance: getTokenName(item.underlying),
-                sort: 1,
               };
               item.asks.forEach(async (item) => {
                 item.settleToken_symbol = getTokenName(item.settleToken);
@@ -267,29 +267,41 @@ export default {
                 );
                 let AsksInfo = await Asks(item.askID);
                 item.show_volume = fixD(
-                  AddressFormWei(AsksInfo.remain, ResultItem.underlying) /
+                  AddressFormWei(AsksInfo.remain, ResultItem.collateral) /
                     this.strikePriceArray[1][ResultItem.underlying_symbol],
                   8
+                );
+                console.log(
+                  AddressFormWei(AsksInfo.remain, ResultItem.underlying),
+                  this.strikePriceArray[1][ResultItem.underlying_symbol]
                 );
                 item.show_ID =
                   item.seller.substr(0, 2) +
                   item.seller.substr(2, 3) +
                   "..." +
                   item.seller.substr(-4).toUpperCase();
-                if (item.expiry < nowDate) {
+                if (
+                  item.show_volume == 0 ||
+                  Number(ResultItem.expiry) < nowDate
+                ) {
                   item.status = "dated";
                   item.sort = 0;
+                } else {
+                  item.sort = 1;
                 }
-                Object.assign(item, ResultItem);
-                FixList.push(item);
-                FixList = FixList.sort(function (a, b) {
-                  return Number(a.show_price) - Number(b.show_price);
-                });
-                FixList = FixList.sort(function (a, b) {
-                  return b.sort - a.sort;
-                });
+                let AllItem = Object.assign(item, ResultItem);
+                if (AllItem.show_price != 0) {
+                  FixListPush.push(item);
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(a.show_price) - Number(b.show_price);
+                  });
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(b.sort) - Number(a.sort);
+                  });
+                }
               });
             });
+            FixList = FixListPush;
             this.FilterList = FixList;
             this.isLoading = false;
           }

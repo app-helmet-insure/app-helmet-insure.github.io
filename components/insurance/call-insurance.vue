@@ -208,6 +208,7 @@ export default {
           if (res && res.data.data.options) {
             let ReturnList = res.data.data.options;
             let FixList = [];
+            let FixListPush = [];
             if (this.activeInsurance != "WBNB") {
               ReturnList = ReturnList.filter(
                 (item) =>
@@ -249,7 +250,6 @@ export default {
                 underlying_symbol: getTokenName(item.underlying),
                 underlying_decimals: getDecimals(UnderlyingDecimals),
                 currentInsurance: getTokenName(item.collateral),
-                sort: 1,
               };
               item.asks.filter(async (item) => {
                 item.settleToken_symbol = getTokenName(item.settleToken);
@@ -268,22 +268,29 @@ export default {
                   "..." +
                   item.seller.substr(-4).toUpperCase();
                 if (
-                  AsksInfo.show_volume == 0 ||
+                  item.show_volume == 0 ||
                   Number(ResultItem.expiry) < nowDate
                 ) {
                   item.status = "dated";
                   ResultItem.sort = 0;
+                } else {
+                  ResultItem.sort = 1;
                 }
-                Object.assign(item, ResultItem);
-                FixList.push(item);
-                FixList = FixList.sort(function (a, b) {
-                  return Number(a.show_price) - Number(b.show_price);
-                });
-                FixList = FixList.sort(function (a, b) {
-                  return b.sort - a.sort;
-                });
+                let AllItem = Object.assign(item, ResultItem);
+                if (AllItem.show_price != 0) {
+                  FixListPush.push(AllItem);
+
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(a.show_price) - Number(b.show_price);
+                  });
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(b.sort) - Number(a.sort);
+                  });
+                }
               });
             });
+            FixList = FixListPush;
+            console.log(FixList);
             this.FilterList = FixList;
             this.isLoading = false;
           }

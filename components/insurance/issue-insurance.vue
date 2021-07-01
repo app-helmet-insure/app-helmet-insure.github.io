@@ -406,6 +406,8 @@ export default {
             data = {};
             return;
           }
+          data = {};
+          return;
         });
       } else {
         object.conText = `<p>You will supply <span>${data.volume} ${data.currency}</span> Policies , with strike price of <span>${data.price} ${data.showType}</span></p>`;
@@ -417,6 +419,8 @@ export default {
             data = {};
             return;
           }
+          data = {};
+          return;
         });
       }
     },

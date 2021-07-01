@@ -294,23 +294,13 @@ export const Buy = async (data, callback) => {
                         buttonText: 'Confirm',
                         showDialog: false,
                     });
-                } else {
-                    Message({
-                        message: 'The policy is rented successfully',
-                        type: 'success',
-                    });
                 }
                 callback('success');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                callBack('error');
             });
     } catch (error) {
         console.log('error', 'Buy');

@@ -31,7 +31,7 @@
         <section>
           <p>
             <span>{{ $t("Table.Besold") }}:</span>
-            <span>{{ item.beSold == 0 ? 0 : fixD(item.beSold, 8) }} </span>
+            <span>{{ fixD(item.beSold, 8) }} </span>
           </p>
           <p>
             <span>{{ $t("Table.Unsold") }}: </span>
@@ -350,7 +350,12 @@ export default {
               );
               item.unSold =
                 Remain / this.strikePriceArray[1][ResultItem.underlying_symbol];
-              item.beSold = item.show_volume - Remain;
+              // item.beSold = item.show_volume - Remain;
+              item.beSold = fixD(
+                (Volume - Remain) /
+                  this.strikePriceArray[1][ResultItem.underlying_symbol],
+                8
+              );
             }
             if (item.expiry < nowDate) {
               item.status = "dated";
@@ -426,7 +431,6 @@ export default {
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
           Cancel(data.askID, (status) => {
-            console.log(status);
             if (status == "success") {
               this.getList();
             }
@@ -445,7 +449,6 @@ export default {
       );
       this.showList = list;
     },
-
     toMining() {
       // this.$router.push("/mining");
     },

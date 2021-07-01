@@ -271,10 +271,6 @@ export default {
                     this.strikePriceArray[1][ResultItem.underlying_symbol],
                   8
                 );
-                console.log(
-                  AddressFormWei(AsksInfo.remain, ResultItem.underlying),
-                  this.strikePriceArray[1][ResultItem.underlying_symbol]
-                );
                 item.show_ID =
                   item.seller.substr(0, 2) +
                   item.seller.substr(2, 3) +

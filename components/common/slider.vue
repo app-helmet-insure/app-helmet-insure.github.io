@@ -139,6 +139,25 @@
           </nuxt-link>
         </div>
         <div class="menu_item">
+          <nuxt-link
+            to="/guard"
+            :class="routeObj.name.includes('guard') ? 'active' : ''"
+          >
+            <svg class="hot" aria-hidden="true">
+              <use
+                :href="`#icon-${
+                  routeObj.name.includes('guard') ? 'hot1' : 'hot'
+                }`"
+              ></use>
+            </svg>
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-iio"></use>
+            </svg>
+            Guard
+            <!-- <i class="num">1</i> -->
+          </nuxt-link>
+        </div>
+        <div class="menu_item">
           <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
             <!-- <svg class="hot" aria-hidden="true">
               <use

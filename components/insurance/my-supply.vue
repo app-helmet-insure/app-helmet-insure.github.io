@@ -216,11 +216,13 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.getList();
+  },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
-        this.getList();
       }
     },
     fliterListWatch(newValue) {

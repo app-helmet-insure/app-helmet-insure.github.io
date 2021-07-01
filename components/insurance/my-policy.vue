@@ -199,6 +199,9 @@ export default {
       return this.$store.state.themes;
     },
   },
+  mounted() {
+    this.getList();
+  },
   watch: {
     userInfo: {
       handler: "userInfoWatch",
@@ -213,7 +216,6 @@ export default {
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
-        this.getList();
       }
     },
 

@@ -273,13 +273,8 @@ export default {
         this.Rent = 0;
         return;
       }
-      let {
-        callDpr,
-        putDpr,
-        callInsuranceNum,
-        putInsuranceNum,
-        _expiry,
-      } = newValue;
+      let { callDpr, putDpr, callInsuranceNum, putInsuranceNum, _expiry } =
+        newValue;
       if (
         (newValue.callDpr && newValue.callInsuranceNum && newValue._expiry) ||
         (newValue.putDpr && newValue.putInsuranceNum && newValue._expiry)
@@ -365,6 +360,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
+      data = {};
       let data = {
         private: false, //
         annual: type == 1 ? this.callDpr : this.putDpr,
@@ -401,13 +397,15 @@ export default {
         } ${"BNB"}</span></p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
+          console.log(res);
           if (res) {
             onIssueSellOnETH(data, (status) => {
               data = {};
             });
+          } else {
+            data = {};
+            return;
           }
-          data = {};
-          return;
         });
       } else {
         object.conText = `<p>You will supply <span>${data.volume} ${data.currency}</span> Policies , with strike price of <span>${data.price} ${data.showType}</span></p>`;
@@ -415,9 +413,10 @@ export default {
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
             onIssueSell(data, (status) => {});
+          } else {
+            data = {};
+            return;
           }
-          data = {};
-          return;
         });
       }
     },

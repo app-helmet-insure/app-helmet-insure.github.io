@@ -287,6 +287,7 @@ export default {
             TypeCoin: item.TypeCoin,
             expiry: item.expiry,
             show_expiry: item.show_expiry,
+            dueDate: item.show_expiry,
             id: item.id,
             long: item.long,
             outPriceUnit: item.outPriceUnit,
@@ -476,13 +477,15 @@ export default {
           if (Number(item.expiry) < nowDate) {
             item.status = "Expired";
             item.sort = 2;
-            item.show_expiry = "Expired";
+            item.dueDate = "Expired";
           }
           if (BidsInfo.remain != 0) {
             arr.push(item);
           }
           if (index == List.length - 1) {
-            this.FilterList = [...new Set(arr)];
+            this.FilterList = [...new Set(arr)].sort((a, b) => {
+              return a.sort - b.sort;
+            });
             this.isLoading = false;
           }
         });

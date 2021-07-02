@@ -1,6 +1,6 @@
 <template>
   <div class="status-dialog">
-    <div class="mask" @click="closeDialog"></div>
+    <div class="mask" @click="closeDialogs"></div>
     <div :class="`status-dialog-content ${data.layout}`">
       <h3 class="layout1_title" v-if="data.layout == 'layout1'">
         <span>
@@ -11,13 +11,13 @@
             alt=""
           />{{ data.title }}
         </span>
-        <span class="close" @click="closeDialog"></span>
+        <span class="close" @click="closeDialogs"></span>
       </h3>
       <h3 class="layout2_title" v-if="data.layout == 'layout2'">
         <span>
           {{ data.title }}
         </span>
-        <span class="close" @click="closeDialog"></span>
+        <span class="close" @click="closeDialogs"></span>
       </h3>
       <h3 class="con-tit" v-if="data.conTit" v-html="data.conTit"></h3>
       <div class="con-text" v-if="data.conText" v-html="data.conText"></div>
@@ -64,6 +64,10 @@ export default {
     },
   },
   methods: {
+    closeDialogs() {
+      this.$emit("close");
+      this.$bus.$emit("PROCESS_ACTION", false);
+    },
     async closeDialog() {
       this.$bus.$emit("PROCESS_ACTION", this.data.showDialog);
       this.$emit("close");

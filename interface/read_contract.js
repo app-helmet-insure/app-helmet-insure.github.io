@@ -2,6 +2,7 @@ import MiningABI from '~/abi/deposite_abi.json';
 import ApproveABI from '~/abi/IPancakePair.json';
 import CakePoolABI from '~/abi/cake_pool_abi.json';
 import MdexPoolABI from '~/abi/mdex_pool_abi.json';
+import OrderABI from '~/abi/order_abi.json';
 import {
     Web3Contract,
     getAccounts,
@@ -12,6 +13,7 @@ import {
     getBlockNumber,
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
+let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
 // Balanceof
 export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
     let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
@@ -189,4 +191,12 @@ export const RewardsDuration = async (ContractAddress) => {
         .then((res) => {
             return res;
         });
+};
+export const Asks = async (AskID) => {
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    return Contracts.methods.asks(AskID).call();
+};
+export const Bids = async (BidID) => {
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    return Contracts.methods.bids(BidID).call();
 };

@@ -20,21 +20,21 @@
         <tbody>
           <tr v-for="(item, index) in showList" :key="index">
             <td>
-              {{ item.showID }}
+              {{ item.show_ID }}
               <i
                 class="copy"
                 id="copy"
                 @click="copyAdress($event, item.seller)"
               ></i>
             </td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.remain }}</td>
+            <td>{{ item.show_price }}</td>
+            <td>{{ item.show_volume }}</td>
             <td>
               <input
                 type="text"
                 name=""
                 v-model="item.buyNum"
-                :max="item.remain"
+                :max="item.show_volume"
                 :maxlength="8"
                 :placeholder="$t('Table.NumberSubscriptions')"
               />
@@ -42,7 +42,7 @@
             <td
               class="option"
               :style="
-                item.status == 'dated' || item.remain == 0
+                item.status == 'dated' || item.show_volume == 0
                   ? 'visibility: hidden;'
                   : ''
               "
@@ -60,11 +60,11 @@
         <section>
           <p>
             <span>{{ $t("Table.Rent") }}</span>
-            <span>{{ item.price }}</span>
+            <span>{{ item.show_price }}</span>
           </p>
           <p>
             <span>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</span>
-            <span>{{ item.remain }}</span>
+            <span>{{ item.show_volume }}</span>
           </p>
         </section>
         <section>
@@ -72,14 +72,14 @@
             type="text"
             name=""
             v-model="item.buyNum"
-            :max="item.remain"
+            :max="item.show_volume"
             :maxlength="8"
             :placeholder="$t('Table.NumberSubscriptions')"
           />
           <button
             @click="handleClickBuy(item)"
             :style="
-              item.status == 'dated' || item.remain == 0
+              item.status == 'dated' || item.show_volume == 0
                 ? 'visibility:hidden;'
                 : ''
             "
@@ -96,7 +96,7 @@
     </div>
     <section
       class="noData"
-      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+      v-if="(FilterList.length < 1 && !isLoading) || !isLogin"
     >
       <div>
         <img
@@ -106,9 +106,9 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="insuranceList.length > 10 && isLogin">
+    <section class="pages" v-if="FilterList.length > 10 && isLogin">
       <Page
-        :total="insuranceList.length"
+        :total="FilterList.length"
         :limit="limit"
         :page="page + 1"
         @page-change="handleClickChagePage"
@@ -121,15 +121,7 @@
 import PInput from "~/components/common/p-input.vue";
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
-import {
-  fixD,
-  addCommom,
-  autoRounding,
-  toRounding,
-  fixDEAdd,
-} from "~/assets/js/util.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
-import { buyInsuranceBuy, asks } from "~/interface/order.js";
+import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
@@ -137,6 +129,16 @@ import Page from "~/components/common/page.vue";
 import InsuranceTitle from "./insurance-title";
 import { getAddress } from "~/assets/utils/address-pool.js";
 import { getInsuranceList } from "~/interface/event.js";
+import {
+  TokenDecimals,
+  getDecimals,
+  DecimalsFormWei,
+  fromWei,
+  AddressFormWei,
+} from "~/interface/common_contract.js";
+import { Asks } from "~/interface/read_contract.js";
+import { Buy } from "~/interface/write_contract.js";
+import moment from "moment";
 export default {
   components: {
     InsuranceTitle,
@@ -151,39 +153,29 @@ export default {
       page_h5: 0,
       limit_h5: 3,
       showList: [],
-      insuranceList: [],
+      FilterList: [],
       isLoading: true,
+      fixD,
     };
   },
-  mounted() {
-    // this.getList();
-  },
   computed: {
-    aboutInfoSell() {
-      let list = this.$store.state.aboutInfoSell;
-      return list;
-    },
-    strikePriceArray() {
-      return this.$store.state.strikePriceArray;
-    },
-    indexArray() {
-      let list = this.$store.state.allIndexPrice;
-      return list;
-    },
     userInfo() {
       return this.$store.state.userInfo;
     },
     storeThemes() {
       return this.$store.state.themes;
     },
+    strikePriceArray() {
+      return this.$store.state.strikePriceArray;
+    },
   },
   watch: {
-    aboutInfoSell: {
-      handler: "aboutInfoSellWatch",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
+      immediate: true,
+    },
+    FilterList: {
+      handler: "fliterListWatch",
       immediate: true,
     },
   },
@@ -193,119 +185,126 @@ export default {
       this.isLogin = isLogin;
       if (isLogin) {
         this.isLoading = true;
-        this.setList(this.aboutInfoSell);
+        this.getList();
       } else {
         this.isLoading = false;
       }
     },
-    aboutInfoSellWatch(newValue) {
+    fliterListWatch(newValue) {
       if (newValue) {
-        this.page = 0;
-        this.limit = 10;
-        this.page_h5 = 0;
-        this.limit_h5 = 3;
-        this.setList(newValue);
+        let list = newValue;
+        this.showList = list.slice(0, this.limit);
       }
     },
     getList() {
-      getInsuranceList().then((res) => {
-        let InsuranceList = res.data.data.options;
-        console.log(InsuranceList);
-      });
-    },
-    async setList(sell) {
       this.isLoading = true;
-
-      let item, resultItem;
-      let resultList = [];
-      // 当前时间
-      let now = new Date() * 1;
-      // 当前保险地址
+      // Current Insurance
       let coinAddress = getAddress(this.activeInsurance);
-      // 当前保险的全部保单
-      let callInsuranceList;
-      if (sell) {
-        if (this.activeInsurance != "WBNB") {
-          callInsuranceList = sell.filter(
-            (item) => item.longInfo._collateral.toLowerCase() == coinAddress
-          );
-        } else {
-          callInsuranceList = sell.filter(
-            (item) =>
-              item.longInfo._collateral.toLowerCase() == coinAddress &&
-              item.longInfo._underlying.toLowerCase() ==
-                "0xe9e7cea3dedca5984780bafc599bd69add087d56"
-          );
-        }
-      }
-      // 数据处理
-      for (let i = 0; i < callInsuranceList.length; i++) {
-        item = callInsuranceList[i];
-        // 展示账户ID
-        let showID =
-          item.seller.substr(0, 2) +
-          item.seller.substr(2, 3) +
-          "..." +
-          item.seller.substr(-4).toUpperCase();
-        // 到期时间
-        let time = item.longInfo._expiry * 1000;
-        // 抵押物
-        let coToken = getTokenName(item.longInfo._collateral);
-        // 标的物
-        let unToken = getTokenName(item.longInfo._underlying);
-        // 价格
-        let price =
-          coToken == "CTK"
-            ? fromWei(item.price, 30)
-            : fromWei(item.price, unToken);
+      // Now Time
+      let nowDate = parseInt(moment.now() / 1000);
+      try {
+        // Map List
+        getInsuranceList().then((res) => {
+          if (res && res.data.data.options) {
+            let ReturnList = res.data.data.options;
+            let FixList = [];
+            let FixListPush = [];
+            if (this.activeInsurance != "WBNB") {
+              ReturnList = ReturnList.filter(
+                (item) =>
+                  item.collateral.toLowerCase() == coinAddress &&
+                  Number(item.expiry) + 2592000 > nowDate &&
+                  item.asks.length
+              );
+            } else {
+              ReturnList = ReturnList.filter(
+                (item) =>
+                  item.collateral.toLowerCase() == coinAddress &&
+                  item.underlying.toLowerCase() ==
+                    "0xe9e7cea3dedca5984780bafc599bd69add087d56" &&
+                  Number(item.expiry) + 2592000 > nowDate &&
+                  item.asks.length
+              );
+            }
+            ReturnList = ReturnList.forEach((item) => {
+              // 标的
+              let UnderlyingDecimals = TokenDecimals(item.underlying);
+              // 抵押
+              let CollateralDecimals = TokenDecimals(item.collateral);
+              // 执行
+              let StrikePriceDecimals =
+                18 + UnderlyingDecimals - CollateralDecimals;
+              let ResultItem = {
+                expiry: item.expiry,
+                long: item.long,
+                short: item.short,
+                show_strikePrice: fixD(
+                  DecimalsFormWei(item.strikePrice, StrikePriceDecimals),
+                  8
+                ),
+                strikePrice: item.strikePrice,
+                collateral: item.collateral,
+                collateral_symbol: getTokenName(item.collateral),
+                collateral_decimals: getDecimals(CollateralDecimals),
+                underlying: item.underlying,
+                underlying_symbol: getTokenName(item.underlying),
+                underlying_decimals: getDecimals(UnderlyingDecimals),
+                currentInsurance: getTokenName(item.collateral),
+              };
+              item.asks.filter(async (item) => {
+                item.settleToken_symbol = getTokenName(item.settleToken);
+                item.show_price = fixD(
+                  DecimalsFormWei(item.price, StrikePriceDecimals),
+                  8
+                );
+                let AsksInfo = await Asks(item.askID);
+                item.show_volume = fixD(
+                  AddressFormWei(AsksInfo.remain, ResultItem.collateral),
+                  8
+                );
+                item.show_ID =
+                  item.seller.substr(0, 2) +
+                  item.seller.substr(2, 3) +
+                  "..." +
+                  item.seller.substr(-4).toUpperCase();
+                if (
+                  item.show_volume == 0 ||
+                  Number(ResultItem.expiry) < nowDate
+                ) {
+                  item.status = "dated";
+                  ResultItem.sort = 0;
+                } else {
+                  ResultItem.sort = 1;
+                }
+                let AllItem = Object.assign(item, ResultItem);
+                if (AllItem.show_price != 0) {
+                  FixListPush.push(AllItem);
 
-        // 出险价格
-        let exPirce = precision.divide(
-          1,
-          fromWei(item.longInfo._strikePrice, coToken)
-        );
-        resultItem = {
-          seller: item.seller,
-          id: item.askID,
-          volume: fixD(fromWei(item.volume, coToken), 8),
-          price: coToken == "SHIB" ? fixD(price, 10) : fixD(price, 4),
-          settleToken: item.settleToken,
-          _strikePrice: fromWei(item.longInfo._strikePrice, coToken),
-          _underlying: item.longInfo._underlying,
-          _expiry: item.longInfo._expiry,
-          _collateral: item.longInfo._collateral,
-          remain: 0,
-          showID,
-          buyNum: "",
-          sort: 1,
-        };
-        let res = await asks(resultItem["id"], "sync", coToken);
-        resultItem["remain"] = fixD(res, 8);
-        if (resultItem["remain"] == 0 || time < now) {
-          resultItem["status"] = "dated";
-          resultItem["sort"] = 0;
-        }
-        if (
-          time + 2592000000 > now &&
-          resultItem.seller != "0x0603CD787f45D1b830cEd5AcaEECDaB661B267ca"
-        ) {
-          resultList.push(resultItem);
-        }
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(a.show_price) - Number(b.show_price);
+                  });
+                  FixListPush = FixListPush.sort(function (a, b) {
+                    return Number(b.sort) - Number(a.sort);
+                  });
+                }
+              });
+            });
+            FixList = FixListPush;
+            console.log(FixList);
+            this.FilterList = FixList;
+            this.isLoading = false;
+          }
+        });
+      } catch (error) {
+        console.log(error, "callInsurance");
+        this.isLoading = false;
       }
-      resultList.sort(function (a, b) {
-        return Number(a.price) - Number(b.price);
-      });
-      this.insuranceList = resultList.sort(function (a, b) {
-        return b.sort - a.sort;
-      });
-      this.isLoading = false;
-      this.showList = resultList.slice(this.page * this.limit, this.limit);
     },
     handleClickChagePage(index) {
       index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.insuranceList.slice(
+      let list = this.FilterList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
       );
@@ -313,30 +312,25 @@ export default {
     },
     // 承保按钮
     handleClickBuy(data) {
-      if (!data.buyNum) {
+      if (!data.buyNum || data.buyNum > data.show_volume) {
         return;
       }
-
-      let datas;
-      datas = {
-        askID: data.id,
-        volume: data.buyNum,
-        showVolueme: data.buyNum,
-        price: data.price,
-        settleToken: "HELMET",
-        _strikePrice: data._strikePrice,
-        _underlying: getTokenName(data._underlying),
-        _expiry: data._expiry,
-        _collateral: getTokenName(data._collateral),
-        showType: getTokenName(data._collateral),
+      let datas = {
+        askID: data.askID,
+        buyNum: data.buyNum,
+        showNum: data.buyNum,
+        show_strikePrice: this.strikePriceArray[0][data.collateral_symbol],
+        currentInsurance: data.currentInsurance,
+        settleToken_symbol: data.settleToken_symbol,
       };
-      1;
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>Buy <span>${datas.showVolueme} ${datas.showType}
+        conText: `<p>Buy <span>${datas.buyNum} ${data.currentInsurance}
                   </span> Policys, with the premium of <span>
-                  ${fixD(datas.price * datas.volume, 8)} ${datas.settleToken}
+                  ${fixD(data.show_price * datas.buyNum, 8)} ${
+          datas.settleToken_symbol
+        }
                   </span></p>`,
         activeTip: true,
         activeTipText1: "Please double check the price above，",
@@ -348,7 +342,11 @@ export default {
       });
       this.$bus.$on("PROCESS_ACTION", (res) => {
         if (res) {
-          buyInsuranceBuy(datas, (status) => {});
+          Buy(datas, (status) => {
+            if (status == "success") {
+              this.getList();
+            }
+          });
         }
         datas = {};
       });

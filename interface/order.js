@@ -117,12 +117,12 @@ export const onIssueSell = async (data_, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSell', error);
@@ -222,12 +222,12 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSellOnETH', error);
@@ -315,12 +315,12 @@ export const buyInsuranceBuy = async (_data, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {}
 };
@@ -503,10 +503,11 @@ export const MyPayaso = async (address1) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const onExercise = async (data, callBack, flag) => {
+export const onExercise = async (data, flag, callback) => {
     if (JSON.stringify(data) === '{}') {
         return false;
     }
+    console.log(data);
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
@@ -526,7 +527,6 @@ export const onExercise = async (data, callBack, flag) => {
         } else {
             value = toWei(data.vol, data.token);
         }
-        console.log(data, value);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -573,12 +573,11 @@ export const onExercise = async (data, callBack, flag) => {
                 loading: true,
                 conTit: 'Please Confirm the transaction in your wallet',
                 conText: `<p>You will swap<span> ${fixD(
-                    data._underlying_vol,
+                    data.show_strikePrice,
                     8
-                )} ${data._underlying}</span> to <span> ${fixD(
-                    data.showVolume,
-                    8
-                )} ${data._collateral}</span></p>`,
+                )} ${data.token}</span> to <span> ${fixD(data.buyVolume, 8)} ${
+                    data.totoken
+                }</span></p>`,
             });
         })
         .on('receipt', function(receipt) {
@@ -593,23 +592,18 @@ export const onExercise = async (data, callBack, flag) => {
                     conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                     showDialog: false,
                 });
-            } else {
-                Message({
-                    message: 'Activated successfully',
-                    type: 'success',
-                });
             }
-            bus.$emit('REFRESH_ALL_DATA');
+            callback('success');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
 };
 

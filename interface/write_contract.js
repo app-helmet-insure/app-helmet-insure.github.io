@@ -1,15 +1,19 @@
 import MiningABI from '~/abi/deposite_abi.json';
 import ApproveABI from '~/abi/IPancakePair.json';
 import CompoundABI from '~/abi/helmet_abi.json';
+import OrderABI from '~/abi/order_abi.json';
 import {
     Web3Contract,
     getAccounts,
     getDecimals,
+    TokenNameToWei,
     toWei,
     fromWei,
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
 import bus from '~/assets/js/bus';
+import { fixD } from '~/assets/js/util.js';
+let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
 
 export const Stake = async (
     { ContractAddress, DepositeVolume, Decimals },
@@ -254,4 +258,92 @@ export const Approve = async (
     } catch (error) {
         console.log(error);
     }
+};
+export const Buy = async (data, callback) => {
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    let Account = await getAccounts();
+    let SubmitVolume = TokenNameToWei(data.buyNum, data.currentInsurance);
+    let AskID = data.askID;
+    try {
+        Contracts.methods
+            .buy(AskID, SubmitVolume)
+            .send({ from: Account })
+            .on('transactionHash', (hash) => {
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                bus.$emit('OPEN_STATUS_DIALOG', {
+                    title: 'Waiting For Confirmation',
+                    layout: 'layout2',
+                    loading: true,
+                    buttonText: 'Confirm',
+                    conTit: 'Please Confirm the transaction in your wallet',
+                    conText: `<p>Buy <span>${data.showNum} ${data.currentInsurance}
+                </span> Policys, with the strike price of <span>
+                ${data.show_strikePrice} ${data.settleToken_symbol}
+                </span></p>`,
+                });
+            })
+            .on('receipt', function(receipt) {
+                if (window.statusDialog) {
+                    bus.$emit('CLOSE_STATUS_DIALOG');
+                    bus.$emit('OPEN_STATUS_DIALOG', {
+                        title: 'Transation submitted',
+                        layout: 'layout2',
+                        buttonText: 'Confirm',
+                        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                        button: true,
+                        buttonText: 'Confirm',
+                        showDialog: false,
+                    });
+                }
+                callback('success');
+            })
+            .on('error', function(error, receipt) {
+                bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
+                bus.$emit('CLOSE_STATUS_DIALOG');
+                callBack('error');
+            });
+    } catch (error) {
+        console.log('error', 'Buy');
+    }
+};
+export const Cancel = async (askID, callBack) => {
+    // const WEB3 = await web3();
+    if (!askID) {
+        return;
+    }
+    let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+    let Account = await getAccounts();
+    if (!window.CURRENTADDRESS) {
+        return;
+    }
+    Contracts.methods
+        .cancel(askID)
+        .send({ from: Account })
+        .on('transactionHash', (hash) => {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Waiting For Confirmation',
+                layout: 'layout2',
+                loading: true,
+                buttonText: 'Confirm',
+                conTit: 'Please Confirm the transaction in your wallet',
+                conText: `Cancel your Policy supplying order.`,
+            });
+        })
+        .on('receipt', function(receipt) {
+            bus.$emit('CLOSE_STATUS_DIALOG');
+            bus.$emit('OPEN_STATUS_DIALOG', {
+                title: 'Transation submitted',
+                layout: 'layout2',
+                buttonText: 'Confirm',
+                conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+                button: true,
+                buttonText: 'Confirm',
+                showDialog: false,
+            });
+            callBack('success');
+        })
+        .on('error', (err, receipt) => {
+            callBack('failed');
+        });
 };

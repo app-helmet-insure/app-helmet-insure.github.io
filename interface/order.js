@@ -117,12 +117,12 @@ export const onIssueSell = async (data_, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSell', error);
@@ -222,12 +222,12 @@ export const onIssueSellOnETH = async (data_, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSellOnETH', error);
@@ -315,12 +315,12 @@ export const buyInsuranceBuy = async (_data, callBack) => {
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {}
 };
@@ -595,13 +595,13 @@ export const onExercise = async (data, flag, callBack) => {
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
 };
 

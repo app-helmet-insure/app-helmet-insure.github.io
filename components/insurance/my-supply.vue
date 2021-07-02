@@ -330,7 +330,7 @@ export default {
               AddressFormWei(item.volume, ResultItem.collateral),
               8
             );
-            if (Remain == "0") {
+            if (Number(Remain) == "0") {
               item.status = "Beborrowed";
               item.sort = 1;
             } else {
@@ -380,6 +380,7 @@ export default {
         FixList = FixListPush;
         this.FilterList = FixList;
         this.isLoading = false;
+        return this.FilterList;
       });
     },
     //获取已出售

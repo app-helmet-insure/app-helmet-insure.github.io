@@ -143,27 +143,17 @@
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
 import Page from "~/components/common/page.vue";
-import {
-  fixD,
-  addCommom,
-  autoRounding,
-  toRounding,
-  fixDEAdd,
-} from "~/assets/js/util.js";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
-import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
-import { balanceOf, getBalance } from "~/interface/deposite";
+import { onExercise } from "~/interface/order.js";
+import { getBalance } from "~/interface/deposite";
 import { getInsuranceList } from "~/interface/event.js";
 import {
   TokenDecimals,
-  getDecimals,
   DecimalsFormWei,
-  fromWei,
-  AddressFormWei,
   getAccounts,
 } from "~/interface/common_contract.js";
 import moment from "moment";
-import BigNumber from "bignumber.js";
 import { Bids } from "~/interface/read_contract.js";
 export default {
   components: {
@@ -565,10 +555,10 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>you will swap<span> ${fixD(data.buyVolume, 8)} ${
-          data.totoken
-        }</span> to <span> ${fixD(data.show_strikePrice, 8)} ${
+        conText: `<p>you will swap<span> ${fixD(data.show_strikePrice, 8)} ${
           data.token
+        }</span> to <span> ${fixD(data.buyVolume, 8)} ${
+          data.totoken
         }</span></p>`,
         activeTip: true,
         activeTipText1: "Please double check the price above，",

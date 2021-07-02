@@ -2,6 +2,20 @@
   <div class="guard_migrate">
     <div class="guard_migrate_wrap">
       <h3 class="guard_migrate_title">Migrate to Polygon</h3>
+      <div class="guard_migrate_swap">
+        <div class="guard_migrate_swap_from">
+          <div class="header">
+            <div class="logo">From <i class="binance"></i> BSC</div>
+            <span>HELMET</span>
+          </div>
+        </div>
+        <div class="guard_migrate_swap_to">
+          <div class="header">
+            <div class="logo">From <i class="polygon"></i> Polygon</div>
+            <span>GUARD</span>
+          </div>
+        </div>
+      </div>
       <div class="input_box">
         <input type="text" name="" id="" placeholder="输入划转数量" />
         <span class="max">最大量</span>
@@ -21,7 +35,7 @@ export default {};
   min-width: 1200px;
   height: 420px;
   background: #ffffff;
-  box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+  box-shadow: 0px 4px 8px 0px rgba(236, 232, 232, 0.02);
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -35,6 +49,22 @@ export default {};
       color: #17173a;
       line-height: 32px;
       text-align: center;
+    }
+  }
+  &_swap {
+    margin-top: 20px;
+    width: 100%;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #e8e8eb;
+    border-radius: 5px;
+    &_from {
+      flex: 1;
+    }
+    &_to {
+      background: #f7f7fa;
+      flex: 1;
     }
     .input_box {
       margin-top: 30px;

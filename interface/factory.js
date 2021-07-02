@@ -204,12 +204,6 @@ export const onExercise = async (data, callBack) => {
                     conTit: '<div>Activated successfully</div>',
                     conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                 });
-            } else {
-                Message({
-                    message: 'Activated successfully',
-                    type: 'success',
-                    // duration: 0,
-                });
             }
             bus.$emit('REFRESH_BALANCE');
         })

@@ -388,7 +388,7 @@ export default {
       let list = this.myAboutInfoBuy;
       if (!list) {
         return;
-      }
+      } 
       let array = list.filter((item) => item.askID === id);
       let num = 0;
       let number = 0;

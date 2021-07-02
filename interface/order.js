@@ -526,7 +526,6 @@ export const onExercise = async (data, flag, callBack) => {
         } else {
             value = toWei(data.vol, data.token);
         }
-        console.log(data, value);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -562,7 +561,6 @@ export const onExercise = async (data, flag, callBack) => {
             }
         });
     }
-    console.log(value);
     // 一键判断是否需要授权，给予无限授权
     order.methods
         .exercise(data.flag ? value : data.bidID)
@@ -591,11 +589,6 @@ export const onExercise = async (data, flag, callBack) => {
                     buttonText: 'Confirm',
                     conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                     showDialog: false,
-                });
-            } else {
-                Message({
-                    message: 'Activated successfully',
-                    type: 'success',
                 });
             }
             callback('success');

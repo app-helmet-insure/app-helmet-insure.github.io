@@ -388,7 +388,7 @@ export default {
       let list = this.myAboutInfoBuy;
       if (!list) {
         return;
-      } 
+      }
       let array = list.filter((item) => item.askID === id);
       let num = 0;
       let number = 0;
@@ -537,6 +537,9 @@ export default {
     }
     .supply_title {
       width: 100%;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .supply_item {
       width: 100%;
@@ -720,6 +723,9 @@ export default {
       height: 44px;
       margin-left: 10px;
       line-height: 55px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .supply_item_H5 {
       width: 100%;

@@ -1828,6 +1828,11 @@ export default {
     }
     .policy_title {
       width: 100%;
+      h3 {
+        @include themeify {
+          color: themed("color-17173a");
+        }
+      }
     }
     .policy_item {
       width: 100%;
@@ -2006,6 +2011,11 @@ export default {
       height: 44px;
       margin-left: 10px;
       line-height: 55px;
+      h3 {
+        @include themeify {
+          color: themed("color-17173a");
+        }
+      }
     }
     .policy_item_H5 {
       width: 100%;

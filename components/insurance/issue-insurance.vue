@@ -726,7 +726,7 @@ export default {
             font-family: IBMPlexSans-Medium, IBMPlexSans;
             font-weight: 600;
             @include themeify {
-              background: themed("color-17173a");
+              color: themed("color-17173a");
             }
             line-height: 16px;
             margin-top: 12px;
@@ -928,7 +928,7 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         right: 62px;
       }

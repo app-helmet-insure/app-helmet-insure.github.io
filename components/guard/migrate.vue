@@ -5,43 +5,72 @@
       <div class="guard_migrate_swap">
         <div class="guard_migrate_swap_from">
           <div class="header">
-            <div class="logo">From <i class="binance"></i> BSC</div>
+            <div class="logo">
+              From <img src="~/assets/img/icon/binance.png" alt="" /><span
+                >BSC</span
+              >
+            </div>
             <span>HELMET</span>
+          </div>
+          <div class="input_box">
+            <input type="text" v-model="SwapNumber" />
+            <p>
+              <span class="max">最大量</span>
+              <img src="~/assets/img/icon/helmet.png" alt="" />
+            </p>
           </div>
         </div>
         <div class="guard_migrate_swap_to">
           <div class="header">
-            <div class="logo">From <i class="polygon"></i> Polygon</div>
+            <div class="logo">
+              To <img src="~/assets/img/icon/polygon.png" alt="" /><span
+                >Polygon</span
+              >
+            </div>
             <span>GUARD</span>
+          </div>
+          <div class="input_box">
+            <input type="text" v-model="SwapNumber" readonly />
+            <p>
+              <img src="~/assets/img/icon/guard.png" alt="" />
+            </p>
           </div>
         </div>
       </div>
-      <div class="input_box">
-        <input type="text" name="" id="" placeholder="输入划转数量" />
-        <span class="max">最大量</span>
-        <p>HELMET</p>
+      <div class="guard_migrate_destination">
+        <h3>Destination</h3>
+        <div class="account">12222222222222222222222222222222</div>
+        <button>Approve</button>
+        <p>注意：该过程是不可逆过程,BSC资产将会彻底转化成 Polygon 资产</p>
+        <span>Powered by BlackHole & ChainSwap</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      SwapNumber: "0.00",
+    };
+  },
+};
 </script>
 
 <style lang='scss' scoped>
 .guard_migrate {
   width: 100%;
   min-width: 1200px;
-  height: 420px;
   background: #ffffff;
   box-shadow: 0px 4px 8px 0px rgba(236, 232, 232, 0.02);
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px 0;
   &_wrap {
-    width: 320px;
+    width: 480px;
     h3 {
       font-size: 24px;
       font-family: IBMPlexSans-SemiBold, IBMPlexSans;
@@ -54,54 +83,202 @@ export default {};
   &_swap {
     margin-top: 20px;
     width: 100%;
-    height: 240px;
+    height: 360px;
     display: flex;
     flex-direction: column;
-    border: 1px solid #e8e8eb;
+    border: 2px solid #e8e8eb;
     border-radius: 5px;
     &_from {
       flex: 1;
+      padding: 0 24px;
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .logo {
+          margin: 24px 0 0 0px;
+          width: 180px;
+          height: 45px;
+          background: #fff4d0;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img {
+            width: 30px;
+            height: 30px;
+            margin: 0 9px;
+          }
+          font-size: 21px;
+          font-weight: 600;
+          color: rgba(23, 23, 58, 0.7);
+          line-height: 16px;
+          span {
+            color: #f0b90b;
+          }
+        }
+        > span {
+          font-size: 21px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          color: #17173a;
+          line-height: 14px;
+          margin-top: 24px;
+        }
+      }
+      .input_box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 36px;
+        margin-top: 24px;
+        input {
+          width: 250px;
+          height: 100%;
+          font-size: 26px;
+          flex-shrink: 0;
+          font-weight: 600;
+        }
+        p {
+          display: flex;
+          align-items: center;
+          .max {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #e8e8eb;
+            margin: 0 12px;
+            flex-shrink: 0;
+          }
+          img {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+          }
+        }
+      }
     }
     &_to {
       background: #f7f7fa;
       flex: 1;
-    }
-    .input_box {
-      margin-top: 30px;
-      width: 100%;
-      height: 40px;
-      border: 2px solid #e8e8e8;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      input {
-        width: 250px;
-        height: 100%;
-        padding-left: 12px;
-        &::placeholder {
-          color: rgba(23, 23, 58, 0.4);
-        }
-      }
-      > span {
-        position: absolute;
-        display: block;
-        font-size: 12px;
-        padding: 6px 8px;
-        height: 24px;
-        background: #f8f9fa;
-        border-radius: 5px;
-        border: 1px solid #e8e8eb;
-        color: #17173a;
-        right: 81px;
+      padding: 0 24px;
+      .header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        .logo {
+          margin: 39px 0 0 0px;
+          width: 180px;
+          height: 45px;
+          background: #ddc8ff;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img {
+            width: 30px;
+            height: 30px;
+            margin: 0 9px;
+          }
+          font-size: 21px;
+          font-weight: 600;
+          color: rgba(23, 23, 58, 0.7);
+          line-height: 16px;
+          span {
+            color: #9f66ff;
+          }
+        }
+        > span {
+          font-size: 21px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          color: #17173a;
+          line-height: 14px;
+          margin-top: 24px;
+        }
       }
-      > p {
-        height: 100%;
-        flex: 1;
-        border-left: 1px solid #e8e8e8;
+      .input_box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 36px;
+        margin-top: 24px;
+        input {
+          width: 250px;
+          height: 100%;
+          font-size: 26px;
+          flex-shrink: 0;
+          font-weight: 600;
+          background: transparent;
+          pointer-events: none;
+          color: rgba(23, 23, 58, 0.4);
+        }
+        p {
+          display: flex;
+          align-items: center;
+          img {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+          }
+        }
       }
+    }
+  }
+  &_destination {
+    h3 {
+      font-size: 21px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #17173a;
+      line-height: 20px;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    .account {
+      width: 100%;
+      height: 60px;
+      border-radius: 5px;
+      border: 2px solid #e8e8eb;
+      font-size: 21px;
+      font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.4);
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+    }
+    button {
+      width: 100%;
+      height: 60px;
+      background: #17173a;
+      border-radius: 5px;
+      font-size: 21px;
+      font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+      font-weight: 600;
+      color: #ffffff;
+      margin-top: 14px;
+    }
+    > p {
+      font-size: 18px;
+      font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.4);
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+    > span {
+      display: flex;
+      justify-content: center;
+      height: 12px;
+      font-size: 18px;
+      font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.7);
+      margin-top: 14px;
     }
   }
 }

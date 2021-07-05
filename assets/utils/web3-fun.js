@@ -5,7 +5,6 @@ export const toWei = (number, currency = 'WETH') => {
     let result;
     try {
         result = window.WEB3.utils.toWei(String(number), unit);
-        console.log(unit, result);
         if (currency !== 'WBTC') {
             return result;
         } else {

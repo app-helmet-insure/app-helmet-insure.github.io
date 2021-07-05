@@ -120,6 +120,13 @@ import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { getBalance } from "~/interface/order.js";
+import { getInsuranceList } from "~/interface/event.js";
+import {
+  TokenDecimals,
+  DecimalsFormWei,
+  getAccounts,
+} from "~/interface/common_contract.js";
+import { BalanceOf } from "~/interface/read_contract.js";
 import {
   newGetSymbol,
   getWei,
@@ -180,8 +187,51 @@ export default {
       if (newValue) {
         this.page = 0;
         this.limit = 10;
-        this.setSettlementList(newValue);
+        // this.setSettlementList(newValue);
+        this.getList();
       }
+    },
+    getList() {
+      getInsuranceList().then(async (res) => {
+        let CurrentAccount = await getAccounts();
+        let ReturnList = res.data.data.options;
+        let ResultItem = {};
+        for (let i = 0; i < ReturnList.length; i++) {
+          let item = ReturnList[i];
+          // 标的
+          let UnderlyingDecimals = TokenDecimals(item.underlying);
+          let UnderlyingSymbol = getTokenName(item.underlying);
+          // 抵押
+          let CollateralDecimals = TokenDecimals(item.collateral);
+          let CollateralSymbol = getTokenName(item.collateral);
+          // 结算
+          let LongBalance = await BalanceOf(item.long, CollateralDecimals);
+          let ShortBalance = await BalanceOf(item.short, CollateralDecimals);
+          console.log(LongBalance, ShortBalance);
+          if (UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+          } else {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+          }
+          if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+          }
+          if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+          }
+          console.log(item);
+          if (Number(ShortBalance) > 0 && Number(LongBalance) > 0) {
+            ResultItem = {
+              seller: item.seller,
+              collateral: item.collateral,
+            };
+          }
+        }
+      });
     },
     // 倒计时
     async setSettlementList(list) {

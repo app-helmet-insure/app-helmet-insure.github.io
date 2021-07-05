@@ -17,7 +17,9 @@ import {
     DecimalsToWei,
     AddressFormWei,
 } from '~/interface/common_contract.js';
+import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import moment from 'moment';
+import BigNumber from "bignumber.js";
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -31,7 +33,7 @@ export const getLongValues = async function(addressArray) {
     addressArray.forEach((item) => {
         for (let key in item) {
             let value = item[key];
-            key in obj ? (obj[key] += value) : (obj[key] = Number(value));
+            key in obj ? (obj[key] =  new BigNumber(obj[key]).plus(new BigNumber(value))) : (obj[key] = new BigNumber(value));
         }
     });
     for (let i in obj) {
@@ -341,7 +343,6 @@ export const getLongType = async function() {
 export const getLongValuess = async function() {
     let rightTime = parseInt(moment.now());
     let leftTime = parseInt(moment.now()) - 518400000;
-    console.log(rightTime, leftTime);
     return Axios({
         method: 'post',
         url:
@@ -414,7 +415,6 @@ export const getLongValuess = async function() {
             }
             return value;
         });
-        console.log(value);
         return value;
     });
 };

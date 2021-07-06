@@ -24,21 +24,21 @@
         <section>
           <span v-if="item.type == 'call'">
             {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-            {{ item._collateral }}
+            {{ item.collateral_symbol }}
           </span>
           <span v-else>
             {{ fixD(item.und, 8) }}
-            {{ item._underlying }}
+            {{ item.underlying_symbol }}
           </span>
         </section>
         <section>
           <span v-if="item.type == 'call'">
             {{ fixD(item.und, 8) }}
-            {{ item._underlying }}
+            {{ item.underlying_symbol }}
           </span>
           <span v-else>
             {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-            {{ item._collateral }}
+            {{ item.collateral_symbol }}
           </span>
         </section>
         <section>
@@ -63,22 +63,22 @@
             <span>{{ $t("Table.DenAssets") }}</span>
             <span v-if="item.type == 'call'">
               {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-              {{ item._collateral }}
+              {{ item.collateral_symbol }}
             </span>
             <span v-else>
               {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
+              {{ item.underlying_symbol }}
             </span>
           </p>
           <p>
             <span>{{ $t("Table.BaseAssets") }}</span>
             <span v-if="item.type == 'call'">
               {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
+              {{ item.underlying_symbol }}
             </span>
             <span v-else>
               {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-              {{ item._collateral }}
+              {{ item.collateral_symbol }}
             </span>
           </p>
         </section>
@@ -264,9 +264,18 @@ export default {
                 type: item.type,
                 TypeCoin: item.TypeCoin,
                 claimBalance: 0,
-                col: DecimalsFormWei(SettleInfo.col, CollateralDecimals),
-                fee: DecimalsFormWei(SettleInfo.fee, CollateralDecimals),
-                und: DecimalsFormWei(SettleInfo.und, CollateralDecimals),
+                col: DecimalsFormWei(
+                  SettleInfo.col,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
+                fee: DecimalsFormWei(
+                  SettleInfo.fee,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
+                und: DecimalsFormWei(
+                  SettleInfo.und,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
               });
             } catch (error) {
               console.log(error);
@@ -282,7 +291,6 @@ export default {
             FixList = newArr;
             this.FilterList = FixList;
             this.isLoading = false;
-            console.log(FixList);
           }
         });
       });
@@ -305,6 +313,7 @@ export default {
     },
     // 行权
     toClaim(item) {
+      console.log(item);
       let object = {
         title: "WARNING",
         layout: "layout1",
@@ -326,9 +335,14 @@ export default {
           if (res) {
             burn(
               data.short,
-              data.longBalance,
+              data.claimBalance,
               { _collateral: data.collateral_symbol },
-              data
+              data,
+              (res) => {
+                if (res == "success") {
+                  this.getList();
+                }
+              }
             );
           }
           data = {};
@@ -356,7 +370,11 @@ export default {
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
-            settle(data.short, data);
+            settle(data.short, data, (res) => {
+              if (res == "success") {
+                this.getList();
+              }
+            });
           }
           data = {};
         });

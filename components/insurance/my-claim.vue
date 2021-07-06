@@ -266,7 +266,6 @@ export default {
                 item.short,
                 ShortMinusLongVolume
               );
-              console.log(SettleInfo);
               FixList.push({
                 collateral: item.collateral,
                 collateral_symbol: CollateralSymbol,
@@ -296,19 +295,18 @@ export default {
             } catch (error) {
               console.log(error);
             }
-            var newobj = {};
-            var newArr = [];
-            FixList.forEach((item) => {
-              if (!newobj[item.collateral + item.underlying + item.short]) {
-                newobj[item.collateral + item.underlying + item.short] = 1;
-                newArr.push(item);
-              }
-            });
-            FixList = newArr;
-            console.log(FixList);
-            this.FilterList = FixList;
-            this.isLoading = false;
           }
+          var newobj = {};
+          var newArr = [];
+          FixList.forEach((item) => {
+            if (!newobj[item.collateral + item.underlying + item.short]) {
+              newobj[item.collateral + item.underlying + item.short] = 1;
+              newArr.push(item);
+            }
+          });
+          FixList = newArr;
+          this.FilterList = FixList;
+          this.isLoading = false;
         });
       });
     },

@@ -222,6 +222,7 @@ export default {
     getList() {
       this.isLoading = true;
       getInsuranceList().then(async (res) => {
+        console.log(res);
         let CurrentAccount = await getAccounts();
         let ReturnList = res.data.data.options;
         let FixList = [];
@@ -235,6 +236,7 @@ export default {
             return item;
           }
         });
+
         ReturnList.forEach((item) => {
           // 标的
           let UnderlyingDecimals = TokenDecimals(item.underlying);
@@ -461,29 +463,36 @@ export default {
             arr.push(HMTRGolicy);
           }
         }
-        List.map(async (item, index) => {
-          let BidsInfo = await Bids(item.bidID);
-          if (BidsInfo.remain == 0) {
-            item.status == "Activated";
-            item.sort = 1;
-          } else {
-            item.status == "Unactivated";
-            item.sort = 0;
-          }
-          if (Number(item.expiry) < nowDate) {
-            item.status = "Expired";
-            item.sort = 2;
-            item.dueDate = "Expired";
-          }
-          if (BidsInfo.remain != 0) {
-            arr.push(item);
-          }
-          this.FilterList = [...new Set(arr)].sort((a, b) => {
-            return a.sort - b.sort;
+        if (List.length) {
+          List.map(async (item, index) => {
+            console.log(item);
+            let BidsInfo = await Bids(item.bidID);
+            if (BidsInfo.remain == 0) {
+              item.status == "Activated";
+              item.sort = 1;
+            } else {
+              item.status == "Unactivated";
+              item.sort = 0;
+            }
+            if (Number(item.expiry) < nowDate) {
+              item.status = "Expired";
+              item.sort = 2;
+              item.dueDate = "Expired";
+            }
+            if (BidsInfo.remain != 0) {
+              arr.push(item);
+            }
+            this.FilterList = [...new Set(arr)].sort((a, b) => {
+              return a.sort - b.sort;
+            });
+            this.isLoading = false;
+            return this.FilterList;
           });
+        } else {
+          this.FilterList = [];
           this.isLoading = false;
           return this.FilterList;
-        });
+        }
       });
     },
     // 倒计时

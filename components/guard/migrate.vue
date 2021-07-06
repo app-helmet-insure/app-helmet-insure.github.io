@@ -13,9 +13,11 @@
             <span>HELMET</span>
           </div>
           <div class="input_box">
-            <input type="text" v-model="SwapNumber" />
+            <input type="text" v-model="SwapNumber" placeholder="0.00" />
             <p>
-              <span class="max">最大量</span>
+              <span class="max" @click="SwapNumber = BalanceArray.HELMET"
+                >最大量</span
+              >
               <img src="~/assets/img/icon/helmet.png" alt="" />
             </p>
           </div>
@@ -30,7 +32,12 @@
             <span>GUARD</span>
           </div>
           <div class="input_box">
-            <input type="text" v-model="SwapNumber" readonly />
+            <input
+              type="text"
+              v-model="SwapNumber"
+              readonly
+              placeholder="0.00"
+            />
             <p>
               <img src="~/assets/img/icon/guard.png" alt="" />
             </p>
@@ -39,7 +46,7 @@
       </div>
       <div class="guard_migrate_destination">
         <h3>Destination</h3>
-        <div class="account">12222222222222222222222222222222</div>
+        <div class="account">{{ Account }}</div>
         <button>Approve</button>
         <p>注意：该过程是不可逆过程,BSC资产将会彻底转化成 Polygon 资产</p>
         <span>Powered by BlackHole & ChainSwap</span>
@@ -49,11 +56,42 @@
 </template>
 
 <script>
+import { getAccounts } from "~/interface/common_contract.js";
+import { Allowance } from "~/interface/read_contract.js";
+import { Send } from "~/interface/write_contract.js";
 export default {
   data() {
     return {
-      SwapNumber: "0.00",
+      SwapNumber: "",
+      Account: "",
+      NeedApprove: "",
     };
+  },
+  computed: {
+    BalanceArray() {
+      return this.$store.state.BalanceArray;
+    },
+  },
+  mounted() {
+    this.MyAccount();
+    this.ApproveFlagFn();
+  },
+  methods: {
+    async MyAccount() {
+      let Account = await getAccounts();
+      Account = Account.substr(0, 12) + "..." + Account.substr(-15);
+      this.Account = Account;
+    },
+    async ApproveFlagFn() {
+      let ApproveFlag = await Allowance(
+        "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        "0x910651F81a605a6Ef35d05527d24A72fecef8bF0"
+      );
+      this.NeedApprove = ApproveFlag;
+    },
+    async SendConfirm(){
+      
+    }
   },
 };
 </script>
@@ -138,6 +176,10 @@ export default {
           font-size: 26px;
           flex-shrink: 0;
           font-weight: 600;
+          color: #17173a;
+          &::placeholder {
+            color: #17173a;
+          }
         }
         p {
           display: flex;
@@ -148,7 +190,12 @@ export default {
             border-radius: 5px;
             border: 1px solid #e8e8eb;
             margin: 0 12px;
+            cursor: pointer;
             flex-shrink: 0;
+            &:hover {
+              border: 1px solid #ff9600;
+              color: #ff9600;
+            }
           }
           img {
             width: 36px;
@@ -212,6 +259,9 @@ export default {
           background: transparent;
           pointer-events: none;
           color: rgba(23, 23, 58, 0.4);
+          &::placeholder {
+            color: rgba(23, 23, 58, 0.4);
+          }
         }
         p {
           display: flex;

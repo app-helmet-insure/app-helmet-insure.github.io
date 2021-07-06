@@ -3,6 +3,7 @@ import ApproveABI from '~/abi/IPancakePair.json';
 import CakePoolABI from '~/abi/cake_pool_abi.json';
 import MdexPoolABI from '~/abi/mdex_pool_abi.json';
 import OrderABI from '~/abi/order_abi.json';
+import FectoryABI from '~/abi/factory_abi.json';
 import {
     Web3Contract,
     getAccounts,
@@ -14,6 +15,7 @@ import {
 } from './common_contract.js';
 import BigNumber from 'bignumber.js';
 let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
+let FectoryContractAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88';
 // Balanceof
 export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
     let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
@@ -199,4 +201,8 @@ export const Asks = async (AskID) => {
 export const Bids = async (BidID) => {
     let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
     return Contracts.methods.bids(BidID).call();
+};
+export const Settleable = async (seller, short) => {
+    let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
+    return Contracts.methods.settleable(seller, short).call();
 };

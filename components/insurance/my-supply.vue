@@ -216,11 +216,13 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.getList();
+  },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
-        this.getList();
       }
     },
     fliterListWatch(newValue) {
@@ -328,7 +330,7 @@ export default {
               AddressFormWei(item.volume, ResultItem.collateral),
               8
             );
-            if (Remain == "0") {
+            if (Number(Remain) == "0") {
               item.status = "Beborrowed";
               item.sort = 1;
             } else {
@@ -378,6 +380,7 @@ export default {
         FixList = FixListPush;
         this.FilterList = FixList;
         this.isLoading = false;
+        return this.FilterList;
       });
     },
     //获取已出售
@@ -534,6 +537,9 @@ export default {
     }
     .supply_title {
       width: 100%;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .supply_item {
       width: 100%;
@@ -717,6 +723,9 @@ export default {
       height: 44px;
       margin-left: 10px;
       line-height: 55px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .supply_item_H5 {
       width: 100%;

@@ -273,13 +273,8 @@ export default {
         this.Rent = 0;
         return;
       }
-      let {
-        callDpr,
-        putDpr,
-        callInsuranceNum,
-        putInsuranceNum,
-        _expiry,
-      } = newValue;
+      let { callDpr, putDpr, callInsuranceNum, putInsuranceNum, _expiry } =
+        newValue;
       if (
         (newValue.callDpr && newValue.callInsuranceNum && newValue._expiry) ||
         (newValue.putDpr && newValue.putInsuranceNum && newValue._expiry)
@@ -365,6 +360,7 @@ export default {
       // 到期日
       // 结算token
       // 单价
+      data = {};
       let data = {
         private: false, //
         annual: type == 1 ? this.callDpr : this.putDpr,
@@ -401,10 +397,14 @@ export default {
         } ${"BNB"}</span></p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
+          console.log(res);
           if (res) {
             onIssueSellOnETH(data, (status) => {
               data = {};
             });
+          } else {
+            data = {};
+            return;
           }
           data = {};
           return;
@@ -415,6 +415,9 @@ export default {
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
             onIssueSell(data, (status) => {});
+          } else {
+            data = {};
+            return;
           }
           data = {};
           return;
@@ -723,7 +726,7 @@ export default {
             font-family: IBMPlexSans-Medium, IBMPlexSans;
             font-weight: 600;
             @include themeify {
-              background: themed("color-17173a");
+              color: themed("color-17173a");
             }
             line-height: 16px;
             margin-top: 12px;
@@ -925,7 +928,7 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans;
         @include themeify {
-          background: themed("color-17173a");
+          color: themed("color-17173a");
         }
         right: 62px;
       }

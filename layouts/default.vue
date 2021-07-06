@@ -186,13 +186,10 @@ export default {
       this.closeStatusDialog();
       window.statusDialog = false;
     });
-    // 刷新所有数据
-    this.$bus.$on("REFRESH_ALL_DATA", (data) => {
-      this.refreshAllData();
-    });
     this.$bus.$on("REFRESH_BALANCE", () => {
       this.getBalance();
     });
+    this.$bus.$emit("GET_SLIDER_NUMBER");
     let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
     localStorage.setItem("themes", themes);
@@ -287,7 +284,6 @@ export default {
           this.$store.dispatch("setUserInfo", userInfo);
           this.getBalance();
           this.getIndexPirce();
-          this.$bus.$emit("REFRESH_ALL_DATA");
           this.$bus.$emit("REFRESH_MINING");
           this.$bus.$emit("GET_CARD_BALANCE");
           this.$bus.$emit("NFT_WINDOW_STATUS");
@@ -303,7 +299,6 @@ export default {
 
             let userInfo = await mateMaskInfo(account[0], "MetaMask");
             this.$store.dispatch("setUserInfo", userInfo);
-            this.$bus.$emit("REFRESH_ALL_DATA");
             this.$bus.$emit("REFRESH_MINING");
             this.closeDialog();
           });

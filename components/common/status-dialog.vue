@@ -66,6 +66,7 @@ export default {
   methods: {
     closeDialogs() {
       this.$emit("close");
+      this.$bus.$emit("PROCESS_ACTION", false);
     },
     async closeDialog() {
       this.$bus.$emit("PROCESS_ACTION", this.data.showDialog);

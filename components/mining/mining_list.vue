@@ -7,7 +7,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
           :class="['finshed_line', 'finshed_pc']"
-          v-if="item.REWARD_NAME == 'helmet_wings'"
+          v-if="item.REWARD_NAME == 'helmet_mtrg'"
         >
           <p></p>
           <i :class="storeThemes + '_star'"></i>
@@ -182,7 +182,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
         <div
           class="finshed_line finshed_h5"
-          v-if="item.REWARD_NAME == 'helmet_wings'"
+          v-if="item.REWARD_NAME == 'helmet_mtrg'"
         >
           <p></p>
           <i></i>

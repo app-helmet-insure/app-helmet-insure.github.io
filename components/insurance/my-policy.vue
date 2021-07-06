@@ -4,7 +4,11 @@
       <h3>{{ $t("Type.MyGuarantee") }}</h3>
     </div>
     <template v-if="isLogin">
-      <div class="policy_item" v-for="item in showList" :key="item.bidID">
+      <div
+        class="policy_item"
+        v-for="item in showList"
+        :key="item.bidID + item.askID"
+      >
         <section>
           <p>
             <span>{{ $t("Table.ID") }}:{{ item.bidID }}</span>
@@ -56,7 +60,7 @@
       <div
         class="policy_item_H5"
         v-for="item in showList"
-        :key="item.bidID + '1'"
+        :key="item.bidID + item.askID + '1'"
       >
         <section>
           <p>
@@ -139,27 +143,17 @@
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
 import Page from "~/components/common/page.vue";
-import {
-  fixD,
-  addCommom,
-  autoRounding,
-  toRounding,
-  fixDEAdd,
-} from "~/assets/js/util.js";
+import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
-import { onExercise, getExercise, getTransfer } from "~/interface/order.js";
-import { balanceOf, getBalance } from "~/interface/deposite";
+import { onExercise } from "~/interface/order.js";
+import { getBalance } from "~/interface/deposite";
 import { getInsuranceList } from "~/interface/event.js";
 import {
   TokenDecimals,
-  getDecimals,
   DecimalsFormWei,
-  fromWei,
-  AddressFormWei,
   getAccounts,
 } from "~/interface/common_contract.js";
 import moment from "moment";
-import BigNumber from "bignumber.js";
 import { Bids } from "~/interface/read_contract.js";
 export default {
   components: {
@@ -199,6 +193,9 @@ export default {
       return this.$store.state.themes;
     },
   },
+  mounted() {
+    this.getList();
+  },
   watch: {
     userInfo: {
       handler: "userInfoWatch",
@@ -213,7 +210,6 @@ export default {
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
-        this.getList();
       }
     },
 
@@ -482,12 +478,11 @@ export default {
           if (BidsInfo.remain != 0) {
             arr.push(item);
           }
-          if (index == List.length - 1) {
-            this.FilterList = [...new Set(arr)].sort((a, b) => {
-              return a.sort - b.sort;
-            });
-            this.isLoading = false;
-          }
+          this.FilterList = [...new Set(arr)].sort((a, b) => {
+            return a.sort - b.sort;
+          });
+          this.isLoading = false;
+          return this.FilterList;
         });
       });
     },
@@ -560,10 +555,10 @@ export default {
       this.$bus.$emit("OPEN_STATUS_DIALOG", {
         title: "WARNING",
         layout: "layout1",
-        conText: `<p>you will swap<span> ${fixD(data.buyVolume, 8)} ${
-          data.totoken
-        }</span> to <span> ${fixD(data.show_strikePrice, 8)} ${
+        conText: `<p>you will swap<span> ${fixD(data.show_strikePrice, 8)} ${
           data.token
+        }</span> to <span> ${fixD(data.buyVolume, 8)} ${
+          data.totoken
         }</span></p>`,
         activeTip: true,
         activeTipText1: "Please double check the price above，",
@@ -597,6 +592,7 @@ export default {
         let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 1,
           bidID: 1,
           buyer: myAddress,
@@ -653,6 +649,7 @@ export default {
         let Token = getTokenName("0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 2,
           bidID: 2,
           buyer: myAddress,
@@ -709,6 +706,7 @@ export default {
         let Token = getTokenName("0x936909e72951a19a5e1d75a109b0d34f06f39838");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 3,
           bidID: 3,
           buyer: myAddress,
@@ -765,6 +763,7 @@ export default {
         let Token = getTokenName("0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 4,
           bidID: 4,
           buyer: myAddress,
@@ -820,6 +819,7 @@ export default {
         let Token = getTokenName("0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 5,
           bidID: 5,
           buyer: myAddress,
@@ -876,6 +876,7 @@ export default {
         let Token = getTokenName("0xe204c4c21c6ed90e37cb06cb94436614f3208d58");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 5,
           bidID: 5,
           buyer: myAddress,
@@ -932,6 +933,7 @@ export default {
         let Token = getTokenName("0xfeF73F4eeE23E78Ee14b6D2B6108359E8fbe6112");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 6,
           bidID: 6,
           buyer: myAddress,
@@ -988,6 +990,7 @@ export default {
         let Token = getTokenName("0xdD9b5801e8A38ef7A728A42492699521C6A7379b");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 7,
           bidID: 7,
           buyer: myAddress,
@@ -1044,6 +1047,7 @@ export default {
         let Token = getTokenName("0xb779F208f8d662558dF8E2b6bFE3b6305CC13389");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 8,
           bidID: 8,
           buyer: myAddress,
@@ -1100,6 +1104,7 @@ export default {
         let Token = getTokenName("0x9065fcbb5f73B908aC4B05BdB81601Eec2065522");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 9,
           bidID: 9,
           buyer: myAddress,
@@ -1156,6 +1161,7 @@ export default {
         let Token = getTokenName("0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 10,
           bidID: 10,
           buyer: myAddress,
@@ -1213,6 +1219,7 @@ export default {
         let Token = getTokenName("0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 11,
           bidID: 11,
           buyer: myAddress,
@@ -1270,6 +1277,7 @@ export default {
         let Token = getTokenName("0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 12,
           bidID: 12,
           buyer: myAddress,
@@ -1325,6 +1333,7 @@ export default {
         let Token = getTokenName("0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 13,
           bidID: 13,
           buyer: myAddress,
@@ -1380,6 +1389,7 @@ export default {
         let Token = getTokenName("0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 14,
           bidID: 14,
           buyer: myAddress,
@@ -1435,6 +1445,7 @@ export default {
         let Token = getTokenName("0xCa7597633927A98B800738eD5CD2933a74a80e8c");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 15,
           bidID: 15,
           buyer: myAddress,
@@ -1492,6 +1503,7 @@ export default {
         let Token = getTokenName("0x224b33139a377a62d4BaD3D58cEDb7807AE228eB");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 16,
           bidID: 16,
           buyer: myAddress,
@@ -1549,6 +1561,7 @@ export default {
         let Token = getTokenName("0x34508EA9ec327ff3b98A2F10eEDc2950875bf026");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 17,
           bidID: 17,
           buyer: myAddress,
@@ -1605,6 +1618,7 @@ export default {
         let Token = getTokenName("0xa561926e81decb74b3d11e14680b3f6d1c5012bd");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 18,
           bidID: 18,
           buyer: myAddress,
@@ -1661,6 +1675,7 @@ export default {
         let Token = getTokenName("0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624");
         let resultItem;
         resultItem = {
+          askID: "air",
           id: 19,
           bidID: 19,
           buyer: myAddress,
@@ -1717,8 +1732,9 @@ export default {
         let Token = getTokenName("0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44");
         let resultItem;
         resultItem = {
-          id: 19,
-          bidID: 19,
+          askID: "air",
+          id: 20,
+          bidID: 20,
           buyer: myAddress,
           show_price: "--",
           premium: "--" * volume,
@@ -1802,6 +1818,11 @@ export default {
     }
     .policy_title {
       width: 100%;
+      h3 {
+        @include themeify {
+          color: themed("color-17173a");
+        }
+      }
     }
     .policy_item {
       width: 100%;
@@ -1980,6 +2001,11 @@ export default {
       height: 44px;
       margin-left: 10px;
       line-height: 55px;
+      h3 {
+        @include themeify {
+          color: themed("color-17173a");
+        }
+      }
     }
     .policy_item_H5 {
       width: 100%;

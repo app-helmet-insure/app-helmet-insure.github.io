@@ -62,6 +62,7 @@ export const getContract = (name, charID = 56) => {
     }
 };
 export const TokenDecimals = (Address) => {
+    console.log(Address);
     Address = Address.toLowerCase();
     switch (Address) {
         case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8': //HELMET
@@ -105,7 +106,6 @@ export const getDecimals = (Decimals) => {
     }
 };
 export const toWei = (bigNumber, DecimalsUnit) => {
-    
     try {
         return window.WEB3.utils.toWei(bigNumber, DecimalsUnit);
     } catch (e) {
@@ -123,7 +123,6 @@ export const DecimalsToWei = (FixNumber, Decimals) => {
 };
 export const TokenNameToWei = (FixNumber, TokenName) => {
     let TokenAddress = getAddress(TokenName);
-    console.log(TokenAddress);
     return AddressToWei(FixNumber, TokenAddress);
 };
 export const fromWei = (bigNumber, DecimalsUnit) => {

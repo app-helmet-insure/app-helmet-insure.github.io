@@ -23,7 +23,7 @@
         </section>
         <section>
           <span v-if="item.type == 'call'">
-            {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
             {{ item._collateral }}
           </span>
           <span v-else>
@@ -37,7 +37,7 @@
             {{ item._underlying }}
           </span>
           <span v-else>
-            {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
             {{ item._collateral }}
           </span>
         </section>
@@ -62,7 +62,7 @@
           <p>
             <span>{{ $t("Table.DenAssets") }}</span>
             <span v-if="item.type == 'call'">
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+              {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
               {{ item._collateral }}
             </span>
             <span v-else>
@@ -77,7 +77,7 @@
               {{ item._underlying }}
             </span>
             <span v-else>
-              {{ fixD(precision.plus(item.col, item.longBalance), 8) }}
+              {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
               {{ item._collateral }}
             </span>
           </p>
@@ -104,14 +104,14 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <!-- <section class="pages" v-if="claimList.length > 10 && !isLogin">
+    <section class="pages" v-if="FilterList.length > 10 && isLogin">
       <Page
-        :total="claimList.length"
+        :total="FilterList.length"
         :limit="limit"
         :page="page + 1"
         @page-change="handleClickChagePage"
       />
-    </section> -->
+    </section>
   </div>
 </template>
 
@@ -119,13 +119,14 @@
 import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { getBalance } from "~/interface/order.js";
+import { getInsuranceList } from "~/interface/event.js";
 import {
-  newGetSymbol,
-  getWei,
-  getTokenName,
-} from "~/assets/utils/address-pool.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+  TokenDecimals,
+  DecimalsFormWei,
+  DecimalsToWei,
+} from "~/interface/common_contract.js";
+import { BalanceOf, Settleable } from "~/interface/read_contract.js";
+import { getTokenName } from "~/assets/utils/address-pool.js";
 import { settleable, burn, settle } from "~/interface/factory.js";
 import Page from "~/components/common/page.vue";
 export default {
@@ -140,6 +141,7 @@ export default {
       toRounding: toRounding,
       showList: [],
       claimList: [],
+      FilterList: [],
       getTokenName,
       fixD,
       page: 0,
@@ -160,124 +162,130 @@ export default {
     },
   },
   watch: {
-    myAboutInfoSell: {
-      handler: "myAboutInfoSellWatch",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
     },
+    FilterList: {
+      handler: "fliterListWatch",
+      immediate: true,
+    },
   },
-
+  mounted() {
+    this.getList();
+  },
   methods: {
+    fliterListWatch(newValue) {
+      if (newValue) {
+        this.page = 0;
+        this.limit = 10;
+        let list = newValue;
+        this.showList = list.slice(0, this.limit);
+      }
+    },
     userInfoWatch(newValue) {
       if (newValue) {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    myAboutInfoSellWatch(newValue) {
-      if (newValue) {
-        this.page = 0;
-        this.limit = 10;
-        this.setSettlementList(newValue);
-      }
-    },
-    // 倒计时
-    async setSettlementList(list) {
-      this.isLoading = true;
-      this.showList = [];
-      const result = [];
-      let mapArray = [];
-      let obj = {};
-      let item,
-        longBalance,
-        shortBalance,
-        _collateral,
-        _underlying,
-        number,
-        volume,
-        id,
-        und;
-      for (let i = 0; i < list.length; i++) {
-        item = list[i];
-        _collateral = getTokenName(item.longInfo._collateral, window.chainID);
-        longBalance = await getBalance(item.longInfo.long, _collateral);
-        _underlying = getTokenName(item.longInfo._underlying, window.chainID);
-        shortBalance = await getBalance(item.longInfo.short, _collateral);
-        let Token = _underlying == "WBNB" ? _underlying : _collateral;
-        if (_underlying == "WBNB") {
-          item.TypeCoin = _collateral;
-          item.type = "Call";
-        } else {
-          item.TypeCoin = _underlying;
-          item.type = "Put";
-        }
-        if (_underlying == "BUSD" && _collateral == "WBNB") {
-          item.TypeCoin = _collateral;
-          item.type = "Call";
-        }
-        if (_collateral == "BUSD" && _underlying == "WBNB") {
-          item.TypeCoin = _underlying;
-          item.type = "Put";
-        }
-        if (Number(shortBalance) > 0 && Number(longBalance) > 0) {
-          result.push({
-            creator: item.seller,
-            _collateral,
-            _underlying,
-            col: 0,
-            fee: 0,
-            und: 0,
-            long: item.longInfo.long,
-            short: item.longInfo.short,
-            longBalance:
-              Number(shortBalance) > Number(longBalance)
-                ? longBalance
-                : shortBalance,
-            type: item.type,
-            TypeCoin: item.TypeCoin,
-          });
-        }
-        number = precision.minus(shortBalance, longBalance);
-        if (Number(number) > 0) {
-          try {
-            volume = toWei(number, _collateral);
-            const settle = await settleable(item.longInfo.short, volume);
-
-            if (settle.col !== "0" || settle.und !== "0") {
-              result.push({
-                creator: item.seller,
-                _collateral,
-                _underlying,
-                col: fromWei(settle.col, _collateral),
-                fee: fromWei(settle.fee, _collateral),
-                und: fromWei(settle.und, _collateral),
-                long: item.longInfo.long,
-                short: item.longInfo.short,
-                // longBalance: Number(longBalance) > 0 ? String(number) : 0,
-                longBalance: 0,
+    getList() {
+      getInsuranceList().then((res) => {
+        let ReturnList = res.data.data.options;
+        let FixList = [];
+        this.isLoading = true;
+        ReturnList.forEach(async (item) => {
+          // 标的
+          let UnderlyingDecimals = TokenDecimals(item.underlying);
+          let UnderlyingSymbol = getTokenName(item.underlying);
+          // 抵押
+          let CollateralDecimals = TokenDecimals(item.collateral);
+          let CollateralSymbol = getTokenName(item.collateral);
+          // 结算
+          let LongBalance = await BalanceOf(item.long, CollateralDecimals);
+          let ShortBalance = await BalanceOf(item.short, CollateralDecimals);
+          if (UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+          } else {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+          }
+          if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
+            item.TypeCoin = CollateralSymbol;
+            item.type = "Call";
+          }
+          if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
+            item.TypeCoin = UnderlyingSymbol;
+            item.type = "Put";
+          }
+          if (Number(ShortBalance) > 0 && Number(LongBalance) > 0) {
+            FixList.push({
+              collateral: item.collateral,
+              collateral_symbol: CollateralSymbol,
+              collateral_decimals: CollateralDecimals,
+              underlying: item.collateral,
+              underlying_symbol: UnderlyingSymbol,
+              underlying_decimals: UnderlyingDecimals,
+              expiry: item.expiry,
+              long: item.long,
+              short: item.short,
+              type: item.type,
+              TypeCoin: item.TypeCoin,
+              claimBalance:
+                Number(ShortBalance) > Number(LongBalance)
+                  ? LongBalance
+                  : ShortBalance,
+              col: 0,
+              fee: 0,
+              und: 0,
+            });
+          }
+          let ShortMinusLong = precision.minus(ShortBalance, LongBalance) + "";
+          if (Number(ShortMinusLong) > 0) {
+            try {
+              let ShortMinusLongVolume = DecimalsToWei(
+                ShortMinusLong,
+                CollateralDecimals
+              );
+              const SettleInfo = await Settleable(
+                item.short,
+                ShortMinusLongVolume
+              );
+              FixList.push({
+                collateral: item.collateral,
+                collateral_symbol: CollateralSymbol,
+                collateral_decimals: CollateralDecimals,
+                underlying: item.collateral,
+                underlying_symbol: UnderlyingSymbol,
+                underlying_decimals: UnderlyingDecimals,
+                expiry: item.expiry,
+                long: item.long,
+                short: item.short,
                 type: item.type,
                 TypeCoin: item.TypeCoin,
+                claimBalance: 0,
+                col: DecimalsFormWei(SettleInfo.col, CollateralDecimals),
+                fee: DecimalsFormWei(SettleInfo.fee, CollateralDecimals),
+                und: DecimalsFormWei(SettleInfo.und, CollateralDecimals),
               });
+            } catch (error) {
+              console.log(error);
             }
-          } catch (err) {
-            console.log("setSettlementList##err###", err);
+            var newobj = {};
+            var newArr = [];
+            FixList.forEach((item) => {
+              if (!newobj[item.collateral + item.underlying + item.short]) {
+                newobj[item.collateral + item.underlying + item.short] = 1;
+                newArr.push(item);
+              }
+            });
+            FixList = newArr;
+            this.FilterList = FixList;
+            this.isLoading = false;
+            console.log(FixList);
           }
-        }
-      }
-      var newobj = {};
-      var newArr = [];
-      result.forEach((item) => {
-        if (!newobj[item._collateral + item._underlying + item.short]) {
-          newobj[item._collateral + item._underlying + item.short] = 1;
-          newArr.push(item);
-        }
+        });
       });
-      this.isLoading = false;
-      this.claimList = newArr;
-      this.showList = newArr;
-      // this.showList = newArr.slice(this.page * this.limit, this.limit);
     },
     getDownTime(time) {
       let now = new Date() * 1;
@@ -309,10 +317,9 @@ export default {
         showDialog: true,
       };
       let data = item;
-      console.log(data, data.longBalance);
-      if (data.longBalance != 0) {
-        object.conText = `<p>Settlement ${addCommom(data.longBalance)} ${
-          data._collateral
+      if (data.claimBalance != 0) {
+        object.conText = `<p>Settlement ${addCommom(data.claimBalance)} ${
+          data.collateral_symbol
         }</p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
@@ -320,7 +327,7 @@ export default {
             burn(
               data.short,
               data.longBalance,
-              { _collateral: data._collateral },
+              { _collateral: data.collateral_symbol },
               data
             );
           }
@@ -328,32 +335,24 @@ export default {
         });
       } else {
         let colValue = addCommom(
-          Number(data.col) + Number(data.longBalance),
+          Number(data.col) + Number(data.claimBalance),
           8
         );
         let undValue = addCommom(data.und, 8);
         if (colValue && undValue) {
           object.conText = `<p>Settlement <span>${
-            colValue + data._collateral
-          } ${"And" + undValue + data._underlying}</span></p>`;
+            colValue + data.collateral_symbol
+          } ${"And" + undValue + data.underlying_symbol}</span></p>`;
         } else if (!colValue && undValue) {
           object.conText = `<p>Settlement <span>${
-            undValue + data._underlying
+            undValue + " " + data.underlying_symbol
           }</span></p>`;
         } else {
           object.conText = `<p>Settlement <span>${
-            colValue + data._collateral
+            colValue + " " + data.collateral_symbol
           }</span></p>`;
         }
-        // if (undValue > 0) {
-        //   object.conText = `<p>Settlement <span>${
-        //     colValue + data._collateral
-        //   } ${"And" + undValue + data._underlying}</span></p>`;
-        // } else {
-        //   object.conText = `<p>Settlement <span>${
-        //     colValue + data._collateral
-        //   }</span></p>`;
-        // }
+
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
@@ -367,7 +366,7 @@ export default {
       index = index - 1;
       this.page = index;
       let page = index;
-      let list = this.claimList.slice(
+      let list = this.FilterList.slice(
         this.page * this.limit,
         (page + 1) * this.limit
       );
@@ -398,6 +397,9 @@ export default {
     }
     .claim_title {
       width: 100%;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
     .claim_text {
       width: 100%;
@@ -528,6 +530,9 @@ export default {
         height: 44px;
         line-height: 55px;
         padding-left: 10px;
+        @include themeify {
+          color: themed("color-17173a");
+        }
       }
     }
     .claim_text {

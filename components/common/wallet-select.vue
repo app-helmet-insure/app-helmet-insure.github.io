@@ -45,7 +45,6 @@ export default {
               window.localStorage.setItem("currentType", "MetaMask");
               let userInfo = await mateMaskInfo(account[0], "MetaMask");
               this.$store.dispatch("setUserInfo", userInfo);
-              this.$bus.$emit("REFRESH_ALL_DATA");
               this.$bus.$emit("REFRESH_MINING");
               this.closeDialog();
             });
@@ -74,7 +73,6 @@ export default {
       let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
       this.$store.dispatch("setUserInfo", userInfo);
       window.localStorage.setItem("currentType", "WalletConnect");
-      this.$bus.$emit("REFRESH_ALL_DATA");
       this.$bus.$emit("REFRESH_MINING");
       this.closeDialog();
     },

@@ -111,18 +111,17 @@ export const onIssueSell = async (data_, callBack) => {
                         // duration: 0,
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSell', error);
@@ -216,18 +215,17 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                         type: 'success',
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {
         console.log('onIssueSellOnETH', error);
@@ -309,18 +307,17 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                         type: 'success',
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
                 bus.$emit('OPEN_STATUS_DIALOG', { showDialog: false });
                 bus.$emit('CLOSE_STATUS_DIALOG');
-                if (error && error.message) {
-                    Message({
-                        message: error && error.message,
-                        type: 'error',
-                    });
-                }
+                // if (error && error.message) {
+                //     Message({
+                //         message: error && error.message,
+                //         type: 'error',
+                //     });
+                // }
             });
     } catch (error) {}
 };
@@ -503,10 +500,11 @@ export const MyPayaso = async (address1) => {
             return window.WEB3.utils.fromWei(res, getWei(tocurrcy));
         });
 };
-export const onExercise = async (data, flag, callBack) => {
+export const onExercise = async (data, flag, callback) => {
     if (JSON.stringify(data) === '{}') {
         return false;
     }
+    console.log(data);
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
@@ -526,7 +524,6 @@ export const onExercise = async (data, flag, callBack) => {
         } else {
             value = toWei(data.vol, data.token);
         }
-        console.log(data, value);
         // 一键判断是否需要授权，给予无限授权
         if (data.approveAddress1) {
             await oneKeyArrpove(
@@ -562,7 +559,6 @@ export const onExercise = async (data, flag, callBack) => {
             }
         });
     }
-    console.log(value);
     // 一键判断是否需要授权，给予无限授权
     order.methods
         .exercise(data.flag ? value : data.bidID)
@@ -573,10 +569,11 @@ export const onExercise = async (data, flag, callBack) => {
                 layout: 'layout2',
                 loading: true,
                 conTit: 'Please Confirm the transaction in your wallet',
-                conText: `<p>You will swap<span> ${fixD(data.buyVolume, 8)} ${
+                conText: `<p>You will swap<span> ${fixD(
+                    data.show_strikePrice,
+                    8
+                )} ${data.token}</span> to <span> ${fixD(data.buyVolume, 8)} ${
                     data.totoken
-                }</span> to <span> ${fixD(data.show_strikePrice, 8)} ${
-                    data.token
                 }</span></p>`,
             });
         })
@@ -592,23 +589,18 @@ export const onExercise = async (data, flag, callBack) => {
                     conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
                     showDialog: false,
                 });
-            } else {
-                Message({
-                    message: 'Activated successfully',
-                    type: 'success',
-                });
             }
             callback('success');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
-            if (error && error.message) {
-                Message({
-                    message: error && error.message,
-                    type: 'error',
-                    // duration: 0,
-                });
-            }
+            // if (error && error.message) {
+            //     Message({
+            //         message: error && error.message,
+            //         type: 'error',
+            //         // duration: 0,
+            //     });
+            // }
         });
 };
 
@@ -694,7 +686,6 @@ export const onCancel = async (askID, callBack) => {
                 buttonText: 'Confirm',
                 showDialog: false,
             });
-            bus.$emit('REFRESH_ALL_DATA');
         })
         .on('error', (err, receipt) => {
             callBack('failed');
@@ -727,7 +718,6 @@ export const onWaive = async (data) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {})
         .on('receipt', function(receipt) {
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('ONWAIVE_END', data.bidID);
         })
         .on('error', (err, receipt) => {

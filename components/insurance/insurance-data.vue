@@ -60,6 +60,7 @@
 <script>
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { getLongType, getLongValuess } from "~/interface/event.js";
 import countTo from "vue-count-to";
 export default {
   name: "insurance-banner",
@@ -73,17 +74,11 @@ export default {
       addCommom: addCommom,
       helmetPrice: 0,
       isLogin: false,
+      helmetVarieties: "--",
+      totalHelmetsBorrowedVolume: 0,
     };
   },
   computed: {
-    helmetVarieties() {
-      // 已经成交的保险品种的种类
-      return this.$store.state.helmetVarieties;
-    },
-    totalHelmetsBorrowedVolume() {
-      // 保险交易过的资金量
-      return this.$store.state.totalHelmetsBorrowedVolume;
-    },
     indexArray() {
       let list = this.$store.state.allIndexPrice;
       return list;
@@ -106,6 +101,10 @@ export default {
     if (window.chainID == 56) {
       this.getBannerData();
     }
+    this.$nextTick(async () => {
+      this.helmetVarieties = await getLongType();
+      this.totalHelmetsBorrowedVolume = await getLongValuess();
+    });
   },
   methods: {
     handleClickBuy() {

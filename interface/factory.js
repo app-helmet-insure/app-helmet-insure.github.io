@@ -79,7 +79,6 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                     // duration: 0,
                 });
             }
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
@@ -143,7 +142,6 @@ export const settle = async (short, data) => {
                     // duration: 0,
                 });
             }
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
@@ -203,12 +201,6 @@ export const onExercise = async (data, callBack) => {
                     title: 'Successfully rented',
                     conTit: '<div>Activated successfully</div>',
                     conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-                });
-            } else {
-                Message({
-                    message: 'Activated successfully',
-                    type: 'success',
-                    // duration: 0,
                 });
             }
             bus.$emit('REFRESH_BALANCE');

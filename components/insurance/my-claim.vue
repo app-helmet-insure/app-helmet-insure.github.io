@@ -218,7 +218,10 @@ export default {
             item.TypeCoin = UnderlyingSymbol;
             item.type = "Put";
           }
-          if (Number(ShortBalance) > 0 && Number(LongBalance) > 0) {
+          if (
+            Number(fixD(ShortBalance, 8)) > 0 &&
+            Number(fixD(LongBalance, 8)) > 0
+          ) {
             FixList.push({
               collateral: item.collateral,
               collateral_symbol: CollateralSymbol,
@@ -356,7 +359,7 @@ export default {
         if (colValue && undValue) {
           object.conText = `<p>Settlement <span>${
             colValue + data.collateral_symbol
-          } ${"And" + undValue + data.underlying_symbol}</span></p>`;
+          } ${"And " + undValue + data.underlying_symbol}</span></p>`;
         } else if (!colValue && undValue) {
           object.conText = `<p>Settlement <span>${
             undValue + " " + data.underlying_symbol

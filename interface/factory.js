@@ -52,8 +52,8 @@ export const burn = async (longOrshort, volume, opt = {}, data, callback) => {
                 loading: true,
                 buttonText: 'Confirm',
                 conTit: 'Please Confirm the transaction in your wallet',
-                conText: `<p>Settlement ${addCommom(data.longBalance)} ${
-                    data._collateral
+                conText: `<p>Settlement ${addCommom(data.claimBalance)} ${
+                    data.collateral_symbol
                 }</p>`,
             });
         })
@@ -88,7 +88,7 @@ export const settle = async (short, data, callback) => {
     let conText;
     if (undValue > 0) {
         conText = `<p>Settlement <span>${colValue +
-            data.collateral_symbol} ${'And' +
+            data.collateral_symbol} ${'And ' +
             undValue +
             data.underlying_symbol}</span></p>`;
     } else {

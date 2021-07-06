@@ -123,7 +123,6 @@ export const DecimalsToWei = (FixNumber, Decimals) => {
 };
 export const TokenNameToWei = (FixNumber, TokenName) => {
     let TokenAddress = getAddress(TokenName);
-    console.log(TokenAddress);
     return AddressToWei(FixNumber, TokenAddress);
 };
 export const fromWei = (bigNumber, DecimalsUnit) => {

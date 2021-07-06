@@ -79,7 +79,6 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                     // duration: 0,
                 });
             }
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
@@ -143,7 +142,6 @@ export const settle = async (short, data) => {
                     // duration: 0,
                 });
             }
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {

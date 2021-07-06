@@ -297,6 +297,11 @@ export const mutations = {
             state.locale = locale;
         }
     },
+    SET_SLIDER_NUMBER(state, data) {
+        if (data.Type == 'MiningSliderNumber') {
+            state.sliderNumber.MiningSliderNumber = data.Number;
+        }
+    },
     SET_LONG_MAP(state, data) {
         state.longMap = data;
     },
@@ -330,9 +335,6 @@ export const mutations = {
 
     SET_USER_INFO(state, data) {
         state.userInfo = data;
-    },
-    SET_HAT_LIST(state, data) {
-        state.hatList = data;
     },
     SET_WALLET_RYPE(state, data) {
         state.walletType = data;

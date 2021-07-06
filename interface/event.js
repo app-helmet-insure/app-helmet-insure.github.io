@@ -19,7 +19,7 @@ import {
 } from '~/interface/common_contract.js';
 import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import moment from 'moment';
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -33,7 +33,11 @@ export const getLongValues = async function(addressArray) {
     addressArray.forEach((item) => {
         for (let key in item) {
             let value = item[key];
-            key in obj ? (obj[key] =  new BigNumber(obj[key]).plus(new BigNumber(value))) : (obj[key] = new BigNumber(value));
+            key in obj
+                ? (obj[key] = new BigNumber(obj[key]).plus(
+                      new BigNumber(value)
+                  ))
+                : (obj[key] = new BigNumber(value));
         }
     });
     for (let i in obj) {
@@ -409,7 +413,6 @@ export const getLongValuess = async function() {
         let result = await getLongValues(arr1);
         let value = 0;
         result.data.map((item) => {
-            console.log(item);
             if (Object.values(item)[0] && Number(Object.values(item)[0] >= 0)) {
                 value += Object.values(item)[0];
             }

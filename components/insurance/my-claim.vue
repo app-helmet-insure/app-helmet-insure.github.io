@@ -29,7 +29,7 @@
         </section>
         <section>
           <span v-if="item.type == 'call'">
-            {{ precision.plus(item.col, item.claimBalance) }}
+            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
             {{ item.collateral_symbol }}
           </span>
           <span v-else>
@@ -43,7 +43,7 @@
             {{ item.underlying_symbol }}
           </span>
           <span v-else>
-            {{ precision.plus(item.col, item.claimBalance) }}
+            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
             {{ item.collateral_symbol }}
           </span>
         </section>

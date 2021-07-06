@@ -14,6 +14,12 @@
         class="claim_item"
         v-for="(item, index) in showList"
         :key="index + 'key'"
+        :style="
+          fixD(item.und, 8) == 0 &&
+          precision.plus(item.col, item.claimBalance) == 0
+            ? 'display:none'
+            : ''
+        "
       >
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
@@ -23,7 +29,7 @@
         </section>
         <section>
           <span v-if="item.type == 'call'">
-            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
+            {{ precision.plus(item.col, item.claimBalance) }}
             {{ item.collateral_symbol }}
           </span>
           <span v-else>
@@ -37,7 +43,7 @@
             {{ item.underlying_symbol }}
           </span>
           <span v-else>
-            {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
+            {{ precision.plus(item.col, item.claimBalance) }}
             {{ item.collateral_symbol }}
           </span>
         </section>
@@ -51,6 +57,12 @@
         class="claim_item_H5"
         v-for="(item, index) in showList"
         :key="index + '1'"
+        :style="
+          fixD(item.und, 8) == 0 &&
+          precision.plus(item.col, item.claimBalance) == 0
+            ? 'display:none'
+            : ''
+        "
       >
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
@@ -254,6 +266,7 @@ export default {
                 item.short,
                 ShortMinusLongVolume
               );
+              console.log(SettleInfo);
               FixList.push({
                 collateral: item.collateral,
                 collateral_symbol: CollateralSymbol,
@@ -292,6 +305,7 @@ export default {
               }
             });
             FixList = newArr;
+            console.log(FixList);
             this.FilterList = FixList;
             this.isLoading = false;
           }

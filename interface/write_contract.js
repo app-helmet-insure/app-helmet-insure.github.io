@@ -3,7 +3,7 @@ import ApproveABI from '~/abi/IPancakePair.json';
 import CompoundABI from '~/abi/helmet_abi.json';
 import OrderABI from '~/abi/order_abi.json';
 import ChainSwapABI from '~/abi/ChainSwap.json';
-import BurnSwapABI from '~/abi/ChainSwap.json';
+import BurnSwapABI from '~/abi/BurnSwap.json';
 
 import {
     Web3Contract,
@@ -351,12 +351,13 @@ export const Cancel = async (askID, callBack) => {
             callBack('failed');
         });
 };
-export const Send = async (ChainID, ToAdress, Volume, CallBack) => {
-    let Contracts = await Web3Contract(ChainSwapABI, BurnSwapContractAddress);
+export const SwapAndSend = async (Volume, ChainID, ToAdress, CallBack) => {
+    let Contracts = await Web3Contract(BurnSwapABI, BurnSwapContractAddress);
     let Account = await getAccounts();
+    let NewVolume = TokenNameToWei(Volume, 'HELMET');
     Contracts.methods
-        .send(ChainID, ToAdress, Volume)
-        .send(Account)
+        .swapAndSend(NewVolume, ChainID, ToAdress)
+        .send({ from: Account, value: '5000000000000000' })
         .on('transactionHash', (hash) => {
             bus.$emit('CLOSE_STATUS_DIALOG');
             bus.$emit('OPEN_STATUS_DIALOG', {
@@ -365,7 +366,7 @@ export const Send = async (ChainID, ToAdress, Volume, CallBack) => {
                 loading: true,
                 buttonText: 'Confirm',
                 conTit: 'Please Confirm the transaction in your wallet',
-                conText: `Cancel your Policy supplying order.`,
+                conText: `You will send ${Volume} HELMET`,
             });
         })
         .on('receipt', function(receipt) {
@@ -379,9 +380,9 @@ export const Send = async (ChainID, ToAdress, Volume, CallBack) => {
                 buttonText: 'Confirm',
                 showDialog: false,
             });
-            callBack('success');
+            CallBack('success');
         })
         .on('error', (err, receipt) => {
-            callBack('failed');
+            CallBack('failed');
         });
 };

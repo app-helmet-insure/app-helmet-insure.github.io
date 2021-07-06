@@ -46,8 +46,10 @@
       </div>
       <div class="guard_migrate_destination">
         <h3>Destination</h3>
-        <div class="account">{{ Account }}</div>
-        <button>Approve</button>
+        <div class="account">
+          {{ Account.substr(0, 12) + "..." + Account.substr(-15) }}
+        </div>
+        <button @click="SendConfirm">Approve</button>
         <p>注意：该过程是不可逆过程,BSC资产将会彻底转化成 Polygon 资产</p>
         <span>Powered by BlackHole & ChainSwap</span>
       </div>
@@ -56,9 +58,9 @@
 </template>
 
 <script>
-import { getAccounts } from "~/interface/common_contract.js";
+import { getAccounts, TokenNameToWei } from "~/interface/common_contract.js";
 import { Allowance } from "~/interface/read_contract.js";
-import { Send } from "~/interface/write_contract.js";
+import { Approve, SwapAndSend } from "~/interface/write_contract.js";
 export default {
   data() {
     return {
@@ -79,19 +81,40 @@ export default {
   methods: {
     async MyAccount() {
       let Account = await getAccounts();
-      Account = Account.substr(0, 12) + "..." + Account.substr(-15);
       this.Account = Account;
     },
     async ApproveFlagFn() {
       let ApproveFlag = await Allowance(
         "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
-        "0x910651F81a605a6Ef35d05527d24A72fecef8bF0"
+        "0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc"
       );
       this.NeedApprove = ApproveFlag;
     },
-    async SendConfirm(){
-      
-    }
+    async ApproveToken() {
+      Approve(
+        "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        "0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc",
+        "WAR",
+        (res) => {
+          if (res) {
+            console.log(res);
+          }
+        }
+      );
+    },
+    async SendConfirm() {
+      if (!this.SwapNumber) {
+        return;
+      }
+      let Volume = this.SwapNumber;
+      let ChainID = "137";
+      let ToAddress = this.Account;
+      SwapAndSend(Volume, ChainID, ToAddress, (res) => {
+        if (res == "success") {
+          this.$bus.$emit("REFRESH_BALANCE");
+        }
+      });
+    },
   },
 };
 </script>

@@ -4,6 +4,8 @@ import CakePoolABI from '~/abi/cake_pool_abi.json';
 import MdexPoolABI from '~/abi/mdex_pool_abi.json';
 import OrderABI from '~/abi/order_abi.json';
 import FectoryABI from '~/abi/factory_abi.json';
+import BurnSwapABI from '~/abi/BurnSwap.json';
+import ChainSwapABI from '~/abi/ChainSwap.json';
 import {
     Web3Contract,
     getAccounts,
@@ -16,6 +18,9 @@ import {
 import BigNumber from 'bignumber.js';
 let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
 let FectoryContractAddress = '0x021297e233550eDBa8e6487EB7c6696cFBB63b88';
+let BurnSwapContractAddress = '0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc'; //燃烧地址
+let BurnSignContractAddress = '0x81d82a35253B982E755c4D7d6AADB6463305B188'; //燃烧签名地址
+let StakingContractAddress = '0x910651F81a605a6Ef35d05527d24A72fecef8bF0'; //质押地址
 // Balanceof
 export const BalanceOf = async (ContractAddress, Decimals, TokenAddress) => {
     let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
@@ -205,4 +210,14 @@ export const Bids = async (BidID) => {
 export const Settleable = async (seller, short) => {
     let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
     return Contracts.methods.settleable(seller, short).call();
+};
+export const SentCount = async (ToChainID) => {
+    let Contracts = await Web3Contract(ChainSwapABI, BurnSignContractAddress);
+    let Account = await getAccounts();
+    return Contracts.methods.sentCount(ToChainID, Account).call();
+};
+export const Sent = async (ToChainID, Nonce) => {
+    let Contracts = await Web3Contract(ChainSwapABI, BurnSignContractAddress);
+    let Account = await getAccounts();
+    return Contracts.methods.sent(ToChainID, Account, Nonce).call();
 };

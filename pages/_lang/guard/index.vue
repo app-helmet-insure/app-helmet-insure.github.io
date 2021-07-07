@@ -1,13 +1,15 @@
 <template>
   <div class="main_container">
     <Migrate />
+    <History />
   </div>
 </template>
 
 <script>
 import Migrate from "~/components/guard/migrate.vue";
+import History from "~/components/guard/history.vue";
 export default {
-  components: { Migrate },
+  components: { Migrate, History },
 };
 </script>
 

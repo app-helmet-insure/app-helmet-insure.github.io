@@ -69,14 +69,14 @@ export default {
       Account: "",
       NeedApprove: "",
       MagicSignData: {
-        contractAddress: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        contractAddress: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
         fromChainId: 56,
-        nonce: 1,
-        to: "0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd",
+        nonce: 3,
+        to: "0x8Fa3f933DCf5E7ca57fdf22048286ea2d5Bd3d15",
         toChainId: 137,
-        fromContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
-        toContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
-        mainContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        fromContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
+        toContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
+        mainContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
       },
     };
   },
@@ -124,6 +124,7 @@ export default {
       SwapAndSend(Volume, ChainID, ToAddress, (res) => {
         if (res == "success") {
           this.$bus.$emit("REFRESH_BALANCE");
+          this.$bus.$emit("GET_GUARD_HISTORY");
           let SignData = this.MagicSignData;
           getSignDataSyn(SignData);
         }

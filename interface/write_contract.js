@@ -17,8 +17,9 @@ import BigNumber from 'bignumber.js';
 import bus from '~/assets/js/bus';
 import { fixD } from '~/assets/js/util.js';
 let OrderContractAddress = '0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D';
-let BurnSwapContractAddress = '0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc';
-
+let BurnSwapContractAddress = '0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc'; //燃烧地址
+let BurnSignContractAddress = '0x81d82a35253B982E755c4D7d6AADB6463305B188'; //燃烧签名地址
+let StakingContractAddress = '0x910651F81a605a6Ef35d05527d24A72fecef8bF0'; //质押地址
 export const Stake = async (
     { ContractAddress, DepositeVolume, Decimals },
     callback

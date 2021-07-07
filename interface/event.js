@@ -1,26 +1,9 @@
-import Vue from 'vue';
-import { getContract } from '~/assets/utils/address-pool.js';
-import Web3 from 'web3';
 import Axios from 'axios';
-import ERC20_abi from '~/abi/ERC20_abi.json';
-import payaso_abi from '~/abi/payaso_abi.json';
 import factory_abi from '~/abi/factory_abi.json';
 import order_abi from '~/abi/order_abi.json';
-import deposite_abi from '~/abi/deposite_abi.json';
-import token_abi from '~/abi/token_abi.json';
-import helmet_abi from '~/abi/helmet_abi.json';
-import precision from '~/assets/js/precision.js';
-import { fixDEAdd } from '~/assets/js/util.js';
-import {
-    TokenNameFormWei,
-    DecimalsFormWei,
-    DecimalsToWei,
-    AddressFormWei,
-} from '~/interface/common_contract.js';
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
-import axios from 'axios';
+import qs from 'qs';
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -426,13 +409,16 @@ export const getSignDataSyn = (data) => {
     let SignNumberFlag = true;
     let SignResultData = [];
     for (let index = 1; index < 6; index++) {
+        let params = qs.stringify(data, { encodeValuesOnly: true });
+        console.log(params);
         let Url = `https://node${index}.chainswap.exchange/web/getSignDataSyn`;
         console.log(Url);
-        Axios({ method: 'get', url: Url, params: data }).then((res) => {
+        Axios.get(Url + '?' + params).then((res) => {
             try {
                 console.log(res);
                 if (SignResultData.length === 3 && SignNumberFlag) {
                     SignResultData = false;
+                    return;
                 } else {
                     let { signatory, signV, signR, signS } = res.data.data;
                     SignResultData.push([signatory, signV, signR, signS]);
@@ -442,4 +428,5 @@ export const getSignDataSyn = (data) => {
             }
         });
     }
+    console.log(SignResultData);
 };

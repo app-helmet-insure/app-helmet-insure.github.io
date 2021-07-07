@@ -20,7 +20,7 @@ const selectNetwork = (charID) => {
             return 'MAGIC';
         default:
             // return 'Ropsten';
-            return 'Rinkeby';
+            return 'BSC';
     }
 };
 

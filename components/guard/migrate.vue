@@ -61,12 +61,23 @@
 import { getAccounts, TokenNameToWei } from "~/interface/common_contract.js";
 import { Allowance } from "~/interface/read_contract.js";
 import { Approve, SwapAndSend } from "~/interface/write_contract.js";
+import { getSignDataSyn } from "~/interface/event.js";
 export default {
   data() {
     return {
       SwapNumber: "",
       Account: "",
       NeedApprove: "",
+      MagicSignData: {
+        contractAddress: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        fromChainId: 56,
+        nonce: 1,
+        to: "0x471C9A8acc6562bb28cEbE041668cC224AD0F3Bd",
+        toChainId: 137,
+        fromContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        toContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+        mainContract: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+      },
     };
   },
   computed: {
@@ -77,6 +88,7 @@ export default {
   mounted() {
     this.MyAccount();
     this.ApproveFlagFn();
+    getSignDataSyn(this.MagicSignData);
   },
   methods: {
     async MyAccount() {
@@ -112,6 +124,8 @@ export default {
       SwapAndSend(Volume, ChainID, ToAddress, (res) => {
         if (res == "success") {
           this.$bus.$emit("REFRESH_BALANCE");
+          let SignData = this.MagicSignData;
+          getSignDataSyn(SignData);
         }
       });
     },

@@ -106,11 +106,7 @@ export default {
     },
     async connectWallet() {
       const walletConnectProvider = new WalletConnectProvider({
-        chainId: 56,
         bridge: "https://bridge.walletconnect.org",
-        rpc: {
-          56: "https://bsc-dataseed1.binance.org/",
-        },
         qrcode: true,
         pollingInterval: 10000,
       });

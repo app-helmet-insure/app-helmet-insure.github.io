@@ -145,7 +145,7 @@ export default {
       immediate: true,
     },
     ChainID(newValue) {
-      if (newValue == 56) {
+      if (newValue == 56 || newValue == 137) {
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();

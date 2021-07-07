@@ -16,6 +16,8 @@ const selectNetwork = (charID) => {
             return 'Ropsten';
         case 56:
             return 'BSC';
+        case 137:
+            return 'MAGIC';
         default:
             // return 'Ropsten';
             return 'Rinkeby';

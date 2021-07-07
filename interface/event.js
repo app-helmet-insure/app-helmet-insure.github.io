@@ -20,6 +20,7 @@ import {
 import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import moment from 'moment';
 import BigNumber from 'bignumber.js';
+import axios from 'axios';
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -420,4 +421,25 @@ export const getLongValuess = async function() {
         });
         return value;
     });
+};
+export const getSignDataSyn = (data) => {
+    let SignNumberFlag = true;
+    let SignResultData = [];
+    for (let index = 1; index < 6; index++) {
+        let Url = `https://node${index}.chainswap.exchange/web/getSignDataSyn`;
+        console.log(Url);
+        Axios({ method: 'get', url: Url, params: data }).then((res) => {
+            try {
+                console.log(res);
+                if (SignResultData.length === 3 && SignNumberFlag) {
+                    SignResultData = false;
+                } else {
+                    let { signatory, signV, signR, signS } = res.data.data;
+                    SignResultData.push([signatory, signV, signR, signS]);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        });
+    }
 };

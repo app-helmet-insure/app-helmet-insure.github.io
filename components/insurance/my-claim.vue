@@ -304,9 +304,9 @@ export default {
               newArr.push(item);
             }
           });
-          FixList = newArr;
-          this.FilterList = FixList;
+          this.FilterList = newArr;
           this.isLoading = false;
+          return this.FilterList;
         });
       });
     },

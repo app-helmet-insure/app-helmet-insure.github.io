@@ -363,7 +363,10 @@ export default {
               item.status = "dated";
             }
             Object.assign(item, ResultItem);
-            if (item.seller.toLowerCase() == CurrentAccount.toLowerCase()) {
+            if (
+              item.seller.toLowerCase() ==
+              "0xef7336f8cC4FD68e5dc67D2b233750d35C2be0D4".toLowerCase()
+            ) {
               FixListPush.push(item);
               FixListPush = FixListPush.sort(function (a, b) {
                 return Number(b.expiry) - Number(a.expiry);

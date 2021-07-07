@@ -4,7 +4,10 @@
       <p><span>Airdrop</span><i @click="closeAirdrop"></i></p>
       <div class="text">
         <span>{{ $t("Table.HELMETRewards") }}</span>
-        <span>{{ addCommom(getReward, 8) }} SHIBh</span>
+        <span
+          >{{ addCommom(getReward, 8) }}
+          <i @click="hadnleShowOnePager($event, 'SHIBh')">SHIBh</i>
+        </span>
       </div>
       <button class="button" @click="claim">
         <i :class="claimLoading ? 'loading_pic' : ''"></i>Claim
@@ -72,6 +75,19 @@ export default {
     });
   },
   methods: {
+    hadnleShowOnePager(e, earn) {
+      if (e.target.tagName === "I") {
+        let Earn = earn;
+        this.$bus.$emit("OPEN_ONEPAGER", {
+          showFlag: true,
+          title: `What is $${earn}?`,
+          text: earn,
+        });
+      } else {
+        return;
+      }
+      this.closeAirdrop();
+    },
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -238,6 +254,14 @@ export default {
           font-weight: bold;
           @include themeify {
             color: themed("color-17173a");
+            i {
+              border-bottom: 2px dotted themed("color-17173a");
+              cursor: pointer;
+              &:hover {
+                border-bottom: 2px dotted #ff9600;
+                color: #ff9600;
+              }
+            }
           }
           line-height: 14px;
         }

@@ -285,6 +285,8 @@ export const getTokenName = (address) => {
             return 'BABY';
         case '0x4131b87f74415190425ccd873048c708f8005823':
             return 'BMXX';
+        case '0x851f7a700c5d67db59612b871338a85526752c25':
+            return 'ARGON';
         default:
             return '--';
     }

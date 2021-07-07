@@ -256,22 +256,23 @@ export default {
           let CollateralDecimals = TokenDecimals(item.collateral);
           let CollateralSymbol = getTokenName(item.collateral);
           // 执行
-          let StrikePriceDecimals =
+          let CallStrikePriceDecimals =
             18 + UnderlyingDecimals - CollateralDecimals;
+          let PutStrikePriceDecimals = 18;
           if (UnderlyingSymbol == "WBNB") {
             item.TypeCoin = CollateralSymbol;
             item.type = "Call";
             item.outPriceUnit = "BNB";
             item.show_strikePrice = DecimalsFormWei(
               item.strikePrice,
-              StrikePriceDecimals
+              CallStrikePriceDecimals
             );
           } else {
             item.TypeCoin = UnderlyingSymbol;
             item.type = "Put";
             item.outPriceUnit = "BNB";
             item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
+              1 / DecimalsFormWei(item.strikePrice, PutStrikePriceDecimals);
           }
           if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
             item.TypeCoin = CollateralSymbol;
@@ -279,7 +280,7 @@ export default {
             item.outPriceUnit = "BUSD";
             item.show_strikePrice = DecimalsFormWei(
               item.strikePrice,
-              StrikePriceDecimals
+              CallStrikePriceDecimals
             );
           }
           if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
@@ -287,7 +288,7 @@ export default {
             item.type = "Put";
             item.outPriceUnit = "BUSD";
             item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
+              1 / DecimalsFormWei(item.strikePrice, PutStrikePriceDecimals);
           }
           item.show_expiry = moment(new Date(item.expiry * 1000)).format(
             "YYYY/MM/DD HH:mm:ss"
@@ -316,7 +317,12 @@ export default {
           item.asks.filter(async (item) => {
             item.settleToken_symbol = getTokenName(item.settleToken);
             item.show_price = fixD(
-              DecimalsFormWei(item.price, StrikePriceDecimals),
+              DecimalsFormWei(
+                item.price,
+                ResultItem.type == "Call"
+                  ? CallStrikePriceDecimals
+                  : PutStrikePriceDecimals
+              ),
               8
             );
 
@@ -330,16 +336,16 @@ export default {
               AddressFormWei(item.volume, ResultItem.collateral),
               8
             );
+            if (parseInt(ResultItem.expiry) < nowDate) {
+              item.status = "Expired";
+              item.sort = 2;
+            }
             if (Number(Remain) == "0") {
               item.status = "Beborrowed";
               item.sort = 1;
             } else {
               item.status = "Unborrowed";
               item.sort = 0;
-            }
-            if (parseInt(ResultItem.expiry) < nowDate) {
-              item.status = "Expired";
-              item.sort = 2;
             }
             if (ResultItem.type == "Call") {
               item.show_volume = Volume;
@@ -363,14 +369,8 @@ export default {
               item.status = "dated";
             }
             Object.assign(item, ResultItem);
-            if (
-              item.seller.toLowerCase() ==
-              "0xef7336f8cC4FD68e5dc67D2b233750d35C2be0D4".toLowerCase()
-            ) {
+            if (item.seller.toLowerCase() == CurrentAccount.toLowerCase()) {
               FixListPush.push(item);
-              FixListPush = FixListPush.sort(function (a, b) {
-                return Number(b.expiry) - Number(a.expiry);
-              });
               FixListPush = FixListPush.sort(function (a, b) {
                 return b.askID - a.askID;
               });

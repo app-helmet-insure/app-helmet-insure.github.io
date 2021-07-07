@@ -29,7 +29,7 @@ export const settleable = async (seller, short) => {
         });
 };
 
-export const burn = async (longOrshort, volume, opt = {}, data) => {
+export const burn = async (longOrshort, volume, opt = {}, data, callback) => {
     if (JSON.stringify(data) === '{}') {
         return false;
     }
@@ -52,8 +52,8 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                 loading: true,
                 buttonText: 'Confirm',
                 conTit: 'Please Confirm the transaction in your wallet',
-                conText: `<p>Settlement ${addCommom(data.longBalance)} ${
-                    data._collateral
+                conText: `<p>Settlement ${addCommom(data.claimBalance)} ${
+                    data.collateral_symbol
                 }</p>`,
             });
         })
@@ -69,37 +69,31 @@ export const burn = async (longOrshort, volume, opt = {}, data) => {
                     buttonText: 'Confirm',
                     showDialog: false,
                 });
-            } else {
-                Message({
-                    message: `${colValue > 0 && data._collateral} ${undValue >
-                        0 &&
-                        ', ' +
-                            data._underlying} settlement is successful, Please check in the wallet`,
-                    type: 'success',
-                    // duration: 0,
-                });
             }
+            callback('success');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
+            callback('error');
         });
 };
 
-export const settle = async (short, data) => {
+export const settle = async (short, data, callback) => {
     if (JSON.stringify(data) === '{}') {
         return false;
     }
-    let colValue = addCommom(Number(data.col) + Number(data.longBalance), 8);
+    let colValue = addCommom(Number(data.col) + Number(data.claimBalance), 8);
     let undValue = addCommom(data.und, 8);
     let conText;
     if (undValue > 0) {
-        conText = `<p>Settlement <span>${colValue > 0 &&
-            colValue + data._collateral} ${undValue > 0 &&
-            'And' + undValue + data._underlying}</span></p>`;
+        conText = `<p>Settlement <span>${colValue +
+            data.collateral_symbol} ${'And ' +
+            undValue +
+            data.underlying_symbol}</span></p>`;
     } else {
         conText = `<p>Settlement <span>${colValue > 0 &&
-            colValue + data._collateral}</span></p>`;
+            colValue + data.collateral_symbol}</span></p>`;
     }
     const factory = await getFactory();
     // const address = window.CURRENTADDRESS;
@@ -132,20 +126,13 @@ export const settle = async (short, data) => {
                     buttonText: 'Confirm',
                     showDialog: false,
                 });
-            } else {
-                Message({
-                    message: `${colValue > 0 && data._collateral} ${undValue >
-                        0 &&
-                        ', ' +
-                            data._underlying} settlement is successful, Please check in the wallet`,
-                    type: 'success',
-                    // duration: 0,
-                });
             }
+            callback('success');
             bus.$emit('REFRESH_BALANCE');
         })
         .on('error', function(error, receipt) {
             bus.$emit('CLOSE_STATUS_DIALOG');
+            callback('error');
         });
 };
 export const onExercise = async (data, callBack) => {

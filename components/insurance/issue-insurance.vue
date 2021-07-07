@@ -397,7 +397,6 @@ export default {
         } ${"BNB"}</span></p>`;
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
-          console.log(res);
           if (res) {
             onIssueSellOnETH(data, (status) => {
               data = {};

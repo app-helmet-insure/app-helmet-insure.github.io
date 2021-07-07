@@ -14,6 +14,12 @@
         class="claim_item"
         v-for="(item, index) in showList"
         :key="index + 'key'"
+        :style="
+          fixD(item.und, 8) == 0 &&
+          precision.plus(item.col, item.claimBalance) == 0
+            ? 'display:none'
+            : ''
+        "
       >
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
@@ -24,21 +30,21 @@
         <section>
           <span v-if="item.type == 'call'">
             {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-            {{ item._collateral }}
+            {{ item.collateral_symbol }}
           </span>
           <span v-else>
             {{ fixD(item.und, 8) }}
-            {{ item._underlying }}
+            {{ item.underlying_symbol }}
           </span>
         </section>
         <section>
           <span v-if="item.type == 'call'">
             {{ fixD(item.und, 8) }}
-            {{ item._underlying }}
+            {{ item.underlying_symbol }}
           </span>
           <span v-else>
             {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-            {{ item._collateral }}
+            {{ item.collateral_symbol }}
           </span>
         </section>
         <section>
@@ -51,6 +57,12 @@
         class="claim_item_H5"
         v-for="(item, index) in showList"
         :key="index + '1'"
+        :style="
+          fixD(item.und, 8) == 0 &&
+          precision.plus(item.col, item.claimBalance) == 0
+            ? 'display:none'
+            : ''
+        "
       >
         <section>
           <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
@@ -63,22 +75,22 @@
             <span>{{ $t("Table.DenAssets") }}</span>
             <span v-if="item.type == 'call'">
               {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-              {{ item._collateral }}
+              {{ item.collateral_symbol }}
             </span>
             <span v-else>
               {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
+              {{ item.underlying_symbol }}
             </span>
           </p>
           <p>
             <span>{{ $t("Table.BaseAssets") }}</span>
             <span v-if="item.type == 'call'">
               {{ fixD(item.und, 8) }}
-              {{ item._underlying }}
+              {{ item.underlying_symbol }}
             </span>
             <span v-else>
               {{ fixD(precision.plus(item.col, item.claimBalance), 8) }}
-              {{ item._collateral }}
+              {{ item.collateral_symbol }}
             </span>
           </p>
         </section>
@@ -218,7 +230,10 @@ export default {
             item.TypeCoin = UnderlyingSymbol;
             item.type = "Put";
           }
-          if (Number(ShortBalance) > 0 && Number(LongBalance) > 0) {
+          if (
+            Number(fixD(ShortBalance, 8)) > 0 &&
+            Number(fixD(LongBalance, 8)) > 0
+          ) {
             FixList.push({
               collateral: item.collateral,
               collateral_symbol: CollateralSymbol,
@@ -264,26 +279,34 @@ export default {
                 type: item.type,
                 TypeCoin: item.TypeCoin,
                 claimBalance: 0,
-                col: DecimalsFormWei(SettleInfo.col, CollateralDecimals),
-                fee: DecimalsFormWei(SettleInfo.fee, CollateralDecimals),
-                und: DecimalsFormWei(SettleInfo.und, CollateralDecimals),
+                col: DecimalsFormWei(
+                  SettleInfo.col,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
+                fee: DecimalsFormWei(
+                  SettleInfo.fee,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
+                und: DecimalsFormWei(
+                  SettleInfo.und,
+                  item.type == "Call" ? UnderlyingDecimals : CollateralDecimals
+                ),
               });
             } catch (error) {
               console.log(error);
             }
-            var newobj = {};
-            var newArr = [];
-            FixList.forEach((item) => {
-              if (!newobj[item.collateral + item.underlying + item.short]) {
-                newobj[item.collateral + item.underlying + item.short] = 1;
-                newArr.push(item);
-              }
-            });
-            FixList = newArr;
-            this.FilterList = FixList;
-            this.isLoading = false;
-            console.log(FixList);
           }
+          var newobj = {};
+          var newArr = [];
+          FixList.forEach((item) => {
+            if (!newobj[item.collateral + item.underlying + item.short]) {
+              newobj[item.collateral + item.underlying + item.short] = 1;
+              newArr.push(item);
+            }
+          });
+          this.FilterList = newArr;
+          this.isLoading = false;
+          return this.FilterList;
         });
       });
     },
@@ -305,6 +328,7 @@ export default {
     },
     // 行权
     toClaim(item) {
+      console.log(item);
       let object = {
         title: "WARNING",
         layout: "layout1",
@@ -326,9 +350,14 @@ export default {
           if (res) {
             burn(
               data.short,
-              data.longBalance,
+              data.claimBalance,
               { _collateral: data.collateral_symbol },
-              data
+              data,
+              (res) => {
+                if (res == "success") {
+                  this.getList();
+                }
+              }
             );
           }
           data = {};
@@ -342,7 +371,7 @@ export default {
         if (colValue && undValue) {
           object.conText = `<p>Settlement <span>${
             colValue + data.collateral_symbol
-          } ${"And" + undValue + data.underlying_symbol}</span></p>`;
+          } ${"And " + undValue + data.underlying_symbol}</span></p>`;
         } else if (!colValue && undValue) {
           object.conText = `<p>Settlement <span>${
             undValue + " " + data.underlying_symbol
@@ -356,7 +385,11 @@ export default {
         this.$bus.$emit("OPEN_STATUS_DIALOG", object);
         this.$bus.$on("PROCESS_ACTION", (res) => {
           if (res) {
-            settle(data.short, data);
+            settle(data.short, data, (res) => {
+              if (res == "success") {
+                this.getList();
+              }
+            });
           }
           data = {};
         });

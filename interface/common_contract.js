@@ -62,7 +62,6 @@ export const getContract = (name, charID = 56) => {
     }
 };
 export const TokenDecimals = (Address) => {
-    console.log(Address);
     Address = Address.toLowerCase();
     switch (Address) {
         case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8': //HELMET

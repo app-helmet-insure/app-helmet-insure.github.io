@@ -111,7 +111,6 @@ export const onIssueSell = async (data_, callBack) => {
                         // duration: 0,
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
@@ -216,7 +215,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
                         type: 'success',
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
@@ -309,7 +307,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
                         type: 'success',
                     });
                 }
-                bus.$emit('REFRESH_ALL_DATA');
                 bus.$emit('REFRESH_BALANCE');
             })
             .on('error', function(error, receipt) {
@@ -689,7 +686,6 @@ export const onCancel = async (askID, callBack) => {
                 buttonText: 'Confirm',
                 showDialog: false,
             });
-            bus.$emit('REFRESH_ALL_DATA');
         })
         .on('error', (err, receipt) => {
             callBack('failed');
@@ -722,7 +718,6 @@ export const onWaive = async (data) => {
         .send({ from: window.CURRENTADDRESS })
         .on('transactionHash', (hash) => {})
         .on('receipt', function(receipt) {
-            bus.$emit('REFRESH_ALL_DATA');
             bus.$emit('ONWAIVE_END', data.bidID);
         })
         .on('error', (err, receipt) => {

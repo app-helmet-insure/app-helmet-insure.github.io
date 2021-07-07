@@ -43,7 +43,6 @@ export const mateMaskInfo = async (address, name) => {
                 window.WEB3 = new Web3(Web3.givenProvider);
             }
             window.chainID = await getID();
-            bus.$emit('REFRESH_ALL_DATA');
         } else {
             if (currentType === 'WalletConnect') {
                 if (coinbase) {

@@ -11,7 +11,15 @@ import token_abi from '~/abi/token_abi.json';
 import helmet_abi from '~/abi/helmet_abi.json';
 import precision from '~/assets/js/precision.js';
 import { fixDEAdd } from '~/assets/js/util.js';
+import {
+    TokenNameFormWei,
+    DecimalsFormWei,
+    DecimalsToWei,
+    AddressFormWei,
+} from '~/interface/common_contract.js';
+import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
 import moment from 'moment';
+import BigNumber from 'bignumber.js';
 export const decodeLogs = function(event, log) {
     return window.WEB3.eth.abi.decodeLog(
         event.inputs,
@@ -25,7 +33,11 @@ export const getLongValues = async function(addressArray) {
     addressArray.forEach((item) => {
         for (let key in item) {
             let value = item[key];
-            key in obj ? (obj[key] += value) : (obj[key] = Number(value));
+            key in obj
+                ? (obj[key] = new BigNumber(obj[key]).plus(
+                      new BigNumber(value)
+                  ))
+                : (obj[key] = new BigNumber(value));
         }
     });
     for (let i in obj) {
@@ -288,5 +300,124 @@ export const getInsuranceList = async function() {
               }
               `,
         },
+    });
+};
+export const getLongType = async function() {
+    let rightTime = parseInt(moment.now());
+    let leftTime = parseInt(moment.now()) - 518400000;
+    console.log(rightTime, leftTime);
+    return Axios({
+        method: 'post',
+        url:
+            'https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure',
+        data: {
+            query: `{
+                options(first: 1000) {
+                  id
+                  creator
+                  collateral 
+                  underlying
+                  strikePrice
+                  expiry
+                  long
+                  short
+                  asks {
+                    askID
+                    seller
+                    volume
+                    settleToken
+                    price
+                    isCancel
+                    binds {
+                      bidID
+                      askID
+                      buyer
+                      volume
+                      amount
+                    }
+                  }
+                }
+              }
+              `,
+        },
+    }).then((res) => {
+        return res.data.data.options.length;
+    });
+};
+export const getLongValuess = async function() {
+    let rightTime = parseInt(moment.now());
+    let leftTime = parseInt(moment.now()) - 518400000;
+    return Axios({
+        method: 'post',
+        url:
+            'https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure',
+        data: {
+            query: `{
+                options(first: 1000) {
+                  id
+                  creator
+                  collateral 
+                  underlying
+                  strikePrice
+                  expiry
+                  long
+                  short
+                  asks {
+                    askID
+                    seller
+                    volume
+                    settleToken
+                    price
+                    isCancel
+                    binds {
+                      bidID
+                      askID
+                      buyer
+                      volume
+                      amount
+                    }
+                  }
+                }
+              }
+              `,
+        },
+    }).then(async (res) => {
+        let list = res.data.data.options;
+        let longList = list.filter((item) => {
+            return item.asks.length > 0;
+        });
+        let arr = [];
+        let arr1 = [];
+        longList.forEach((item) => {
+            item.asks.forEach((itemAsks) => {
+                let obj = Object.assign(itemAsks, item);
+                itemAsks.binds.forEach((itemBids) => {
+                    itemBids.buyVolume = itemBids.volume;
+                    let obj1 = Object.assign(itemBids, obj);
+                    if (
+                        !itemBids.isCancel &&
+                        item.expiry.length === 10 &&
+                        itemBids.volume != 0
+                    ) {
+                        arr.push(obj1);
+                    }
+                });
+            });
+        });
+        arr1 = arr.map((item) => {
+            let key = item.collateral;
+            let obj = {};
+            obj[key] = item.buyVolume;
+            return obj;
+        });
+        let result = await getLongValues(arr1);
+        let value = 0;
+        result.data.map((item) => {
+            if (Object.values(item)[0] && Number(Object.values(item)[0] >= 0)) {
+                value += Object.values(item)[0];
+            }
+            return value;
+        });
+        return value;
     });
 };

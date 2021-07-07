@@ -272,7 +272,7 @@ export default {
             item.type = "Put";
             item.outPriceUnit = "BNB";
             item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, PutStrikePriceDecimals);
+              1 / DecimalsFormWei(item.strikePrice, CallStrikePriceDecimals);
           }
           if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
             item.TypeCoin = CollateralSymbol;
@@ -288,7 +288,7 @@ export default {
             item.type = "Put";
             item.outPriceUnit = "BUSD";
             item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, PutStrikePriceDecimals);
+              1 / DecimalsFormWei(item.strikePrice, CallStrikePriceDecimals);
           }
           item.show_expiry = moment(new Date(item.expiry * 1000)).format(
             "YYYY/MM/DD HH:mm:ss"

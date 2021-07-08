@@ -352,25 +352,31 @@ export default {
         let QFEIPolicy = await this.QFEIPolicy();
         let bHELMETPolicy = await this.bHELMETPolicy();
         let qHELMETPolicy = await this.qHELMETPolicy();
-        let xhBURGERolicy = await this.xhBURGERolicy();
-        let SHIBHRolicy = await this.SHIBHRolicy();
-        let HWINGSRolicy = await this.HWINGSRolicy();
-        let HMTRGolicy = await this.HMTRGolicy();
-        let HBABYolicy = await this.HBABYolicy();
-        let HBMXXolicy = await this.HBMXXolicy();
-        if (HBMXXolicy) {
-          if (HBMXXolicy["sort"] != 1 && HBMXXolicy["sort"] != 3) {
-            arr.push(HBMXXolicy);
+        let xhBURGERPolicy = await this.xhBURGERPolicy();
+        let SHIBHRPolicy = await this.SHIBHRPolicy();
+        let HWINGSRPolicy = await this.HWINGSRPolicy();
+        let HMTRGPolicy = await this.HMTRGPolicy();
+        let HBABYPolicy = await this.HBABYPolicy();
+        let HBMXXPolicy = await this.HBMXXPolicy();
+        let HARGONPolicy = await this.HARGONPolicy();
+        if (HARGONPolicy) {
+          if (HARGONPolicy["sort"] != 1 && HARGONPolicy["sort"] != 3) {
+            arr.push(HARGONPolicy);
           }
         }
-        if (HBABYolicy) {
-          if (HBABYolicy["sort"] != 1 && HBABYolicy["sort"] != 3) {
-            arr.push(HBABYolicy);
+        if (HBMXXPolicy) {
+          if (HBMXXPolicy["sort"] != 1 && HBMXXPolicy["sort"] != 3) {
+            arr.push(HBMXXPolicy);
           }
         }
-        if (HWINGSRolicy) {
-          if (HWINGSRolicy["sort"] != 1 && HWINGSRolicy["sort"] != 3) {
-            arr.push(HWINGSRolicy);
+        if (HBABYPolicy) {
+          if (HBABYPolicy["sort"] != 1 && HBABYPolicy["sort"] != 3) {
+            arr.push(HBABYPolicy);
+          }
+        }
+        if (HWINGSRPolicy) {
+          if (HWINGSRPolicy["sort"] != 1 && HWINGSRPolicy["sort"] != 3) {
+            arr.push(HWINGSRPolicy);
           }
         }
         if (cakePolicy) {
@@ -448,19 +454,19 @@ export default {
             arr.push(qHELMETPolicy);
           }
         }
-        if (xhBURGERolicy) {
-          if (xhBURGERolicy["sort"] != 1 && xhBURGERolicy["sort"] != 3) {
-            arr.push(xhBURGERolicy);
+        if (xhBURGERPolicy) {
+          if (xhBURGERPolicy["sort"] != 1 && xhBURGERPolicy["sort"] != 3) {
+            arr.push(xhBURGERPolicy);
           }
         }
-        if (SHIBHRolicy) {
-          if (SHIBHRolicy["sort"] != 1 && SHIBHRolicy["sort"] != 3) {
-            arr.push(SHIBHRolicy);
+        if (SHIBHRPolicy) {
+          if (SHIBHRPolicy["sort"] != 1 && SHIBHRPolicy["sort"] != 3) {
+            arr.push(SHIBHRPolicy);
           }
         }
-        if (HMTRGolicy) {
-          if (HMTRGolicy["sort"] != 1 && HMTRGolicy["sort"] != 3) {
-            arr.push(HMTRGolicy);
+        if (HMTRGPolicy) {
+          if (HMTRGPolicy["sort"] != 1 && HMTRGPolicy["sort"] != 3) {
+            arr.push(HMTRGPolicy);
           }
         }
         if (List.length) {
@@ -1441,7 +1447,7 @@ export default {
         return resultItem;
       }
     },
-    async xhBURGERolicy() {
+    async xhBURGERPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1497,7 +1503,7 @@ export default {
         return resultItem;
       }
     },
-    async SHIBHRolicy() {
+    async SHIBHRPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1556,7 +1562,7 @@ export default {
         return resultItem;
       }
     },
-    async HWINGSRolicy() {
+    async HWINGSRPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1613,7 +1619,7 @@ export default {
         return resultItem;
       }
     },
-    async HMTRGolicy() {
+    async HMTRGPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1670,7 +1676,7 @@ export default {
         return resultItem;
       }
     },
-    async HBABYolicy() {
+    async HBABYPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1727,7 +1733,7 @@ export default {
         return resultItem;
       }
     },
-    async HBMXXolicy() {
+    async HBMXXPolicy() {
       let myAddress =
         this.$store.state.userInfo.data &&
         this.$store.state.userInfo.data.account &&
@@ -1784,7 +1790,63 @@ export default {
         return resultItem;
       }
     },
+    async HARGONPolicy() {
+      let myAddress =
+        this.$store.state.userInfo.data &&
+        this.$store.state.userInfo.data.account &&
+        this.$store.state.userInfo.data.account.toLowerCase();
+      let volume = await getBalance(
+        "0x4ce2d9804da7583c02f80fec087aea1d137214eb"
+      );
 
+      let currentTime = new Date().getTime();
+      if (fixD(volume, 8) != 0) {
+        let Token = getTokenName("0x4ce2d9804da7583c02f80fec087aea1d137214eb");
+        let resultItem;
+        resultItem = {
+          askID: "air",
+          id: 21,
+          bidID: 21,
+          buyer: myAddress,
+          show_price: "--",
+          premium: "--" * volume,
+          volume: volume.toString(),
+          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
+          dueDate: moment(new Date(1628352000000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          _collateral: "0x851f7a700c5d67db59612b871338a85526752c25",
+          show_strikePrice: 0.15,
+          _strikePrice: 0.15,
+          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          _expiry: 1628352000000,
+          transfer: true,
+          longAdress: "0x4ce2d9804da7583c02f80fec087aea1d137214eb",
+          type: "Call",
+          symbol: "hARGON",
+          approveAddress1: "FACTORY",
+          approveAddress2: "",
+          outPrice: 0.15,
+          outPriceUnit: "BUSD",
+          showVolume: volume,
+          buyVolume: volume,
+          TypeCoin: getTokenName("0x851f7a700c5d67db59612b871338a85526752c25"),
+        };
+        if (resultItem._expiry < currentTime) {
+          resultItem["status"] = "Expired";
+          resultItem["sort"] = 2;
+          resultItem["dueDate"] = "Expired";
+        } else {
+          resultItem["status"] = "Unactivated";
+          resultItem["sort"] = 0;
+        }
+        if (resultItem._expiry + 5184000000 < currentTime) {
+          resultItem["status"] = "Hidden";
+          resultItem["sort"] = 3;
+        }
+        return resultItem;
+      }
+    },
     handleClickChagePage(index) {
       index = index - 1;
       this.page = index;

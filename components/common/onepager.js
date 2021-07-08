@@ -204,4 +204,18 @@ export default {
         'Expire date: July 29th 24:00 SGT Helmet team took 3636 Helmet as premium for supporting $hbMXX policy creating.',
         'Do not trade heavily on $hbMXX, b/c if $bMXX fail to hit 20 BUSD, $hbMXX would just be used as short-term mining shovel and a souvenir token.',
     ],
+    hARGON: [
+        'It is $ARGON cover miss out policy (CALL Option of $ARGON).',
+        'The reasonable activate price: $ARGON=0.15 BUSD.',
+        'For example, if $ARGON hit 0.2 BUSD before expiration date, you could swap 0.15 BUSD+1 $hARGON to 1$ARGON, and get net 0.05 BUSD profit.',
+        'Total supply: 125,000 hARGON',
+        'Expire date: August 7th 24:00 SGT Helmet team took 125,000 Helmet as premium for supporting $hARGON policy creating.',
+        'Do not trade heavily on $hARGON, b/c if $ARGON fail to hit 0.15 BUSD, $hARGON would just be used as short-term mining shovel and a souvenir token.',
+    ],
+    SHIBh: [
+        'SHIBh is the PUT Option of SHIB: 1SHIB+1SHIBh=0.000001 BUSD  Expire: 12th July 24:00',
+        'Total supply: 50,000,000,000',
+        "Do not trade heavily on SHIBh. If SHIBh doesn't dump that way, SHIBh would worth nothing.",
+        'Remember to hedge trading risk and that is what Helmet works for.',
+    ],
 };

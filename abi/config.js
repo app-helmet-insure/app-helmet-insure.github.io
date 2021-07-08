@@ -49,6 +49,7 @@ export default {
     BSC_HWINGS: '0x34508EA9ec327ff3b98A2F10eEDc2950875bf026',
     BSC_HMTRG: '0xa561926e81decb74b3d11e14680b3f6d1c5012bd',
     BSC_HBABY: '0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624',
+
     // iTOKEN
     BSC_TOKEN: '0x3b73c1b2ea59835cbfcadade5462b6ab630d9890',
     // 主网合约

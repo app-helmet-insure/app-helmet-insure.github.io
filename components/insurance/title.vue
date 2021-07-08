@@ -1,10 +1,10 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide bmxx">
+      <div class="swiper-slide argon">
         <div></div>
       </div>
-      <div class="swiper-slide mtrg">
+      <div class="swiper-slide bmxx">
         <div></div>
       </div>
       <div class="swiper-slide baby">
@@ -144,16 +144,15 @@ export default {
         background-position: center;
       }
     }
+    .argon {
+      > div {
+        background-image: url("../../assets/img/banner/argon_web.png");
+      }
+    }
     .bmxx {
       background: #fff9ef;
       > div {
         background-image: url("../../assets/img/banner/bmxx_web.png");
-      }
-    }
-    .mtrg {
-      background: #000622;
-      > div {
-        background-image: url("../../assets/img/banner/mtrg_web.png");
       }
     }
     .baby {
@@ -211,16 +210,15 @@ export default {
         background-position: center;
       }
     }
+    .argon {
+      > div {
+        background-image: url("../../assets/img/banner/argon_h5.png");
+      }
+    }
     .bmxx {
       background: #fff9ef;
       > div {
         background-image: url("../../assets/img/banner/bmxx_h5.png");
-      }
-    }
-    .mtrg {
-      background: #000622;
-      > div {
-        background-image: url("../../assets/img/banner/mtrg_h5.png");
       }
     }
     .baby {

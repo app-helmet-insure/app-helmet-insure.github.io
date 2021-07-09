@@ -6,9 +6,9 @@
         <div class="guard_migrate_swap_from">
           <div class="header">
             <div class="logo">
-              From <img src="~/assets/img/icon/binance.png" alt="" /><span
-                >BSC</span
-              >
+              From <img src="~/assets/img/icon/binance.png" alt="" /><span>{{
+                FromNetwork
+              }}</span>
             </div>
             <span>HELMET</span>
           </div>
@@ -25,9 +25,9 @@
         <div class="guard_migrate_swap_to">
           <div class="header">
             <div class="logo">
-              To <img src="~/assets/img/icon/polygon.png" alt="" /><span
-                >Polygon</span
-              >
+              To <img src="~/assets/img/icon/polygon.png" alt="" /><span>{{
+                ToNetwork
+              }}</span>
             </div>
             <span>GUARD</span>
           </div>
@@ -49,7 +49,13 @@
         <div class="account">
           {{ Account.substr(0, 12) + "..." + Account.substr(-15) }}
         </div>
-        <button @click="SendConfirm">Approve</button>
+        <button @click="SendConfirm" v-if="ChainID == 56">
+          <i v-if="ConfirmLoading" class="loading_pic"></i>
+          {{
+            ConfirmLoading ? "This process may take some time..." : "Confirm"
+          }}
+        </button>
+        <button @click="SwitchNetwork" v-else>Switch to BSC</button>
         <p>注意：该过程是不可逆过程,BSC资产将会彻底转化成 Polygon 资产</p>
         <span>Powered by BlackHole & ChainSwap</span>
       </div>
@@ -58,17 +64,25 @@
 </template>
 
 <script>
-import { getAccounts, TokenNameToWei } from "~/interface/common_contract.js";
+import {
+  getAccounts,
+  TokenNameToWei,
+  DecimalsToWei,
+  bscNetwork,
+} from "~/interface/common_contract.js";
 import { Allowance } from "~/interface/read_contract.js";
-import { Approve, SwapAndSend } from "~/interface/write_contract.js";
-import { getSignDataSyn } from "~/interface/event.js";
+import { Approve } from "~/interface/write_contract.js";
+import Web3 from "web3";
+import ChainSwapConfig from "./config";
 export default {
   data() {
     return {
       SwapNumber: "",
       Account: "",
       NeedApprove: "",
-      MagicSignData: {
+      FromNetwork: "BSC",
+      ToNetwork: "Polygon",
+      MATICSignData: {
         contractAddress: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
         fromChainId: 56,
         nonce: 3,
@@ -78,17 +92,29 @@ export default {
         toContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
         mainContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
       },
+      ConfirmLoading: false,
     };
   },
   computed: {
     BalanceArray() {
       return this.$store.state.BalanceArray;
     },
+    ChainID() {
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
+    BridgeConfig() {
+      return ChainSwapConfig(this.FromNetwork, this.ToNetwork);
+    },
+  },
+  watch: {
+    ChainID(newValue) {
+      this.chainID = newValue;
+    },
   },
   mounted() {
     this.MyAccount();
-    this.ApproveFlagFn();
-    getSignDataSyn(this.MagicSignData);
+    // this.ApproveFlagFn();
   },
   methods: {
     async MyAccount() {
@@ -114,21 +140,41 @@ export default {
         }
       );
     },
+    async SwitchNetwork() {
+      let ethereum = window.ethereum;
+      await ethereum
+        .request({
+          method: "wallet_addEthereumChain",
+          params: [{ ...bscNetwork }],
+        })
+        .then(() => {});
+    },
     async SendConfirm() {
       if (!this.SwapNumber) {
         return;
       }
-      let Volume = this.SwapNumber;
-      let ChainID = "137";
-      let ToAddress = this.Account;
-      SwapAndSend(Volume, ChainID, ToAddress, (res) => {
-        if (res == "success") {
+      this.ConfirmLoading = true;
+      let { ToChainID, BurnSwapContracts, FromAssets, ToAssets } =
+        this.BridgeConfig;
+      let web3 = new Web3(window.ethereum);
+      let Contracts = new web3.eth.Contract(
+        BurnSwapContracts.ABI,
+        BurnSwapContracts.Address
+      );
+      let Volume = DecimalsToWei(this.SwapNumber, FromAssets.Decimals);
+      let Account = await getAccounts();
+      Contracts.methods[BurnSwapContracts.Method](Volume, ToChainID, Account)
+        .send({ from: Account, value: DecimalsToWei("0.005", 18) })
+        .on("transactionHash", (hash) => {})
+        .on("receipt", (_, receipt) => {
           this.$bus.$emit("REFRESH_BALANCE");
           this.$bus.$emit("GET_GUARD_HISTORY");
-          let SignData = this.MagicSignData;
-          getSignDataSyn(SignData);
-        }
-      });
+          this.$bus.$emit("OPEN_GUARD_DIALOG", { Step: 1, Type: "pendding" });
+          this.ConfirmLoading = false;
+        })
+        .on("error", (err, receipt) => {
+          console.log(err);
+        });
     },
   },
 };
@@ -347,6 +393,13 @@ export default {
       font-weight: 600;
       color: #ffffff;
       margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      i {
+        width: 30px;
+        height: 30px;
+      }
     }
     > p {
       font-size: 18px;

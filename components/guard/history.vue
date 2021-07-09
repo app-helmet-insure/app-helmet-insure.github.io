@@ -50,36 +50,56 @@
           >
         </section>
         <section>
-          <span>{{ item.Amounts }}</span>
+          <span>{{ item.ChainswapAmounts }}</span>
         </section>
-        <section>11</section>
+        <section>
+          <button @click="getSwapToken(item)" :class="item.Status + 'button'">
+            {{ item.Status == "Finished" ? "Finished" : "Withdraw" }}
+          </button>
+        </section>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { SentCount, Sent } from "~/interface/read_contract.js";
-import { TokenNameFormWei, getAccounts } from "~/interface/common_contract.js";
+import {
+  DecimalsFormWei,
+  getAccounts,
+  DecimalsToWei,
+} from "~/interface/common_contract.js";
+import Web3 from "web3";
+import ChainSwapABI from "~/abi/ChainSwap.json";
+import { getSignDataSyn } from "~/interface/event.js";
 export default {
   data() {
     return {
-      BSCTOMAGIC: {
+      BSCTOMATIC: {
         FromChainID: 56,
         FromToken: "HELMET",
         FromChainName: "BSC",
         ToChainID: 137,
         ToToken: "GUARD",
         ToChainName: "Polygon",
+        ContractAddress: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
+        TokenDecimals: 18,
+        FromContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
+        ToContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
+        MainContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
       },
       History: [],
       Account: "",
+      CurrentData: {},
     };
   },
   async mounted() {
     this.$bus.$on("GET_GUARD_HISTORY", async () => {
       await this.getSendVolume();
     });
+    this.$bus.$on("HISTORY_GUARD_SWAP", async (Step) => {
+      await this.GuardSwapToken(this.CurrentData);
+    });
+
     this.MyAccount();
     await this.getSendVolume();
   },
@@ -89,25 +109,112 @@ export default {
       this.Account = Account;
     },
     async getMaxNonce() {
-      console.log(this.BSCTOMAGIC.ToChainID);
-      let MaxNonce = await SentCount(this.BSCTOMAGIC.ToChainID);
+      let Account = await getAccounts();
+      let web3 = new Web3(
+        new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+      );
+      let Contracts = new web3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
+      let MaxNonce = Contracts.methods
+        .sentCount(this.BSCTOMATIC.ToChainID, Account)
+        .call();
+
       return MaxNonce;
     },
     async getSendVolume() {
       let MaxNonce = await this.getMaxNonce();
-      console.log(MaxNonce);
+      let Account = await getAccounts();
+      let BSCweb3 = new Web3(
+        new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+      );
+      let BSCContracts = new BSCweb3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
+      let MATICweb3 = new Web3(
+        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+      );
+      let MATICContracts = new MATICweb3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
       let History = [];
       for (let Nonce = 0; Nonce < MaxNonce; Nonce++) {
-        let Amounts = await Sent(this.BSCTOMAGIC.ToChainID, Nonce);
-        let HistoryItem = this.BSCTOMAGIC;
-        HistoryItem.Amounts = TokenNameFormWei(
-          Amounts,
-          this.BSCTOMAGIC.FromToken
+        let ChainswapAmounts = await BSCContracts.methods
+          .sent(this.BSCTOMATIC.ToChainID, Account, Nonce)
+          .call();
+        let ReceiveAmounts = await MATICContracts.methods
+          .received(this.BSCTOMATIC.FromChainID, Account, Nonce)
+          .call();
+        ChainswapAmounts = DecimalsFormWei(
+          ChainswapAmounts,
+          this.BSCTOMATIC.TokenDecimals
         );
-        console.log(HistoryItem);
+        ReceiveAmounts = DecimalsFormWei(
+          ReceiveAmounts,
+          this.BSCTOMATIC.TokenDecimals
+        );
+        let HistoryItem = { ...this.BSCTOMATIC };
+        HistoryItem.ChainswapAmounts = ChainswapAmounts;
+        HistoryItem.ReceiveAmounts = ReceiveAmounts;
+        HistoryItem.Nonce = Nonce;
+        HistoryItem.Status =
+          ChainswapAmounts == ReceiveAmounts ? "Finished" : "";
+        HistoryItem.Sort = ChainswapAmounts == ReceiveAmounts ? 1 : 0;
         History.push(HistoryItem);
       }
-      this.History = History;
+      this.History = History.sort(function (a, b) {
+        return a.Sort - b.Sort;
+      });
+    },
+    async getSwapToken(data) {
+      this.CurrentData = data;
+      this.$bus.$emit("OPEN_GUARD_DIALOG", { Step: 2, Type: "pendding" });
+    },
+    async GuardSwapToken(data) {
+      let Account = await getAccounts();
+      let web3 = new Web3(window.ethereum);
+      let Contracts = new web3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
+      let SignData = {
+        contractAddress: this.BSCTOMATIC.ContractAddress,
+        fromChainId: this.BSCTOMATIC.FromChainID,
+        nonce: data.Nonce,
+        to: Account,
+        toChainId: this.BSCTOMATIC.ToChainID,
+        fromContract: this.BSCTOMATIC.FromContract,
+        toContract: this.BSCTOMATIC.ToContract,
+        mainContract: this.BSCTOMATIC.MainContract,
+      };
+      getSignDataSyn(SignData, async (Signs) => {
+        if (Signs) {
+          await Contracts.methods
+            .receive(
+              this.BSCTOMATIC.FromChainID,
+              Account,
+              data.Nonce,
+              DecimalsToWei(data.ChainswapAmounts, data.TokenDecimals),
+              Signs
+            )
+            .send({ from: Account, value: "5000000000000000" })
+            .on("transactionHash", (hash) => {})
+            .on("receipt", (_, receipt) => {
+              this.$bus.$emit("GET_GUARD_HISTORY");
+              this.$bus.$emit("CLOSE_GUARD_DIALOG");
+              this.$bus.$emit("OPEN_GUARD_DIALOG", {
+                Step: 1,
+                Type: "success",
+              });
+            })
+            .on("error", (err, receipt) => {
+              this.$bus.$emit("CLOSE_GUARD_DIALOG");
+            });
+        }
+      });
     },
   },
 };
@@ -197,6 +304,26 @@ export default {
           font-weight: 600;
           color: #17173a;
           line-height: 17px;
+        }
+      }
+      &:nth-of-type(6) {
+        button {
+          font-size: 14px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          color: #ffffff;
+          line-height: 24px;
+          padding: 8px 18px;
+          background: #17173a;
+          border-radius: 5px;
+          font-weight: 600;
+          width: 100px;
+          border: 1px solid #17173a;
+        }
+        .Finishedbutton {
+          border: 1px solid #e8e8eb;
+          background: #f8f9fa;
+          color: rgba(23, 23, 58, 0.4);
+          pointer-events: none;
         }
       }
     }

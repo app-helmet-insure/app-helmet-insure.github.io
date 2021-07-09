@@ -12,27 +12,29 @@ export const BurgerSwapContract = async (address) => {
 };
 export const burgerswaplpt = async (token1, token2, unit) => {
     const charID = window.chainID || 56;
-    let TOKEN1 = token1;
-    let TOKEN2 = token2;
-    if (token1.indexOf('0x') === -1) {
-        TOKEN1 = getAddress(token1, charID);
+    if (chainID === 56) {
+        let TOKEN1 = token1;
+        let TOKEN2 = token2;
+        if (token1.indexOf('0x') === -1) {
+            TOKEN1 = getAddress(token1, charID);
+        }
+        if (token2.indexOf('0x') === -1) {
+            TOKEN2 = getAddress(token2, charID);
+        }
+        let Contract = await BurgerSwapContract();
+        return Contract.methods
+            .getLpValueByFactory(
+                '0x1eCaeE6e4e01C45712ccd9262c3e9F623A6ac7ed',
+                TOKEN1,
+                TOKEN2,
+                '1000000000000000000'
+            )
+            .call()
+            .then((res) => {
+                let result = Number(res[0]) / Math.pow(10, res[1]);
+                return result;
+            });
     }
-    if (token2.indexOf('0x') === -1) {
-        TOKEN2 = getAddress(token2, charID);
-    }
-    let Contract = await BurgerSwapContract();
-    return Contract.methods
-        .getLpValueByFactory(
-            '0x1eCaeE6e4e01C45712ccd9262c3e9F623A6ac7ed',
-            TOKEN1,
-            TOKEN2,
-            '1000000000000000000'
-        )
-        .call()
-        .then((res) => {
-            let result = Number(res[0]) / Math.pow(10, res[1]);
-            return result;
-        });
 };
 
 export const burgerswaptoken = async (address) => {

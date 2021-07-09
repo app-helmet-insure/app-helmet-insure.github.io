@@ -211,13 +211,3 @@ export const Settleable = async (seller, short) => {
     let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
     return Contracts.methods.settleable(seller, short).call();
 };
-export const SentCount = async (ToChainID) => {
-    let Contracts = await Web3Contract(ChainSwapABI, BurnSignContractAddress);
-    let Account = await getAccounts();
-    return Contracts.methods.sentCount(ToChainID, Account).call();
-};
-export const Sent = async (ToChainID, Nonce) => {
-    let Contracts = await Web3Contract(ChainSwapABI, BurnSignContractAddress);
-    let Account = await getAccounts();
-    return Contracts.methods.sent(ToChainID, Account, Nonce).call();
-};

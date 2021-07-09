@@ -146,9 +146,11 @@ export default {
     this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
       this.buyDialog = res;
     });
-    this.getBalance(this.activeData);
-    this.HelmetPriceHigh(this.activeData);
-    this.ApproveFlag(this.activeData);
+    if (window.chainId === 56) {
+      this.getBalance(this.activeData);
+      this.HelmetPriceHigh(this.activeData);
+      this.ApproveFlag(this.activeData);
+    }
   },
   computed: {
     SwapParams() {
@@ -195,7 +197,7 @@ export default {
       this.SwapHelmetFunction();
     },
     activeDataWatch(newValue) {
-      if (newValue) {
+      if (newValue && window.chainId === 56) {
         this.HelmetPriceHigh(newValue);
         this.ApproveFlag(newValue);
         this.getBalance(newValue);

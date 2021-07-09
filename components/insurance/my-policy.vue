@@ -222,7 +222,6 @@ export default {
     getList() {
       this.isLoading = true;
       getInsuranceList().then(async (res) => {
-        console.log(res);
         let CurrentAccount = await getAccounts();
         let ReturnList = res.data.data.options;
         let FixList = [];
@@ -471,7 +470,6 @@ export default {
         }
         if (List.length) {
           List.map(async (item, index) => {
-            console.log(item);
             let BidsInfo = await Bids(item.bidID);
             if (BidsInfo.remain == 0) {
               item.status == "Activated";

@@ -405,28 +405,27 @@ export const getLongValuess = async function() {
         return value;
     });
 };
-export const getSignDataSyn = (data) => {
+export const getSignDataSyn = (data, callback) => {
     let SignNumberFlag = true;
     let SignResultData = [];
     for (let index = 1; index < 6; index++) {
         let params = qs.stringify(data, { encodeValuesOnly: true });
-        console.log(params);
         let Url = `https://node${index}.chainswap.exchange/web/getSignDataSyn`;
-        console.log(Url);
         Axios.get(Url + '?' + params).then((res) => {
             try {
-                console.log(res);
                 if (SignResultData.length === 3 && SignNumberFlag) {
-                    SignResultData = false;
-                    return;
+                    SignNumberFlag = false;
+                    console.log(SignResultData);
+                    callback(SignResultData);
                 } else {
-                    let { signatory, signV, signR, signS } = res.data.data;
-                    SignResultData.push([signatory, signV, signR, signS]);
+                    if (SignResultData.length < 3) {
+                        let { signatory, signV, signR, signS } = res.data.data;
+                        SignResultData.push([signatory, signV, signR, signS]);
+                    }
                 }
             } catch (error) {
                 console.log(error);
             }
         });
     }
-    console.log(SignResultData);
 };

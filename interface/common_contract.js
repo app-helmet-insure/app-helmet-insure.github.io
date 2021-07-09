@@ -31,11 +31,20 @@ const selectNetwork = (charID) => {
             return 'Rinkeby';
     }
 };
+
 export const getAccounts = async () => {
     const WEB3 = await new web3();
     let account = await WEB3.eth.getAccounts();
     return (account = account[0]);
 };
+
+export function RPC_URLS(chainId) {
+    return {
+        128: 'https://http-mainnet-node.huobichain.com',
+        56: 'https://bsc-dataseed.binance.org/',
+        137: 'https://rpc-mainnet.maticvigil.com',
+    }[chainId];
+}
 export const getBlockNumber = async () => {
     const WEB3 = await new web3();
     let blockNumber = await WEB3.eth.getBlockNumber();
@@ -62,16 +71,20 @@ export const getContract = (name, charID = 56) => {
     }
 };
 export const TokenDecimals = (Address) => {
-    Address = Address.toLowerCase();
-    switch (Address) {
-        case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8': //HELMET
-            return 18;
-        case '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c': //BNB
-            return 18;
-        case '0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929': //CTK
-            return 6;
-        default:
-            return 18;
+    try {
+        Address = Address.toLowerCase();
+        switch (Address) {
+            case '0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8': //HELMET
+                return 18;
+            case '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c': //BNB
+                return 18;
+            case '0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929': //CTK
+                return 6;
+            default:
+                return 18;
+        }
+    } catch (error) {
+        console.log(error);
     }
 };
 export const getDecimals = (Decimals) => {
@@ -149,4 +162,39 @@ export const ShowMiningData = async (ContractAdress, ParamsAddress) => {
     let CurrentProvider = new Web3Provider(WEB3.currentProvider);
     let MulticallProvider = new Provider(CurrentProvider, 56);
     const MulticallContract = new Contract(ContractAdress, MiningABI.abi);
+};
+export const bscNetwork = {
+    chainId: '0x38',
+    chainName: 'BSC',
+    nativeCurrency: {
+        name: 'BNB',
+        symbol: 'BNB',
+        decimals: 18,
+    },
+    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+    blockExplorerUrls: ['https://bscscan.com'],
+};
+
+export const hecoNetwork = {
+    chainId: '0x80',
+    chainName: 'HECO',
+    nativeCurrency: {
+        name: 'HT',
+        symbol: 'HT',
+        decimals: 18,
+    },
+    rpcUrls: ['https://http-mainnet-node.huobichain.com'],
+    blockExplorerUrls: ['https://hecoinfo.com'],
+};
+
+export const maticNetwork = {
+    chainId: '0x89',
+    chainName: 'MATIC',
+    nativeCurrency: {
+        name: 'MATIC',
+        symbol: 'MATIC',
+        decimals: 18,
+    },
+    rpcUrls: ['https://rpc-mainnet.maticvigil.com'],
+    blockExplorerUrls: ['https://polygonscan.com/'],
 };

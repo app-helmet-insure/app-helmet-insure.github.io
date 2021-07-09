@@ -2,14 +2,16 @@
   <div class="main_container">
     <Migrate />
     <History />
+    <Dialog />
   </div>
 </template>
 
 <script>
 import Migrate from "~/components/guard/migrate.vue";
 import History from "~/components/guard/history.vue";
+import Dialog from "~/components/guard/dialog.vue";
 export default {
-  components: { Migrate, History },
+  components: { Migrate, History, Dialog },
 };
 </script>
 

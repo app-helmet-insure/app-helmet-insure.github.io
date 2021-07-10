@@ -7,7 +7,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
           :class="['finshed_line', 'finshed_pc']"
-          v-if="item.REWARD_NAME == 'helmet_mtrg'"
+          v-if="item.REWARD_NAME == 'helmet_baby'"
         >
           <p></p>
           <i :class="storeThemes + '_star'"></i>
@@ -182,7 +182,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
         <div
           class="finshed_line finshed_h5"
-          v-if="item.REWARD_NAME == 'helmet_mtrg'"
+          v-if="item.REWARD_NAME == 'helmet_baby'"
         >
           <p></p>
           <i></i>
@@ -557,6 +557,48 @@ export default {
           JUMP1_TEXT:
             "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
           APRTYPE: "MdexDoublePoolAPR",
+          REWARD_YEAR: "Infinity",
+        },
+        {
+          POOL_NAME: "HELMET-<i>hARGON</i>&nbsp;LPT",
+          STAKE_SYMBOL: "HELMET-hARGON LPT",
+          STAKE_UNIT: "LPT",
+          REARD_VOLUME: "two",
+          REWARD_NAME: "helmet_argon",
+          REARD_IMGSHOW: true,
+          OPEN_TIME: this.getMiningTime("2021/07/10 00:00"),
+          MING_TIME: this.getRemainTime("2021/07/25 00:00"),
+          START_TIME: "2021/07/10 00:00 UTC+8",
+          END_TIME: "2021/07/25 00:00 UTC+8",
+          COMBO_FLAG: true,
+          REWARD_TYPE: "APR",
+          ONE_PAGER: "hARGON",
+          REWARD1_SYMBOL: "HELMET",
+          REWARD2_SYMBOL: "ARGON",
+          REWARD1_DECIMALS: 18,
+          REWARD2_DECIMALS: 18,
+          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+          REWARD2_ADDRESS: "0x851f7a700c5d67db59612b871338a85526752c25",
+          REWARD1_VOLUME: 35000,
+          REWARD2_VOLUME: 350000,
+          MINING_DAY: 15,
+          LEFTTOKEN: {
+            ADDTOKEN_SYMBOL: "hARGON",
+            ADDTOKEN_ADDRESS: "0x4ce2d9804da7583c02f80fec087aea1d137214eb",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          RIGHTTOKEN: {
+            ADDTOKEN_SYMBOL: "ARGON",
+            ADDTOKEN_ADDRESS: "0x851f7a700c5d67db59612b871338a85526752c25",
+            ADDTOKEN_DECIMALS: 18,
+          },
+          POOL_ADDRESS: "0xC12D0dE9f64467f4Dd51e0313b3b801b5F945648",
+          STAKE_ADDRESS: "0x78c6c572a60cc7a2006513597a981fcd99d3ec77",
+          STAKE_DECIMALS: 18,
+          SWAP_TYPE: "PANCAKEV2",
+          JUMP1_TEXT:
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x4ce2d9804da7583c02f80fec087aea1d137214eb/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hARGON LPT</a>",
+          APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
         {

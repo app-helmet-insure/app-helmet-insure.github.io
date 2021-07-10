@@ -469,9 +469,10 @@ export default {
             arr.push(HMTRGPolicy);
           }
         }
+        
         if (List.length) {
           List.map(async (item, index) => {
-            console.log(item);
+           
             let BidsInfo = await Bids(item.bidID);
             if (BidsInfo.remain == 0) {
               item.status == "Activated";

@@ -469,10 +469,8 @@ export default {
             arr.push(HMTRGPolicy);
           }
         }
-        
         if (List.length) {
           List.map(async (item, index) => {
-           
             let BidsInfo = await Bids(item.bidID);
             if (BidsInfo.remain == 0) {
               item.status == "Activated";
@@ -496,7 +494,9 @@ export default {
             return this.FilterList;
           });
         } else {
-          this.FilterList = [];
+          this.FilterList = [...new Set(arr)].sort((a, b) => {
+            return a.sort - b.sort;
+          });
           this.isLoading = false;
           return this.FilterList;
         }

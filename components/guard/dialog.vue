@@ -71,6 +71,8 @@ export default {
           params: [{ ...maticNetwork }],
         })
         .then(() => {
+          console.log(111111111111111111111111);
+          this.Step = 2;
           this.ClickWithDraw(1);
         });
     },

@@ -71,6 +71,7 @@ import {
 import Web3 from "web3";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import { getSignDataSyn } from "~/interface/event.js";
+import ChainSwapConfig from "./config";
 export default {
   data() {
     return {
@@ -87,17 +88,29 @@ export default {
         ToContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
         MainContract: "0x81d82a35253B982E755c4D7d6AADB6463305B188",
       },
+      FromNetwork: "BSC",
+      ToNetwork: "Polygon",
       History: [],
       Account: "",
       CurrentData: {},
     };
+  },
+  computed: {
+    BridgeConfig() {
+      return ChainSwapConfig(this.FromNetwork, this.ToNetwork);
+    },
   },
   async mounted() {
     this.$bus.$on("GET_GUARD_HISTORY", async () => {
       await this.getSendVolume();
     });
     this.$bus.$on("HISTORY_GUARD_SWAP", async (Step) => {
-      await this.GuardSwapToken(this.CurrentData);
+      if (Step == 1) {
+        await this.SwitchSwapToken();
+      }
+      if (Step === 2) {
+        await this.ClickSwapToken(this.CurrentData);
+      }
     });
 
     this.MyAccount();
@@ -126,28 +139,18 @@ export default {
     async getSendVolume() {
       let MaxNonce = await this.getMaxNonce();
       let Account = await getAccounts();
-      let BSCweb3 = new Web3(
-        new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
-      );
-      let BSCContracts = new BSCweb3.eth.Contract(
-        ChainSwapABI,
-        this.BSCTOMATIC.ContractAddress
-      );
-      let MATICweb3 = new Web3(
-        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
-      );
-      let MATICContracts = new MATICweb3.eth.Contract(
-        ChainSwapABI,
-        this.BSCTOMATIC.ContractAddress
-      );
       let History = [];
       for (let Nonce = 0; Nonce < MaxNonce; Nonce++) {
-        let ChainswapAmounts = await BSCContracts.methods
-          .sent(this.BSCTOMATIC.ToChainID, Account, Nonce)
-          .call();
-        let ReceiveAmounts = await MATICContracts.methods
-          .received(this.BSCTOMATIC.FromChainID, Account, Nonce)
-          .call();
+        let ChainswapAmounts = await this.AskChainSwapAmounts(
+          this.BSCTOMATIC.ToChainID,
+          Account,
+          Nonce
+        );
+        let ReceiveAmounts = await this.AskReceiveAmounts(
+          this.BSCTOMATIC.FromChainID,
+          Account,
+          Nonce
+        );
         ChainswapAmounts = DecimalsFormWei(
           ChainswapAmounts,
           this.BSCTOMATIC.TokenDecimals
@@ -169,11 +172,88 @@ export default {
         return a.Sort - b.Sort;
       });
     },
+    // 获取数量
+    async AskChainSwapAmounts(ToChainID, Account, Nonce) {
+      let BSCweb3 = new Web3(
+        new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+      );
+      let BSCContracts = new BSCweb3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
+      let ChainswapAmounts = await BSCContracts.methods
+        .sent(ToChainID, Account, Nonce)
+        .call();
+      return ChainswapAmounts;
+    },
+    // 接收数量
+    async AskReceiveAmounts(FromChainID, Account, Nonce) {
+      let MATICweb3 = new Web3(
+        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+      );
+      let MATICContracts = new MATICweb3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
+      let ReceiveAmounts = await MATICContracts.methods
+        .received(FromChainID, Account, Nonce)
+        .call();
+      return ReceiveAmounts;
+    },
     async getSwapToken(data) {
       this.CurrentData = data;
       this.$bus.$emit("OPEN_GUARD_DIALOG", { Step: 2, Type: "pendding" });
     },
-    async GuardSwapToken(data) {
+    // 直接Withdraw
+    async SwitchSwapToken() {
+      let { FromChainID, ToChainID, BurnSwapContracts, FromAssets, ToAssets } =
+        this.BridgeConfig;
+      let Account = await getAccounts();
+      let MaxNonce = await this.getMaxNonce;
+      console.log(ToChainID, Account, MaxNonce - 1);
+      let ChainswapAmounts = await this.AskChainSwapAmounts(
+        ToChainID,
+        Account,
+        MaxNonce - 1
+      );
+      let SignData = {
+        contractAddress: this.BSCTOMATIC.ContractAddress,
+        fromChainId: this.BSCTOMATIC.FromChainID,
+        nonce: MaxNonce - 1,
+        to: Account,
+        toChainId: this.BSCTOMATIC.ToChainID,
+        fromContract: this.BSCTOMATIC.FromContract,
+        toContract: this.BSCTOMATIC.ToContract,
+        mainContract: this.BSCTOMATIC.MainContract,
+      };
+      getSignDataSyn(SignData, async (Signs) => {
+        if (Signs) {
+          await Contracts.methods
+            .receive(
+              FromChainID,
+              Account,
+              MaxNonce - 1,
+              DecimalsToWei(ChainswapAmounts, ToAssets.Decimals),
+              Signs
+            )
+            .send({ from: Account, value: "5000000000000000" })
+            .on("transactionHash", (hash) => {})
+            .on("receipt", (_, receipt) => {
+              this.$bus.$emit("GET_GUARD_HISTORY");
+              this.$bus.$emit("CLOSE_GUARD_DIALOG");
+              this.$bus.$emit("OPEN_GUARD_DIALOG", {
+                Step: 1,
+                Type: "success",
+              });
+            })
+            .on("error", (err, receipt) => {
+              this.$bus.$emit("CLOSE_GUARD_DIALOG");
+            });
+        }
+      });
+    },
+    // 下方Withdraw
+    async ClickSwapToken(data) {
       let Account = await getAccounts();
       let web3 = new Web3(window.ethereum);
       let Contracts = new web3.eth.Contract(

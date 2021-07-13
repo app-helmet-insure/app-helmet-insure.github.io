@@ -33,15 +33,19 @@
           </section>
           <section>
             <span v-if="item.InsuranceType == 'SHIB'"
-              >{{ fixD(item.InsurancePriceBNB, 10) }} BNB</span
+              >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
             >
             <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
-            <span v-else>{{ toRounding(item.InsurancePriceBNB, 4) }} BNB</span>
+            <span v-else
+              >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
+            >
             <span v-if="item.InsuranceType == 'SHIB'"
-              >${{ fixD(item.InsurancePriceBUSD, 10) }}</span
+              >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
             >
             <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
-            <span v-else>${{ toRounding(item.InsurancePriceBUSD, 4) }}</span>
+            <span v-else
+              >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
+            >
           </section>
           <section>
             <div>
@@ -146,15 +150,19 @@
           </div>
           <p>
             <span v-if="item.InsuranceType == 'SHIB'"
-              >{{ fixD(item.InsurancePriceBNB, 10) }} BNB</span
+              >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
             >
             <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
-            <span v-else>{{ toRounding(item.InsurancePriceBNB, 4) }} BNB</span>
+            <span v-else
+              >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
+            >
             <span v-if="item.InsuranceType == 'SHIB'"
-              >${{ fixD(item.InsurancePriceBUSD, 10) }}</span
+              >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
             >
             <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
-            <span v-else>${{ toRounding(item.InsurancePriceBUSD, 4) }}</span>
+            <span v-else
+              >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
+            >
           </p>
         </section>
         <section>

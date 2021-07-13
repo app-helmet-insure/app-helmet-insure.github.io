@@ -3,19 +3,38 @@
   <div class="wallet-select-mask mask">
     <div class="wallet-select-block">
       <i class="close" @click="closeDialog"></i>
-      <ul>
-        <li
-          :class="
-            item === 'MetaMask' || item === 'WalletConnect' ? 'on' : 'off'
-          "
-          v-for="item in walletList"
-          :key="item"
-          @click="selectWallet(item)"
-        >
-          <img :src="require(`~/assets/img/wallet-icon/${item}@2x.png`)" />
-          <span>{{ $t("Wallet.ConnectWallet", { item: item }) }}</span>
-        </li>
-      </ul>
+      <h3 v-if="Type == 'ALL'">链接钱包</h3>
+      <h3 v-if="Type == 'NETWORK'">切换网络</h3>
+      <div class="switch_network" v-if="Type == 'ALL' || Type == 'NETWORK'">
+        <p v-if="Type == 'ALL'">选择网络</p>
+        <div>
+          <div
+            @click="SwitchNetworkBSC"
+            :class="ChainID == 56 ? 'activeNetwork' : ''"
+          >
+            <img src="~/assets/img/guard/BSC.png" alt="" /> BSC
+          </div>
+          <div
+            @click="SwitchNetworkMATIC"
+            :class="ChainID == 137 ? 'activeNetwork' : ''"
+          >
+            <img src="~/assets/img/guard/Polygon.png" alt="" />Polygon
+          </div>
+        </div>
+      </div>
+      <div class="switch_wallet" v-if="Type == 'ALL'">
+        <p>选择钱包</p>
+        <div>
+          <div @click="selectWallet('MetaMask')">
+            <img src="~/assets/img/wallet-icon/MetaMask@2x.png" alt="" />
+            MetaMask
+          </div>
+          <div @click="selectWallet('WalletConnect')">
+            <img src="~/assets/img/wallet-icon/WalletConnect@2x.png" alt="" />
+            WalletConnect
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,9 +42,10 @@
 import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
-
+import { bscNetwork, maticNetwork } from "~/interface/common_contract.js";
 export default {
   name: "wallet-select",
+  props: ["Type"],
   data() {
     return {
       walletList: ["MetaMask", "WalletConnect"],
@@ -33,7 +53,31 @@ export default {
       coinbase: "",
     };
   },
+  computed: {
+    ChainID() {
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
+  },
   methods: {
+    async SwitchNetworkBSC() {
+      let ethereum = window.ethereum;
+      await ethereum
+        .request({
+          method: "wallet_addEthereumChain",
+          params: [{ ...bscNetwork }],
+        })
+        .then(() => {});
+    },
+    async SwitchNetworkMATIC() {
+      let ethereum = window.ethereum;
+      await ethereum
+        .request({
+          method: "wallet_addEthereumChain",
+          params: [{ ...maticNetwork }],
+        })
+        .then(() => {});
+    },
     // 链接钱包
     selectWallet(item) {
       this.$store.dispatch("setWalletType", item);
@@ -84,49 +128,111 @@ export default {
 @media screen and (min-width: 750px) {
   .wallet-select-mask {
     .wallet-select-block {
-      width: 640px;
-      height: 280px;
+      width: 480px;
       left: 50%;
       top: 50%;
       margin-left: -320px;
       margin-top: -140px;
+      padding: 30px 45px 45px 45px;
+      border-radius: 8px;
+      @include themeify {
+        background: themed("swap_backgruond");
+      }
     }
-    ul {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      li {
-        width: 320px;
-        height: 280px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0px 16px;
-        border-right: 1px solid #ededf0;
+    h3 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      height: 40px;
+      @include themeify {
+        color: themed("color-#121212");
+      }
+    }
+    .switch_network {
+      p {
+        font-size: 18px;
+        font-weight: 600;
         @include themeify {
-          background: themed("color-f8f9fa");
+          color: themed("color-#121212");
         }
-        &:hover {
+        line-height: 40px;
+      }
+      > div {
+        display: flex;
+        justify-content: space-between;
+        > div {
           cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 180px;
+          height: 50px;
+          font-size: 16px;
+          font-weight: 600;
           @include themeify {
-            background: themed("color-ffffff");
+            color: themed("color-#121212");
+            background: themed("color-#f8f9fa");
+            border: 1px solid themed("insure_input_border");
           }
-          span {
-            color: #fd7e14;
+          line-height: 18px;
+          border-radius: 5px;
+          img {
+            width: 24px;
+            margin-right: 4px;
+          }
+          &:hover {
+            @include themeify {
+              background: themed("swap_backgruond");
+            }
+            border: 2px solid #fd7e14 !important;
           }
         }
-
-        img {
-          width: 80px;
-          height: 80px;
-          margin-right: 16px;
+        .activeNetwork {
+          @include themeify {
+            background: themed("swap_backgruond");
+          }
+          border: 2px solid #fd7e14 !important;
         }
-        span {
-          margin-top: 20px;
-          font-size: 14px;
-          color: $text-b2;
+      }
+    }
+    .switch_wallet {
+      margin-top: 20px;
+      p {
+        font-size: 18px;
+        font-weight: 600;
+        color: #121212;
+        line-height: 40px;
+      }
+      > div {
+        display: flex;
+        justify-content: space-between;
+        > div {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 180px;
+          height: 180px;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 18px;
+          border-radius: 5px;
+          @include themeify {
+            color: themed("color-#121212");
+            background: themed("color-#f8f9fa");
+            border: 1px solid themed("insure_input_border");
+          }
+          img {
+            width: 48px;
+            margin-bottom: 10px;
+          }
+          &:hover {
+            @include themeify {
+              background: themed("swap_backgruond");
+            }
+            border: 2px solid #fd7e14 !important;
+          }
         }
       }
     }
@@ -183,14 +289,14 @@ export default {
     text-align: left;
     .close {
       display: block;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       background: url("../../assets/img/icon/guanbi.png") center center
         no-repeat;
       background-size: 100% 100%;
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 20px;
+      top: 20px;
       cursor: pointer;
     }
     .title {

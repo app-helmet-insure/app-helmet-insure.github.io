@@ -150,6 +150,11 @@ export default {
         .then(() => {});
     },
     async SendConfirm() {
+      this.$bus.$emit("OPEN_GUARD_DIALOG", {
+        Type: "SWITCHANDWITHDRAW",
+        Status: "PENDDING",
+        Button: "Switch to Matic & Withdraw",
+      });
       if (!this.SwapNumber) {
         return;
       }
@@ -169,10 +174,15 @@ export default {
         .on("receipt", (_, receipt) => {
           this.$bus.$emit("REFRESH_BALANCE");
           this.$bus.$emit("GET_GUARD_HISTORY");
-          this.$bus.$emit("OPEN_GUARD_DIALOG", { Step: 1, Type: "pendding" });
+          this.$bus.$emit("OPEN_GUARD_DIALOG", {
+            Type: "SWITCHANDWITHDRAW",
+            ClickFn: "SwitchAndWithdraw",
+            Button: "Switch to Matic & Withdraw",
+          });
           this.ConfirmLoading = false;
         })
         .on("error", (err, receipt) => {
+          this.ConfirmLoading = false;
           console.log(err);
         });
     },

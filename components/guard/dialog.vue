@@ -2,15 +2,19 @@
   <div class="guard_dialog_mask" v-if="dialogFlag">
     <div class="guard_dialog">
       <i class="close" @click="CloseDialog"></i>
-      <div class="staking" v-if="Type === 'pendding'">
+      <div class="staking" v-if="Status === 'PENDDING'">
         <div class="top_text">This process may take some time</div>
-        <button class="switch_button" @click="SwitchNetwork" v-if="Step === 1">
-          Switch to Matic & Withdraw
+        <button
+          class="switch_button"
+          @click="CommonFunction"
+          v-if="Type == 'SWITCHANDWITHDRAW'"
+        >
+          <i v-if="WithdrawLoading" class="loading_pic"></i>{{ Button }}
         </button>
         <button
           class="switch_button"
-          @click="ClickWithDraw(2)"
-          v-if="Step === 2"
+          @click="CommonFunction"
+          v-if="Type === 'WITHDRAW'"
         >
           <i v-if="WithdrawLoading" class="loading_pic"></i>
           {{
@@ -22,7 +26,7 @@
         </div>
         <div class="powered">Powered by BlackHole & ChainSwap</div>
       </div>
-      <div class="success" v-if="Type === 'success'">
+      <div class="success" v-if="Status === 'success'">
         <img src="~/assets/img/guard/success.png" alt="" />
         <div class="top_text">This process may take some time</div>
         <div class="link">
@@ -43,19 +47,28 @@ export default {
     return {
       dialogFlag: false,
       Step: 1,
-      Type: "pendding",
+      Type: "SWITCHANDWITHDRAW",
+      Status: "PENDDING",
       WithdrawLoading: false,
+      Button: "Switch to Matic & Withdraw",
     };
   },
   mounted() {
-    this.$bus.$on("OPEN_GUARD_DIALOG", ({ Step, Type }) => {
-      this.Step = Step;
+    this.$bus.$on("OPEN_GUARD_DIALOG", ({ Type, Button, Status }) => {
       this.Type = Type;
+      this.Button = Button;
+      this.Status = Status;
       this.dialogFlag = true;
     });
     this.$bus.$on("CLOSE_GUARD_DIALOG", () => {
       this.dialogFlag = false;
     });
+  },
+  computed: {
+    ChainID() {
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
   },
   methods: {
     CloseDialog() {
@@ -63,22 +76,38 @@ export default {
       this.Step = 1;
       this.WithdrawLoading = false;
     },
-    async SwitchNetwork() {
+    CommonFunction() {
+      if (this.Type === "SWITCHANDWITHDRAW") {
+        this.SwitchAndWithdraw();
+      }
+    },
+    async SwitchAndWithdraw() {
       let ethereum = window.ethereum;
       await ethereum
         .request({
           method: "wallet_addEthereumChain",
           params: [{ ...maticNetwork }],
         })
-        .then(() => {
-          console.log(111111111111111111111111);
-          this.Step = 2;
-          this.ClickWithDraw(1);
+        .then((res) => {
+          this.WithdrawLoading = true;
+          this.$bus.$emit("HISTORY_GUARD_SWAP", 1);
         });
     },
+    async SwitchNetworkMATIC(CallBack) {
+      let ethereum = window.ethereum;
+      await ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [{ ...maticNetwork }],
+      });
+    },
     ClickWithDraw(Step) {
-      this.$bus.$emit("HISTORY_GUARD_SWAP", Step);
-      this.WithdrawLoading = true;
+      if (this.ChainID != 137) {
+        this.Step = 1;
+        this.SwitchNetwork();
+      } else {
+        this.$bus.$emit("HISTORY_GUARD_SWAP", Step);
+        this.WithdrawLoading = true;
+      }
     },
   },
 };

@@ -23,6 +23,14 @@
           alt=""
         />
       </div>
+      <div class="airdrop_web airdrop" @click="handleClickNetwork(ChainID)">
+        <img src="~/assets/img/guard/BSC.png" alt="" v-if="ChainID == 56" />
+        <img
+          src="~/assets/img/guard/Polygon.png"
+          alt=""
+          v-if="ChainID == 137"
+        />
+      </div>
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -50,8 +58,8 @@
       <WallectSelect
         v-if="showWallectSelect"
         @close="closeWallectSelect"
+        :Type="WallectSelectType"
       ></WallectSelect>
-
       <CurrentAccount
         v-if="showCurrentAccount"
         @close="closeCurrentAccount"
@@ -76,7 +84,7 @@ import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
-import { getID } from "~/assets/utils/address-pool.js";
+import { maticNetwork, bscNetwork } from "~/interface/common_contract.js";
 export default {
   name: "p-header",
   props: ["account"],
@@ -93,6 +101,7 @@ export default {
       showMask: false,
       showCurrentAccount: false, // 显示当前账户信息
       showChangeWallet: false,
+      WallectSelectType: "ALL",
     };
   },
   computed: {
@@ -123,10 +132,14 @@ export default {
       this.chainID = newValue;
     },
   },
-  mounted() {},
+
   methods: {
     handleClickAirdrop() {
       this.$bus.$emit("AIRDROP_DIALOG", true);
+    },
+    async handleClickNetwork() {
+      this.showWallectSelect = true;
+      this.WallectSelectType = "NETWORK";
     },
     openChangeWallet() {
       this.showChangeWallet = true;
@@ -154,9 +167,11 @@ export default {
     },
     openWallectSelect() {
       this.showWallectSelect = true;
+      this.WallectSelectType = "ALL";
     },
     closeWallectSelect() {
       this.showWallectSelect = false;
+      this.WallectSelectType = "ALL";
     },
     handleShowMask() {
       this.$bus.$emit("OPEN_SILDER", true);

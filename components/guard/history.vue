@@ -99,22 +99,25 @@ export default {
     BridgeConfig() {
       return ChainSwapConfig(this.FromNetwork, this.ToNetwork);
     },
+    ChainID() {
+      let chainID = this.$store.state.chainID;
+      return chainID;
+    },
   },
   async mounted() {
     this.$bus.$on("GET_GUARD_HISTORY", async () => {
-      await this.getSendVolume();
+      this.getHistoryList();
     });
     this.$bus.$on("HISTORY_GUARD_SWAP", async (Step) => {
-      if (Step == 1) {
+      if (Step === 1) {
         await this.SwitchSwapToken();
       }
       if (Step === 2) {
         await this.ClickSwapToken(this.CurrentData);
       }
     });
-
     this.MyAccount();
-    await this.getSendVolume();
+    // this.getHistoryList();
   },
   methods: {
     async MyAccount() {
@@ -136,7 +139,7 @@ export default {
 
       return MaxNonce;
     },
-    async getSendVolume() {
+    async getHistoryList() {
       let MaxNonce = await this.getMaxNonce();
       let Account = await getAccounts();
       let History = [];
@@ -202,37 +205,47 @@ export default {
     },
     async getSwapToken(data) {
       this.CurrentData = data;
-      this.$bus.$emit("OPEN_GUARD_DIALOG", { Step: 2, Type: "pendding" });
+      this.$bus.$emit("OPEN_GUARD_DIALOG", {
+        Type: "SWITCHANDWITHDRAW",
+        Function: "SwitchAndWithdraw",
+        Button: "Switch to Matic & Withdraw",
+      });
     },
     // 直接Withdraw
     async SwitchSwapToken() {
       let { FromChainID, ToChainID, BurnSwapContracts, FromAssets, ToAssets } =
         this.BridgeConfig;
+      if (this.ChainID != ToChainID) {
+      }
       let Account = await getAccounts();
-      let MaxNonce = await this.getMaxNonce;
-      console.log(ToChainID, Account, MaxNonce - 1);
+      let web3 = new Web3(window.ethereum);
+      let MaxNonce = await this.getMaxNonce();
       let ChainswapAmounts = await this.AskChainSwapAmounts(
         ToChainID,
         Account,
-        MaxNonce - 1
+        Number(MaxNonce) - 1
       );
       let SignData = {
         contractAddress: this.BSCTOMATIC.ContractAddress,
         fromChainId: this.BSCTOMATIC.FromChainID,
-        nonce: MaxNonce - 1,
+        nonce: Number(MaxNonce) - 1,
         to: Account,
         toChainId: this.BSCTOMATIC.ToChainID,
         fromContract: this.BSCTOMATIC.FromContract,
         toContract: this.BSCTOMATIC.ToContract,
         mainContract: this.BSCTOMATIC.MainContract,
       };
+      let Contracts = new web3.eth.Contract(
+        ChainSwapABI,
+        this.BSCTOMATIC.ContractAddress
+      );
       getSignDataSyn(SignData, async (Signs) => {
         if (Signs) {
           await Contracts.methods
             .receive(
-              FromChainID,
+              this.BSCTOMATIC.FromChainID,
               Account,
-              MaxNonce - 1,
+              Number(MaxNonce) - 1,
               DecimalsToWei(ChainswapAmounts, ToAssets.Decimals),
               Signs
             )

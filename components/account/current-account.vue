@@ -139,8 +139,8 @@ export default {
       }
       .close {
         display: inline-block;
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         background-image: url("../../assets/img/icon/guanbi.png");
         background-repeat: no-repeat;
         background-position: center center;
@@ -148,6 +148,7 @@ export default {
         position: absolute;
         right: 30px;
         top: 20px;
+        cursor: pointer;
       }
       .account-box {
         border-radius: 3px;

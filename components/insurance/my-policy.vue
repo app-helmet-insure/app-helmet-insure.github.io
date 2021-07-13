@@ -493,7 +493,9 @@ export default {
             return this.FilterList;
           });
         } else {
-          this.FilterList = [];
+          this.FilterList = [...new Set(arr)].sort((a, b) => {
+            return a.sort - b.sort;
+          });
           this.isLoading = false;
           return this.FilterList;
         }

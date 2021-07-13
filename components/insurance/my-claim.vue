@@ -430,9 +430,6 @@ export default {
     }
     .claim_title {
       width: 100%;
-      @include themeify {
-        color: themed("color-17173a");
-      }
     }
     .claim_text {
       width: 100%;
@@ -563,9 +560,6 @@ export default {
         height: 44px;
         line-height: 55px;
         padding-left: 10px;
-        @include themeify {
-          color: themed("color-17173a");
-        }
       }
     }
     .claim_text {

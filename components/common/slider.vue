@@ -213,6 +213,11 @@
             </svg>
           </a>
         </div>
+        <div class="binance_link">
+          <div class="binance_wrap">
+            Invested by <img src="~/assets/img/slider/binance_web.png" alt="" />
+          </div>
+        </div>
         <div class="footer_bottom">
           <Langauage class="langauage" />
           <div class="themes">
@@ -399,6 +404,21 @@ export default {
     margin-top: 40px;
     flex: 1;
     overflow-y: auto;
+    &::-webkit-scrollbar-track {
+      background-color: #fff !important;
+    }
+    &::-webkit-scrollbar {
+      width: 6px !important;
+      background-color: #f96000;
+      height: 40px !important;
+      position: fixed;
+      bottom: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 40px;
+      background: #f96000 !important;
+      border-radius: 3px;
+    }
     &_group {
       height: auto;
       position: relative;
@@ -581,7 +601,7 @@ export default {
     }
   }
   .footer {
-    height: 128px;
+    height: 185px;
     .logo_wrap {
       display: flex;
       transform: translateX(-10px);
@@ -614,9 +634,6 @@ export default {
       height: 64px;
       display: flex;
       align-items: center;
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
       a {
         margin-right: 20px;
         &:last-of-type {
@@ -633,6 +650,28 @@ export default {
               fill: themed("media_icon_hover");
             }
           }
+        }
+      }
+    }
+    .binance_link {
+      width: 100%;
+      @include themeify {
+        border-bottom: 1px solid themed("color-e8e8eb");
+      }
+      .binance_wrap {
+        width: 100%;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        @include themeify {
+          color: themed("color-17173a");
+          background: themed("color-f8f9fa");
+        }
+        img {
+          margin-left: 4px;
+          width: 98px;
         }
       }
     }
@@ -745,6 +784,7 @@ export default {
     margin-top: 40px;
     flex: 1;
     overflow-y: auto;
+
     &_group {
       height: auto;
       position: relative;
@@ -954,9 +994,6 @@ export default {
       height: 36px;
       display: flex;
       align-items: center;
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
       padding-bottom: 20px;
       a {
         margin-right: 20px;
@@ -974,6 +1011,28 @@ export default {
         }
         &:last-of-type {
           margin: 0;
+        }
+      }
+    }
+    .binance_link {
+      width: 100%;
+      @include themeify {
+        border-bottom: 1px solid themed("color-e8e8eb");
+      }
+      .binance_wrap {
+        width: 100%;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        @include themeify {
+          color: themed("color-17173a");
+          background: themed("color-f8f9fa");
+        }
+        img {
+          margin-left: 4px;
+          width: 98px;
         }
       }
     }

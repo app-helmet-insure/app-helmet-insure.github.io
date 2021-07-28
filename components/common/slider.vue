@@ -172,7 +172,7 @@
       </div>
       <div class="footer">
         <a href="https://www.guard.insure/insurance" class="toGuard_h5"
-          ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Flash to
+          ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
           Guard</a
         >
         <div class="logo_wrap">

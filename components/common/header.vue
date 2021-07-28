@@ -24,7 +24,7 @@
         />
       </div>
       <a href="https://www.guard.insure/insurance" class="toGuard_web"
-        ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Flash to
+        ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
         Guard</a
       >
       <a

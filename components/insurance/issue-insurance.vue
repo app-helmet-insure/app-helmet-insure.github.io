@@ -374,7 +374,6 @@ export default {
         showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
         _yield: 0,
       };
-
       let object = {
         title: "WARNING",
         layout: "layout1",

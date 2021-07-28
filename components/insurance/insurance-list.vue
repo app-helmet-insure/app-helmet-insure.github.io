@@ -309,10 +309,6 @@ export default {
           InsuranceImg: "HELMET",
         },
         {
-          InsuranceType: "SHIB",
-          InsuranceImg: "SHIB",
-        },
-        {
           InsuranceType: "ETH",
           InsuranceImg: "ETH",
         },
@@ -339,6 +335,10 @@ export default {
         {
           InsuranceType: "MATH",
           InsuranceImg: "MATH",
+        },
+        {
+          InsuranceType: "SHIB",
+          InsuranceImg: "SHIB",
         },
         {
           InsuranceType: "COIN(BSC)",

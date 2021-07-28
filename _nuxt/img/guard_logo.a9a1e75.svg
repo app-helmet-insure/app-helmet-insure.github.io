@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <linearGradient x1="0%" y1="23.8981956%" x2="90.8234459%" y2="30.0528327%" id="linearGradient-1">
+            <stop stop-color="#2167EC" offset="0%"></stop>
+            <stop stop-color="#1457D8" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="41.131723%" cy="0%" fx="41.131723%" fy="0%" r="122.048039%" gradientTransform="translate(0.411317,0.000000),rotate(77.001376),scale(1.000000,1.501363),translate(-0.411317,-0.000000)" id="radialGradient-2">
+            <stop stop-color="#115AE6" offset="0%"></stop>
+            <stop stop-color="#4786FF" offset="42.8430944%"></stop>
+            <stop stop-color="#6398FF" offset="53.8682615%"></stop>
+            <stop stop-color="#0D4FCD" offset="100%"></stop>
+        </radialGradient>
+        <circle id="path-3" cx="14.726" cy="14.726" r="10.976"></circle>
+        <filter x="-18.3%" y="-18.3%" width="136.6%" height="136.6%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="-1" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.239215686   0 0 0 0 0.698039216  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="定稿" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Bridge" transform="translate(-819.000000, -75.000000)">
+            <g id="编组-3" transform="translate(809.000000, 70.000000)">
+                <g id="Gurad_coin" transform="translate(10.000000, 5.000000)">
+                    <rect id="矩形" x="0" y="0" width="30" height="30"></rect>
+                    <g id="椭圆形">
+                        <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-3"></use>
+                        <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                        <circle stroke="url(#radialGradient-2)" stroke-width="3.515625" cx="14.726" cy="14.726" r="12.7338125"></circle>
+                    </g>
+                    <path d="M15,8 C18.2805714,8 20.9462114,10.5691252 20.9991962,13.7579924 L21,13.8548125 L21,20.1987867 L15.8442222,21.2 L15.8444444,18.4219616 L15.8450855,18.3617662 C15.880029,16.7223762 17.3392372,15.3988771 19.1486773,15.3638752 L19.2222222,15.3631645 L19.2222222,13.8337659 L18.891383,13.7733094 C16.4167091,13.3210951 13.8796378,13.3043372 11.4000139,13.723222 L11.1813757,13.761313 L10.7777778,13.8337659 L10.7777778,15.3631645 L10.847608,15.3638052 C12.6339549,15.3966104 14.079849,16.6852176 14.1526774,18.2945285 L14.1549145,18.3617662 L14.1553333,18.4018333 L14.1553333,21.1980484 L9,20.1987867 L9,13.8548125 L9.00080383,13.7579924 C9.05378857,10.5691252 11.7194286,8 15,8 Z" id="路径" fill="#FFFFFF" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

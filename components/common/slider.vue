@@ -140,6 +140,18 @@
         </div>
         <div class="menu_item">
           <nuxt-link
+            to="/migration"
+            :class="routeObj.name.includes('migration') ? 'active' : ''"
+          >
+            <svg class="icon svg-icon" aria-hidden="true">
+              <use xlink:href="#icon-iio"></use>
+            </svg>
+            Migration
+            <!-- <i class="num">1</i> -->
+          </nuxt-link>
+        </div>
+        <!-- <div class="menu_item">
+          <nuxt-link
             to="/guard"
             :class="routeObj.name.includes('guard') ? 'active' : ''"
           >
@@ -154,9 +166,9 @@
               <use xlink:href="#icon-iio"></use>
             </svg>
             Guard
-            <!-- <i class="num">1</i> -->
+            <i class="num">1</i>
           </nuxt-link>
-        </div>
+        </div> -->
         <div class="menu_item">
           <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
             <!-- <svg class="hot" aria-hidden="true">

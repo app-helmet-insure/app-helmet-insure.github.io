@@ -1,9 +1,16 @@
 <template>
-  <div class="main_container"></div>
+  <div class="main_container">
+    <div class="migrate_container">
+      <Title />
+    </div>
+  </div>
 </template>
 
 <script>
-export default {};
+import Title from "~/components/migration/index";
+export default {
+  components: { Title },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -12,11 +19,15 @@ export default {};
 @media screen and (min-width: 750px) {
   .main_container {
     width: 80%;
-    .flashmining_container {
-      width: 100%;
-      min-width: 1026px;
-      margin: 0 auto 30px;
-    }
+    background: #fff;
+    padding-bottom: 70px;
   }
 }
-</style>
+@media screen and (max-width: 750px) {
+  .main_container {
+    width: 100%;
+    background: #fff !important;
+    padding-bottom: 70px;
+  }
+}
+</style>  

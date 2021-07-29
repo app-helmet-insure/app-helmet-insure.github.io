@@ -202,6 +202,10 @@
         </div>
       </div>
       <div class="footer">
+        <a href="https://www.guard.insure/insurance" class="toGuard_h5"
+          ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
+          Guard</a
+        >
         <div class="logo_wrap">
           <a
             href="https://www.coingecko.com/en/coins/helmet-insure"
@@ -337,6 +341,9 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
+  .toGuard_h5 {
+    display: none;
+  }
   .openSlider {
     display: block;
   }
@@ -991,6 +998,32 @@ export default {
     }
   }
   .footer {
+    .toGuard_h5 {
+      min-width: 150px;
+      height: 40px;
+      margin-bottom: 10px;
+      @include themeify {
+        background: themed("color-17173a");
+        color: themed("color-ffffff");
+      }
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-family: IBMPlexSans;
+      line-height: 24px;
+      padding: 0 15px;
+      margin-right: 10px;
+      &:hover {
+        @include themeify {
+          background: themed("color-2c2c2c");
+        }
+      }
+      img {
+        margin-right: 8px;
+      }
+    }
     .logo_wrap {
       display: flex;
       margin-bottom: 10px;
@@ -1026,6 +1059,7 @@ export default {
       display: flex;
       align-items: center;
       padding-bottom: 20px;
+
       a {
         margin-right: 20px;
         .icon {

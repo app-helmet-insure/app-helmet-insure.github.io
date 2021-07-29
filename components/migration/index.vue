@@ -1,12 +1,109 @@
 <template>
   <div class="migration_title">
     <h3>Migrate to Polygon</h3>
+    <div class="showdata">
+      <p>
+        <img src="~/assets/img/migration/burn.svg" alt="" />燃烧中：
+        1,0,000.232232 Helmet
+      </p>
+      <p>
+        <img src="~/assets/img/migration/coin.svg" alt="" />待提现：
+        1,000,000.232232 Guard
+      </p>
+    </div>
+    <div class="showaction">
+      <Stake />
+      <Swap />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import Stake from "./stake.vue";
+import Swap from "./swap.vue";
+export default {
+  components: { Stake, Swap },
+};
 </script>
 
-<style>
+<style lang='scss' scoped>
+@media screen and(min-width:750px) {
+  h3 {
+    margin: 30px auto;
+    text-align: center;
+    font-size: 24px;
+    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+    font-weight: 600;
+    color: #17173a;
+    line-height: 32px;
+  }
+  .showdata {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+    height: 70px;
+    background: #f7f7fa;
+    border-radius: 5px;
+    img {
+      margin-right: 4px;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: #17173a;
+      line-height: 18px;
+      padding: 0 40px;
+      margin-right: 40px;
+    }
+  }
+  .showaction {
+    width: 80%;
+    margin: 40px auto 0;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media screen and(max-width:750px) {
+  h3 {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 24px;
+    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+    font-weight: 600;
+    color: #17173a;
+    line-height: 32px;
+    padding: 30px 0;
+  }
+  .showdata {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    margin: 0 auto;
+    height: 70px;
+    background: #f7f7fa;
+    border-radius: 5px;
+    img {
+      margin-right: 4px;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: #17173a;
+      line-height: 18px;
+      padding: 0 10px;
+    }
+  }
+  .showaction {
+    width: 95%;
+    margin: 40px auto 0;
+  }
+}
 </style>

@@ -22,6 +22,8 @@
     "Server": "Powered By PancakeSwap "
   },
   "Banner": {
+    "HelmetBurn":"Helmet Burning Amount",
+    "GuardSupply":"Guard Circulating Supply",
     "ClosedPolicy": "Policy Category",
     "LongValue": "Policy Creation",
     "HelmetTransfer": "HELMET In Circulation",

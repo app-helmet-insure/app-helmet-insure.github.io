@@ -192,7 +192,6 @@ export const getID = async () => {
     } else {
         const walletConnectProvider = new WalletConnectProvider({
             chainId: 56,
-            bridge: 'wss://bridge.walletconnect.org/',
             rpc: {
                 56: 'https://bsc-dataseed1.binance.org/',
             },

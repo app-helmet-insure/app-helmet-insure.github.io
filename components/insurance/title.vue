@@ -1,27 +1,15 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide argon">
-        <div></div>
-      </div>
-      <div class="swiper-slide bmxx">
-        <div></div>
-      </div>
-      <div class="swiper-slide baby">
-        <div></div>
-      </div>
-      <div class="swiper-slide dark">
-        <div></div>
-      </div>
+      <div class="swiper-slide guard"><div></div></div>
+      <div class="swiper-slide mcrn"><div></div></div>
+      <div class="swiper-slide nuls"><div></div></div>
       <a
         class="swiper-slide dis"
         href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
         target="_blank"
         ><div></div
       ></a>
-      <div class="swiper-slide shib">
-        <div></div>
-      </div>
     </div>
     <div class="swiper-button-next swiper-button-black"></div>
     <div class="swiper-button-prev swiper-button-black"></div>
@@ -144,40 +132,28 @@ export default {
         background-position: center;
       }
     }
-    .argon {
+    .guard {
+      background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/argon_web.png");
+        background-image: url("../../assets/img/banner/gaurd_web.png");
       }
     }
-    .bmxx {
-      background: #fff9ef;
+    .mcrn {
+      background: #d1f5ff;
       > div {
-        background-image: url("../../assets/img/banner/bmxx_web.png");
+        background-image: url("../../assets/img/banner/mcrn_web.png");
       }
     }
-    .baby {
-      background: #c5edfa;
+    .nuls {
+      background: linear-gradient(#1c1c1c, 50%, #2b2d35 100%);
       > div {
-        background-image: url("../../assets/img/banner/babyswap_web.png");
-      }
-    }
-
-    .dark {
-      background: #ffe9ce;
-      > div {
-        background-image: url("../../assets/img/banner/darkmode_pc.png");
+        background-image: url("../../assets/img/banner/nuls_web.png");
       }
     }
     .dis {
       background: #7289da;
       > div {
         background-image: url("../../assets/img/banner/dis_web.png");
-      }
-    }
-    .shib {
-      background: #262724;
-      > div {
-        background-image: url("../../assets/img/banner/shib2_web.png");
       }
     }
     .imgbanner {
@@ -210,40 +186,28 @@ export default {
         background-position: center;
       }
     }
-    .argon {
+    .guard {
+      background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/argon_h5.png");
+        background-image: url("../../assets/img/banner/gaurd_h5.png");
       }
     }
-    .bmxx {
-      background: #fff9ef;
+    .mcrn {
+      background: #d1f5ff;
       > div {
-        background-image: url("../../assets/img/banner/bmxx_h5.png");
+        background-image: url("../../assets/img/banner/mcrn_h5.png");
       }
     }
-    .baby {
-      background: #c5edfa;
+    .nuls {
+      background: linear-gradient(#1c1c1c, 50%, #2b2d35 100%);
       > div {
-        background-image: url("../../assets/img/banner/babyswap_h5.png");
-      }
-    }
-    .dark {
-      background: #ffe9ce;
-      > div {
-        background-image: url("../../assets/img/banner/darkmode_h5.png");
+        background-image: url("../../assets/img/banner/nuls_h5.png");
       }
     }
     .dis {
       background: #7289da;
       > div {
         background-image: url("../../assets/img/banner/dis.png");
-      }
-    }
-
-    .shib {
-      background: #262724;
-      > div {
-        background-image: url("../../assets/img/banner/shib2_h5.png");
       }
     }
 

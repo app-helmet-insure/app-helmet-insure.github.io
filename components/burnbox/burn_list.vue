@@ -284,7 +284,7 @@ export default {
       let arr = [
         {
           INDEX: "SHIBHHMCRN",
-          POOL_NAME: "<i>hMCRN</i>&nbsp;Burning&nbsp;Box",
+          POOL_NAME: "<i>SHIBh</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hMCRN",
           TOTAL_BONUS: 2900,
           START_TIME: "2021/07/31 00:00 UTC+8",
@@ -301,7 +301,7 @@ export default {
         },
         {
           INDEX: "SHIBHHWIZARD",
-          POOL_NAME: "<i>hWIZARD</i>&nbsp;Burning&nbsp;Box",
+          POOL_NAME: "<i>SHIBh</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hWIZARD",
           TOTAL_BONUS: 5000,
           START_TIME: "2021/07/31 00:00 UTC+8",

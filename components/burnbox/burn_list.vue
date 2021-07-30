@@ -136,13 +136,13 @@
             ></span>
             <p>
               {{ $t("Table.EarnList") }}
-              <span>{{ item.TOKEN_NAME }} </span>
+              <span>{{ item.REWARD_NAME }} </span>
             </p>
           </div>
         </section>
         <section>
           <p>
-            <span>{{ item.TOTAL_BONUS + " " + item.TOKEN_NAME }}</span>
+            <span>{{ item.TOTAL_BONUS + " " + item.REWARD_NAME }}</span>
             <span>{{ $t("Table.Bonus") }}</span>
           </p>
           <div>

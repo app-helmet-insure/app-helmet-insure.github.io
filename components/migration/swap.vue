@@ -4,34 +4,139 @@
 
     <div class="stake_wrap">
       <div class="show_text">
-        <p><span>当日剩余兑换额度：</span> <span>1000000</span></p>
-        <p><span>我的额度：</span> <span>1000000</span></p>
+        <p>
+          <span>当日剩余兑换额度：</span> <span>{{ AllQuota }}</span>
+        </p>
+        <p>
+          <span>我的额度：</span> <span>{{ MyQuota }}</span>
+        </p>
       </div>
       <div class="balance text">
-        <span>可结算:</span><span>0.00010000 LPT</span>
+        <span>可用:</span><span>{{ MyBalance }} Helmet</span>
       </div>
       <div class="input">
-        <input type="text" />
-        <span class="max">最大量</span>
+        <input type="text" v-model="BurnVolume" />
+        <span class="max" @click="BurnVolume = MyQuota">最大量</span>
       </div>
-      <button class="b_button">质押挖矿</button>
-      <div class="guard_balance">
+      <button class="b_button" @click="ActionStep()">
+        {{
+          HelmetNeedApprove || GuardNeedApprove ? "授权" : "燃烧兑换 Guard"
+        }}质押挖矿
+      </button>
+      <!-- <div class="guard_balance">
         <span>燃烧兑换 Guard，立享 Black 奖励</span>
         <div>
           <p><span>Guard额度：</span> <span>1000000</span></p>
           <button>Claim</button>
         </div>
-      </div>
+      </div> -->
       <p>Powered by BlackHole</p>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import {
+  QuotaPerDay,
+  BalanceOf,
+  Allowance,
+} from "~/interface/read_contract.js";
+import { BurnHelmet, Approve } from "~/interface/write_contract.js";
+const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
+const HelmetAddress = "0xa9579F94A285DD51EBA60aC48Fb61ca50E803217";
+const GuardAddress = "0xC78eEfDC4D31A44A45182713d64Dbc8505636CcB";
+export default {
+  data() {
+    return {
+      MyBalance: 0,
+      MyQuota: 0,
+      AllQuota: 0,
+      BurnVolume: "",
+      HelmetNeedApprove: true,
+      GuardNeedApprove: true,
+    };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.getMyQuota();
+      this.getAllQuota();
+      this.getMyBalance();
+      this.getHelmetApproveStatus();
+      this.getGuardApproveStatus();
+    });
+  },
+  methods: {
+    async getMyBalance() {
+      let MyBalance = await BalanceOf(HelmetAddress);
+      this.MyBalance = MyBalance;
+    },
+    async getMyQuota() {
+      let MyQuota = await BalanceOf(GuardAddress);
+      console.log(MyQuota, "MyQuota");
+      this.MyQuota = MyQuota;
+    },
+    async getAllQuota() {
+      let AllQuota = await QuotaPerDay(ContractAddress);
+      console.log(AllQuota, "AllQuota");
+      this.AllQuota = AllQuota;
+    },
+    async getHelmetApproveStatus() {
+      let HelmetNeedApprove = await Allowance(HelmetAddress, ContractAddress);
+      this.HelmetNeedApprove = HelmetNeedApprove;
+    },
+    async getGuardApproveStatus() {
+      let GuardNeedApprove = await Allowance(GuardAddress, ContractAddress);
+      this.GuardNeedApprove = GuardNeedApprove;
+    },
+    async ApproveHelemt(flag) {
+      Approve(HelmetAddress, ContractAddress, "Helmet", (res) => {
+        if (res === "success") {
+          this.HelmetNeedApprove = false;
+          if (flag) {
+            this.toBurnHelmet();
+          } else {
+            this.ApproveGuard();
+          }
+        }
+      });
+    },
+    async ApproveGuard() {
+      Approve(GuardAddress, ContractAddress, "Guard", (res) => {
+        if (res === "success") {
+          this.GuardNeedApprove = false;
+          this.toBurnHelmet();
+        }
+      });
+    },
+    async toBurnHelmet() {
+      if (!this.BurnVolume) {
+        return;
+      }
+      BurnHelmet(ContractAddress, this.BurnVolume);
+    },
+    async ActionStep() {
+      if (this.HelmetNeedApprove && this.HelmetNeedApprove) {
+        this.ApproveHelemt();
+        console.log(1);
+      }
+      if (this.HelmetNeedApprove && !this.HelmetNeedApprove) {
+        this.ApproveHelemt(true);
+        console.log(2);
+      }
+      if (!this.HelmetNeedApprove && this.HelmetNeedApprove) {
+        this.ApproveGuard();
+        console.log(3);
+      }
+      if (!this.HelmetNeedApprove && !this.HelmetNeedApprove) {
+        this.toBurnHelmet();
+        console.log(4);
+      }
+    },
+  },
+};
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
   .migration_swap {
@@ -68,6 +173,7 @@ export default {};
     }
     .stake_wrap {
       padding: 0 40px;
+      margin-top: 10px;
     }
     .show_text {
       width: 100%;
@@ -75,7 +181,6 @@ export default {};
       background: #f8f9fa;
       border-radius: 5px;
       padding: 0 10px;
-      margin-top: 10px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -85,8 +190,11 @@ export default {};
         justify-content: space-between;
         font-size: 14px;
         font-weight: 500;
+        &:nth-of-type(1) {
+          margin-top: 0;
+        }
         &:nth-of-type(2) {
-          margin-top: 4px;
+          margin-top: 10px;
         }
         span {
           &:nth-of-type(1) {

@@ -3,7 +3,7 @@
     <div class="title"><span>1</span>抵押LPT获取Guard额度</div>
     <div class="stake_wrap">
       <div class="balance text">
-        <span>可抵押:</span><span>0.00010000 LPT</span>
+        <span>可抵押:</span><span>{{myBalance}} LPT</span>
       </div>
       <div class="input">
         <input type="text" />
@@ -30,7 +30,32 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      myBalance: 0,
+      allQuota: 0,
+    };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      // this.getMyBalance();
+      // this.getAllQuota();
+    });
+  },
+  methods: {
+    async getMyBalance() {
+      let ContractAddress = "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571";
+      let myBalance = await BalanceOf(ContractAddress);
+      this.myBalance = myBalance;
+    },
+    async getAllQuota() {
+      let ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
+      let allQuota = await QuotaPerDay(ContractAddress);
+      this.allQuota = allQuota;
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>

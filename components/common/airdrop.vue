@@ -383,7 +383,7 @@ export default {
       width: 100%;
       height: 40px;
       @include themeify {
-        color: themed("color-17173a");
+        background: themed("color-17173a");
       }
       border-radius: 5px;
       font-size: 14px;

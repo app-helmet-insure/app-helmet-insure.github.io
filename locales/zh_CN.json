@@ -22,6 +22,8 @@
     "Server": "该服务由 PancakeSwap 提供支持"
   },
   "Banner": {
+    "HelmetBurn":"Helmet 销毁总量",
+    "GuardSupply":"Guard 铸造总量",
     "ClosedPolicy": "支持保险种类",
     "LongValue": "LONG当前总价值",
     "HelmetTransfer": "Helmet流通量",

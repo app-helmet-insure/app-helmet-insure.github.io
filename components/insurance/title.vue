@@ -1,9 +1,10 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide guard"><div></div></div>
+      <!-- <div class="swiper-slide guard"><div></div></div> -->
       <div class="swiper-slide mcrn"><div></div></div>
-      <div class="swiper-slide nuls"><div></div></div>
+      <div class="swiper-slide wizard"><div></div></div>
+      <!-- <div class="swiper-slide nuls"><div></div></div> -->
       <a
         class="swiper-slide dis"
         href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
@@ -132,6 +133,12 @@ export default {
         background-position: center;
       }
     }
+    .wizard {
+      background: linear-gradient(#62deff 50%, #d4f0e1 100%);
+      > div {
+        background-image: url("../../assets/img/banner/wizard_web.png");
+      }
+    }
     .guard {
       background: #22222a;
       > div {
@@ -184,6 +191,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .wizard {
+      background: linear-gradient(#62deff, 50%, #d4f0e1, 100%);
+      > div {
+        background-image: url("../../assets/img/banner/wizard_h5.png");
       }
     }
     .guard {

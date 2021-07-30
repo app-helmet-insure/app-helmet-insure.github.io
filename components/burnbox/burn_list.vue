@@ -71,7 +71,7 @@
             <button
               @click="HandleClickAction(item, 'STAKE')"
               :class="
-                activeBurn == item.TOKEN_NAME &&
+                activeBurn == item.INDEX &&
                 showActiveBurn &&
                 activeType == 'STAKE'
                   ? 'activeButton stakeFlash'
@@ -84,7 +84,7 @@
             <button
               @click="HandleClickAction(item, 'CLAIM')"
               :class="
-                activeBurn == item.icon &&
+                activeBurn == item.INDEX &&
                 showActiveBurn &&
                 activeType == 'CLAIM'
                   ? 'activeButton claimFlash'
@@ -98,7 +98,7 @@
         </div>
         <div
           class="burn_detail"
-          v-if="showActiveBurn && activeBurn == item.TOKEN_NAME"
+          v-if="showActiveBurn && activeBurn == item.INDEX"
         >
           <svg class="close" aria-hidden="true" @click="showActiveBurn = false">
             <use xlink:href="#icon-close"></use>
@@ -179,7 +179,7 @@
           <button
             @click="HandleClickAction(item, 'STAKE', true)"
             :class="
-              activeBurn == item.TOKEN_NAME &&
+              activeBurn == item.INDEX &&
               showActiveBurn &&
               activeType == 'STAKE'
                 ? 'activeButton stakeFlash'
@@ -191,7 +191,7 @@
           <button
             @click="HandleClickAction(item, 'CLAIM', true)"
             :class="
-              activeBurn == item.TOKEN_NAME &&
+              activeBurn == item.INDEX &&
               showActiveBurn &&
               activeType == 'CLAIM'
                 ? 'activeButton claimFlash'
@@ -203,7 +203,7 @@
         </section>
         <div
           class="wraper_title"
-          v-if="showActiveBurn && activeBurn == item.TOKEN_NAME"
+          v-if="showActiveBurn && activeBurn == item.INDEX"
         >
           <PHeader></PHeader>
           <div class="wraper">
@@ -275,7 +275,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeBurn = PoolData.TOKEN_NAME;
+      this.activeBurn = PoolData.INDEX;
     },
     close_wraper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
@@ -283,6 +283,41 @@ export default {
     initBurnBox() {
       let arr = [
         {
+          INDEX: "SHIBHHMCRN",
+          POOL_NAME: "<i>SHIBh</i>&nbsp;Burning&nbsp;Box",
+          REWARD_NAME: "hMCRN",
+          TOTAL_BONUS: 2900,
+          START_TIME: "2021/07/31 00:00 UTC+8",
+          END_TIME: "2021/08/05 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/07/31 00:00"),
+          MING_TIME: this.getRemainTime("2021/08/05 00:00"),
+          TOKEN_NAME: "SHIBh",
+          STAKE_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          STAKE_DECIMALS: 12,
+          REWARD_DECIMALS: 18,
+          POOL_ADDRESS: "0x6ac3B230bB6F337f043E943D212D7Ae6a7174fa8",
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf",
+        },
+        {
+          INDEX: "SHIBHHWIZARD",
+          POOL_NAME: "<i>SHIBh</i>&nbsp;Burning&nbsp;Box",
+          REWARD_NAME: "hWIZARD",
+          TOTAL_BONUS: 5000,
+          START_TIME: "2021/07/31 00:00 UTC+8",
+          END_TIME: "2021/08/05 00:00 UTC+8",
+          OPEN_TIME: this.getMiningTime("2021/07/31 00:00"),
+          MING_TIME: this.getRemainTime("2021/08/05 00:00"),
+          TOKEN_NAME: "SHIBh",
+          STAKE_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          STAKE_DECIMALS: 12,
+          REWARD_DECIMALS: 18,
+          POOL_ADDRESS: "0x3670893F84dc477Bd0a0F4bE74B6916F4CD3074e",
+          ONELPT_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
+          REWARD_ADDRESS: "0x792b733af7b9b83331f90dbbd297e519258b09bc",
+        },
+        {
+          INDEX: "BHELMETHBABY",
           POOL_NAME: "<i>BHELMET</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hBABY",
           TOTAL_BONUS: 60000,
@@ -299,6 +334,7 @@ export default {
           REWARD_ADDRESS: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
         },
         {
+          INDEX: "HFORSHIBH",
           POOL_NAME: "<i>hFOR</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "SHIBh",
           TOTAL_BONUS: 15000000000,
@@ -315,6 +351,7 @@ export default {
           REWARD_ADDRESS: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
         },
         {
+          INDEX: "HAUTOHTPT",
           POOL_NAME: "<i>hAUTO</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hTPT",
           TOTAL_BONUS: 1000000,
@@ -331,6 +368,7 @@ export default {
           REWARD_ADDRESS: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
         },
         {
+          INDEX: "BNB500HTPT",
           POOL_NAME: "<i>BNB500</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hTPT",
           TOTAL_BONUS: 1000000,
@@ -347,6 +385,7 @@ export default {
           REWARD_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
         },
         {
+          INDEX: "HCTKHDODO",
           POOL_NAME: "<i>hCTK</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "hDODO",
           TOTAL_BONUS: 10000,
@@ -363,6 +402,7 @@ export default {
           REWARD_ADDRESS: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
         },
         {
+          INDEX: "HCCTHCCTII",
           POOL_NAME: "<i>HCCT</i>&nbsp;Burning&nbsp;Box",
           REWARD_NAME: "HCCTII",
           TOTAL_BONUS: 100000,

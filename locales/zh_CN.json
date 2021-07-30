@@ -22,8 +22,8 @@
     "Server": "该服务由 PancakeSwap 提供支持"
   },
   "Banner": {
-    "HelmetBurn":"Helmet 销毁总量",
-    "GuardSupply":"Guard 铸造总量",
+    "HelmetBurn": "Helmet 销毁总量",
+    "GuardSupply": "Guard 铸造总量",
     "ClosedPolicy": "支持保险种类",
     "LongValue": "LONG当前总价值",
     "HelmetTransfer": "Helmet流通量",
@@ -311,5 +311,19 @@
     "Insurance_text22": "已结束",
     "Insurance_text23": "抵押",
     "Insurance_text24": "购买"
+  },
+  "Migration": {
+    "MyBurning": "My Burning",
+    "MyPendding": "My Pendding",
+    "StakeTitle": "抵押LPT获取Guard额度",
+    "Available": "可抵押",
+    "MyStake": "我的抵押",
+    "Total": "总抵押量",
+    "GuardCredit": "Guard额度",
+    "SwapTitle": "兑换 Guard",
+    "AvailableGuard": "当日剩余兑换额度",
+    "MyCredits": "我的额度",
+    "Approve": "授权",
+    "Burn":"燃烧兑换 Guard"
   }
 }

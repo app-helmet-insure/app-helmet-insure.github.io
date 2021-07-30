@@ -7,6 +7,7 @@ import FectoryABI from "~/abi/factory_abi.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import MigrationABI from "~/abi/Migration.json";
+import IIOABI from "~/abi/iio_abi.json";
 import {
   Web3Contract,
   getAccounts,
@@ -23,7 +24,11 @@ let BurnSwapContractAddress = "0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc"; //�
 let BurnSignContractAddress = "0x81d82a35253B982E755c4D7d6AADB6463305B188"; //燃烧签名地址
 let StakingContractAddress = "0x910651F81a605a6Ef35d05527d24A72fecef8bF0"; //质押地址
 // Balanceof
-export const BalanceOf = async (ContractAddress, Decimals=18, TokenAddress) => {
+export const BalanceOf = async (
+  ContractAddress,
+  Decimals = 18,
+  TokenAddress
+) => {
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   if (!TokenAddress) {
     TokenAddress = await getAccounts();
@@ -42,7 +47,7 @@ export const BalanceOf = async (ContractAddress, Decimals=18, TokenAddress) => {
     });
 };
 // TotalSupply
-export const TotalSupply = async (ContractAddress, Decimals=18) => {
+export const TotalSupply = async (ContractAddress, Decimals = 18) => {
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
@@ -58,7 +63,7 @@ export const TotalSupply = async (ContractAddress, Decimals=18) => {
     });
 };
 // Pool Reward
-export const Earned = async (ContractAddress, Decimals=18) => {
+export const Earned = async (ContractAddress, Decimals = 18) => {
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
@@ -75,12 +80,33 @@ export const Earned = async (ContractAddress, Decimals=18) => {
     });
 };
 // Pool Reward2
-export const Earned2 = async (ContractAddress, Decimals=18) => {
+export const Earned2 = async (ContractAddress, Decimals = 18) => {
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
     .earned2(Account)
+    .call()
+    .then((res) => {
+      if (DecimalsUnit) {
+        return fromWei(res, DecimalsUnit);
+      } else {
+        let powNumber = new BigNumber(10).pow(Decimals).toString();
+        return new BigNumber(res).div(powNumber).toString();
+      }
+    });
+};
+// Pool Reward3
+export const Earned3 = async (
+  ContractAddress,
+  RewardAddress,
+  Decimals = 18
+) => {
+  let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
+  let Account = await getAccounts();
+  let DecimalsUnit = getDecimals(Decimals);
+  return Contracts.methods
+    .earned3(RewardAddress, Account)
     .call()
     .then((res) => {
       if (DecimalsUnit) {
@@ -212,15 +238,15 @@ export const Settleable = async (seller, short) => {
   let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
   return Contracts.methods.settleable(seller, short).call();
 };
-export const QuotaPerDay = async (ContractAddress, Address = null) => {
+export const RestQuota = async (ContractAddress, Address = null) => {
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);
   let Account = await getAccounts();
   Address ? Address : Account;
   return Contracts.methods
-    .quotaPerDay()
+    .restQuota()
     .call()
     .then((res) => {
-        console.log(res)
+      console.log(res);
       return fromWei(res);
     });
 };
@@ -235,3 +261,15 @@ export const Quotas = async (ContractAddress, Address = null) => {
       return fromWei(res);
     });
 };
+export const TotalBurns = async (ContractAddress, Address = null) => {
+  let Contracts = await Web3Contract(MigrationABI, ContractAddress);
+  let Account = await getAccounts();
+  Address ? Address : Account;
+  return Contracts.methods
+    .totalBurns(Address)
+    .call()
+    .then((res) => {
+      return fromWei(res);
+    });
+};
+

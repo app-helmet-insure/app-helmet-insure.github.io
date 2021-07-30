@@ -1,24 +1,38 @@
 <template>
   <div class="migration_stake">
-    <div class="title"><span>1</span>抵押LPT获取Guard额度</div>
+    <div class="title"><span>1</span>{{ $t("Migration.StakeTitle") }}</div>
     <div class="stake_wrap">
       <div class="balance text">
-        <span>可抵押:</span><span>{{myBalance}} LPT</span>
+        <span>{{ $t("Migration.Available") }}:</span
+        ><span>{{ fixD(myBalance, 4) }} LPT</span>
       </div>
       <div class="input">
-        <input type="text" />
-        <span class="max">最大量</span>
+        <input type="text" v-model="StakeVolume" />
+        <span class="max" @click="StakeVolume = myBalance">{{
+          $t("Insurance.Insurance_text18")
+        }}</span>
       </div>
-      <button class="b_button">质押挖矿</button>
+      <button
+        @click="toDeposite"
+        :class="stakeLoading ? 'disable b_button' : 'b_button'"
+      >
+        <i :class="stakeLoading ? 'loading_pic' : ''"></i
+        >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.ConfirmDeposit") }}
+      </button>
       <div class="my_stake text">
-        <span>我的抵押:</span><span>0.00010000 LPT</span>
+        <span>{{ $t("Migration.MyStake") }}:</span
+        ><span>{{ fixD(myStkaing, 4) }} LPT</span>
       </div>
       <div class="all_stake text">
-        <span>总抵押量:</span><span>0.00010000 LPT</span>
+        <span>{{ $t("Migration.Total") }}:</span
+        ><span>{{ fixD(poolStaking, 4) }} LPT</span>
       </div>
       <div class="guard_balance">
-        <p><span>Guard额度：</span> <span>1000000</span></p>
-        <button>Claim</button>
+        <p>
+          <span>{{ $t("Migration.GuardCredit") }}</span>
+          <span>{{ fixD(myReward3, 8) }}</span>
+        </p>
+        <button>{{ $t("Table.Claim") }}</button>
       </div>
       <a
         href="https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -30,29 +44,91 @@
 </template>
 
 <script>
+import { fixD } from "~/assets/js/util.js";
+import {
+  BalanceOf,
+  TotalSupply,
+  Earned3,
+  Allowance,
+} from "~/interface/read_contract.js";
+import { Stake, Approve, GetReward3 } from "~/interface/write_contract.js";
+let StakeAddress = "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571";
+let PoolAddress = "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb";
+let Earn3Address = "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb";
 export default {
   data() {
     return {
       myBalance: 0,
-      allQuota: 0,
+      StakeVolume: "",
+      poolStaking: 0,
+      myStkaing: 0,
+      myReward3: 0,
+      ApproveFlag: false,
+      stakeLoading: false,
+      fixD,
     };
   },
   mounted() {
     this.$nextTick(() => {
-      // this.getMyBalance();
-      // this.getAllQuota();
+      this.NeedApprove();
+      this.getBalance();
     });
   },
   methods: {
-    async getMyBalance() {
-      let ContractAddress = "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571";
-      let myBalance = await BalanceOf(ContractAddress);
+    async getBalance() {
+      let myBalance = await BalanceOf(StakeAddress);
+      let poolStaking = await TotalSupply(PoolAddress);
+      let myStkaing = await BalanceOf(PoolAddress);
+      let myReward3 = await Earned3(PoolAddress, Earn3Address);
       this.myBalance = myBalance;
+      this.poolStaking = poolStaking;
+      this.myStkaing = myStkaing;
+      this.myReward3 = myReward3;
     },
-    async getAllQuota() {
-      let ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
-      let allQuota = await QuotaPerDay(ContractAddress);
-      this.allQuota = allQuota;
+    async NeedApprove() {
+      let flag = await Allowance(StakeAddress, PoolAddress);
+      this.ApproveFlag = flag;
+    },
+    // 抵押
+    async toDeposite() {
+      if (!this.StakeVolume) {
+        return;
+      }
+      if (this.stakeLoading) {
+        return;
+      }
+      this.stakeLoading = true;
+      if (this.ApproveFlag) {
+        await Approve(StakeAddress, PoolAddress, "Helmet", (res) => {
+          if (res == "success" || res == "error") {
+            this.NeedApprove();
+            this.stakeLoading = false;
+          }
+        });
+      } else {
+        let StakeVolume = this.StakeVolume;
+        await Stake(
+          {
+            ContractAddress: PoolAddress,
+            DepositeVolume: StakeVolume,
+            Decimals: 18,
+          },
+          (res) => {
+            console.log(res);
+            if (res == "success" || res == "error") {
+              this.getBalance();
+              this.stakeLoading = false;
+            }
+          }
+        );
+      }
+    },
+    async claimQuota() {
+      GetReward3(PoolAddress, Earn3Address, (res) => {
+        if (res === "success" || res === "error") {
+          this.getBalance();
+        }
+      });
     },
   },
 };
@@ -60,6 +136,15 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
+.loading_pic {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
 @media screen and (min-width: 750px) {
   .migration_stake {
     width: 400px;
@@ -213,7 +298,7 @@ export default {
     a {
       margin-top: 10px;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: #fd7e14;
       line-height: 20px;
       display: flex;

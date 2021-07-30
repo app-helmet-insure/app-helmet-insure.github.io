@@ -1,27 +1,41 @@
 <template>
   <div class="migration_swap">
-    <div class="title"><span>2</span>兑换 Guard</div>
+    <div class="title"><span>2</span>{{ $t("Migration.SwapTitle") }}</div>
 
     <div class="stake_wrap">
       <div class="show_text">
         <p>
-          <span>当日剩余兑换额度：</span> <span>{{ AllQuota }}</span>
+          <span>{{ $t("Migration.AvailableGuard") }}:</span>
+          <span>{{ AllQuota }}</span>
         </p>
         <p>
-          <span>我的额度：</span> <span>{{ MyQuota }}</span>
+          <span>{{ $t("Migration.MyCredits") }}:</span>
+          <span>{{ MyQuota }}</span>
         </p>
       </div>
       <div class="balance text">
-        <span>可用:</span><span>{{ MyBalance }} Helmet</span>
+        <span>{{ $t("Migration.Available") }}:</span
+        ><span>{{ MyBalance }} Helmet</span>
       </div>
       <div class="input">
-        <input type="text" v-model="BurnVolume" />
-        <span class="max" @click="BurnVolume = MyQuota">最大量</span>
+        <input
+          type="text"
+          v-model="BurnVolume"
+          :disabled="Math.min(AllQuota, MyQuota, MyBalance) ? false : true"
+        />
+        <span
+          v-if="Math.min(AllQuota, MyQuota, MyBalance)"
+          class="max"
+          @click="BurnVolume = Math.min(AllQuota, MyQuota, MyBalance)"
+          >{{$t('Insurance.Insurance_text18')}}</span
+        >
       </div>
       <button class="b_button" @click="ActionStep()">
         {{
-          HelmetNeedApprove || GuardNeedApprove ? "授权" : "燃烧兑换 Guard"
-        }}质押挖矿
+          HelmetNeedApprove || GuardNeedApprove
+            ? $t("Migration.Approve")
+            : "燃烧兑换 Guard"
+        }}
       </button>
       <!-- <div class="guard_balance">
         <span>燃烧兑换 Guard，立享 Black 奖励</span>
@@ -30,17 +44,13 @@
           <button>Claim</button>
         </div>
       </div> -->
-      <p>Powered by BlackHole</p>
+      <!-- <p>Powered by BlackHole</p> -->
     </div>
   </div>
 </template>
 
 <script>
-import {
-  QuotaPerDay,
-  BalanceOf,
-  Allowance,
-} from "~/interface/read_contract.js";
+import { RestQuota, BalanceOf, Allowance } from "~/interface/read_contract.js";
 import { BurnHelmet, Approve } from "~/interface/write_contract.js";
 const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
 const HelmetAddress = "0xa9579F94A285DD51EBA60aC48Fb61ca50E803217";
@@ -76,7 +86,7 @@ export default {
       this.MyQuota = MyQuota;
     },
     async getAllQuota() {
-      let AllQuota = await QuotaPerDay(ContractAddress);
+      let AllQuota = await RestQuota(ContractAddress);
       console.log(AllQuota, "AllQuota");
       this.AllQuota = AllQuota;
     },
@@ -112,24 +122,26 @@ export default {
       if (!this.BurnVolume) {
         return;
       }
-      BurnHelmet(ContractAddress, this.BurnVolume);
+      BurnHelmet(ContractAddress, this.BurnVolume, (res) => {
+        if (res === "success" || res === "error") {
+          this.getMyQuota();
+          this.getAllQuota();
+          this.getMyBalance();
+        }
+      });
     },
     async ActionStep() {
       if (this.HelmetNeedApprove && this.HelmetNeedApprove) {
         this.ApproveHelemt();
-        console.log(1);
       }
       if (this.HelmetNeedApprove && !this.HelmetNeedApprove) {
         this.ApproveHelemt(true);
-        console.log(2);
       }
       if (!this.HelmetNeedApprove && this.HelmetNeedApprove) {
         this.ApproveGuard();
-        console.log(3);
       }
       if (!this.HelmetNeedApprove && !this.HelmetNeedApprove) {
         this.toBurnHelmet();
-        console.log(4);
       }
     },
   },

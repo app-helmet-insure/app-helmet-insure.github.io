@@ -22,9 +22,10 @@ let BurnSwapContractAddress = "0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc"; //�
 let BurnSignContractAddress = "0x81d82a35253B982E755c4D7d6AADB6463305B188"; //燃烧签名地址
 let StakingContractAddress = "0x910651F81a605a6Ef35d05527d24A72fecef8bF0"; //质押地址
 export const Stake = async (
-  { ContractAddress, DepositeVolume, Decimals },
+  { ContractAddress, DepositeVolume, Decimals = 18 },
   callback
 ) => {
+  console.log(ContractAddress, DepositeVolume, (Decimals = 18));
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
@@ -74,6 +75,43 @@ export const GetReward = async (ContractAddress, callback) => {
   try {
     Contracts.methods
       .getReward()
+      .send({ from: Account })
+      .on("transactionHash", (hash) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Waiting For Confirmation",
+          layout: "layout2",
+          loading: true,
+          buttonText: "Confirm",
+          conTit: "Please Confirm the transaction in your wallet",
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+        });
+      })
+      .on("receipt", (receipt) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Transation submitted",
+          layout: "layout2",
+          buttonText: "Confirm",
+          conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+          button: true,
+          buttonText: "Confirm",
+          showDialog: false,
+        });
+        callback("success");
+      })
+      .on("error", (error) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        callback("error");
+      });
+  } catch (error) {}
+};
+export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
+  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Account = await getAccounts();
+  try {
+    Contracts.methods
+      .getReward3(RewardAddress)
       .send({ from: Account })
       .on("transactionHash", (hash) => {
         bus.$emit("CLOSE_STATUS_DIALOG");
@@ -354,7 +392,7 @@ export const Cancel = async (askID, callBack) => {
 export const BurnHelmet = async (
   ContractAddress,
   Volume,
-  Decimals,
+  Decimals = 18,
   callBack
 ) => {
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);

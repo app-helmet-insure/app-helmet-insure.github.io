@@ -38,13 +38,7 @@ export const getAccounts = async () => {
     return (account = account[0]);
 };
 
-export function RPC_URLS(chainId) {
-    return {
-        128: 'https://http-mainnet-node.huobichain.com',
-        56: 'https://bsc-dataseed.binance.org/',
-        137: 'https://rpc-mainnet.maticvigil.com',
-    }[chainId];
-}
+
 export const getBlockNumber = async () => {
     const WEB3 = await new web3();
     let blockNumber = await WEB3.eth.getBlockNumber();

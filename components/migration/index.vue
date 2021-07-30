@@ -3,12 +3,15 @@
     <h3>Migrate to Polygon</h3>
     <div class="showdata">
       <p>
-        <img src="~/assets/img/migration/burn.svg" alt="" />燃烧中：
-        1,0,000.232232 Helmet
+        <img src="~/assets/img/migration/burn.svg" alt="" />{{
+          $t("Migration.MyBurning")
+        }}： 1,0,000.232232 Helmet
       </p>
       <p>
-        <img src="~/assets/img/migration/coin.svg" alt="" />待提现：
-        1,000,000.232232 Guard
+        <img src="~/assets/img/migration/coin.svg" alt="" />{{
+          $t("Migration.MyPendding")
+        }}: {{ myPendding }} Guard
+        <button @click="jump">{{ $t("Table.Claim") }}</button>
       </p>
     </div>
     <div class="showaction">
@@ -21,8 +24,40 @@
 <script>
 import Stake from "./stake.vue";
 import Swap from "./swap.vue";
+import Web3 from "web3";
+import { getAccounts, fromWei } from "~/interface/common_contract.js";
+import GuardClaimABI from "~/abi/GuardClaim.json";
+const GuardAddress = "0xb962B860f880Bb461EEB323Fc33dC9eFce157dAC";
 export default {
   components: { Stake, Swap },
+  data() {
+    return {
+      myPendding: 0,
+    };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.getMyPendding();
+    });
+  },
+  methods: {
+    jump(){
+    window.location.href='https://www.guard.insure/insurance?action=claim'
+    },
+    async MyAccount() {
+      let Account = await getAccounts();
+      this.Account = Account;
+    },
+    async getMyPendding() {
+      let Account = await getAccounts();
+      let web3 = new Web3(
+        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+      );
+      let Contracts = new web3.eth.Contract(GuardClaimABI, GuardAddress);
+      let myPendding = await Contracts.methods.claimingList(Account).call();
+      this.myPendding = fromWei(myPendding);
+    },
+  },
 };
 </script>
 
@@ -58,6 +93,17 @@ export default {
       line-height: 18px;
       padding: 0 40px;
       margin-right: 40px;
+      button {
+        min-width: 52px;
+        min-height: 24px;
+        background: #fd7e14;
+        border-radius: 5px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #ffffff;
+        margin-left: 20px;
+      }
     }
   }
   .showaction {
@@ -99,6 +145,17 @@ export default {
       color: #17173a;
       line-height: 18px;
       padding: 0 10px;
+      button {
+        min-width: 52px;
+        min-height: 24px;
+        background: #fd7e14;
+        border-radius: 5px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #ffffff;
+        margin-left: 20px;
+      }
     }
   }
   .showaction {

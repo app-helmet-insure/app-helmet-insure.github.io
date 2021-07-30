@@ -299,5 +299,19 @@
     "Insurance_text22": "Finalizado",
     "Insurance_text23": "Depositar",
     "Insurance_text24": "Comprar"
+  },
+  "Migration": {
+    "MyBurning": "My Burning",
+    "MyPendding": "My Pendding",
+    "StakeTitle": "Stake HELMET-BNB LPT to get GUARD credits",
+    "Available": "Available",
+    "MyStake": "My Stake",
+    "Total": "Total",
+    "GuardCredit":"Guard Credit",
+    "SwapTitle":"Get Guard",
+    "AvailableGuard":"Available GUARD today",
+    "MyCredits":"My Credits",
+    "Approve":"Approve",
+    "Burn":"Burn"
   }
 }

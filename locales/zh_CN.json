@@ -324,6 +324,8 @@
     "AvailableGuard": "当日剩余兑换额度",
     "MyCredits": "我的额度",
     "Approve": "授权",
-    "Burn":"燃烧兑换 Guard"
+    "Burn":"燃烧兑换 Guard",
+    "Notice":"提示",
+    "Jump":"{number}s 后即将跳转到 Guard.insure, 获得 Guard"
   }
 }

@@ -2,14 +2,16 @@
   <div class="main_container">
     <div class="migrate_container">
       <Title />
+      <Dialog />
     </div>
   </div>
 </template>
 
 <script>
 import Title from "~/components/migration/index";
+import Dialog from "~/components/migration/dialog";
 export default {
-  components: { Title },
+  components: { Title,Dialog },
 };
 </script>
 

@@ -246,7 +246,6 @@ export const RestQuota = async (ContractAddress, Address = null) => {
     .restQuota()
     .call()
     .then((res) => {
-      console.log(res);
       return fromWei(res);
     });
 };
@@ -261,10 +260,11 @@ export const Quotas = async (ContractAddress, Address = null) => {
       return fromWei(res);
     });
 };
-export const TotalBurns = async (ContractAddress, Address = null) => {
+export const TotalBurns = async (ContractAddress, Address) => {
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);
   let Account = await getAccounts();
   Address ? Address : Account;
+  console.log(ContractAddress, Address);
   return Contracts.methods
     .totalBurns(Address)
     .call()
@@ -272,4 +272,3 @@ export const TotalBurns = async (ContractAddress, Address = null) => {
       return fromWei(res);
     });
 };
-

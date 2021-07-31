@@ -5,12 +5,18 @@
       <p>
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
           $t("Migration.MyBurning")
-        }}： 1,0,000.232232 Helmet
+        }}：
+        {{
+          fixD(myBurns - mySuccess - myPendding, 4) > 0
+            ? fixD(myBurns - mySuccess - myPendding, 4)
+            : 0
+        }}
+        Helmet
       </p>
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ myPendding }} Guard
+        }}: {{ fixD(myPendding, 4) }} Guard
         <button @click="jump">{{ $t("Table.Claim") }}</button>
       </p>
     </div>
@@ -25,24 +31,32 @@
 import Stake from "./stake.vue";
 import Swap from "./swap.vue";
 import Web3 from "web3";
+import { fixD } from "~/assets/js/util.js";
 import { getAccounts, fromWei } from "~/interface/common_contract.js";
+import { TotalBurns } from "~/interface/read_contract.js";
 import GuardClaimABI from "~/abi/GuardClaim.json";
 const GuardAddress = "0xb962B860f880Bb461EEB323Fc33dC9eFce157dAC";
+const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
 export default {
   components: { Stake, Swap },
   data() {
     return {
       myPendding: 0,
+      mySuccess: 0,
+      myBurns: 0,
+      fixD,
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.getMyPendding();
+      this.getMySuccess();
+      this.getMyBurns();
     });
   },
   methods: {
-    jump(){
-    window.location.href='https://www.guard.insure/insurance?action=claim'
+    jump() {
+      this.$bus.$emit("GUARD_DIALOG", true);
     },
     async MyAccount() {
       let Account = await getAccounts();
@@ -56,6 +70,20 @@ export default {
       let Contracts = new web3.eth.Contract(GuardClaimABI, GuardAddress);
       let myPendding = await Contracts.methods.claimingList(Account).call();
       this.myPendding = fromWei(myPendding);
+    },
+    async getMySuccess() {
+      let Account = await getAccounts();
+      let web3 = new Web3(
+        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+      );
+      let Contracts = new web3.eth.Contract(GuardClaimABI, GuardAddress);
+      let mySuccess = await Contracts.methods.claimedList(Account).call();
+      this.mySuccess = fromWei(mySuccess);
+    },
+    async getMyBurns() {
+      let Account = await getAccounts();
+      let myBurns = await TotalBurns(ContractAddress, Account);
+      this.myBurns = fromWei(myBurns);
     },
   },
 };

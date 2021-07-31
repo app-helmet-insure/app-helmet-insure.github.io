@@ -222,7 +222,7 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;
+        cursor: pointer;    text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;
@@ -394,7 +394,7 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;
+        cursor: pointer;    text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;

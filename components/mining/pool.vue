@@ -155,7 +155,7 @@
         </button>
         <p v-if="activeData.REWARD1_SYMBOL">
           <span
-            ><i @click="hadnleShowOnePager($event, 'QHELMET')">{{
+            ><i>{{
               activeData.REWARD1_SYMBOL
             }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
@@ -174,7 +174,7 @@
         </p>
         <p v-if="activeData.REWARD2_SYMBOL">
           <span
-            ><i @click="hadnleShowOnePager($event, 'QHELMET')">{{
+            ><i>{{
               activeData.REWARD2_SYMBOL
             }}</i>
             {{ $t("Table.HELMETRewards") }}：</span

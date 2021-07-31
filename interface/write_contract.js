@@ -277,7 +277,7 @@ export const Approve = async (
           loading: true,
           buttonText: "Confirm",
           conTit: "Please Confirm the transaction in your wallet",
-          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${TokenSymbol} to HELMET</a>`,
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${TokenSymbol} to Helmet.insure</a>`,
         });
       })
       .on("receipt", (receipt) => {
@@ -410,7 +410,7 @@ export const BurnHelmet = async (
         loading: true,
         buttonText: "Confirm",
         conTit: "Please Confirm the transaction in your wallet",
-        conText: `Cancel your Policy supplying order.`,
+        conText: `Burn your HELMET to get GUARD.`,
       });
     })
     .on("receipt", function(receipt) {

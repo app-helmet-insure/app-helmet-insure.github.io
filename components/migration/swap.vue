@@ -6,16 +6,16 @@
       <div class="show_text">
         <p>
           <span>{{ $t("Migration.AvailableGuard") }}:</span>
-          <span>{{ AllQuota }}</span>
+          <span>{{ addCommom(AllQuota, 4) }}</span>
         </p>
         <p>
           <span>{{ $t("Migration.MyCredits") }}:</span>
-          <span>{{ MyQuota }}</span>
+          <span>{{ addCommom(MyQuota, 4) }}</span>
         </p>
       </div>
       <div class="balance text">
-        <span>{{ $t("Migration.Available") }}:</span
-        ><span>{{ MyBalance }} Helmet</span>
+        <span>{{ $t("Migration.Available1") }}:</span
+        ><span>{{ addCommom(MyBalance, 4) }} Helmet</span>
       </div>
       <div class="input">
         <input
@@ -27,14 +27,14 @@
           v-if="Math.min(AllQuota, MyQuota, MyBalance)"
           class="max"
           @click="BurnVolume = Math.min(AllQuota, MyQuota, MyBalance)"
-          >{{$t('Insurance.Insurance_text18')}}</span
+          >{{ $t("Insurance.Insurance_text18") }}</span
         >
       </div>
       <button class="b_button" @click="ActionStep()">
         {{
           HelmetNeedApprove || GuardNeedApprove
             ? $t("Migration.Approve")
-            : "燃烧兑换 Guard"
+            : $t("Migration.Burn")
         }}
       </button>
       <!-- <div class="guard_balance">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { fixD, addCommom } from "~/assets/js/util.js";
 import { RestQuota, BalanceOf, Allowance } from "~/interface/read_contract.js";
 import { BurnHelmet, Approve } from "~/interface/write_contract.js";
 const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
@@ -64,6 +65,8 @@ export default {
       BurnVolume: "",
       HelmetNeedApprove: true,
       GuardNeedApprove: true,
+      addCommom,
+      fixD,
     };
   },
   mounted() {
@@ -99,7 +102,7 @@ export default {
       this.GuardNeedApprove = GuardNeedApprove;
     },
     async ApproveHelemt(flag) {
-      Approve(HelmetAddress, ContractAddress, "Helmet", (res) => {
+      Approve(HelmetAddress, ContractAddress, "HELMET", (res) => {
         if (res === "success") {
           this.HelmetNeedApprove = false;
           if (flag) {
@@ -111,7 +114,7 @@ export default {
       });
     },
     async ApproveGuard() {
-      Approve(GuardAddress, ContractAddress, "Guard", (res) => {
+      Approve(GuardAddress, ContractAddress, "GUARD", (res) => {
         if (res === "success") {
           this.GuardNeedApprove = false;
           this.toBurnHelmet();
@@ -261,7 +264,8 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;    text-align: center;
+        cursor: pointer;
+        text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;
@@ -440,7 +444,8 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;    text-align: center;
+        cursor: pointer;
+        text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;

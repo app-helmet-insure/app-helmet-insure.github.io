@@ -4,7 +4,7 @@
     <div class="stake_wrap">
       <div class="balance text">
         <span>{{ $t("Migration.Available") }}:</span
-        ><span>{{ fixD(myBalance, 4) }} LPT</span>
+        ><span>{{ addCommom(myBalance, 4) }} LPT</span>
       </div>
       <div class="input">
         <input type="text" v-model="StakeVolume" />
@@ -21,18 +21,18 @@
       </button>
       <div class="my_stake text">
         <span>{{ $t("Migration.MyStake") }}:</span
-        ><span>{{ fixD(myStkaing, 4) }} LPT</span>
+        ><span>{{ addCommom(myStkaing, 4) }} LPT</span>
       </div>
       <div class="all_stake text">
         <span>{{ $t("Migration.Total") }}:</span
-        ><span>{{ fixD(poolStaking, 4) }} LPT</span>
+        ><span>{{ addCommom(poolStaking, 4) }} LPT</span>
       </div>
       <div class="guard_balance">
         <p>
           <span>{{ $t("Migration.GuardCredit") }}</span>
-          <span>{{ fixD(myReward3, 8) }}</span>
+          <span>{{ addCommom(myReward3, 8) }}</span>
         </p>
-        <button>{{ $t("Table.Claim") }}</button>
+        <button>{{ $t("Migration.Claim") }}</button>
       </div>
       <a
         href="https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { fixD } from "~/assets/js/util.js";
+import { fixD, addCommom } from "~/assets/js/util.js";
 import {
   BalanceOf,
   TotalSupply,
@@ -66,6 +66,7 @@ export default {
       ApproveFlag: false,
       stakeLoading: false,
       fixD,
+      addCommom,
     };
   },
   mounted() {
@@ -99,7 +100,7 @@ export default {
       }
       this.stakeLoading = true;
       if (this.ApproveFlag) {
-        await Approve(StakeAddress, PoolAddress, "Helmet", (res) => {
+        await Approve(StakeAddress, PoolAddress, "HELMET", (res) => {
           if (res == "success" || res == "error") {
             this.NeedApprove();
             this.stakeLoading = false;
@@ -175,6 +176,7 @@ export default {
         font-size: 14px;
         font-weight: 600;
         color: #ffffff;
+        flex-shrink: 0;
         line-height: 20px;
       }
     }
@@ -222,7 +224,8 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;    text-align: center;
+        cursor: pointer;
+        text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;
@@ -348,6 +351,7 @@ export default {
         font-weight: 600;
         color: #ffffff;
         line-height: 20px;
+        flex-shrink: 0;
       }
     }
     .stake_wrap {
@@ -394,7 +398,8 @@ export default {
         border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
-        cursor: pointer;    text-align: center;
+        cursor: pointer;
+        text-align: center;
         &:hover {
           border: 1px solid #ff9600;
           color: #ff9600;

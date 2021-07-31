@@ -313,10 +313,11 @@
     "Insurance_text24": "购买"
   },
   "Migration": {
-    "MyBurning": "My Burning",
-    "MyPendding": "My Pendding",
+    "MyBurning": "燃烧中",
+    "MyPendding": "待提现",
     "StakeTitle": "抵押LPT获取Guard额度",
     "Available": "可抵押",
+    "Available1": "可燃烧",
     "MyStake": "我的抵押",
     "Total": "总抵押量",
     "GuardCredit": "Guard额度",
@@ -326,6 +327,7 @@
     "Approve": "授权",
     "Burn":"燃烧兑换 Guard",
     "Notice":"提示",
-    "Jump":"{number}s 后即将跳转到 Guard.insure, 获得 Guard"
+    "Claim":"领取",
+    "Jump":"{number}S 后即将跳转到 Guard.insure, 领取 Guard"
   }
 }

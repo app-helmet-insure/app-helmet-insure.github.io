@@ -301,19 +301,21 @@
         "Insurance_text24": "خرید"
     },
     "Migration": {
-      "MyBurning": "My Burning",
-      "MyPendding": "My Pendding",
-      "StakeTitle": "Stake HELMET-BNB LPT to get GUARD credits",
-      "Available": "Available",
-      "MyStake": "My Stake",
-      "Total": "Total",
-      "GuardCredit":"Guard Credit",
-      "SwapTitle":"Get Guard",
-      "AvailableGuard":"Available GUARD today",
-      "MyCredits":"My Credits",
-      "Approve":"Approve",
-      "Burn":"Burn",
-      "Notice":"Notice",
-      "Junp": "After {number}s, it will jump to guard.insure. Claim Guard"
+        "MyBurning": "My Burning",
+        "MyPendding": "My Pendding",
+        "StakeTitle": "Stake HELMET-BNB LPT to get GUARD credits",
+        "Available": "Available",
+        "Available1": "Available",
+        "MyStake": "My Stake",
+        "Total": "Total",
+        "GuardCredit": "Guard Credit",
+        "SwapTitle": "Get Guard",
+        "AvailableGuard": "Available GUARD today",
+        "MyCredits": "My Credits",
+        "Approve": "Approve",
+        "Burn": "Burn",
+        "Notice": "Notice",
+        "Claim": "Claim",
+        "Jump": "You will swich to guard.insure in {number}s (to claim GUARD)"
     }
 }

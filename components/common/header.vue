@@ -27,6 +27,7 @@
         ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
         Guard</a
       >
+      <span class="migration" @click="jump">Migration</span>
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -130,6 +131,9 @@ export default {
   },
 
   methods: {
+    jump() {
+      this.$router.push("/migration");
+    },
     handleClickAirdrop() {
       this.$bus.$emit("AIRDROP_DIALOG", true);
     },
@@ -208,6 +212,20 @@ export default {
       img {
         margin-right: 8px;
       }
+    }
+    .migration {
+      width: 100px;
+      height: 40px;
+      background: #9f66ff;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 22px;
+      text-align: center;
+      line-height: 40px;
+      margin-right: 10px;
+      cursor: pointer;
     }
     .wrong {
       min-width: 171px;
@@ -372,6 +390,9 @@ export default {
         display: none;
       }
       .toGuard_web {
+        display: none;
+      }
+      .migration {
         display: none;
       }
       .airdrop {

@@ -1,23 +1,19 @@
 <template>
   <div class="migration_title">
-    <h3>Migrate to Polygon</h3>
+    <h3>Migrate Helmet(BSC) to Guard(Polygon)</h3>
     <div class="showdata">
       <p>
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
           $t("Migration.MyBurning")
         }}：
-        {{
-          fixD(myBurns - mySuccess - myPendding, 4) > 0
-            ? fixD(myBurns - mySuccess - myPendding, 4)
-            : 0
-        }}
+        {{ addCommom(myBurning, 4) }}
         Helmet
       </p>
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ fixD(myPendding, 4) }} Guard
-        <button @click="jump">{{ $t("Table.Claim") }}</button>
+        }}: {{ addCommom(myPendding, 4) }} Guard
+        <button @click="jump">{{ $t("Migration.Claim") }}</button>
       </p>
     </div>
     <div class="showaction">
@@ -31,7 +27,7 @@
 import Stake from "./stake.vue";
 import Swap from "./swap.vue";
 import Web3 from "web3";
-import { fixD } from "~/assets/js/util.js";
+import { fixD, addCommom } from "~/assets/js/util.js";
 import { getAccounts, fromWei } from "~/interface/common_contract.js";
 import { TotalBurns } from "~/interface/read_contract.js";
 import GuardClaimABI from "~/abi/GuardClaim.json";
@@ -44,20 +40,21 @@ export default {
       myPendding: 0,
       mySuccess: 0,
       myBurns: 0,
+      myBurning: 0,
       fixD,
+      addCommom,
     };
   },
   mounted() {
     this.$nextTick(() => {
-      this.getMyPendding();
-      this.getMySuccess();
-      this.getMyBurns();
+      this.getBalance();
     });
   },
   methods: {
     jump() {
       this.$bus.$emit("GUARD_DIALOG", true);
     },
+
     async MyAccount() {
       let Account = await getAccounts();
       this.Account = Account;
@@ -83,7 +80,13 @@ export default {
     async getMyBurns() {
       let Account = await getAccounts();
       let myBurns = await TotalBurns(ContractAddress, Account);
-      this.myBurns = fromWei(myBurns);
+      this.myBurns = myBurns;
+    },
+    async getBalance() {
+      await this.getMyPendding();
+      await this.getMySuccess();
+      await this.getMyBurns();
+      this.myBurning = this.myBurns - this.mySuccess - this.myPendding;
     },
   },
 };

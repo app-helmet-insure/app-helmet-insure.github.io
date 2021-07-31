@@ -55,6 +55,26 @@ export default {
     transform: translate(-50%, -50%);
     padding: 20px;
     > div {
+      padding: 0 40px;
+      text-align: center;
+      margin-top: 40px;
+      font-weight: 600;
+    }
+  }
+}
+@media screen and(min-width: 750px) {
+  .migration_dialog_wrap {
+    width: 95%;
+    height: 200px;
+    background: #fff;
+    border-radius: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    > div {
+      padding: 0 40px;
       text-align: center;
       margin-top: 40px;
       font-weight: 600;

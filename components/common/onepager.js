@@ -220,7 +220,7 @@ export default {
   ],
   hMCRN: [
     "It is $bMCRN cover miss out policy (CALL Option of $bMCRN).",
-    "The reasonable activate price: $MCRN=7 BUSD.",
+    "The reasonable activate price: 1 $MCRN=7 BUSD.",
     "For example, if $MCRN hit 10 BUSD before expiration date, you could swap 7 BUSD+1 $hMCRN to 1 $MCRN, and get net 3BUSD profit.",
     "Total supply: 2900",
     "Expire date: August 30th 24:00 SGT Helmet team took 2900 Helmet as premium for supporting $hMCRN policy creating.",

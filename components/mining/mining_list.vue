@@ -597,7 +597,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hARGON LPT</a>",
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hMCRN LPT</a>",
           APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },
@@ -639,7 +639,7 @@ export default {
           STAKE_DECIMALS: 18,
           SWAP_TYPE: "PANCAKEV2",
           JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x5066c68cae3b9bdacd6a1a37c90f2d1723559d18/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hARGON LPT</a>",
+            "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x5066c68cae3b9bdacd6a1a37c90f2d1723559d18/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWIZARD LPT</a>",
           APRTYPE: "hTokenDoublePoolAPR",
           REWARD_YEAR: "Infinity",
         },

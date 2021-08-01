@@ -11,7 +11,7 @@
 export default {
   data() {
     return {
-      flag: false,
+      flag: true,
       count: 5,
     };
   },
@@ -62,7 +62,7 @@ export default {
     }
   }
 }
-@media screen and(min-width: 750px) {
+@media screen and(max-width: 750px) {
   .migration_dialog_wrap {
     width: 95%;
     height: 200px;

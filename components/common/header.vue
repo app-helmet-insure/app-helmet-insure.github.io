@@ -27,7 +27,7 @@
         ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
         Guard</a
       >
-      <span class="migration" @click="jump">Migration</span>
+      <!-- <span class="migration" @click="jump">Migration</span> -->
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"

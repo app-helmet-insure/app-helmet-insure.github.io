@@ -4,7 +4,7 @@
       <h3>{{ $t("Table.BurnMining") }}</h3>
     </div>
     <div class="burn_web">
-      <div class="burn_item" v-for="item in burnList" :key="item.POOL_NAME">
+      <div class="burn_item" v-for="item in burnList" :key="item.INDEX">
         <div class="burn_show">
           <img
             :src="
@@ -115,7 +115,7 @@
       <div
         class="burn_item_h5"
         v-for="item in burnList"
-        :key="item.POOL_NAME + item.TOKEN_NAME"
+        :key="item.INDEX + 'h5'"
       >
         <section>
           <img

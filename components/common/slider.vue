@@ -92,7 +92,7 @@
               <use xlink:href="#icon-mining1"></use>
             </svg>
             {{ $t("Header.Mining") }}
-            <i class="num">3</i>
+            <i class="num">5</i>
           </nuxt-link>
         </div>
         <div class="menu_item">
@@ -138,7 +138,7 @@
             <!-- <i class="num">1</i> -->
           </nuxt-link>
         </div>
-        <div class="menu_item">
+        <!-- <div class="menu_item">
           <nuxt-link
             to="/migration"
             :class="routeObj.name.includes('migration') ? 'active' : ''"
@@ -147,9 +147,8 @@
               <use xlink:href="#icon-iio"></use>
             </svg>
             Migration
-            <!-- <i class="num">1</i> -->
           </nuxt-link>
-        </div>
+        </div> -->
         <!-- <div class="menu_item">
           <nuxt-link
             to="/guard"

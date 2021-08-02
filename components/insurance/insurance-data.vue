@@ -15,7 +15,7 @@
           <p><img src="~/assets/img/icon/guard.svg" alt="" /></p>
           <p>
             <span class="title_name">{{ $t("Banner.GuardSupply") }}</span
-            ><span class="number">100,000</span>
+            ><span class="number">{{ addCommom(guardVolume, 0) }}</span>
           </p>
         </div>
       </li>
@@ -78,9 +78,13 @@
 <script>
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import ERC20 from "~/abi/ERC20_abi.json";
 import { getLongType, getLongValuess } from "~/interface/event.js";
 import { BalanceOf } from "~/interface/read_contract.js";
 import countTo from "vue-count-to";
+import BigNumber from "bignumber.js";
+import {fromWei, getAccounts, getDecimals, Web3Contract} from "../../interface/common_contract";
+import Web3 from "web3";
 export default {
   name: "insurance-banner",
   components: {
@@ -96,6 +100,7 @@ export default {
       helmetVarieties: "--",
       totalHelmetsBorrowedVolume: 0,
       helmetvolume: 0,
+      guardVolume: 0,
     };
   },
   computed: {
@@ -122,9 +127,19 @@ export default {
       this.getBannerData();
     }
     this.$nextTick(async () => {
-      this.helmetVarieties = await getLongType();
-      this.totalHelmetsBorrowedVolume = await getLongValuess();
-      this.helmetvolume = await this.getHelmetVolume();
+       getLongType().then(res => {
+         this.helmetVarieties = res
+       });
+      getLongValuess().then(res => {
+        this.totalHelmetsBorrowedVolume = res
+      })
+      this.getHelmetVolume().then(res =>{
+        this.helmetvolume = res
+      })
+      this.getGuardVolume().then(res => {
+        // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
+        this.guardVolume = new BigNumber(4000000).minus(new BigNumber(res)).plus(100000)
+      })
     });
   },
   methods: {
@@ -164,6 +179,17 @@ export default {
       let deadContract = "0x000000000000000000000000000000000000dead";
       return await BalanceOf(helmetConrtact, 18, deadContract);
     },
+    async getGuardVolume() {
+      const HttpWeb3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com'))
+        let Contracts = new HttpWeb3.eth.Contract(ERC20.abi, '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8');
+        let DecimalsUnit = getDecimals(18);
+        return await Contracts.methods
+            .balanceOf('0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699')
+            .call()
+            .then((res) => {
+              return fromWei(res, DecimalsUnit);
+            })
+    }
   },
 };
 </script>

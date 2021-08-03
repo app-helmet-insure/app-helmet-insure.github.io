@@ -254,7 +254,7 @@ export const getInsuranceList = async function() {
       "https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure",
     data: {
       query: `{
-                options(first:2000) {
+                options(first:1000) {
                   id
                   creator
                   collateral 

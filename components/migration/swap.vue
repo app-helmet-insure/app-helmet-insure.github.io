@@ -26,7 +26,7 @@
         <span
           v-if="Math.min(AllQuota, MyQuota, MyBalance)"
           class="max"
-          @click="BurnVolume = Math.min(AllQuota, MyQuota, MyBalance)"
+          @click="BurnVolume = fixD(Math.min(AllQuota, MyQuota, MyBalance), 8)"
           >{{ $t("Insurance.Insurance_text18") }}</span
         >
       </div>
@@ -92,7 +92,7 @@ export default {
     },
     async getMyQuota() {
       let MyQuota = await BalanceOf(QuotaAddress);
-      console.log(MyQuota, "MyQuota");
+      console.log(MyQuota, "w kMyQuota");
       this.MyQuota = MyQuota;
     },
     async getAllQuota() {
@@ -132,12 +132,23 @@ export default {
       if (!this.BurnVolume) {
         return;
       }
-      BurnHelmet(ContractAddress, this.BurnVolume, 18, (res) => {
+      let Volume = this.BurnVolume;
+      if (fixD(this.AllQuota, 8) == this.BurnVolume) {
+        Volume = this.AllQuota;
+      }
+      if (fixD(this.MyBalance, 8) == this.BurnVolume) {
+        Volume = this.MyBalance;
+      }
+      if (fixD(this.MyQuota, 8) == this.BurnVolume) {
+        Volume = this.MyQuota;
+      }
+      console.log(Volume);
+      BurnHelmet(ContractAddress, Volume, 18, (res) => {
         if (res === "success" || res === "error") {
           this.getMyQuota();
           this.getAllQuota();
           this.getMyBalance();
-          this.$bus.$emit("REFRESH_MIGRATION_TITLE")
+          this.$bus.$emit("REFRESH_MIGRATION_TITLE");
         }
       });
     },

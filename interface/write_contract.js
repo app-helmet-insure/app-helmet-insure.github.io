@@ -404,8 +404,9 @@ export const BurnHelmet = async (
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
-  Volume = toWei(Volume + "", DecimalsUnit);
-Contracts.methods
+  Volume = toWei(Volume, DecimalsUnit);
+  console.log(Volume);
+  Contracts.methods
     .burn(Volume)
     .send({ from: Account })
     .on("transactionHash", (hash) => {

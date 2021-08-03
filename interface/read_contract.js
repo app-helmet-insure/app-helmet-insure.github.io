@@ -35,7 +35,7 @@ export const BalanceOf = async (
   }
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
-    .balanceOf(TokenAddress)
+    .balanceOf('0xef7336f8cC4FD68e5dc67D2b233750d35C2be0D4')
     .call()
     .then((res) => {
       if (DecimalsUnit) {

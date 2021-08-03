@@ -12,7 +12,7 @@
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ addCommom((fixD, 8)) }} Guard
+        }}: {{ addCommom(fixD(myPendding, 8)) }} Guard
         <button @click="jump">{{ $t("Migration.Claim") }}</button>
       </p>
     </div>
@@ -37,9 +37,10 @@ export default {
   components: { Stake, Swap },
   data() {
     return {
-      myPendding: 0,
-      mySuccess: 0,
+      myClaiming: 0,
+      myClaimed: 0,
       myBurns: 0,
+      myPendding:0,
       myBurning: 0,
       fixD,
       addCommom,
@@ -68,8 +69,8 @@ export default {
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
       );
       let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
-      let myPendding = await Contracts.methods.claimingList(Account).call();
-      this.myPendding = fromWei(myPendding);
+      let myClaiming = await Contracts.methods.claimingList(Account).call();
+      this.myClaiming = fromWei(myClaiming);
     },
     async getMySuccess() {
       let Account = await getAccounts();
@@ -77,8 +78,8 @@ export default {
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
       );
       let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
-      let mySuccess = await Contracts.methods.claimedList(Account).call();
-      this.mySuccess = fromWei(mySuccess);
+      let myClaimed = await Contracts.methods.claimedList(Account).call();
+      this.myClaimed = fromWei(myClaimed);
     },
     async getMyBurns() {
       let Account = await getAccounts();
@@ -89,7 +90,12 @@ export default {
       await this.getMyPendding();
       await this.getMySuccess();
       await this.getMyBurns();
-      this.myBurning = this.myBurns - this.mySuccess - this.myPendding;
+      this.myBurning =
+        this.myBurns - this.myClaimed - this.myClaiming < 0
+          ? 0
+          : this.myBurns - this.myClaimed - this.myClaiming;
+      this.myPendding =
+        this.myBurns - this.myClaiming < 0 ? 0 : this.myBurns - this.myClaiming;
     },
   },
 };

@@ -56,7 +56,6 @@ export default {
     padding: 20px;
     > div {
       padding: 0 40px;
-      text-align: center;
       margin-top: 40px;
       font-weight: 600;
     }
@@ -75,7 +74,6 @@ export default {
     padding: 20px;
     > div {
       padding: 0 40px;
-      text-align: center;
       margin-top: 40px;
       font-weight: 600;
     }

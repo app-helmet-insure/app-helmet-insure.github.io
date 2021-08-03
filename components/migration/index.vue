@@ -31,8 +31,8 @@ import { fixD, addCommom } from "~/assets/js/util.js";
 import { getAccounts, fromWei } from "~/interface/common_contract.js";
 import { TotalBurns } from "~/interface/read_contract.js";
 import GuardClaimABI from "~/abi/GuardClaim.json";
-const GuardAddress = "0xb962B860f880Bb461EEB323Fc33dC9eFce157dAC";
-const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
+const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";
+const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
 export default {
   components: { Stake, Swap },
   data() {
@@ -64,7 +64,7 @@ export default {
       let web3 = new Web3(
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
       );
-      let Contracts = new web3.eth.Contract(GuardClaimABI, GuardAddress);
+      let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
       let myPendding = await Contracts.methods.claimingList(Account).call();
       this.myPendding = fromWei(myPendding);
     },
@@ -73,7 +73,7 @@ export default {
       let web3 = new Web3(
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
       );
-      let Contracts = new web3.eth.Contract(GuardClaimABI, GuardAddress);
+      let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
       let mySuccess = await Contracts.methods.claimedList(Account).call();
       this.mySuccess = fromWei(mySuccess);
     },

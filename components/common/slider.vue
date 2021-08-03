@@ -138,7 +138,7 @@
             <!-- <i class="num">1</i> -->
           </nuxt-link>
         </div>
-        <!-- <div class="menu_item">
+        <div class="menu_item">
           <nuxt-link
             to="/migration"
             :class="routeObj.name.includes('migration') ? 'active' : ''"
@@ -148,7 +148,7 @@
             </svg>
             Migration
           </nuxt-link>
-        </div> -->
+        </div>
         <!-- <div class="menu_item">
           <nuxt-link
             to="/guard"

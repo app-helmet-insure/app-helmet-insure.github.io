@@ -29,10 +29,10 @@
       </div>
       <div class="guard_balance">
         <p>
-          <span>{{ $t("Migration.GuardCredit") }}</span>
+          <span>{{ $t("Migration.GuardCredit") }}：</span>
           <span>{{ addCommom(myReward3, 8) }}</span>
         </p>
-        <button>{{ $t("Migration.Claim") }}</button>
+        <button @click="claimQuota">{{ $t("Migration.Claim") }}</button>
       </div>
       <a
         href="https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
@@ -54,7 +54,7 @@ import {
 import { Stake, Approve, GetReward3 } from "~/interface/write_contract.js";
 let StakeAddress = "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571";
 let PoolAddress = "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb";
-let Earn3Address = "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb";
+let Earn3Address = "0x73f15cDBeaf9818a80b748F1389d791ce488d172";
 export default {
   data() {
     return {
@@ -125,6 +125,7 @@ export default {
       }
     },
     async claimQuota() {
+      console.log(11)
       GetReward3(PoolAddress, Earn3Address, (res) => {
         if (res === "success" || res === "error") {
           this.getBalance();

@@ -328,6 +328,9 @@
     "Burn":"燃烧兑换 Guard",
     "Notice":"提示",
     "Claim":"领取",
-    "Jump":"{number}S 后即将跳转到 Guard.insure, 领取 Guard"
+    "Jump":"{number}S 后即将跳转到 Guard.insure, 领取 Guard",
+    "Dialog":"0 Helmet 参与 Migrate Helmet(BSC) to Guard(Polygon) 活动",
+    "Confirm":"确认",
+    "FreeDay":"限免活动"
   }
 }

@@ -53,9 +53,9 @@
 import { fixD, addCommom } from "~/assets/js/util.js";
 import { RestQuota, BalanceOf, Allowance } from "~/interface/read_contract.js";
 import { BurnHelmet, Approve } from "~/interface/write_contract.js";
-const ContractAddress = "0xbE97f9298684e643765806ec91b16Ca672c467ce";
-const HelmetAddress = "0xa9579F94A285DD51EBA60aC48Fb61ca50E803217";
-const GuardAddress = "0xC78eEfDC4D31A44A45182713d64Dbc8505636CcB";
+const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
+const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+const QuotaAddress = "0x73f15cDBeaf9818a80b748F1389d791ce488d172";
 export default {
   data() {
     return {
@@ -84,7 +84,7 @@ export default {
       this.MyBalance = MyBalance;
     },
     async getMyQuota() {
-      let MyQuota = await BalanceOf(GuardAddress);
+      let MyQuota = await BalanceOf(QuotaAddress);
       console.log(MyQuota, "MyQuota");
       this.MyQuota = MyQuota;
     },
@@ -98,7 +98,7 @@ export default {
       this.HelmetNeedApprove = HelmetNeedApprove;
     },
     async getGuardApproveStatus() {
-      let GuardNeedApprove = await Allowance(GuardAddress, ContractAddress);
+      let GuardNeedApprove = await Allowance(QuotaAddress, ContractAddress);
       this.GuardNeedApprove = GuardNeedApprove;
     },
     async ApproveHelemt(flag) {
@@ -114,7 +114,7 @@ export default {
       });
     },
     async ApproveGuard() {
-      Approve(GuardAddress, ContractAddress, "GUARD", (res) => {
+      Approve(QuotaAddress, ContractAddress, "GUARD", (res) => {
         if (res === "success") {
           this.GuardNeedApprove = false;
           this.toBurnHelmet();

@@ -272,3 +272,8 @@ export const TotalBurns = async (ContractAddress, Address) => {
       return fromWei(res);
     });
 };
+export const Applied3 = async (ContractAddress, RewardAdress) => {
+  let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
+  let Account = await getAccounts();
+  return Contracts.methods.applied3(RewardAdress, Account).call();
+};

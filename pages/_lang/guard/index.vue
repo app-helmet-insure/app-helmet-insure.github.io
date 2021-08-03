@@ -21,7 +21,6 @@ export default {
 @media screen and (min-width: 750px) {
   .main_container {
     width: 80%;
-   
   }
 }
 </style>

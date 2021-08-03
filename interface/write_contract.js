@@ -5,6 +5,7 @@ import OrderABI from "~/abi/order_abi.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import MigrationABI from "~/abi/Migration.json";
+import IIOABI from "~/abi/iio_abi.json";
 
 import {
   Web3Contract,
@@ -107,7 +108,8 @@ export const GetReward = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  console.log(ContractAddress, RewardAddress)
+  let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -411,6 +413,44 @@ export const BurnHelmet = async (
         buttonText: "Confirm",
         conTit: "Please Confirm the transaction in your wallet",
         conText: `Burn your HELMET to get GUARD.`,
+      });
+    })
+    .on("receipt", function(receipt) {
+      bus.$emit("CLOSE_STATUS_DIALOG");
+      bus.$emit("OPEN_STATUS_DIALOG", {
+        title: "Transation submitted",
+        layout: "layout2",
+        buttonText: "Confirm",
+        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+        button: true,
+        buttonText: "Confirm",
+        showDialog: false,
+      });
+      callBack("success");
+    })
+    .on("error", (err, receipt) => {
+      callBack("failed");
+    });
+};
+export const ApplyRewards3 = async (
+  ContractAddress,
+  EarnAddress,
+  callBack
+) => {
+  let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
+  let Account = await getAccounts();
+  Contracts.methods
+    .applyReward3(EarnAddress)
+    .send({ from: Account })
+    .on("transactionHash", (hash) => {
+      bus.$emit("CLOSE_STATUS_DIALOG");
+      bus.$emit("OPEN_STATUS_DIALOG", {
+        title: "Waiting For Confirmation",
+        layout: "layout2",
+        loading: true,
+        buttonText: "Confirm",
+        conTit: "Please Confirm the transaction in your wallet",
+        conText: `FREE DAYS 0 HELMET for GUARD Credits Confirm.`,
       });
     })
     .on("receipt", function(receipt) {

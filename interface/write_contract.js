@@ -22,10 +22,9 @@ let BurnSwapContractAddress = "0x6Bab2711Ca22fE7395811022F92bB037cd4af7bc"; //�
 let BurnSignContractAddress = "0x81d82a35253B982E755c4D7d6AADB6463305B188"; //燃烧签名地址
 let StakingContractAddress = "0x910651F81a605a6Ef35d05527d24A72fecef8bF0"; //质押地址
 export const Stake = async (
-  { ContractAddress, DepositeVolume, Decimals = 18 },
+  { ContractAddress, DepositeVolume, Decimals },
   callback
 ) => {
-  console.log(ContractAddress, DepositeVolume, (Decimals = 18));
   let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
@@ -35,6 +34,7 @@ export const Stake = async (
     let powNumber = new BigNumber(10).pow(Decimals).toString();
     DepositeVolume = new BigNumber(DepositeVolume).times(powNumber).toString();
   }
+  console.log(DepositeVolume);
   try {
     Contracts.methods
       .stake(DepositeVolume)

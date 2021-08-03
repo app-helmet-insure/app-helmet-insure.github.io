@@ -104,6 +104,7 @@ export default {
           if (res == "success" || res == "error") {
             this.NeedApprove();
             this.stakeLoading = false;
+            this.ApproveFlag = true;
           }
         });
       } else {
@@ -125,7 +126,7 @@ export default {
       }
     },
     async claimQuota() {
-      console.log(11)
+      console.log(11);
       GetReward3(PoolAddress, Earn3Address, (res) => {
         if (res === "success" || res === "error") {
           this.getBalance();

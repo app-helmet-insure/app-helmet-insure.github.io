@@ -4,7 +4,7 @@
     <div class="stake_wrap">
       <div class="balance text">
         <span>{{ $t("Migration.Available") }}:</span
-        ><span>{{ addCommom(myBalance, 4) }} LPT</span>
+        ><span>{{ addCommom(fixD(myBalance, 4)) }} LPT</span>
       </div>
       <div class="input">
         <input type="text" v-model="StakeVolume" />
@@ -21,16 +21,16 @@
       </button>
       <div class="my_stake text">
         <span>{{ $t("Migration.MyStake") }}:</span
-        ><span>{{ addCommom(myStkaing, 4) }} LPT</span>
+        ><span>{{ addCommom(fixD(myStkaing, 4)) }} LPT</span>
       </div>
       <div class="all_stake text">
         <span>{{ $t("Migration.Total") }}:</span
-        ><span>{{ addCommom(poolStaking, 4) }} LPT</span>
+        ><span>{{ addCommom(fixD(poolStaking, 4)) }} LPT</span>
       </div>
       <div class="guard_balance">
         <p>
           <span>{{ $t("Migration.GuardCredit") }}：</span>
-          <span>{{ addCommom(myReward3, 8) }}</span>
+          <span>{{ addCommom(fixD(myReward3, 8)) }}</span>
         </p>
         <button @click="claimQuota">{{ $t("Migration.Claim") }}</button>
       </div>

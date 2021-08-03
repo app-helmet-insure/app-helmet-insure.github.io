@@ -6,16 +6,16 @@
       <div class="show_text">
         <p>
           <span>{{ $t("Migration.AvailableGuard") }}:</span>
-          <span>{{ addCommom(AllQuota, 8) }}</span>
+          <span>{{ addCommom(fixD(AllQuota, 8)) }}</span>
         </p>
         <p>
           <span>{{ $t("Migration.MyCredits") }}:</span>
-          <span>{{ addCommom(MyQuota, 8) }}</span>
+          <span>{{ addCommom(fixD(MyQuota, 8)) }}</span>
         </p>
       </div>
       <div class="balance text">
         <span>{{ $t("Migration.Available1") }}:</span
-        ><span>{{ addCommom(MyBalance, 8) }} Helmet</span>
+        ><span>{{ addCommom(fixD(MyBalance, 8)) }} Helmet</span>
       </div>
       <div class="input">
         <input

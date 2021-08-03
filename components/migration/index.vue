@@ -6,13 +6,13 @@
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
           $t("Migration.MyBurning")
         }}：
-        {{ addCommom(myBurning, 8) }}
+        {{ addCommom(fixD(myBurning, 8)) }}
         Helmet
       </p>
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ addCommom(myPendding, 8) }} Guard
+        }}: {{ addCommom((fixD, 8)) }} Guard
         <button @click="jump">{{ $t("Migration.Claim") }}</button>
       </p>
     </div>

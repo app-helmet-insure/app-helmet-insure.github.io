@@ -40,7 +40,7 @@ export default {
       myClaiming: 0,
       myClaimed: 0,
       myBurns: 0,
-      myPendding:0,
+      myPendding: 0,
       myBurning: 0,
       fixD,
       addCommom,
@@ -90,12 +90,16 @@ export default {
       await this.getMyPendding();
       await this.getMySuccess();
       await this.getMyBurns();
+      // this.myBurning =
+      //   this.myBurns - this.myClaimed - this.myClaiming < 0
+      //     ? 0
+      //     : this.myBurns - this.myClaimed - this.myClaiming;
       this.myBurning =
-        this.myBurns - this.myClaimed - this.myClaiming < 0
-          ? 0
-          : this.myBurns - this.myClaimed - this.myClaiming;
-      this.myPendding =
         this.myBurns - this.myClaiming < 0 ? 0 : this.myBurns - this.myClaiming;
+      this.myPendding =
+        this.myClaiming - this.myClaimed < 0
+          ? 0
+          : this.myClaiming - this.myClaimed;
     },
   },
 };

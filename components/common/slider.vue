@@ -144,7 +144,7 @@
             :class="routeObj.name.includes('migration') ? 'active' : ''"
           >
             <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-iio"></use>
+              <use xlink:href="#icon-migration"></use>
             </svg>
             Migration
           </nuxt-link>

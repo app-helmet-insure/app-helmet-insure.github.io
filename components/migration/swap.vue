@@ -153,16 +153,23 @@ export default {
       });
     },
     async ActionStep() {
-      if (this.HelmetNeedApprove && this.HelmetNeedApprove) {
+      console.log(this.HelmetNeedApprove, this.GuardNeedApprove);
+      console.log(
+        this.HelmetNeedApprove && this.GuardNeedApprove,
+        this.HelmetNeedApprove && !this.GuardNeedApprove,
+        !this.HelmetNeedApprove && this.GuardNeedApprove,
+        !this.HelmetNeedApprove && !this.GuardNeedApprove
+      );
+      if (this.HelmetNeedApprove && this.GuardNeedApprove) {
         return this.ApproveHelemt();
       }
-      if (this.HelmetNeedApprove && !this.HelmetNeedApprove) {
+      if (this.HelmetNeedApprove && !this.GuardNeedApprove) {
         return this.ApproveHelemt(true);
       }
-      if (!this.HelmetNeedApprove && this.HelmetNeedApprove) {
+      if (!this.HelmetNeedApprove && this.GuardNeedApprove) {
         return this.ApproveGuard();
       }
-      if (!this.HelmetNeedApprove && !this.HelmetNeedApprove) {
+      if (!this.HelmetNeedApprove && !this.GuardNeedApprove) {
         return this.toBurnHelmet();
       }
     },
@@ -177,17 +184,24 @@ export default {
     width: 400px;
     height: 410px;
     border-radius: 10px;
-    border: 1px solid #e8e8eb;
+    @include themeify {
+      background: themed("color-f8f9fa");
+      color: themed("color-17173a");
+      border: 1px solid themed("color-e8e8eb");
+    }
     overflow: hidden;
     .title {
       height: 50px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+        color: themed("color-17173a");
+      }
+
       display: flex;
       align-items: center;
       font-size: 16px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
       line-height: 18px;
       padding: 0 40px;
       span {
@@ -212,7 +226,9 @@ export default {
     .show_text {
       width: 100%;
       height: 68px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
       padding: 0 10px;
       display: flex;
@@ -232,11 +248,15 @@ export default {
         }
         span {
           &:nth-of-type(1) {
-            color: rgba(23, 23, 58, 0.7);
             font-weight: 500;
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
           }
           &:nth-of-type(2) {
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             font-weight: 600;
           }
         }
@@ -252,11 +272,15 @@ export default {
       span {
         font-size: 14px;
         &:nth-of-type(1) {
-          color: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 30%);
+          }
           font-weight: 500;
         }
         &:nth-of-type(2) {
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           font-weight: 600;
         }
       }
@@ -270,7 +294,11 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
+        @include themeify {
+          @include themeify {
+            border: 1px solid themed("color-e8e8eb");
+          }
+        }
         padding-left: 12px;
       }
       span {
@@ -278,16 +306,19 @@ export default {
         right: 10px;
         min-width: 52px;
         min-height: 24px;
-        background: #f8f9fa;
+        @include themeify {
+          background: themed("color-f8f9fa");
+          border: 1px solid themed("color-e8e8eb");
+          color: themed("color-17173a");
+        }
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
         padding: 4px 6px;
         font-size: 12px;
         cursor: pointer;
         text-align: center;
         &:hover {
           border: 1px solid #ff9600;
-          color: #ff9600;
+          color: #ff9600 !important;
         }
       }
     }
@@ -300,7 +331,9 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
       padding: 0 10px;
       margin-top: 10px;
@@ -308,7 +341,9 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 30%);
+        }
         line-height: 14px;
       }
       > div {
@@ -322,11 +357,15 @@ export default {
         font-weight: 500;
         span {
           &:nth-of-type(1) {
-            color: rgba(23, 23, 58, 0.7);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
             font-weight: 500;
           }
           &:nth-of-type(2) {
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             font-weight: 600;
           }
         }
@@ -359,18 +398,24 @@ export default {
     width: 100%;
     height: 410px;
     border-radius: 10px;
-    border: 1px solid #e8e8eb;
+    @include themeify {
+      border: 1px solid themed("color-e8e8eb");
+    }
     margin-top: 10px;
     overflow: hidden;
     .title {
       height: 50px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       display: flex;
       align-items: center;
       font-size: 16px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 18px;
       padding: 0 40px;
       span {
@@ -394,7 +439,9 @@ export default {
     .show_text {
       width: 100%;
       height: 68px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
       padding: 0 10px;
       margin-top: 10px;
@@ -412,11 +459,15 @@ export default {
         }
         span {
           &:nth-of-type(1) {
-            color: rgba(23, 23, 58, 0.7);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
             font-weight: 500;
           }
           &:nth-of-type(2) {
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             font-weight: 600;
           }
         }
@@ -432,11 +483,15 @@ export default {
       span {
         font-size: 14px;
         &:nth-of-type(1) {
-          color: rgba(23, 23, 58, 0.7);
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 30%);
+          }
           font-weight: 500;
         }
         &:nth-of-type(2) {
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
           font-weight: 600;
         }
       }
@@ -450,7 +505,9 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
+        @include themeify {
+          border: 1px solid themed("color-e8e8eb");
+        }
         padding-left: 12px;
       }
       span {
@@ -458,16 +515,19 @@ export default {
         right: 10px;
         min-width: 52px;
         min-height: 24px;
-        background: #f8f9fa;
         border-radius: 5px;
-        border: 1px solid #e8e8eb;
+        @include themeify {
+          border: 1px solid themed("color-e8e8eb");
+          color: themed("color-17173a");
+          background: themed("color-f8f9fa");
+        }
         padding: 4px 6px;
         font-size: 12px;
         cursor: pointer;
         text-align: center;
         &:hover {
           border: 1px solid #ff9600;
-          color: #ff9600;
+          color: #ff9600 !important;
         }
       }
     }
@@ -482,7 +542,9 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("color-f8f9fa");
+      }
       border-radius: 5px;
       padding: 0 10px;
       margin-top: 10px;
@@ -490,7 +552,9 @@ export default {
         font-size: 14px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 30%);
+        }
         line-height: 14px;
       }
       > div {
@@ -504,11 +568,15 @@ export default {
         font-weight: 500;
         span {
           &:nth-of-type(1) {
-            color: rgba(23, 23, 58, 0.7);
+            @include themeify {
+              color: darken($color: themed("color-17173a"), $amount: 30%);
+            }
             font-weight: 500;
           }
           &:nth-of-type(2) {
-            color: #17173a;
+            @include themeify {
+              color: themed("color-17173a");
+            }
             font-weight: 600;
           }
         }

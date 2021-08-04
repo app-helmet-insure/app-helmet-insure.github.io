@@ -13,7 +13,7 @@ import Title from "~/components/migration/index";
 import JumpDialog from "~/components/migration/jump_dialog";
 import TipDialog from "~/components/migration/tip_dialog";
 export default {
-  components: { Title,JumpDialog,TipDialog },
+  components: { Title, JumpDialog, TipDialog },
 };
 </script>
 
@@ -23,14 +23,18 @@ export default {
 @media screen and (min-width: 750px) {
   .main_container {
     width: 80%;
-    background: #fff;
+    @include themeify {
+      background: themed("color-ffffff");
+    }
     padding-bottom: 70px;
   }
 }
 @media screen and (max-width: 750px) {
   .main_container {
     width: 100%;
-    background: #fff !important;
+    @include themeify {
+      background: themed("color-ffffff") !important;
+    }
     padding-bottom: 70px;
   }
 }

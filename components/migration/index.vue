@@ -106,6 +106,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/base.scss";
 @media screen and(min-width:750px) {
   h3 {
     margin: 30px auto;
@@ -113,16 +114,20 @@ export default {
     font-size: 24px;
     font-family: IBMPlexSans-SemiBold, IBMPlexSans;
     font-weight: 600;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     line-height: 32px;
   }
   .showdata {
     display: flex;
     align-items: center;
-    width: 80%;
+    width: 868px;
     margin: 0 auto;
     height: 70px;
-    background: #f7f7fa;
+    @include themeify {
+      background: themed("mining_earn");
+    }
     border-radius: 5px;
     img {
       margin-right: 4px;
@@ -133,7 +138,9 @@ export default {
       font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 18px;
       padding: 0 40px;
       margin-right: 40px;
@@ -151,7 +158,7 @@ export default {
     }
   }
   .showaction {
-    width: 80%;
+    width: 868px;
     margin: 40px auto 0;
     display: flex;
     justify-content: space-between;
@@ -164,7 +171,9 @@ export default {
     font-size: 24px;
     font-family: IBMPlexSans-SemiBold, IBMPlexSans;
     font-weight: 600;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     line-height: 32px;
     padding: 30px 0;
   }
@@ -175,7 +184,9 @@ export default {
     width: 95%;
     margin: 0 auto;
     height: 70px;
-    background: #f7f7fa;
+    @include themeify {
+      background: themed("mining_earn");
+    }
     border-radius: 5px;
     img {
       margin-right: 4px;
@@ -186,7 +197,9 @@ export default {
       font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 18px;
       padding: 0 10px;
       button {

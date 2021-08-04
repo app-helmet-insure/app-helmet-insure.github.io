@@ -155,13 +155,13 @@ export default {
     border-radius: 10px;
     @include themeify {
       border: 1px solid themed("color-e8e8eb");
-      background: themed("color-f8f9fa");
+      background: themed("color-ffffff");
     }
     overflow: hidden;
     .title {
       height: 50px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
         color: themed("color-17173a");
       }
 
@@ -223,10 +223,15 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
+        background: transparent;
         @include themeify {
+          color: themed("color-17173a");
           border: 1px solid themed("color-e8e8eb");
         }
         padding-left: 12px;
+        &:focus {
+          border: 1px solid #fd7e14 !important;
+        }
       }
       span {
         position: absolute;
@@ -234,7 +239,7 @@ export default {
         min-width: 52px;
         min-height: 24px;
         @include themeify {
-          background: themed("color-f8f9fa");
+          background: themed("mining_earn");
           border: 1px solid themed("color-e8e8eb");
           color: themed("color-17173a");
         }
@@ -244,7 +249,7 @@ export default {
         cursor: pointer;
         text-align: center;
         &:hover {
-          border: 1px solid #ff9600;
+          border: 1px solid #ff9600 !important;
           color: #ff9600 !important;
         }
       }
@@ -295,7 +300,7 @@ export default {
       align-items: center;
       justify-content: space-between;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;
@@ -358,22 +363,20 @@ export default {
     border-radius: 10px;
     @include themeify {
       border: 1px solid themed("color-e8e8eb");
-      background: themed("color-f8f9fa");
+      background: themed("color-ffffff");
     }
     overflow: hidden;
     .title {
       height: 50px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
+        color: themed("color-17173a");
       }
       display: flex;
       align-items: center;
       font-size: 16px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      @include themeify {
-        color: themed("color-17173a");
-      }
       line-height: 18px;
       padding: 0 40px;
       span {
@@ -427,10 +430,15 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
+        background: transparent;
         @include themeify {
+          color: themed("color-17173a");
           border: 1px solid themed("color-e8e8eb");
         }
         padding-left: 12px;
+        &:focus {
+          border: 1px solid #fd7e14 !important;
+        }
       }
       span {
         position: absolute;
@@ -439,7 +447,7 @@ export default {
         min-height: 24px;
         @include themeify {
           border: 1px solid themed("color-e8e8eb");
-          background: themed("color-f8f9fa");
+          background: themed("mining_earn");
           color: themed("color-17173a");
         }
         border-radius: 5px;
@@ -448,7 +456,7 @@ export default {
         cursor: pointer;
         text-align: center;
         &:hover {
-          border: 1px solid #ff9600;
+          border: 1px solid #ff9600 !important;
           color: #ff9600 !important;
         }
       }
@@ -501,7 +509,7 @@ export default {
       align-items: center;
       justify-content: space-between;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;

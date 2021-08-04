@@ -185,7 +185,7 @@ export default {
     height: 410px;
     border-radius: 10px;
     @include themeify {
-      background: themed("color-f8f9fa");
+      background: themed("color-ffffff");
       color: themed("color-17173a");
       border: 1px solid themed("color-e8e8eb");
     }
@@ -193,7 +193,7 @@ export default {
     .title {
       height: 50px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
         color: themed("color-17173a");
       }
 
@@ -227,7 +227,7 @@ export default {
       width: 100%;
       height: 68px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;
@@ -294,12 +294,14 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
+        background: transparent;
         @include themeify {
-          @include themeify {
-            border: 1px solid themed("color-e8e8eb");
-          }
+          border: 1px solid themed("color-e8e8eb");
         }
         padding-left: 12px;
+        &:focus {
+          border: 1px solid #fd7e14 !important;
+        }
       }
       span {
         position: absolute;
@@ -307,7 +309,7 @@ export default {
         min-width: 52px;
         min-height: 24px;
         @include themeify {
-          background: themed("color-f8f9fa");
+          background: themed("mining_earn");
           border: 1px solid themed("color-e8e8eb");
           color: themed("color-17173a");
         }
@@ -317,7 +319,7 @@ export default {
         cursor: pointer;
         text-align: center;
         &:hover {
-          border: 1px solid #ff9600;
+          border: 1px solid #ff9600 !important;
           color: #ff9600 !important;
         }
       }
@@ -332,7 +334,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;
@@ -399,6 +401,7 @@ export default {
     height: 410px;
     border-radius: 10px;
     @include themeify {
+      background: themed("color-ffffff");
       border: 1px solid themed("color-e8e8eb");
     }
     margin-top: 10px;
@@ -406,7 +409,7 @@ export default {
     .title {
       height: 50px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       display: flex;
       align-items: center;
@@ -440,7 +443,7 @@ export default {
       width: 100%;
       height: 68px;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;
@@ -505,10 +508,15 @@ export default {
         width: 100%;
         height: 40px;
         border-radius: 5px;
+        background: transparent;
         @include themeify {
+          color: themed("color-17173a");
           border: 1px solid themed("color-e8e8eb");
         }
         padding-left: 12px;
+        &:focus {
+          border: 1px solid #fd7e14 !important;
+        }
       }
       span {
         position: absolute;
@@ -519,14 +527,14 @@ export default {
         @include themeify {
           border: 1px solid themed("color-e8e8eb");
           color: themed("color-17173a");
-          background: themed("color-f8f9fa");
+          background: themed("mining_earn");
         }
         padding: 4px 6px;
         font-size: 12px;
         cursor: pointer;
         text-align: center;
         &:hover {
-          border: 1px solid #ff9600;
+          border: 1px solid #ff9600 !important;
           color: #ff9600 !important;
         }
       }
@@ -543,7 +551,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       @include themeify {
-        background: themed("color-f8f9fa");
+        background: themed("mining_earn");
       }
       border-radius: 5px;
       padding: 0 10px;

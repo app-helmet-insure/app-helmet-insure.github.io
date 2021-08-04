@@ -23,11 +23,7 @@
           alt=""
         />
       </div>
-      <a href="https://www.guard.insure/insurance" class="toGuard_web"
-        ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
-        Guard</a
-      >
-      <span class="migration" @click="jump">Migration</span>
+      <span class="migration" @click="jump">To Polygon</span>
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -188,34 +184,10 @@ export default {
     display: flex;
     align-items: center;
     text-align: center;
-    .toGuard_web {
-      min-width: 150px;
-      height: 40px;
-      @include themeify {
-        background: themed("color-17173a");
-        color: themed("color-ffffff");
-      }
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-family: IBMPlexSans;
-      line-height: 24px;
-      padding: 0 15px;
-      margin-right: 10px;
-      &:hover {
-        @include themeify {
-          background: themed("color-2c2c2c");
-        }
-      }
-      img {
-        margin-right: 8px;
-      }
-    }
     .migration {
-      width: 100px;
+      min-width: 100px;
       height: 40px;
+      padding: 0 15px;
       background: #9f66ff;
       border-radius: 5px;
       font-size: 16px;
@@ -387,9 +359,6 @@ export default {
     }
     .account {
       .airdrop_web {
-        display: none;
-      }
-      .toGuard_web {
         display: none;
       }
       .migration {

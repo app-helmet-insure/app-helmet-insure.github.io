@@ -14,197 +14,178 @@
         @mouseleave="whirlLogo(false)"
         :class="['logo', whirlLogoFlag && 'whirl_logo', storeThemes + '_logo']"
       ></a>
-      <div class="menu">
-        <div class="menu_group">
-          <div class="menu_item">
-            <a
-              @click="sliderClick"
-              :class="
-                routeObj.name === 'index'
-                  ? 'active'
-                  : routeObj.name == 'myPolicy' ||
-                    routeObj.name == 'mySupply' ||
-                    routeObj.name == 'myClaim'
-                  ? 'active_child'
-                  : ''
-              "
-            >
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-insurance"></use>
-              </svg>
-              {{ $t("Table.safe") }}
-              <svg
+      <div class="top_slider">
+        <div class="menu">
+          <div class="menu_group">
+            <div class="menu_item">
+              <a
+                @click="sliderClick"
                 :class="
                   routeObj.name === 'index'
-                    ? 'right'
+                    ? 'active'
                     : routeObj.name == 'myPolicy' ||
                       routeObj.name == 'mySupply' ||
                       routeObj.name == 'myClaim'
-                    ? 'active_child right'
-                    : 'right'
+                    ? 'active_child'
+                    : ''
                 "
               >
-                <use xlink:href="#icon-rightSelect"></use>
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-insurance"></use>
+                </svg>
+                {{ $t("Table.safe") }}
+                <svg
+                  :class="
+                    routeObj.name === 'index'
+                      ? 'right'
+                      : routeObj.name == 'myPolicy' ||
+                        routeObj.name == 'mySupply' ||
+                        routeObj.name == 'myClaim'
+                      ? 'active_child right'
+                      : 'right'
+                  "
+                >
+                  <use xlink:href="#icon-rightSelect"></use>
+                </svg>
+              </a>
+            </div>
+            <div
+              class="child_menu"
+              v-if="
+                sliderFlag ||
+                routeObj.name == 'myPolicy' ||
+                routeObj.name == 'mySupply' ||
+                routeObj.name == 'myClaim'
+              "
+            >
+              <p class="child_menu_item">
+                <nuxt-link
+                  to="/myPolicy"
+                  :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
+                >
+                  {{ $t("Type.MyGuarantee") }}
+                </nuxt-link>
+              </p>
+              <p class="child_menu_item">
+                <nuxt-link
+                  to="/mySupply"
+                  :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
+                >
+                  {{ $t("Type.IssueInsurance") }}
+                </nuxt-link>
+              </p>
+              <p class="child_menu_item">
+                <nuxt-link
+                  to="/myClaim"
+                  :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
+                >
+                  {{ $t("Type.Claim") }}
+                </nuxt-link>
+              </p>
+            </div>
+          </div>
+          <div class="menu_item">
+            <nuxt-link
+              to="/mining"
+              :class="routeObj.name === 'mining' ? 'active' : ''"
+            >
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-mining1"></use>
               </svg>
-            </a>
+              {{ $t("Header.Mining") }}
+              <i class="num">5</i>
+            </nuxt-link>
           </div>
-          <div
-            class="child_menu"
-            v-if="
-              sliderFlag ||
-              routeObj.name == 'myPolicy' ||
-              routeObj.name == 'mySupply' ||
-              routeObj.name == 'myClaim'
-            "
-          >
-            <p class="child_menu_item">
-              <nuxt-link
-                to="/myPolicy"
-                :class="routeObj.name === 'myPolicy' ? 'child_active ' : ''"
-              >
-                {{ $t("Type.MyGuarantee") }}
-              </nuxt-link>
-            </p>
-            <p class="child_menu_item">
-              <nuxt-link
-                to="/mySupply"
-                :class="routeObj.name === 'mySupply' ? 'child_active ' : ''"
-              >
-                {{ $t("Type.IssueInsurance") }}
-              </nuxt-link>
-            </p>
-            <p class="child_menu_item">
-              <nuxt-link
-                to="/myClaim"
-                :class="routeObj.name === 'myClaim' ? 'child_active ' : ''"
-              >
-                {{ $t("Type.Claim") }}
-              </nuxt-link>
-            </p>
+          <div class="menu_item">
+            <nuxt-link
+              to="/flashmining"
+              :class="routeObj.name === 'flashmining' ? 'active' : ''"
+            >
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-flashmining"></use>
+              </svg>
+              {{ $t("Header.FlashMining") }}
+              <!-- <i class="num">1</i> -->
+            </nuxt-link>
           </div>
-        </div>
-        <div class="menu_item">
-          <nuxt-link
-            to="/mining"
-            :class="routeObj.name === 'mining' ? 'active' : ''"
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-mining1"></use>
-            </svg>
-            {{ $t("Header.Mining") }}
-            <i class="num">5</i>
-          </nuxt-link>
-        </div>
-        <div class="menu_item">
-          <nuxt-link
-            to="/flashmining"
-            :class="routeObj.name === 'flashmining' ? 'active' : ''"
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-flashmining"></use>
-            </svg>
-            {{ $t("Header.FlashMining") }}
-            <!-- <i class="num">1</i> -->
-          </nuxt-link>
-        </div>
-        <div class="menu_item">
-          <nuxt-link
-            to="/burnbox"
-            :class="routeObj.name === 'burnbox' ? 'active' : ''"
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-burnbox"></use>
-            </svg>
-            {{ $t("Header.BruningBox") }}
-            <i class="num">2</i>
-          </nuxt-link>
-        </div>
-        <div class="menu_item">
-          <nuxt-link
-            to="/iio"
-            :class="routeObj.name.includes('iio') ? 'active' : ''"
-          >
-            <svg class="hot" aria-hidden="true">
-              <use
-                :href="`#icon-${
-                  routeObj.name.includes('iio') ? 'hot1' : 'hot'
-                }`"
-              ></use>
-            </svg>
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-iio"></use>
-            </svg>
-            {{ $t("Header.IIO") }}
-            <!-- <i class="num">1</i> -->
-          </nuxt-link>
-        </div>
-        <div class="menu_item">
-          <nuxt-link
-            to="/migration"
-            :class="routeObj.name.includes('migration') ? 'active' : ''"
-          >
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-migration"></use>
-            </svg>
-            Migration
-          </nuxt-link>
-        </div>
-        <!-- <div class="menu_item">
-          <nuxt-link
-            to="/guard"
-            :class="routeObj.name.includes('guard') ? 'active' : ''"
-          >
-            <svg class="hot" aria-hidden="true">
-              <use
-                :href="`#icon-${
-                  routeObj.name.includes('guard') ? 'hot1' : 'hot'
-                }`"
-              ></use>
-            </svg>
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-iio"></use>
-            </svg>
-            Guard
-            <i class="num">1</i>
-          </nuxt-link>
-        </div> -->
-        <div class="menu_item">
-          <nuxt-link to="/nft" :class="routeObj.name === 'nft' ? 'active' : ''">
-            <!-- <svg class="hot" aria-hidden="true">
+          <div class="menu_item">
+            <nuxt-link
+              to="/burnbox"
+              :class="routeObj.name === 'burnbox' ? 'active' : ''"
+            >
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-burnbox"></use>
+              </svg>
+              {{ $t("Header.BruningBox") }}
+              <i class="num">2</i>
+            </nuxt-link>
+          </div>
+          <div class="menu_item">
+            <nuxt-link
+              to="/iio"
+              :class="routeObj.name.includes('iio') ? 'active' : ''"
+            >
+              <svg class="hot" aria-hidden="true">
+                <use
+                  :href="`#icon-${
+                    routeObj.name.includes('iio') ? 'hot1' : 'hot'
+                  }`"
+                ></use>
+              </svg>
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-iio"></use>
+              </svg>
+              {{ $t("Header.IIO") }}
+              <!-- <i class="num">1</i> -->
+            </nuxt-link>
+          </div>
+          <div class="menu_item">
+            <nuxt-link
+              to="/nft"
+              :class="routeObj.name === 'nft' ? 'active' : ''"
+            >
+              <!-- <svg class="hot" aria-hidden="true">
               <use
                 :href="`#icon-${
                   routeObj.name.includes('nft') ? 'new1' : 'new'
                 }`"
               ></use>
             </svg> -->
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-nft"></use>
-            </svg>
-            {{ $t("Header.NFT") }}
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-nft"></use>
+              </svg>
+              {{ $t("Header.NFT") }}
+            </nuxt-link>
+          </div>
+          <div class="menu_item">
+            <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-papar"></use>
+              </svg>
+              {{ $t("Header.GuideBook") }}
+            </a>
+          </div>
+          <div class="menu_item">
+            <a href="https://helmetinsure.medium.com/" target="_blank">
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-medium"></use>
+              </svg>
+              {{ $t("Header.Medium") }}</a
+            >
+          </div>
+        </div>
+        <div class="to_polygon">
+          <nuxt-link
+            to="/migration"
+            :class="routeObj.name.includes('migration') ? 'active' : ''"
+          >
+            <img src="~/assets/img/guard/Polygon.png" alt="" />
+            <span>To Polygon</span>
+            <i></i>
           </nuxt-link>
         </div>
-        <div class="menu_item">
-          <a href="https://helmet-insure.gitbook.io/helmet/" target="_blank">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-papar"></use>
-            </svg>
-            {{ $t("Header.GuideBook") }}
-          </a>
-        </div>
-        <div class="menu_item">
-          <a href="https://helmetinsure.medium.com/" target="_blank">
-            <svg class="icon svg-icon" aria-hidden="true">
-              <use xlink:href="#icon-medium"></use>
-            </svg>
-            {{ $t("Header.Medium") }}</a
-          >
-        </div>
       </div>
-      <div class="footer">
-        <a href="https://www.guard.insure/insurance" class="toGuard_h5"
-          ><img src="~/assets/img/helmet/guard_logo.svg" alt="" /> Switch to
-          Guard</a
-        >
+      <div class="bot_slider">
         <div class="logo_wrap">
           <a
             href="https://www.coingecko.com/en/coins/helmet-insure"
@@ -340,9 +321,6 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 @media screen and (min-width: 750px) {
-  .toGuard_h5 {
-    display: none;
-  }
   .openSlider {
     display: block;
   }
@@ -437,10 +415,11 @@ export default {
     -webkit-animation: rotation_180 1s linear;
     -o-animation: rotation_180 1s linear;
   }
-  .menu {
-    margin-top: 40px;
+  .top_slider {
     flex: 1;
     overflow-y: auto;
+    margin-top: 40px;
+    padding-bottom: 20px;
     &::-webkit-scrollbar-track {
       background-color: #fff !important;
     }
@@ -456,6 +435,8 @@ export default {
       background: #f96000 !important;
       border-radius: 3px;
     }
+  }
+  .menu {
     &_group {
       height: auto;
       position: relative;
@@ -637,8 +618,45 @@ export default {
       transform: rotate(0) !important;
     }
   }
-  .footer {
-    height: 185px;
+  .to_polygon {
+    margin-top: 20px;
+    @include themeify {
+      border-top: 1px solid themed("price_line");
+    }
+    > a {
+      margin-top: 20px;
+      height: 40px;
+      background: rgba(221, 200, 255, 0.6);
+      border-radius: 5px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      position: relative;
+      > img {
+        width: 24px;
+        height: 24px;
+      }
+      > span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #9f66ff;
+        line-height: 18px;
+        margin-left: 4px;
+      }
+      i {
+        position: absolute;
+        right: 10px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/img/guard/right_double.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
+  }
+  .bot_slider {
     .logo_wrap {
       display: flex;
       transform: translateX(-10px);
@@ -817,11 +835,13 @@ export default {
   .light_logo {
     background-image: url("../../assets/img/slider/slider_logo_h5_light.png");
   }
-  .menu {
+  .top_slider {
     margin-top: 40px;
     flex: 1;
     overflow-y: auto;
-
+    padding-bottom: 20px;
+  }
+  .menu {
     &_group {
       height: auto;
       position: relative;
@@ -996,33 +1016,45 @@ export default {
       transform: rotate(0) !important;
     }
   }
-  .footer {
-    .toGuard_h5 {
-      min-width: 150px;
+  .to_polygon {
+    margin-top: 10px;
+    @include themeify {
+      border-top: 1px solid themed("price_line");
+    }
+    > a {
+      margin-top: 20px;
       height: 40px;
-      margin-bottom: 10px;
-      @include themeify {
-        background: themed("color-17173a");
-        color: themed("color-ffffff");
-      }
+      background: rgba(221, 200, 255, 0.6);
       border-radius: 5px;
+      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-family: IBMPlexSans;
-      line-height: 24px;
-      padding: 0 15px;
-      margin-right: 10px;
-      &:hover {
-        @include themeify {
-          background: themed("color-2c2c2c");
-        }
+      padding: 0 10px;
+      position: relative;
+      > img {
+        width: 24px;
+        height: 24px;
       }
-      img {
-        margin-right: 8px;
+      > span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #9f66ff;
+        line-height: 18px;
+        margin-left: 4px;
+      }
+      i {
+        position: absolute;
+        right: 10px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/img/guard/right_double.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
       }
     }
+  }
+  .bot_slider {
     .logo_wrap {
       display: flex;
       margin-bottom: 10px;

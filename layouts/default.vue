@@ -2,12 +2,16 @@
   <div class="layout-container" v-if="canShow">
     <div class="contractAdress" v-if="TitleTextShow">
       <i></i>
-      <p>
-        <span>HELMET is now on pancakeswap.</span>
-        <span>Token Contract Address:</span>
+      <div>
+        <span>HELMET Token Contract Address:</span>
         <span>0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
-        <a @click="openBUY">Exchange now</a>
-      </p>
+        <p>
+          <a @click="openBUY" class="bsc_helmet">Buy HELMET(BSC)</a>
+          <a href="https://www.guard.insure/insurance/" class="matic_helmet"
+            >Guard(Polygon)</a
+          >
+        </p>
+      </div>
       <svg class="close" aria-hidden="true" @click="TitleTextShow = false">
         <use xlink:href="#icon-close"></use>
       </svg>
@@ -137,7 +141,7 @@ export default {
   },
   watch: {
     ChainID(newValue) {
-      if (newValue == 56 ) {
+      if (newValue == 56) {
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();
@@ -481,7 +485,7 @@ export default {
         background-size: 100% 100%;
         margin-right: 4px;
       }
-      p {
+      > div {
         display: flex;
         align-items: center;
         font-family: Helvetica;
@@ -495,26 +499,29 @@ export default {
           cursor: pointer;
           margin-left: 4px;
         }
-      }
-      a {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 32px;
-        @include themeify {
-          background: themed("color-17173a");
-          color: themed("color-ffffff");
-          &:hover {
-            background: themed("color-2c2c2c");
+        > p {
+          display: flex;
+          .bsc_helmet {
+            background: #fd7e14;
+          }
+          .matic_helmet {
+            background: #4364e8;
+          }
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            border-radius: 5px;
+            padding: 0 10px;
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            line-height: 24px;
+            text-decoration: underline;
+            margin-left: 17px;
+            color: #ffffff;
           }
         }
-        border-radius: 5px;
-        padding: 0 10px;
-        font-size: 14px;
-        font-family: IBMPlexSans;
-        line-height: 24px;
-        text-decoration: underline;
-        margin-left: 17px;
       }
     }
     .content {
@@ -563,7 +570,7 @@ export default {
         margin-right: 2px;
         flex-shrink: 0;
       }
-      p {
+      > div {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -578,20 +585,28 @@ export default {
           }
           line-height: 16px;
         }
-        a {
-          min-width: 111px;
-          height: 32px;
-          @include themeify {
-            background: themed("color-17173a");
-            color: themed("color-ffffff");
+        > P {
+          display: flex;
+          .bsc_helmet {
+            background: #fd7e14;
           }
-          border-radius: 5px;
-          padding: 0 10px;
-          font-size: 14px;
-          font-family: IBMPlexSans;
-          text-align: center;
-          line-height: 32px;
-          text-decoration: underline;
+          .matic_helmet {
+            background: #4364e8;
+            margin-left: 17px;
+          }
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            border-radius: 5px;
+            padding: 0 10px;
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            line-height: 24px;
+            text-decoration: underline;
+            color: #ffffff;
+          }
         }
       }
       .close {

@@ -239,7 +239,7 @@ export default {
         min-width: 52px;
         min-height: 24px;
         @include themeify {
-          background: themed("mining_earn");
+          background: themed("mining_earn");  
           border: 1px solid themed("color-e8e8eb");
           color: themed("color-17173a");
         }

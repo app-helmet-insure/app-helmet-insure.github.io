@@ -329,7 +329,7 @@
     "Notice":"Notice",
     "Claim":"Claim",
     "Jump": "You will swich to guard.insure in {number}s (to claim GUARD)",
-    "Dialog": "0 HELMET for GUARD Credits Confirm",
+    "Dialog": "Necessary to Confirm then get Guard credits",
     "Confirm":"Confirm",
     "FreeDay":"FREE DAYS"
   }

@@ -6,16 +6,16 @@
       <div class="show_text">
         <p>
           <span>{{ $t("Migration.AvailableGuard") }}:</span>
-          <span>{{ addCommom(AllQuota, 4) }}</span>
+          <span>{{ addCommom(AllQuota, 8) }}</span>
         </p>
         <p>
           <span>{{ $t("Migration.MyCredits") }}:</span>
-          <span>{{ addCommom(MyQuota, 4) }}</span>
+          <span>{{ addCommom(MyQuota, 8) }}</span>
         </p>
       </div>
       <div class="balance text">
         <span>{{ $t("Migration.Available1") }}:</span
-        ><span>{{ addCommom(MyBalance, 4) }} Helmet</span>
+        ><span>{{ addCommom(MyBalance, 8) }} Helmet</span>
       </div>
       <div class="input">
         <input
@@ -132,11 +132,12 @@ export default {
       if (!this.BurnVolume) {
         return;
       }
-      return BurnHelmet(ContractAddress, this.BurnVolume, (res) => {
+      BurnHelmet(ContractAddress, this.BurnVolume, 18, (res) => {
         if (res === "success" || res === "error") {
           this.getMyQuota();
           this.getAllQuota();
           this.getMyBalance();
+          this.$bus.$emit("REFRESH_MIGRATION_TITLE")
         }
       });
     },

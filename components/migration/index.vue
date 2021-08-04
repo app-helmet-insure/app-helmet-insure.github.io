@@ -6,13 +6,13 @@
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
           $t("Migration.MyBurning")
         }}：
-        {{ addCommom(myBurning, 4) }}
+        {{ addCommom(myBurning, 8) }}
         Helmet
       </p>
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ addCommom(myPendding, 4) }} Guard
+        }}: {{ addCommom(myPendding, 8) }} Guard
         <button @click="jump">{{ $t("Migration.Claim") }}</button>
       </p>
     </div>
@@ -49,7 +49,7 @@ export default {
     this.$nextTick(() => {
       this.getBalance();
     });
-    this.$bus.$on("REFRESH_MIGRATION_SWAP", () => {
+    this.$bus.$on("REFRESH_MIGRATION_TITLE", () => {
       this.getBalance();
     });
   },

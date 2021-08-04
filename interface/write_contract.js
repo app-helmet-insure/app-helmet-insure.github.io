@@ -405,7 +405,7 @@ export const BurnHelmet = async (
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   Volume = toWei(Volume + "", DecimalsUnit);
-  return Contracts.methods
+Contracts.methods
     .burn(Volume)
     .send({ from: Account })
     .on("transactionHash", (hash) => {
@@ -432,10 +432,10 @@ export const BurnHelmet = async (
           showDialog: false,
         });
       }
-      return callBack("success");
+      callBack("success");
     })
     .on("error", (err, receipt) => {
-      return callBack("error");
+      callBack("error");
     });
 };
 export const ApplyRewards3 = async (ContractAddress, EarnAddress, callBack) => {

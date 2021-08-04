@@ -126,10 +126,10 @@ export default {
       }
     },
     async claimQuota() {
-      console.log(11);
       GetReward3(PoolAddress, Earn3Address, (res) => {
         if (res === "success" || res === "error") {
           this.getBalance();
+          this.$bus.$emit("REFRESH_MIGRATION_SWAP");
         }
       });
     },

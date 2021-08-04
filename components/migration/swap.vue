@@ -77,6 +77,13 @@ export default {
       this.getHelmetApproveStatus();
       this.getGuardApproveStatus();
     });
+    this.$bus.$on("REFRESH_MIGRATION_SWAP", () => {
+      this.getMyQuota();
+      this.getAllQuota();
+      this.getMyBalance();
+      this.getHelmetApproveStatus();
+      this.getGuardApproveStatus();
+    });
   },
   methods: {
     async getMyBalance() {
@@ -125,7 +132,7 @@ export default {
       if (!this.BurnVolume) {
         return;
       }
-      BurnHelmet(ContractAddress, this.BurnVolume, (res) => {
+      return BurnHelmet(ContractAddress, this.BurnVolume, (res) => {
         if (res === "success" || res === "error") {
           this.getMyQuota();
           this.getAllQuota();
@@ -135,16 +142,16 @@ export default {
     },
     async ActionStep() {
       if (this.HelmetNeedApprove && this.HelmetNeedApprove) {
-        this.ApproveHelemt();
+        return this.ApproveHelemt();
       }
       if (this.HelmetNeedApprove && !this.HelmetNeedApprove) {
-        this.ApproveHelemt(true);
+        return this.ApproveHelemt(true);
       }
       if (!this.HelmetNeedApprove && this.HelmetNeedApprove) {
-        this.ApproveGuard();
+        return this.ApproveGuard();
       }
       if (!this.HelmetNeedApprove && !this.HelmetNeedApprove) {
-        this.toBurnHelmet();
+        return this.toBurnHelmet();
       }
     },
   },

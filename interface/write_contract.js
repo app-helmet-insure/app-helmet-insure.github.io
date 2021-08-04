@@ -108,7 +108,7 @@ export const GetReward = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
-  console.log(ContractAddress, RewardAddress)
+  console.log(ContractAddress, RewardAddress);
   let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
   let Account = await getAccounts();
   try {
@@ -283,16 +283,18 @@ export const Approve = async (
         });
       })
       .on("receipt", (receipt) => {
-        bus.$emit("CLOSE_STATUS_DIALOG");
-        bus.$emit("OPEN_STATUS_DIALOG", {
-          title: "Transation submitted",
-          layout: "layout2",
-          buttonText: "Confirm",
-          conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-          button: true,
-          buttonText: "Confirm",
-          showDialog: false,
-        });
+        if (window.statusDialog) {
+          bus.$emit("CLOSE_STATUS_DIALOG");
+          bus.$emit("OPEN_STATUS_DIALOG", {
+            title: "Transation submitted",
+            layout: "layout2",
+            buttonText: "Confirm",
+            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+            button: true,
+            buttonText: "Confirm",
+            showDialog: false,
+          });
+        }
         callback("success");
       })
       .on("error", (err) => {
@@ -375,20 +377,22 @@ export const Cancel = async (askID, callBack) => {
       });
     })
     .on("receipt", function(receipt) {
-      bus.$emit("CLOSE_STATUS_DIALOG");
-      bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "Transation submitted",
-        layout: "layout2",
-        buttonText: "Confirm",
-        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: false,
-      });
+      if (window.statusDialog) {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Transation submitted",
+          layout: "layout2",
+          buttonText: "Confirm",
+          conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+          button: true,
+          buttonText: "Confirm",
+          showDialog: false,
+        });
+      }
       callBack("success");
     })
     .on("error", (err, receipt) => {
-      callBack("failed");
+      callBack("error");
     });
 };
 export const BurnHelmet = async (
@@ -400,8 +404,8 @@ export const BurnHelmet = async (
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
-  Volume = toWei(Volume, DecimalsUnit);
-  Contracts.methods
+  Volume = toWei(Volume + "", DecimalsUnit);
+  return Contracts.methods
     .burn(Volume)
     .send({ from: Account })
     .on("transactionHash", (hash) => {
@@ -416,27 +420,25 @@ export const BurnHelmet = async (
       });
     })
     .on("receipt", function(receipt) {
-      bus.$emit("CLOSE_STATUS_DIALOG");
-      bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "Transation submitted",
-        layout: "layout2",
-        buttonText: "Confirm",
-        conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: false,
-      });
-      callBack("success");
+      if (window.statusDialog) {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Transation submitted",
+          layout: "layout2",
+          buttonText: "Confirm",
+          conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+          button: true,
+          buttonText: "Confirm",
+          showDialog: false,
+        });
+      }
+      return callBack("success");
     })
     .on("error", (err, receipt) => {
-      callBack("failed");
+      return callBack("error");
     });
 };
-export const ApplyRewards3 = async (
-  ContractAddress,
-  EarnAddress,
-  callBack
-) => {
+export const ApplyRewards3 = async (ContractAddress, EarnAddress, callBack) => {
   let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
   let Account = await getAccounts();
   Contracts.methods
@@ -467,6 +469,6 @@ export const ApplyRewards3 = async (
       callBack("success");
     })
     .on("error", (err, receipt) => {
-      callBack("failed");
+      callBack("error");
     });
 };

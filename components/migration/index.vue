@@ -49,6 +49,9 @@ export default {
     this.$nextTick(() => {
       this.getBalance();
     });
+    this.$bus.$on("REFRESH_MIGRATION_SWAP", () => {
+      this.getBalance();
+    });
   },
   methods: {
     jump() {

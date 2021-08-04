@@ -19,13 +19,12 @@ let Earn3Address = "0x73f15cDBeaf9818a80b748F1389d791ce488d172";
 export default {
   data() {
     return {
-      flag: true,
+      flag: false,
       Status: false,
     };
   },
   watch: {
     Status(value) {
-      console.log(value);
       if (value) {
         this.flag = false;
       }
@@ -40,12 +39,16 @@ export default {
     Submit() {
       this.flag = false;
       ApplyRewards3(PoolAddress, Earn3Address, (res) => {
-        if (res == "success" || success == "error") {
+        if (res == "success") {
+          this.Status = true;
         }
       });
     },
     async getApproveStatus() {
       let Status = await Applied3(PoolAddress, Earn3Address);
+      if (!Status) {
+        this.flag = true;
+      }
       this.Status = Status;
     },
   },

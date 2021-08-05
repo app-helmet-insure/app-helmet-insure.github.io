@@ -10,11 +10,11 @@
         <div class="show_text">
           <p>
             <span>{{ $t("Migration.MyCredits") }}:</span>
-            <span>{{ addCommom(fixD(MyQuota, 8)) }}</span>
+            <span>{{ addCommom(fixD(MyQuota, 4)) }}</span>
           </p>
           <p>
             <span>Helmet:</span>
-            <span>{{ addCommom(fixD(MyBalance, 8)) }} </span>
+            <span>{{ addCommom(fixD(MyBalance, 4)) }} </span>
           </p>
         </div>
         <div class="swap_action">
@@ -28,7 +28,7 @@
               <button
                 class="max"
                 @click="
-                  BurnVolume = fixD(Math.min(AllQuota, MyQuota, MyBalance), 8)
+                  BurnVolume = fixD(Math.min(AllQuota, MyQuota, MyBalance), 4)
                 "
               >
                 {{ $t("Insurance.Insurance_text18") }}
@@ -409,10 +409,40 @@ export default {
 }
 
 @media screen and(min-width: 750px) {
+  .swap_wrap {
+    width: 400px;
+  }
 }
 @media screen and(max-width: 750px) {
   .content {
     flex-direction: column;
+  }
+  .swap_wrap {
+    min-width: 320px;
+    width: 95%;
+    padding: 10px 10px;
+    > button {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .swap_action {
+      width: 100%;
+    }
+    .action_cen {
+      width: calc(100% - 21px);
+    }
+    .action_bot {
+      input {
+        width: 95%;
+      }
+    }
+  }
+  .tips_wrap {
+    min-width: 320px;
+    width: 95%;
+    margin-left: 0;
+    margin-top: 20px;
+    height: auto;
   }
 }
 </style>

@@ -5,14 +5,13 @@
       <p>
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
           $t("Migration.MyBurning")
-        }}：
-        {{ addCommom(fixD(myBurning, 8)) }}
+        }}: {{ addCommom(fixD(myBurning, 4)) }}
         Helmet
       </p>
       <p>
         <img src="~/assets/img/migration/coin.svg" alt="" />{{
           $t("Migration.MyPendding")
-        }}: {{ addCommom(fixD(myPendding, 8)) }} Guard
+        }}: {{ addCommom(fixD(myPendding, 4)) }} Guard
         <button @click="jump">{{ $t("Migration.Claim") }}</button>
       </p>
     </div>
@@ -167,7 +166,6 @@ h3 {
   margin: 30px auto 0;
   .step {
     width: 4px;
-    height: 715px;
     position: relative;
     background: linear-gradient(360deg, #4364e8, #fd7e14);
     transform: translate(12px);
@@ -187,14 +185,6 @@ h3 {
       color: #ffffff;
       margin-left: 50%;
     }
-    &_one {
-      top: 30px;
-      background: #fd7e14;
-    }
-    &_two {
-      background: #4364e8;
-      top: 330px;
-    }
   }
 }
 @media screen and(min-width:750px) {
@@ -211,6 +201,17 @@ h3 {
   }
   .showaction {
     width: 868px;
+    .step {
+      height: 715px;
+      &_one {
+        top: 30px;
+        background: #fd7e14;
+      }
+      &_two {
+        background: #4364e8;
+        top: 330px;
+      }
+    }
   }
 }
 @media screen and(max-width:750px) {
@@ -218,9 +219,31 @@ h3 {
     margin: 0 auto;
     padding: 30px 0;
   }
+  .showdata {
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
   .showaction {
     width: 100%;
-  
+    .step {
+      display: flex;
+      &_one {
+        top: 30px;
+        background: #fd7e14;
+      }
+      &_two {
+        background: #4364e8;
+        top: 545px;
+      }
+    }
+    .wrap {
+      flex: 1;
+      width: 85%;
+      margin-left: 30px;
+    }
   }
 }
 </style>

@@ -5,7 +5,7 @@
       <div class="stake_wrap">
         <div class="guard_balance">
           <span class="name">{{ $t("Migration.GuardCredit") }}：</span>
-          <span class="num">{{ addCommom(fixD(myReward3, 8)) }}</span>
+          <span class="num">{{ addCommom(fixD(myReward3, 4)) }}</span>
         </div>
         <button
           @click="claimQuota"
@@ -17,7 +17,7 @@
         <div class="stake_balance">
           <p>
             <span class="name">{{ $t("Migration.MyStake") }}：</span>
-            <span class="num">{{ addCommom(fixD(myStkaing, 8)) }}</span>
+            <span class="num">{{ addCommom(fixD(myStkaing, 4)) }}</span>
           </p>
           <button>Go Deposit</button>
         </div>
@@ -258,10 +258,20 @@ export default {
     flex-direction: column;
   }
   .stake_wrap {
+    min-width: 320px;
     width: 95%;
+    padding: 10px 10px;
+    >button{
+      width: 100%;
+    }
   }
   .tips_wrap {
+    min-width: 320px;
+    width: 95%;
     margin-left: 0;
+    margin-top: 20px;
+    height: auto;
   }
+  
 }
 </style>

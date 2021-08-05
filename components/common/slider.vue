@@ -117,7 +117,7 @@
                 <use xlink:href="#icon-burnbox"></use>
               </svg>
               {{ $t("Header.BruningBox") }}
-              <i class="num">2</i>
+              <!-- <i class="num">2</i> -->
             </nuxt-link>
           </div>
           <div class="menu_item">

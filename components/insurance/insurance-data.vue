@@ -2,22 +2,29 @@
   <div class="insurance-banner">
     <ul>
       <li>
+        <div class="label_data">
+          <!-- 已成交保单 -->
+          <p>
+            <label>{{ $t("Banner.HelmetBurn") }}</label>
+            <span>{{ isLogin ? addCommom(helmetvolume, 0) : "--" }}</span>
+          </p>
+        </div>
         <!-- 销毁 -->
-        <div>
+        <!-- <div>
           <p><img src="~/assets/img/icon/helmet.svg" alt="" /></p>
 
           <p>
             <span class="title_name">{{ $t("Banner.HelmetBurn") }}</span
             ><span class="number">{{ addCommom(helmetvolume, 0) }}</span>
           </p>
-        </div>
-        <div>
+        </div> -->
+        <!-- <div>
           <p><img src="~/assets/img/icon/guard.svg" alt="" /></p>
           <p>
             <span class="title_name">{{ $t("Banner.GuardSupply") }}</span
             ><span class="number">{{ addCommom(guardVolume, 0) }}</span>
           </p>
-        </div>
+        </div> -->
       </li>
       <li>
         <div class="label_data">
@@ -83,7 +90,12 @@ import { getLongType, getLongValuess } from "~/interface/event.js";
 import { BalanceOf } from "~/interface/read_contract.js";
 import countTo from "vue-count-to";
 import BigNumber from "bignumber.js";
-import {fromWei, getAccounts, getDecimals, Web3Contract} from "../../interface/common_contract";
+import {
+  fromWei,
+  getAccounts,
+  getDecimals,
+  Web3Contract,
+} from "../../interface/common_contract";
 import Web3 from "web3";
 export default {
   name: "insurance-banner",
@@ -127,19 +139,21 @@ export default {
       this.getBannerData();
     }
     this.$nextTick(async () => {
-       getLongType().then(res => {
-         this.helmetVarieties = res
-       });
-      getLongValuess().then(res => {
-        this.totalHelmetsBorrowedVolume = res
-      })
-      this.getHelmetVolume().then(res =>{
-        this.helmetvolume = res
-      })
-      this.getGuardVolume().then(res => {
+      getLongType().then((res) => {
+        this.helmetVarieties = res;
+      });
+      getLongValuess().then((res) => {
+        this.totalHelmetsBorrowedVolume = res;
+      });
+      this.getHelmetVolume().then((res) => {
+        this.helmetvolume = res;
+      });
+      this.getGuardVolume().then((res) => {
         // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
-        this.guardVolume = new BigNumber(4000000).minus(new BigNumber(res)).plus(100000)
-      })
+        this.guardVolume = new BigNumber(4000000)
+          .minus(new BigNumber(res))
+          .plus(100000);
+      });
     });
   },
   methods: {
@@ -180,16 +194,21 @@ export default {
       return await BalanceOf(helmetConrtact, 18, deadContract);
     },
     async getGuardVolume() {
-      const HttpWeb3 = new Web3(new Web3.providers.HttpProvider('https://rpc-mainnet.maticvigil.com'))
-        let Contracts = new HttpWeb3.eth.Contract(ERC20.abi, '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8');
-        let DecimalsUnit = getDecimals(18);
-        return await Contracts.methods
-            .balanceOf('0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699')
-            .call()
-            .then((res) => {
-              return fromWei(res, DecimalsUnit);
-            })
-    }
+      const HttpWeb3 = new Web3(
+        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+      );
+      let Contracts = new HttpWeb3.eth.Contract(
+        ERC20.abi,
+        "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+      );
+      let DecimalsUnit = getDecimals(18);
+      return await Contracts.methods
+        .balanceOf("0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699")
+        .call()
+        .then((res) => {
+          return fromWei(res, DecimalsUnit);
+        });
+    },
   },
 };
 </script>
@@ -262,46 +281,46 @@ export default {
             }
           }
         }
-        &:nth-of-type(1) {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 0 20px;
-          > div {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-            p {
-              &:nth-of-type(1) {
-                width: 36px;
-                height: 36px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 5px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-              &:nth-of-type(2) {
-                margin-left: 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                span {
-                  margin: 0;
-                }
-                .title_name {
-                  font-size: 12px;
-                  color: #ffffff;
-                }
-                .number {
-                  font-size: 18px;
-                  font-weight: 600;
-                  color: #ffffff;
-                }
-              }
-            }
-          }
-        }
+        // &:nth-of-type(1) {
+        //   display: flex;
+        //   flex-direction: column;
+        //   justify-content: center;
+        //   padding: 0 20px;
+        //   > div {
+        //     display: flex;
+        //     align-items: center;
+        //     margin: 5px 0;
+        //     p {
+        //       &:nth-of-type(1) {
+        //         width: 36px;
+        //         height: 36px;
+        //         background: rgba(255, 255, 255, 0.3);
+        //         border-radius: 5px;
+        //         display: flex;
+        //         align-items: center;
+        //         justify-content: center;
+        //       }
+        //       &:nth-of-type(2) {
+        //         margin-left: 20px;
+        //         display: flex;
+        //         flex-direction: column;
+        //         align-items: flex-start;
+        //         span {
+        //           margin: 0;
+        //         }
+        //         .title_name {
+        //           font-size: 12px;
+        //           color: #ffffff;
+        //         }
+        //         .number {
+        //           font-size: 18px;
+        //           font-weight: 600;
+        //           color: #ffffff;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
         &:nth-of-type(4) {
           position: relative;
           p {
@@ -385,6 +404,9 @@ export default {
       li:nth-of-type(1) {
         margin: 0;
         background: linear-gradient(314deg, #38ede8 0%, #20d3ce 100%);
+        > div {
+          background-image: url("../../assets/img/insurancelist/card4@2x.png");
+        }
       }
       li:nth-of-type(2) {
         background: linear-gradient(227deg, #c48dfe 0%, #8f3fff 100%);
@@ -470,46 +492,46 @@ export default {
             margin-top: 16px;
           }
         }
-        &:nth-of-type(1) {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          padding: 0 20px;
-          > div {
-            display: flex;
-            align-items: center;
-            margin: 5px 0;
-            p {
-              &:nth-of-type(1) {
-                width: 36px;
-                height: 36px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 5px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-              &:nth-of-type(2) {
-                margin-left: 20px;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                span {
-                  margin: 0;
-                }
-                .title_name {
-                  font-size: 12px;
-                  color: #ffffff;
-                }
-                .number {
-                  font-size: 18px;
-                  font-weight: 600;
-                  color: #ffffff;
-                }
-              }
-            }
-          }
-        }
+        // &:nth-of-type(1) {
+        //   display: flex;
+        //   flex-direction: column;
+        //   justify-content: center;
+        //   padding: 0 20px;
+        //   > div {
+        //     display: flex;
+        //     align-items: center;
+        //     margin: 5px 0;
+        //     p {
+        //       &:nth-of-type(1) {
+        //         width: 36px;
+        //         height: 36px;
+        //         background: rgba(255, 255, 255, 0.3);
+        //         border-radius: 5px;
+        //         display: flex;
+        //         align-items: center;
+        //         justify-content: center;
+        //       }
+        //       &:nth-of-type(2) {
+        //         margin-left: 20px;
+        //         display: flex;
+        //         flex-direction: column;
+        //         align-items: flex-start;
+        //         span {
+        //           margin: 0;
+        //         }
+        //         .title_name {
+        //           font-size: 12px;
+        //           color: #ffffff;
+        //         }
+        //         .number {
+        //           font-size: 18px;
+        //           font-weight: 600;
+        //           color: #ffffff;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
         &:nth-of-type(4) {
           position: relative;
           p {
@@ -593,7 +615,9 @@ export default {
       li:nth-of-type(1) {
         margin: 0;
         background: linear-gradient(314deg, #38ede8 0%, #20d3ce 100%);
-        border-radius: 10px;
+        > div {
+          background-image: url("../../assets/img/insurancelist/card4@2x.png");
+        }
       }
       li:nth-of-type(2) {
         margin: 0;

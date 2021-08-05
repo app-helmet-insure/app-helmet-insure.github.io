@@ -35,14 +35,12 @@
             <span v-if="item.InsuranceType == 'SHIB'"
               >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
             >
-            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
             <span v-else
               >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
             >
             <span v-if="item.InsuranceType == 'SHIB'"
               >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
             >
-            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
             <span v-else
               >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
             >
@@ -60,12 +58,11 @@
             <button
               @click="buyPutInsurance(item.InsuranceType)"
               :class="
-                (activeInsurance == item.InsuranceType &&
+                activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'PUT'
                   ? 'activeButton buyPutInsurance'
-                  : 'buyPutInsurance',
-                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
+                  : 'buyPutInsurance'
               "
             >
               {{ $t("Insurance.Insurance_text6") }}
@@ -74,12 +71,11 @@
             <button
               @click="buyCallInsurance(item.InsuranceType)"
               :class="
-                (activeInsurance == item.InsuranceType &&
+                activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'CALL'
                   ? 'activeButton buyCallInsurance'
-                  : 'buyCallInsurance',
-                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
+                  : 'buyCallInsurance'
               "
             >
               {{ $t("Insurance.Insurance_text7") }}
@@ -88,12 +84,11 @@
             <button
               @click="issueInsurance(item.InsuranceType)"
               :class="
-                (activeInsurance == item.InsuranceType &&
+                activeInsurance == item.InsuranceType &&
                 showActiveInsurance &&
                 activeType == 'SELL'
                   ? 'activeButton issueInsurance'
-                  : 'issueInsurance',
-                item.InsuranceImg == 'COIN' ? 'disable_insurance' : '')
+                  : 'issueInsurance'
               "
             >
               {{ $t("Insurance.Insurance_text8") }}
@@ -339,10 +334,6 @@ export default {
         {
           InsuranceType: "SHIB",
           InsuranceImg: "SHIB",
-        },
-        {
-          InsuranceType: "COIN(BSC)",
-          InsuranceImg: "COIN",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];

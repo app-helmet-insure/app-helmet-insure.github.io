@@ -325,12 +325,18 @@
     "AvailableGuard": "当日剩余兑换额度",
     "MyCredits": "我的额度",
     "Approve": "授权",
-    "Burn":"燃烧兑换 Guard",
-    "Notice":"提示",
-    "Claim":"领取",
-    "Jump":"{number}S 后即将跳转到 Guard.insure, 领取 Guard",
-    "Dialog":"点击“确认”参与 Migrate Helmet(BSC) to Guard(Polygon) 活动",
-    "Confirm":"确认",
-    "FreeDay":"限免活动"
+    "Burn": "燃烧兑换 Guard",
+    "Notice": "提示",
+    "Claim": "领取",
+    "Jump": "{number}S 后即将跳转到 Guard.insure, 领取 Guard",
+    "Dialog": "点击“确认”参与 Migrate Helmet(BSC) to Guard(Polygon) 活动",
+    "Confirm": "确认",
+    "FreeDay": "限免活动",
+    "Tips1": "用户需要在挖矿中的 <span>Helmet-BNB LPT</span> 池抵押 <span> LPT </span> 才可获得 <span>Guard</span> 额度奖励",
+    "Tips2": "Guard额度每24小时释放20,000个。每个用户可获得奖励的 Guard 额度取决于所有参与 Migrate Helmet(BSC) to Guard (Polugon) 的用户在挖矿中的 Helmet-BNB LPT 池中的占比",
+    "Tips3": "获得的 <span>Guard</span> 额度需要领取到钱包之后才能使用",
+    "Tips4": "兑换 Guard（Polygon）需要燃烧等量的 Helmet 与 Guard 额度",
+    "Tips5": "每24小时全网限量兑换额度 10,000 个(当日 22:00至次日22:00)",
+    "Tips6": "兑换额度每日 22:00 更新"
   }
 }

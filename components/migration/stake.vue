@@ -1,44 +1,42 @@
 <template>
   <div class="migration_stake">
-    <div class="title"><span>1</span>{{ $t("Migration.StakeTitle") }}</div>
-    <div class="stake_wrap">
-      <div class="balance text">
-        <span>{{ $t("Migration.Available") }}:</span
-        ><span>{{ addCommom(fixD(myBalance, 4)) }} LPT</span>
+    <div class="title">{{ $t("Migration.StakeTitle") }}</div>
+    <div class="content">
+      <div class="stake_wrap">
+        <div class="guard_balance">
+          <span class="name">{{ $t("Migration.GuardCredit") }}：</span>
+          <span class="num">{{ addCommom(fixD(myReward3, 8)) }}</span>
+        </div>
+        <button
+          @click="claimQuota"
+          :class="claimLoading ? 'disable b_button' : 'b_button'"
+        >
+          <i :class="claimLoading ? 'loading_pic' : ''"></i>
+          {{ $t("Migration.Claim") }}
+        </button>
+        <div class="stake_balance">
+          <p>
+            <span class="name">{{ $t("Migration.MyStake") }}：</span>
+            <span class="num">{{ addCommom(fixD(myStkaing, 8)) }}</span>
+          </p>
+          <button>Go Deposit</button>
+        </div>
       </div>
-      <div class="input">
-        <input type="text" v-model="StakeVolume" />
-        <span class="max" @click="StakeVolume = myBalance">{{
-          $t("Insurance.Insurance_text18")
-        }}</span>
+      <div class="tips_wrap">
+        <div class="logo">Tips</div>
+        <div>
+          <span>01</span>
+          <p v-html="$t('Migration.Tips1')"></p>
+        </div>
+        <div>
+          <span>02</span>
+          <p v-html="$t('Migration.Tips2')"></p>
+        </div>
+        <div>
+          <span>03</span>
+          <p v-html="$t('Migration.Tips3')"></p>
+        </div>
       </div>
-      <button
-        @click="toDeposite"
-        :class="stakeLoading ? 'disable b_button' : 'b_button'"
-      >
-        <i :class="stakeLoading ? 'loading_pic' : ''"></i
-        >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.ConfirmDeposit") }}
-      </button>
-      <div class="my_stake text">
-        <span>{{ $t("Migration.MyStake") }}:</span
-        ><span>{{ addCommom(fixD(myStkaing, 4)) }} LPT</span>
-      </div>
-      <div class="all_stake text">
-        <span>{{ $t("Migration.Total") }}:</span
-        ><span>{{ addCommom(fixD(poolStaking, 4)) }} LPT</span>
-      </div>
-      <div class="guard_balance">
-        <p>
-          <span>{{ $t("Migration.GuardCredit") }}：</span>
-          <span>{{ addCommom(fixD(myReward3, 8)) }}</span>
-        </p>
-        <button @click="claimQuota">{{ $t("Migration.Claim") }}</button>
-      </div>
-      <a
-        href="https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
-        target="_blank"
-        >From <i class="pancake"></i>Get HELMET-BNB LPT(V2)</a
-      >
     </div>
   </div>
 </template>
@@ -64,7 +62,7 @@ export default {
       myStkaing: 0,
       myReward3: 0,
       ApproveFlag: false,
-      stakeLoading: false,
+      claimLoading: false,
       fixD,
       addCommom,
     };
@@ -86,49 +84,12 @@ export default {
       this.myStkaing = myStkaing;
       this.myReward3 = myReward3;
     },
-    async NeedApprove() {
-      let flag = await Allowance(StakeAddress, PoolAddress);
-      this.ApproveFlag = flag;
-    },
-    // 抵押
-    async toDeposite() {
-      if (!this.StakeVolume) {
-        return;
-      }
-      if (this.stakeLoading) {
-        return;
-      }
-      this.stakeLoading = true;
-      if (this.ApproveFlag) {
-        await Approve(StakeAddress, PoolAddress, "HELMET", (res) => {
-          if (res == "success" || res == "error") {
-            this.NeedApprove();
-            this.stakeLoading = false;
-            this.ApproveFlag = true;
-          }
-        });
-      } else {
-        let StakeVolume = this.StakeVolume;
-        await Stake(
-          {
-            ContractAddress: PoolAddress,
-            DepositeVolume: StakeVolume,
-            Decimals: 18,
-          },
-          (res) => {
-            console.log(res);
-            if (res == "success" || res == "error") {
-              this.getBalance();
-              this.stakeLoading = false;
-            }
-          }
-        );
-      }
-    },
     async claimQuota() {
+      this.claimLoading = true;
       GetReward3(PoolAddress, Earn3Address, (res) => {
         if (res === "success" || res === "error") {
           this.getBalance();
+          this.claimLoading = false;
           this.$bus.$emit("REFRESH_MIGRATION_SWAP");
         }
       });
@@ -137,6 +98,16 @@ export default {
 };
 </script>
 
+<style lang='scss'>
+.tips_wrap {
+  > div {
+    span {
+      color: #17173a;
+      font-weight: 600;
+    }
+  }
+}
+</style>
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
 .loading_pic {
@@ -148,421 +119,149 @@ export default {
   background-size: cover;
   animation: loading 2s 0s linear infinite;
 }
-@media screen and (min-width: 750px) {
-  .migration_stake {
-    width: 400px;
-    height: 410px;
-    border-radius: 10px;
+.title {
+  height: 18px;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  @include themeify {
+    color: themed("color-17173a");
+  }
+  line-height: 18px;
+  margin-top: 32px;
+}
+.content {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.stake_wrap {
+  border-radius: 10px;
+  border: 1px solid #e8e8eb;
+  padding: 20px 40px;
+  .guard_balance {
+    width: 100%;
+    height: 46px;
     @include themeify {
-      border: 1px solid themed("color-e8e8eb");
-      background: themed("color-ffffff");
+      background: themed("mining_earn");
     }
-    overflow: hidden;
-    .title {
-      height: 50px;
+    border-radius: 5px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      font-size: 14px;
+      font-weight: 500;
       @include themeify {
-        background: themed("mining_earn");
-        color: themed("color-17173a");
-      }
-
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 600;
-      line-height: 18px;
-      padding: 0 40px;
-      span {
-        display: flex;
-        margin-right: 8px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #fd7e14;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        flex-shrink: 0;
-        line-height: 20px;
+        color: darken($color: themed("color-17173a"), $amount: 30%);
       }
     }
-    .stake_wrap {
-      padding: 0 40px;
-    }
-    .text {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .balance {
-      margin-top: 30px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      input {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        background: transparent;
-        @include themeify {
-          color: themed("color-17173a");
-          border: 1px solid themed("color-e8e8eb");
-        }
-        padding-left: 12px;
-        &:focus {
-          border: 1px solid #fd7e14 !important;
-        }
-      }
-      span {
-        position: absolute;
-        right: 10px;
-        min-width: 52px;
-        min-height: 24px;
-        @include themeify {
-          background: themed("mining_earn");  
-          border: 1px solid themed("color-e8e8eb");
-          color: themed("color-17173a");
-        }
-        border-radius: 5px;
-        padding: 4px 6px;
-        font-size: 12px;
-        cursor: pointer;
-        text-align: center;
-        &:hover {
-          border: 1px solid #ff9600 !important;
-          color: #ff9600 !important;
-        }
-      }
-    }
-    .b_button {
-      border-radius: 5px;
-    }
-    .my_stake {
-      margin-top: 20px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .all_stake {
-      margin-top: 10px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .guard_balance {
-      width: 100%;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      margin-top: 10px;
-      p {
-        font-size: 14px;
-        font-weight: 500;
-        span {
-          &:nth-of-type(1) {
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-            font-weight: 500;
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
-      }
-    }
-    a {
-      margin-top: 10px;
+    .num {
       font-size: 14px;
       font-weight: 600;
-      color: #fd7e14;
-      line-height: 20px;
-      display: flex;
-      align-items: center;
-      i {
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        margin: 0 2px;
+      color: #22292f;
+    }
+  }
+  > button {
+    margin-top: 20px;
+    border-radius: 5px;
+  }
+  .stake_balance {
+    width: 100%;
+    height: 64px;
+    @include themeify {
+      background: themed("mining_earn");
+    }
+    border-radius: 5px;
+    padding: 0 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      font-size: 14px;
+      font-weight: 500;
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 30%);
       }
-      .pancake {
-        background-image: url("../../assets/img/icon/pancake@2x.png");
+    }
+    .num {
+      font-size: 14px;
+      font-weight: 600;
+      color: #22292f;
+    }
+    button {
+      background: #fd7e14;
+      border-radius: 5px;
+      min-height: 24px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 12px;
+    }
+  }
+}
+.tips_wrap {
+  margin-left: 48px;
+  width: 370px;
+  height: 230px;
+  @include themeify {
+    background: themed("mining_earn");
+  }
+  border-radius: 10px;
+  padding: 10px 25px;
+  .logo {
+    width: 33px;
+    height: 17px;
+    background: #17173a;
+    border-radius: 2px;
+    font-size: 12px;
+    font-family: IBMPlexSans;
+    color: #ffffff;
+    justify-content: center;
+    transform: skew(-10deg);
+  }
+  > div {
+    display: flex;
+    margin-top: 10px;
+    span {
+      font-size: 12px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.3);
+      line-height: 20px;
+      letter-spacing: 1px;
+    }
+    p {
+      margin-left: 3px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      color: rgba(23, 23, 58, 0.7);
+      line-height: 20px;
+      span {
+        font-weight: 600;
+        color: #17173a;
       }
     }
   }
 }
-@media screen and (max-width: 750px) {
-  .migration_stake {
-    width: 100%;
-    height: 410px;
-    border-radius: 10px;
-    @include themeify {
-      border: 1px solid themed("color-e8e8eb");
-      background: themed("color-ffffff");
-    }
-    overflow: hidden;
-    .title {
-      height: 50px;
-      @include themeify {
-        background: themed("mining_earn");
-        color: themed("color-17173a");
-      }
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 600;
-      line-height: 18px;
-      padding: 0 40px;
-      span {
-        display: flex;
-        margin-right: 8px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #fd7e14;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 20px;
-        flex-shrink: 0;
-      }
-    }
-    .stake_wrap {
-      padding: 0 10px;
-    }
-    .text {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .balance {
-      margin-top: 30px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      input {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        background: transparent;
-        @include themeify {
-          color: themed("color-17173a");
-          border: 1px solid themed("color-e8e8eb");
-        }
-        padding-left: 12px;
-        &:focus {
-          border: 1px solid #fd7e14 !important;
-        }
-      }
-      span {
-        position: absolute;
-        right: 10px;
-        min-width: 52px;
-        min-height: 24px;
-        @include themeify {
-          border: 1px solid themed("color-e8e8eb");
-          background: themed("mining_earn");
-          color: themed("color-17173a");
-        }
-        border-radius: 5px;
-        padding: 4px 6px;
-        font-size: 12px;
-        cursor: pointer;
-        text-align: center;
-        &:hover {
-          border: 1px solid #ff9600 !important;
-          color: #ff9600 !important;
-        }
-      }
-    }
-    .b_button {
-      border-radius: 5px;
-      width: 100%;
-      margin-top: 20px;
-    }
-    .my_stake {
-      margin-top: 20px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .all_stake {
-      margin-top: 10px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .guard_balance {
-      width: 100%;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      margin-top: 10px;
-      p {
-        font-size: 14px;
-        font-weight: 500;
-        span {
-          &:nth-of-type(1) {
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-            font-weight: 500;
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
-      }
-    }
-    a {
-      margin-top: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      color: #fd7e14;
-      line-height: 20px;
-      display: flex;
-      align-items: center;
-      i {
-        display: block;
-        width: 20px;
-        height: 20px;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        margin: 0 2px;
-      }
-      .pancake {
-        background-image: url("../../assets/img/icon/pancake@2x.png");
-      }
-    }
+@media screen and(min-width: 750px) {
+  .stake_wrap {
+    width: 400px;
+  }
+}
+@media screen and(max-width: 750px) {
+  .content {
+    flex-direction: column;
+  }
+  .stake_wrap {
+    width: 95%;
+  }
+  .tips_wrap {
+    margin-left: 0;
   }
 }
 </style>

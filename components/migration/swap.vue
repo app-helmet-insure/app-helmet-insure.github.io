@@ -1,50 +1,72 @@
 <template>
   <div class="migration_swap">
-    <div class="title"><span>2</span>{{ $t("Migration.SwapTitle") }}</div>
-
-    <div class="stake_wrap">
-      <div class="show_text">
-        <p>
-          <span>{{ $t("Migration.AvailableGuard") }}:</span>
-          <span>{{ addCommom(fixD(AllQuota, 8)) }}</span>
-        </p>
-        <p>
-          <span>{{ $t("Migration.MyCredits") }}:</span>
-          <span>{{ addCommom(fixD(MyQuota, 8)) }}</span>
-        </p>
-      </div>
-      <div class="balance text">
-        <span>{{ $t("Migration.Available1") }}:</span
-        ><span>{{ addCommom(fixD(MyBalance, 8)) }} Helmet</span>
-      </div>
-      <div class="input">
-        <input
-          type="text"
-          v-model="BurnVolume"
-          :disabled="Math.min(AllQuota, MyQuota, MyBalance) ? false : true"
-        />
-        <span
-          v-if="Math.min(AllQuota, MyQuota, MyBalance)"
-          class="max"
-          @click="BurnVolume = fixD(Math.min(AllQuota, MyQuota, MyBalance), 8)"
-          >{{ $t("Insurance.Insurance_text18") }}</span
-        >
-      </div>
-      <button class="b_button" @click="ActionStep()">
-        {{
-          HelmetNeedApprove || GuardNeedApprove
-            ? $t("Migration.Approve")
-            : $t("Migration.Burn")
-        }}
-      </button>
-      <!-- <div class="guard_balance">
-        <span>燃烧兑换 Guard，立享 Black 奖励</span>
-        <div>
-          <p><span>Guard额度：</span> <span>1000000</span></p>
-          <button>Claim</button>
+    <div class="title">{{ $t("Migration.SwapTitle") }}</div>
+    <div class="content">
+      <div class="swap_wrap">
+        <div class="today_quota">
+          <span class="name">{{ $t("Migration.AvailableGuard") }}:</span>
+          <span class="num">{{ addCommom(fixD(AllQuota, 2)) }}</span>
         </div>
-      </div> -->
-      <!-- <p>Powered by BlackHole</p> -->
+        <div class="show_text">
+          <p>
+            <span>{{ $t("Migration.MyCredits") }}:</span>
+            <span>{{ addCommom(fixD(MyQuota, 8)) }}</span>
+          </p>
+          <p>
+            <span>Helmet:</span>
+            <span>{{ addCommom(fixD(MyBalance, 8)) }} </span>
+          </p>
+        </div>
+        <div class="swap_action">
+          <div class="action_top action">
+            <label for="helmet">{{ $t("Migration.MyCredits") }}</label>
+            <input type="text" id="helmet" v-model="BurnVolume" />
+          </div>
+          <div class="action_cen">
+            <div>
+              <div class="circle">1:1</div>
+              <button
+                class="max"
+                @click="
+                  BurnVolume = fixD(Math.min(AllQuota, MyQuota, MyBalance), 8)
+                "
+              >
+                {{ $t("Insurance.Insurance_text18") }}
+              </button>
+            </div>
+          </div>
+          <div class="action_bot action">
+            <label for="guard">Helmet</label>
+            <input type="text" id="guard" v-model="BurnVolume" readonly />
+          </div>
+        </div>
+        <button
+          :class="burnLoading ? 'disable b_button' : 'b_button'"
+          @click="ActionStep()"
+        >
+          <i :class="burnLoading ? 'loading_pic' : ''"></i>
+          {{
+            HelmetNeedApprove || GuardNeedApprove
+              ? $t("Migration.Approve")
+              : $t("Migration.Burn")
+          }}
+        </button>
+      </div>
+      <div class="tips_wrap">
+        <div class="logo">Tips</div>
+        <div>
+          <span>01</span>
+          <p v-html="$t('Migration.Tips4')"></p>
+        </div>
+        <div>
+          <span>02</span>
+          <p v-html="$t('Migration.Tips5')"></p>
+        </div>
+        <div>
+          <span>03</span>
+          <p v-html="$t('Migration.Tips6')"></p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -65,6 +87,7 @@ export default {
       BurnVolume: "",
       HelmetNeedApprove: true,
       GuardNeedApprove: true,
+      burnLoading: false,
       addCommom,
       fixD,
     };
@@ -117,6 +140,8 @@ export default {
           } else {
             this.ApproveGuard();
           }
+        } else {
+          this.burnLoading = false;
         }
       });
     },
@@ -124,7 +149,10 @@ export default {
       Approve(QuotaAddress, ContractAddress, "GUARD", (res) => {
         if (res === "success") {
           this.GuardNeedApprove = false;
+          this.burnLoading = false;
           this.toBurnHelmet();
+        } else {
+          this.burnLoading = false;
         }
       });
     },
@@ -148,18 +176,13 @@ export default {
           this.getMyQuota();
           this.getAllQuota();
           this.getMyBalance();
+          this.burnLoading = false;
           this.$bus.$emit("REFRESH_MIGRATION_TITLE");
         }
       });
     },
     async ActionStep() {
-      console.log(this.HelmetNeedApprove, this.GuardNeedApprove);
-      console.log(
-        this.HelmetNeedApprove && this.GuardNeedApprove,
-        this.HelmetNeedApprove && !this.GuardNeedApprove,
-        !this.HelmetNeedApprove && this.GuardNeedApprove,
-        !this.HelmetNeedApprove && !this.GuardNeedApprove
-      );
+      this.burnLoading = true;
       if (this.HelmetNeedApprove && this.GuardNeedApprove) {
         return this.ApproveHelemt();
       }
@@ -177,439 +200,219 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-@import "~/assets/css/base.scss";
-@media screen and (min-width: 750px) {
-  .migration_swap {
-    width: 400px;
-    height: 410px;
-    border-radius: 10px;
-    @include themeify {
-      background: themed("color-ffffff");
-      color: themed("color-17173a");
-      border: 1px solid themed("color-e8e8eb");
-    }
-    overflow: hidden;
-    .title {
-      height: 50px;
-      @include themeify {
-        background: themed("mining_earn");
-        color: themed("color-17173a");
-      }
-
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
+<style lang='scss'>
+.tips_wrap {
+  > div {
+    span {
+      color: #17173a;
       font-weight: 600;
-      line-height: 18px;
-      padding: 0 40px;
-      span {
-        display: flex;
-        margin-right: 8px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #fd7e14;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 20px;
-      }
-    }
-    .stake_wrap {
-      padding: 0 40px;
-      margin-top: 10px;
-    }
-    .show_text {
-      width: 100%;
-      height: 68px;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      p {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 14px;
-        font-weight: 500;
-        &:nth-of-type(1) {
-          margin-top: 0;
-        }
-        &:nth-of-type(2) {
-          margin-top: 10px;
-        }
-        span {
-          &:nth-of-type(1) {
-            font-weight: 500;
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-    }
-    .text {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .balance {
-      margin-top: 15px;
-      span {
-        font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      input {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        background: transparent;
-        @include themeify {
-          border: 1px solid themed("color-e8e8eb");
-        }
-        padding-left: 12px;
-        &:focus {
-          border: 1px solid #fd7e14 !important;
-        }
-      }
-      span {
-        position: absolute;
-        right: 10px;
-        min-width: 52px;
-        min-height: 24px;
-        @include themeify {
-          background: themed("mining_earn");
-          border: 1px solid themed("color-e8e8eb");
-          color: themed("color-17173a");
-        }
-        border-radius: 5px;
-        padding: 4px 6px;
-        font-size: 12px;
-        cursor: pointer;
-        text-align: center;
-        &:hover {
-          border: 1px solid #ff9600 !important;
-          color: #ff9600 !important;
-        }
-      }
-    }
-    .b_button {
-      border-radius: 5px;
-    }
-    .guard_balance {
-      width: 100%;
-      height: 68px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      margin-top: 10px;
-      > span {
-        font-size: 14px;
-        font-family: IBMPlexSans-Medium, IBMPlexSans;
-        font-weight: 500;
-        @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 30%);
-        }
-        line-height: 14px;
-      }
-      > div {
-        margin-top: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      p {
-        font-size: 14px;
-        font-weight: 500;
-        span {
-          &:nth-of-type(1) {
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-            font-weight: 500;
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
-      }
-    }
-    p {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      font-size: 12px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 500;
-      color: rgba(23, 23, 58, 0.4);
-      line-height: 12px;
     }
   }
 }
-@media screen and (max-width: 750px) {
-  .migration_swap {
+</style>
+<style lang="scss" scoped>
+@import "~/assets/css/base.scss";
+.title {
+  height: 18px;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 600;
+  @include themeify {
+    color: themed("color-17173a");
+  }
+  line-height: 18px;
+  margin-top: 30px;
+}
+.content {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+.swap_wrap {
+  width: 400px;
+  height: 345px;
+  border-radius: 10px;
+  border: 1px solid #e8e8eb;
+  padding: 20px 40px;
+  .today_quota {
     width: 100%;
-    height: 410px;
-    border-radius: 10px;
+    height: 46px;
     @include themeify {
-      background: themed("color-ffffff");
-      border: 1px solid themed("color-e8e8eb");
+      background: themed("mining_earn");
     }
-    margin-top: 10px;
-    overflow: hidden;
-    .title {
-      height: 50px;
+    border-radius: 5px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .name {
+      font-size: 14px;
+      font-weight: 500;
       @include themeify {
-        background: themed("mining_earn");
+        color: darken($color: themed("color-17173a"), $amount: 30%);
       }
-      display: flex;
-      align-items: center;
-      font-size: 16px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
+    }
+    .num {
+      font-size: 14px;
       font-weight: 600;
-      @include themeify {
-        color: themed("color-17173a");
-      }
-      line-height: 18px;
-      padding: 0 40px;
-      span {
-        display: flex;
-        margin-right: 8px;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #fd7e14;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 600;
-        color: #ffffff;
-        line-height: 20px;
-      }
+      color: #22292f;
     }
-    .stake_wrap {
-      padding: 0 10px;
-    }
-    .show_text {
-      width: 100%;
-      height: 68px;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      p {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 14px;
-        font-weight: 500;
-        &:nth-of-type(2) {
-          margin-top: 4px;
-        }
-        span {
-          &:nth-of-type(1) {
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-            font-weight: 500;
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-    }
-    .text {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .balance {
+  }
+  > button {
+    border-radius: 5px;
+  }
+}
+.show_text {
+  margin-top: 20px;
+  p {
+    display: flex;
+    justify-content: space-between;
+    &:nth-of-type(2) {
       margin-top: 15px;
-      span {
+    }
+    span {
+      &:nth-of-type(1) {
         font-size: 14px;
-        &:nth-of-type(1) {
-          @include themeify {
-            color: darken($color: themed("color-17173a"), $amount: 30%);
-          }
-          font-weight: 500;
-        }
-        &:nth-of-type(2) {
-          @include themeify {
-            color: themed("color-17173a");
-          }
-          font-weight: 600;
-        }
-      }
-    }
-    .input {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      input {
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        background: transparent;
-        @include themeify {
-          color: themed("color-17173a");
-          border: 1px solid themed("color-e8e8eb");
-        }
-        padding-left: 12px;
-        &:focus {
-          border: 1px solid #fd7e14 !important;
-        }
-      }
-      span {
-        position: absolute;
-        right: 10px;
-        min-width: 52px;
-        min-height: 24px;
-        border-radius: 5px;
-        @include themeify {
-          border: 1px solid themed("color-e8e8eb");
-          color: themed("color-17173a");
-          background: themed("mining_earn");
-        }
-        padding: 4px 6px;
-        font-size: 12px;
-        cursor: pointer;
-        text-align: center;
-        &:hover {
-          border: 1px solid #ff9600 !important;
-          color: #ff9600 !important;
-        }
-      }
-    }
-    .b_button {
-      width: 100%;
-      margin-top: 20px;
-      border-radius: 5px;
-    }
-    .guard_balance {
-      width: 100%;
-      height: 68px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      @include themeify {
-        background: themed("mining_earn");
-      }
-      border-radius: 5px;
-      padding: 0 10px;
-      margin-top: 10px;
-      > span {
-        font-size: 14px;
-        font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
         @include themeify {
           color: darken($color: themed("color-17173a"), $amount: 30%);
         }
-        line-height: 14px;
       }
-      > div {
-        margin-top: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      p {
+      &:nth-of-type(2) {
         font-size: 14px;
-        font-weight: 500;
-        span {
-          &:nth-of-type(1) {
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 30%);
-            }
-            font-weight: 500;
-          }
-          &:nth-of-type(2) {
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            font-weight: 600;
-          }
-        }
-      }
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
+        font-weight: 600;
+        color: #22292f;
       }
     }
-    p {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
+  }
+}
+.swap_action {
+  width: 320px;
+  height: 121px;
+  background-image: url("../../assets/img/migration/swap_web.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .action {
+    flex: 1;
+    max-height: 59px;
+  }
+  .action {
+    padding-left: 50px;
+    label {
+      display: inline-block;
+      margin-top: 8px;
       font-size: 12px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 500;
+      font-weight: 600;
       color: rgba(23, 23, 58, 0.4);
-      line-height: 12px;
     }
+    input {
+      margin-top: 5px;
+      font-size: 18px;
+      font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+      font-weight: 600;
+      color: #17173a;
+      line-height: 18px;
+    }
+  }
+  .action_cen {
+    width: 300px;
+    height: 1px;
+    margin-left: 20px;
+    background: #ededf0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    > div {
+      position: absolute;
+      right: 0;
+      display: flex;
+      align-items: center;
+    }
+    .circle {
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(138deg, #fd7e14 0%, #4364e8 100%);
+      font-size: 14px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      text-align: center;
+      line-height: 30px;
+      margin-right: 12px;
+    }
+    .max {
+      width: 52px;
+      height: 24px;
+      background: #f8f9fa;
+      border-radius: 5px;
+      border: 1px solid #e8e8eb;
+      margin-right: 10px;
+      &:hover {
+        border: 1px solid #ff9600;
+        color: #ff9600;
+      }
+    }
+  }
+}
+.tips_wrap {
+  margin-left: 48px;
+  width: 370px;
+  height: 345px;
+  @include themeify {
+    background: themed("mining_earn");
+  }
+  border-radius: 10px;
+  padding: 10px 25px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  .logo {
+    width: 33px;
+    height: 17px;
+    background: #17173a;
+    border-radius: 2px;
+    font-size: 12px;
+    font-family: IBMPlexSans;
+    color: #ffffff;
+    justify-content: center;
+    transform: skew(-10deg);
+  }
+  > div {
+    display: flex;
+    margin-top: 10px;
+    span {
+      font-size: 12px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      color: rgba(23, 23, 58, 0.3);
+      line-height: 20px;
+      letter-spacing: 1px;
+    }
+    p {
+      margin-left: 3px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      color: rgba(23, 23, 58, 0.7);
+      line-height: 20px;
+      span {
+        font-weight: 600;
+        color: #17173a;
+      }
+    }
+  }
+}
+
+@media screen and(min-width: 750px) {
+}
+@media screen and(max-width: 750px) {
+  .content {
+    flex-direction: column;
   }
 }
 </style>

@@ -17,8 +17,14 @@
       </p>
     </div>
     <div class="showaction">
-      <Stake />
-      <Swap />
+      <div class="step">
+        <div class="step_one step_num">1</div>
+        <div class="step_two step_num">2</div>
+      </div>
+      <div class="wrap">
+        <Stake />
+        <Swap />
+      </div>
     </div>
   </div>
 </template>
@@ -90,10 +96,6 @@ export default {
       await this.getMyPendding();
       await this.getMySuccess();
       await this.getMyBurns();
-      // this.myBurning =
-      //   this.myBurns - this.myClaimed - this.myClaiming < 0
-      //     ? 0
-      //     : this.myBurns - this.myClaimed - this.myClaiming;
       this.myBurning =
         this.myBurns - this.myClaiming < 0 ? 0 : this.myBurns - this.myClaiming;
       this.myPendding =
@@ -107,117 +109,118 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
-@media screen and(min-width:750px) {
-  h3 {
-    margin: 30px auto;
-    text-align: center;
-    font-size: 24px;
-    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+h3 {
+  text-align: center;
+  font-size: 24px;
+  font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+  font-weight: 600;
+  @include themeify {
+    color: themed("color-17173a");
+  }
+  line-height: 32px;
+}
+.showdata {
+  margin: 0 auto;
+  display: flex;
+  height: 70px;
+  @include themeify {
+    background: themed("mining_earn");
+  }
+  border-radius: 5px;
+  img {
+    margin-right: 4px;
+  }
+  p {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: IBMPlexSans-Medium, IBMPlexSans;
     font-weight: 600;
     @include themeify {
       color: themed("color-17173a");
     }
-    line-height: 32px;
+    line-height: 18px;
+    button {
+      min-width: 52px;
+      min-height: 24px;
+      background: #fd7e14;
+      border-radius: 5px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-left: 20px;
+    }
   }
   .showdata {
-    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    p {
+      padding: 0 10px;
+    }
+  }
+}
+.showaction {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px auto 0;
+  .step {
+    width: 4px;
+    height: 715px;
+    position: relative;
+    background: linear-gradient(360deg, #4364e8, #fd7e14);
+    transform: translate(12px);
+    border-radius: 2px;
+    margin-left: 10px;
+    &_num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      position: absolute;
+      transform: translate(-50%);
+      text-align: center;
+      line-height: 24px;
+      font-size: 14px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      margin-left: 50%;
+    }
+    &_one {
+      top: 30px;
+      background: #fd7e14;
+    }
+    &_two {
+      background: #4364e8;
+      top: 330px;
+    }
+  }
+}
+@media screen and(min-width:750px) {
+  h3 {
+    margin: 30px auto;
+  }
+  .showdata {
     align-items: center;
     width: 868px;
-    margin: 0 auto;
-    height: 70px;
-    @include themeify {
-      background: themed("mining_earn");
-    }
-    border-radius: 5px;
-    img {
-      margin-right: 4px;
-    }
     p {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 600;
-      @include themeify {
-        color: themed("color-17173a");
-      }
-      line-height: 18px;
       padding: 0 40px;
       margin-right: 40px;
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
-        margin-left: 20px;
-      }
     }
   }
   .showaction {
     width: 868px;
-    margin: 40px auto 0;
-    display: flex;
-    justify-content: space-between;
   }
 }
 @media screen and(max-width:750px) {
   h3 {
     margin: 0 auto;
-    text-align: center;
-    font-size: 24px;
-    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
-    font-weight: 600;
-    @include themeify {
-      color: themed("color-17173a");
-    }
-    line-height: 32px;
     padding: 30px 0;
   }
-  .showdata {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 95%;
-    margin: 0 auto;
-    height: 70px;
-    @include themeify {
-      background: themed("mining_earn");
-    }
-    border-radius: 5px;
-    img {
-      margin-right: 4px;
-    }
-    p {
-      display: flex;
-      align-items: center;
-      font-size: 14px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 600;
-      @include themeify {
-        color: themed("color-17173a");
-      }
-      line-height: 18px;
-      padding: 0 10px;
-      button {
-        min-width: 52px;
-        min-height: 24px;
-        background: #fd7e14;
-        border-radius: 5px;
-        padding: 6px 10px;
-        font-size: 12px;
-        font-weight: 500;
-        color: #ffffff;
-        margin-left: 20px;
-      }
-    }
-  }
   .showaction {
-    width: 95%;
-    margin: 40px auto 0;
+    width: 100%;
+  
   }
 }
 </style>

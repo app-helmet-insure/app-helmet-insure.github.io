@@ -322,7 +322,7 @@
     "Total": "总抵押量",
     "GuardCredit": "Guard额度",
     "SwapTitle": "兑换 Guard",
-    "AvailableGuard": "当日剩余兑换额度",
+    "AvailableGuard": "当前剩余额度(每日22:00更新)",
     "MyCredits": "我的额度",
     "Approve": "授权",
     "Burn": "燃烧兑换 Guard",

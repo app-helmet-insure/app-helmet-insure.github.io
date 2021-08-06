@@ -39,9 +39,6 @@ export default {
     };
   },
   computed: {
-    locales() {
-      return this.$store.state.locales;
-    },
     locale() {
       return this.$store.state.locale;
     },
@@ -49,33 +46,20 @@ export default {
       return this.$store.state.localeList;
     },
   },
-  watch: {
-    locale: {
-      handler: "watchLocale",
-      immediate: true,
-    },
-  },
-  async mounted() {
-    let storageLang = window.localStorage.lang;
-    if (storageLang) {
-      this.$store.dispatch("setLanguage", storageLang);
-      this.langName = this.localeList.filter(
-        (item) => item.key === storageLang
-      )[0].name;
-    }
+  watch: {},
+  mounted() {
+    let storageLang = window.localStorage.lang || this.locale || "en_US";
+    let name = this.localeList.filter((item) => item.key === storageLang)[0]
+      .name;
+    this.langName = name;
   },
   methods: {
-    watchLocale(newVol) {
-      this.lang = newVol;
-      this.langName = this.localeList.filter(
-        (item) => item.key === newVol
-      )[0].name;
-    },
-    switchLang(lang) {
-      this.lang = lang;
-      window.localStorage.setItem("lang", lang);
-      this.$store.dispatch("setLanguage", lang);
-      this.$i18n.locale = lang;
+    switchLang(key) {
+      this.$store.commit("SET_LANG", key);
+      window.localStorage.setItem("lang", key);
+      this.$i18n.locale = key;
+      let name = this.localeList.filter((item) => item.key === key)[0].name;
+      this.langName = name;
     },
   },
 };

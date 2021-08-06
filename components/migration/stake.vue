@@ -19,7 +19,7 @@
             <span class="name">{{ $t("Migration.MyStake") }}：</span>
             <span class="num">{{ addCommom(fixD(myStkaing, 4)) }}</span>
           </p>
-          <button>Go Deposit</button>
+          <button>{{ $t("Migration.ToStake") }}</button>
         </div>
       </div>
       <div class="tips_wrap">
@@ -69,7 +69,6 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.NeedApprove();
       this.getBalance();
     });
   },

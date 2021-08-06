@@ -315,6 +315,8 @@ export default {
   .action {
     flex: 1;
     max-height: 59px;
+    display: flex;
+    flex-direction: column;
   }
   .action {
     padding-left: 50px;

@@ -135,7 +135,7 @@ export default {
       padding: 30px 45px 45px 45px;
       border-radius: 8px;
       @include themeify {
-        background: themed("swap_backgruond");
+        background: themed("swap_background");
       }
     }
     h3 {
@@ -181,14 +181,14 @@ export default {
           }
           &:hover {
             @include themeify {
-              background: themed("swap_backgruond");
+              background: themed("swap_background");
             }
             border: 2px solid #fd7e14 !important;
           }
         }
         .activeNetwork {
           @include themeify {
-            background: themed("swap_backgruond");
+            background: themed("swap_background");
           }
           border: 2px solid #fd7e14 !important;
         }
@@ -228,7 +228,7 @@ export default {
           }
           &:hover {
             @include themeify {
-              background: themed("swap_backgruond");
+              background: themed("swap_background");
             }
             border: 2px solid #fd7e14 !important;
           }

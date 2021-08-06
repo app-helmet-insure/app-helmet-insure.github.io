@@ -17,7 +17,7 @@
             <span>{{ addCommom(fixD(MyBalance, 4)) }} </span>
           </p>
         </div>
-        <div class="swap_action">
+        <div :class="`swap_action ${storeThemes}`">
           <div class="action_top action">
             <label for="helmet">{{ $t("Migration.MyCredits") }}</label>
             <input type="text" id="helmet" v-model="BurnVolume" />
@@ -107,6 +107,11 @@ export default {
       this.getHelmetApproveStatus();
       this.getGuardApproveStatus();
     });
+  },
+  computed: {
+    storeThemes() {
+      return this.$store.state.themes;
+    },
   },
   methods: {
     async getMyBalance() {
@@ -218,7 +223,7 @@ export default {
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   @include themeify {
-    color: themed("color-17173a");
+    color: themed("migration_color2");
   }
   line-height: 18px;
   margin-top: 30px;
@@ -232,13 +237,15 @@ export default {
   width: 400px;
   height: 345px;
   border-radius: 10px;
-  border: 1px solid #e8e8eb;
+  @include themeify {
+    border: 1px solid themed("swap_border");
+  }
   padding: 20px 40px;
   .today_quota {
     width: 100%;
     height: 46px;
     @include themeify {
-      background: themed("mining_earn");
+      background: themed("migration_color1");
     }
     border-radius: 5px;
     padding: 0 10px;
@@ -249,13 +256,15 @@ export default {
       font-size: 14px;
       font-weight: 500;
       @include themeify {
-        color: darken($color: themed("color-17173a"), $amount: 30%);
+        color: themed("migration_color4");
       }
     }
     .num {
       font-size: 14px;
       font-weight: 600;
-      color: #22292f;
+      @include themeify {
+        color: themed("migration_color3");
+      }
     }
   }
   > button {
@@ -275,21 +284,28 @@ export default {
         font-size: 14px;
         font-weight: 500;
         @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 30%);
+          color: themed("migration_color4");
         }
       }
       &:nth-of-type(2) {
         font-size: 14px;
         font-weight: 600;
-        color: #22292f;
+        @include themeify {
+          color: themed("migration_color3");
+        }
       }
     }
   }
 }
+.dark {
+  background-image: url("../../assets/img/migration/swap_bg_dark.png");
+}
+.light {
+  background-image: url("../../assets/img/migration/swap_bg_light.png");
+}
 .swap_action {
   width: 320px;
   height: 121px;
-  background-image: url("../../assets/img/migration/swap_web.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   margin-top: 15px;
@@ -308,22 +324,30 @@ export default {
       font-size: 12px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: rgba(23, 23, 58, 0.4);
+      @include themeify {
+        color: themed("migration_color7");
+      }
     }
     input {
       margin-top: 5px;
       font-size: 18px;
       font-family: IBMPlexSans-SemiBold, IBMPlexSans;
       font-weight: 600;
-      color: #17173a;
+      @include themeify {
+        color: themed("migration_color2");
+      }
       line-height: 18px;
+      background: transparent;
+      caret-color: #fd7e14;
     }
   }
   .action_cen {
     width: 300px;
     height: 1px;
     margin-left: 20px;
-    background: #ededf0;
+    @include themeify {
+      background: themed("color-ededf0");
+    }
     position: relative;
     display: flex;
     align-items: center;
@@ -349,13 +373,17 @@ export default {
     .max {
       width: 52px;
       height: 24px;
-      background: #f8f9fa;
+      @include themeify {
+        background: themed("migration_color1");
+        border: 1px solid themed("swap_border");
+        color: themed("migration_color2");
+      }
+
       border-radius: 5px;
-      border: 1px solid #e8e8eb;
       margin-right: 10px;
       &:hover {
-        border: 1px solid #ff9600;
-        color: #ff9600;
+        border: 1px solid #ff9600 !important;
+        color: #ff9600 !important;
       }
     }
   }
@@ -365,7 +393,7 @@ export default {
   width: 370px;
   height: 345px;
   @include themeify {
-    background: themed("mining_earn");
+    background: themed("migration_color1");
   }
   border-radius: 10px;
   padding: 10px 25px;
@@ -375,7 +403,9 @@ export default {
   .logo {
     width: 33px;
     height: 17px;
-    background: #17173a;
+    @include themeify {
+      background: themed("migration_color5");
+    }
     border-radius: 2px;
     font-size: 12px;
     font-family: IBMPlexSans;
@@ -390,7 +420,9 @@ export default {
       font-size: 12px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: rgba(23, 23, 58, 0.3);
+      @include themeify {
+        color: themed("migration_color6");
+      }
       line-height: 20px;
       letter-spacing: 1px;
     }
@@ -398,11 +430,15 @@ export default {
       margin-left: 3px;
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;
-      color: rgba(23, 23, 58, 0.7);
+      @include themeify {
+        color: themed("migration_color4");
+      }
       line-height: 20px;
       span {
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("migration_color2");
+        }
       }
     }
   }

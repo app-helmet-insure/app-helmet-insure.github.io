@@ -98,16 +98,7 @@ export default {
 };
 </script>
 
-<style lang='scss'>
-.tips_wrap {
-  > div {
-    span {
-      color: #17173a;
-      font-weight: 600;
-    }
-  }
-}
-</style>
+
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
 .loading_pic {
@@ -125,7 +116,7 @@ export default {
   font-family: PingFangSC-Medium, PingFang SC;
   font-weight: 600;
   @include themeify {
-    color: themed("color-17173a");
+    color: themed("migration_color2");
   }
   line-height: 18px;
   margin-top: 32px;
@@ -137,7 +128,9 @@ export default {
 }
 .stake_wrap {
   border-radius: 10px;
-  border: 1px solid #e8e8eb;
+  @include themeify {
+    border: 1px solid themed("swap_border");
+  }
   padding: 20px 40px;
   .guard_balance {
     width: 100%;
@@ -154,13 +147,15 @@ export default {
       font-size: 14px;
       font-weight: 500;
       @include themeify {
-        color: darken($color: themed("color-17173a"), $amount: 30%);
+        color: themed("migration_color4");
       }
     }
     .num {
       font-size: 14px;
       font-weight: 600;
-      color: #22292f;
+      @include themeify {
+        color: themed("migration_color3");
+      }
     }
   }
   > button {
@@ -171,7 +166,7 @@ export default {
     width: 100%;
     height: 64px;
     @include themeify {
-      background: themed("mining_earn");
+      background: themed("migration_color1");
     }
     border-radius: 5px;
     padding: 0 10px;
@@ -183,13 +178,15 @@ export default {
       font-size: 14px;
       font-weight: 500;
       @include themeify {
-        color: darken($color: themed("color-17173a"), $amount: 30%);
+        color: themed("migration_color4");
       }
     }
     .num {
       font-size: 14px;
       font-weight: 600;
-      color: #22292f;
+      @include themeify {
+        color: themed("migration_color3");
+      }
     }
     button {
       background: #fd7e14;
@@ -209,14 +206,16 @@ export default {
   width: 370px;
   height: 230px;
   @include themeify {
-    background: themed("mining_earn");
+    background: themed("migration_color1");
   }
   border-radius: 10px;
   padding: 10px 25px;
   .logo {
     width: 33px;
     height: 17px;
-    background: #17173a;
+    @include themeify {
+      background: themed("migration_color5");
+    }
     border-radius: 2px;
     font-size: 12px;
     font-family: IBMPlexSans;
@@ -231,7 +230,9 @@ export default {
       font-size: 12px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-      color: rgba(23, 23, 58, 0.3);
+      @include themeify {
+        color: themed("migration_color6");
+      }
       line-height: 20px;
       letter-spacing: 1px;
     }
@@ -239,11 +240,15 @@ export default {
       margin-left: 3px;
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;
-      color: rgba(23, 23, 58, 0.7);
+      @include themeify {
+        color: themed("migration_color4");
+      }
       line-height: 20px;
       span {
         font-weight: 600;
-        color: #17173a;
+        @include themeify {
+          color: themed("migration_color2");
+        }
       }
     }
   }
@@ -261,7 +266,7 @@ export default {
     min-width: 320px;
     width: 95%;
     padding: 10px 10px;
-    >button{
+    > button {
       width: 100%;
     }
   }
@@ -272,6 +277,20 @@ export default {
     margin-top: 20px;
     height: auto;
   }
-  
+}
+</style>
+<style lang='scss'>
+@import "~/assets/css/base.scss";
+.tips_wrap {
+  > div {
+    p {
+      > span {
+        @include themeify {
+          color: themed("migration_color2");
+        }
+        font-weight: 600;
+      }
+    }
+  }
 }
 </style>

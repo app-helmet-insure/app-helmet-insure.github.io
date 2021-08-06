@@ -114,7 +114,7 @@ h3 {
   font-family: IBMPlexSans-SemiBold, IBMPlexSans;
   font-weight: 600;
   @include themeify {
-    color: themed("color-17173a");
+    color: themed("migration_color2");
   }
   line-height: 32px;
 }
@@ -123,7 +123,7 @@ h3 {
   display: flex;
   height: 70px;
   @include themeify {
-    background: themed("mining_earn");
+    background: themed("migration_color1");
   }
   border-radius: 5px;
   img {
@@ -136,7 +136,7 @@ h3 {
     font-family: IBMPlexSans-Medium, IBMPlexSans;
     font-weight: 600;
     @include themeify {
-      color: themed("color-17173a");
+      color: themed("migration_color2");
     }
     line-height: 18px;
     button {

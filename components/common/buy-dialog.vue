@@ -650,7 +650,7 @@ export default {
     width: 100%;
     height: 80px;
     @include themeify {
-      background: themed("swap_backgruond");
+      background: themed("swap_background");
       border: 2px solid themed("swap_border");
     }
     border-radius: 5px;

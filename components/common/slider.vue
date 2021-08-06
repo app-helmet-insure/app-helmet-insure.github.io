@@ -626,7 +626,7 @@ export default {
     > a {
       margin-top: 20px;
       height: 40px;
-      background: rgba(221, 200, 255, 0.6);
+      background: rgba(#9F66FF, $alpha: 0.2);
       border-radius: 5px;
       width: 100%;
       display: flex;
@@ -720,6 +720,7 @@ export default {
         align-items: center;
         justify-content: center;
         margin-bottom: 20px;
+        border-radius: 5px;
         @include themeify {
           color: themed("color-17173a");
           background: themed("color-f8f9fa");
@@ -1122,6 +1123,7 @@ export default {
         align-items: center;
         justify-content: center;
         margin-bottom: 20px;
+        border-radius: 5px;
         @include themeify {
           color: themed("color-17173a");
           background: themed("color-f8f9fa");

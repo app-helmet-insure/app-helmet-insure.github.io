@@ -19,7 +19,7 @@
             <span class="name">{{ $t("Migration.MyStake") }}：</span>
             <span class="num">{{ addCommom(fixD(myStkaing, 4)) }}</span>
           </p>
-          <button @click="router.push('/mining')">
+          <button @click="$router.push('/mining')">
             {{ $t("Migration.ToStake") }}
           </button>
         </div>

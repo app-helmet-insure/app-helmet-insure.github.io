@@ -318,7 +318,6 @@ export default {
           );
           earnings = -(Math.max(callIndexPx - callStrikePrice, 0) - premium);
           earnings = BigNumber(earnings.toString()).toFixed();
-          console.log(earnings);
           this.callRent = fixD(earnings < 0 ? 0 : earnings, 8);
         } else {
           this.callRent = 0;

@@ -7,12 +7,15 @@
           <span class="name">{{ $t("Migration.GuardCredit") }}：</span>
           <span class="num">{{ addCommom(fixD(myReward3, 4)) }}</span>
         </div>
-        <button
+        <!-- <button
           @click="claimQuota"
           :class="claimLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i>
           {{ $t("Migration.Claim") }}
+        </button> -->
+        <button class="disable_button b_button">
+          {{ $t("Migration.Pause") }}
         </button>
         <div class="stake_balance">
           <p>

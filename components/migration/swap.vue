@@ -40,7 +40,7 @@
             <input type="text" id="guard" v-model="BurnVolume" readonly />
           </div>
         </div>
-        <button
+        <!-- <button
           :class="burnLoading ? 'disable b_button' : 'b_button'"
           @click="ActionStep()"
         >
@@ -50,6 +50,9 @@
               ? $t("Migration.Approve")
               : $t("Migration.Burn")
           }}
+        </button> -->
+        <button class="disable_button b_button">
+          {{ $t("Migration.Pause") }}
         </button>
       </div>
       <div class="tips_wrap">

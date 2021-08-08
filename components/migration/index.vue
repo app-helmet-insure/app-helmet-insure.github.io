@@ -1,6 +1,7 @@
 <template>
   <div class="migration_title">
     <h3>Migrate Helmet(BSC) to Guard(Polygon)</h3>
+    <p>{{ $t("Migration.Tips7") }}</p>
     <div class="showdata">
       <p>
         <img src="~/assets/img/migration/burn.svg" alt="" />{{
@@ -108,16 +109,32 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
-h3 {
-  text-align: center;
-  font-size: 24px;
-  font-family: IBMPlexSans-SemiBold, IBMPlexSans;
-  font-weight: 600;
-  @include themeify {
-    color: themed("migration_color2");
+
+.migration_title {
+  > p {
+    background: rgba(255, 184, 1, 0.1);
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffb801;
+    line-height: 20px;
   }
-  line-height: 32px;
+  > h3 {
+    text-align: center;
+    font-size: 24px;
+    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+    font-weight: 600;
+    @include themeify {
+      color: themed("migration_color2");
+    }
+    line-height: 32px;
+  }
 }
+
 .showdata {
   margin: 0 auto;
   display: flex;
@@ -191,6 +208,13 @@ h3 {
   h3 {
     margin: 30px auto;
   }
+  .migration_title {
+    > p {
+      width: 878px;
+      height: 30px;
+      justify-content: center;
+    }
+  }
   .showdata {
     align-items: center;
     width: 868px;
@@ -218,6 +242,13 @@ h3 {
   h3 {
     margin: 0 auto;
     padding: 30px 0;
+  }
+  .migration_title {
+    > p {
+      width: 90%;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
   }
   .showdata {
     flex-direction: column;

@@ -86,7 +86,10 @@
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import ERC20 from "~/abi/ERC20_abi.json";
-import { getLongType, getLongValuess } from "~/interface/event.js";
+import {
+  getLongType,
+  getLongTokenValue,
+} from "~/interface/event.js";
 import { BalanceOf } from "~/interface/read_contract.js";
 import countTo from "vue-count-to";
 import BigNumber from "bignumber.js";
@@ -142,7 +145,7 @@ export default {
       getLongType().then((res) => {
         this.helmetVarieties = res;
       });
-      getLongValuess().then((res) => {
+      getLongTokenValue().then((res) => {
         this.totalHelmetsBorrowedVolume = res;
       });
       this.getHelmetVolume().then((res) => {

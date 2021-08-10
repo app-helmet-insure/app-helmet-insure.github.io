@@ -4,7 +4,6 @@ import {
   getBuyList,
   getRePriceList,
   getMintList,
-  getLongValues,
 } from "~/interface/event.js";
 import {
   getID,
@@ -630,16 +629,6 @@ export const actions = {
         }
       }
     }
-    // console.log(longArray);
-    getLongValues(longArray).then((res) => {
-      let value = 0;
-      let data = res.data;
-      for (let i = 0; i < data.length; i++) {
-        // console.log(data[i], '###########');
-        value += Object.values(data[i])[0];
-      }
-      commit("SET_TOTAL_HELMETS_BORROWED_VOLUME", value);
-    });
     commit("SET_ABOUT_INFO_BUY", {
       aboutInfoBuy,
       myAboutInfoBuy,

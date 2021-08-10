@@ -11,43 +11,6 @@ export const decodeLogs = function(event, log) {
     log.topics.slice(1)
   );
 };
-export const getLongValues = async function(addressArray) {
-  let newArr = [],
-    obj = {};
-  addressArray.forEach((item) => {
-    for (let key in item) {
-      let value = item[key];
-      key in obj
-        ? (obj[key] = new BigNumber(obj[key]).plus(new BigNumber(value)))
-        : (obj[key] = new BigNumber(value));
-    }
-  });
-  for (let i in obj) {
-    let o = {};
-    o[i] = obj[i];
-    newArr.push(o);
-  }
-  return Axios({
-    method: "post",
-    url: "https://api.helmet.insure/api/getTokenValueArray/",
-    data: JSON.stringify(newArr),
-    headers: {
-      "Content-type": "application/json;charset=utf-8",
-      // Authorization: "Bearer e5fa8358-42f3-4fa1-918d-2a972f4c5de0",
-    },
-  });
-};
-export const getLongValue = async function(addressArray) {
-  return Axios({
-    method: "post",
-    url: "https://api.helmet.insure/api/getTokenValueArray/",
-    data: JSON.stringify(addressArray),
-    headers: {
-      "Content-type": "application/json;charset=utf-8",
-      // Authorization: "Bearer e5fa8358-42f3-4fa1-918d-2a972f4c5de0",
-    },
-  });
-};
 // 获取long, Sell, Buy映射
 export const getLongList = async function(callback) {
   // let ContractAddress = getContract();
@@ -326,83 +289,6 @@ export const getLongType = async function() {
     return res.data.data.options.length;
   });
 };
-export const getLongValuess = async function() {
-  let rightTime = parseInt(moment.now());
-  let leftTime = parseInt(moment.now()) - 518400000;
-  return Axios({
-    method: "post",
-    url:
-      "https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-insure",
-    data: {
-      query: `{
-                options(first: 1000) {
-                  id
-                  creator
-                  collateral 
-                  underlying
-                  strikePrice
-                  expiry
-                  long
-                  short
-                  asks {
-                    askID
-                    seller
-                    volume
-                    settleToken
-                    price
-                    isCancel
-                    binds {
-                      bidID
-                      askID
-                      buyer
-                      volume
-                      amount
-                    }
-                  }
-                }
-              }
-              `,
-    },
-  }).then(async (res) => {
-    let list = res.data.data.options;
-    let longList = list.filter((item) => {
-      return item.asks.length > 0;
-    });
-    let arr = [];
-    let arr1 = [];
-    longList.forEach((item) => {
-      item.asks.forEach((itemAsks) => {
-        let obj = Object.assign(itemAsks, item);
-        itemAsks.binds.forEach((itemBids) => {
-          itemBids.buyVolume = itemBids.volume;
-          let obj1 = Object.assign(itemBids, obj);
-          if (
-            !itemBids.isCancel &&
-            item.expiry.length === 10 &&
-            itemBids.volume != 0
-          ) {
-            arr.push(obj1);
-          }
-        });
-      });
-    });
-    arr1 = arr.map((item) => {
-      let key = item.collateral;
-      let obj = {};
-      obj[key] = item.buyVolume;
-      return obj;
-    });
-    let result = await getLongValues(arr1);
-    let value = 0;
-    result.data.map((item) => {
-      if (Object.values(item)[0] && Number(Object.values(item)[0] >= 0)) {
-        value += Object.values(item)[0];
-      }
-      return value;
-    });
-    return value;
-  });
-};
 export const getSignDataSyn = (data, callback) => {
   let SignNumberFlag = true;
   let SignResultData = [];
@@ -426,4 +312,12 @@ export const getSignDataSyn = (data, callback) => {
       }
     });
   }
+};
+export const getLongTokenValue = (data) => {
+  return Axios.get("https://api.llama.fi/protocols").then((res) => {
+    let data = res.data;
+    let filterData = data.filter((item) => item.id === "437")[0];
+    let TVLS = filterData.chainTvls.Binance;
+    return TVLS;
+  });
 };

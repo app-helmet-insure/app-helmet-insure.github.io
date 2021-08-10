@@ -1,20 +1,22 @@
 <template>
   <div class="main_container">
-    <Title></Title>
+    <Title />
     <div class="home_container">
-      <InsuranceData></InsuranceData>
-      <InsureanceList></InsureanceList>
+      <InsuranceData />
+      <HelmetBurning />
+      <InsureanceList />
     </div>
   </div>
 </template>
 <script>
 import InsuranceData from "~/components/insurance/insurance-data.vue";
+import HelmetBurning from "~/components/insurance/HelmetBurning.vue";
 import InsureanceList from "~/components/insurance/insurance-list.vue";
 import Title from "~/components/insurance/title.vue";
 export default {
   layout: "default",
   name: "home",
-  components: { InsuranceData, InsureanceList, Title },
+  components: { InsuranceData, InsureanceList, HelmetBurning, Title },
 };
 </script>
 <style lang="scss">
@@ -33,7 +35,6 @@ export default {
     width: 100%;
     > .home_container {
       width: 100%;
-      
     }
   }
 }

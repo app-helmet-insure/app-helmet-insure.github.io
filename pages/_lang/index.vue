@@ -3,7 +3,7 @@
     <Title />
     <div class="home_container">
       <InsuranceData />
-      <HelmetBurning />
+      <!-- <HelmetBurning /> -->
       <InsureanceList />
     </div>
   </div>

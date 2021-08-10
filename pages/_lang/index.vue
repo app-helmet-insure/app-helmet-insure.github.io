@@ -10,7 +10,7 @@
 </template>
 <script>
 import InsuranceData from "~/components/insurance/insurance-data.vue";
-// import HelmetBurning from "~/components/insurance/HelmetBurning.vue";
+import HelmetBurning from "~/components/insurance/HelmetBurning.vue";
 import InsureanceList from "~/components/insurance/insurance-list.vue";
 import Title from "~/components/insurance/title.vue";
 export default {

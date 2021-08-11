@@ -1,10 +1,14 @@
 <template>
   <div class="burn_helmet">
     <div class="burn_helmet_wrap">
+      <div class="downTime">
+        <span>
+          {{ number }}″
+        </span>
+      </div>
       <div class="transfrom">
         <div class="transfrom_wrap">
-          <div class="helmet"></div>
-          <div class="time_helmet"></div>
+          <div class="burn_helmet_img"></div>
         </div>
         <div class="black_hole">
           <div class="black_hole_wrap">
@@ -13,11 +17,10 @@
           </div>
         </div>
       </div>
-
       <div class="descirtion">
         <span class="desc">1HELMET BURNT</span>
         <i>/</i>
-        <span class="number">{{ number }}</span>
+        <span class="number">16</span>
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@
 export default {
   data() {
     return {
-      number: 6,
+      number: 16,
     };
   },
   mounted() {
@@ -36,7 +39,7 @@ export default {
   watch: {
     number(value) {
       if (value == 0) {
-        this.number = 6;
+        this.number = 16;
       }
     },
   },
@@ -59,6 +62,7 @@ export default {
   border-radius: 30px;
   background-image: url("../../assets/img/helmet/burn_helmet.png");
   background-repeat: no-repeat;
+  background-size: 100% 100%;
   margin-bottom: 13px;
 }
 .burn_helmet_wrap {
@@ -68,6 +72,22 @@ export default {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+}
+.downTime {
+  display: flex;
+  align-items: center;
+  margin-right: 23px;
+  font-size: 24px;
+  font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 24px;
+  width: 50px;
+  span{
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
 }
 .transfrom {
   width: 50px;
@@ -84,31 +104,14 @@ export default {
     align-items: center;
     overflow: hidden;
   }
-  .helmet {
+  .burn_helmet_img {
     width: 32px;
-    height: 32px;
-    background-image: url("../../assets/img/helmet/burncoin.png");
+    height: 68px;
+    background-image: url("../../assets/img/helmet/burnhelmet.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: absolute;
-    top: -16px;
-    animation: burnHelmet 6s 0s linear infinite;
-  }
-  .time_helmet {
-    width: 32px;
-    height: 32px;
-    background-image: url("../../assets/img/helmet/burncoin.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-family: IBMPlexSans-Medium, IBMPlexSans;
-    font-weight: 600;
-    color: #000000;
-    position: absolute;
-    animation: timeHelmet 6s 0s linear infinite;
+    animation: burnHelmet 16s 0s linear infinite;
   }
   .black_hole {
     width: 50px;
@@ -143,39 +146,14 @@ export default {
   0% {
     top: -16px;
   }
-  50% {
+  94% {
     top: -16px;
   }
   100% {
-    top: 22px;
+    top: 18px;
   }
 }
-@keyframes timeHelmet {
-  0% {
-    bottom: 6px;
-  }
-  50% {
-    bottom: -48px;
-    display: none;
-  }
 
-  60% {
-    top: -80px;
-  }
-  70% {
-    top: -128px;
-  }
-  80% {
-    top: -48px;
-  }
-  90% {
-    top: -32px;
-  }
-  100% {
-    top: -16px;
-    display: block;
-  }
-}
 .descirtion {
   .desc {
     font-size: 20px;

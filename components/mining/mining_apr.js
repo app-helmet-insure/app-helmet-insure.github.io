@@ -88,7 +88,6 @@ const CakeDoublePoolAPR = async ({
     let DAYILY_REWARD2 =
         (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (CAKE_PER_BLOCK * 28800) +
         '';
-    console.log(DAYILY_REWARD2);
     let TOTAL_REWARD1 = await PoolAllowance(
         REWARD1_ADDRESS,
         HELMET_FARM,

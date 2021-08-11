@@ -2,9 +2,7 @@
   <div class="burn_helmet">
     <div class="burn_helmet_wrap">
       <div class="downTime">
-        <span>
-          {{ number }}″
-        </span>
+        <span> {{ number }}″ </span>
       </div>
       <div class="transfrom">
         <div class="transfrom_wrap">
@@ -20,7 +18,7 @@
       <div class="descirtion">
         <span class="desc">1HELMET BURNT</span>
         <i>/</i>
-        <span class="number">16</span>
+        <span class="number">16’</span>
       </div>
     </div>
   </div>
@@ -56,11 +54,9 @@ export default {
 
 <style lang='scss'>
 .burn_helmet {
-  width: 100%;
   height: 60px;
   background-color: #000;
   border-radius: 30px;
-  background-image: url("../../assets/img/helmet/burn_helmet.png");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   margin-bottom: 13px;
@@ -76,14 +72,12 @@ export default {
 .downTime {
   display: flex;
   align-items: center;
-  margin-right: 23px;
-  font-size: 24px;
   font-family: IBMPlexSans-SemiBold, IBMPlexSans;
   font-weight: 600;
   color: #ffffff;
   line-height: 24px;
   width: 50px;
-  span{
+  span {
     display: block;
     width: 100%;
     text-align: center;
@@ -93,7 +87,6 @@ export default {
   width: 50px;
   height: 100%;
   position: relative;
-  margin-right: 23px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -146,7 +139,7 @@ export default {
   0% {
     top: -16px;
   }
-  94% {
+  97% {
     top: -16px;
   }
   100% {
@@ -156,7 +149,6 @@ export default {
 
 .descirtion {
   .desc {
-    font-size: 20px;
     font-family: IBMPlexSans-SemiBold, IBMPlexSans;
     font-weight: 600;
     color: #ffffff;
@@ -166,16 +158,61 @@ export default {
     -webkit-text-fill-color: transparent;
   }
   > i {
-    font-size: 26px;
     color: #ffffff;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2);
   }
   .number {
-    font-size: 24px;
     font-family: IBMPlexSans-SemiBold, IBMPlexSans;
     font-weight: 600;
     color: #ffffff;
     line-height: 24px;
+  }
+}
+@media screen and (min-width: 750px) {
+  .burn_helmet {
+    width: 100%;
+    background-image: url("../../assets/img/helmet/burn_helmet.png");
+  }
+  .downTime {
+    margin-right: 23px;
+  }
+  .transfrom {
+    margin-right: 23px;
+  }
+  .downTime {
+    font-size: 24px;
+  }
+  .descirtion {
+    .desc {
+      font-size: 20px;
+    }
+    > i {
+      font-size: 26px;
+    }
+    .number {
+      font-size: 24px;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .burn_helmet {
+    width: 95%;
+    margin: 0 auto;
+    background-image: url("../../assets/img/helmet/burn_helmet_h5.png");
+  }
+  .downTime {
+    font-size: 19px;
+  }
+  .descirtion {
+    .desc {
+      font-size: 16px;
+    }
+    > i {
+      font-size: 18px;
+    }
+    .number {
+      font-size: 19px;
+    }
   }
 }
 </style>

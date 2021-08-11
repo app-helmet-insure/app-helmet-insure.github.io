@@ -3,7 +3,7 @@
     <Title />
     <div class="home_container">
       <InsuranceData />
-      <!-- <HelmetBurning /> -->
+      <HelmetBurning />
       <InsureanceList />
     </div>
   </div>
@@ -16,7 +16,7 @@ import Title from "~/components/insurance/title.vue";
 export default {
   layout: "default",
   name: "home",
-  components: { InsuranceData, InsureanceList, Title },
+  components: { InsuranceData, InsureanceList, HelmetBurning, Title }, 
 };
 </script>
 <style lang="scss">

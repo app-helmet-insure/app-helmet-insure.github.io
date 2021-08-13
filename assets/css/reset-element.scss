@@ -1,0 +1,57 @@
+@import url("//unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css");
+@import './themes.scss'; 
+@import './base.scss'; 
+
+.block {
+  position: relative;
+}
+.slider_content {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 100%;
+}
+.el-slider__input {
+  float: none;
+  width: 100%;
+}
+.el-input.is-active .el-input__inner, .el-input__inner:focus {
+  @include themeify {
+    border: 1px solid themed('color-fd7e14') !important;
+  }
+}
+.el-input-number--small .el-input__inner {
+  padding: 0 10px;
+  margin-top: 6px;
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  @include themeify {
+    color: themed('color-17173a');
+    background: themed('ibo_input');
+    border: 1px solid themed('color-e8e8eb');
+  }
+}
+.el-input-number--small .el-input-number__decrease, .el-input-number--small .el-input-number__increase {
+  display: none;
+}
+.el-slider__runway.show-input {
+  margin: 44px auto 0;
+  width: 150px;
+}
+.el-slider__button-wrapper {
+  top: -11px;
+  width: 24px;
+  height: 24px;
+}
+.el-slider__button {
+  padding: 3;
+  width: 14px;
+  height: 14px;
+  background: #FD7E14;
+  box-shadow: 0px 0px 4px 0px rgba(232, 232, 235, 0.9);
+  border: 2px solid #FFFFFF;
+}
+.el-slider__bar {
+  background: #FD7E14;
+}

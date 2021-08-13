@@ -21,7 +21,7 @@
               <a
                 @click="sliderClick"
                 :class="
-                  routeObj.name === 'index'
+                  routeObj.name === 'insurance'
                     ? 'active'
                     : routeObj.name == 'myPolicy' ||
                       routeObj.name == 'mySupply' ||
@@ -36,7 +36,7 @@
                 {{ $t("Table.safe") }}
                 <svg
                   :class="
-                    routeObj.name === 'index'
+                    routeObj.name === 'insurance'
                       ? 'right'
                       : routeObj.name == 'myPolicy' ||
                         routeObj.name == 'mySupply' ||
@@ -293,7 +293,7 @@ export default {
   },
   watch: {
     $route() {
-      this.$route.path !== "/";
+      this.$route.path !== "/insurance";
     },
     storeThemes(newValue) {
       console.log(newValue);
@@ -308,7 +308,7 @@ export default {
     },
     sliderClick() {
       this.sliderFlag = !this.sliderFlag;
-      this.$router.push("/");
+      this.$router.push("/insurance");
     },
     whirlLogo(val) {
       if (this.whirlLogoFlag === val) return;
@@ -626,7 +626,7 @@ export default {
     > a {
       margin-top: 20px;
       height: 40px;
-      background: rgba(#9F66FF, $alpha: 0.2);
+      background: rgba(#9f66ff, $alpha: 0.2);
       border-radius: 5px;
       width: 100%;
       display: flex;

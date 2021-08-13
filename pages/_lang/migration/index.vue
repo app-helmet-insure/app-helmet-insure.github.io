@@ -13,6 +13,7 @@ import Title from "~/components/migration/index";
 import JumpDialog from "~/components/migration/jump_dialog";
 import TipDialog from "~/components/migration/tip_dialog";
 export default {
+  layout: "home",
   components: { Title, JumpDialog, TipDialog },
 };
 </script>

@@ -32,9 +32,8 @@
         <span>Audit report</span>
       </a>
     </div>
-    <div class="footer_bottom" :style="`padding:0 ${padding}px`">
-      <p>Powered by payaso.io core team</p>
-      <Langauage class="langauage" />
+    <div class="footer_bottom">
+      <p>Powered by HELMET Core team</p>
     </div>
   </div>
 </template>
@@ -42,7 +41,6 @@
 import Langauage from "~/components/common/langauage.vue";
 import "~/assets/svg/iconfont.js";
 export default {
-  props: ["padding"],
   name: "p-footer",
   components: { Langauage },
 };
@@ -54,7 +52,7 @@ export default {
     width: 100%;
     height: 240px;
     @include themeify {
-      background: themed("color-17173a");
+      background: #121212;
     }
     display: flex;
     flex-direction: column;
@@ -106,9 +104,7 @@ export default {
   .footer-container {
     width: 100%;
     height: 218px;
-    @include themeify {
-      background: themed("color-17173a");
-    }
+    background: #121212;
     display: flex;
     flex-direction: column;
     .footer_top {
@@ -159,16 +155,16 @@ export default {
   width: 24px;
   height: 24px;
   vertical-align: -0.15em;
-  fill: rgba(23, 23, 58, 0.7) !important;
+  fill: #787878 !important;
   overflow: hidden;
   &:hover {
-    fill: #17173a !important;
+    fill: #fd7e14 !important;
   }
 }
 .footer_top {
   a:hover {
     .icon {
-      fill: #17173a !important;
+      fill: #fd7e14 !important;
     }
     span {
       color: #fd7e14 !important;

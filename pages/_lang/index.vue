@@ -1,5 +1,5 @@
 <template>
-  <div class="helmet_container" v-if="ShowFlag">
+  <div class="helmet_container">
     <div class="helmet_logo">
       <a href="#"></a>
     </div>
@@ -69,24 +69,6 @@ export default {
     return {
       showVideo: false,
     };
-  },
-  watch: {
-    showVideo(newValue) {
-      if (newValue) {
-        setInterval(() => {
-          setTimeout(() => {
-            this.showVideo = false;
-          });
-          clearTimeout();
-        }, 142000);
-      }
-    },
-  },
-  computed: {
-    ShowFlag() {
-      console.log(this.$route.path === "/");
-      return this.$route.path === "/";
-    },
   },
   components: {
     // Insurance,

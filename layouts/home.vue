@@ -16,6 +16,10 @@
         <use xlink:href="#icon-close"></use>
       </svg>
     </div>
+    <!-- <p>
+      <span>{{ $t("Tip.SendCoin") }}</span>
+    </p> -->
+    <!-- <PHeader></PHeader> -->
     <div class="content">
       <PSlider />
       <div class="content_wrap">
@@ -27,6 +31,7 @@
         </template>
       </div>
     </div>
+    <!-- <PFooter :padding="200"></PFooter> -->
     <RiskWarning
       v-if="showRiskWarning"
       @close="closeRiskWarning"

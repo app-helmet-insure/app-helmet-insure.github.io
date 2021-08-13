@@ -53,7 +53,11 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: ["~assets/css/main.scss", "~assets/css/animate.css"],
+  css: [
+    "~assets/css/main.scss",
+    "~assets/css/animate.css",
+    "element-ui/lib/theme-chalk/index.css",
+  ],
   /*
    ** Plugins to load before mounting the App
    */
@@ -62,6 +66,7 @@ module.exports = {
     "~plugins/bus-inject.js",
     "~plugins/filter.js",
     "~plugins/c-ui.js",
+    "~plugins/element-ui.js",
   ],
   /*
    ** Nuxt.js dev-modules
@@ -85,6 +90,14 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    babel: {
+      plugins: [
+        [
+          "component",
+          { libraryName: "element-ui", styleLibraryName: "theme-chalk" },
+        ],
+      ],
+    },
     /*
      ** You can extend webpack config here
      */

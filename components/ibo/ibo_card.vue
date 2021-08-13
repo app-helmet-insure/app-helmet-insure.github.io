@@ -21,44 +21,69 @@
               <span v-if='item.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text7") }}</span>
             </p>
           </div>
-          <p class="ibo_item_radio">{{item.ratio}}</p>
-          <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-            <span class="value">{{item.totalPurchasedAmount}}</span>
-          </p>
-          <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
-            <span class="value">{{item.pool_info.max_allocation}}</span>
-          </p>
-          <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
-            <span class="value">{{item.progress}}%</span>
-          </p>
-          <a class="ibo_item_progress">
-            <i 
-              class="ibo_item_progress_bar" 
-              :style="item.progress > 1 ? 'width: 100%' : item.progress == 0 ? 'display: none' : 'width: ' + item.progress * 100 + '%'">
-            </i>
-          </a>
-          <div class="block">
-            <el-slider
-              v-model="value"
-              :min='item.pool_info.min_allocation'
-              :max='item.pool_info.max_allocation'
-              show-input>
-            </el-slider>
-            <p class="ibo_item_value slider_content">
-              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
-              <span class="value">999</span>
+          <div v-if='item.status !== 3'>
+            <p class="ibo_item_radio">{{item.ratio}}</p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
+              <span class="value">{{item.totalPurchasedAmount}} {{item.underlying.symbol}}</span>
             </p>
-            <p class="min_max_value">
-              <span>{{ $t("IBO.IBO_text12") }}{{item.pool_info.min_allocation}}</span>
-              <span>{{ $t("IBO.IBO_text13") }}{{item.pool_info.max_allocation}}</span>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
+              <span class="value">{{item.pool_info.max_allocation}}</span>
+            </p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
+              <span class="value">{{item.progress}}%</span>
+            </p>
+            <a class="ibo_item_progress">
+              <i 
+                class="ibo_item_progress_bar" 
+                :style="item.progress > 1 ? 'width: 100%' : item.progress == 0 ? 'display: none' : 'width: ' + item.progress * 100 + '%'">
+              </i>
+            </a>
+            <div class="block">
+              <el-slider
+                v-model="value"
+                :min='item.pool_info.min_allocation'
+                :max='item.pool_info.max_allocation'
+                show-input>
+              </el-slider>
+              <p class="ibo_item_value slider_content">
+                <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
+                <span class="value">999 {{item.underlying.symbol}}</span>
+              </p>
+              <p class="min_max_value">
+                <span>{{ $t("IBO.IBO_text12") }}{{item.pool_info.min_allocation}}</span>
+                <span>{{ $t("IBO.IBO_text13") }}{{item.pool_info.max_allocation}}</span>
+              </p>
+            </div>
+            <a class="ibo_item_btn" @click='onApprove'>{{ $t("Table.Approve") }}</a>
+            <a class="ibo_item_btn" @click='onBurn'>{{ $t("Table.Burn") }}</a>
+          </div>
+          <div v-if='item.status === 3' class="finished_style">
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text20") }}</span>
+              <span class="value">1.0s</span>
+            </p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text21") }}</span>
+              <span class="value">999%</span>
+            </p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text22") }}</span>
+              <span class="value">$999</span>
+            </p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text23") }}</span>
+              <span class="value">999 {{item.underlying.symbol}}</span>
+            </p>
+            <p class="ibo_item_value">
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text24") }}</span>
+              <span class="value">10,000 {{item.underlying.symbol}}</span>
             </p>
           </div>
-          <a class="ibo_item_btn" @click='onApprove'>{{ $t("Table.Burn") }}</a>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14") }}</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: item.underlying.symbol}) }}</span>
             <span class="value">999</span>
           </p>
           <p class="ibo_item_value">
@@ -76,14 +101,14 @@
           </p>
           <div v-if='claimFlag'>
             <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18") }}</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: item.underlying.symbol}) }}</span>
             <span class="value">10,000</span>
           </p>
           <p class="ibo_item_value">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
             <span class="value">10%</span>
           </p>
-          <a class="ibo_item_btn ibo_item_claim" @click='onApprove'>{{ $t("Table.Claim") }}</a>
+          <a class="ibo_item_btn ibo_item_claim" @click='onClaim'>{{ $t("Table.Claim") }}</a>
           </div>
         </div>
       </div>
@@ -98,24 +123,24 @@
          iboData: [
             {
               name: 'Helmet',
-              address: '0x1',
+              address: '0x685f36fD01b749788BFa4d2526a77261EF604f3f',
               abi: null,
               start_at: '1627635600',
               is_top: true,
               is_coming: false, // is_coming 为 true 则不请求合约
               currency: {
-                address: '0x910651F81a605a6Ef35d05527d24A72fecef8bF0', // 如果是0x0则是ht
+                address: '0x68944B6333ddcd7AA3f550Fdf80524d32A1A937a',
                 decimal: 18,
-                symbol: 'WAR',
+                symbol: 'CUSDT',
               },
               icon: '',
               type: 1,
               isPrivate: true,
               underlying: {
-                address: '0xE5944B50DF84001a36c7DE0d5Cb4da7ab21407D2',
+                address: '0xC78eEfDC4D31A44A45182713d64Dbc8505636CcB',
                 decimal: 18,
-                symbol: 'XNFT',
-                name: 'XNFT',
+                symbol: 'CTT',
+                name: 'CTT',
                 total_supply: '100,000,000',
                 holders: '-',
                 transfers: '-',
@@ -134,7 +159,7 @@
               Github: '-',
               yuque: '-',
               progress: 0.2,
-              status: 0,
+              status: 1,
               ratio: '1 XXX=0.1 Helmet',
               time: '1627639200',
               purchasedCurrencyOf: 0,
@@ -165,6 +190,12 @@
       },
       onApprove() {
         console.log('approve')
+      },
+      onBurn() {
+        console.log('burn')
+      },
+      onClaim() {
+        console.log('claim')
       }
      }
    }
@@ -200,7 +231,7 @@
       .ibo_item {
         padding: 20px;
         width: 320px;
-        min-height: 476px;
+        min-height: 370px;
         @include themeify {
           background: themed("color-ffffff");
         }
@@ -438,6 +469,13 @@
               }
               opacity: 0.4;
             }
+          }
+        }
+        .finished_style {
+          margin: 18px 0 20px;
+          padding: 8px 10px 16px;
+          @include themeify {
+            background: themed("color-f8f9fa");
           }
         }
       }
@@ -450,7 +488,7 @@
         margin: 10px auto;
         padding: 20px;
         width: 320px;
-        min-height: 476px;
+        min-height: 370px;
         @include themeify {
           background: themed("color-ffffff");
         }
@@ -688,6 +726,13 @@
               }
               opacity: 0.4;
             }
+          }
+        }
+        .finished_style {
+          margin: 18px 0 20px;
+          padding: 8px 10px 16px;
+          @include themeify {
+            background: themed("color-f8f9fa");
           }
         }
       }

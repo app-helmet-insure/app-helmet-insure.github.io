@@ -344,11 +344,16 @@
     "IBO_text11": "Available:",
     "IBO_text12": "Min:",
     "IBO_text13": "Max:",
-    "IBO_text14": "My Helmet",
+    "IBO_text14": "My {icon}",
     "IBO_text15": "Winning Rate",
     "IBO_text16": "Token Get(EST)",
     "IBO_text17": "Claim Details",
-    "IBO_text18": "Unused Helmet",
-    "IBO_text19": "Token Get"
+    "IBO_text18": "Unused {icon}",
+    "IBO_text19": "Token Get",
+    "IBO_text20": "During",
+    "IBO_text21": "Committed",
+    "IBO_text22": "Total Value",
+    "IBO_text23": "Total",
+    "IBO_text24": "Burnt"
   }
 }

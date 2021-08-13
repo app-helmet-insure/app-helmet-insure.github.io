@@ -18,7 +18,7 @@
       <div class="descirtion">
         <span class="desc">1HELMET BURNT</span>
         <i>/</i>
-        <span class="number">16’</span>
+        <span class="number">16″</span>
       </div>
     </div>
   </div>

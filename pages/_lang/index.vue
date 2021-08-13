@@ -16,7 +16,7 @@ import Title from "~/components/insurance/title.vue";
 export default {
   layout: "default",
   name: "home",
-  components: { InsuranceData, InsureanceList, HelmetBurning, Title },
+  components: { InsuranceData, InsureanceList, HelmetBurning, Title }, 
 };
 </script>
 <style lang="scss">

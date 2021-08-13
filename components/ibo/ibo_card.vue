@@ -13,25 +13,25 @@
               {{item.name}}
             </p>
             <p class="ibo_item_title_right">
-              <span class="ibo_item_countdown">05d/01h</span>
-              <span v-if='item.status === 0' class="ibo_item_status ibo_item_status_ongoing">Will start in</span>
-              <span v-if='item.status === 1 && (item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">Undergoing</span>
-              <span v-if='item.status === 1 && !(item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">Waiting</span>
-              <span v-if='item.status === 2' class="ibo_item_status ibo_item_status_ongoing">Calculating</span>
-              <span v-if='item.status === 3' class="ibo_item_status ibo_item_status_ongoing">Finished</span>
+              <span class="ibo_item_countdown">05{{ $t("IBO.IBO_text1") }}/01{{ $t("IBO.IBO_text2") }}</span>
+              <span v-if='item.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text3") }}</span>
+              <span v-if='item.status === 1 && (item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text4") }}</span>
+              <span v-if='item.status === 1 && !(item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text5") }}</span>
+              <span v-if='item.status === 2' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text6") }}</span>
+              <span v-if='item.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text7") }}</span>
             </p>
           </div>
           <p class="ibo_item_radio">{{item.ratio}}</p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Total Releases</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
             <span class="value">{{item.totalPurchasedAmount}}</span>
           </p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Max members</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
             <span class="value">{{item.pool_info.max_allocation}}</span>
           </p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">progress</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
             <span class="value">{{item.progress}}%</span>
           </p>
           <a class="ibo_item_progress">
@@ -48,39 +48,39 @@
               show-input>
             </el-slider>
             <p class="ibo_item_value slider_content">
-              <span class="ibo_item_value_title">Available:</span>
+              <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
               <span class="value">999</span>
             </p>
             <p class="min_max_value">
-              <span>Min:{{item.pool_info.min_allocation}}</span>
-              <span>Max:{{item.pool_info.max_allocation}}</span>
+              <span>{{ $t("IBO.IBO_text12") }}{{item.pool_info.min_allocation}}</span>
+              <span>{{ $t("IBO.IBO_text13") }}{{item.pool_info.max_allocation}}</span>
             </p>
           </div>
           <a class="ibo_item_btn" @click='onApprove'>{{ $t("Table.Burn") }}</a>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">My Helmet</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14") }}</span>
             <span class="value">999</span>
           </p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Winning Rate</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text15") }}</span>
             <span class="value">10,000</span>
           </p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Token Get(EST)</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text16") }}</span>
             <span class="value">10%</span>
           </p>
           <p class="claim_detail_btn" @click='showClaim'>
             <span></span>
-            <a>Claim Details</a>
+            <a>{{ $t("IBO.IBO_text17") }}</a>
             <span></span>
           </p>
           <div v-if='claimFlag'>
             <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Unused Helmet</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18") }}</span>
             <span class="value">10,000</span>
           </p>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">Token Get</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
             <span class="value">10%</span>
           </p>
           <a class="ibo_item_btn ibo_item_claim" @click='onApprove'>{{ $t("Table.Claim") }}</a>

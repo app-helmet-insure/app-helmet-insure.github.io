@@ -342,5 +342,26 @@
     "Tips7": "New polygon dev plan in!!!  Better&healthier bridge approach rush on its way and your GUARD Credits are still valid!!!",
     "ToStake": "Go Deposit",
     "Pause":"Temporarily closed"
+  },
+  "IBO": {
+    "IBO_text1": "d",
+    "IBO_text2": "h",
+    "IBO_text3": "Will start in",
+    "IBO_text4": "Undergoing",
+    "IBO_text5": "Waiting",
+    "IBO_text6": "Calculating",
+    "IBO_text7": "Finished",
+    "IBO_text8": "Total Releases",
+    "IBO_text9": "Max members",
+    "IBO_text10": "progress",
+    "IBO_text11": "Available:",
+    "IBO_text12": "Min:",
+    "IBO_text13": "Max:",
+    "IBO_text14": "My Helmet",
+    "IBO_text15": "Winning Rate",
+    "IBO_text16": "Token Get(EST)",
+    "IBO_text17": "Claim Details",
+    "IBO_text18": "Unused Helmet",
+    "IBO_text19": "Token Get"
   }
 }

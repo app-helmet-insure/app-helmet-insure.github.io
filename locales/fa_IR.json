@@ -260,7 +260,11 @@
         "MiningTip1": "کمپین های استخراج Helmet .",
         "MiningTip2": "می توانید توکن های اختصاصی Helmet را فارم کنید ، یا با گرو گذاری توکن های مختلف ارائه دهنده نقدینگی (LPT) جوایز COMBO را کسب کنید.",
         "IIOTip1": "IIO: پیشنهادات اولیه BSC Token",
-        "IIOTip2": "مدل توزیع دارایی جدید با منطق انتخاب اروپایی."
+        "IIOTip2": "مدل توزیع دارایی جدید با منطق انتخاب اروپایی.",
+        "APY":"APY",
+        "APR":"APR",
+        "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+        "EarnTip2":"The return on compound interest will get higher and higher over time."
     },
     "Account": {
         "Account": "حساب کاربری",

@@ -125,13 +125,13 @@
               to="/iio"
               :class="routeObj.name.includes('iio') ? 'active' : ''"
             >
-              <svg class="hot" aria-hidden="true">
+              <!-- <svg class="hot" aria-hidden="true">
                 <use
                   :href="`#icon-${
                     routeObj.name.includes('iio') ? 'hot1' : 'hot'
                   }`"
                 ></use>
-              </svg>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-iio"></use>
               </svg>
@@ -139,7 +139,7 @@
               <!-- <i class="num">1</i> -->
             </nuxt-link>
           </div>
-          <div class="menu_item">
+          <!-- <div class="menu_item">
             <nuxt-link
               to="/ibo"
               :class="routeObj.name === 'ibo' ? 'active' : ''"
@@ -149,7 +149,7 @@
              </svg>
               {{ $t("Header.IBO") }}
             </nuxt-link>
-          </div>
+          </div> -->
           <div class="menu_item">
             <nuxt-link
               to="/nft"

@@ -131,16 +131,33 @@
             </section>
 
             <section class="APY" v-else>
-              <el-tooltip
-                effect="dark"
-                :content="`APY：${item.APY}`"
-                placement="top-start"
-              >
-                <div class="APY_style">
-                  <span>{{ item.REWARD_YEAR }}</span>
-                  <span>{{ item.REWARD_TYPE }}</span>
-                </div>
-              </el-tooltip>
+              <span>{{ item.REWARD_YEAR }}</span>
+              <span>
+                {{ item.REWARD_TYPE }}
+                <el-tooltip effect="dark" placement="top-start">
+                  <div slot="content">
+                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
+                    <p>{{ $t("Tip.EarnTip1") }}</p>
+                    <p>{{ $t("Tip.EarnTip2") }}</p>
+                  </div>
+                  <svg
+                    t="1617039040708"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="1287"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                      p-id="1288"
+                    ></path>
+                  </svg>
+                </el-tooltip>
+              </span>
             </section>
             <section>
               <button
@@ -279,16 +296,33 @@
               <span>{{ item.REWARD_TYPE }}</span>
             </p>
             <p class="APY" v-else>
-              <el-tooltip
-                effect="dark"
-                :content="`APY：${item.APY}`"
-                placement="top-start"
-              >
-                <p class="APY_style">
-                  <span>{{ item.REWARD_YEAR }}</span>
-                  <span>{{ item.REWARD_TYPE }}</span>
-                </p>
-              </el-tooltip>
+              <span>{{ item.REWARD_YEAR }}</span>
+              <span>
+                {{ item.REWARD_TYPE }}
+                <el-tooltip effect="dark" placement="top-start">
+                  <div slot="content">
+                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
+                    <p>{{ $t("Tip.EarnTip1") }}</p>
+                    <p>{{ $t("Tip.EarnTip2") }}</p>
+                  </div>
+                  <svg
+                    t="1617039040708"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="1287"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                      p-id="1288"
+                    ></path>
+                  </svg>
+                </el-tooltip>
+              </span>
             </p>
             <div>
               <i></i>
@@ -497,7 +531,7 @@ export default {
           OPEN_TIME: "Mining",
           COMBO_FLAG: false,
           flash: false,
-          REWARD_TYPE: "APR",
+          REWARD_TYPE: "APY",
           COMPOUND: true,
           ONE_PAGER: false,
           REWARD1_SYMBOL: "HELMET",
@@ -1313,11 +1347,21 @@ export default {
     width: 100%;
     margin: 0 auto;
   }
-  .APY_style {
-    width: 50px;
-    cursor: pointer;
-    @include themeify {
-      border-bottom: 1px dotted themed("color-17173a");
+  .APY {
+    display: flex;
+    flex-direction: column;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+      cursor: pointer;
+      @include themeify {
+        fill: themed("color-17173a");
+      }
     }
   }
   .mining_title {
@@ -1610,11 +1654,21 @@ export default {
     }
     padding-bottom: 50px;
   }
-  .APY_style {
-    width: 50px;
-    cursor: pointer;
-    @include themeify {
-      border-bottom: 1px dotted themed("color-17173a");
+  .APY {
+    display: flex;
+    flex-direction: column;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+      cursor: pointer;
+      @include themeify {
+        fill: themed("color-17173a");
+      }
     }
   }
   .mining_title {

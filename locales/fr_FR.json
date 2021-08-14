@@ -260,7 +260,11 @@
         "MiningTip1": "Helmet Mining Campaigns.",
         "MiningTip2": "Vous pouvez cultiver des Helmet tokens, ou gagner COMBO récompenses en jalonnant différents jetons de fourniture de liquidité (LPTs).",
         "IIOTip1": "IIO: Initial BSC Token Offerings",
-        "IIOTip2": "Nouveau modèle de distribution des actifs avec logique d'option européenne."
+        "IIOTip2": "Nouveau modèle de distribution des actifs avec logique d'option européenne.",
+        "APY":"APY",
+        "APR":"APR",
+        "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+        "EarnTip2":"The return on compound interest will get higher and higher over time."
     },
     "Account": {
         "Account": "Compte",

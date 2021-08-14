@@ -1167,7 +1167,8 @@ export default {
       }
     },
     async getHelmetAPY() {
-      this.miningList[0].APY = await GetHelmetPoolAPY(this.miningList[0]);
+      let apy = await GetHelmetPoolAPY(this.miningList[0]);
+      this.miningList[0].APY = fixD(apy, 2) + "%";
     },
     getMiningTime(time) {
       let now = new Date() * 1;

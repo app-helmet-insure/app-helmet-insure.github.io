@@ -135,7 +135,7 @@
               <span>
                 {{ item.REWARD_TYPE }}
                 <el-tooltip effect="dark" placement="top-start">
-                  <div slot="content">
+                  <div slot="content" style="width: 200px">
                     <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
                     <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
                     <p>{{ $t("Tip.EarnTip1") }}</p>
@@ -300,7 +300,7 @@
               <span>
                 {{ item.REWARD_TYPE }}
                 <el-tooltip effect="dark" placement="top-start">
-                  <div slot="content">
+                  <div slot="content" style="width: 150px">
                     <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
                     <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
                     <p>{{ $t("Tip.EarnTip1") }}</p>

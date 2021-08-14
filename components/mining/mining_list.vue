@@ -136,13 +136,7 @@
                 :content="`APY：${item.APY}`"
                 placement="top-start"
               >
-                <div
-                  style="
-                    width: 50px;
-                    cursor: pointer;
-                    border-bottom: 1px dotted #17173a;
-                  "
-                >
+                <div class="APY_style">
                   <span>{{ item.REWARD_YEAR }}</span>
                   <span>{{ item.REWARD_TYPE }}</span>
                 </div>
@@ -280,9 +274,21 @@
             </p>
           </section>
           <section>
-            <p>
+            <p v-if="!item.APY">
               <span>{{ item.REWARD_YEAR }}</span>
               <span>{{ item.REWARD_TYPE }}</span>
+            </p>
+            <p class="APY" v-else>
+              <el-tooltip
+                effect="dark"
+                :content="`APY：${item.APY}`"
+                placement="top-start"
+              >
+                <p class="APY_style">
+                  <span>{{ item.REWARD_YEAR }}</span>
+                  <span>{{ item.REWARD_TYPE }}</span>
+                </p>
+              </el-tooltip>
             </p>
             <div>
               <i></i>
@@ -437,11 +443,11 @@ export default {
     },
   },
   watch: {
-    storeThemes(newValue) {
-      if (newValue) {
-        this.initMiningData();
-      }
-    },
+    // storeThemes(newValue) {
+    //   if (newValue) {
+    //     this.initMiningData();
+    //   }
+    // },
   },
   methods: {
     hadnleShowOnePager(e, ONE_PAGER) {
@@ -1306,6 +1312,13 @@ export default {
     width: 100%;
     margin: 0 auto;
   }
+  .APY_style {
+    width: 50px;
+    cursor: pointer;
+    @include themeify {
+      border-bottom: 1px dotted themed("color-17173a");
+    }
+  }
   .mining_title {
     display: flex;
     align-items: center;
@@ -1596,6 +1609,13 @@ export default {
     }
     padding-bottom: 50px;
   }
+  .APY_style {
+    width: 50px;
+    cursor: pointer;
+    @include themeify {
+      border-bottom: 1px dotted themed("color-17173a");
+    }
+  }
   .mining_title {
     display: none;
   }
@@ -1797,9 +1817,10 @@ export default {
     top: 0;
     left: 0;
     z-index: 99;
+    display: flex;
+    flex-direction: column;
     .wraper {
       flex: 1;
-      overflow-y: scroll;
       .wraper_header {
         height: 44px;
         padding: 0 16px;

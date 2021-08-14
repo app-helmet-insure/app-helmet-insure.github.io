@@ -347,9 +347,10 @@ export default {
   top: 0;
   left: 0;
   z-index: 99;
+  display: flex;
+  flex-direction: column;
   .wraper {
     flex: 1;
-    overflow-y: scroll;
     .wraper_header {
       height: 44px;
       padding: 0 16px;

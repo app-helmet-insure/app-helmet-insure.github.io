@@ -112,7 +112,7 @@
       <div v-if='claimFlag'>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: iboData.underlying.symbol}) }}</span>
-          <span class="value">10,000</span>
+          <span class="value">{{ notUsed }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
@@ -172,17 +172,7 @@ export default {
       if (!this.iboData.settleable){
         return '-'
       }
-      return new BigNumber(
-          Web3.utils.fromWei(this.iboData.purchasedCurrencyOf, 'ether')
-      )
-      .multipliedBy(
-          new BigNumber(
-              Web3.utils.fromWei(this.iboData.settleable.rate, 'ether')
-          )
-      )
-      .dividedBy(new BigNumber(this.iboData.price))
-      .toFixed(6, 1)
-      .toString() * 1
+      return this.iboData.settleable.volume
     },
     // 可领取
     volume: function () {
@@ -190,7 +180,14 @@ export default {
         return this.iboData.settleable.volume
       }
       return 0
-    }
+    },
+    // 未使用
+    notUsed: function () {
+      if (this.iboData.settleable) {
+        return new BigNumber((1 - this.rate) * this.iboData.settleable.purchasedCurrencyOf).toFormat()
+      }
+      return 0
+  }
   },
   created() {
     this.iboData = this.pool

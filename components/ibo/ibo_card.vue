@@ -150,7 +150,7 @@
         <p>{{$t("IBO.IBO_text30")}}: <a href="https://game1network.com" target="_blank">https://game1network.com</a></p>
       </div>
       <div v-else-if="iboData.name === 'GAME1'" class="tip_box">
-        <p>{{$t("IBO.IBO_text28")}}: 16 August UTC 14:00</p>
+        <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august2") }}</p>
         <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
         <p>TG(EN): <a href="https://t.me/UFOMO_EN" target="_blank">https://t.me/UFOMO_EN</a></p>
         <p>TG(CN): <a href="https://t.me/UFOMO_cn" target="_blank">https://t.me/UFOMO_cn</a></p>
@@ -289,6 +289,7 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
+
 .tip_box{
   transform: translateY(-10px);
   p{
@@ -607,7 +608,9 @@ export default {
 }
 
 @media screen and (max-width: 750px) {
-
+  .el-dialog{
+    width: 90%;
+  }
   .ibo_item {
     margin: 10px auto;
     padding: 20px;

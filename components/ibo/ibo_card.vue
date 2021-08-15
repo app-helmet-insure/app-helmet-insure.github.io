@@ -27,9 +27,9 @@
           </span>
         </p>
         <p class="ibo_item_title_right">
-          <span class="ibo_item_countdown">{{ countdown.d }}{{ $t("IBO.IBO_text1") }}/{{
-              countdown.h
-            }}{{ $t("IBO.IBO_text2") }}</span>
+          <span class="ibo_item_countdown">{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{
+              countdown.m
+            }}{{ $t("IBO.IBO_text1") }}</span>
           <span v-if='iboData.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{
               $t("IBO.IBO_text3")
             }}</span>
@@ -180,8 +180,8 @@ export default {
       timer: null,
       now: parseInt(Date.now() / 1000),
       countdown: {
-        d: '-',
-        h: '-'
+        h: '-',
+        m: '-'
       }
     }
   },
@@ -245,8 +245,8 @@ export default {
       if (thisTime < startTime) {
         const t = startTime - thisTime
         this.countdown = {
-          d: Math.floor(t / 86400000),
-          h: Math.floor((t % 86400000) / 3600000)
+          h: Math.floor(t / 3600000),
+          m: Math.floor((t % 3600000) / 60000)
         }
       }
     },
@@ -369,9 +369,6 @@ export default {
       font-size: 18px;
       font-family: IBMPlexSans-Bold, IBMPlexSans;
       font-weight: bold;
-      span{
-        text-decoration: underline;
-      }
       @include themeify {
         color: themed("color-17173a");
       }

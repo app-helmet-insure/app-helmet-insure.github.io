@@ -344,8 +344,8 @@
     "Pause":"暂停"
   },
   "IBO": {
-    "IBO_text1": "d",
-    "IBO_text2": "h",
+    "IBO_text1": "分钟",
+    "IBO_text2": "小时",
     "IBO_text3": "倒计时",
     "IBO_text4": "进行中",
     "IBO_text5": "等待",

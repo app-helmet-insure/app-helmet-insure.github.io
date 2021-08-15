@@ -339,7 +339,7 @@
     "IBO": {
         "IBO_text1": "d",
         "IBO_text2": "h",
-        "IBO_text3": "Will start in",
+        "IBO_text3": "countdown",
         "IBO_text4": "Undergoing",
         "IBO_text5": "Waiting",
         "IBO_text6": "Calculating",
@@ -363,6 +363,11 @@
         "IBO_text24": "Burnt",
         "IBO_text25": "IBO: Mini IDO with 50% HELMET raising fund burnt.",
         "IBO_text26": "You need to prepare HELMET to get the IBO share.",
-        "IBO_text27": "Disclaimer — All projects are subject to both high market risk and volatility. Projects from IBO part might witness high risk and Please, do your own research and full due diligence before even considering to invest your funds in any project and please, make your investments very cautiously. Helmet.insure will not be held responsible for any investment losses."
+        "IBO_text27": "Disclaimer — All projects are subject to both high market risk and volatility. Projects from IBO part might witness high risk and Please, do your own research and full due diligence before even considering to invest your funds in any project and please, make your investments very cautiously. Helmet.insure will not be held responsible for any investment losses.",
+        "IBO_text28": "Expected trading time",
+        "IBO_text29": "Trading platform",
+        "IBO_text30": "Website",
+        "TG_text": "TG(EN)",
+        "TG_URL": "https://t.me/UFOMO_EN"
     }
 }

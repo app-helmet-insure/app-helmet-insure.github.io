@@ -2,8 +2,8 @@
   <div class="ibo_title">
     <div class="ibo_title_wrap">
       <div class="ibo_title_text">
-        <h3>{{ $t("Tip.MiningTip1") }}</h3>
-        <p>{{ $t("Tip.MiningTip2") }}</p>
+        <h3>{{ $t("IBO.IBO_text25") }}</h3>
+        <p>{{ $t("IBO.IBO_text26") }}</p>
       </div>
     </div>
   </div>

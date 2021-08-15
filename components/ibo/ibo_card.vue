@@ -232,7 +232,7 @@ export default {
       })
     },
     onBurn() {
-      if (this.iboData.status === 0 || this.$store.state.userInfo.status !== 1) {
+      if (this.iboData.status === 1 || this.$store.state.userInfo.status !== 1) {
         onBurn_(this.amount, this.iboData.currency.address, this.iboData.abi, (success) => {
           success && this.init()
         })

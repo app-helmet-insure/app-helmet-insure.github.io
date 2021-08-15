@@ -143,13 +143,13 @@
         :visible="showTip"
         :before-close="() => showTip = false"
         width="200">
-      <div v-if="iboData.name === 'UFOMO'" class="tip_box">
+      <div v-if="iboData.name === 'GAME1'" class="tip_box">
         <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august") }}</p>
         <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
         <p>TG: <a href="T.me/game1networkchat" target="_blank">T.me/game1networkchat</a></p>
         <p>{{$t("IBO.IBO_text30")}}: <a href="https://game1network.com" target="_blank">https://game1network.com</a></p>
       </div>
-      <div v-else-if="iboData.name === 'GAME1'" class="tip_box">
+      <div v-else-if="iboData.name === 'UFOMO'" class="tip_box">
         <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august2") }}</p>
         <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
         <p>TG(EN): <a href="https://t.me/UFOMO_EN" target="_blank">https://t.me/UFOMO_EN</a></p>

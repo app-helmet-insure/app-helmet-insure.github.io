@@ -42,11 +42,10 @@ export default {
     }
   }
 }
-@media screen and (min-width: 750px) {
-  .ibo_project {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.ibo_project {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 @media screen and (max-width: 750px) {
   .ibo_project {

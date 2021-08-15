@@ -50,6 +50,7 @@ export default {
 @media screen and (max-width: 750px) {
   .ibo_project {
     padding-bottom: 30px;
+    justify-content: center;
   }
 }
 </style>

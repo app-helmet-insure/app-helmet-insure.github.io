@@ -301,7 +301,12 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
+.el-slider__button-wrapper{
+   z-index: 99;
+ }
+
 .ibo_item_btn{
   background: #17173a;
   &.disabled{

@@ -7,7 +7,7 @@
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src='require(`~/assets/img/ibo/${iboData.icon}`)'/>
-          {{ iboData.name }}
+          <span>{{ iboData.name }}</span>
         </p>
         <p class="ibo_item_title_right">
           <span class="ibo_item_countdown">{{ countdown.d }}{{ $t("IBO.IBO_text1") }}/{{
@@ -310,6 +310,9 @@ export default {
       font-size: 18px;
       font-family: IBMPlexSans-Bold, IBMPlexSans;
       font-weight: bold;
+      span{
+        text-decoration: underline;
+      }
       @include themeify {
         color: themed("color-17173a");
       }
@@ -460,6 +463,7 @@ export default {
       color: #FFF;
       line-height: 40px;
       text-align: center;
+      background: #17173A;
       @include themeify {
         background: themed("ibo_btn");
       }

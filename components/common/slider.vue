@@ -139,7 +139,7 @@
               <!-- <i class="num">1</i> -->
             </nuxt-link>
           </div>
-          <!-- <div class="menu_item">
+          <div class="menu_item">
             <nuxt-link
               to="/ibo"
               :class="routeObj.name === 'ibo' ? 'active' : ''"
@@ -149,7 +149,7 @@
              </svg>
               {{ $t("Header.IBO") }}
             </nuxt-link>
-          </div> -->
+          </div>
           <div class="menu_item">
             <nuxt-link
               to="/nft"

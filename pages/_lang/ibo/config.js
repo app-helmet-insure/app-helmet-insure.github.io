@@ -10,7 +10,7 @@ export const iboPools = [
     abi: starterLimitAbi,
     start_at: '1629115200',
     is_top: true,
-    is_coming: false, // is_coming 为 true 则不请求合约
+    is_coming: true, // is_coming 为 true 则不请求合约
     currency: {
       address: '0x68944B6333ddcd7AA3f550Fdf80524d32A1A937a',
       decimal: 18,

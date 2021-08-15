@@ -16,6 +16,7 @@ export const iboPools = [
       decimal: 18,
       symbol: 'CUSDT',
     },
+    totalPurchasedAmountSymbol: 'UFOMO', // 总释放单位
     icon:'ibo_card_UFOMO@2x.png',
     type: 1,
     isPrivate: true,
@@ -42,7 +43,7 @@ export const iboPools = [
     Telegram_Channel: 'https://t.me/xNFT_Global',
     Github: '-',
     yuque: '-',
-    progress: 0.2,
+    progress: 0,
     status: 0,
     ratio: ' 1 HELMET= 27500 UFOMO',
     time: '1629122400',
@@ -60,10 +61,11 @@ export const iboPools = [
     committed: '', // 超募比例
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
-    networkId: 56,
+    networkId: 56
   },
   {
     name: 'GAME1',
+    totalPurchasedAmountSymbol: 'GAME1', // 总释放单位
     address: '0x685f36fD01b749788BFa4d2526a77261EF604f3f',
     abi: starterLimitAbi,
     start_at: '1629122400',
@@ -100,9 +102,9 @@ export const iboPools = [
     Telegram_Channel: 'https://t.me/xNFT_Global',
     Github: '-',
     yuque: '-',
-    progress: 0.2,
+    progress: 0,
     status: 0,
-    ratio: ' 1 HELMET= 4GAME1',
+    ratio: ' 1 HELMET= 4 GAME1',
     time: '1629122400',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '111111',//总释放

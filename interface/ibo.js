@@ -128,7 +128,6 @@ export const getPoolInfo = (pool) => {
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
-
     return Object.assign({}, pool, {
       ratio: `1${pool.underlying.symbol}=${formatAmount(price, 18, 5)}${
         pool.currency.symbol
@@ -149,16 +148,16 @@ export const getPoolInfo = (pool) => {
       purchasedCurrencyOf,
       totalSettleable: {
         completed_: total_completed_,
-        amount: total_amount,
+        amount: total_amount, // 预计获得
         volume: total_volume,
         rate: total_rate,
       },
       totalSettledUnderlying,
       settleable: {
         completed_,
-        amount,
-        volume,
-        rate,
+        amount, // 未结算数量
+        volume,// 预计中签量
+        rate
       },
     })
   })
@@ -197,8 +196,9 @@ export const onBurn_ = (_amount, contractAddress, abi, callback) => {
 }
 // 提取
 export const onClaim_ = (contractAddress,abi, callback) => {
+  console.log(contractAddress, abi)
   let web3_ = new Web3(window.ethereum)
-  let myContract = new web3_.eth.Contract(ERC20.abi, contractAddress);
+  let myContract = new web3_.eth.Contract(abi, contractAddress);
   myContract.methods
     .settle()
     .send({ from: window.CURRENTADDRESS })

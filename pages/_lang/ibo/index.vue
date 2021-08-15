@@ -2,7 +2,11 @@
   <div class="main_container">
     <IBOMingTitle></IBOMingTitle>
     <div class="ibo_container">
+      <div class="ibo_card" >
+        <div class="ibo_project">
         <IBOCard v-for="(pool, index) in iboPools" :key="index" :pool="pool"></IBOCard>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +39,17 @@ export default {
       min-width: 1026px;
       margin: 0 auto 30px;
     }
+  }
+}
+@media screen and (min-width: 750px) {
+  .ibo_project {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 750px) {
+  .ibo_project {
+    padding-bottom: 30px;
   }
 }
 </style>

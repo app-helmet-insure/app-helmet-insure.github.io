@@ -8,6 +8,23 @@
         <p class="ibo_item_title_left">
           <img :src='require(`~/assets/img/ibo/${iboData.icon}`)'/>
           <span>{{ iboData.name }}</span>
+          <span style="margin-left: 5px;cursor:pointer;" @click="showTip = true">
+            <svg
+
+                t="1617039040708"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="1287"
+                width="16"
+                height="16"
+            >
+              <path
+                  d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                  p-id="1288"
+              ></path></svg>
+          </span>
         </p>
         <p class="ibo_item_title_right">
           <span class="ibo_item_countdown">{{ countdown.d }}{{ $t("IBO.IBO_text1") }}/{{
@@ -32,7 +49,7 @@
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalPurchasedAmount }} {{ iboData.underlying.symbol }}</span>
+          <span class="value">{{ totalPurchasedAmount }} {{ iboData.totalPurchasedAmountSymbol }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -121,15 +138,34 @@
         <a class="ibo_item_btn ibo_item_claim" @click='onClaim'>{{ $t("Table.Claim") }}</a>
       </div>
     </div>
+    <Dialog
+        title="Tip"
+        :visible="showTip"
+        :before-close="() => showTip = false"
+        width="200">
+      <div v-if="iboData.name === 'UFOMO'" class="tip_box">
+        <p>{{$t("IBO.IBO_text28")}}: 28 August</p>
+        <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
+        <p>TG: <a href="T.me/game1networkchat" target="_blank">T.me/game1networkchat</a></p>
+        <p>{{$t("IBO.IBO_text30")}}: <a href="https://game1network.com" target="_blank">https://game1network.com</a></p>
+      </div>
+      <div v-else-if="iboData.name === 'GAME1'" class="tip_box">
+        <p>{{$t("IBO.IBO_text28")}}: 16 August UTC 14:00</p>
+        <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
+        <p>TG(EN): <a href="https://t.me/UFOMO_EN" target="_blank">https://t.me/UFOMO_EN</a></p>
+        <p>TG(CN): <a href="https://t.me/UFOMO_cn" target="_blank">https://t.me/UFOMO_cn</a></p>
+        <p>{{$t("IBO.IBO_text30")}}: <a href="https://crazyufo.vip/#/fomoGame" target="_blank">https://crazyufo.vip/#/fomoGame</a></p>
+      </div>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import {fromWei, getPoolInfo, onApprove_, onBurn_, onClaim_} from '../../interface/ibo'
 import BigNumber from "bignumber.js";
-import Web3 from "web3";
-
+import {Dialog} from 'element-ui'
 export default {
+  components: {Dialog},
   props: {
     pool: {
       type: Object
@@ -138,6 +174,7 @@ export default {
   data() {
     return {
       iboData: null,
+      showTip: false,
       amount: 0,
       claimFlag: false,
       timer: null,
@@ -252,7 +289,13 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
-
+.tip_box{
+  transform: translateY(-10px);
+  p{
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
 .ibo_item_warp {
   display: flex;
   align-items: center;

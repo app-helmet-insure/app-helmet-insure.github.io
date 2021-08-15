@@ -346,7 +346,7 @@
   "IBO": {
     "IBO_text1": "d",
     "IBO_text2": "h",
-    "IBO_text3": "后开始",
+    "IBO_text3": "倒计时",
     "IBO_text4": "进行中",
     "IBO_text5": "等待",
     "IBO_text6": "结算中",
@@ -370,6 +370,11 @@
     "IBO_text24": "燃烧数量",
     "IBO_text25": "IBO: 首次代币销毁发行，50%募资额（HELMET) 执行销毁。",
     "IBO_text26": "您需准备 HELMET 注入IBO 池子以获得新代币份额。",
-    "IBO_text27": "本板块属于高风险投资区，请谨慎操作，HELMET 团队将不会对您的投资损失负责。"
+    "IBO_text27": "本板块属于高风险投资区，请谨慎操作，HELMET 团队将不会对您的投资损失负责。",
+    "IBO_text28": "预计开启交易时间",
+    "IBO_text29": "交易平台",
+    "IBO_text30": "网站地址",
+    "TG_text": "TG(CN)",
+    "TG_URL": "https://t.me/UFOMO_cn"
   }
 }

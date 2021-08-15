@@ -260,7 +260,11 @@
     "MiningTip1": "Campañas de minería de Helmet.",
     "MiningTip2": "Puedes farmear Tokens dedicados de Helmet, u obtener COMBOS de recompensas estakenado diferentes LPT Tokens.",
     "IIOTip1": "IIO: Oferta inicial de Tokens en BSC",
-    "IIOTip2": "Nueva modelo de distribuciòn de activos con modelo Lógico Europeo."
+    "IIOTip2": "Nueva modelo de distribuciòn de activos con modelo Lógico Europeo.",
+    "APY":"APY",
+    "APR":"APR",
+    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+    "EarnTip2":"The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "Cuenta",

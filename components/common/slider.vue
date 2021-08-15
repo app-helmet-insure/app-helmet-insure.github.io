@@ -21,7 +21,7 @@
               <a
                 @click="sliderClick"
                 :class="
-                  routeObj.name === 'index'
+                  routeObj.name === 'insurance'
                     ? 'active'
                     : routeObj.name == 'myPolicy' ||
                       routeObj.name == 'mySupply' ||
@@ -36,7 +36,7 @@
                 {{ $t("Table.safe") }}
                 <svg
                   :class="
-                    routeObj.name === 'index'
+                    routeObj.name === 'insurance'
                       ? 'right'
                       : routeObj.name == 'myPolicy' ||
                         routeObj.name == 'mySupply' ||
@@ -125,13 +125,13 @@
               to="/iio"
               :class="routeObj.name.includes('iio') ? 'active' : ''"
             >
-              <svg class="hot" aria-hidden="true">
+              <!-- <svg class="hot" aria-hidden="true">
                 <use
                   :href="`#icon-${
                     routeObj.name.includes('iio') ? 'hot1' : 'hot'
                   }`"
                 ></use>
-              </svg>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-iio"></use>
               </svg>
@@ -144,9 +144,28 @@
               to="/ibo"
               :class="routeObj.name === 'ibo' ? 'active' : ''"
             >
-             <svg t="1628841152515" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3325" width="24" height="24">
-                <path d="M810.666667 810.666667V418.133333l-298.666667-234.666666-298.666667 234.666666V810.666667h597.333334z m85.333333 42.666666c0 25.6-17.066667 42.666667-42.666667 42.666667H170.666667c-25.6 0-42.666667-17.066667-42.666667-42.666667V396.8c0-12.8 4.266667-25.6 17.066667-34.133333l341.333333-268.8c17.066667-12.8 38.4-12.8 51.2 0l341.333333 268.8c12.8 8.533333 17.066667 21.333333 17.066667 34.133333V853.333333zM298.666667 512h85.333333c0 72.533333 55.466667 128 128 128s128-55.466667 128-128h85.333333c0 119.466667-93.866667 213.333333-213.333333 213.333333s-213.333333-93.866667-213.333333-213.333333z" p-id="3326"></path>
-             </svg>
+              <svg class="hot" aria-hidden="true">
+                <use
+                  :href="`#icon-${
+                    routeObj.name.includes('ibo') ? 'new1' : 'new'
+                  }`"
+                ></use>
+              </svg>
+              <svg
+                t="1628841152515"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="3325"
+                width="24"
+                height="24"
+              >
+                <path
+                  d="M810.666667 810.666667V418.133333l-298.666667-234.666666-298.666667 234.666666V810.666667h597.333334z m85.333333 42.666666c0 25.6-17.066667 42.666667-42.666667 42.666667H170.666667c-25.6 0-42.666667-17.066667-42.666667-42.666667V396.8c0-12.8 4.266667-25.6 17.066667-34.133333l341.333333-268.8c17.066667-12.8 38.4-12.8 51.2 0l341.333333 268.8c12.8 8.533333 17.066667 21.333333 17.066667 34.133333V853.333333zM298.666667 512h85.333333c0 72.533333 55.466667 128 128 128s128-55.466667 128-128h85.333333c0 119.466667-93.866667 213.333333-213.333333 213.333333s-213.333333-93.866667-213.333333-213.333333z"
+                  p-id="3326"
+                ></path>
+              </svg>
               {{ $t("Header.IBO") }}
             </nuxt-link>
           </div>
@@ -304,7 +323,7 @@ export default {
   },
   watch: {
     $route() {
-      this.$route.path !== "/";
+      this.$route.path !== "/insurance";
     },
     storeThemes(newValue) {
       console.log(newValue);
@@ -319,7 +338,7 @@ export default {
     },
     sliderClick() {
       this.sliderFlag = !this.sliderFlag;
-      this.$router.push("/");
+      this.$router.push("/insurance");
     },
     whirlLogo(val) {
       if (this.whirlLogoFlag === val) return;
@@ -637,7 +656,7 @@ export default {
     > a {
       margin-top: 20px;
       height: 40px;
-      background: rgba(#9F66FF, $alpha: 0.2);
+      background: rgba(#9f66ff, $alpha: 0.2);
       border-radius: 5px;
       width: 100%;
       display: flex;

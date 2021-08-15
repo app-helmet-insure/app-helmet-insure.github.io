@@ -260,7 +260,11 @@
     "MiningTip1": "Kampanye Penambangan Helmet.",
     "MiningTip2": "Anda dapat bertani token Helmet khusus, atau mendapatkan hadiah COMBO dengan mempertaruhkan Token Penyedia Likuiditas yang berbeda (LPTs).",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
-    "IIOTip2": "Model distribusi aset baru dengan logika opsi Eropa."
+    "IIOTip2": "Model distribusi aset baru dengan logika opsi Eropa.",
+    "APY":"APY",
+    "APR":"APR",
+    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+    "EarnTip2":"The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "Akun",

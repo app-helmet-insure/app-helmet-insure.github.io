@@ -13,6 +13,7 @@ import NFTCARDBOOK from "~/components/nft/nft_cardbook";
 import NFTDIALGO from "~/components/nft/nft_dialog";
 import NFTWINDOW from "~/components/nft/nft_window";
 export default {
+  layout: "home",
   components: {
     NFTTITLE,
     NFTCARDBOOK,

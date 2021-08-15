@@ -271,7 +271,11 @@
     "MiningTip1": "Helmet Mining Campaigns.",
     "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
-    "IIOTip2": "New assets distribution model with European option logic."
+    "IIOTip2": "New assets distribution model with European option logic.",
+    "APY":"APY",
+    "APR":"APR",
+    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+    "EarnTip2":"The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "Account",

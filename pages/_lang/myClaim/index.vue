@@ -7,6 +7,7 @@
 <script>
 import MyClaim from "~/components/insurance/my-claim.vue";
 export default {
+  layout: "home",
   components: {
     MyClaim,
   },

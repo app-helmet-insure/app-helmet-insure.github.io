@@ -68,7 +68,7 @@ import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 export default {
-  name: "default",
+  name: "home",
   components: {
     PHeader,
     PSlider,

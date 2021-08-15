@@ -36,9 +36,6 @@ $themes: (
     price_line: #e8e8e8,
     onepager_title: #ffcb82,
     iio_text1: #17173a,
-    ibo_btn: #17173a,
-    ibo_btn_hover: #2c2c2c,
-    ibo_input: #fff,
     migration_color1: #f8f9fa,
     migration_color2: #17173a,
     migration_color3: #22292f,
@@ -46,6 +43,16 @@ $themes: (
     migration_color5: #17173a,
     migration_color6: rgba(23, 23, 58, 0.3),
     migration_color7: rgba(23, 23, 58, 0.4),
+    lptmining_border:
+      linear-gradient(
+        271deg,
+        rgba(232, 232, 241, 1),
+        rgba(233, 205, 221, 1),
+        rgba(228, 208, 240, 1)
+      ),
+    lptmining_color1: #17173a,
+    lptmining_color2: rgba(255, 255, 255, 0.4),
+    lptmining_color3: rgba(34, 34, 34, 0.4),
   ),
   dark: (
     color-dc3545: #dc3545,
@@ -84,9 +91,6 @@ $themes: (
     price_line: #2c2c2c,
     onepager_title: #2c2c2c,
     iio_text1: #17173a,
-    ibo_btn: #2c2c2c,
-    ibo_btn_hover: #333232,
-    ibo_input: #222222,
     migration_color1: #222222,
     migration_color2: #ffffff,
     migration_color3: #ffffff,
@@ -94,5 +98,9 @@ $themes: (
     migration_color5: #fd7e14,
     migration_color6: rgba(255, 255, 255, 0.3),
     migration_color7: rgba(255, 255, 255, 0.4),
+    lptmining_border: linear-gradient(271deg, #373737, #6f5140, #4f2743),
+    lptmining_color1: rgba(255, 255, 255, 0.87),
+    lptmining_color2: rgba(34, 34, 34, 0.4),
+    lptmining_color3: rgba(255, 255, 255, 0.38),
   ),
 );

@@ -7,6 +7,7 @@
 <script>
 import MyPolicy from "~/components/insurance/my-policy.vue";
 export default {
+  layout: "home",
   components: {
     MyPolicy,
   },

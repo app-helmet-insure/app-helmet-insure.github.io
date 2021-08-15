@@ -4,7 +4,7 @@
     <div class="ibo_container">
       <div class="ibo_card" >
         <div class="ibo_project">
-        <IBOCard v-for="(pool, index) in iboPools" :key="index" :pool="pool"></IBOCard>
+          <IBOCard v-for="(pool, index) in iboPools" :key="index" :pool="pool"></IBOCard>
         </div>
       </div>
     </div>
@@ -16,9 +16,10 @@ import IBOMingTitle from "~/components/ibo/ibo_title.vue";
 import IBOCard from "~/components/ibo/ibo_card.vue";
 import { iboPools } from './config'
 export default {
+  layout: "home",
   components: {
     IBOMingTitle,
-    IBOCard
+    IBOCard,
   },
   data() {
     return {

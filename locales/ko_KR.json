@@ -260,7 +260,11 @@
     "MiningTip1": "헬멧 채굴 캠페인.",
     "MiningTip2": "전용 헬멧 토큰을 파밍하거나 다른 유동성 공급자 토큰을 스테이킹하여 콤보 보상을 받을 수 있습니다. (LPTs)",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
-    "IIOTip2": "New assets distribution model with European option logic."
+    "IIOTip2": "New assets distribution model with European option logic.",
+    "APY":"APY",
+    "APR":"APR",
+    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+    "EarnTip2":"The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "계정",

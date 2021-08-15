@@ -13,7 +13,7 @@ import FlashMiningList from "~/components/flashmining/flashmining_list.vue";
 import FlashMiningTitle from "~/components/flashmining/flashmining_title.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
-  layout: "default",
+  layout: "home",
   components: { FlashMiningTitle, FlashMiningList, Onepager },
   data() {
     return {

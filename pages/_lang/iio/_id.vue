@@ -13,6 +13,7 @@ import Action from "~/components/iio/action.vue";
 import About from "~/components/iio/about.vue";
 import OnePager from "~/components/common/onepager.vue";
 export default {
+  layout: "home",
   name: "iio-id",
   components: {
     Banner,

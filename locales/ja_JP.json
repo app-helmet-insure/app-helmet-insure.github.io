@@ -258,7 +258,11 @@
     "MiningTip1": "Helmet Mining Campaigns.",
     "MiningTip2": "専用のHelmetトークンをファームすることもできますし、異なるLiquidity Provider Tokens（LPT）をステークすることでCOMBO報酬を得ることもできます。",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
-    "IIOTip2": "ヨーロピアン・オプション・ロジックを用いた新しい資産分配モデル。"
+    "IIOTip2": "ヨーロピアン・オプション・ロジックを用いた新しい資産分配モデル。",
+    "APY":"APY",
+    "APR":"APR",
+    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
+    "EarnTip2":"The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "アカウント",

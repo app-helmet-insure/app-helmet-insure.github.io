@@ -1,8 +1,8 @@
 <template>
   <div class="mining_list">
-    <div class="mining_title">
+    <!-- <div class="mining_title">
       <h3>{{ $t("Header.Mining") }}</h3>
-    </div>
+    </div> -->
     <div class="mining_web">
       <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
@@ -125,9 +125,39 @@
                 <span>{{ $t("Table.MIningCutdown") }}</span>
               </p>
             </section>
-            <section>
+            <section v-if="!item.APY">
               <span>{{ item.REWARD_YEAR }}</span>
               <span>{{ item.REWARD_TYPE }}</span>
+            </section>
+
+            <section class="APY" v-else>
+              <span>{{ item.APY}}</span>
+              <span>
+                {{ item.REWARD_TYPE }}
+                <el-tooltip effect="dark" placement="top-start">
+                  <div slot="content" style="width: 200px">
+                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
+                    <p>{{ $t("Tip.EarnTip1") }}</p>
+                    <p>{{ $t("Tip.EarnTip2") }}</p>
+                  </div>
+                  <svg
+                    t="1617039040708"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="1287"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                      p-id="1288"
+                    ></path>
+                  </svg>
+                </el-tooltip>
+              </span>
             </section>
             <section>
               <button
@@ -261,9 +291,38 @@
             </p>
           </section>
           <section>
-            <p>
+            <p v-if="!item.APY">
               <span>{{ item.REWARD_YEAR }}</span>
               <span>{{ item.REWARD_TYPE }}</span>
+            </p>
+            <p class="APY" v-else>
+              <span>{{ item.APY }}</span>
+              <span>
+                {{ item.REWARD_TYPE }}
+                <el-tooltip effect="dark" placement="top-start">
+                  <div slot="content" style="width: 150px">
+                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
+                    <p>{{ $t("Tip.EarnTip1") }}</p>
+                    <p>{{ $t("Tip.EarnTip2") }}</p>
+                  </div>
+                  <svg
+                    t="1617039040708"
+                    class="icon"
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="1287"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                      p-id="1288"
+                    ></path>
+                  </svg>
+                </el-tooltip>
+              </span>
             </p>
             <div>
               <i></i>
@@ -369,7 +428,7 @@ import { fixD } from "~/assets/js/util.js";
 import POOL from "./pool.vue";
 import moment from "moment";
 import PHeader from "~/components/common/header.vue";
-import { GetPoolAPR } from "./mining_apr.js";
+import { GetPoolAPR, GetHelmetPoolAPY } from "./mining_apr.js";
 export default {
   components: {
     Wraper,
@@ -391,6 +450,7 @@ export default {
   },
   mounted() {
     this.initMiningData();
+    this.getHelmetAPY();
     this.GetPoolItemAPR();
     this.getHelmetBalance();
     let flag = navigator.userAgent.match(
@@ -417,11 +477,11 @@ export default {
     },
   },
   watch: {
-    storeThemes(newValue) {
-      if (newValue) {
-        this.initMiningData();
-      }
-    },
+    // storeThemes(newValue) {
+    //   if (newValue) {
+    //     this.initMiningData();
+    //   }
+    // },
   },
   methods: {
     hadnleShowOnePager(e, ONE_PAGER) {
@@ -459,46 +519,7 @@ export default {
       this.HelmetBalance = Helmet;
     },
     initMiningData() {
-      let apyArray = this.apyArray;
       let arr = [
-        {
-          POOL_NAME: "HELMET-BNB&nbsp;MLP",
-          STAKE_SYMBOL: "HELMET-BNB MLP",
-          STAKE_UNIT: "MLP",
-          REARD_VOLUME: "two",
-          REWARD_NAME: "mdx",
-          REARD_IMGSHOW: true,
-          MING_TIME: "Ongoing",
-          OPEN_TIME: "Mining",
-          COMBO_FLAG: false,
-          REWARD_TYPE: "APR",
-          ONE_PAGER: false,
-          POOL_PID: "0x38",
-          TOKEN1_DECIMALS: 18,
-          TOKEN1_SYMBOL: "HELMET",
-          TOKEN1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-          TOKEN2_DECIMALS: 18,
-          TOKEN2_SYMBOL: "WBNB",
-          TOKEN2_ADDRESS: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-          REWARD2_SYMBOL: "MDX",
-          REWARD2_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
-          REWARD2_DECIMALS: 18,
-          RIGHTTOKEN: {
-            ADDTOKEN_SYMBOL: "MDX",
-            ADDTOKEN_ADDRESS: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
-            ADDTOKEN_DECIMALS: 18,
-          },
-          PROXY_ADDRESS: "0xc48fe252aa631017df253578b1405ea399728a50",
-          POOL_ADDRESS: "0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B",
-          STAKE_ADDRESS: "0x83d8E2E030cD820dfdD94723c3bcf2BC52e1701A",
-          REWARD1_ADDRESS: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
-          STAKE_DECIMALS: 18,
-          SWAP_TYPE: "MDEX",
-          JUMP1_TEXT:
-            "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
-          APRTYPE: "MdexDoublePoolAPR",
-          REWARD_YEAR: "Infinity",
-        },
         {
           POOL_NAME: "HELMET&nbsp;POOL",
           STAKE_SYMBOL: "HELMET",
@@ -510,7 +531,7 @@ export default {
           OPEN_TIME: "Mining",
           COMBO_FLAG: false,
           flash: false,
-          REWARD_TYPE: "APY",
+          REWARD_TYPE: "APR",
           COMPOUND: true,
           ONE_PAGER: false,
           REWARD1_SYMBOL: "HELMET",
@@ -524,42 +545,6 @@ export default {
           REWARD_YEAR: "Infinity",
         },
 
-        {
-          POOL_NAME: `HELMET-BNB&nbsp;LPT <i class=v2_${this.storeThemes}></i>`,
-          STAKE_SYMBOL: "HELMET-BNB LPT",
-          STAKE_UNIT: "LPT",
-          REARD_VOLUME: "one",
-          REWARD_NAME: "helmet1",
-          REARD_IMGSHOW: true,
-          MING_TIME: "Ongoing",
-          OPEN_TIME: "Mining",
-          COMBO_FLAG: false,
-          iio: false,
-          REWARD_TYPE: "APR",
-          ONE_PAGER: false,
-          POOL_PID: "0x11e",
-          TOKEN1_DECIMALS: 18,
-          TOKEN1_SYMBOL: "HELMET",
-          TOKEN1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-          TOKEN2_DECIMALS: 18,
-          TOKEN2_SYMBOL: "WBNB",
-          TOKEN2_ADDRESS: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-          PROXY_ADDRESS: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
-          POOL_ADDRESS: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
-          STAKE_ADDRESS: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
-          REWARD1_DECIMALS: 18,
-          REWARD1_SYMBOL: "HELMET",
-          REWARD1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-          REWARD2_DECIMALS: 18,
-          REWARD2_SYMBOL: "CAKE",
-          REWARD2_ADDRESS: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
-          STAKE_DECIMALS: 18,
-          SWAP_TYPE: "PANCAKEV2",
-          JUMP1_TEXT:
-            "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
-          APRTYPE: "CakeDoublePoolAPR",
-          REWARD_YEAR: "Infinity",
-        },
         {
           POOL_NAME: "HELMET-<i>hMCRN</i>&nbsp;LPT",
           STAKE_SYMBOL: "HELMET-hMCRN LPT",
@@ -1214,7 +1199,10 @@ export default {
         let res = await GetPoolAPR(item);
         item.REWARD_YEAR = res;
       }
-      // this.$forceUpdate();
+    },
+    async getHelmetAPY() {
+      let apy = await GetHelmetPoolAPY(this.miningList[0]);
+      this.miningList[0].APY = fixD(apy, 2) + "%";
     },
     getMiningTime(time) {
       let now = new Date() * 1;
@@ -1358,6 +1346,23 @@ export default {
   .mining_list {
     width: 100%;
     margin: 0 auto;
+  }
+  .APY {
+    display: flex;
+    flex-direction: column;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+      cursor: pointer;
+      @include themeify {
+        fill: themed("color-17173a");
+      }
+    }
   }
   .mining_title {
     display: flex;
@@ -1649,6 +1654,23 @@ export default {
     }
     padding-bottom: 50px;
   }
+  .APY {
+    display: flex;
+    flex-direction: column;
+    span {
+      display: flex;
+      align-items: center;
+    }
+    svg {
+      width: 14px;
+      height: 14px;
+      margin-left: 4px;
+      cursor: pointer;
+      @include themeify {
+        fill: themed("color-17173a");
+      }
+    }
+  }
   .mining_title {
     display: none;
   }
@@ -1850,9 +1872,10 @@ export default {
     top: 0;
     left: 0;
     z-index: 99;
+    display: flex;
+    flex-direction: column;
     .wraper {
       flex: 1;
-      overflow-y: scroll;
       .wraper_header {
         height: 44px;
         padding: 0 16px;

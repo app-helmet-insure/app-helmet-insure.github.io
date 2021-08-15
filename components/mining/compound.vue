@@ -70,7 +70,7 @@ export default {
   background: rgba($color: #000000, $alpha: 0.9);
   left: 0;
   top: 0;
-  z-index: 15;
+  z-index: 999;
 }
 .onepager-enter-active {
   animation: onepager-in 0.5s;

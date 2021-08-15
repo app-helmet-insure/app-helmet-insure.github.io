@@ -308,7 +308,7 @@ export default {
     width: 80%;
     margin: 20px auto;
     min-width: 1026px;
-    height: 80px;
+    // height: 80px;
     @include themeify {
       background: themed("color-f8f9fa");
     }

@@ -144,7 +144,7 @@
         :before-close="() => showTip = false"
         width="200">
       <div v-if="iboData.name === 'UFOMO'" class="tip_box">
-        <p>{{$t("IBO.IBO_text28")}}: 28 August</p>
+        <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august") }}</p>
         <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
         <p>TG: <a href="T.me/game1networkchat" target="_blank">T.me/game1networkchat</a></p>
         <p>{{$t("IBO.IBO_text30")}}: <a href="https://game1network.com" target="_blank">https://game1network.com</a></p>

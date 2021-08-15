@@ -84,7 +84,7 @@
         <a class="ibo_item_btn" v-if="iboData.currency.allowance === '0'" @click='onApprove'>{{
             $t("Table.Approve")
           }}</a>
-        <a class="ibo_item_btn" @click='onBurn' v-else>{{ $t("Table.Burn") }}</a>
+        <a :class="(iboData.status !== 1 || $store.state.userInfo.status !== 1) ? 'disabled ibo_item_btn' : 'ibo_item_btn'" @click='onBurn' v-else>{{ $t("Table.Burn") }}</a>
       </div>
       <div v-if='iboData.status === 3' class="finished_style">
         <p class="ibo_item_value">
@@ -135,7 +135,7 @@
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{volume}}</span>
         </p>
-        <a class="ibo_item_btn ibo_item_claim" @click='onClaim'>{{ $t("Table.Claim") }}</a>
+        <a :class="(iboData.status !== 2 || $store.state.userInfo.status !== 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'" @click='onClaim'>{{ $t("Table.Claim") }}</a>
       </div>
     </div>
     <Dialog
@@ -276,7 +276,7 @@ export default {
       }
     },
     onClaim() {
-      if (this.iboData.status === 2 || this.$store.state.userInfo.status !== 1) {
+      if (this.iboData.status !== 2 || this.$store.state.userInfo.status !== 1) {
         onClaim_(this.iboData.currency.address,this.iboData.abi, (success) => {
           success && this.init()
         })
@@ -301,6 +301,19 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.ibo_item_btn{
+  background: #17173a;
+  &.disabled{
+    cursor: default;
+    background: #cccccc!important;
+  }
+}
+.ibo_item_claim{
+  &.disabled{
+    cursor: default;
+    background: #cccccc!important;
+  }
 }
 
 @media screen and (min-width: 750px) and (max-width: 1860px) {

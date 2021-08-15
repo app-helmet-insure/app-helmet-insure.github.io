@@ -236,13 +236,13 @@ export default {
     },
     onBurn() {
       if (this.iboData.status === 0 || this.$store.state.userInfo.status !== 1) {
-        onBurn_(this.amount, this.iboData.currency.address, (success) => {
+        onBurn_(this.amount, this.iboData.currency.address, this.iboData.abi, (success) => {
           success && this.init()
         })
       }
     },
     onClaim() {
-      if (true || this.iboData.status === 2 || this.$store.state.userInfo.status !== 1) {
+      if (this.iboData.status === 2 || this.$store.state.userInfo.status !== 1) {
         onClaim_(this.iboData.currency.address,this.iboData.abi, (success) => {
           success && this.init()
         })

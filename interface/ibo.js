@@ -182,10 +182,11 @@ export const onApprove_ =  (contractAddress, callback = (status) => {}) => {
 }
 // 质押
 export const onBurn_ = (_amount, contractAddress, abi, callback) => {
+  console.log(_amount)
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(abi, contractAddress);
   myContract.methods
-    .purchase(_amount)
+    .purchase(Web3.utils.toWei(String(_amount), 'ether'))
     .send({ from: window.CURRENTADDRESS })
     .on('receipt', function() {
       callback(true)
@@ -196,7 +197,6 @@ export const onBurn_ = (_amount, contractAddress, abi, callback) => {
 }
 // 提取
 export const onClaim_ = (contractAddress,abi, callback) => {
-  console.log(contractAddress, abi)
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(abi, contractAddress);
   myContract.methods

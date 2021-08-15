@@ -131,7 +131,7 @@
             </section>
 
             <section class="APY" v-else>
-              <span>{{ item.REWARD_YEAR }}</span>
+              <span>{{ item.APY}}</span>
               <span>
                 {{ item.REWARD_TYPE }}
                 <el-tooltip effect="dark" placement="top-start">
@@ -296,7 +296,7 @@
               <span>{{ item.REWARD_TYPE }}</span>
             </p>
             <p class="APY" v-else>
-              <span>{{ item.REWARD_YEAR }}</span>
+              <span>{{ item.APY }}</span>
               <span>
                 {{ item.REWARD_TYPE }}
                 <el-tooltip effect="dark" placement="top-start">
@@ -531,7 +531,7 @@ export default {
           OPEN_TIME: "Mining",
           COMBO_FLAG: false,
           flash: false,
-          REWARD_TYPE: "APY",
+          REWARD_TYPE: "APR",
           COMPOUND: true,
           ONE_PAGER: false,
           REWARD1_SYMBOL: "HELMET",

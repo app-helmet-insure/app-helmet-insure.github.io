@@ -1,66 +1,64 @@
 <template>
-  <div class="ibo_card">
+  <div class="ibo_card" v-if="iboData">
     <div class="ibo_project">
       <div 
         class="ibo_item_warp"
-        v-for='(item, index) in iboData'
-        :key='index'
       >
         <div class="ibo_item">
           <div class="ibo_item_title">
             <p class="ibo_item_title_left">
-              <img :src='require(`~/assets/img/ibo/ibo_card_${item.name}@2x.png`)' />
-              {{item.name}}
+              <img :src='require(`~/assets/img/ibo/ibo_card_${iboData.name}@2x.png`)' />
+              {{iboData.name}}
             </p>
             <p class="ibo_item_title_right">
               <span class="ibo_item_countdown">05{{ $t("IBO.IBO_text1") }}/01{{ $t("IBO.IBO_text2") }}</span>
-              <span v-if='item.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text3") }}</span>
-              <span v-if='item.status === 1 && (item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text4") }}</span>
-              <span v-if='item.status === 1 && !(item.timeClose === 0 || item.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text5") }}</span>
-              <span v-if='item.status === 2' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text6") }}</span>
-              <span v-if='item.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text7") }}</span>
+              <span v-if='iboData.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text3") }}</span>
+              <span v-if='iboData.status === 1 && (iboData.timeClose === 0 || iboData.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text4") }}</span>
+              <span v-if='iboData.status === 1 && !(iboData.timeClose === 0 || iboData.timeClose > now)' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text5") }}</span>
+              <span v-if='iboData.status === 2' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text6") }}</span>
+              <span v-if='iboData.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text7") }}</span>
             </p>
           </div>
-          <div v-if='item.status !== 3'>
-            <p class="ibo_item_radio">{{item.ratio}}</p>
+          <div v-if='iboData.status !== 3'>
+            <p class="ibo_item_radio">{{iboData.ratio}}</p>
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-              <span class="value">{{item.totalPurchasedAmount}} {{item.underlying.symbol}}</span>
+              <span class="value">{{iboData.totalPurchasedAmount}} {{iboData.underlying.symbol}}</span>
             </p>
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
-              <span class="value">{{item.pool_info.max_allocation}}</span>
+              <span class="value">{{iboData.pool_info.max_allocation}}</span>
             </p>
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
-              <span class="value">{{item.progress}}%</span>
+              <span class="value">{{iboData.progress}}%</span>
             </p>
             <a class="ibo_item_progress">
               <i 
                 class="ibo_item_progress_bar" 
-                :style="item.progress > 1 ? 'width: 100%' : item.progress == 0 ? 'display: none' : 'width: ' + item.progress * 100 + '%'">
+                :style="iboData.progress > 1 ? 'width: 100%' : iboData.progress == 0 ? 'display: none' : 'width: ' + iboData.progress * 100 + '%'">
               </i>
             </a>
             <div class="block">
               <el-slider
-                v-model="value"
-                :min='item.pool_info.min_allocation'
-                :max='item.pool_info.max_allocation'
+                v-model="amount"
+                :min='iboData.pool_info.min_allocation'
+                :max='iboData.pool_info.max_allocation'
                 show-input>
               </el-slider>
               <p class="ibo_item_value slider_content">
                 <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
-                <span class="value">999 {{item.underlying.symbol}}</span>
+                <span class="value">999 {{iboData.underlying.symbol}}</span>
               </p>
               <p class="min_max_value">
-                <span>{{ $t("IBO.IBO_text12") }}{{item.pool_info.min_allocation}}</span>
-                <span>{{ $t("IBO.IBO_text13") }}{{item.pool_info.max_allocation}}</span>
+                <span>{{ $t("IBO.IBO_text12") }}{{iboData.pool_info.min_allocation}}</span>
+                <span>{{ $t("IBO.IBO_text13") }}{{iboData.pool_info.max_allocation}}</span>
               </p>
             </div>
-            <a class="ibo_item_btn" @click='onApprove'>{{ $t("Table.Approve") }}</a>
+            <a class="ibo_item_btn" v-if="iboData.currency.allowance === '0'" @click='onApprove'>{{ $t("Table.Approve") }}</a>
             <a class="ibo_item_btn" @click='onBurn'>{{ $t("Table.Burn") }}</a>
           </div>
-          <div v-if='item.status === 3' class="finished_style">
+          <div v-if='iboData.status === 3' class="finished_style">
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text20") }}</span>
               <span class="value">1.0s</span>
@@ -75,15 +73,15 @@
             </p>
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text23") }}</span>
-              <span class="value">999 {{item.underlying.symbol}}</span>
+              <span class="value">999 {{iboData.underlying.symbol}}</span>
             </p>
             <p class="ibo_item_value">
               <span class="ibo_item_value_title">{{ $t("IBO.IBO_text24") }}</span>
-              <span class="value">10,000 {{item.underlying.symbol}}</span>
+              <span class="value">10,000 {{iboData.underlying.symbol}}</span>
             </p>
           </div>
           <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: item.underlying.symbol}) }}</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: iboData.underlying.symbol}) }}</span>
             <span class="value">999</span>
           </p>
           <p class="ibo_item_value">
@@ -101,7 +99,7 @@
           </p>
           <div v-if='claimFlag'>
             <p class="ibo_item_value">
-            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: item.underlying.symbol}) }}</span>
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: iboData.underlying.symbol}) }}</span>
             <span class="value">10,000</span>
           </p>
           <p class="ibo_item_value">
@@ -117,85 +115,61 @@
 </template>
 
 <script>
+import {getPoolInfo, onApprove_, onBurn_, onClaim_} from '../../interface/ibo'
+import Web3  from 'web3'
    export default {
+     props: {
+       pool: {
+         type: Object
+       }
+     },
      data() {
        return {
-         iboData: [
-            {
-              name: 'Helmet',
-              address: '0x685f36fD01b749788BFa4d2526a77261EF604f3f',
-              abi: null,
-              start_at: '1627635600',
-              is_top: true,
-              is_coming: false, // is_coming 为 true 则不请求合约
-              currency: {
-                address: '0x68944B6333ddcd7AA3f550Fdf80524d32A1A937a',
-                decimal: 18,
-                symbol: 'CUSDT',
-              },
-              icon: '',
-              type: 1,
-              isPrivate: true,
-              underlying: {
-                address: '0xC78eEfDC4D31A44A45182713d64Dbc8505636CcB',
-                decimal: 18,
-                symbol: 'CTT',
-                name: 'CTT',
-                total_supply: '100,000,000',
-                holders: '-',
-                transfers: '-',
-              },
-              amount: '12500', // token 总额
-              pool_info: {
-                token_distribution: 'July 30th 2021, 5:00PM SGT',
-                min_allocation: 0,
-                max_allocation: 666,
-                min_swap_level: '66,600 WAR',
-              },
-              website: 'https://xnft.net/',
-              white_paper: 'https://xnft.net/xNFT_Protocol_Whitepaper_EN.pdf',
-              twitter: 'https://twitter.com/xNFT_Protocol?s=09',
-              Telegram_Channel: 'https://t.me/xNFT_Global',
-              Github: '-',
-              yuque: '-',
-              progress: 0.2,
-              status: 1,
-              ratio: '1 XXX=0.1 Helmet',
-              time: '1627639200',
-              purchasedCurrencyOf: 0,
-              totalPurchasedAmount: '66600000000000000000000',
-              totalPurchasedUnderlying: '0',
-              totalPurchasedCurrency: '0',
-              is_flash: false,
-              link_url: 'https://xnft.net/', // 跳转外链接
-              project_introduction:
-                'The xNFT Protocol is an underlying technology that supports NFT transactions',
-              duration: '', // 完成时间
-              totalApplicants: '150', // 申请总人数
-              winningRate: '-', // 申请中签率
-              committed: '', // 超募比例
-              total: '', // 参与资金规模
-              poolType: 0, // 值为 1 代表定向
-              networkId: 56,
-            },
-         ],
-         value: 0,
+         iboData: null,
+         amount: 0,
          claimFlag: false,
+         timer: null,
          now: parseInt(Date.now() / 1000)
        }
      },
+     created() {
+       this.iboData = this.pool
+       this.timer = setInterval(() => {
+         this.now = parseInt(Date.now() / 1000)
+       }, 1000)
+       this.init()
+     },
+     destroyed() {
+       clearInterval(this.timer)
+     },
      methods: {
+       init(){
+         getPoolInfo(this.pool).then(newPool =>{
+           this.iboData = newPool
+           console.log('newPool', JSON.parse(JSON.stringify(newPool)))
+         })
+       },
       showClaim() {
         this.claimFlag = !this.claimFlag
       },
       onApprove() {
-        console.log('approve')
+        if (this.$store.state.userInfo.status !== 1) {
+          return
+        }
+        console.log(this.$store.state.userInfo)
+        onApprove_(this.iboData.currency.address, (success) => {
+          success && this.init()
+        })
       },
       onBurn() {
-        console.log('burn')
+        onBurn_(this.amount,this.iboData.currency.address, (success) => {
+          success && this.init()
+        })
       },
       onClaim() {
-        console.log('claim')
+         onClaim_(this.iboData.currency.address, (success) => {
+           success && this.init()
+         })
       }
      }
    }

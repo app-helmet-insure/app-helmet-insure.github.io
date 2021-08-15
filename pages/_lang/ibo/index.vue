@@ -2,7 +2,7 @@
   <div class="main_container">
     <IBOMingTitle></IBOMingTitle>
     <div class="ibo_container">
-        <IBOCard></IBOCard>
+        <IBOCard v-for="(pool, index) in iboPools" :key="index" :pool="pool"></IBOCard>
     </div>
   </div>
 </template>
@@ -10,11 +10,17 @@
 <script>
 import IBOMingTitle from "~/components/ibo/ibo_title.vue";
 import IBOCard from "~/components/ibo/ibo_card.vue";
+import { iboPools } from './config'
 export default {
   components: {
     IBOMingTitle,
     IBOCard
   },
+  data() {
+    return {
+      iboPools
+    }
+  }
 };
 </script>
 

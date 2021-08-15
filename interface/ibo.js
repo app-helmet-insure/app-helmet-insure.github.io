@@ -76,6 +76,7 @@ export const getPoolInfo = (pool) => {
       timeSettle = 0,
       currency_allowance = 0,
     ] = resData
+      console.log('resData', resData)
     const [
       total_completed_,
       total_amount,
@@ -99,6 +100,7 @@ export const getPoolInfo = (pool) => {
       status = 2
     }
 
+    // 招募满了
     if (
       totalSettleable.volume == totalSettledUnderlying &&
       totalSettleable.volume > 0
@@ -106,7 +108,6 @@ export const getPoolInfo = (pool) => {
       status = 3
     }
 
-      console.log('totalPurchasedAmount', pool.amount, Web3.utils.toWei(pool.amount, 'ether'))
     const totalPurchasedAmount = new BigNumber(
       Web3.utils.toWei(pool.amount, 'ether')
     )
@@ -139,7 +140,8 @@ export const getPoolInfo = (pool) => {
           .toString() * 1,
       status: status,
       time: time,
-      timeClose,
+      timeClose,//结束时间time
+      timeSettle,//claim开始时间
       price: Web3.utils.fromWei(price, 'ether'),
       is_join,
       totalPurchasedCurrency,

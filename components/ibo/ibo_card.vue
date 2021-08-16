@@ -10,7 +10,7 @@
           <span>{{ iboData.name }}</span>
           <span style="margin-left: 5px;cursor:pointer;" @click="showTip = true">
             <svg
-
+                :fill="$store.state.themes === 'dark' ? '#ffffff' : '#000000'"
                 t="1617039040708"
                 class="icon"
                 viewBox="0 0 1024 1024"
@@ -23,7 +23,8 @@
               <path
                   d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
                   p-id="1288"
-              ></path></svg>
+              ></path>
+            </svg>
           </span>
         </p>
         <p class="ibo_item_title_right">
@@ -39,7 +40,7 @@
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalPurchasedAmount }} {{ iboData.totalPurchasedAmountSymbol }}</span>
+          <span class="value">{{ totalPurchasedAmount }} {{ iboData.currency.symbol }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -56,25 +57,41 @@
           </i>
         </a>
         <div class="block">
+
           <el-slider
-              v-model="amount"
+              :value="amount"
               :min='iboData.pool_info.min_allocation'
               :max='iboData.pool_info.max_allocation'
-              show-input>
+              show-input
+              :disabled="this.iboData.purchasedCurrencyOf > 0"
+          >
           </el-slider>
           <p class="ibo_item_value slider_content">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
-            <span class="value">{{ $store.state.BalanceArray['HELMET'] }} {{ iboData.underlying.symbol }}</span>
+            <span class="value">{{ available }} {{ iboData.currency.symbol }}</span>
           </p>
           <p class="min_max_value">
             <span>{{ $t("IBO.IBO_text12") }}{{ iboData.pool_info.min_allocation }}</span>
             <span>{{ $t("IBO.IBO_text13") }}{{ iboData.pool_info.max_allocation }}</span>
           </p>
         </div>
-        <a class="ibo_item_btn" :class="iboData.status !== 1 ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"  @click='onApprove'>
+        <a class="ibo_item_btn" :class="iboData.status !== 1 ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"
+           :style="{
+          background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
+          color : $store.state.themes === 'dark' ? '#000000' : '#ffffff'
+        }"
+           @click='onApprove'>
           <i class="el-icon-loading" v-if="approvalLoading"></i>
           {{$t("Table.Approve") }}</a>
-        <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn' : 'ibo_item_btn'" @click='onBurn' v-else>{{ $t("Table.Burn") }}</a>
+        <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1 && iboData.pool_info.curUserCount < iboData.pool_info.maxAccount) || this.iboData.purchasedCurrencyOf > 0 ? 'disabled ibo_item_btn' : 'ibo_item_btn'"
+           :style="{
+            background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
+            color : $store.state.themes === 'dark' ? '#000000' : '#ffffff'
+           }"
+           @click='onBurn' v-else>
+          <i class="el-icon-loading" v-if="burnLoading"></i>
+          {{ $t("Table.Burn") }}
+        </a>
       </div>
       <div v-if='iboData.status === 3' class="finished_style">
         <p class="ibo_item_value">
@@ -100,7 +117,7 @@
       </div>
 
       <p class="ibo_item_value">
-        <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: iboData.underlying.symbol}) }}</span>
+        <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: iboData.currency.symbol}) }}</span>
         <span class="value">{{ purchasedCurrencyOf }}</span>
       </p>
       <p class="ibo_item_value">
@@ -118,14 +135,15 @@
       </p>
       <div v-if='claimFlag'>
         <p class="ibo_item_value">
-          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: iboData.underlying.symbol}) }}</span>
+          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: iboData.currency.symbol}) }}</span>
           <span class="value">{{ notUsed }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{volume}}</span>
         </p>
-        <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'" @click='onClaim'>
+        <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'"
+            @click='onClaim'>
           <i class="el-icon-loading" v-if="claimLoading"></i>
           {{ $t("Table.Claim") }}
         </a>
@@ -154,11 +172,11 @@
 </template>
 
 <script>
-import {fromWei, getPoolInfo, onApprove_, onBurn_, onClaim_} from '../../interface/ibo'
+import {formatAmount, fromWei, getPoolInfo, onApprove_, onBurn_, onClaim_} from '../../interface/ibo'
 import BigNumber from "bignumber.js";
-import {Dialog} from 'element-ui'
+import {Dialog, Input, MessageBox} from 'element-ui'
 export default {
-  components: {Dialog},
+  components: {Dialog, Input},
   props: {
     pool: {
       type: Object
@@ -168,7 +186,7 @@ export default {
     return {
       iboData: null,
       showTip: false,
-      amount: 0,
+      amount: '',
       claimFlag: false,
       timer: null,
       now: parseInt(Date.now() / 1000),
@@ -178,7 +196,8 @@ export default {
         statusTxt: 'IBO.IBO_text3'
       },
       approvalLoading: false,
-      claimLoading: false
+      claimLoading: false,
+      burnLoading: false
     }
   },
   computed: {
@@ -205,12 +224,12 @@ export default {
       if (!this.iboData.settleable){
         return '-'
       }
-      return this.iboData.settleable.volume
+      return formatAmount(this.iboData.settleable.volume, this.iboData.underlying.decimal)
     },
     // 可领取
     volume: function () {
       if (this.iboData.settleable){
-        return this.iboData.settleable.volume
+        return formatAmount(this.iboData.settleable.volume, this.iboData.underlying.decimal)
       }
       return 0
     },
@@ -220,7 +239,17 @@ export default {
         return new BigNumber((1 - fromWei(this.iboData.settleable.rate)) * this.iboData.purchasedCurrencyOf).toFormat()
       }
       return 0
-  }
+    },
+    // 可用
+    available: function () {
+      // 我的质押
+      const purchasedCurrencyOf = fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
+      // 我的余额
+      const balance = this.$store.state.BalanceArray['HELMET']
+      // 我的剩余额度
+      const remainingLimit = this.iboData.pool_info.max_allocation - purchasedCurrencyOf
+      return Math.min(remainingLimit, balance)
+    }
   },
   created() {
     this.iboData = this.pool
@@ -248,6 +277,9 @@ export default {
       switch (this.iboData.status) {
         case 0:
           t = this.iboData.start_at - thisTime
+            if (t === 0){
+
+            }
           statusTxt = 'IBO.IBO_text3'
           break
         case 1:
@@ -272,6 +304,8 @@ export default {
       if (t > 0) {
         h = Math.floor(t / 3600)
         m = Math.floor((t % 3600) / 60)
+      } else if (this.iboData.status !== 2) {
+        this.init()
       }
       this.countdown = {
         h,
@@ -282,6 +316,10 @@ export default {
     init() {
       getPoolInfo(this.pool).then(newPool => {
         this.iboData = newPool
+        const purchasedCurrencyOf = fromWei(newPool.purchasedCurrencyOf).toFixed(6, 1) * 1
+        if (purchasedCurrencyOf > 0){
+          this.amount = purchasedCurrencyOf
+        }
         console.log('newPool', JSON.parse(JSON.stringify(newPool)))
       })
     },
@@ -293,22 +331,38 @@ export default {
         return
       }
       this.approvalLoading = true
-      onApprove_(this.iboData.currency.address, (success) => {
+      onApprove_(this.iboData.currency.address, this.iboData.address, (success) => {
         success && this.init()
         this.approvalLoading = false
       })
     },
     onBurn() {
-      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1) {
-        onBurn_(this.amount, this.iboData.currency.address, this.iboData.abi, (success) => {
-          success && this.init()
-        })
+      if (!this.amount || isNaN(Number(this.amount))){
+        return
+      }
+      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {
+        const msg = this.$t('IBO.IBO_text27')
+        console.log('msg', msg)
+        MessageBox.confirm(msg, 'Tip', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          showCancelButton: true,
+          customClass: 'confirm-tip'
+        }).then(() => {
+          this.burnLoading = true
+          onBurn_(this.amount, this.iboData.address, this.iboData.abi, (success) => {
+            success && this.init()
+            this.burnLoading = false
+          })
+        }).catch(() => {
+
+        });
       }
     },
     onClaim() {
       if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1 && !this.claimLoading) {
         this.claimLoading = true
-        onClaim_(this.iboData.currency.address,this.iboData.abi, (success) => {
+        onClaim_(this.iboData.address,this.iboData.abi, (success) => {
           success && this.init()
           this.claimLoading = false
         })
@@ -352,7 +406,23 @@ export default {
     background: #cccccc!important;
   }
 }
-
+.input-max-btn{
+  position: absolute;
+  left: 0;
+  top: 10px;
+  transform: translateX(-100%);
+  padding: 2px 4px;
+  background: #cccccc;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.confirm-tip{
+  .el-button--primary{
+    background: #17173A;
+    border-color: #17173A;
+  }
+}
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;

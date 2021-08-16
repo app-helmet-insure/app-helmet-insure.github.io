@@ -55,6 +55,8 @@ export const getPoolInfo = (pool) => {
     poolContract.totalSettleable(),
     poolContract.settleable(account),
     poolContract.totalSettledUnderlying(),
+    poolContract.maxUser(),//最多参与人数
+    poolContract.curUserCount(),//当前参与人数
   ]
   // 追加可能存在的
   poolContract.time && promiseList.push(poolContract.time())
@@ -72,6 +74,8 @@ export const getPoolInfo = (pool) => {
       totalSettleable,
       settleable,
       totalSettledUnderlying,
+      maxUser,//最多参与人数
+      curUserCount,//当前参与人数
       time = 0,
       timeSettle = 0,
       currency_allowance = 0,
@@ -130,8 +134,8 @@ export const getPoolInfo = (pool) => {
       allowance: currency_allowance,
     })
     return Object.assign({}, pool, {
-      ratio: `1${pool.underlying.symbol}=${formatAmount(price, 18, 5)}${
-        pool.currency.symbol
+      ratio: `1 ${pool.currency.symbol} = ${formatAmount(price, 18, 5)} ${
+        pool.underlying.symbol
       }`,
       progress:
         new BigNumber(totalPurchasedCurrency)
@@ -161,17 +165,22 @@ export const getPoolInfo = (pool) => {
         volume,// 预计中签量
         rate
       },
+      pool_info: {
+        ...pool.pool_info,
+        maxAccount: maxUser, // 最多参与人数
+        curUserCount, // 当前参与人数
+      }
     })
   })
 }
 
 // 授权
-export const onApprove_ =  (contractAddress, callback = (status) => {}) => {
+export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => {}) => {
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(ERC20.abi, contractAddress);
   myContract.methods
     .approve(
-      window.CURRENTADDRESS,
+      poolAddress,
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     )
     .send({ from: window.CURRENTADDRESS })
@@ -183,10 +192,10 @@ export const onApprove_ =  (contractAddress, callback = (status) => {}) => {
     })
 }
 // 质押
-export const onBurn_ = (_amount, contractAddress, abi, callback) => {
-  console.log(_amount)
+export const onBurn_ = (_amount, poolAddress, abi, callback) => {
+  console.log(_amount, Web3.utils.toWei(String(_amount), 'ether'))
   let web3_ = new Web3(window.ethereum)
-  let myContract = new web3_.eth.Contract(abi, contractAddress);
+  let myContract = new web3_.eth.Contract(abi, poolAddress);
   myContract.methods
     .purchase(Web3.utils.toWei(String(_amount), 'ether'))
     .send({ from: window.CURRENTADDRESS })

@@ -57,6 +57,8 @@ export const getPoolInfo = (pool) => {
     poolContract.totalSettledUnderlying(),
     poolContract.maxUser(),//最多参与人数
     poolContract.curUserCount(),//当前参与人数
+    poolContract.amtLow(),//最少金额
+    poolContract.amtHigh(),//最大金额
   ]
   // 追加可能存在的
   poolContract.time && promiseList.push(poolContract.time())
@@ -77,6 +79,8 @@ export const getPoolInfo = (pool) => {
       totalSettledUnderlying,
       maxUser,//最多参与人数
       curUserCount,//当前参与人数
+      amtLow,
+      amtHigh,
       time = 0,
       timeSettle = 0,
       currency_allowance = 0,
@@ -135,6 +139,7 @@ export const getPoolInfo = (pool) => {
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
+      console.log('Web3.utils.fromWei(amtLow, \'ether\')', Web3.utils.fromWei(amtLow, 'ether'))
     return Object.assign({}, pool, {
       ratio: `1 ${pool.currency.symbol} = ${formatAmount(price, 18, 5)} ${
         pool.underlying.symbol
@@ -172,6 +177,8 @@ export const getPoolInfo = (pool) => {
         ...pool.pool_info,
         maxAccount: maxUser, // 最多参与人数
         curUserCount, // 当前参与人数
+        min_allocation: Web3.utils.fromWei(amtLow, 'ether')*1,
+        max_allocation: Web3.utils.fromWei(amtHigh, 'ether')*1,
       }
     })
   })

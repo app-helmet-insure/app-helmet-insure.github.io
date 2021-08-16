@@ -1,6 +1,7 @@
 
 import starterLimitAbi from '../../../abi/IBO_StarterLimit.json'
 import IBOTest from '../../../abi/ibo_test.json'
+import {utils} from "web3";
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
 
@@ -161,10 +162,10 @@ export const iboPools = [
     yuque: '-',
     progress: 0,
     status: 0,
-    ratio: ' 1 HELMET= 4 GAME1',
+    ratio: ' 1 CUSDT = 0.5 CTT',
     time: '1629122400',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '800',//总释放
+    totalPurchasedAmount: utils.toWei('25000'),//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
     is_flash: false,

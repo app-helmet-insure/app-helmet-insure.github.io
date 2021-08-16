@@ -7,7 +7,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME">
         <div
           :class="['finshed_line', 'finshed_pc']"
-          v-if="item.REWARD_NAME == 'helmet_argon'"
+          v-if="item.REWARD_NAME == 'helmet_mcrn'"
         >
           <p></p>
           <i :class="storeThemes + '_star'"></i>
@@ -131,7 +131,7 @@
             </section>
 
             <section class="APY" v-else>
-              <span>{{ item.APY}}</span>
+              <span>{{ item.APY }}</span>
               <span>
                 {{ item.REWARD_TYPE }}
                 <el-tooltip effect="dark" placement="top-start">
@@ -212,7 +212,7 @@
       <div v-for="item in miningList" :key="item.REWARD_NAME + '1'">
         <div
           class="finshed_line finshed_h5"
-          v-if="item.REWARD_NAME == 'helmet_argon'"
+          v-if="item.REWARD_NAME == 'helmet_mcrn'"
         >
           <p></p>
           <i></i>

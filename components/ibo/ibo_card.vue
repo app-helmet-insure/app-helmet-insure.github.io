@@ -393,6 +393,7 @@ export default {
    z-index: 99;
  }
 
+
 .ibo_item_btn{
   background: #17173a;
   &.disabled{
@@ -423,6 +424,7 @@ export default {
     border-color: #17173A;
   }
 }
+
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;
@@ -621,15 +623,31 @@ export default {
       color: #FFF;
       line-height: 40px;
       text-align: center;
-      background: #17173A;
       @include themeify {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
-
+      &.disabled {
+        cursor: default;
+        
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
+      }
       &:hover {
         @include themeify {
-          background: themed("ibo_btn_hover");
+          background: themed("black_button_hover");
         }
       }
     }
@@ -637,6 +655,24 @@ export default {
     &_claim {
       @include themeify {
         background: themed("color-fd7e14");
+      }
+
+      &.disabled {
+        cursor: default;
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
       }
 
       &:hover {

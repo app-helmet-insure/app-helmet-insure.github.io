@@ -101,22 +101,23 @@ export default {
       this.$emit("close");
     },
     async connectWallet() {
-      try {
-        const walletConnectProvider = new WalletConnectProvider({
-          chainId: 56,
-          qrcode: true,
-          pollingInterval: 10000,
-        });
-        await walletConnectProvider.enable();
-        const web3 = new Web3(walletConnectProvider);
-        const coinbase = walletConnectProvider.wc.accounts[0];
-        window.WEB3 = web3;
-        let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
-        this.$store.dispatch("setUserInfo", userInfo);
-        window.localStorage.setItem("currentType", "WalletConnect");
-        this.$bus.$emit("REFRESH_MINING");
-        this.closeDialog();
-      } catch (error) {}
+      const walletConnectProvider = new WalletConnectProvider({
+        rpc: {
+          56: "https://bsc-dataseed1.binance.org/",
+        },
+        chainId: 56,
+        qrcode: true,
+        pollingInterval: 10000,
+      });
+      await walletConnectProvider.enable();
+      const web3 = new Web3(walletConnectProvider);
+      const coinbase = walletConnectProvider.wc.accounts[0];
+      window.WEB3 = web3;
+      let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
+      this.$store.dispatch("setUserInfo", userInfo);
+      window.localStorage.setItem("currentType", "WalletConnect");
+      this.$bus.$emit("REFRESH_MINING");
+      this.closeDialog();
     },
   },
 };
@@ -261,7 +262,6 @@ export default {
       }
     }
     .switch_network {
-     
       p {
         font-size: 18px;
         font-weight: 600;

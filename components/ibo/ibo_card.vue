@@ -128,7 +128,7 @@
         <span class="ibo_item_value_title">{{ $t("IBO.IBO_text16") }}</span>
         <span class="value">{{ rateValue }}</span>
       </p>
-      <p class="claim_detail_btn" @click='showClaim'>
+      <p class="claim_detail_btn" @click='showClaim' :class="{active: iboData.status === 2}">
         <span></span>
         <a>{{ $t("IBO.IBO_text17") }}</a>
         <span></span>
@@ -215,7 +215,7 @@ export default {
     },
     // 中签率
     rate: function () {
-      if (!this.iboData.settleable){
+      if (!this.iboData.settleable || this.iboData.purchasedCurrencyOf <= 0){
         return '-'
       }
       return fromWei(this.iboData.settleable.rate)
@@ -333,7 +333,9 @@ export default {
       })
     },
     showClaim() {
-      this.claimFlag = !this.claimFlag
+      if (this.iboData.status === 2){
+        this.claimFlag = !this.claimFlag
+      }
     },
     onApprove() {
       if (this.$store.state.userInfo.status !== 1 || this.iboData.status !== 1 || this.approvalLoading) {
@@ -346,10 +348,10 @@ export default {
       })
     },
     onBurn() {
-      if (!this.amount || isNaN(Number(this.amount))){
+      if (!this.amount || isNaN(Number(this.amount)) || (!(this.iboData.pool_info.curUserCount < this.iboData.pool_info.maxAccount) || this.iboData.purchasedCurrencyOf > 0)){
         return
       }
-      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {
+      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading && this.iboData.purchasedCurrencyOf <= 0) {
         const msg = this.$t('IBO.IBO_text27')
         console.log('msg', msg)
         MessageBox.confirm(msg, 'Tip', {
@@ -433,7 +435,9 @@ export default {
     border-color: #17173A;
   }
 }
-
+.el-slider__bar{
+  background: #FD7E14!important;
+}
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;
@@ -462,9 +466,8 @@ export default {
       background: themed("color-ffffff");
     }
     @include themeify {
-      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
+      box-shadow: 2px 3px 5px 0px themed("color-e8e8eb");
     }
-
     border-radius: 10px;
     @include themeify {
       box-border: 1px solid themed("color-e8e8eb");
@@ -696,7 +699,9 @@ export default {
       justify-content: space-between;
       align-items: center;
       margin-top: 20px;
-
+      &.active{
+        color: #FD7E14;
+      }
       span {
         width: 84px;
         height: 1px;
@@ -716,7 +721,7 @@ export default {
         opacity: 0.4;
         line-height: 14px;
 
-        &:hover {
+        &.active:hover {
           @include themeify {
             color: themed("color-fd7e14");
           }

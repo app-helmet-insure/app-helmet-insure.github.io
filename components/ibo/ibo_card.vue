@@ -1,55 +1,77 @@
 <template>
-  <div
-      class="ibo_item_warp"
-      v-if="iboData"
-  >
+  <div class="ibo_item_warp" v-if="iboData">
     <div class="ibo_item">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
-          <img :src='require(`~/assets/img/ibo/${iboData.icon}`)'/>
+          <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />
           <span>{{ iboData.name }}</span>
-          <span style="margin-left: 5px;cursor:pointer;" @click="showTip = true">
+          <span
+            style="margin-left: 5px; cursor: pointer"
+            @click="showTip = true"
+          >
             <svg
-
-                t="1617039040708"
-                class="icon"
-                viewBox="0 0 1024 1024"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="1287"
-                width="16"
-                height="16"
+              t="1617039040708"
+              class="icon"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="1287"
+              width="16"
+              height="16"
             >
               <path
-                  d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                  p-id="1288"
-              ></path></svg>
+                d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                p-id="1288"
+              ></path>
+            </svg>
           </span>
         </p>
         <p class="ibo_item_title_right">
-          <span class="ibo_item_countdown">{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{
-              countdown.m
-            }}{{ $t("IBO.IBO_text1") }}</span>
-          <span v-if='iboData.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text3")
-            }}</span>
-          <span v-if='iboData.status === 1 && (iboData.timeClose === 0 || iboData.timeClose > now)'
-                class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text4") }}</span>
-          <span v-if='iboData.status === 1 && !(iboData.timeClose === 0 || iboData.timeClose > now)'
-                class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text5") }}</span>
-          <span v-if='iboData.status === 2' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text6")
-            }}</span>
-          <span v-if='iboData.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text7")
-            }}</span>
+          <span class="ibo_item_countdown"
+            >{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{ countdown.m
+            }}{{ $t("IBO.IBO_text1") }}</span
+          >
+          <span
+            v-if="iboData.status === 0"
+            class="ibo_item_status ibo_item_status_ongoing"
+            >{{ $t("IBO.IBO_text3") }}</span
+          >
+          <span
+            v-if="
+              iboData.status === 1 &&
+              (iboData.timeClose === 0 || iboData.timeClose > now)
+            "
+            class="ibo_item_status ibo_item_status_ongoing"
+            >{{ $t("IBO.IBO_text4") }}</span
+          >
+          <span
+            v-if="
+              iboData.status === 1 &&
+              !(iboData.timeClose === 0 || iboData.timeClose > now)
+            "
+            class="ibo_item_status ibo_item_status_ongoing"
+            >{{ $t("IBO.IBO_text5") }}</span
+          >
+          <span
+            v-if="iboData.status === 2"
+            class="ibo_item_status ibo_item_status_ongoing"
+            >{{ $t("IBO.IBO_text6") }}</span
+          >
+          <span
+            v-if="iboData.status === 3"
+            class="ibo_item_status ibo_item_status_ongoing"
+            >{{ $t("IBO.IBO_text7") }}</span
+          >
         </p>
       </div>
-      <div v-if='iboData.status !== 3'>
+      <div v-if="iboData.status !== 3">
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalPurchasedAmount }} {{ iboData.totalPurchasedAmountSymbol }}</span>
+          <span class="value"
+            >{{ totalPurchasedAmount }}
+            {{ iboData.totalPurchasedAmountSymbol }}</span
+          >
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -61,32 +83,61 @@
         </p>
         <a class="ibo_item_progress">
           <i
-              class="ibo_item_progress_bar"
-              :style="iboData.progress > 1 ? 'width: 100%' : iboData.progress == 0 ? 'display: none' : 'width: ' + iboData.progress * 100 + '%'">
+            class="ibo_item_progress_bar"
+            :style="
+              iboData.progress > 1
+                ? 'width: 100%'
+                : iboData.progress == 0
+                ? 'display: none'
+                : 'width: ' + iboData.progress * 100 + '%'
+            "
+          >
           </i>
         </a>
         <div class="block">
           <el-slider
-              v-model="amount"
-              :min='iboData.pool_info.min_allocation'
-              :max='iboData.pool_info.max_allocation'
-              show-input>
+            v-model="amount"
+            :min="iboData.pool_info.min_allocation"
+            :max="iboData.pool_info.max_allocation"
+            show-input
+          >
           </el-slider>
           <p class="ibo_item_value slider_content">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
-            <span class="value">{{ $store.state.BalanceArray['HELMET'] }} {{ iboData.underlying.symbol }}</span>
+            <span class="value"
+              >{{ $store.state.BalanceArray["HELMET"] }}
+              {{ iboData.underlying.symbol }}</span
+            >
           </p>
           <p class="min_max_value">
-            <span>{{ $t("IBO.IBO_text12") }}{{ iboData.pool_info.min_allocation }}</span>
-            <span>{{ $t("IBO.IBO_text13") }}{{ iboData.pool_info.max_allocation }}</span>
+            <span
+              >{{ $t("IBO.IBO_text12")
+              }}{{ iboData.pool_info.min_allocation }}</span
+            >
+            <span
+              >{{ $t("IBO.IBO_text13")
+              }}{{ iboData.pool_info.max_allocation }}</span
+            >
           </p>
         </div>
-        <a class="ibo_item_btn" v-if="iboData.currency.allowance === '0'" @click='onApprove'>{{
-            $t("Table.Approve")
-          }}</a>
-        <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn' : 'ibo_item_btn'" @click='onBurn' v-else>{{ $t("Table.Burn") }}</a>
+        <a
+          class="ibo_item_btn"
+          v-if="iboData.currency.allowance === '0'"
+          @click="onApprove"
+          >{{ $t("Table.Approve") }}</a
+        >
+        <a
+          :class="
+            !(iboData.status === 1 && $store.state.userInfo.status === 1)
+              ? 'disabled ibo_item_btn'
+              : 'ibo_item_btn'
+          "
+          @click="onBurn"
+          v-else
+          >{{ $t("Table.Burn") }}</a
+        >
       </div>
-      <div v-if='iboData.status === 3' class="finished_style">
+      <div v-if="iboData.status === 3" class="finished_style">
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text20") }}</span>
           <span class="value">1.0s</span>
@@ -110,7 +161,9 @@
       </div>
 
       <p class="ibo_item_value">
-        <span class="ibo_item_value_title">{{ $t("IBO.IBO_text14", {icon: iboData.underlying.symbol}) }}</span>
+        <span class="ibo_item_value_title">{{
+          $t("IBO.IBO_text14", { icon: iboData.underlying.symbol })
+        }}</span>
         <span class="value">{{ purchasedCurrencyOf }}</span>
       </p>
       <p class="ibo_item_value">
@@ -121,55 +174,119 @@
         <span class="ibo_item_value_title">{{ $t("IBO.IBO_text16") }}</span>
         <span class="value">{{ rateValue }}</span>
       </p>
-      <p class="claim_detail_btn" @click='showClaim'>
+      <p class="claim_detail_btn" @click="showClaim">
         <span></span>
         <a>{{ $t("IBO.IBO_text17") }}</a>
         <span></span>
       </p>
-      <div v-if='claimFlag'>
+      <div v-if="claimFlag">
         <p class="ibo_item_value">
-          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text18", {icon: iboData.underlying.symbol}) }}</span>
+          <span class="ibo_item_value_title">{{
+            $t("IBO.IBO_text18", { icon: iboData.underlying.symbol })
+          }}</span>
           <span class="value">{{ notUsed }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
-          <span class="value">{{volume}}</span>
+          <span class="value">{{ volume }}</span>
         </p>
-        <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'" @click='onClaim'>{{ $t("Table.Claim") }}</a>
+        <a
+          :class="
+            !(iboData.status === 2 && $store.state.userInfo.status === 1)
+              ? 'disabled ibo_item_btn ibo_item_claim'
+              : 'ibo_item_btn ibo_item_claim'
+          "
+          @click="onClaim"
+          >{{ $t("Table.Claim") }}</a
+        >
       </div>
     </div>
     <Dialog
-        title="Tip"
-        :visible="showTip"
-        :before-close="() => showTip = false"
-        width="200">
+      title="Tip"
+      :visible="showTip"
+      :before-close="() => (showTip = false)"
+      width="200"
+    >
       <div v-if="iboData.name === 'GAME1'" class="tip_box">
-        <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august") }}</p>
-        <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
-        <p>TG: <a href="T.me/game1networkchat" target="_blank">T.me/game1networkchat</a></p>
-        <p>{{$t("IBO.IBO_text30")}}: <a href="https://game1network.com" target="_blank">https://game1network.com</a></p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_august") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap.finance</p>
+        <p>
+          TG:
+          <a href="T.me/game1networkchat" target="_blank"
+            >T.me/game1networkchat</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://game1network.com" target="_blank"
+            >https://game1network.com</a
+          >
+        </p>
+        <p>
+          ContractAddress: 0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb')
+            "
+          ></i>
+        </p>
       </div>
       <div v-else-if="iboData.name === 'UFOMO'" class="tip_box">
-        <p>{{$t("IBO.IBO_text28")}}: {{$t("IBO.IBO_august2") }}</p>
-        <p>{{$t("IBO.IBO_text29")}}: Pancakeswap.finance</p>
-        <p>TG(EN): <a href="https://t.me/UFOMO_EN" target="_blank">https://t.me/UFOMO_EN</a></p>
-        <p>TG(CN): <a href="https://t.me/UFOMO_cn" target="_blank">https://t.me/UFOMO_cn</a></p>
-        <p>{{$t("IBO.IBO_text30")}}: <a href="https://crazyufo.vip/#/fomoGame" target="_blank">https://crazyufo.vip/#/fomoGame</a></p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_august2") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap.finance</p>
+        <p>
+          TG(EN):
+          <a href="https://t.me/UFOMO_EN" target="_blank"
+            >https://t.me/UFOMO_EN</a
+          >
+        </p>
+        <p>
+          TG(CN):
+          <a href="https://t.me/UFOMO_cn" target="_blank"
+            >https://t.me/UFOMO_cn</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://crazyufo.vip/#/fomoGame" target="_blank"
+            >https://crazyufo.vip/#/fomoGame</a
+          >
+        </p>
+        <p>
+          Contracts: 0xc9354034968f79f181b76a2f8a015fcdbaed2692
+          <i
+            class="copy"
+            id="copy_default"
+            @click="
+              copyAdress($event, '0xc9354034968f79f181b76a2f8a015fcdbaed2692')
+            "
+          ></i>
+        </p>
       </div>
     </Dialog>
   </div>
 </template>
 
 <script>
-import {fromWei, getPoolInfo, onApprove_, onBurn_, onClaim_} from '../../interface/ibo'
+import {
+  fromWei,
+  getPoolInfo,
+  onApprove_,
+  onBurn_,
+  onClaim_,
+} from "../../interface/ibo";
 import BigNumber from "bignumber.js";
-import {Dialog} from 'element-ui'
+import { Dialog } from "element-ui";
+import ClipboardJS from "clipboard";
+import Message from "~/components/common/Message";
 export default {
-  components: {Dialog},
+  components: { Dialog },
   props: {
     pool: {
-      type: Object
-    }
+      type: Object,
+    },
   },
   data() {
     return {
@@ -180,119 +297,158 @@ export default {
       timer: null,
       now: parseInt(Date.now() / 1000),
       countdown: {
-        h: '-',
-        m: '-'
-      }
-    }
+        h: "-",
+        m: "-",
+      },
+    };
   },
   computed: {
     // 总释放
     totalPurchasedAmount: function () {
-      return new BigNumber(this.iboData.totalPurchasedAmount).toFormat()
+      return new BigNumber(this.iboData.totalPurchasedAmount).toFormat();
     },
     // 我的质押
     purchasedCurrencyOf: function () {
-      return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
+      return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
     },
     // 中签率
     rate: function () {
-      if (!this.iboData.settleable){
-        return '-'
+      if (!this.iboData.settleable) {
+        return "-";
       }
       return fromWei(this.iboData.settleable.rate)
-          .multipliedBy(new BigNumber(100))
-          .toFixed(2, 1)
-          .toString()
+        .multipliedBy(new BigNumber(100))
+        .toFixed(2, 1)
+        .toString();
     },
     // 预计获得
     rateValue: function () {
-      if (!this.iboData.settleable){
-        return '-'
+      if (!this.iboData.settleable) {
+        return "-";
       }
-      return this.iboData.settleable.volume
+      return this.iboData.settleable.volume;
     },
     // 可领取
     volume: function () {
-      if (this.iboData.settleable){
-        return this.iboData.settleable.volume
+      if (this.iboData.settleable) {
+        return this.iboData.settleable.volume;
       }
-      return 0
+      return 0;
     },
     // 未使用
     notUsed: function () {
       if (this.iboData.settleable) {
-        return new BigNumber((1 - this.rate) * this.iboData.settleable.purchasedCurrencyOf).toFormat()
+        return new BigNumber(
+          (1 - this.rate) * this.iboData.settleable.purchasedCurrencyOf
+        ).toFormat();
       }
-      return 0
-  }
+      return 0;
+    },
   },
   created() {
-    this.iboData = this.pool
+    this.iboData = this.pool;
     this.timer = setInterval(() => {
-      this.getCountdownData()
-    }, 1000)
+      this.getCountdownData();
+    }, 1000);
     if (!this.iboData.is_coming) {
-      this.init()
+      this.init();
     }
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     getCountdownData() {
-      const thisTime = new Date().getTime()
-      const startTime = new Date(this.iboData.start_at * 1000)
+      const thisTime = new Date().getTime();
+      const startTime = new Date(this.iboData.start_at * 1000);
       if (thisTime < startTime) {
-        const t = startTime - thisTime
+        const t = startTime - thisTime;
         this.countdown = {
           h: Math.floor(t / 3600000),
-          m: Math.floor((t % 3600000) / 60000)
-        }
+          m: Math.floor((t % 3600000) / 60000),
+        };
       }
     },
     init() {
-      getPoolInfo(this.pool).then(newPool => {
-        this.iboData = newPool
-        console.log('newPool', JSON.parse(JSON.stringify(newPool)))
-      })
+      getPoolInfo(this.pool).then((newPool) => {
+        this.iboData = newPool;
+        console.log("newPool", JSON.parse(JSON.stringify(newPool)));
+      });
     },
     showClaim() {
-      this.claimFlag = !this.claimFlag
+      this.claimFlag = !this.claimFlag;
     },
     onApprove() {
       if (this.$store.state.userInfo.status !== 1) {
-        return
+        return;
       }
-      console.log(this.$store.state.userInfo)
+      console.log(this.$store.state.userInfo);
       onApprove_(this.iboData.currency.address, (success) => {
-        success && this.init()
-      })
+        success && this.init();
+      });
     },
     onBurn() {
-      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1) {
-        onBurn_(this.amount, this.iboData.currency.address, this.iboData.abi, (success) => {
-          success && this.init()
-        })
+      if (
+        this.iboData.status === 1 &&
+        this.$store.state.userInfo.status === 1
+      ) {
+        onBurn_(
+          this.amount,
+          this.iboData.currency.address,
+          this.iboData.abi,
+          (success) => {
+            success && this.init();
+          }
+        );
       }
     },
     onClaim() {
-      if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1) {
-        onClaim_(this.iboData.currency.address,this.iboData.abi, (success) => {
-          success && this.init()
-        })
+      if (
+        this.iboData.status === 2 &&
+        this.$store.state.userInfo.status === 1
+      ) {
+        onClaim_(this.iboData.currency.address, this.iboData.abi, (success) => {
+          success && this.init();
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
-
-.tip_box{
+.copy {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-image: url("../../assets/img/helmet/copy.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.tip_box {
   transform: translateY(-10px);
-  p{
+  p {
     font-size: 16px;
     line-height: 30px;
   }
@@ -301,23 +457,22 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
-.el-slider__button-wrapper{
-   z-index: 99;
- }
+.el-slider__button-wrapper {
+  z-index: 99;
+}
 
-.ibo_item_btn{
+.ibo_item_btn {
   background: #17173a;
-  &.disabled{
+  &.disabled {
     cursor: default;
-    background: #cccccc!important;
+    background: #cccccc !important;
   }
 }
-.ibo_item_claim{
-  &.disabled{
+.ibo_item_claim {
+  &.disabled {
     cursor: default;
-    background: #cccccc!important;
+    background: #cccccc !important;
   }
 }
 
@@ -340,7 +495,6 @@ export default {
 }
 
 @media screen and (min-width: 750px) {
-
   .ibo_item {
     padding: 20px;
     width: 320px;
@@ -465,7 +619,7 @@ export default {
       display: inline-block;
       width: 100%;
       height: 6px;
-      background: #E8E8EB;
+      background: #e8e8eb;
       border-radius: 100px;
 
       .ibo_item_progress_bar {
@@ -473,17 +627,17 @@ export default {
         top: 0;
         left: 0;
         height: 6px;
-        background: linear-gradient(180deg, #FDB514 0%, #FD7E14 100%);
+        background: linear-gradient(180deg, #fdb514 0%, #fd7e14 100%);
         border-radius: 100px 0px 0px 100px;
 
         &:after {
           position: absolute;
-          content: '';
+          content: "";
           width: 1px;
           height: 10px;
           top: -2px;
           right: 0;
-          background: #FD7E14;
+          background: #fd7e14;
         }
       }
     }
@@ -516,10 +670,10 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
-      color: #FFF;
+      color: #fff;
       line-height: 40px;
       text-align: center;
-      background: #17173A;
+      background: #17173a;
       @include themeify {
         background: themed("ibo_btn");
       }
@@ -576,7 +730,7 @@ export default {
           opacity: 1;
 
           &:after {
-            content: '';
+            content: "";
             position: absolute;
             top: 2px;
             right: -10px;
@@ -595,7 +749,7 @@ export default {
         }
 
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: 6px;
           right: -10px;
@@ -623,7 +777,7 @@ export default {
 }
 
 @media screen and (max-width: 750px) {
-  .el-dialog{
+  .el-dialog {
     width: 90%;
   }
   .ibo_item {
@@ -751,7 +905,7 @@ export default {
       display: inline-block;
       width: 100%;
       height: 6px;
-      background: #E8E8EB;
+      background: #e8e8eb;
       border-radius: 100px;
 
       .ibo_item_progress_bar {
@@ -759,17 +913,17 @@ export default {
         top: 0;
         left: 0;
         height: 6px;
-        background: linear-gradient(180deg, #FDB514 0%, #FD7E14 100%);
+        background: linear-gradient(180deg, #fdb514 0%, #fd7e14 100%);
         border-radius: 100px 0px 0px 100px;
 
         &:after {
           position: absolute;
-          content: '';
+          content: "";
           width: 1px;
           height: 10px;
           top: -2px;
           right: 0;
-          background: #FD7E14;
+          background: #fd7e14;
         }
       }
     }
@@ -802,7 +956,7 @@ export default {
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
-      color: #FFF;
+      color: #fff;
       line-height: 40px;
       text-align: center;
       @include themeify {
@@ -861,7 +1015,7 @@ export default {
           opacity: 1;
 
           &:after {
-            content: '';
+            content: "";
             position: absolute;
             top: 2px;
             right: -10px;
@@ -880,7 +1034,7 @@ export default {
         }
 
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: 6px;
           right: -10px;
@@ -905,6 +1059,5 @@ export default {
       }
     }
   }
-
 }
 </style>

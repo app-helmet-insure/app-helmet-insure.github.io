@@ -37,7 +37,7 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 27,500.0 UFOMO',
+    ratio: '1 HELMET = 27,500 UFOMO',
     time: '1629122400',
     purchasedCurrencyOf: 0, // 我的质押
     totalPurchasedAmount: '39999999999999600000000',
@@ -78,7 +78,7 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 4.0 GAME1',
+    ratio: '1 HELMET = 4 GAME1',
     time: '1629126000',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '27777750000000000000000',//总释放

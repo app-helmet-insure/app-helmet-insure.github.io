@@ -62,6 +62,7 @@ export const getPoolInfo = (pool) => {
   poolContract.time && promiseList.push(poolContract.time())
   poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
   currencyToken && promiseList.push(currencyToken.allowance(account, pool.address))
+  currencyToken && promiseList.push(currencyToken.balanceOf(account))
   const multicallProvider = getOnlyMultiCallProvider()
   return multicallProvider
     .all(promiseList).then(res => {
@@ -79,6 +80,7 @@ export const getPoolInfo = (pool) => {
       time = 0,
       timeSettle = 0,
       currency_allowance = 0,
+      balanceOf = 0
     ] = resData
       console.log('resData', resData)
     const [
@@ -151,6 +153,7 @@ export const getPoolInfo = (pool) => {
       totalPurchasedCurrency,
       totalPurchasedAmount: pool.amount,
       totalPurchasedUnderlying,
+      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
       purchasedCurrencyOf,
       totalSettleable: {
         completed_: total_completed_,

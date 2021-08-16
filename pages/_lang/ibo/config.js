@@ -13,7 +13,7 @@ export const iboPools = [
     is_top: true,
     is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
-      address: '0x68944B6333ddcd7AA3f550Fdf80524d32A1A937a',
+      address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
       symbol: 'HELMET',
     },
@@ -71,7 +71,7 @@ export const iboPools = [
     is_top: true,
     is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
-      address: '0x68944B6333ddcd7AA3f550Fdf80524d32A1A937a',
+      address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
       symbol: 'HELMET',
     },

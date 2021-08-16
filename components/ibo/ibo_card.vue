@@ -186,7 +186,7 @@ export default {
     return {
       iboData: null,
       showTip: false,
-      amount: '',
+      amount: null,
       claimFlag: false,
       timer: null,
       now: parseInt(Date.now() / 1000),
@@ -197,7 +197,8 @@ export default {
       },
       approvalLoading: false,
       claimLoading: false,
-      burnLoading: false
+      burnLoading: false,
+      initLoading: false
     }
   },
   computed: {
@@ -207,6 +208,9 @@ export default {
     },
     // 我的质押
     purchasedCurrencyOf: function () {
+      if (this.initLoading){
+        return '-'
+      }
       return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
     },
     // 中签率
@@ -242,13 +246,16 @@ export default {
     },
     // 可用
     available: function () {
+      if (this.initLoading) {
+        return '-'
+      }
       // 我的质押
       const purchasedCurrencyOf = fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
       // 我的余额
-      const balance = this.$store.state.BalanceArray['HELMET']
-      // 我的剩余额度
+      const balanceOf = this.iboData.balanceOf
+      // 我的剩余额度 balanceOf
       const remainingLimit = this.iboData.pool_info.max_allocation - purchasedCurrencyOf
-      return Math.min(remainingLimit, balance)
+      return Math.min(remainingLimit, balanceOf)
     }
   },
   created() {
@@ -314,12 +321,14 @@ export default {
       }
     },
     init() {
+      this.initLoading = true
       getPoolInfo(this.pool).then(newPool => {
         this.iboData = newPool
         const purchasedCurrencyOf = fromWei(newPool.purchasedCurrencyOf).toFixed(6, 1) * 1
         if (purchasedCurrencyOf > 0){
           this.amount = purchasedCurrencyOf
         }
+        this.initLoading = false
         console.log('newPool', JSON.parse(JSON.stringify(newPool)))
       })
     },

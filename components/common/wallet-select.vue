@@ -101,23 +101,22 @@ export default {
       this.$emit("close");
     },
     async connectWallet() {
-      const walletConnectProvider = new WalletConnectProvider({
-        chainId: 56,
-        rpc: {
-          56: "https://bsc-dataseed1.binance.org/",
-        },
-        qrcode: true,
-        pollingInterval: 10000,
-      });
-      await walletConnectProvider.enable();
-      const web3 = new Web3(walletConnectProvider);
-      const coinbase = walletConnectProvider.wc.accounts[0];
-      window.WEB3 = web3;
-      let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
-      this.$store.dispatch("setUserInfo", userInfo);
-      window.localStorage.setItem("currentType", "WalletConnect");
-      this.$bus.$emit("REFRESH_MINING");
-      this.closeDialog();
+      try {
+        const walletConnectProvider = new WalletConnectProvider({
+          chainId: 56,
+          qrcode: true,
+          pollingInterval: 10000,
+        });
+        await walletConnectProvider.enable();
+        const web3 = new Web3(walletConnectProvider);
+        const coinbase = walletConnectProvider.wc.accounts[0];
+        window.WEB3 = web3;
+        let userInfo = await mateMaskInfo(coinbase, "WalletConnect");
+        this.$store.dispatch("setUserInfo", userInfo);
+        window.localStorage.setItem("currentType", "WalletConnect");
+        this.$bus.$emit("REFRESH_MINING");
+        this.closeDialog();
+      } catch (error) {}
     },
   },
 };
@@ -144,7 +143,7 @@ export default {
       font-weight: 600;
       height: 40px;
       @include themeify {
-        color: themed("color-#121212");
+        color: themed("color-121212");
       }
     }
     .switch_network {
@@ -152,7 +151,7 @@ export default {
         font-size: 18px;
         font-weight: 600;
         @include themeify {
-          color: themed("color-#121212");
+          color: themed("color-121212");
         }
         line-height: 40px;
       }
@@ -169,7 +168,7 @@ export default {
           font-size: 16px;
           font-weight: 600;
           @include themeify {
-            color: themed("color-#121212");
+            color: themed("color-121212");
             background: themed("color-#f8f9fa");
             border: 1px solid themed("insure_input_border");
           }
@@ -199,7 +198,9 @@ export default {
       p {
         font-size: 18px;
         font-weight: 600;
-        color: #121212;
+        @include themeify {
+          color: themed("color-121212");
+        }
         line-height: 40px;
       }
       > div {
@@ -218,7 +219,7 @@ export default {
           line-height: 18px;
           border-radius: 5px;
           @include themeify {
-            color: themed("color-#121212");
+            color: themed("color-121212");
             background: themed("color-#f8f9fa");
             border: 1px solid themed("insure_input_border");
           }
@@ -239,43 +240,114 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .wallet-select-mask {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     .wallet-select-block {
-      min-width: 320px;
-      width: 80%;
-      height: 460px;
+      width: 95%;
+      top: 50%;
+      left: 2.5%;
+      margin: -50% auto 0;
+      padding: 20px;
+      border-radius: 8px;
+      @include themeify {
+        background: themed("swap_background");
+      }
     }
-    ul {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      li {
-        height: 280px;
+    h3 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      height: 40px;
+      @include themeify {
+        color: themed("color-121212");
+      }
+    }
+    .switch_network {
+     
+      p {
+        font-size: 18px;
+        font-weight: 600;
+        @include themeify {
+          color: themed("color-121212");
+        }
+        line-height: 40px;
+      }
+      > div {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #ededf0;
-        &.on {
+        justify-content: space-between;
+        > div {
           cursor: pointer;
-        }
-        &.off {
-          cursor: wait;
-          opacity: 0.5;
-        }
-        img {
-          width: 80px;
-          height: 80px;
-        }
-        span {
-          font-size: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 150px;
+          height: 50px;
+          font-size: 16px;
+          font-weight: 600;
           @include themeify {
-            background: themed("color-17173a");
+            color: themed("color-121212");
+            background: themed("color-#f8f9fa");
+            border: 1px solid themed("insure_input_border");
           }
-          margin-top: 20px;
+          line-height: 18px;
+          border-radius: 5px;
+          img {
+            width: 24px;
+            margin-right: 4px;
+          }
+          &:hover {
+            @include themeify {
+              background: themed("swap_background");
+            }
+            border: 2px solid #fd7e14 !important;
+          }
+        }
+        .activeNetwork {
+          @include themeify {
+            background: themed("swap_background");
+          }
+          border: 2px solid #fd7e14 !important;
+        }
+      }
+    }
+    .switch_wallet {
+      margin-top: 20px;
+      p {
+        font-size: 18px;
+        font-weight: 600;
+        @include themeify {
+          color: themed("color-121212");
+        }
+        line-height: 40px;
+      }
+      > div {
+        display: flex;
+        justify-content: space-between;
+        > div {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 150px;
+          height: 150px;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 18px;
+          border-radius: 5px;
+          @include themeify {
+            color: themed("color-121212");
+            background: themed("color-#f8f9fa");
+            border: 1px solid themed("insure_input_border");
+          }
+          img {
+            width: 48px;
+            margin-bottom: 10px;
+          }
+          &:hover {
+            @include themeify {
+              background: themed("swap_background");
+            }
+            border: 2px solid #fd7e14 !important;
+          }
         }
       }
     }

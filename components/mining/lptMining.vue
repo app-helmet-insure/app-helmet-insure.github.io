@@ -1,7 +1,7 @@
 <template>
   <div class="lptMining">
     <div class="lptMiningBorder">
-      <p class="lptMiningTitle">LPT Mining</p>
+      <p class="lptMiningTitle">HELMET-BNB Mining</p>
       <div class="lptMiningWrap">
         <div
           class="lptMiningItemWrap"

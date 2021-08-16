@@ -149,7 +149,7 @@ export const getPoolInfo = (pool) => {
         .toFixed(2, 1)
         .toString()*1)
     return Object.assign({}, pool, {
-      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(1).toString()} ${
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFixed(1, 1).toString()*1} ${
         pool.underlying.symbol
       }`,
       progress:

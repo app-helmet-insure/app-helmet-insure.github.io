@@ -357,7 +357,7 @@ export default {
       })
     },
     onBurn() {
-      if (!this.amount || isNaN(Number(this.amount)) || this.iboData.pool_info.curUserCount >= this.iboData.pool_info.maxAccount || this.iboData.purchasedCurrencyOf > 0){
+      if (!this.amount || isNaN(Number(this.amount)) || this.iboData.purchasedCurrencyOf > 0){
         return
       }
       if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {

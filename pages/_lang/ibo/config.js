@@ -28,7 +28,7 @@ export const iboPools = [
       holders: '-',
       transfers: '-',
     },
-    amount: '12500', // token 总额
+    amount: '1100000000', // token 总额
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -40,7 +40,7 @@ export const iboPools = [
     ratio: '1 HELMET = 27,500.0 UFOMO',
     time: '1629122400',
     purchasedCurrencyOf: 0, // 我的质押
-    totalPurchasedAmount: '454545454545450000',
+    totalPurchasedAmount: '39999999999999600000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
     winningRate: '-', // 申请中签率
@@ -69,7 +69,7 @@ export const iboPools = [
       holders: '-',
       transfers: '-',
     },
-    amount: '12500', // token 总额
+    amount: '111111', // token 总额
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -81,7 +81,7 @@ export const iboPools = [
     ratio: '1 HELMET = 4.0 GAME1',
     time: '1629122400',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '3125000000000000000000',//总释放
+    totalPurchasedAmount: '27777750000000000000000',//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

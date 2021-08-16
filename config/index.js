@@ -1,7 +1,4 @@
 import Vue from "vue";
-({ app, store }) => {
-  console.log(app.i18n);
-};
 // Pool Status
 // 1 unopen
 // 2 ongoing
@@ -30,7 +27,7 @@ export const formatMiningPool = (PoolData) => {
   }
   return PoolData;
 };
-const getShowTime = (time, status) => {
+const getShowTime = (time) => {
   const now = new Date() * 1;
   const dueDate = time;
   const DonwTime = dueDate - now;

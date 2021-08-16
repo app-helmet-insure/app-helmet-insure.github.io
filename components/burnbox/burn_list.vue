@@ -245,7 +245,10 @@ export default {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
     forMatTime(){
-      
+      for (let index = 0; index < FixPoolList.length; index++) {
+        const element = FixPoolList[index];
+        
+      }
     }
   },
 };

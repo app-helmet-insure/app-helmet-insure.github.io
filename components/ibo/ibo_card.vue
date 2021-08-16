@@ -434,6 +434,7 @@ export default {
   border-radius: 4px;
 }
 .confirm-tip{
+  max-width: 95vw;
   .el-button--primary{
     background: #17173A;
     border-color: #17173A;

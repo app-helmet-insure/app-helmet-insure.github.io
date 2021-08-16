@@ -378,7 +378,7 @@ export default {
     },
     onMax(){
       const available = this.getAvailable()
-      if (this.iboData.pool_info.min_allocation >= available && available < this.iboData.pool_info.max_allocation) {
+      if (this.iboData.pool_info.min_allocation <= available && available >= this.iboData.pool_info.max_allocation) {
         this.amount = available
       }
     }

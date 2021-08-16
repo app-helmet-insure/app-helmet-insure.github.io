@@ -3,7 +3,7 @@
     <div class="iio_project">
       <div
         class="iio_item_wrap"
-        v-for="(item, index) in iioData"
+        v-for="(item, index) in ProjectData"
         :key="item.iio_name"
       >
         <div
@@ -128,259 +128,26 @@
 
 <script>
 import moment from "moment";
+import { ProjectData } from "../../config/iio.js";
+
 export default {
   data() {
     return {
-      iioData: [
-        {
-          iio_name: "ChainSwap",
-          iio_img: "iio_chainswap",
-          iio_webSite: "www.chainswap.com",
-          coming: true,
-          background: "#7A4AE3",
-          swapVolume: "100,000",
-          swapUtil: "TOKEN",
-          stakeUtil: "BUSD",
-          stakeShare: 0.3,
-          showStart: "Apr. 19th 21:00 SGT",
-          showEnd: "Apr. 23rd 21:00 SGT",
-          warnupTimeUTC: "2021/04/16 21:00 UTC+8",
-          distributingTimeUTC: "2021/04/19 21:00 UTC+8",
-          activatingTimeUTC: "2021/04/23 20:00 UTC+8",
-          finishedTimeUTC: "2021/04/24 21:00 UTC+8",
-          link: "https://www.chainswap.exchange/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "2,200",
-          expired_stake: "29,962,828.05",
-          expired_premium: "5366.66%",
-          expired_activating: "85.44%",
-        },
-        {
-          iio_name: "BlackHole",
-          iio_img: "iio_blackhole",
-          iio_webSite: "blackhole.black",
-          coming: true,
-          background: "#33B9C2",
-          swapVolume: "200,000",
-          swapUtil: "BLACK",
-          stakeUtil: "BUSD",
-          stakeShare: 0.05,
-          showStart: "Apr. 26th 20:00 SGT",
-          showEnd: "Apr. 29th 21:00 SGT",
-          warnupTimeUTC: "2021/04/24 20:00 UTC+8",
-          distributingTimeUTC: "2021/04/26 20:00 UTC+8",
-          activatingTimeUTC: "2021/04/29 21:00 UTC+8",
-          finishedTimeUTC: "2021/05/04 21:00 UTC+8",
-          link: "https://www.chainswap.exchange/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "1438",
-          expired_stake: "37,619,415.09",
-          expired_premium: "6500.00%",
-          expired_activating: "64.05%",
-        },
-        {
-          iio_name: "WeStarter",
-          iio_img: "iio_westarter",
-          iio_webSite: "www.westarter.org",
-          coming: true,
-          background: "#269E38",
-          swapVolume: "120,000",
-          swapUtil: "WAR",
-          stakeUtil: "BUSD",
-          stakeShare: 0.25,
-          showStart: "Apr. 27th 21:00 SGT",
-          showEnd: "Apr. 29th 21:00 SGT",
-          warnupTimeUTC: "2021/04/26 24:00 UTC+8",
-          distributingTimeUTC: "2021/04/27 21:00 UTC+8",
-          activatingTimeUTC: "2021/04/29 21:00 UTC+8",
-          finishedTimeUTC: "2021/05/01 21:00 UTC+8",
-          link: "https://www.chainswap.exchange/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "1,366",
-          expired_stake: "35,458,440.17",
-          expired_premium: "2620.00%",
-          expired_activating: "91.56%",
-        },
-        {
-          iio_name: "Lever",
-          iio_img: "iio_lever",
-          iio_webSite: "lever.network",
-          coming: true,
-          background: "#4156D5",
-          swapVolume: "60,000",
-          swapUtil: "LEV",
-          stakeUtil: "BUSD",
-          stakeShare: 0.5,
-          showStart: "May. 05th 20:00 SGT",
-          showEnd: "May. 07th 20:00 SGT",
-          warnupTimeUTC: "2021/05/03 20:00 UTC+8",
-          distributingTimeUTC: "2021/05/05 20:00 UTC+8",
-          activatingTimeUTC: "2021/05/07 20:00 UTC+8",
-          finishedTimeUTC: "2021/05/08 20:00 UTC+8",
-          link: "https://www.chainswap.exchange/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "1009",
-          expired_stake: "31,073,418.10",
-          expired_premium: "820.00%",
-          expired_activating: "86.67%",
-        },
-        {
-          iio_name: "PaulProtocol",
-          iio_img: "iio_paul",
-          iio_webSite: "paulprotocol.io",
-          coming: true,
-          background: "#0F2B39",
-          swapVolume: "100,000,000",
-          swapUtil: "PAUL",
-          stakeUtil: "BUSD",
-          stakeShare: 0.002,
-          showStart: "May. 30th 21:00 SGT",
-          showEnd: "June. 02nd 21:00 SGT",
-          warnupTimeUTC: "2021/05/25 21:00 UTC+8",
-          distributingTimeUTC: "2021/05/30 21:00 UTC+8", //showStart
-          activatingTimeUTC: "2021/06/02 21:00 UTC+8", //showEnd
-          finishedTimeUTC: "2021/06/03 21:00 UTC+8",
-          link: "https://www.paulprotocol.io",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "431",
-          expired_stake: "10,064,505.48",
-          expired_premium: "137.39%",
-          expired_activating: "44.50%",
-        },
-        {
-          iio_name: "CryptoTycoon",
-          iio_img: "iio_ctt",
-          iio_webSite: "cryptotycoon.finance",
-          coming: true,
-          background: "#FA6400",
-          swapVolume: "1,500",
-          swapUtil: "CTT",
-          stakeUtil: "BUSD",
-          stakeShare: 30,
-          showStart: "May. 23rd 21:00 SGT",
-          showEnd: "May. 25th 21:00 SGT",
-          warnupTimeUTC: "2021/05/21 21:00 UTC+8",
-          distributingTimeUTC: "2021/05/23 21:00 UTC+8", //showStart
-          activatingTimeUTC: "2021/05/25 21:00 UTC+8", //showEnd
-          finishedTimeUTC: "2021/05/26 21:00 UTC+8",
-          link: "https://cryptotycoon.finance/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "584",
-          expired_stake: "9,043,142.79",
-          expired_premium: "93.17%",
-          expired_activating: "83.55%",
-        },
-        {
-          iio_name: "CoinWind",
-          iio_img: "iio_cow",
-          iio_webSite: "www.coinwind.com",
-          coming: true,
-          background: "#08063D",
-          swapVolume: "100,000",
-          swapUtil: "COW",
-          stakeUtil: "BUSD",
-          stakeShare: 0.5,
-          showStart: "May. 23rd 21:00 SGT",
-          showEnd: "May. 25th 22:00 SGT",
-          warnupTimeUTC: "2021/05/21 21:00 UTC+8",
-          distributingTimeUTC: "2021/05/23 21:00 UTC+8", //showStart
-          activatingTimeUTC: "2021/05/25 22:00 UTC+8", //showEnd
-          finishedTimeUTC: "2021/05/26 22:00 UTC+8",
-          link: "https://www.coinwind.com",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "491",
-          expired_stake: "9,498,855.80",
-          expired_premium: "211.84%",
-          expired_activating: "85.5%",
-        },
-        {
-          iio_name: "WMASS",
-          iio_img: "iio_wmass",
-          iio_webSite: "wmass.org",
-          coming: true,
-          background: "#E55841",
-          swapVolume: "142,857",
-          swapUtil: "WMASS",
-          stakeUtil: "BUSD",
-          stakeShare: 0.35,
-          showStart: "May. 20th 21:00 SGT",
-          showEnd: "May. 22nd 21:00 SGT",
-          warnupTimeUTC: "2021/05/19 21:00 UTC+8",
-          distributingTimeUTC: "2021/05/20 21:00 UTC+8",
-          activatingTimeUTC: "2021/05/22 21:00 UTC+8",
-          finishedTimeUTC: "2021/05/23 21:00 UTC+8",
-          link: "https://wmass.org/home",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "484",
-          expired_stake: "5,468,799.20",
-          expired_premium: "86.17%",
-          expired_activating: "25.15%",
-        },
-        {
-          iio_name: "MarsEcosystem",
-          iio_img: "iio_xms",
-          iio_webSite: "marsecosystem.com",
-          coming: true,
-          background: "#FA6400",
-          swapVolume: "603,865",
-          swapUtil: "XMS",
-          stakeUtil: "BUSD",
-          stakeShare: 0.0828,
-          showStart: "June. 13th 21:00 SGT",
-          showEnd: "June. 14th 18:00 SGT",
-          warnupTimeUTC: "2021/06/13 21:00 UTC+8",
-          distributingTimeUTC: "2021/06/13 21:00 UTC+8",
-          activatingTimeUTC: "2021/06/14 18:00 UTC+8",
-          finishedTimeUTC: "2021/06/15 18:00 UTC+8",
-          link: "https://marsecosystem.com/",
-          enterbutton: true,
-          open: true,
-          sort: 0,
-          active_page: 2,
-          expired_burnt: "237",
-          expired_stake: "4,606,500.90",
-          expired_premium: "0%",
-          expired_activating: "88.54%",
-        },
-      ],
+      ProjectData,
     };
   },
   mounted() {
-    this.getStatus(this.iioData);
+    this.getStatus(ProjectData);
   },
   methods: {
     toDetails(index) {
-      let name = this.iioData[index].iio_name.toLowerCase();
+      let name = ProjectData[index].iio_name.toLowerCase();
       this.$router.push({
         path: `iio/${name}`,
       });
     },
     getStatus(newValue) {
-      let data = newValue || this.iioData;
+      let data = newValue || ProjectData;
       let nowTime = moment.now();
       data.forEach((item) => {
         item.sort = 4;
@@ -428,7 +195,7 @@ export default {
       data = data.sort(function (a, b) {
         return a.sort - b.sort;
       });
-      this.iioData = data;
+      this.ProjectData = data;
     },
   },
 };

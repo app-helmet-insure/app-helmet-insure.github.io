@@ -77,7 +77,6 @@ async function start() {
     nuxt.render(ctx.req, ctx.res);
   });
   app.listen(port, host);
-  console.log(`Server listening on http://${host}:${port}`);
 }
 
 start();

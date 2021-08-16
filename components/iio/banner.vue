@@ -49,7 +49,7 @@ import { fixD, addCommom } from "~/assets/js/util.js";
 import { getLongValue } from "~/interface/event.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { applied3 } from "~/interface/iio.js";
-import Information from "./iio_information.js";
+import { Information } from "../../config/iio.js";
 export default {
   data() {
     return {

@@ -48,7 +48,7 @@
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
-          <span class="value">{{ iboData.progress * 100 }}%</span>
+          <span class="value">{{ (iboData.progress * 100).toFixed(0) }}%</span>
         </p>
         <a class="ibo_item_progress">
           <i
@@ -57,7 +57,6 @@
           </i>
         </a>
         <div class="block">
-
           <span class="slider-max" v-if="this.iboData.purchasedCurrencyOf <= 0" @click="onMax">{{ $t("Table.Max") }}</span>
           <el-slider
               v-model="amount"
@@ -144,6 +143,7 @@
           <span class="value">{{volume}}</span>
         </p>
         <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'"
+           :style="{color : $store.state.themes === 'dark' && !(iboData.status === 2 && $store.state.userInfo.status === 1) ? '#000000' : '#ffffff'}"
             @click='onClaim'>
           <i class="el-icon-loading" v-if="claimLoading"></i>
           {{ $t("Table.Claim") }}
@@ -241,7 +241,7 @@ export default {
     // 未使用
     notUsed: function () {
       if (this.iboData.settleable) {
-        return new BigNumber((1 - fromWei(this.iboData.settleable.rate)) * this.iboData.purchasedCurrencyOf).toFormat()
+        return new BigNumber((1 - fromWei(this.iboData.settleable.rate)) * fromWei(this.iboData.purchasedCurrencyOf)).toFormat(6)
       }
       return 0
     },
@@ -445,15 +445,21 @@ export default {
   right: 5px;
   top: 18px;
   z-index: 9;
-  padding: 2px 3px;
-  font-size: 12px;
-  background: #cccccc;
-  color: #ffffff;
+  width: 52px;
+  height: 24px;
+  background: #F8F9FA;
+  border-radius: 5px;
+  border: 1px solid #E8E8EB;
+  color: #17173A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  border-radius: 2px;
-  @include themeify {
-    border-color: themed("color-fd7e14");
-    //box-shadow: 0px 0px 4px 0px themed("color-ffffff");
+  font-size: 12px;
+  &:hover{
+    background: #FFFAF3;
+    border: 1px solid #FD7E14;
+    color: #FD7E14;
   }
 }
 .ibo_item.active{

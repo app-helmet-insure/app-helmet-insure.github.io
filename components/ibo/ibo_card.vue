@@ -258,9 +258,7 @@ export default {
     this.timer = setInterval(() => {
       this.getCountdownData()
     }, 1000)
-    if (!this.iboData.is_coming) {
-      this.init()
-    }
+    this.init()
   },
   destroyed() {
     clearInterval(this.timer)
@@ -270,7 +268,7 @@ export default {
       // 我的质押
       const purchasedCurrencyOf = fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
       // 我的余额
-      const balanceOf = this.iboData.balanceOf
+      const balanceOf = this.iboData.balanceOf || 0
       // 我的剩余额度 balanceOf
       const remainingLimit = this.iboData.pool_info.max_allocation - purchasedCurrencyOf
       return Math.min(remainingLimit, balanceOf)
@@ -322,6 +320,9 @@ export default {
       }
     },
     init() {
+      if (this.iboData.is_coming){
+        return
+      }
       this.initLoading = true
       getPoolInfo(this.pool).then(newPool => {
         this.iboData = newPool

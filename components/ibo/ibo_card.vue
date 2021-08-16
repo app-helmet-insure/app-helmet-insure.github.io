@@ -40,7 +40,7 @@
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalTokenAmount }} {{ iboData.currency.symbol }}</span>
+          <span class="value">{{ totalTokenAmount }} {{ iboData.underlying.symbol }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -58,7 +58,7 @@
         </a>
         <div class="block">
 
-          <span class="slider-max" v-if="this.iboData.purchasedCurrencyOf <= 0" onclick="onMax">{{ $t("Table.Max") }}</span>
+          <span class="slider-max" v-if="this.iboData.purchasedCurrencyOf <= 0" @click="onMax">{{ $t("Table.Max") }}</span>
           <el-slider
               v-model="amount"
               :min='iboData.pool_info.min_allocation'
@@ -451,7 +451,7 @@ export default {
   border-radius: 2px;
   @include themeify {
     border-color: themed("color-fd7e14");
-    box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
+    //box-shadow: 0px 0px 4px 0px themed("color-ffffff");
   }
 }
 .ibo_item.active{

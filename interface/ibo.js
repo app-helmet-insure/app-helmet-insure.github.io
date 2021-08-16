@@ -86,6 +86,10 @@ export const getPoolInfo = (pool) => {
       currency_allowance = 0,
       balanceOf = 0
     ] = resData
+      // time = 1629118800
+      //   timeSettle = 1629118800
+      // curUserCount=0
+      // purchasedCurrencyOf=0
       console.log('resData', resData)
     const [
       total_completed_,

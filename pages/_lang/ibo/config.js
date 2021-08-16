@@ -10,7 +10,7 @@ export const iboPools = [
     name: 'UFOMO',
     address: '0x685f36fD01b749788BFa4d2526a77261EF604f3f',
     abi: starterLimitAbi,
-    start_at: '1628906820',
+    start_at: '1629115200',
     is_top: true,
     is_coming: false, // is_coming 为 true 则不请求合约
     currency: {

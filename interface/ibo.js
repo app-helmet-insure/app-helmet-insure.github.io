@@ -156,7 +156,7 @@ export const getPoolInfo = (pool) => {
       price: Web3.utils.fromWei(price, 'ether'),
       is_join,
       totalPurchasedCurrency,
-      totalPurchasedAmount: pool.amount,
+      totalPurchasedAmount,
       totalPurchasedUnderlying,
       balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
       purchasedCurrencyOf,

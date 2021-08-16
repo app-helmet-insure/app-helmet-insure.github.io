@@ -40,7 +40,7 @@
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalPurchasedAmount }} {{ iboData.currency.symbol }}</span>
+          <span class="value">{{ totalTokenAmount }} {{ iboData.currency.symbol }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -203,8 +203,8 @@ export default {
   },
   computed: {
     // 总释放
-    totalPurchasedAmount: function () {
-      return new BigNumber(this.iboData.totalPurchasedAmount).toFormat()
+    totalTokenAmount: function () {
+      return new BigNumber(this.iboData.amount).toFormat()
     },
     // 我的质押
     purchasedCurrencyOf: function () {

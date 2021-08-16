@@ -350,11 +350,9 @@ export default {
         return
       }
       if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {
-        const msg = this.$t('IBO.IBO_text27')
-        console.log('msg', msg)
-        MessageBox.confirm(msg, 'Tip', {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm(this.$t('IBO.IBO_text27'), this.$t('IBO.IBO_text33'), {
+          confirmButtonText: this.$t('IBO.IBO_text31'),
+          cancelButtonText: this.$t('IBO.IBO_text32'),
           showCancelButton: true,
           customClass: 'confirm-tip'
         }).then(() => {

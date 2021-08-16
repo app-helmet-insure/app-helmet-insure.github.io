@@ -381,6 +381,9 @@
     "IBO_august": "28 August",
     "IBO_august2": "16 August UTC 14:00",
     "TG_text": "TG(EN)",
-    "TG_URL": "https://t.me/UFOMO_EN"
+    "TG_URL": "https://t.me/UFOMO_EN",
+    "IBO_text31": "Confirm",
+    "IBO_text32": "Cancel",
+    "IBO_text33": "Tip"
   }
 }

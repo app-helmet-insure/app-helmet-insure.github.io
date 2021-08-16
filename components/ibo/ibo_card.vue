@@ -3,7 +3,7 @@
       class="ibo_item_warp"
       v-if="iboData"
   >
-    <div class="ibo_item">
+    <div class="ibo_item" :class="{active: iboData.status === 2}">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src='require(`~/assets/img/ibo/${iboData.icon}`)'/>
@@ -40,7 +40,7 @@
         <p class="ibo_item_radio">{{ iboData.ratio }}</p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
-          <span class="value">{{ totalPurchasedAmount }} {{ iboData.currency.symbol }}</span>
+          <span class="value">{{ totalPurchasedAmount }} {{ iboData.underlying.symbol }}</span>
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text9") }}</span>
@@ -57,8 +57,9 @@
           </i>
         </a>
         <div class="block">
+
           <el-slider
-              v-model="amount"
+              :value="amount"
               :min='iboData.pool_info.min_allocation'
               :max='iboData.pool_info.max_allocation'
               show-input
@@ -127,7 +128,7 @@
         <span class="ibo_item_value_title">{{ $t("IBO.IBO_text16") }}</span>
         <span class="value">{{ rateValue }}</span>
       </p>
-      <p class="claim_detail_btn" @click='showClaim' :class="{active: iboData.status === 2}">
+      <p class="claim_detail_btn" @click='showClaim'>
         <span></span>
         <a>{{ $t("IBO.IBO_text17") }}</a>
         <span></span>
@@ -214,7 +215,7 @@ export default {
     },
     // 中签率
     rate: function () {
-      if (!this.iboData.settleable || this.iboData.purchasedCurrencyOf <= 0){
+      if (!this.iboData.settleable){
         return '-'
       }
       return fromWei(this.iboData.settleable.rate)
@@ -332,9 +333,7 @@ export default {
       })
     },
     showClaim() {
-      if (this.iboData.status === 2){
-        this.claimFlag = !this.claimFlag
-      }
+      this.claimFlag = !this.claimFlag
     },
     onApprove() {
       if (this.$store.state.userInfo.status !== 1 || this.iboData.status !== 1 || this.approvalLoading) {
@@ -347,10 +346,10 @@ export default {
       })
     },
     onBurn() {
-      if (!this.amount || isNaN(Number(this.amount)) || (!(this.iboData.pool_info.curUserCount < this.iboData.pool_info.maxAccount) || this.iboData.purchasedCurrencyOf > 0)){
+      if (!this.amount || isNaN(Number(this.amount))){
         return
       }
-      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading && this.iboData.purchasedCurrencyOf <= 0) {
+      if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {
         const msg = this.$t('IBO.IBO_text27')
         console.log('msg', msg)
         MessageBox.confirm(msg, 'Tip', {
@@ -434,8 +433,12 @@ export default {
     border-color: #17173A;
   }
 }
-.el-slider__bar{
-  background: #FD7E14!important;
+
+.ibo_item.active{
+  @include themeify {
+    border-color: themed("color-fd7e14");
+    box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
+  }
 }
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
@@ -465,8 +468,9 @@ export default {
     }
     @include themeify {
       border: 1px solid themed("color-e8e8eb");
-      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
+      box-shadow: 0px 0px 4px 0px themed("color-e8e8eb");
     }
+
     border-radius: 10px;
     @include themeify {
       box-border: 1px solid themed("color-e8e8eb");
@@ -698,9 +702,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       margin-top: 20px;
-      &.active{
-        color: #FD7E14;
-      }
+
       span {
         width: 84px;
         height: 1px;
@@ -714,17 +716,11 @@ export default {
         font-size: 12px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        opacity: 0.4;
+        color: #fd7e14;
         line-height: 14px;
 
-        &.active:hover {
-          @include themeify {
-            color: themed("color-fd7e14");
-          }
-          opacity: 1;
+        &:hover {
+          color: #fd7e14;
 
           &:after {
             content: '';
@@ -733,13 +729,10 @@ export default {
             right: -10px;
             width: 0;
             height: 0;
-            @include themeify {
-              border: 4px solid themed("color-fd7e14");
-              border-left-color: transparent;
-              border-bottom-color: transparent;
-              border-right-color: transparent;
-            }
-            opacity: 1;
+            border: 4px solid #fd7e14;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
             transform: rotate(-180deg);
             // transition: 0.3s;
           }
@@ -752,13 +745,10 @@ export default {
           right: -10px;
           width: 0;
           height: 0;
-          @include themeify {
-            border: 4px solid themed("color-17173a");
-            border-left-color: transparent;
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-          }
-          opacity: 0.4;
+          border: 4px solid #fd7e14;
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          border-right-color: transparent;
         }
       }
     }
@@ -787,7 +777,7 @@ export default {
     }
     @include themeify {
       border: 1px solid themed("color-e8e8eb");
-      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
+      box-shadow: 0px 0px 4px 0px themed("color-e8e8eb");
     }
 
     border-radius: 10px;
@@ -961,7 +951,24 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
-
+      &.disabled {
+        cursor: default;
+        
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
+      }
       &:hover {
         @include themeify {
           background: themed("ibo_btn_hover");
@@ -973,7 +980,23 @@ export default {
       @include themeify {
         background: themed("color-fd7e14");
       }
-
+     &.disabled {
+        cursor: default;
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
+      }
       &:hover {
         @include themeify {
           background: themed("color-fd7e14");
@@ -1000,17 +1023,11 @@ export default {
         font-size: 12px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        opacity: 0.4;
+        color: #fd7e14;
         line-height: 14px;
 
         &:hover {
-          @include themeify {
-            color: themed("color-fd7e14");
-          }
-          opacity: 1;
+          color: #fd7e14;
 
           &:after {
             content: '';
@@ -1019,13 +1036,10 @@ export default {
             right: -10px;
             width: 0;
             height: 0;
-            @include themeify {
-              border: 4px solid themed("color-fd7e14");
-              border-left-color: transparent;
-              border-bottom-color: transparent;
-              border-right-color: transparent;
-            }
-            opacity: 1;
+            border: 4px solid #fd7e14;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
             transform: rotate(-180deg);
             // transition: 0.3s;
           }
@@ -1038,13 +1052,10 @@ export default {
           right: -10px;
           width: 0;
           height: 0;
-          @include themeify {
-            border: 4px solid themed("color-17173a");
-            border-left-color: transparent;
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-          }
-          opacity: 0.4;
+          border: 4px solid #fd7e14;
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          border-right-color: transparent;
         }
       }
     }

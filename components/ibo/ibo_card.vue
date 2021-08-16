@@ -75,23 +75,23 @@
             <span>{{ $t("IBO.IBO_text13") }}{{ iboData.pool_info.max_allocation }}</span>
           </p>
         </div>
-        <a class="ibo_item_btn" :class="iboData.status !== 1 || iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"
+        <a class="ibo_item_btn" :class="iboData.status !== 1  ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"
            :style="{
           background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
           color : $store.state.themes === 'dark' ? '#000000' : '#ffffff'
         }"
            @click='onApprove'>
           <i class="el-icon-loading" v-if="approvalLoading"></i>
-          {{ $t(iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? "IBO.IBO_text34" : "Table.Approve") }}
+          {{ $t("Table.Approve") }}
           </a>
-        <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1 && iboData.pool_info.curUserCount < iboData.pool_info.maxAccount) || this.iboData.purchasedCurrencyOf > 0 ? 'disabled ibo_item_btn' : 'ibo_item_btn'"
+        <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1) || this.iboData.purchasedCurrencyOf > 0 ? 'disabled ibo_item_btn' : 'ibo_item_btn'"
            :style="{
             background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
             color : $store.state.themes === 'dark' ? '#000000' : '#ffffff'
            }"
            @click='onBurn' v-else>
           <i class="el-icon-loading" v-if="burnLoading"></i>
-          {{ $t(iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? "IBO.IBO_text34" : "Table.Burn") }}
+          {{ $t("Table.Burn") }}
         </a>
       </div>
       <div v-if='iboData.status === 3' class="finished_style">

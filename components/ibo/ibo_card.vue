@@ -241,7 +241,10 @@ export default {
     // 未使用
     notUsed: function () {
       if (this.iboData.settleable) {
-        return new BigNumber((1 - fromWei(this.iboData.settleable.rate)) * fromWei(this.iboData.purchasedCurrencyOf)).toFormat(6)
+        if (this.iboData.settleable.amount == '0'){
+          return 0
+        }
+        return new BigNumber(fromWei(this.iboData.settleable.amount)).toFormat(6)
       }
       return 0
     },

@@ -1,4 +1,5 @@
 import { formatMiningPool } from "./index";
+
 let PoolList = [
   {
     key: "SHIBHHMCRN",
@@ -18,8 +19,10 @@ let PoolList = [
     key: "SHIBHHWIZARD",
     pool_name: "<i>SHIBh</i> Burning Box",
     total_bonus: 5000,
-    start_time: "2021/07/31 00:00 UTC+8",
-    finish_time: "2021/08/05 00:00 UTC+8",
+    // start_time: "2021/07/31 00:00 UTC+8",
+    // finish_time: "2021/08/05 00:00 UTC+8",
+    start_time: "2021/08/16 18:00 UTC+8",
+    finish_time: "2021/09/15 00:00 UTC+8",
     pool_address: "0x3670893F84dc477Bd0a0F4bE74B6916F4CD3074e",
     stake_symbol: "SHIBh",
     stake_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",

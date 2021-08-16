@@ -244,56 +244,9 @@ export default {
     close_wraper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
     },
-    getMiningTime(time) {
-      let now = new Date() * 1;
-      let dueDate = time;
-      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let template;
-      if (dueDate > now) {
-        template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-          minute: minute > 9 ? minute : "0" + minute,
-        };
-        return template;
-      } else {
-        return "Mining";
-      }
-    },
-    getRemainTime(time) {
-      let now = new Date() * 1;
-      let dueDate = time;
-      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let template;
-
-      if (dueDate > now) {
-        template = {
-          day: day > 9 ? day : "0" + day,
-          hour: hour > 9 ? hour : "0" + hour,
-          minute: minute > 9 ? minute : "0" + minute,
-        };
-        return template;
-      } else {
-        template = {
-          day: "00",
-          hour: "00",
-          minute: "00",
-        };
-        return "Expired";
-      }
-    },
+    forMatTime(){
+      
+    }
   },
 };
 </script>
@@ -351,8 +304,6 @@ export default {
     width: 60px;
     height: 60px;
     margin-right: 20px;
-  }
-  section {
   }
 }
 @media screen and(min-width: 750px) {

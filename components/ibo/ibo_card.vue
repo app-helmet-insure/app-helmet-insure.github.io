@@ -75,14 +75,15 @@
             <span>{{ $t("IBO.IBO_text13") }}{{ iboData.pool_info.max_allocation }}</span>
           </p>
         </div>
-        <a class="ibo_item_btn" :class="iboData.status !== 1 ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"
+        <a class="ibo_item_btn" :class="iboData.status !== 1 || iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"
            :style="{
           background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
           color : $store.state.themes === 'dark' ? '#000000' : '#ffffff'
         }"
            @click='onApprove'>
           <i class="el-icon-loading" v-if="approvalLoading"></i>
-          {{$t("Table.Approve") }}</a>
+          {{ $t(iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? "IBO.IBO_text34" : "Table.Approve") }}
+          </a>
         <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1 && iboData.pool_info.curUserCount < iboData.pool_info.maxAccount) || this.iboData.purchasedCurrencyOf > 0 ? 'disabled ibo_item_btn' : 'ibo_item_btn'"
            :style="{
             background : $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
@@ -90,7 +91,7 @@
            }"
            @click='onBurn' v-else>
           <i class="el-icon-loading" v-if="burnLoading"></i>
-          {{ $t("Table.Burn") }}
+          {{ $t(iboData.pool_info.curUserCount >= iboData.pool_info.maxAccount ? "IBO.IBO_text34" : "Table.Burn") }}
         </a>
       </div>
       <div v-if='iboData.status === 3' class="finished_style">
@@ -199,7 +200,8 @@ export default {
       approvalLoading: false,
       claimLoading: false,
       burnLoading: false,
-      initLoading: false
+      initLoading: false,
+      initTimer: null
     }
   },
   computed: {
@@ -209,14 +211,14 @@ export default {
     },
     // 我的质押
     purchasedCurrencyOf: function () {
-      if (this.initLoading){
-        return '-'
-      }
+      // if (this.initLoading){
+      //   return '-'
+      // }
       return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
     },
     // 中签率
     rate: function () {
-      if (!this.iboData.settleable){
+      if (!this.iboData.settleable || this.iboData.status === 0){
         return '-'
       }
       return fromWei(this.iboData.settleable.rate)
@@ -250,9 +252,9 @@ export default {
     },
     // 可用
     available: function () {
-      if (this.initLoading) {
-        return '-'
-      }
+      // if (this.initLoading) {
+      //   return '-'
+      // }
       return this.getAvailable()
     }
   },
@@ -261,10 +263,14 @@ export default {
     this.timer = setInterval(() => {
       this.getCountdownData()
     }, 1000)
+    this.initTimer = setInterval(() => {
+      this.init()
+    }, 16000)
     this.init()
   },
   destroyed() {
     clearInterval(this.timer)
+    clearInterval(this.initTimer)
   },
   methods: {
     getAvailable(){

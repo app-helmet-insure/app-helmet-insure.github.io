@@ -6,6 +6,7 @@ import {Contract, Provider} from 'ethers-multicall-x'
 import BigNumber from "bignumber.js";
 const BSCChainId = 56
 const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
+BigNumber.config({ EXPONENTIAL_AT: 100 })
 export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
 export function processResult(data) {
   data = cloneDeep(data)
@@ -148,7 +149,7 @@ export const getPoolInfo = (pool) => {
         .toFixed(2, 1)
         .toString()*1)
     return Object.assign({}, pool, {
-      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toString()} ${
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(1).toString()} ${
         pool.underlying.symbol
       }`,
       progress:
@@ -163,7 +164,7 @@ export const getPoolInfo = (pool) => {
       price: Web3.utils.fromWei(price, 'ether'),
       is_join,
       totalPurchasedCurrency,
-      totalPurchasedAmount,
+      totalPurchasedAmount: totalPurchasedAmount,
       totalPurchasedUnderlying,
       balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
       purchasedCurrencyOf,

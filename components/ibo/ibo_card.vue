@@ -30,18 +30,8 @@
           <span class="ibo_item_countdown">{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{
               countdown.m
             }}{{ $t("IBO.IBO_text1") }}</span>
-          <span v-if='iboData.status === 0' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text3")
-            }}</span>
-          <span v-if='iboData.status === 1 && (iboData.timeClose === 0 || iboData.timeClose > now)'
-                class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text4") }}</span>
-          <span v-if='iboData.status === 1 && !(iboData.timeClose === 0 || iboData.timeClose > now)'
-                class="ibo_item_status ibo_item_status_ongoing">{{ $t("IBO.IBO_text5") }}</span>
-          <span v-if='iboData.status === 2' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text6")
-            }}</span>
-          <span v-if='iboData.status === 3' class="ibo_item_status ibo_item_status_ongoing">{{
-              $t("IBO.IBO_text7")
+          <span class="ibo_item_status ibo_item_status_ongoing">{{
+              $t(countdown.statusTxt)
             }}</span>
         </p>
       </div>
@@ -81,9 +71,9 @@
             <span>{{ $t("IBO.IBO_text13") }}{{ iboData.pool_info.max_allocation }}</span>
           </p>
         </div>
-        <a class="ibo_item_btn" v-if="iboData.currency.allowance === '0'" @click='onApprove'>{{
-            $t("Table.Approve")
-          }}</a>
+        <a class="ibo_item_btn" :class="iboData.status !== 1 ? 'disabled' : ''" v-if="iboData.currency.allowance === '0'"  @click='onApprove'>
+          <i class="el-icon-loading" v-if="approvalLoading"></i>
+          {{$t("Table.Approve") }}</a>
         <a :class="!(iboData.status === 1 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn' : 'ibo_item_btn'" @click='onBurn' v-else>{{ $t("Table.Burn") }}</a>
       </div>
       <div v-if='iboData.status === 3' class="finished_style">
@@ -135,7 +125,10 @@
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{volume}}</span>
         </p>
-        <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'" @click='onClaim'>{{ $t("Table.Claim") }}</a>
+        <a :class="!(iboData.status === 2 && $store.state.userInfo.status === 1) ? 'disabled ibo_item_btn ibo_item_claim' : 'ibo_item_btn ibo_item_claim'" @click='onClaim'>
+          <i class="el-icon-loading" v-if="claimLoading"></i>
+          {{ $t("Table.Claim") }}
+        </a>
       </div>
     </div>
     <Dialog
@@ -181,8 +174,11 @@ export default {
       now: parseInt(Date.now() / 1000),
       countdown: {
         h: '-',
-        m: '-'
-      }
+        m: '-',
+        statusTxt: 'IBO.IBO_text3'
+      },
+      approvalLoading: false,
+      claimLoading: false
     }
   },
   computed: {
@@ -221,7 +217,7 @@ export default {
     // 未使用
     notUsed: function () {
       if (this.iboData.settleable) {
-        return new BigNumber((1 - this.rate) * this.iboData.settleable.purchasedCurrencyOf).toFormat()
+        return new BigNumber((1 - fromWei(this.iboData.settleable.rate)) * this.iboData.purchasedCurrencyOf).toFormat()
       }
       return 0
   }
@@ -240,14 +236,47 @@ export default {
   },
   methods: {
     getCountdownData() {
-      const thisTime = new Date().getTime()
-      const startTime = new Date(this.iboData.start_at * 1000)
-      if (thisTime < startTime) {
-        const t = startTime - thisTime
-        this.countdown = {
-          h: Math.floor(t / 3600000),
-          m: Math.floor((t % 3600000) / 60000)
-        }
+      // "IBO_text3": "倒计时",
+      //     "IBO_text4": "进行中",
+      //     "IBO_text5": "等待",
+      //     "IBO_text6": "结算中",
+      //     "IBO_text7": "已完成",
+      const thisTime = parseInt(new Date().getTime()/1000)
+      let t = 0
+      // 倒计时开始
+      let statusTxt = 'IBO.IBO_text3'
+      switch (this.iboData.status) {
+        case 0:
+          t = this.iboData.start_at - thisTime
+          statusTxt = 'IBO.IBO_text3'
+          break
+        case 1:
+          // 倒计时结束
+            if (this.iboData.timeClose === 0 || this.iboData.timeClose > thisTime){
+              t = this.iboData.timeClose - thisTime
+              statusTxt = 'IBO.IBO_text4'
+            } else {
+              statusTxt = 'IBO.IBO_text5'
+            }
+          break
+        case 2:
+          // 倒计时claim
+          t = this.iboData.timeSettle - thisTime
+          statusTxt = 'IBO.IBO_text6'
+          break
+        case 3:
+          statusTxt = 'IBO.IBO_text7'
+      }
+      let h = '-'
+      let m = '-'
+      if (t > 0) {
+        h = Math.floor(t / 3600)
+        m = Math.floor((t % 3600) / 60)
+      }
+      this.countdown = {
+        h,
+        m,
+        statusTxt
       }
     },
     init() {
@@ -260,12 +289,13 @@ export default {
       this.claimFlag = !this.claimFlag
     },
     onApprove() {
-      if (this.$store.state.userInfo.status !== 1) {
+      if (this.$store.state.userInfo.status !== 1 || this.iboData.status !== 1 || this.approvalLoading) {
         return
       }
-      console.log(this.$store.state.userInfo)
+      this.approvalLoading = true
       onApprove_(this.iboData.currency.address, (success) => {
         success && this.init()
+        this.approvalLoading = false
       })
     },
     onBurn() {
@@ -276,9 +306,11 @@ export default {
       }
     },
     onClaim() {
-      if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1) {
+      if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1 && !this.claimLoading) {
+        this.claimLoading = true
         onClaim_(this.iboData.currency.address,this.iboData.abi, (success) => {
           success && this.init()
+          this.claimLoading = false
         })
       }
     }

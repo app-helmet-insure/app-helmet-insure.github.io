@@ -141,7 +141,7 @@ export const getPoolInfo = (pool) => {
     })
       console.log('Web3.utils.fromWei(amtLow, \'ether\')', Web3.utils.fromWei(amtLow, 'ether'))
     return Object.assign({}, pool, {
-      ratio: `1 ${pool.currency.symbol} = ${formatAmount(price, 18, 5)} ${
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toString()} ${
         pool.underlying.symbol
       }`,
       progress:

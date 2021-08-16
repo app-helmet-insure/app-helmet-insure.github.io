@@ -79,7 +79,7 @@ export const iboPools = [
     progress: 0,
     status: 0,
     ratio: '1 HELMET = 4.0 GAME1',
-    time: '1629122400',
+    time: '1629126000',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '27777750000000000000000',//总释放
     totalPurchasedUnderlying: '0',

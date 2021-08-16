@@ -58,8 +58,9 @@
         </a>
         <div class="block">
 
+          <span class="slider-max" v-if="this.iboData.purchasedCurrencyOf <= 0" onclick="onMax">{{ $t("Table.Max") }}</span>
           <el-slider
-              :value="amount"
+              v-model="amount"
               :min='iboData.pool_info.min_allocation'
               :max='iboData.pool_info.max_allocation'
               show-input
@@ -249,13 +250,7 @@ export default {
       if (this.initLoading) {
         return '-'
       }
-      // 我的质押
-      const purchasedCurrencyOf = fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
-      // 我的余额
-      const balanceOf = this.iboData.balanceOf
-      // 我的剩余额度 balanceOf
-      const remainingLimit = this.iboData.pool_info.max_allocation - purchasedCurrencyOf
-      return Math.min(remainingLimit, balanceOf)
+      return this.getAvailable()
     }
   },
   created() {
@@ -271,6 +266,15 @@ export default {
     clearInterval(this.timer)
   },
   methods: {
+    getAvailable(){
+      // 我的质押
+      const purchasedCurrencyOf = fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1
+      // 我的余额
+      const balanceOf = this.iboData.balanceOf
+      // 我的剩余额度 balanceOf
+      const remainingLimit = this.iboData.pool_info.max_allocation - purchasedCurrencyOf
+      return Math.min(remainingLimit, balanceOf)
+    },
     getCountdownData() {
       // "IBO_text3": "倒计时",
       //     "IBO_text4": "进行中",
@@ -284,9 +288,6 @@ export default {
       switch (this.iboData.status) {
         case 0:
           t = this.iboData.start_at - thisTime
-            if (t === 0){
-
-            }
           statusTxt = 'IBO.IBO_text3'
           break
         case 1:
@@ -295,13 +296,13 @@ export default {
               t = this.iboData.timeClose - thisTime
               statusTxt = 'IBO.IBO_text4'
             } else {
-              statusTxt = 'IBO.IBO_text5'
+              statusTxt = 'IBO.IBO_text7'
             }
           break
         case 2:
           // 倒计时claim
           t = this.iboData.timeSettle - thisTime
-          statusTxt = 'IBO.IBO_text6'
+          statusTxt = 'IBO.IBO_text7'
           break
         case 3:
           statusTxt = 'IBO.IBO_text7'
@@ -367,12 +368,18 @@ export default {
       }
     },
     onClaim() {
-      if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1 && !this.claimLoading) {
+      if (this.iboData.status === 2 && this.$store.state.userInfo.status === 1 && !this.claimLoading && this.iboData.settleable.volume > 0) {
         this.claimLoading = true
         onClaim_(this.iboData.address,this.iboData.abi, (success) => {
           success && this.init()
           this.claimLoading = false
         })
+      }
+    },
+    onMax(){
+      const available = this.getAvailable()
+      if (this.iboData.pool_info.min_allocation >= available && available < this.iboData.pool_info.max_allocation) {
+        this.amount = available
       }
     }
   }
@@ -431,7 +438,22 @@ export default {
     border-color: #17173A;
   }
 }
-
+.slider-max{
+  position: absolute;
+  right: 5px;
+  top: 18px;
+  z-index: 9;
+  padding: 2px 3px;
+  font-size: 12px;
+  background: #cccccc;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 2px;
+  @include themeify {
+    border-color: themed("color-fd7e14");
+    box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
+  }
+}
 .ibo_item.active{
   @include themeify {
     border-color: themed("color-fd7e14");

@@ -3,7 +3,7 @@
       class="ibo_item_warp"
       v-if="iboData"
   >
-    <div class="ibo_item">
+    <div class="ibo_item" :class="{active: iboData.status === 2}">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src='require(`~/assets/img/ibo/${iboData.icon}`)'/>
@@ -346,15 +346,13 @@ export default {
       })
     },
     onBurn() {
-      if (!this.amount || isNaN(Number(this.amount))){
+      if (!this.amount || isNaN(Number(this.amount)) || this.iboData.pool_info.curUserCount >= this.iboData.pool_info.maxAccount || this.iboData.purchasedCurrencyOf > 0){
         return
       }
       if (this.iboData.status === 1 && this.$store.state.userInfo.status === 1 && !this.burnLoading) {
-        const msg = this.$t('IBO.IBO_text27')
-        console.log('msg', msg)
-        MessageBox.confirm(msg, 'Tip', {
-          confirmButtonText: 'Confirm',
-          cancelButtonText: 'Cancel',
+        MessageBox.confirm(this.$t('IBO.IBO_text27'), this.$t('IBO.IBO_text33'), {
+          confirmButtonText: this.$t('IBO.IBO_text31'),
+          cancelButtonText: this.$t('IBO.IBO_text32'),
           showCancelButton: true,
           customClass: 'confirm-tip'
         }).then(() => {
@@ -434,6 +432,12 @@ export default {
   }
 }
 
+.ibo_item.active{
+  @include themeify {
+    border-color: themed("color-fd7e14");
+    box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
+  }
+}
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;
@@ -451,7 +455,6 @@ export default {
     width: 20%;
   }
 }
-
 @media screen and (min-width: 750px) {
 
   .ibo_item {
@@ -462,7 +465,8 @@ export default {
       background: themed("color-ffffff");
     }
     @include themeify {
-      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
+      border: 1px solid themed("color-e8e8eb");
+      box-shadow: 0px 0px 4px 0px themed("color-e8e8eb");
     }
 
     border-radius: 10px;
@@ -770,7 +774,8 @@ export default {
       background: themed("color-ffffff");
     }
     @include themeify {
-      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
+      border: 1px solid themed("color-e8e8eb");
+      box-shadow: 0px 0px 4px 0px themed("color-e8e8eb");
     }
 
     border-radius: 10px;

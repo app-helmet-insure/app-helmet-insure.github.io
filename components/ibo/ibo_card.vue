@@ -710,17 +710,11 @@ export default {
         font-size: 12px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        opacity: 0.4;
+        color: #fd7e14;
         line-height: 14px;
 
         &:hover {
-          @include themeify {
-            color: themed("color-fd7e14");
-          }
-          opacity: 1;
+          color: #fd7e14;
 
           &:after {
             content: '';
@@ -729,13 +723,10 @@ export default {
             right: -10px;
             width: 0;
             height: 0;
-            @include themeify {
-              border: 4px solid themed("color-fd7e14");
-              border-left-color: transparent;
-              border-bottom-color: transparent;
-              border-right-color: transparent;
-            }
-            opacity: 1;
+            border: 4px solid #fd7e14;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
             transform: rotate(-180deg);
             // transition: 0.3s;
           }
@@ -748,13 +739,10 @@ export default {
           right: -10px;
           width: 0;
           height: 0;
-          @include themeify {
-            border: 4px solid themed("color-17173a");
-            border-left-color: transparent;
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-          }
-          opacity: 0.4;
+          border: 4px solid #fd7e14;
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          border-right-color: transparent;
         }
       }
     }
@@ -956,7 +944,24 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
-
+      &.disabled {
+        cursor: default;
+        
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
+      }
       &:hover {
         @include themeify {
           background: themed("ibo_btn_hover");
@@ -968,7 +973,23 @@ export default {
       @include themeify {
         background: themed("color-fd7e14");
       }
-
+     &.disabled {
+        cursor: default;
+        @include themeify {
+          background: themed("ibo_disable");
+        }
+        @include themeify {
+          color: themed("ibo_disable_text");
+        }
+        &:hover {
+          @include themeify {
+            background: themed("ibo_disable");
+          }
+          @include themeify {
+            color: themed("ibo_disable_text");
+          }
+        }
+      }
       &:hover {
         @include themeify {
           background: themed("color-fd7e14");
@@ -995,17 +1016,11 @@ export default {
         font-size: 12px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        opacity: 0.4;
+        color: #fd7e14;
         line-height: 14px;
 
         &:hover {
-          @include themeify {
-            color: themed("color-fd7e14");
-          }
-          opacity: 1;
+          color: #fd7e14;
 
           &:after {
             content: '';
@@ -1014,13 +1029,10 @@ export default {
             right: -10px;
             width: 0;
             height: 0;
-            @include themeify {
-              border: 4px solid themed("color-fd7e14");
-              border-left-color: transparent;
-              border-bottom-color: transparent;
-              border-right-color: transparent;
-            }
-            opacity: 1;
+            border: 4px solid #fd7e14;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
             transform: rotate(-180deg);
             // transition: 0.3s;
           }
@@ -1033,13 +1045,10 @@ export default {
           right: -10px;
           width: 0;
           height: 0;
-          @include themeify {
-            border: 4px solid themed("color-17173a");
-            border-left-color: transparent;
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-          }
-          opacity: 0.4;
+          border: 4px solid #fd7e14;
+          border-left-color: transparent;
+          border-bottom-color: transparent;
+          border-right-color: transparent;
         }
       }
     }

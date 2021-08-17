@@ -1,5 +1,5 @@
 
-import starterLimitAbi from '../../../abi/IBO_StarterLimit.json'
+import starterLimitAbi from '../abi/IBO_StarterLimit.json'
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
 

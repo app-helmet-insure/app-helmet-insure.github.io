@@ -1,4 +1,3 @@
-import Vue from "vue";
 // Pool Status
 // 1 unopen
 // 2 ongoing
@@ -36,12 +35,14 @@ const getShowTime = (time) => {
   const minute = Math.floor(
     (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
   );
-  if (dueDate > now) {
-    let template = {
-      day: day > 9 ? day : "0" + day,
-      hour: hour > 9 ? hour : "0" + hour,
-      minute: minute > 9 ? minute : "0" + minute,
-    };
-    return template;
+  const FixDay = day > 9 ? day : "0" + day;
+  const FixHour = hour > 9 ? hour : "0" + hour;
+  const FixMinute = minute > 9 ? minute : "0" + minute;
+  let template;
+  if (Number(FixDay) > 0) {
+    template = `${FixDay}<b>${window.$nuxt.$t("Content.DayM")}</b><i>/</i>${FixHour}<b>${window.$nuxt.$t("Content.HourM")}</b>`;
+  }else{
+    template = `${FixHour}<b>${window.$nuxt.$t("Content.HourM")}</b><i>/</i>${FixMinute}<b>${window.$nuxt.$t("Content.MinM")}</b>`;
   }
+  return template;
 };

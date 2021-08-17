@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import BURNTITLE from "~/components/burnbox/burn_title.vue";
-import BURNLIST from "~/components/burnbox/burn_list.vue";
+import BURNTITLE from "~/components/burnbox/burnTitle.vue";
+import BURNLIST from "~/components/burnbox/burnList.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",

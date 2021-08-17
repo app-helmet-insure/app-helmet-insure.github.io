@@ -14,7 +14,7 @@
 <script>
 import IBOMingTitle from "~/components/ibo/ibo_title.vue";
 import IBOCard from "~/components/ibo/ibo_card.vue";
-import { iboPools } from './config'
+import { iboPools } from '../../../config/ibo'
 export default {
   layout: "home",
   components: {

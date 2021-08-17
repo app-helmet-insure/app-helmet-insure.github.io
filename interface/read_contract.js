@@ -1,4 +1,4 @@
-import MiningABI from "~/abi/deposite_abi.json";
+import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import CakePoolABI from "~/abi/cake_pool_abi.json";
 import MdexPoolABI from "~/abi/mdex_pool_abi.json";

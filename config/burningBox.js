@@ -1,35 +1,36 @@
-import { formatMiningPool } from "./index";
 
-let PoolList = [
+export const PoolList = [
   {
     key: "SHIBHHMCRN",
     pool_name: "<i>SHIBh</i> Burning Box",
     total_bonus: 2900,
     start_time: "2021/07/31 00:00 UTC+8",
-    finish_time: "2021/08/30 00:00 UTC+8",
+    finish_time: "2021/08/05 00:00 UTC+8",
     pool_address: "0x6ac3B230bB6F337f043E943D212D7Ae6a7174fa8",
     stake_symbol: "SHIBh",
     stake_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     stake_decimals_number: 12,
+    stake_decimals: 'microether',
     reward_symbol: "hMCRN",
     reward_address: "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf",
     reward_decimals_number: 18,
+    reward_decimals: 'ether',
   },
   {
     key: "SHIBHHWIZARD",
     pool_name: "<i>SHIBh</i> Burning Box",
     total_bonus: 5000,
-    // start_time: "2021/07/31 00:00 UTC+8",
-    // finish_time: "2021/08/05 00:00 UTC+8",
-    start_time: "2021/08/16 18:00 UTC+8",
-    finish_time: "2021/09/15 00:00 UTC+8",
+    start_time: "2021/07/31 00:00 UTC+8",
+    finish_time: "2021/08/05 00:00 UTC+8",
     pool_address: "0x3670893F84dc477Bd0a0F4bE74B6916F4CD3074e",
     stake_symbol: "SHIBh",
     stake_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     stake_decimals_number: 12,
+    stake_decimals: 'microether',
     reward_symbol: "hWIZARD",
     reward_address: "0x792b733af7b9b83331f90dbbd297e519258b09bc",
     reward_decimals_number: 18,
+    reward_decimals: 'ether',
   },
   {
     key: "BHELMETHBABY",
@@ -41,9 +42,11 @@ let PoolList = [
     stake_symbol: "BHELMET",
     stake_address: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
     stake_decimals_number: 18,
+    stake_decimals: 'ether',
     reward_symbol: "hBABY",
     reward_address: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
     reward_decimals_number: 18,
+    reward_decimals: 'ether',
   },
   {
     key: "HFORSHIBH",
@@ -55,9 +58,11 @@ let PoolList = [
     stake_symbol: "hFOR",
     stake_address: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
     stake_decimals_number: 18,
+    stake_decimals: 'ether',
     reward_symbol: "SHIBh",
     reward_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     reward_decimals_number: 12,
+    reward_decimals: 'microether',
   },
   {
     key: "HAUTOHTPT",
@@ -116,4 +121,3 @@ let PoolList = [
     reward_decimals_number: 18,
   },
 ];
-export const FixPoolList = formatMiningPool(PoolList);

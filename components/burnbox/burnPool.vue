@@ -10,7 +10,7 @@
           <span style="display: flex">
             <span>{{ isLogin ? rewards : "--" }}</span>
             /
-            <span>{{ isLogin ? activeData.TOTAL_BONUS : "--" }}</span>
+            <span>{{ isLogin ? activeData.total_bonus : "--" }}</span>
           </span>
         </div>
         <div class="control">
@@ -27,12 +27,12 @@
           <countTo
             v-if="isLogin"
             :startVal="Number(0)"
-            :endVal="Number(balance.Deposite)"
+            :endVal="Number(CanDeposite)"
             :duration="2000"
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ activeData.TOKEN_NAME }}
+          {{ activeData.stake_symbol }}
         </span>
       </p>
       <div class="input">
@@ -42,13 +42,13 @@
           :class="activeType == 'STAKE' ? 'activeInput' : ''"
         />
         <p>
-          <span>{{ activeData.TOKEN_NAME }}</span
-          >|<i @click="DepositeNum = balance.Deposite">{{ $t("Table.Max") }}</i>
+          <span>{{ activeData.stake_symbol }}</span
+          >|<i @click="DepositeNum = CanDeposite">{{ $t("Table.Max") }}</i>
         </p>
       </div>
       <button
         :class="
-          this.activeData.MING_TIME == 'Expired'
+          this.activeData.status === 3
             ? 'disable_button submit_burn'
             : 'submit_burn'
         "
@@ -64,12 +64,12 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Withdraw)"
+              :endVal="Number(CanWithdraw)"
               :duration="2000"
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ activeData.TOKEN_NAME }}</span
+            &nbsp;{{ activeData.stake_symbol }}</span
           >
         </p>
         <p>
@@ -78,30 +78,30 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.TotalLPT)"
+              :endVal="Number(TotalDeposite)"
               :duration="2000"
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ activeData.TOKEN_NAME }}</span
+            &nbsp;{{ activeData.stake_symbol }}</span
           >
         </p>
         <p class="bigsize">
           <span>{{ $t("Table.MyPoolShare") }} </span>
-          <span> {{ isLogin ? balance.Share : "--" }} % </span>
+          <span> {{ isLogin ? MyPoolShare : "--" }} % </span>
         </p>
       </div>
 
       <div class="ContractAddress">
         <span
-          >{{ activeData.TOKEN_NAME }} {{ $t("Table.ContractAddress") }}</span
+          >{{ activeData.stake_symbol }} {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.ONELPT_ADDRESS.toLowerCase() }}
+          {{ activeData.stake_address.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.ONELPT_ADDRESS)"
+            @click="copyAdress($event, activeData.stake_address)"
           ></i>
         </p>
       </div>
@@ -117,7 +117,7 @@
           <span style="display: flex">
             <span>{{ isLogin ? rewards : "--" }}</span>
             /
-            <span>{{ isLogin ? activeData.TOTAL_BONUS : "--" }}</span>
+            <span>{{ isLogin ? activeData.total_bonus : "--" }}</span>
           </span>
         </div>
         <div class="control">
@@ -134,7 +134,7 @@
           ><countTo
             v-if="isLogin"
             :startVal="Number(0)"
-            :endVal="Number(balance.Earn)"
+            :endVal="Number(CanClaim)"
             :duration="2000"
             :decimals="8"
           />
@@ -145,7 +145,7 @@
         <input
           v-if="isLogin"
           type="text"
-          v-model="balance.Earn"
+          v-model="CanClaim"
           disabled
           :class="activeType == 'CLAIM' ? 'activeInput' : ''"
         />
@@ -156,9 +156,9 @@
           :class="activeType == 'CLAIM' ? 'activeInput' : ''"
         />
         <p>
-          <span>{{ activeData.REWARD_NAME }}</span>
+          <span>{{ activeData.reward_symbol }}</span>
           <!-- |<i
-            @click="WithdrawNum = balance.Earn"
+            @click="WithdrawNum = CanClaim"
             style="border: 1px solid #fd7e14"
             >{{ $t("Table.Max") }}</i
           > -->
@@ -171,14 +171,15 @@
       </button>
       <div class="ContractAddress">
         <span
-          >{{ activeData.REWARD_NAME }} {{ $t("Table.ContractAddress") }}</span
+          >{{ activeData.reward_symbol }}
+          {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.REWARD_ADDRESS.toLowerCase() }}
+          {{ activeData.reward_address.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.REWARD_ADDRESS)"
+            @click="copyAdress($event, activeData.reward_address)"
           ></i>
         </p>
       </div>
@@ -200,6 +201,14 @@ import countTo from "vue-count-to";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 import moment from "moment";
+import MiningABI from "../../abi/MiningABI.json";
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+} from "~/interface/index.js";
 export default {
   props: ["activeData", "activeFlag", "activeType"],
   components: {
@@ -207,13 +216,11 @@ export default {
   },
   data() {
     return {
-      balance: {
-        Deposite: 0,
-        Withdraw: 0,
-        Earn: 0,
-        TotalLPT: 0,
-        Share: 0,
-      },
+      CanDeposite: 0,
+      CanWithdraw: 0,
+      TotalDeposite: 0,
+      CanClaim: 0,
+      MyPoolShare: 0,
       process: 0,
       rewards: 0,
       DepositeNum: "",
@@ -243,10 +250,10 @@ export default {
     },
   },
   mounted() {
-    this.getBalance();
-    this.getProcess();
-    this.NeedApprove();
-    if (!this.activeData.MING_TIME == "Expired") {
+    this.$nextTick(() => {
+      this.getPoolInfo();
+    });
+    if (!this.activeData.status === 3) {
       let timer1 = setInterval(() => {
         this.getProcess();
       }, 20000);
@@ -278,46 +285,48 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    async getBalance() {
-      // 可抵押数量
-      let Deposite = await BalanceOf(
-        this.activeData.STAKE_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可赎回数量
-      let Withdraw = await BalanceOf(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 总抵押
-      let TotalLPT = await TotalSupply(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可领取Helmet
-      let Helmet = await Earned(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.REWARD_DECIMALS
-      );
-      this.balance.Deposite = Deposite;
-      this.balance.Withdraw = Withdraw;
-      this.balance.Earn = Helmet;
-      this.balance.TotalLPT = fixD(TotalLPT, 8);
-      this.balance.Share = fixD((Withdraw / TotalLPT) * 100, 2);
+    getPoolInfo() {
+      let {
+        stake_address,
+        pool_address,
+        stake_decimals_number,
+        reward_decimals_number,
+      } = this.activeData;
+      const PoolContracts = new Contract(pool_address, MiningABI);
+      const StakeContracts = new Contract(stake_address, MiningABI);
+      const Account = window.CURRENTADDRESS;
+      const PromiseList = [
+        StakeContracts.balanceOf(Account),
+        PoolContracts.balanceOf(Account),
+        PoolContracts.totalSupply(),
+        PoolContracts.earned(Account),
+      ];
+      const MulticallProvider = getOnlyMultiCallProvider();
+      MulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim] = FixData;
+        this.CanDeposite = fromWei(CanDeposite, stake_decimals_number);
+        this.CanWithdraw = fromWei(CanWithdraw, stake_decimals_number);
+        this.TotalDeposite = fromWei(TotalDeposite, stake_decimals_number);
+        this.CanClaim = fromWei(CanClaim, reward_decimals_number);
+        this.MyPoolShare = fixD(
+          (this.CanWithdraw / this.TotalDeposite) * 100,
+          2
+        );
+      });
     },
     getProcess() {
       let now = moment.now();
-      let startTime = new Date(moment(this.activeData.START_TIME)) * 1;
-      let endTime = new Date(moment(this.activeData.END_TIME)) * 1;
+      let startTime = new Date(moment(this.activeData.start_time)) * 1;
+      let endTime = new Date(moment(this.activeData.finish_time)) * 1;
       let process = precision.divide(now - startTime, endTime - startTime);
-      console.log(process);
-      if (this.activeData.MING_TIME == "Expired") {
+      if (this.activeData.status === 3) {
         this.process = 100;
-        this.rewards = this.activeData.TOTAL_BONUS;
+        this.rewards = this.activeData.total_bonus;
       } else {
         this.process = process > 0 ? fixD(process * 100, 2) : 0;
         this.rewards =
-          process > 0 ? fixD(process * this.activeData.TOTAL_BONUS, 4) : 0;
+          process > 0 ? fixD(process * this.activeData.total_bonus, 4) : 0;
       }
     },
     // 抵押
@@ -328,11 +337,11 @@ export default {
       if (this.stakeLoading) {
         return;
       }
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      let StakeAddress = this.activeData.STAKE_ADDRESS;
-      let TokenSymbol = this.activeData.TOKEN_NAME;
+      let ContractAddress = this.activeData.pool_address;
+      let StakeAddress = this.activeData.stake_address;
+      let TokenSymbol = this.activeData.stake_symbol;
       let DepositeVolume = this.DepositeNum;
-      let Decimals = this.activeData.STAKE_DECIMALS;
+      let Decimals = this.activeData.stake_decimals_number;
       this.stakeLoading = true;
       if (this.ApproveFlag) {
         await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
@@ -351,8 +360,8 @@ export default {
       }
     },
     async NeedApprove() {
-      let SpenderAddress = this.activeData.POOL_ADDRESS;
-      let TokenAddress = this.activeData.STAKE_ADDRESS;
+      let SpenderAddress = this.activeData.pool_address;
+      let TokenAddress = this.activeData.stake_address;
       let flag = await Allowance(TokenAddress, SpenderAddress);
       this.ApproveFlag = flag;
     },
@@ -361,7 +370,7 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let ContractAddress = this.activeData.POOL_ADDRESS;
+      let ContractAddress = this.activeData.pool_address;
       await GetReward(ContractAddress, (res) => {
         if (res == "success" || res == "error") {
           this.getBalance();

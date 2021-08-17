@@ -1,10 +1,8 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <!-- <div class="swiper-slide guard"><div></div></div> -->
-      <div class="swiper-slide mcrn"><div></div></div>
-      <div class="swiper-slide wizard"><div></div></div>
-      <!-- <div class="swiper-slide nuls"><div></div></div> -->
+      <div class="swiper-slide ibo"><div></div></div>
+      <div class="swiper-slide guard"><div></div></div>
       <a
         class="swiper-slide dis"
         href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
@@ -133,28 +131,16 @@ export default {
         background-position: center;
       }
     }
-    .wizard {
-      background: linear-gradient(#62deff 50%, #d4f0e1 100%);
+    .ibo {
+      background: #96f6d1;
       > div {
-        background-image: url("../../assets/img/banner/wizard_web.png");
+        background-image: url("../../assets/img/banner/ibo_web.png");
       }
     }
     .guard {
       background: #22222a;
       > div {
         background-image: url("../../assets/img/banner/gaurd_web.png");
-      }
-    }
-    .mcrn {
-      background: #d1f5ff;
-      > div {
-        background-image: url("../../assets/img/banner/mcrn_web.png");
-      }
-    }
-    .nuls {
-      background: linear-gradient(#1c1c1c, 50%, #2b2d35 100%);
-      > div {
-        background-image: url("../../assets/img/banner/nuls_web.png");
       }
     }
     .dis {
@@ -193,28 +179,16 @@ export default {
         background-position: center;
       }
     }
-    .wizard {
-      background: linear-gradient(#62deff, 50%, #d4f0e1, 100%);
+    .ibo {
+      background: #96f6d1;
       > div {
-        background-image: url("../../assets/img/banner/wizard_h5.png");
+        background-image: url("../../assets/img/banner/ibo_h5.png");
       }
     }
     .guard {
       background: #22222a;
       > div {
         background-image: url("../../assets/img/banner/gaurd_h5.png");
-      }
-    }
-    .mcrn {
-      background: #d1f5ff;
-      > div {
-        background-image: url("../../assets/img/banner/mcrn_h5.png");
-      }
-    }
-    .nuls {
-      background: linear-gradient(#1c1c1c, 50%, #2b2d35 100%);
-      > div {
-        background-image: url("../../assets/img/banner/nuls_h5.png");
       }
     }
     .dis {

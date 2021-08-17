@@ -381,6 +381,10 @@
     "IBO_august": "8月28日",
     "IBO_august2": "8.16UTC14:00",
     "TG_text": "TG(CN)",
-    "TG_URL": "https://t.me/UFOMO_cn"
+    "TG_URL": "https://t.me/UFOMO_cn",
+    "IBO_text31": "确认",
+    "IBO_text32": "取消",
+    "IBO_text33": "提示",
+    "IBO_text34": "名额已满"
   }
 }

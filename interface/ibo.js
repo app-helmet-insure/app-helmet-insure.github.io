@@ -4,10 +4,10 @@ import Web3 from "web3";
 import ERC20 from "../abi/ERC20_abi.json";
 import { Contract, Provider } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
-const BSCChainId = 56;
-const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
-export const getOnlyMultiCallProvider = () =>
-  new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId);
+const BSCChainId = 56
+const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
+BigNumber.config({ EXPONENTIAL_AT: 100 })
+export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
 export function processResult(data) {
   data = cloneDeep(data);
   if (Array.isArray(data)) {
@@ -56,16 +56,21 @@ export const getPoolInfo = (pool) => {
     poolContract.totalSettleable(),
     poolContract.settleable(account),
     poolContract.totalSettledUnderlying(),
-  ];
+    poolContract.maxUser(),//最多参与人数
+    poolContract.curUserCount(),//当前参与人数
+    poolContract.amtLow(),//最少金额
+    poolContract.amtHigh(),//最大金额
+  ]
   // 追加可能存在的
-  poolContract.time && promiseList.push(poolContract.time());
-  poolContract.timeSettle && promiseList.push(poolContract.timeSettle());
-  currencyToken &&
-    promiseList.push(currencyToken.allowance(account, pool.address));
-  const multicallProvider = getOnlyMultiCallProvider();
-  return multicallProvider.all(promiseList).then((res) => {
-    const now = parseInt(Date.now() / 1000);
-    const resData = processResult(res);
+  poolContract.time && promiseList.push(poolContract.time())
+  poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
+  currencyToken && promiseList.push(currencyToken.allowance(account, pool.address))
+  currencyToken && promiseList.push(currencyToken.balanceOf(account))
+  const multicallProvider = getOnlyMultiCallProvider()
+  return multicallProvider
+    .all(promiseList).then(res => {
+    const now = parseInt(Date.now() / 1000)
+    const resData = processResult(res)
     let [
       price,
       totalPurchasedCurrency,
@@ -73,10 +78,20 @@ export const getPoolInfo = (pool) => {
       totalSettleable,
       settleable,
       totalSettledUnderlying,
+      maxUser,//最多参与人数
+      curUserCount,//当前参与人数
+      amtLow,
+      amtHigh,
       time = 0,
       timeSettle = 0,
       currency_allowance = 0,
-    ] = resData;
+      balanceOf = 0
+    ] = resData
+      // time = 1629118800
+      //   timeSettle = 1629118800
+      // curUserCount=0
+      // purchasedCurrencyOf=0
+      console.log('resData', resData)
     const [
       total_completed_,
       total_amount,
@@ -100,6 +115,7 @@ export const getPoolInfo = (pool) => {
       status = 2;
     }
 
+    // 招募满了
     if (
       totalSettleable.volume == totalSettledUnderlying &&
       totalSettleable.volume > 0
@@ -107,11 +123,6 @@ export const getPoolInfo = (pool) => {
       status = 3;
     }
 
-    console.log(
-      "totalPurchasedAmount",
-      pool.amount,
-      Web3.utils.toWei(pool.amount, "ether")
-    );
     const totalPurchasedAmount = new BigNumber(
       Web3.utils.toWei(pool.amount, "ether")
     )
@@ -132,24 +143,30 @@ export const getPoolInfo = (pool) => {
 
     Object.assign(pool.currency, {
       allowance: currency_allowance,
-    });
+    })
+      console.log(new BigNumber(totalPurchasedCurrency)
+        .dividedBy(totalPurchasedAmount)
+        .toFixed(2, 1)
+        .toString()*1)
     return Object.assign({}, pool, {
-      ratio: `1${pool.underlying.symbol}=${formatAmount(price, 18, 5)}${
-        pool.currency.symbol
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(0).toString()} ${
+        pool.underlying.symbol
       }`,
       progress:
         new BigNumber(totalPurchasedCurrency)
           .dividedBy(totalPurchasedAmount)
           .toFixed(2, 1)
-          .toString() * 1,
+          .toString(),
       status: status,
       time: time,
-      timeClose,
-      price: Web3.utils.fromWei(price, "ether"),
+      timeClose,//结束时间time
+      timeSettle,//claim开始时间
+      price: Web3.utils.fromWei(price, 'ether'),
       is_join,
       totalPurchasedCurrency,
-      totalPurchasedAmount: pool.amount,
+      totalPurchasedAmount: totalPurchasedAmount,
       totalPurchasedUnderlying,
+      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
       purchasedCurrencyOf,
       totalSettleable: {
         completed_: total_completed_,
@@ -164,18 +181,25 @@ export const getPoolInfo = (pool) => {
         volume, // 预计中签量
         rate,
       },
-    });
-  });
-};
+      pool_info: {
+        ...pool.pool_info,
+        maxAccount: maxUser, // 最多参与人数
+        curUserCount, // 当前参与人数
+        min_allocation: Web3.utils.fromWei(amtLow, 'ether')*1,
+        max_allocation: Web3.utils.fromWei(amtHigh, 'ether')*1,
+      }
+    })
+  })
+}
 
 // 授权
-export const onApprove_ = (contractAddress, callback = (status) => {}) => {
-  let web3_ = new Web3(window.ethereum);
+export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => {}) => {
+  let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(ERC20.abi, contractAddress);
   myContract.methods
     .approve(
-      window.CURRENTADDRESS,
-      "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      poolAddress,
+      '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     )
     .send({ from: window.CURRENTADDRESS })
     .on("receipt", function() {
@@ -186,10 +210,10 @@ export const onApprove_ = (contractAddress, callback = (status) => {}) => {
     });
 };
 // 质押
-export const onBurn_ = (_amount, contractAddress, abi, callback) => {
-  console.log(_amount);
-  let web3_ = new Web3(window.ethereum);
-  let myContract = new web3_.eth.Contract(abi, contractAddress);
+export const onBurn_ = (_amount, poolAddress, abi, callback) => {
+  console.log(_amount, Web3.utils.toWei(String(_amount), 'ether'))
+  let web3_ = new Web3(window.ethereum)
+  let myContract = new web3_.eth.Contract(abi, poolAddress);
   myContract.methods
     .purchase(Web3.utils.toWei(String(_amount), "ether"))
     .send({ from: window.CURRENTADDRESS })

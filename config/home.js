@@ -107,17 +107,11 @@ export const HelmetMoreCardInfo = [
       "Today, we are super happy to share: Helmet.insure has received strategic investment from Binance!!!!!",
       "We will work closely with BSC community and Binance to provide a more competitive option & insurance protocol for cross-chain and on-chain trading.",
     ],
-  },
-  {
-    cardname: "Purple Miracle: The GUARD on Polygon",
-    index: 2,
-    cardinfo: [
-      "Hello, Helmeters, Thank you for continue company and support. We have hit Polygon net work ",
-    ],
+    link: "https://twitter.com/Helmet_insure/status/1369551295376363520",
   },
   {
     cardname: "Helmet New Steps",
-    index: 3,
+    index: 2,
     cardinfo: [
       "We are all on the grind for the shining future for consecutive months and luckily, we have 8 new industrious partners in our team. and by the way, new version of helmet.insure official website is going to live next week.",
       "1.Colorful LPT Mining Pools",
@@ -125,5 +119,14 @@ export const HelmetMoreCardInfo = [
       "3.Diversify Insurance Categories",
       "4.Plans on HECO Chain",
     ],
+    link: "https://twitter.com/Helmet_insure/status/1426526996985700353",
+  },
+  {
+    cardname: "Purple Miracle: The GUARD on Polygon",
+    index: 3,
+    cardinfo: [
+      "Hello,  Helmeters, Thank you for continue company and support. We have hit Polygon net work ❤ In terms of innovation, we are pleased to announce that we will launch a new plan: The Guard ⍟ . This is a key point in our multi-chain ecology and NFT field dev.",
+    ],
+    link: "https://twitter.com/Helmet_insure/status/1420083465467408386",
   },
 ];

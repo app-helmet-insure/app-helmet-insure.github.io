@@ -34,7 +34,6 @@ export default {
   },
   data() {
     return {
-      showVideo: false,
     };
   },
   computed: {

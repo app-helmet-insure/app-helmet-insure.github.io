@@ -56,7 +56,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      showVideo: false,
+    };
+  },
+};
 </script>
 
 <style lang='scss' scoped>

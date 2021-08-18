@@ -16,14 +16,15 @@ export default {
     min-width: 1280px;
     width: 100%;
     min-height: 100vh;
-    background: #121212;
+    background: #000;
+   
   }
 }
 @media screen and (max-width: 750px) {
   .helmet {
     width: 100%;
     min-height: 100vh;
-    background: #121212;
+    background: #000;
   }
 }
 </style>

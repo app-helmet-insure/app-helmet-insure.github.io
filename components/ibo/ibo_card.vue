@@ -57,9 +57,8 @@
           </i>
         </a>
         <div class="block">
-
           <el-slider
-              :value="amount"
+              v-model="amount"
               :min='iboData.pool_info.min_allocation'
               :max='iboData.pool_info.max_allocation'
               show-input

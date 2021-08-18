@@ -178,7 +178,7 @@ export const getPoolInfo = (pool) => {
         maxAccount: maxUser, // 最多参与人数
         curUserCount, // 当前参与人数
         min_allocation: Web3.utils.fromWei(amtLow, 'ether')*1,
-        max_allocation: 120 //Web3.utils.fromWei(amtHigh, 'ether')*1,
+        max_allocation: Web3.utils.fromWei(amtHigh, 'ether')*1,
       }
     })
   })

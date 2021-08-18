@@ -24,7 +24,7 @@ export default {};
   align-items: center;
   height: 100%;
   width: 4566px;
-  animation: translatePartner 10s 0s linear infinite;
+  animation: translatePartner 30s 0s linear infinite;
 }
 .helmet_partner_bg {
   width: 2283px;

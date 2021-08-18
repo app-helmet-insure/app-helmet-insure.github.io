@@ -454,7 +454,6 @@ export default {
     width: 20%;
   }
 }
-
 @media screen and (min-width: 750px) {
 
   .ibo_item {
@@ -465,7 +464,8 @@ export default {
       background: themed("color-ffffff");
     }
     @include themeify {
-      box-shadow: 2px 3px 5px 0px themed("color-e8e8eb");
+      border: 1px solid themed("color-e8e8eb");
+      box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
     }
     border-radius: 10px;
     @include themeify {
@@ -786,6 +786,7 @@ export default {
       background: themed("color-ffffff");
     }
     @include themeify {
+      border: 1px solid themed("color-e8e8eb");
       box-shadow: 0px -2px 0px 0px themed("color-e8e8eb");
     }
 

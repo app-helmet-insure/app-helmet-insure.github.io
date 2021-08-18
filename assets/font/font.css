@@ -1,6 +1,42 @@
 @font-face {
-    font-family: FredokaOne-Regular;
-    src: url(./FredokaOne-Regular.ttf);
-    font-weight: normal;
-    font-style: normal;
+  font-family: FredokaOne-Regular;
+  src: url(./FredokaOne-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Black;
+  src: url(./Erbaum-Black.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Book;
+  src: url(./Erbaum-Book.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Light;
+  src: url(./Erbaum-Light.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Medium;
+  src: url(./Erbaum-Medium.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Regular;
+  src: url(./Erbaum-Regular.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: Erbaum-Thin;
+  src: url(./Erbaum-Thin.ttf);
+  font-weight: normal;
+  font-style: normal;
 }

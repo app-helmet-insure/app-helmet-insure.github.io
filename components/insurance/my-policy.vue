@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import "~/assets/svg/iconfont.js";
+
 import precision from "~/assets/js/precision.js";
 import Page from "~/components/common/page.vue";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";

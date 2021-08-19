@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import "~/assets/svg/iconfont.js";
+
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { getInsuranceList } from "~/interface/event.js";

@@ -4,10 +4,10 @@
     <div class="helmet_course_q">
       <div class="helmet_course_q_l">
         <div
-          :class="`quarter quarter_${item.direction}`"
-          v-for="item in LeftCourseInfo"
+          v-for="(item, index) in LeftCourseInfo"
           :key="item.quarter"
-          :style="`margin-top:${item.margintop}px`"
+          :style="`margin-top:${item.margintop}px;`"
+          :class="`quarter quarter_${item.direction} ${LeftClassName[index]}`"
         >
           <div :class="`start_line start_line_${item.direction}`">
             <span>{{ item.quarter }}</span>
@@ -26,10 +26,10 @@
       <div class="quarter_line"></div>
       <div class="helmet_course_q_r">
         <div
-          :class="`quarter quarter_${item.direction}`"
-          v-for="item in RightCourseInfo"
+          v-for="(item, index) in RightCourseInfo"
           :key="item.quarter"
           :style="`margin-top:${item.margintop}px`"
+          :class="`quarter quarter_${item.direction} ${RightClassName[index]}`"
         >
           <div :class="`start_line start_line_${item.direction}`">
             <span>{{ item.quarter }}</span>
@@ -52,6 +52,7 @@
 <script>
 import { HelmetCourseInfo } from "../../config/home.js";
 export default {
+  props: ["LeftClassName", "RightClassName"],
   data() {
     return {};
   },
@@ -71,6 +72,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 160px;
   > h3 {
     font-size: 36px;
     font-family: Erbaum-Medium, Erbaum;
@@ -79,7 +81,14 @@ export default {
     line-height: 51px;
   }
   &_q {
-    width: 540px;
+    &_l {
+      width: 540px;
+      visibility: hidden;
+    }
+    &_r {
+      width: 540px;
+      visibility: hidden;
+    }
     margin-top: 25px;
     display: flex;
     justify-content: center;
@@ -166,5 +175,8 @@ export default {
       padding-left: 40px;
     }
   }
+}
+.show_info {
+  visibility: visible !important;
 }
 </style>

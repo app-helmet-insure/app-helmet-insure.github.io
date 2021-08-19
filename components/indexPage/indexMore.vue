@@ -44,11 +44,12 @@ export default {
     line-height: 51px;
   }
   .card_wrap {
+
     display: flex;
     width: 938px;
     height: 637px;
     align-items: flex-end;
-    margin: 0 auto;
+    margin: 50px auto 0px;
     justify-content: center;
     position: relative;
     .card_item {

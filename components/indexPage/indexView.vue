@@ -4,9 +4,14 @@
       <div class="ctk_link">
         <a href="https://www.certik.org/projects/helmet" target="_blank"></a>
       </div>
-      <h3>
-        <span class="orange">HELMET</span><span class="white">.INSURE</span>
-      </h3>
+      <vue-typed-js
+        :strings="[
+          `<span class='orange' style='color:orange'>HELMET</span><span class='white'  style='color:white'>.INSURE</span>`,
+        ]"
+        :typeSpeed="100"
+      >
+        <h3 class="typing"></h3>
+      </vue-typed-js>
       <p>Crypto-assets insurance trading platform</p>
       <div class="btn_link">
         <div class="bsc_dapp">
@@ -56,12 +61,25 @@
 </template>
 
 <script>
-export default {};
+import { VueTypedJs } from "vue-typed-js";
+export default {
+  components: {
+    VueTypedJs,
+  },
+  data() {
+    return {
+      showVideo: false,
+    };
+  },
+  mounted() {},
+  methods: {},
+};
 </script>
 
 <style lang='scss' scoped>
 .helmet_view {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 134px;
@@ -78,6 +96,7 @@ export default {};
         rgba(255, 150, 0, 1)
       );
       padding: 1px;
+      margin-left: 72px;
       a {
         width: 100%;
         height: 100%;
@@ -90,21 +109,30 @@ export default {};
         background-position: center;
       }
     }
-    > h3 {
-      margin-top: 10px;
-      font-size: 90px;
-      font-family: Erbaum-Book, Erbaum;
-      font-weight: normal;
-      .orange {
-        color: #fd7e14;
+    .typed-element {
+      height: 120px;
+      display: flex;
+      justify-content: center;
+      .typing {
+        font-size: 90px;
+        font-family: Erbaum-Book, Erbaum;
+        font-weight: normal;
+        text-align: center;
+        .orange {
+          color: #fd7e14 !important;
+        }
+        .white {
+          color: #ffffff !important;
+        }
       }
-      .white {
+      .typed-cursor {
+        font-size: 90px;
         color: #ffffff;
       }
     }
     > p {
       margin-top: 10px;
-      font-size: 30px;
+      font-size: 36px;
       font-family: Erbaum-Book;
       font-weight: normal;
       color: #9098a2;
@@ -112,6 +140,7 @@ export default {};
     }
     .btn_link {
       display: flex;
+      justify-content: center;
       margin-top: 40px;
       > div {
         height: 56px;
@@ -134,6 +163,7 @@ export default {};
         font-family: Erbaum-Regular, Erbaum;
       }
       .bsc_dapp {
+        margin: 0 10px;
         height: 56px;
         background: linear-gradient(
           133deg,
@@ -144,9 +174,13 @@ export default {};
           background: linear-gradient(134deg, #ffdc8b 0%, #e98600 100%);
           color: #ffffff;
         }
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0px 8px 16px 0px rgba(255, 150, 0, 0.4);
+        }
       }
       .matic_dapp {
-        margin-left: 20px;
+        margin: 0 10px;
         box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
         background: linear-gradient(
           135deg,
@@ -163,6 +197,10 @@ export default {};
           );
           color: #121212;
         }
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0px 10px 16px 0px rgba(255, 255, 255, 0.3);
+        }
       }
     }
   }
@@ -170,7 +208,7 @@ export default {};
     width: 760px;
     height: 540px;
     position: relative;
-    margin-left: 40px;
+    margin-top: 40px;
     .video_index {
       width: 100%;
       height: 100%;

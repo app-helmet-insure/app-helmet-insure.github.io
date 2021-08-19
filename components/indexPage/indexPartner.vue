@@ -23,11 +23,11 @@ export default {};
   display: flex;
   align-items: center;
   height: 100%;
-  width: 4566px;
-  animation: translatePartner 10s 0s linear infinite;
+  width: 4090px;
+  animation: translatePartner 30s 0s linear infinite;
 }
 .helmet_partner_bg {
-  width: 2283px;
+  width: 2045px;
   width: 100%;
   height: 100%;
   background-image: url("../../assets/img/home/partner.png");

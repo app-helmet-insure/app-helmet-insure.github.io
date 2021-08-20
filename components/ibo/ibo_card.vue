@@ -293,7 +293,16 @@
       <div v-else-if="iboData.name === 'AXN'" class="tip_box">
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text35") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
-
+        <p>
+          SC: 0x3a05e86c25366031d92e013cac77ff6c261cb09b
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, '0x3a05e86c25366031d92e013cac77ff6c261cb09b')
+            "
+          ></i>
+        </p>
         <p>
           TG:
           <a href="https://t.me/Axieninjaofficial" target="_blank"

@@ -7,10 +7,10 @@ const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
 export const iboPools = [
   {
     name: 'AXN',
-    address: '0x7A19bC605116d8843e4757Bb97ac31DD6d49E844',
+    address: '0xa1D653b0fd3E56F7c389a6132472A9c2F37157A3',
     abi: starterLimitAbi,
     start_at: '1629460800',
-    is_coming: true, // is_coming 为 true 则不请求合约
+    is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
       address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
@@ -18,7 +18,7 @@ export const iboPools = [
     },
     icon: 'AXN.png',
     underlying: {
-      address: '0x0E52d24c87A5ca4F37E3eE5E16EF5913fb0cCEEB',
+      address: '0x3A05E86c25366031d92e013Cac77Ff6c261cb09B',
       decimal: 18,
       symbol: 'AXN',
       name: 'AXN',

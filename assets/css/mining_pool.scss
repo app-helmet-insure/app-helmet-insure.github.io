@@ -1,499 +1,487 @@
-@import './base.scss';
+@import "./base.scss";
 .ContractAddress {
-    font-size: 14px;
-    color: #fd7e14;
-    margin-top: 8px;
-    a span {
-        @include themeify {
-            color: themed('color-17173a');
-        }
+  font-size: 14px;
+  color: #fd7e14;
+  margin-top: 8px;
+  a span {
+    @include themeify {
+      color: themed("color-17173a");
     }
-    p {
-        display: flex;
-        margin-top: 4px;
-        align-items: center;
-        font-weight: 550;
-    }
-    .copy {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        background-image: url('../../assets/img/helmet/copy.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        cursor: pointer;
-        flex-shrink: 0;
-    }
+  }
+  p {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    font-weight: 550;
+  }
+  .copy {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-image: url("../../assets/img/helmet/copy.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
 }
 .addToken {
-    font-size: 14px;
-    color: #fd7e14;
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    &:hover {
-        color: #fd8a2b;
-    }
-    p {
-        font-weight: 550;
-    }
-    i {
-        margin-left: 4px;
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        background-image: url('../../assets/img/icon/sMetamask.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        flex-shrink: 0;
-    }
+  font-size: 14px;
+  color: #fd7e14;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: #fd8a2b;
+  }
+  p {
+    font-weight: 550;
+  }
+  i {
+    margin-left: 4px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url("../../assets/img/icon/sMetamask.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    flex-shrink: 0;
+  }
 }
 .icon {
-    width: 24px;
-    height: 24px;
-    vertical-align: -0.15em;
-    fill: #787878;
-    overflow: hidden;
+  width: 24px;
+  height: 24px;
+  vertical-align: -0.15em;
+  fill: #787878;
+  overflow: hidden;
 }
 .b_button {
-    border-radius: 5px;
-    width: 100%;
-    margin-top: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  border-radius: 5px;
+  width: 100%;
+  margin-top: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .o_button {
-    width: 100%;
-    margin-top: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
+  width: 100%;
+  margin-top: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
 .loading_pic {
-    display: block;
-    width: 24px;
-    height: 24px;
-    background-image: url('../../assets/img/helmet/loading.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    animation: loading 2s 0s linear infinite;
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
 }
 .disable {
-    pointer-events: none;
+  pointer-events: none;
 }
 @media screen and (min-width: 750px) {
-    .ContractAddress {
-        p {
-            font-size: 14px;
-        }
-        i {
-            flex-shrink: 0;
-        }
+  .ContractAddress {
+    p {
+      font-size: 14px;
     }
-    .mining_pool {
-        padding: 40px 0;
+    i {
+      flex-shrink: 0;
+    }
+  }
+  .mining_pool {
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-evenly;
+    @include themeify {
+      border-top: 1px solid themed("insure_button_border");
+    }
+    border-top: 1px solid #e8e8eb;
+    > i {
+      display: block;
+      width: 1px;
+      height: auto;
+      @include themeify {
+        background: themed("insure_button_border");
+      }
+    }
+    > div {
+      width: 420px;
+      .title {
         display: flex;
-        justify-content: space-evenly;
-        @include themeify {
-            border-top: 1px solid themed('insure_button_border');
+        justify-content: space-between;
+        font-weight: 500;
+        line-height: 16px;
+        > span {
+          font-size: 14px;
+          font-weight: 500;
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 25%);
+          }
+          line-height: 14px;
         }
-        border-top: 1px solid #e8e8eb;
-        > i {
-            display: block;
-            width: 1px;
-            height: auto;
+        p {
+          font-size: 14px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          @include themeify {
+            color: themed("color-17173a");
+          }
+          line-height: 14px;
+        }
+      }
+      .content {
+        margin-top: 20px;
+        input {
+          width: 100%;
+          height: 40px;
+          padding: 0 100px 0 12px;
+          background: transparent;
+          @include themeify {
+            color: themed("color-17173a");
+            border: 1px solid themed("color-e8e8eb");
+          }
+          border-radius: 5px;
+        }
+        .input {
+          margin-top: 4px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          span {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            min-height: 24px;
+            position: absolute;
+            right: 15px;
+            font-size: 12px;
+            cursor: pointer;
             @include themeify {
-                background: themed('insure_button_border');
+              color: themed("color-17173a");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
             }
+            border-radius: 5px;
+            &:hover {
+              border: 1px solid #fd7e14 !important;
+              color: #fd7e14 !important;
+            }
+          }
         }
-        > div {
-            width: 420px;
-            .title {
-                display: flex;
-                justify-content: space-between;
+      }
+      .button {
+        section {
+          div {
+            > .jump_text {
+              a {
+                margin-top: 4px;
+                font-size: 14px;
                 font-weight: 500;
-                line-height: 16px;
-                > span {
-                    font-size: 14px;
-                    font-weight: 500;
-                    @include themeify {
-                        color: darken(
-                            $color: themed('color-17173a'),
-                            $amount: 25%
-                        );
-                    }
-                    line-height: 14px;
+                color: #fd7e14;
+                line-height: 20px;
+                display: flex;
+                align-items: center;
+                i {
+                  display: block;
+                  width: 20px;
+                  height: 20px;
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin: 0 2px;
                 }
-                p {
-                    font-size: 14px;
-                    font-family: IBMPlexSans-Bold, IBMPlexSans;
-                    font-weight: bold;
-                    @include themeify {
-                        color: themed('color-17173a');
-                    }
-                    line-height: 14px;
+                .pancake {
+                  background-image: url("../../assets/img/icon/pancake@2x.png");
                 }
+                .dodo {
+                  background-image: url("../../assets/img/icon/dodo@2x.png");
+                }
+                .chainswap {
+                  background-image: url("../../assets/img/icon/chainswap@2x.png");
+                }
+                .qian {
+                  background-image: url("../../assets/img/icon/qian@2x.png");
+                }
+                .mdx {
+                  background-image: url("../../assets/img/icon/mdx@2x.png");
+                }
+                .burger {
+                  background-image: url("../../assets/img/icon/burgerswap@2x.png");
+                }
+                .babyswap {
+                  background-image: url("../../assets/img/icon/babyswap@2x.png");
+                }
+              }
+              .H5_link {
+                display: none;
+              }
             }
-            .content {
-                margin-top: 20px;
-                input {
-                    width: 100%;
-                    height: 40px;
-                    padding: 0 100px 0 12px;
-                    background: transparent;
-                    @include themeify {
-                        color: themed('color-17173a');
-                        border: 1px solid themed('color-e8e8eb');
-                    }
-                    border-radius: 5px;
-                }
-                .input {
-                    margin-top: 4px;
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    span {
-                        display: flex;
-                        align-items: center;
-                        padding: 4px 8px;
-                        min-height: 24px;
-                        position: absolute;
-                        right: 15px;
-                        font-size: 12px;
-                        cursor: pointer;
-                        @include themeify {
-                            color: themed('color-17173a');
-                            background: themed('insure_button');
-                            border: 1px solid themed('insure_button_border');
-                        }
-                        border-radius: 5px;
-                        &:hover {
-                            border: 1px solid #fd7e14 !important;
-                            color: #fd7e14 !important;
-                        }
-                    }
-                }
-            }
-            .button {
-                section {
-                    div {
-                        > .jump_text {
-                            a {
-                                margin-top: 4px;
-                                font-size: 14px;
-                                font-weight: 500;
-                                color: #fd7e14;
-                                line-height: 20px;
-                                display: flex;
-                                align-items: center;
-                                i {
-                                    display: block;
-                                    width: 20px;
-                                    height: 20px;
-                                    background-repeat: no-repeat;
-                                    background-size: 100% 100%;
-                                    margin: 0 2px;
-                                }
-                                .pancake {
-                                    background-image: url('../../assets/img/icon/pancake@2x.png');
-                                }
-                                .dodo {
-                                    background-image: url('../../assets/img/icon/dodo@2x.png');
-                                }
-                                .chainswap {
-                                    background-image: url('../../assets/img/icon/chainswap@2x.png');
-                                }
-                                .qian {
-                                    background-image: url('../../assets/img/icon/qian@2x.png');
-                                }
-                                .mdx {
-                                    background-image: url('../../assets/img/icon/mdx@2x.png');
-                                }
-                                .burger {
-                                    background-image: url('../../assets/img/icon/burgerswap@2x.png');
-                                }
-                            }
-                            .H5_link {
-                                display: none;
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
-        .deposit {
-            .button {
-                p {
-                    margin-top: 11px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    > span {
-                        &:nth-of-type(1) {
-                            font-size: 14px;
-                            font-family: PingFangSC-Regular, PingFang SC;
-                            @include themeify {
-                                color: darken(
-                                    $color: themed('color-17173a'),
-                                    $amount: 30%
-                                );
-                            }
-                            line-height: 14px;
-                        }
-                        &:nth-of-type(2) {
-                            display: flex;
-                            font-size: 14px;
-                            font-family: IBMPlexSans;
-                            @include themeify {
-                                color: themed('color-17173a');
-                            }
-                            line-height: 14px;
-                        }
-                    }
-                }
-            }
-        }
-        .withdraw {
-            .button {
-                p {
-                    margin-top: 11px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    > span {
-                        &:nth-of-type(1) {
-                            font-size: 14px;
-                            @include themeify {
-                                color: darken(
-                                    $color: themed('color-17173a'),
-                                    $amount: 30%
-                                );
-                            }
-                            line-height: 14px;
-                        }
-                        &:nth-of-type(2) {
-                            font-size: 14px;
-                            font-family: IBMPlexSans;
-                            @include themeify {
-                                color: themed('color-17173a');
-                            }
-                            line-height: 14px;
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
-    .activeInput {
-        border: 1px solid #fd7e14 !important;
+    .deposit {
+      .button {
+        p {
+          margin-top: 11px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 30%);
+              }
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              display: flex;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+            }
+          }
+        }
+      }
     }
+    .withdraw {
+      .button {
+        p {
+          margin-top: 11px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 30%);
+              }
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .activeInput {
+    border: 1px solid #fd7e14 !important;
+  }
 }
 @media screen and (max-width: 750px) {
-    .ContractAddress {
-        p {
-            font-size: 12px;
-        }
-        i {
-            flex-shrink: 0;
-        }
+  .ContractAddress {
+    p {
+      font-size: 12px;
     }
-    .mining_pool {
+    i {
+      flex-shrink: 0;
+    }
+  }
+  .mining_pool {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0 10px;
+    > i {
+      display: none;
+    }
+    > div {
+      padding: 28px 17px;
+      width: 100%;
+      @include themeify {
+        background: themed("color-ffffff");
+      }
+      box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+      border-radius: 5px;
+      .title {
         display: flex;
-        justify-content: space-evenly;
-        margin: 0 10px;
-        > i {
-            display: none;
+        justify-content: space-between;
+        font-weight: 500;
+        line-height: 16px;
+        > span {
+          font-size: 14px;
+          font-weight: 500;
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 25%);
+          }
+          line-height: 14px;
         }
-        > div {
-            padding: 28px 17px;
-            width: 100%;
+        p {
+          font-size: 14px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          @include themeify {
+            color: themed("color-17173a");
+          }
+          line-height: 14px;
+        }
+      }
+      .content {
+        margin-top: 20px;
+        input {
+          width: 100%;
+          height: 40px;
+          background: transparent;
+          padding: 0 100px 0 12px;
+          @include themeify {
+            color: themed("color-17173a");
+            border: 1px solid themed("color-e8e8eb");
+          }
+          border-radius: 5px;
+        }
+        .input {
+          margin-top: 4px;
+          position: relative;
+          display: flex;
+          align-items: center;
+          span {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            min-height: 24px;
+            position: absolute;
+            right: 15px;
+            font-size: 12px;
+            cursor: pointer;
             @include themeify {
-                background: themed('color-ffffff');
+              color: themed("color-17173a");
+              background: themed("insure_button");
+              border: 1px solid themed("insure_button_border");
             }
-            box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
             border-radius: 5px;
-            .title {
-                display: flex;
-                justify-content: space-between;
+            &:hover {
+              @include themeify {
+                background: themed("color-fffaf3");
+              }
+              border: 1px solid #fd7e14;
+            }
+          }
+        }
+      }
+      .button {
+        section {
+          div {
+            .jump_text {
+              a {
+                margin-top: 8px;
+                font-size: 14px;
                 font-weight: 500;
-                line-height: 16px;
-                > span {
-                    font-size: 14px;
-                    font-weight: 500;
-                    @include themeify {
-                        color: darken(
-                            $color: themed('color-17173a'),
-                            $amount: 25%
-                        );
-                    }
-                    line-height: 14px;
+                color: #fd7e14;
+                line-height: 20px;
+                display: flex;
+                align-items: center;
+                i {
+                  display: block;
+                  width: 20px;
+                  height: 20px;
+                  background-repeat: no-repeat;
+                  background-size: 100% 100%;
+                  margin: 0 2px;
                 }
-                p {
-                    font-size: 14px;
-                    font-family: IBMPlexSans-Bold, IBMPlexSans;
-                    font-weight: bold;
-                    @include themeify {
-                        color: themed('color-17173a');
-                    }
-                    line-height: 14px;
+                .pancake {
+                  background-image: url("../../assets/img/icon/pancake@2x.png");
                 }
+                .dodo {
+                  background-image: url("../../assets/img/icon/dodo@2x.png");
+                }
+                .chainswap {
+                  background-image: url("../../assets/img/icon/chainswap@2x.png");
+                }
+                .qian {
+                  background-image: url("../../assets/img/icon/qian@2x.png");
+                }
+                .mdx {
+                  background-image: url("../../assets/img/icon/mdx@2x.png");
+                }
+                .burger {
+                  background-image: url("../../assets/img/icon/burgerswap@2x.png");
+                }
+                .babyswap {
+                  background-image: url("../../assets/img/icon/babyswap@2x.png");
+                }
+              }
+              .PC_link {
+                display: none !important;
+              }
             }
-            .content {
-                margin-top: 20px;
-                input {
-                    width: 100%;
-                    height: 40px;
-                    background: transparent;
-                    padding: 0 100px 0 12px;
-                    @include themeify {
-                        color: themed('color-17173a');
-                        border: 1px solid themed('color-e8e8eb');
-                    }
-                    border-radius: 5px;
-                }
-                .input {
-                    margin-top: 4px;
-                    position: relative;
-                    display: flex;
-                    align-items: center;
-                    span {
-                        display: flex;
-                        align-items: center;
-                        padding: 4px 8px;
-                        min-height: 24px;
-                        position: absolute;
-                        right: 15px;
-                        font-size: 12px;
-                        cursor: pointer;
-                        @include themeify {
-                            color: themed('color-17173a');
-                            background: themed('insure_button');
-                            border: 1px solid themed('insure_button_border');
-                        }
-                        border-radius: 5px;
-                        &:hover {
-                            @include themeify {
-                                background: themed('color-fffaf3');
-                            }
-                            border: 1px solid #fd7e14;
-                        }
-                    }
-                }
-            }
-            .button {
-                section {
-                    div {
-                        .jump_text {
-                            a {
-                                margin-top: 8px;
-                                font-size: 14px;
-                                font-weight: 500;
-                                color: #fd7e14;
-                                line-height: 20px;
-                                display: flex;
-                                align-items: center;
-                                i {
-                                    display: block;
-                                    width: 20px;
-                                    height: 20px;
-                                    background-repeat: no-repeat;
-                                    background-size: 100% 100%;
-                                    margin: 0 2px;
-                                }
-                                .pancake {
-                                    background-image: url('../../assets/img/icon/pancake@2x.png');
-                                }
-                                .dodo {
-                                    background-image: url('../../assets/img/icon/dodo@2x.png');
-                                }
-                                .chainswap {
-                                    background-image: url('../../assets/img/icon/chainswap@2x.png');
-                                }
-                                .qian {
-                                    background-image: url('../../assets/img/icon/qian@2x.png');
-                                }
-                                .mdx {
-                                    background-image: url('../../assets/img/icon/mdx@2x.png');
-                                }
-                                .burger {
-                                    background-image: url('../../assets/img/icon/burgerswap@2x.png');
-                                }
-                            }
-                            .PC_link {
-                                display: none !important;
-                            }
-                        }
-                    }
-                }
-            }
+          }
         }
-        .deposit {
-            .button {
-                p {
-                    margin-top: 11px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    > span {
-                        &:nth-of-type(1) {
-                            font-size: 14px;
-                            font-family: PingFangSC-Regular, PingFang SC;
-                            @include themeify {
-                                color: darken(
-                                    $color: themed('color-17173a'),
-                                    $amount: 30%
-                                );
-                            }
-                            line-height: 14px;
-                        }
-                        &:nth-of-type(2) {
-                            display: flex;
-                            font-size: 14px;
-                            font-family: IBMPlexSans;
-                            @include themeify {
-                                color: themed('color-17173a');
-                            }
-                            line-height: 14px;
-                        }
-                    }
-                }
-            }
-        }
-        .withdraw {
-            .button {
-                p {
-                    margin-top: 11px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    > span {
-                        &:nth-of-type(1) {
-                            font-size: 14px;
-                            @include themeify {
-                                color: darken(
-                                    $color: themed('color-17173a'),
-                                    $amount: 30%
-                                );
-                            }
-                            line-height: 14px;
-                        }
-                        &:nth-of-type(2) {
-                            font-size: 14px;
-                            font-family: IBMPlexSans;
-                            @include themeify {
-                                color: themed('color-17173a');
-                            }
-                            line-height: 14px;
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
-    .activeInput {
-        border: 1px solid #fd7e14 !important;
+    .deposit {
+      .button {
+        p {
+          margin-top: 11px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 30%);
+              }
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              display: flex;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+            }
+          }
+        }
+      }
     }
+    .withdraw {
+      .button {
+        p {
+          margin-top: 11px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              @include themeify {
+                color: darken($color: themed("color-17173a"), $amount: 30%);
+              }
+              line-height: 14px;
+            }
+            &:nth-of-type(2) {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .activeInput {
+    border: 1px solid #fd7e14 !important;
+  }
 }

@@ -155,9 +155,7 @@
         </button>
         <p v-if="activeData.REWARD1_SYMBOL">
           <span
-            ><i>{{
-              activeData.REWARD1_SYMBOL
-            }}</i>
+            ><i>{{ activeData.REWARD1_SYMBOL }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
@@ -174,9 +172,7 @@
         </p>
         <p v-if="activeData.REWARD2_SYMBOL">
           <span
-            ><i>{{
-              activeData.REWARD2_SYMBOL
-            }}</i>
+            ><i>{{ activeData.REWARD2_SYMBOL }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
@@ -512,6 +508,9 @@ export default {
     }
     .burger {
       background-image: url("../../assets/img/icon/burgerswap@2x.png");
+    }
+    .babyswap {
+      background-image: url("../../assets/img/icon/babyswap@2x.png");
     }
   }
   .H5_link {

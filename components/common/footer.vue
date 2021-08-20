@@ -39,7 +39,6 @@
 </template>
 <script>
 import Langauage from "~/components/common/langauage.vue";
-import "~/assets/svg/iconfont.js";
 export default {
   name: "p-footer",
   components: { Langauage },

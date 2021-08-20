@@ -131,7 +131,7 @@
               $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
-            ) || this.iboData.purchasedCurrencyOf > 0
+            ) || iboData.purchasedCurrencyOf > 0 || now > parseInt(iboData.timeClose)
               ? 'disabled ibo_item_btn'
               : 'ibo_item_btn'
           "
@@ -476,6 +476,7 @@ export default {
       //     "IBO_text6": "结算中",
       //     "IBO_text7": "已完成",
       const thisTime = parseInt(new Date().getTime() / 1000);
+      this.now = thisTime
       let t = 0;
       // 倒计时开始
       let statusTxt = "IBO.IBO_text3";
@@ -558,12 +559,14 @@ export default {
       );
     },
     onBurn() {
+      console.log('this.now > parseInt(this.iboData.timeClose)', this.now , parseInt(this.iboData.timeClose))
       if (
         !this.amount ||
         isNaN(Number(this.amount)) ||
         parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount) ||
         this.iboData.purchasedCurrencyOf > 0
+          || this.now > parseInt(this.iboData.timeClose)
       ) {
         return;
       }

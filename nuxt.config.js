@@ -38,6 +38,9 @@ module.exports = {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
+      {
+        src: "//at.alicdn.com/t/font_2755515_9dyey7i0dnq.js",
+      },
       // {
       //   src: "/js/iconfont.js"
       // },
@@ -54,9 +57,10 @@ module.exports = {
    ** Global CSS
    */
   css: [
+    "~assets/font/font.css",
     "~assets/css/main.scss",
     "~assets/css/animate.css",
-    "~assets/css/reset-element.scss"
+    "~assets/css/reset-element.scss",
   ],
   /*
    ** Plugins to load before mounting the App

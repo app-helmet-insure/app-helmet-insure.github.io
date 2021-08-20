@@ -119,7 +119,7 @@
 
 <script>
 import PInput from "~/components/common/p-input.vue";
-import "~/assets/svg/iconfont.js";
+
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
@@ -139,6 +139,7 @@ import {
 import { Asks } from "~/interface/read_contract.js";
 import { Buy } from "~/interface/write_contract.js";
 import moment from "moment";
+
 export default {
   components: {
     InsuranceTitle,
@@ -180,6 +181,23 @@ export default {
     },
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     userInfoWatch(newValue) {
       let isLogin = newValue.data.isLogin;
       this.isLogin = isLogin;

@@ -120,7 +120,6 @@
 
 <script>
 import PInput from "~/components/common/p-input.vue";
-import "~/assets/svg/iconfont.js";
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { buyInsuranceBuy, asks } from "~/interface/order.js";
@@ -189,6 +188,23 @@ export default {
     },
   },
   methods: {
+    copyAdress(e, text) {
+      let _this = this;
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     userInfoWatch(newValue) {
       let isLogin = newValue.data.isLogin;
       this.isLogin = isLogin;
@@ -214,6 +230,7 @@ export default {
       try {
         // Map List
         getInsuranceList().then((res) => {
+          console.log(res);
           if (res && res.data.data.options) {
             let FixList = [];
             let FixListPush = [];

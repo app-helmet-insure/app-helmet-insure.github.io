@@ -21,7 +21,7 @@
           </nuxt-link>
         </div>
         <div class="matic_dapp">
-          <a href="https://www.guard.insure">
+          <a href="https://www.guard.insure/insurance/">
             <img src="../../assets/img/home/matic.png" alt="" />Launch Guard On
             Polygon
           </a>

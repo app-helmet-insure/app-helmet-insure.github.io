@@ -119,7 +119,7 @@
 
 <script>
 import PInput from "~/components/common/p-input.vue";
-import "~/assets/svg/iconfont.js";
+
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";

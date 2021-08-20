@@ -1,545 +1,185 @@
 <template>
-  <div class="helmet_container">
-    <div class="helmet_logo">
-      <a href="#"></a>
+  <div class="helmet_home">
+    <div class="helmet_logo animate__animated animate__bounce">
+      <a></a>
     </div>
-    <div class="helmet_content">
-      <div class="right_text">
-        <h3><span>HELMET</span>.INSURE</h3>
-        <p>Crypto-assets insurance trading platform on BSC</p>
-        <div>
-          <img
-            src="~/assets/img/helmet/invested.png"
-            alt=""
-            class="h5_binance"
-          />
-          <a
-            href="https://github.com/helmet-insure/helmet-insure.github.io"
-            target="_blank"
-          >
-            <img src="~/assets/img/helmet/home_github.png" alt="" />
-            View GitHub
-          </a>
-          <nuxt-link to="/insurance">
-            <img src="~/assets/img/helmet/home_btn_icon.png" alt="" /> Launch
-            APP
-          </nuxt-link>
-          <i></i>
-          <img
-            src="~/assets/img/helmet/invested.png"
-            alt=""
-            class="web_binance"
-          />
-        </div>
-      </div>
-      <div class="right_pic">
-        <img
-          src="~/assets/img/helmet/home_banner.png"
-          alt=""
-          v-if="!this.showVideo"
-        />
-        <img
-          class="bofang"
-          src="~/assets/img/helmet/bofang.png"
-          alt=""
-          v-if="!this.showVideo"
-          @click="showVideo = true"
-        />
-        <div v-if="this.showVideo" style="width: 100%; height: 100%">
-          <iframe
-            width="100%"
-            height="100%"
-            src="https://www.youtube-nocookie.com/embed/tT_zfUarAys?controls=0&autoplay=1"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
+    <IndexView />
+    <IndexCity :ClassName="HelmetCityInfoClass" />
+    <div class="helmet_info">
+      <IndexCourse
+        :LeftClassName="HelmetCourseLeftClass"
+        :RightClassName="HelmetCourseRightClass"
+      />
+      <IndexMore />
+      <h3>Strategic partners</h3>
     </div>
-    <Footer />
+    <IndexPartner />
+    <IndexInvested />
+    <IndexMedia />
   </div>
 </template>
 <script>
-import Footer from "~/components/common/footer.vue";
-import "~/assets/svg/iconfont.js";
+import IndexView from "~/components/indexPage/indexView.vue";
+import IndexCity from "~/components/indexPage/indexCity.vue";
+import IndexCourse from "~/components/indexPage/indexCourse.vue";
+import IndexMore from "~/components/indexPage/indexMore.vue";
+import IndexPartner from "~/components/indexPage/indexPartner.vue";
+import IndexInvested from "~/components/indexPage/indexInvested.vue";
+import IndexMedia from "~/components/indexPage/indexMedia.vue";
+
 export default {
   layout: "page",
+  components: {
+    IndexView,
+    IndexCity,
+    IndexCourse,
+    IndexMore,
+    IndexPartner,
+    IndexInvested,
+    IndexMedia,
+  },
   data() {
     return {
-      showVideo: false,
+      HelmetCityInfoClass: [],
+      HelmetCourseLeftClass: [],
+      HelmetCourseRightClass: [],
+      Flag1: false,
+      Flag2: false,
+      Flag3: false,
+      Flag4: false,
+      Flag5: false,
+      Flag6: false,
     };
   },
-  components: {
-    // Insurance,
-    Footer,
+  mounted() {
+    window.addEventListener("scroll", this.scrollToTop);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.scrollToTop);
+  },
+  methods: {
+    scrollToTop() {
+      var scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      if (scrollTop >= 400 && !this.Flag1) {
+        this.HelmetCityInfoClass = [
+          "animate__zoomIn animate__animated show_info",
+          "animate__zoomIn animate__animated show_info",
+        ];
+        this.Flag1 = true;
+      }
+      if (scrollTop >= 1500 && !this.Flag2) {
+        this.HelmetCourseLeftClass = [
+          "animate__bounceInLeft animate__animated show_info",
+        ];
+        this.Flag2 = true;
+      }
+      if (scrollTop >= 1700 && !this.Flag3) {
+        this.HelmetCourseRightClass = [
+          "animate__bounceInRight animate__animated show_info",
+        ];
+        this.Flag3 = true;
+      }
+      if (scrollTop >= 2000 && !this.Flag4) {
+        this.HelmetCourseLeftClass = [
+          "animate__bounceInLeft animate__animated show_info",
+          "animate__bounceInLeft animate__animated show_info",
+        ];
+        this.Flag4 = true;
+      }
+      if (scrollTop >= 2300 && !this.Flag5) {
+        this.HelmetCourseRightClass = [
+          "animate__bounceInRight animate__animated show_info",
+          "animate__bounceInRight animate__animated show_info",
+        ];
+        this.Flag5 = true;
+      }
+      if (scrollTop >= 2600 && !this.Flag6) {
+        this.HelmetCourseLeftClass = [
+          "animate__bounceInLeft animate__animated show_info",
+          "animate__bounceInLeft animate__animated show_info",
+          "animate__bounceInLeft animate__animated show_info",
+        ];
+        window.removeEventListener("scroll", this.scrollToTop);
+        this.Flag6 = true;
+      }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
-
-@media screen and (min-width: 1280px) {
-  .github {
-    display: flex;
-    cursor: pointer;
-    margin-top: 20px;
-    align-items: center;
-    img {
-      width: 24px;
-      height: 24px;
-      margin-right: 4px;
-    }
-    span {
-      font-size: 16px;
-      font-family: PingFangSC-Semibold, PingFang SC;
-      font-weight: 600;
-      color: #ff9600;
-      line-height: 22px;
+.helmet_home {
+  margin: 0 auto;
+}
+.helmet_logo {
+  margin: 0 auto;
+  a {
+    display: block;
+    background-image: url("../../assets/img/home/index_logo.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+}
+.helmet_info {
+  > h3 {
+    font-family: Erbaum-Medium, Erbaum;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: center;
+  }
+}
+@media screen and (min-width: 750px) {
+  .helmet_home {
+    min-width: 1280px;
+  }
+  .helmet_logo {
+    max-width: 1600px;
+    padding-top: 50px;
+    a {
+      width: 243px;
+      height: 70px;
     }
   }
-  .helmet_container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0 6.25vw;
-    .helmet_logo {
-      height: 108px;
-      display: flex;
-      align-items: flex-end;
-      a {
-        display: block;
-        width: 255px;
-        height: 48px;
-        background-image: url("../../assets/img/helmet/home_logo.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-    }
-    .helmet_content {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-      .right_text {
-        margin-top: 25vh;
-        H3 {
-          color: #fff;
-          font-size: 5vw;
-          font-weight: 300;
-          span {
-            color: #ff9600;
-          }
-        }
-        p {
-          font-size: 2vw;
-          font-weight: 300;
-          color: rgba(255, 255, 255, 0.6);
-        }
-        div {
-          display: flex;
-          margin-top: 6.4vh;
-          a {
-            min-width: 140px;
-            min-height: 36px;
-            width: 8vw;
-            height: 5vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            &:hover {
-              transition: transform 0.5s ease;
-              transform: scale(1.04);
-            }
-            &:nth-of-type(1) {
-              border: 1px solid #ff9600;
-              background: none;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ff9600;
-              margin-right: 20px;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-
-            &:nth-of-type(2) {
-              background: #ff9600;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ffffff;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-          }
-          > i {
-            display: block;
-            width: 2px;
-            min-height: 36px;
-            height: 5vh;
-            background: #212121;
-            border-radius: 1px;
-            margin: 0 40px;
-          }
-          > img {
-            height: 5vh;
-            min-height: 36px;
-          }
-          .h5_binance {
-            display: none;
-          }
-        }
-      }
-
-      .right_pic {
-        min-width: 474px;
-        min-height: 322px;
-        margin-top: 10vh;
-        width: 680px;
-        height: 483px;
-        position: relative;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-        .bofang {
-          width: 120px;
-          height: 120px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          cursor: pointer;
-        }
-      }
+  .helmet_info {
+    height: 3000px;
+    background-image: url("../../assets/img/home/roadmap_bg1_web.png"),
+      url("../../assets/img/home/roadmap_bg2_web.png");
+    background-position: top center, bottom center;
+    background-size: 1920px 1023px, 1920px 1920px;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #000;
+    > h3 {
+      font-size: 36px;
+      line-height: 51px;
     }
   }
 }
-@media screen and (min-width: 750px) and(max-width:1280px) {
-  .helmet_container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    padding: 0 100px;
-    .helmet_logo {
-      height: 108px;
-      display: flex;
-      align-items: flex-end;
-      a {
-        display: block;
-        width: 210px;
-        height: 40px;
-        background-image: url("../../assets/img/helmet/home_logo.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-    }
-    .helmet_content {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-      .right_text {
-        margin-top: 180px;
-        H3 {
-          color: #fff;
-          font-size: 64px;
-          font-weight: 300;
-          span {
-            color: #ff9600;
-          }
-        }
-        p {
-          font-size: 24px;
-          font-weight: 300;
-          color: rgba(255, 255, 255, 0.6);
-        }
-        div {
-          display: flex;
-          margin-top: 40px;
-          a {
-            width: 140px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            &:hover {
-              transition: transform 0.5s ease;
-              transform: scale(1.04);
-            }
-            &:nth-of-type(1) {
-              border: 1px solid #ff9600;
-              background: none;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ff9600;
-              margin-right: 20px;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-            &:nth-of-type(2) {
-              background: #ff9600;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ffffff;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-          }
-          > i {
-            display: block;
-            height: 36px;
-            background: #212121;
-            border-radius: 1px;
-            margin: 0 40px;
-          }
-          > img {
-            height: 36px;
-          }
-          .h5_binance {
-            display: none;
-          }
-        }
-      }
-      .right_pic {
-        min-width: 474px;
-        min-height: 322px;
-        margin-top: 50px;
-        width: 474px;
-        height: 322px;
-        position: relative;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-        .bofang {
-          width: 80px;
-          height: 80px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          cursor: pointer;
-        }
-      }
-    }
-    .helmet_footer {
-      width: 100%;
-      height: 150px;
-      display: flex;
-      flex-direction: column;
-      .footer_top {
-        width: 300px;
-        flex: 1;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        a {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          img {
-            width: 24px;
-            height: 24px;
-          }
-          span {
-            margin-top: 4px;
-            font-size: 14px;
-            color: #e8e7e9;
-          }
-        }
-      }
-      .footer_bottom {
-        border-top: 1px solid #212121;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        p {
-          font-size: 14px;
-          font-weight: 400;
-          color: #545454;
-        }
-      }
+@media screen and (max-width: 750px) {
+  .helmet_home {
+    width: 94%;
+  }
+  .helmet_logo {
+    max-width: 1600px;
+    padding-top: 15px;
+    a {
+      width: 122px;
+      height: 35px;
     }
   }
-}
-@media screen and(max-width:750px) {
-  .helmet_container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    .helmet_logo {
-      display: flex;
-      align-items: flex-end;
-      a {
-        margin: 27px 0 50px 30px;
-        display: block;
-        width: 138px;
-        height: 26px;
-        background-image: url("../../assets/img/helmet/home_logo.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-      }
-    }
-    .helmet_content {
-      display: flex;
-      flex-direction: column-reverse;
-      .right_text {
-        H3 {
-          margin-top: 38px;
-          text-align: center;
-          color: #fff;
-          font-size: 40px;
-          font-weight: 300;
-          span {
-            color: #ff9600;
-          }
-        }
-        p {
-          margin-top: 20px;
-          text-align: center;
-          font-size: 16px;
-          font-weight: 300;
-          color: rgba(255, 255, 255, 0.6);
-        }
-        div {
-          display: flex;
-          flex-direction: column-reverse;
-          margin-top: 34px;
-          a {
-            margin: 0 auto;
-            width: 90%;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            &:hover {
-              transition: transform 0.5s ease;
-              transform: scale(1.04);
-            }
-            &:nth-of-type(1) {
-              border: 1px solid #ff9600;
-              background: none;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ff9600;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-
-            &:nth-of-type(2) {
-              background: #ff9600;
-              font-size: 16px;
-              font-weight: 600;
-              color: #ffffff;
-              margin-bottom: 20px;
-              img {
-                width: 24px;
-                height: 24px;
-                margin-right: 4px;
-              }
-            }
-          }
-          > i {
-            display: none;
-          }
-          > img {
-            width: 80%;
-            margin: 20px auto 0;
-          }
-          .web_binance {
-            display: none;
-          }
-        }
-      }
-      .right_pic {
-        width: 94%;
-        margin: 0 auto;
-        position: relative;
-        min-height: 257px;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-        .bofang {
-          width: 80px;
-          height: 80px;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          cursor: pointer;
-        }
-        > div {
-          width: 100%;
-          min-height: 257px;
-          #youtube {
-            width: 100%;
-            min-height: 257px;
-          }
-        }
-      }
-    }
-    .helmet_footer {
-      width: 100%;
-      height: 150px;
-      display: flex;
-      flex-direction: column;
-      .footer_top {
-        width: 300px;
-        flex: 1;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        a {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          img {
-            width: 24px;
-            height: 24px;
-          }
-          span {
-            margin-top: 4px;
-            font-size: 14px;
-            color: #e8e7e9;
-          }
-        }
-      }
-      .footer_bottom {
-        border-top: 1px solid #212121;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        p {
-          font-size: 14px;
-          font-weight: 400;
-          color: #545454;
-        }
-      }
+  .helmet_info {
+    background-image: url("../../assets/img/home/roadmap_bg1_h5.png"),
+      url("../../assets/img/home/roadmap_bg2_h5.png");
+    background-position: top center, center center;
+    background-size: 100vw auto, 100vw auto;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #000;
+    > h3 {
+      font-size: 24px;
+      line-height: 34px;
+      margin-top: 50px;
     }
   }
 }

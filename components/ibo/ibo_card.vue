@@ -559,7 +559,6 @@ export default {
       );
     },
     onBurn() {
-      console.log('this.now > parseInt(this.iboData.timeClose)', this.now , parseInt(this.iboData.timeClose))
       if (
         !this.amount ||
         isNaN(Number(this.amount)) ||

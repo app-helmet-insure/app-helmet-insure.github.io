@@ -2,7 +2,7 @@
   <div class="helmet_course">
     <h3>Roadmap</h3>
     <div class="helmet_course_q">
-      <div class="helmet_course_q_l">
+      <div class="helmet_course_q_l WEB">
         <div
           v-for="(item, index) in LeftCourseInfo"
           :key="item.quarter"
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="quarter_line"></div>
-      <div class="helmet_course_q_r">
+      <div class="helmet_course_q_r WEB">
         <div
           v-for="(item, index) in RightCourseInfo"
           :key="item.quarter"
@@ -45,6 +45,38 @@
           </p>
         </div>
       </div>
+      <div class="helmet_course_q_r H5">
+        <div
+          v-for="item in HelmetCourseInfo"
+          :key="item.quarter"
+          :style="`margin-top:${item.margintop}px`"
+          :class="`quarter quarter_${item.direction} `"
+        >
+          <div :class="`start_line start_line_${item.direction}`">
+            <svg
+              width="20px"
+              height="20px"
+              :class="`icon  ${!item.flagshow ? '' : 'rotate'}`"
+              aria-hidden="true"
+              @click="handleClickShowInfo(item)"
+            >
+              <use xlink:href="#icon-shouqi"></use>
+            </svg>
+            <span>{{ item.quarter }}</span>
+            <p></p>
+            <i></i>
+          </div>
+          <p
+            v-for="info in item.infomation"
+            :key="info"
+            :class="`quarter_info quarter_info_${item.direction} ${
+              !item.flagshow ? 'hidden_info' : ''
+            }`"
+          >
+            <i v-if="item.finish"></i>{{ info }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +86,7 @@ import { HelmetCourseInfo } from "../../config/home.js";
 export default {
   props: ["LeftClassName", "RightClassName"],
   data() {
-    return {};
+    return { HelmetCourseInfo };
   },
   computed: {
     LeftCourseInfo() {
@@ -62,6 +94,11 @@ export default {
     },
     RightCourseInfo() {
       return HelmetCourseInfo.filter((item) => item.direction === "right");
+    },
+  },
+  methods: {
+    handleClickShowInfo(info) {
+      info.flagshow = !info.flagshow;
     },
   },
 };
@@ -72,42 +109,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 160px;
   > h3 {
-    font-size: 36px;
     font-family: Erbaum-Medium, Erbaum;
     font-weight: 500;
     color: #ffffff;
-    line-height: 51px;
   }
   &_q {
-    &_l {
-      width: 540px;
-      visibility: hidden;
-    }
-    &_r {
-      width: 540px;
-      visibility: hidden;
-    }
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    .quarter_left {
-      transform: translateX(8px);
-    }
-    .quarter_right {
-      transform: translateX(-8px);
-    }
-    .quarter_line {
-      width: 1px;
-      height: 1588px;
-      background: #27282a;
-      flex-shrink: 0;
-    }
     .start_line {
       display: flex;
       align-items: center;
-      width: 540px;
       flex-shrink: 0;
       > span {
         font-size: 24px;
@@ -133,17 +143,6 @@ export default {
         border: 1px solid #f0b90b;
       }
     }
-    .start_line_left {
-      p {
-        margin-left: 4px;
-      }
-    }
-    .start_line_right {
-      flex-direction: row-reverse;
-      p {
-        margin-right: 4px;
-      }
-    }
     .quarter_info {
       width: 100%;
       display: flex;
@@ -164,19 +163,140 @@ export default {
         background-size: 100% 100%;
         margin-right: 4px;
       }
-      &:nth-of-type(1) {
-        margin-top: 40px;
-      }
-    }
-    .quarter_info_left {
-      padding-right: 40px;
-    }
-    .quarter_info_right {
-      padding-left: 40px;
     }
   }
 }
 .show_info {
   visibility: visible !important;
+}
+
+@media screen and (min-width: 750px) {
+  .H5 {
+    display: none !important;
+  }
+  .helmet_course {
+    width: 100%;
+    padding-top: 160px;
+    > h3 {
+      font-size: 36px;
+      line-height: 51px;
+    }
+    &_q {
+      display: flex;
+      justify-content: center;
+      margin-top: 25px;
+      &_l {
+        width: 540px;
+        visibility: hidden;
+      }
+      &_r {
+        width: 540px;
+        visibility: hidden;
+      }
+      .quarter_left {
+        transform: translateX(8px);
+      }
+      .quarter_right {
+        transform: translateX(-8px);
+      }
+      .quarter_line {
+        width: 1px;
+        height: 1588px;
+        background: #27282a;
+        flex-shrink: 0;
+      }
+      .start_line {
+        width: 540px;
+      }
+      .start_line_left {
+        p {
+          margin-left: 4px;
+        }
+      }
+      .start_line_right {
+        flex-direction: row-reverse;
+        p {
+          margin-right: 4px;
+        }
+      }
+      .quarter_info_left {
+        padding-right: 40px;
+      }
+      .quarter_info_right {
+        padding-left: 40px;
+      }
+      .quarter_info {
+        &:nth-of-type(1) {
+          margin-top: 40px;
+        }
+      }
+    }
+    svg {
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .hidden_info {
+    display: none !important;
+  }
+  .WEB {
+    display: none !important;
+  }
+  .helmet_course {
+    width: 100%;
+    margin: 30px auto 0;
+    > h3 {
+      font-size: 24px;
+      line-height: 34px;
+    }
+    &_q {
+      width: 100%;
+      display: flex;
+      .quarter {
+        min-width: 330px;
+        margin-top: 40px !important;
+      }
+      &_l {
+        flex: 1;
+        min-width: 30px;
+        margin: 0 auto;
+      }
+      &_r {
+        flex: 1;
+        min-width: 320px;
+        margin: 0 auto;
+      }
+      .quarter_line {
+        width: 1px;
+        background: #27282a;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        transform: translateX(8px);
+      }
+      .start_line {
+        width: 100%;
+        min-width: 320px;
+      }
+      .start_line_left {
+        flex-direction: row-reverse;
+      }
+      .start_line_right {
+        flex-direction: row-reverse;
+      }
+      .quarter_info {
+        padding: 0 20px 0 20px;
+      }
+      svg {
+        fill: #9098a2;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.rotate {
+  transform: rotate(180deg);
+  transition: 0.5s;
 }
 </style>

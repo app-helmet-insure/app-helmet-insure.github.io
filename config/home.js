@@ -10,6 +10,7 @@ export const HelmetCitysInfo = [
       "Besides, Helmet contains Mining parts, including LP mining, single token staking and policy mining. DeFi users could enjoy yield farming while hedging the trading risk. ",
       "Currently, Helmet is operating on BSC and Polygon(guard.insure), multiple chain dev ongoing that leverages options trading logic for its decentralized insurance offering.",
     ],
+    flagshow: false,
   },
   {
     logo: CityLogo2,
@@ -20,6 +21,7 @@ export const HelmetCitysInfo = [
       "And that’s where Helmet comes into play.",
       "In brief, helmet.insure flexiblly realizes reasonable price discovery, effective risk hedging as well as apt asset allocation.",
     ],
+    flagshow: false,
   },
 ];
 export const HelmetCourseInfo = [
@@ -28,6 +30,7 @@ export const HelmetCourseInfo = [
     direction: "left",
     finish: true,
     margintop: 112,
+    flagshow: false,
     infomation: [
       "Launch on BSC with V1 dapp",
       "IFO on PancakeSwap",
@@ -44,6 +47,7 @@ export const HelmetCourseInfo = [
     direction: "right",
     finish: true,
     margintop: 258,
+    flagshow: false,
     infomation: [
       "Partner with over 10 projects on BSC to provide price coverage and mining campaign (with LONG htoken)",
       "Add 6 insurance policy categories",
@@ -58,6 +62,7 @@ export const HelmetCourseInfo = [
     direction: "left",
     finish: true,
     margintop: 161,
+    flagshow: false,
     infomation: [
       "Multichain development--hit Polygon net (guard.insure)",
       "SHORT token mining on Polygon net",
@@ -73,6 +78,7 @@ export const HelmetCourseInfo = [
     direction: "right",
     finish: false,
     margintop: 125,
+    flagshow: false,
     infomation: [
       "New function of initial token offering",
       "Continued development of more varieties of insurance policy",
@@ -90,6 +96,7 @@ export const HelmetCourseInfo = [
     direction: "left",
     finish: false,
     margintop: 227,
+    flagshow: false,
     infomation: [
       "Build derivate protocols including lending system of denominated asset and insurance of spread trading",
       "Launch Perpetual insurance and derivative insurance",

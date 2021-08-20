@@ -34,23 +34,13 @@ export default {
 
 <style lang='scss' scoped>
 .helmet_more {
-  margin-top: 160px;
   h3 {
     text-align: center;
-    font-size: 36px;
     font-family: Erbaum-Medium, Erbaum;
     font-weight: 500;
     color: #ffffff;
-    line-height: 51px;
   }
   .card_wrap {
-
-    display: flex;
-    width: 938px;
-    height: 637px;
-    align-items: flex-end;
-    margin: 50px auto 0px;
-    justify-content: center;
     position: relative;
     .card_item {
       overflow: hidden;
@@ -63,28 +53,12 @@ export default {
       }
     }
     .card_item_1 {
-      width: 420px;
-      height: 410px;
-      transform: rotate(-15deg);
-      z-index: 1;
-      left: 35px;
-      bottom: 160px;
       background: linear-gradient(360deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
     }
     .card_item_2 {
-      width: 420px;
-      height: 410px;
-      transform: rotate(-7deg);
-      z-index: 3;
       background: linear-gradient(360deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
     }
     .card_item_3 {
-      width: 385px;
-      height: 380px;
-      transform: rotate(15deg);
-      z-index: 2;
-      right: 100px;
-      bottom: 145px;
       background: linear-gradient(360deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
     }
     .card_item_wrap {
@@ -98,22 +72,15 @@ export default {
       border-image-slice: 10%;
 
       h3 {
-        font-size: 24px;
         font-family: Erbaum-Black, Erbaum;
         font-weight: 900;
         color: #c5c5c5;
-        line-height: 35px;
         text-align: left;
       }
       p {
-        &:nth-of-type(1) {
-          margin-top: 20px;
-        }
-        font-size: 16px;
         font-family: Erbaum-Book, Erbaum;
         font-weight: normal;
         color: #9098a2;
-        line-height: 26px;
       }
     }
     .card_item_mask {
@@ -123,6 +90,105 @@ export default {
       top: 0;
       width: 100%;
       height: 100%;
+    }
+  }
+}
+@media screen and(min-width:750px) {
+  .helmet_more {
+    margin-top: 160px;
+    h3 {
+      font-size: 36px;
+      line-height: 51px;
+    }
+    .card_wrap {
+      width: 938px;
+      height: 637px;
+      display: flex;
+      align-items: flex-end;
+      margin: 50px auto 0px;
+      justify-content: center;
+      .card_item_wrap {
+        h3 {
+          font-size: 24px;
+          line-height: 35px;
+        }
+        p {
+          &:nth-of-type(1) {
+            margin-top: 20px;
+          }
+          font-size: 16px;
+          line-height: 26px;
+        }
+      }
+      .card_item_1 {
+        width: 420px;
+        height: 410px;
+        transform: rotate(-15deg);
+        z-index: 1;
+        left: 35px;
+        bottom: 160px;
+      }
+      .card_item_2 {
+        width: 420px;
+        height: 410px;
+        transform: rotate(-7deg);
+        z-index: 3;
+      }
+      .card_item_3 {
+        width: 385px;
+        height: 380px;
+        transform: rotate(15deg);
+        z-index: 2;
+        right: 100px;
+        bottom: 145px;
+      }
+    }
+  }
+}
+@media screen and(max-width:750px) {
+  .helmet_more {
+    margin-top: 100px;
+    height: 700px;
+    h3 {
+      font-size: 24px;
+      line-height: 34px;
+    }
+    .card_wrap {
+      width: 94%;
+      margin: 40px auto 0;
+      .card_item_wrap {
+        h3 {
+          font-size: 16px;
+          line-height: 24px;
+        }
+        p {
+          &:nth-of-type(1) {
+            margin-top: 15px;
+          }
+          font-size: 12px;
+          line-height: 16px;
+        }
+      }
+      .card_item_1 {
+        width: 285px;
+        height: 278px;
+        left: 0;
+        z-index: 1;
+      }
+      .card_item_2 {
+        width: 285px;
+        height: 271px;
+        z-index: 3;
+        left: 0;
+        margin-top: 345px;
+      }
+      .card_item_3 {
+        width: 285px;
+        height: 246px;
+        right: 0;
+        margin-top: 188px;
+        z-index: 2;
+      }
     }
   }
 }

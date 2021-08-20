@@ -79,10 +79,8 @@ export default {
 <style lang='scss' scoped>
 .helmet_view {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 134px;
   &_l {
     .ctk_link {
       display: block;
@@ -96,7 +94,6 @@ export default {
         rgba(255, 150, 0, 1)
       );
       padding: 1px;
-      margin-left: 72px;
       a {
         width: 100%;
         height: 100%;
@@ -110,11 +107,8 @@ export default {
       }
     }
     .typed-element {
-      height: 120px;
       display: flex;
-      justify-content: center;
       .typing {
-        font-size: 90px;
         font-family: Erbaum-Book, Erbaum;
         font-weight: normal;
         text-align: center;
@@ -125,23 +119,15 @@ export default {
           color: #ffffff !important;
         }
       }
-      .typed-cursor {
-        font-size: 90px;
-        color: #ffffff;
-      }
     }
     > p {
-      margin-top: 10px;
-      font-size: 36px;
       font-family: Erbaum-Book;
       font-weight: normal;
       color: #9098a2;
-      line-height: 40px;
     }
     .btn_link {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
       > div {
         height: 56px;
         border-radius: 5px;
@@ -163,7 +149,6 @@ export default {
         font-family: Erbaum-Regular, Erbaum;
       }
       .bsc_dapp {
-        margin: 0 10px;
         height: 56px;
         background: linear-gradient(
           133deg,
@@ -180,7 +165,6 @@ export default {
         }
       }
       .matic_dapp {
-        margin: 0 10px;
         box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
         background: linear-gradient(
           135deg,
@@ -205,8 +189,6 @@ export default {
     }
   }
   &_r {
-    width: 760px;
-    height: 540px;
     position: relative;
     margin-top: 40px;
     .video_index {
@@ -218,9 +200,86 @@ export default {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
-      width: 120px;
-      height: 120px;
       cursor: pointer;
+    }
+  }
+}
+@media screen and(min-width: 750px) {
+  .helmet_view {
+    flex-direction: column;
+    margin-top: 134px;
+    &_l {
+      .ctk_link {
+        margin-left: 72px;
+      }
+      .typed-element {
+        height: 120px;
+        justify-content: center;
+        .typing {
+          font-size: 90px;
+        }
+      }
+      > p {
+        margin-top: 10px;
+        font-size: 36px;
+        line-height: 40px;
+      }
+      .btn_link {
+        margin-top: 40px;
+      }
+      .bsc_dapp {
+        margin: 0 10px;
+      }
+      .matic_dapp {
+        margin: 0 10px;
+      }
+    }
+    &_r {
+      width: 760px;
+      height: 540px;
+      .video_start {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  }
+}
+@media screen and(max-width: 750px) {
+  .helmet_view {
+    width: 100%;
+    flex-direction: column-reverse;
+    &_l {
+      .ctk_link {
+        margin-top: 34px;
+      }
+      .typed-element {
+        height: 60px;
+        .typing {
+          font-size: 36px;
+        }
+      }
+      > p {
+        font-size: 14px;
+        line-height: 24px;
+      }
+      .btn_link {
+        flex-direction: column;
+        margin: 0;
+      }
+      .bsc_dapp {
+        margin-top: 20px;
+      }
+      .matic_dapp {
+        margin-top: 20px;
+      }
+    }
+    &_r {
+      min-width: 335px;
+      min-height: 238px;
+      .video_start {
+        width: 60px;
+        height: 60px;
+      }
     }
   }
 }

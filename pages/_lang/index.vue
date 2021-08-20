@@ -112,38 +112,75 @@ export default {
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 .helmet_home {
-  min-width: 1280px;
   margin: 0 auto;
 }
 .helmet_logo {
-  max-width: 1600px;
   margin: 0 auto;
-  padding-top: 50px;
   a {
     display: block;
-    width: 243px;
-    height: 70px;
     background-image: url("../../assets/img/home/index_logo.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
 }
 .helmet_info {
-  height: 3000px;
-  background-image: url("../../assets/img/home/roadmap_bg1_web.png"),
-    url("../../assets/img/home/roadmap_bg2_web.png");
-  background-position: top center, bottom center;
-  background-size: 1920px 1023px, 1920px 1920px;
-  background-repeat: no-repeat, no-repeat;
-  background-color: #000;
   > h3 {
-    font-size: 36px;
     font-family: Erbaum-Medium, Erbaum;
     font-weight: 500;
     color: #ffffff;
-    line-height: 51px;
     text-align: center;
-    margin-top: 160px;
+  }
+}
+@media screen and (min-width: 750px) {
+  .helmet_home {
+    min-width: 1280px;
+  }
+  .helmet_logo {
+    max-width: 1600px;
+    padding-top: 50px;
+    a {
+      width: 243px;
+      height: 70px;
+    }
+  }
+  .helmet_info {
+    height: 3000px;
+    background-image: url("../../assets/img/home/roadmap_bg1_web.png"),
+      url("../../assets/img/home/roadmap_bg2_web.png");
+    background-position: top center, bottom center;
+    background-size: 1920px 1023px, 1920px 1920px;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #000;
+    > h3 {
+      font-size: 36px;
+      line-height: 51px;
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .helmet_home {
+    width: 94%;
+  }
+  .helmet_logo {
+    max-width: 1600px;
+    padding-top: 15px;
+    a {
+      width: 122px;
+      height: 35px;
+    }
+  }
+  .helmet_info {
+    background-image: url("../../assets/img/home/roadmap_bg1_h5.png"),
+      url("../../assets/img/home/roadmap_bg2_h5.png");
+    background-position: top center, center center;
+    background-size: 100vw auto, 100vw auto;
+    background-repeat: no-repeat, no-repeat;
+    background-color: #000;
+    > h3 {
+      font-size: 24px;
+      line-height: 34px;
+      margin-top: 50px;
+    }
   }
 }
 </style>

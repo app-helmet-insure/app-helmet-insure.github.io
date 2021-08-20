@@ -48,9 +48,11 @@ export const iboPools = [
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
     networkId: 56,
-    claimTimeTipI18n: 'IBO.IBO_text37'
+    claimTimeTipI18n: 'IBO.IBO_text37',
+    rateDecimal: 9
   },
   {
+    rateDecimal: 18,
     name: 'UFOMO',
     address: '0x030EfF0f3dDf927CC0471cB6F8e01689AcF49678',
     abi: starterLimitAbi,
@@ -94,6 +96,7 @@ export const iboPools = [
   },
   {
     name: 'GAME1',
+    rateDecimal: 18,
     address: '0x7A19bC605116d8843e4757Bb97ac31DD6d49E844',
     abi: starterLimitAbi,
     start_at: '1629122400',

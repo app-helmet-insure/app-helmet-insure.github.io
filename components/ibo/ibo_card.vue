@@ -381,7 +381,7 @@ export default {
       if (!this.iboData.settleable || this.iboData.status === 0) {
         return "-";
       }
-      return fromWei(this.iboData.settleable.rate)
+      return fromWei(this.iboData.settleable.rate, this.iboData.rateDecimal)
         .multipliedBy(new BigNumber(100))
         .toFixed(2, 1)
         .toString();

@@ -241,13 +241,13 @@ const hTokenDoublePoolAPR = async ({
 const CompoundPoolAPY = async ({ POOL_ADDRESS }) => {
   // all staking of pool
   let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
-  let REWARD_VALUE = 1 + 33057.57 / STAKE_VOLUME;
+  let REWARD_VALUE = 1 + 22471 / STAKE_VOLUME;
   let APR = Math.pow(REWARD_VALUE, 365) * 100;
   return APR;
 };
 export const GetHelmetPoolAPY = async ({ POOL_ADDRESS }) => {
   let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
-  let APR = (33057.57 / STAKE_VOLUME) * 365 * 100;
+  let APR = (22471 / STAKE_VOLUME) * 365 * 100;
   return APR;
 };
 const GetTokenForBNBValue = async (

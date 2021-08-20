@@ -290,6 +290,23 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'AXN'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text35") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
+
+        <p>
+          TG:
+          <a href="https://t.me/Axieninjaofficial" target="_blank"
+          >https://t.me/Axieninjaofficial</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://www.axieninja.app/" target="_blank"
+          >https://www.axieninja.app/</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>

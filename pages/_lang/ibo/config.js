@@ -47,7 +47,8 @@ export const iboPools = [
     committed: '', // 超募比例
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
-    networkId: 56
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text37'
   },
   {
     name: 'UFOMO',

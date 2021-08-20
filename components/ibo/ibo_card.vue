@@ -224,6 +224,9 @@
           <i class="el-icon-loading" v-if="claimLoading"></i>
           {{ $t("Table.Claim") }}
         </a>
+        <p class="ibo_item_value" v-if="iboData.claimTimeTipI18n">
+          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span>
+        </p>
       </div>
     </div>
     <Dialog
@@ -291,7 +294,8 @@
         </p>
       </div>
       <div v-else-if="iboData.name === 'AXN'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text35") }}</p>
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text37") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text37") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
         <p>
           SC: 0x3a05e86c25366031d92e013cac77ff6c261cb09b
@@ -623,6 +627,9 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
+.claim-time-tip{
+
+}
 .copy {
   display: inline-block;
   width: 12px;

@@ -230,6 +230,7 @@ export default {
       try {
         // Map List
         getInsuranceList().then((res) => {
+          console.log(res);
           if (res && res.data.data.options) {
             let FixList = [];
             let FixListPush = [];

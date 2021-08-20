@@ -208,9 +208,6 @@ export const getExerciseList = async function() {
 };
 //get Insurance
 export const getInsuranceList = async function() {
-  let rightTime = parseInt(moment.now());
-  let leftTime = parseInt(moment.now()) - 518400000;
-  console.log(rightTime, leftTime);
   return Axios({
     method: "post",
     url:
@@ -226,7 +223,7 @@ export const getInsuranceList = async function() {
                   expiry
                   long
                   short
-                  asks {
+                  asks(first:1000) {
                     askID
                     seller
                     volume
@@ -266,7 +263,7 @@ export const getLongType = async function() {
                   expiry
                   long
                   short
-                  asks {
+                  asks(first:1000) {
                     askID
                     seller
                     volume

@@ -321,3 +321,12 @@ export const getLongTokenValue = (data) => {
     return TVLS;
   });
 };
+export const getTokenPrice = (data, callback) => {
+  return Axios({
+    method: "get",
+    url: "https://api.1inch.exchange/v3.0/56/quote",
+    params: { ...data },
+  }).then((res) => {
+    return res;
+  });
+};

@@ -274,6 +274,7 @@ export default {
     });
   },
   methods: {
+    
     buyInsurance_h5(insuranceType) {
       this.activeInsurance = insuranceType;
       this.TradeType = "BUY";

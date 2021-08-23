@@ -324,6 +324,7 @@ export const getTokenPrice = (data, callback) => {
     url: "https://api.1inch.exchange/v3.0/56/quote",
     params: { ...data },
   }).then((res) => {
+    console.log(res);
     return res;
   });
 };

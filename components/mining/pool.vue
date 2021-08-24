@@ -33,6 +33,26 @@
       </div>
       <div class="button">
         <button
+          v-if="this.activeData.STAKE_SYMBOL === 'HELMET'"
+          @click="toDeposite"
+          :class="
+            (stakeLoading ? 'disable b_button' : 'b_button',
+            this.activeData.MING_TIME == 'Finished'
+              ? 'disable_button b_button'
+              : 'b_button')
+          "
+        >
+          <i :class="stakeLoading ? 'loading_pic' : ''"></i
+          >{{
+            ApproveFlag
+              ? $t("Table.Approve")
+              : balance.Reward1
+              ? $t("Table.StakeAndCompound")
+              : $t("Table.ConfirmDeposit")
+          }}
+        </button>
+        <button
+          v-else
           @click="toDeposite"
           :class="
             (stakeLoading ? 'disable b_button' : 'b_button',
@@ -249,6 +269,7 @@ import {
   GetDoubleReward,
   Approve,
   Exit,
+  StakeAndComound,
 } from "~/interface/write_contract.js";
 import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
@@ -411,12 +432,24 @@ export default {
           }
         });
       } else {
-        await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
-          if (res == "success" || res == "error") {
-            this.getBalance();
-            this.stakeLoading = false;
-          }
-        });
+        if (this.activeData.STAKE_SYMBOL === "HELMET") {
+          await StakeAndComound(
+            { ContractAddress, DepositeVolume, Decimals },
+            (res) => {
+              if (res == "success" || res == "error") {
+                this.getBalance();
+                this.stakeLoading = false;
+              }
+            }
+          );
+        } else {
+          await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
+            if (res == "success" || res == "error") {
+              this.getBalance();
+              this.stakeLoading = false;
+            }
+          });
+        }
       }
     },
     async NeedApprove() {

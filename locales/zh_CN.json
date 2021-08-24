@@ -127,6 +127,7 @@
     "HELMETRewards": "待领取奖励",
     "ClaimAllRewards": "领取奖励",
     "Stake": "抵押",
+    "StakeAndCompound":"抵押挖矿 & 复投",
     "Unstake": "赎回",
     "Claim": "结算",
     "DenAssets": "计价资产",

@@ -127,6 +127,7 @@
     "HELMETRewards": "Rewards",
     "ClaimAllRewards": "Claim Rewards",
     "Stake": "Stake",
+    "StakeAndCompound":"Confirm Deposit & Compound",
     "Unstake": "Unstake",
     "Claim": "Claim",
     "DenAssets": "Denominated Asset",

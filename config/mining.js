@@ -1,6 +1,6 @@
 export const lptPool = [
   {
-    POOL_NAME: "HELMET-BNB&nbsp;MLP",
+    POOL_NAME: "HELMET-BNB MLP",
     STAKE_SYMBOL: "HELMET-BNB MLP",
     STAKE_UNIT: "MLP",
     REARD_VOLUME: "two",
@@ -38,7 +38,7 @@ export const lptPool = [
     REWARD_YEAR: "Infinity",
   },
   {
-    POOL_NAME: `HELMET-BNB&nbsp;LPT <i class=v2_light></i>`,
+    POOL_NAME: `HELMET-BNB LPT <i class=v2_light></i>`,
     STAKE_SYMBOL: "HELMET-BNB LPT",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "one",
@@ -74,7 +74,7 @@ export const lptPool = [
     REWARD_YEAR: "Infinity",
   },
   {
-    POOL_NAME: `HELMET-USDT&nbsp;LPT</i>`,
+    POOL_NAME: `HELMET-USDT LPT</i>`,
     STAKE_SYMBOL: "HELMET-USDT LPT",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "one",
@@ -108,5 +108,18 @@ export const lptPool = [
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
     APRTYPE: "TokenDoublePoolAPR",
     REWARD_YEAR: "Infinity",
+  },
+  {
+    POOL_NAME: `GUARD-USDC LPT`,
+    STAKE_SYMBOL: "GUARD-USDC LPT",
+    STAKE_UNIT: "LPT",
+    REARD_VOLUME: "two",
+    REWARD_NAME: "guard_quick",
+    REARD_IMGSHOW: true,
+    MING_TIME: "Ongoing",
+    OPEN_TIME: "Mining",
+    REWARD_TYPE: "APR",
+    REWARD_YEAR: "686.19%",
+    POOL_TYPE: "link",
   },
 ];

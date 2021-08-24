@@ -202,7 +202,6 @@ import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 import moment from "moment";
 import MiningABI from "../../abi/MiningABI.json";
-import { JsonRpcProvider } from "@ethersproject/providers";
 import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,

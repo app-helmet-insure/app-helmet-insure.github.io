@@ -1,7 +1,7 @@
-@import './base.scss';
+@import "./base.scss";
 * {
-    margin: 0px;
-    padding: 0px;
+  margin: 0px;
+  padding: 0px;
 }
 html,
 body,
@@ -29,387 +29,389 @@ th,
 td,
 input,
 button {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
 button {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 html,
 body {
-    @include themeify {
-        background: themed('color-17173a');
-    }
-    // min-width: 1280px;
+  @include themeify {
+    background: themed("color-17173a");
+  }
+  &::-webkit-scrollbar {
+    width: 0px !important;
+  }
 }
 a {
-    cursor: pointer;
-    text-decoration: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 i {
-    font-style: normal;
+  font-style: normal;
 }
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 button,
 input,
 select {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 // 去掉数字类型右侧上下箭头
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
-input[type='number'] {
-    -moz-appearance: textfield;
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 button {
-    cursor: pointer;
-    &:disabled {
-        cursor: not-allowed;
-    }
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
 }
 
 .have-icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mask {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 10;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
 }
 
 $td-gap: 16px;
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    color: $text-t;
-    thead {
-        th {
-            height: 44px;
-            text-align: left;
-            padding-left: $td-gap;
-            font-size: 14px;
-            font-weight: 400;
-            &:last-child {
-                text-align: right;
-                padding-right: $td-gap;
-            }
-        }
+  width: 100%;
+  border-collapse: collapse;
+  color: $text-t;
+  thead {
+    th {
+      height: 44px;
+      text-align: left;
+      padding-left: $td-gap;
+      font-size: 14px;
+      font-weight: 400;
+      &:last-child {
+        text-align: right;
+        padding-right: $td-gap;
+      }
     }
-    tbody {
-        tr {
-            border-bottom: 1px solid $border;
-            &:last-child {
-                border-bottom: none;
-            }
-            td {
-                height: 64px;
-                text-align: left;
-                padding-left: $td-gap;
-                font-size: 14px;
-                &:last-child {
-                    text-align: right;
-                    padding-right: $td-gap;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-end;
-                }
-                > a {
-                    display: flex;
-                    align-items: center;
-                    margin-left: 16px;
-                    color: $text-m;
-                    background: $main-color;
-                    height: 32px;
-                    line-height: 32px;
-                    padding: 0px 10px;
-                    border-radius: 10px;
-                    > img {
-                        width: 20px;
-                        height: 20px;
-                        margin-right: 4px;
-                    }
-                    &:hover {
-                        background: darken($color: $main-color, $amount: 50%);
-                    }
-                }
-                > button {
-                    display: flex;
-                    align-items: center;
-                    margin-left: 16px;
-                    color: $text-m;
-                    background: $main-color;
-                    height: 32px;
-                    line-height: 32px;
-                    padding: 0px 10px;
-                    border-radius: 12px;
-                    > img {
-                        width: 20px;
-                        height: 20px;
-                        margin-right: 4px;
-                    }
-                    &:hover {
-                        background: darken($color: $main-color, $amount: 50%);
-                    }
-                    &:disabled {
-                        background: rgba($main-color, 0.8);
-                    }
-                }
-            }
+  }
+  tbody {
+    tr {
+      border-bottom: 1px solid $border;
+      &:last-child {
+        border-bottom: none;
+      }
+      td {
+        height: 64px;
+        text-align: left;
+        padding-left: $td-gap;
+        font-size: 14px;
+        &:last-child {
+          text-align: right;
+          padding-right: $td-gap;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
         }
+        > a {
+          display: flex;
+          align-items: center;
+          margin-left: 16px;
+          color: $text-m;
+          background: $main-color;
+          height: 32px;
+          line-height: 32px;
+          padding: 0px 10px;
+          border-radius: 10px;
+          > img {
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+          }
+          &:hover {
+            background: darken($color: $main-color, $amount: 50%);
+          }
+        }
+        > button {
+          display: flex;
+          align-items: center;
+          margin-left: 16px;
+          color: $text-m;
+          background: $main-color;
+          height: 32px;
+          line-height: 32px;
+          padding: 0px 10px;
+          border-radius: 12px;
+          > img {
+            width: 20px;
+            height: 20px;
+            margin-right: 4px;
+          }
+          &:hover {
+            background: darken($color: $main-color, $amount: 50%);
+          }
+          &:disabled {
+            background: rgba($main-color, 0.8);
+          }
+        }
+      }
     }
+  }
 }
 .loading {
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  img {
+    width: 40px;
+    height: 40px;
+    animation: helmet 1s ease-in infinite alternate;
+    position: absolute;
+  }
+  > div {
+    height: 100%;
     position: relative;
-    img {
-        width: 40px;
-        height: 40px;
-        animation: helmet 1s ease-in infinite alternate;
-        position: absolute;
+    perspective: 100px;
+    perspective-origin: bottom left;
+  }
+  @keyframes helmet {
+    0% {
+      height: 40px;
+      top: 30%;
+      transform: rotate(20deg);
     }
-    > div {
-        height: 100%;
-        position: relative;
-        perspective: 100px;
-        perspective-origin: bottom left;
+    80% {
+      height: 40px;
     }
-    @keyframes helmet {
-        0% {
-            height: 40px;
-            top: 30%;
-            transform: rotate(20deg);
-        }
-        80% {
-            height: 40px;
-        }
-        100% {
-            height: 20px;
-            top: 60%;
-            transform: rotate(0deg);
-        }
+    100% {
+      height: 20px;
+      top: 60%;
+      transform: rotate(0deg);
     }
-    .shadow {
-        position: absolute;
-        background-color: #ffa000;
-        width: 40px;
-        height: 50px;
-        border-radius: 100%;
-        bottom: 30%;
-        animation: shadow 1s ease-in infinite alternate;
+  }
+  .shadow {
+    position: absolute;
+    background-color: #ffa000;
+    width: 40px;
+    height: 50px;
+    border-radius: 100%;
+    bottom: 30%;
+    animation: shadow 1s ease-in infinite alternate;
+  }
+  @keyframes shadow {
+    0% {
+      width: 10px;
+      height: 10px;
+      opacity: 0.1;
     }
-    @keyframes shadow {
-        0% {
-            width: 10px;
-            height: 10px;
-            opacity: 0.1;
-        }
-        100% {
-            width: 40px;
-            height: 20px;
-            opacity: 0.5;
-        }
+    100% {
+      width: 40px;
+      height: 20px;
+      opacity: 0.5;
     }
-    p {
-        font-size: 14px;
-        color: #787878;
-        position: absolute;
-        bottom: 18%;
-    }
-    // @keyframes text {
-    //     0%,
-    //     40%,
-    //     100% {
-    //         height: 20px;
-    //         font-size: 16px;
-    //     }
-    //     50% {
-    //         height: 0px;
-    //         font-size: 14px;
-    //     }
-    // }
+  }
+  p {
+    font-size: 14px;
+    color: #787878;
+    position: absolute;
+    bottom: 18%;
+  }
+  // @keyframes text {
+  //     0%,
+  //     40%,
+  //     100% {
+  //         height: 20px;
+  //         font-size: 16px;
+  //     }
+  //     50% {
+  //         height: 0px;
+  //         font-size: 14px;
+  //     }
+  // }
 }
 .button-loading {
-    color: rgba(255, 255, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
 }
 .pages {
-    height: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-bottom: 30px;
+  .page_item {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
     display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    padding-bottom: 30px;
-    .page_item {
-        display: inline-block;
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 5px;
-        font-weight: 500;
-        cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .page_active {
+    border-radius: 3px;
+  }
+  div {
+    height: 30px;
+    border-radius: 3px;
+    display: flex;
+    box-sizing: border-box;
+    right: 0;
+    p {
+      width: 32px;
+      cursor: pointer;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .icon {
+        width: 20px;
+        height: 20px;
+      }
     }
-    .page_active {
-        border-radius: 3px;
-    }
-    div {
-        height: 30px;
-        border-radius: 3px;
-        display: flex;
-        box-sizing: border-box;
-        right: 0;
-        p {
-            width: 32px;
-            cursor: pointer;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            .icon {
-                width: 20px;
-                height: 20px;
-            }
-        }
 
-        i {
-            display: block;
-            width: 1px;
-            height: 100%;
-            background: #cfcfd2;
-        }
+    i {
+      display: block;
+      width: 1px;
+      height: 100%;
+      background: #cfcfd2;
     }
+  }
 }
 .noData {
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    div {
-        width: 80px;
-        margin: 0 auto;
-        img {
-            width: 80px;
-            height: 80px;
-        }
-        p {
-            text-align: center;
-            font-size: 12px;
-            @include themeify {
-                color: darken($color: themed('color-17173a'), $amount: 60%);
-            }
-        }
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  div {
+    width: 80px;
+    margin: 0 auto;
+    img {
+      width: 80px;
+      height: 80px;
     }
+    p {
+      text-align: center;
+      font-size: 12px;
+      @include themeify {
+        color: darken($color: themed("color-17173a"), $amount: 60%);
+      }
+    }
+  }
 }
 @media screen and (max-width: 750px) {
-    html,
-    body {
-        font-size: 14px;
+  html,
+  body {
+    font-size: 14px;
+  }
+  .select {
+    width: 100%;
+  }
+  .table {
+    display: none;
+  }
+  .main_container {
+    width: 100%;
+    @include themeify {
+      background: themed("color-f8f9fa");
     }
-    .select {
-        width: 100%;
-    }
-    .table {
-        display: none;
-    }
-    .main_container {
-        width: 100%;
-        @include themeify {
-            background: themed('color-f8f9fa');
-        }
-    }
+  }
 }
 @media screen and (min-width: 750px) {
-    html,
-    body {
-        font-size: 16px;
-    }
-    .select {
-        min-width: 200px;
-    }
-    .tabs-item-box {
-        display: none;
-    }
-    .main_container {
-        margin: 0 auto;
-        min-width: 1026px;
-    }
+  html,
+  body {
+    font-size: 16px;
+  }
+  .select {
+    min-width: 200px;
+  }
+  .tabs-item-box {
+    display: none;
+  }
+  .main_container {
+    margin: 0 auto;
+    min-width: 1026px;
+  }
 }
 .o_button {
-    padding: 0 16px;
-    height: 40px;
-    background: #fd7e14;
-    font-size: 14px;
-    font-weight: bold;
-    @include themeify {
-        color: themed('color-ffffff');
-    }
-    &:hover {
-        background: #ffa000;
-    }
+  padding: 0 16px;
+  height: 40px;
+  background: #fd7e14;
+  font-size: 14px;
+  font-weight: bold;
+  @include themeify {
+    color: themed("color-ffffff");
+  }
+  &:hover {
+    background: #ffa000;
+  }
 }
 .b_button {
-    min-width: 88px;
-    padding: 0 16px;
-    height: 40px;
+  min-width: 88px;
+  padding: 0 16px;
+  height: 40px;
+  @include themeify {
+    background: themed("black_button");
+    color: themed("black_button_text");
+  }
+  font-size: 14px;
+  font-weight: bold;
+  &:hover {
     @include themeify {
-        background: themed('black_button');
-        color: themed('black_button_text');
+      background: themed("black_button_hover");
     }
-    font-size: 14px;
-    font-weight: bold;
-    &:hover {
-        @include themeify {
-            background: themed('black_button_hover');
-        }
-    }
+  }
 }
 .disable_button {
-    min-width: 88px;
-    padding: 0 16px;
-    height: 40px;
-    @include themeify {
-        background: themed('disable_button') !important;
-        color: themed('disable_button_text') !important;
-    }
-    font-size: 14px;
-    pointer-events: none;
-    font-weight: bold;
+  min-width: 88px;
+  padding: 0 16px;
+  height: 40px;
+  @include themeify {
+    background: themed("disable_button") !important;
+    color: themed("disable_button_text") !important;
+  }
+  font-size: 14px;
+  pointer-events: none;
+  font-weight: bold;
 }
 .b_b_button {
-    padding: 0 34px;
-    height: 40px;
+  padding: 0 34px;
+  height: 40px;
+  @include themeify {
+    background: themed("black_button");
+    color: themed("black_button_text");
+  }
+  font-size: 14px;
+  font-weight: bold;
+  &:hover {
     @include themeify {
-        background: themed('black_button');
-        color: themed('black_button_text');
+      background: themed("black_button_hover");
     }
-    font-size: 14px;
-    font-weight: bold;
-    &:hover {
-        @include themeify {
-            background: themed('black_button_hover');
-        }
-    }
+  }
 }

@@ -1,4 +1,3 @@
-
 export const PoolList = [
   {
     key: "SHIBHHMCRN",
@@ -10,11 +9,11 @@ export const PoolList = [
     stake_symbol: "SHIBh",
     stake_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     stake_decimals_number: 12,
-    stake_decimals: 'microether',
+    stake_decimals: "microether",
     reward_symbol: "hMCRN",
     reward_address: "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf",
     reward_decimals_number: 18,
-    reward_decimals: 'ether',
+    reward_decimals: "ether",
   },
   {
     key: "SHIBHHWIZARD",
@@ -26,11 +25,11 @@ export const PoolList = [
     stake_symbol: "SHIBh",
     stake_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     stake_decimals_number: 12,
-    stake_decimals: 'microether',
+    stake_decimals: "microether",
     reward_symbol: "hWIZARD",
     reward_address: "0x792b733af7b9b83331f90dbbd297e519258b09bc",
     reward_decimals_number: 18,
-    reward_decimals: 'ether',
+    reward_decimals: "ether",
   },
   {
     key: "BHELMETHBABY",
@@ -42,11 +41,11 @@ export const PoolList = [
     stake_symbol: "BHELMET",
     stake_address: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
     stake_decimals_number: 18,
-    stake_decimals: 'ether',
+    stake_decimals: "ether",
     reward_symbol: "hBABY",
     reward_address: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
     reward_decimals_number: 18,
-    reward_decimals: 'ether',
+    reward_decimals: "ether",
   },
   {
     key: "HFORSHIBH",
@@ -58,11 +57,11 @@ export const PoolList = [
     stake_symbol: "hFOR",
     stake_address: "0xb779F208f8d662558dF8E2b6bFE3b6305CC13389",
     stake_decimals_number: 18,
-    stake_decimals: 'ether',
+    stake_decimals: "ether",
     reward_symbol: "SHIBh",
     reward_address: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
     reward_decimals_number: 12,
-    reward_decimals: 'microether',
+    reward_decimals: "microether",
   },
   {
     key: "HAUTOHTPT",
@@ -121,3 +120,55 @@ export const PoolList = [
     reward_decimals_number: 18,
   },
 ];
+// Pool Status
+// 1 unopen
+// 2 ongoing
+// 3 expired
+export const formatMiningPool = (PoolData) => {
+  for (let Key = 0; Key < PoolData.length; Key++) {
+    const ItemPool = PoolData[Key];
+    const { start_time, finish_time } = ItemPool;
+    const PresentTime = Date.now();
+    const StartTime = new Date(start_time) * 1;
+    const FinishTime = new Date(finish_time) * 1;
+    const PoolStarted = PresentTime > StartTime ? true : false;
+    const PoolFinished = PresentTime > FinishTime ? true : false;
+    if (!PoolStarted) {
+      ItemPool.status = 1;
+      ItemPool.show_time = getShowTime(StartTime);
+    }
+    if (PoolStarted & !PoolFinished) {
+      ItemPool.status = 2;
+      ItemPool.show_time = getShowTime(FinishTime);
+    }
+    if (PoolFinished) {
+      ItemPool.status = 3;
+      ItemPool.show_time = "Finished";
+    }
+  }
+  return PoolData;
+};
+const getShowTime = (time) => {
+  const now = new Date() * 1;
+  const dueDate = time;
+  const DonwTime = dueDate - now;
+  const day = Math.floor(DonwTime / (24 * 3600000));
+  const hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+  const minute = Math.floor(
+    (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+  );
+  const FixDay = day > 9 ? day : "0" + day;
+  const FixHour = hour > 9 ? hour : "0" + hour;
+  const FixMinute = minute > 9 ? minute : "0" + minute;
+  let template;
+  if (Number(FixDay) > 0) {
+    template = `${FixDay}<b>${window.$nuxt.$t(
+      "Content.DayM"
+    )}</b><i>/</i>${FixHour}<b>${window.$nuxt.$t("Content.HourM")}</b>`;
+  } else {
+    template = `${FixHour}<b>${window.$nuxt.$t(
+      "Content.HourM"
+    )}</b><i>/</i>${FixMinute}<b>${window.$nuxt.$t("Content.MinM")}</b>`;
+  }
+  return template;
+};

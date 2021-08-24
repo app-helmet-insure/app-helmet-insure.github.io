@@ -3,7 +3,7 @@ import { pancakeswapv2 } from "~/assets/utils/pancakeswapv2.js";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
 import { burgerswaplpt } from "~/assets/utils/burgerswap.js";
 import { fixD } from "~/assets/js/util.js";
-
+import { getTokenPrice } from "~/interface/event.js";
 import {
   Contract,
   getAccounts,
@@ -49,6 +49,8 @@ const getAPRMethods = async (poolData) => {
       return await CompoundPoolAPY(poolData);
     case "hTokenDoublePoolAPR":
       return await hTokenDoublePoolAPR(poolData);
+    case "TokenDoublePoolAPR":
+      return await TokenDoublePoolAPR(poolData);
     default:
       return "--";
   }
@@ -183,7 +185,6 @@ const MdexDoublePoolAPR = async ({
   let APR = APR_REWARD2 * 100;
   return APR;
 };
-const TokenDoublePoolAPR = async ({}) => {};
 const hTokenDoublePoolAPR = async ({
   POOL_ADDRESS,
   STAKE_ADDRESS,
@@ -240,13 +241,13 @@ const hTokenDoublePoolAPR = async ({
 const CompoundPoolAPY = async ({ POOL_ADDRESS }) => {
   // all staking of pool
   let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
-  let REWARD_VALUE = 1 + 33057.57 / STAKE_VOLUME;
+  let REWARD_VALUE = 1 + 22471 / STAKE_VOLUME;
   let APR = Math.pow(REWARD_VALUE, 365) * 100;
   return APR;
 };
 export const GetHelmetPoolAPY = async ({ POOL_ADDRESS }) => {
   let STAKE_VOLUME = await TotalSupply(POOL_ADDRESS, 18);
-  let APR = (33057.57 / STAKE_VOLUME) * 365 * 100;
+  let APR = (22471 / STAKE_VOLUME) * 365 * 100;
   return APR;
 };
 const GetTokenForBNBValue = async (
@@ -284,4 +285,50 @@ const GetTokenForHELMETValue = async (
     REWARD2_DECIMALS
   );
   return TokenForBNB;
+};
+const TokenDoublePoolAPR = async ({
+  POOL_PID,
+  PROXY_ADDRESS,
+  POOL_ADDRESS,
+  STAKE_ADDRESS,
+  STAKE_DECIMALS,
+  REWARD1_DECIMALS,
+  REWARD1_ADDRESS,
+  REWARD1_SYMBOL,
+  REWARD2_DECIMALS,
+  REWARD2_ADDRESS,
+  REWARD2_SYMBOL,
+  TOKEN1_SYMBOL,
+  TOKEN1_ADDRESS,
+  TOKEN1_DECIMALS,
+}) => {
+  let Data = await getTokenPrice({
+    fromTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    toTokenAddress: REWARD2_ADDRESS,
+    amount: 1000000000000000000,
+  });
+
+  let STAKE_BNB_VALUE = fromWei(Data.data.toTokenAmount);
+  let TOTAL_VOLUME = await TotalSupply(STAKE_ADDRESS, 18);
+  let STAKE_VOLUME = await BalanceOf(STAKE_ADDRESS, 18, PROXY_ADDRESS);
+  let VOLUME_OF_STAKE =
+    (await BalanceOf(TOKEN1_ADDRESS, STAKE_DECIMALS, STAKE_ADDRESS)) * 2;
+  // total alloc of pool
+  let POOL_TOTAL_ALLOC_POINT = await TotalAllocPoint(PROXY_ADDRESS);
+  // cake per block
+  let CAKE_PER_BLOCK = await CakePerBlock(PROXY_ADDRESS);
+  // alloc of pool
+  let POOL_ALLOC_POINT = await PoolInfo(PROXY_ADDRESS, POOL_PID);
+  POOL_ALLOC_POINT = fromWei(POOL_ALLOC_POINT.allocPoint);
+  // dayily reward
+  let DAYILY_REWARD2 =
+    (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (CAKE_PER_BLOCK * 28800) + "";
+  console.log(DAYILY_REWARD2);
+  let DENOMINATOR_REWARD2 =
+    ((VOLUME_OF_STAKE * STAKE_BNB_VALUE) / TOTAL_VOLUME) * STAKE_VOLUME;
+  console.log(VOLUME_OF_STAKE, STAKE_BNB_VALUE, TOTAL_VOLUME, STAKE_VOLUME);
+  let NUMBERATOR_REWARD2 = 365 * 1 * DAYILY_REWARD2;
+  let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR_REWARD2;
+  let APR = APR_REWARD2 * 100;
+  return APR;
 };

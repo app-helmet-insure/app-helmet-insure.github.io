@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1.000000 0 0 0 0 0.588235 0 0 0 0 0.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="最终" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="首页" transform="translate(-890.000000, -5771.000000)">
+            <g id="编组-9" transform="translate(822.000000, 5763.000000)">
+                <g id="Telegram" transform="translate(60.000000, 0.000000)" filter="url(#filter-1)">
+                    <g transform="translate(8.000000, 8.000000)">
+                        <rect id="矩形" fill="#D8D8D8" opacity="0" x="0" y="0" width="20" height="20"></rect>
+                        <path d="M19.9412352,2.86014572 L16.9233781,17.0922886 C16.6956995,18.0967529 16.1019495,18.3467529 15.2581995,17.8735386 L10.6599852,14.4851457 L8.44123524,16.6190743 C8.19569953,16.86461 7.99034238,17.0699672 7.5171281,17.0699672 L7.84748524,12.3869314 L16.3698067,4.68603858 C16.7403424,4.35568144 16.2894495,4.17264572 15.7939138,4.50300287 L5.25819953,11.1369314 L0.722485241,9.71728858 C-0.264121902,9.40925287 -0.281979045,8.73068144 0.927842384,8.25746715 L18.6689138,1.42264572 C19.4903424,1.11461001 20.2090924,1.60568144 19.9412352,2.86014572 Z" id="路径" fill="#1D1929" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

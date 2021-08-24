@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import "~/assets/font/font.css";
 import { getBalance, totalSupply, balanceOf, redeem } from "~/interface/nft.js";
 import { addCommom } from "~/assets/js/util.js";
 import moment from "moment";

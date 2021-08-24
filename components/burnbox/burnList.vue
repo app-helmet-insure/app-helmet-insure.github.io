@@ -186,8 +186,7 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
-import { PoolList } from "../../config/burningBox.js";
-import { formatMiningPool } from "../../config/index.js";
+import { PoolList, formatMiningPool } from "../../config/burningBox.js";
 import POOL from "./burnPool.vue";
 export default {
   components: {
@@ -198,7 +197,6 @@ export default {
   data() {
     return {
       FixPoolList: [],
-      burnList: [],
       showActiveBurn: false,
       activeType: "",
       activeData: {},
@@ -228,13 +226,26 @@ export default {
       this.activeFlag = Flag;
       this.activeBurn = PoolData.key;
     },
-    close_wraper() {
-      this.$bus.$emit("OPEN_WRAPER_PAFE", false);
-    },
+    
   },
 };
 </script>
-
+<style lang="scss">
+@import "~/assets/css/base.scss";
+.onePager {
+  > i {
+    cursor: pointer;
+    margin-right: 4px;
+    @include themeify {
+      border-bottom: 2px dotted themed("color-17173a");
+    }
+    &:hover {
+      color: #fd7e14;
+      border-bottom: 2px dotted #fd7e14 !important;
+    }
+  }
+}
+</style>
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
 .burn_list {
@@ -259,7 +270,49 @@ export default {
     margin-right: 20px;
   }
 }
-
+.burn_detail {
+  position: relative;
+  .close {
+    position: absolute;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    top: 10px;
+    fill: #ccc;
+    cursor: pointer;
+  }
+}
+.wraper_title {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  @include themeify {
+    background: themed("color-f8f9fa");
+  }
+  top: 0;
+  left: 0;
+  z-index: 99;
+  .wraper {
+    flex: 1;
+    overflow-y: scroll;
+    .wraper_header {
+      height: 44px;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      @include themeify {
+        color: themed("color-17173a");
+      }
+    }
+    .close {
+      width: 24px;
+      height: 24px;
+      fill: #ccc;
+      cursor: pointer;
+    }
+  }
+}
 @media screen and(min-width: 750px) {
   .H5 {
     display: none !important;
@@ -286,6 +339,7 @@ export default {
     flex: 6;
     display: flex;
     align-items: center;
+    min-width: 280px;
     img {
       width: 60px;
       height: 60px;
@@ -490,27 +544,15 @@ export default {
     }
   }
 }
-.burn_detail {
-  position: relative;
-  .close {
-    position: absolute;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    top: 10px;
-    fill: #ccc;
-    cursor: pointer;
-  }
-}
-@media screen and (max-width: 750px) {
-  .burn_title{
-    display: none !important;
-  }
-  .WEB{
-    display: none !important;
-  }
-  .burn_item_wrap{
 
+@media screen and (max-width: 750px) {
+  .burn_title {
+    display: none !important;
+  }
+  .WEB {
+    display: none !important;
+  }
+  .burn_item_wrap {
   }
   .burn_item {
     margin: 0 10px;
@@ -541,14 +583,13 @@ export default {
         margin-left: 20px;
         > span {
           display: flex;
-          align-items: center;
           font-size: 16px;
           font-family: IBMPlexSans-Medium, IBMPlexSans;
           font-weight: 600;
           @include themeify {
             color: themed("color-17173a");
           }
-          line-height: 16px;
+          line-height: 20px;
           > i {
             margin-left: 2px;
             cursor: pointer;
@@ -749,114 +790,6 @@ export default {
             border-left: 3px solid transparent;
           }
         }
-      }
-    }
-    &:nth-of-type(4) {
-      flex: 4;
-      display: flex;
-      flex-direction: column;
-    }
-    &:nth-of-type(5) {
-      flex: 4;
-      display: flex;
-      justify-content: flex-end;
-      min-width: 200px;
-      .activeButton {
-        border: 2px solid #fd7e14;
-        padding: 0px 9px;
-        color: #fd7e14;
-        background: #fffaf3;
-        i {
-          border-right: 5px solid transparent;
-          border-top: 6px solid #fd7e14;
-          border-left: 5px solid transparent;
-          transform: rotate(180deg);
-        }
-      }
-      button {
-        padding: 0px 10px;
-        height: 36px;
-        @include themeify {
-          background: themed("color-f8f9fa");
-        }
-        border-radius: 5px;
-        @include themeify {
-          border: 1px solid themed("color-e8e8eb");
-        }
-        margin-left: 20px;
-        font-size: 14px;
-        font-family: HelveticaNeue;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        line-height: 24px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-        &:nth-of-type(1) {
-          margin: 0;
-        }
-        &:hover {
-          padding: 0px 9px;
-          height: 36px;
-          border: 2px solid #fd7e14;
-          color: #fd7e14;
-          background: #fffaf3;
-          i {
-            border-right: 5px solid transparent;
-            border-top: 6px solid #fd7e14;
-            border-left: 5px solid transparent;
-          }
-        }
-        i {
-          position: relative;
-          margin-left: 6px;
-          border-right: 5px solid transparent;
-          border-top: 6px solid rgba(23, 23, 58, 0.6);
-          border-left: 5px solid transparent;
-          &::after {
-            content: "";
-            position: absolute;
-            top: -6px;
-            left: -3px;
-            border-right: 3px solid transparent;
-            border-top: 4px solid #f8f9fa;
-            border-left: 3px solid transparent;
-          }
-        }
-      }
-    }
-  }
-  .wraper_title {
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    @include themeify {
-      background: themed("color-f8f9fa");
-    }
-    top: 0;
-    left: 0;
-    z-index: 99;
-    .wraper {
-      flex: 1;
-      overflow-y: scroll;
-      .wraper_header {
-        height: 44px;
-        padding: 0 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-      }
-      .close {
-        width: 24px;
-        height: 24px;
-        fill: #ccc;
-        cursor: pointer;
       }
     }
   }

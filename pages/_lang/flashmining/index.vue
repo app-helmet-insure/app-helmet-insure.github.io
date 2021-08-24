@@ -1,20 +1,20 @@
 <template>
   <div class="main_container">
-    <FlashMiningTitle></FlashMiningTitle>
+    <FlashTitle />
     <div class="flashmining_container">
-      <FlashMiningList></FlashMiningList>
+      <FlashList />
       <Onepager></Onepager>
     </div>
   </div>
 </template>
 
 <script>
-import FlashMiningList from "~/components/flashmining/flashmining_list.vue";
-import FlashMiningTitle from "~/components/flashmining/flashmining_title.vue";
+import FlashList from "~/components/flashmining/flashList.vue";
+import FlashTitle from "~/components/flashmining/flashTitle.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",
-  components: { FlashMiningTitle, FlashMiningList, Onepager },
+  components: { FlashList, FlashTitle, Onepager },
   data() {
     return {
       showDeposite: false,

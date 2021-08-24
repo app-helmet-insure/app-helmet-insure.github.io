@@ -245,7 +245,7 @@ export default {
       justify-content: space-between;
       li {
         width: 20%;
-        min-width: 235px;
+        min-width: 230px;
         height: 120px;
         border-radius: 10px;
         > .label_data {

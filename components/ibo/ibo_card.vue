@@ -1,6 +1,6 @@
 <template>
   <div class="ibo_item_warp" v-if="iboData">
-    <div class="ibo_item" :class="{ active: iboData.status === 2 }">
+    <div class="ibo_item" :class="{ active: iboData.status === 2 && (now - iboData.timeSettle) < 86400*2 }">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />
@@ -131,7 +131,7 @@
               $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
-            ) || this.iboData.purchasedCurrencyOf > 0
+            ) || iboData.purchasedCurrencyOf > 0 || now > parseInt(iboData.timeClose)
               ? 'disabled ibo_item_btn'
               : 'ibo_item_btn'
           "
@@ -224,6 +224,9 @@
           <i class="el-icon-loading" v-if="claimLoading"></i>
           {{ $t("Table.Claim") }}
         </a>
+        <p class="ibo_item_value" v-if="iboData.claimTimeTipI18n">
+          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span>
+        </p>
       </div>
     </div>
     <Dialog
@@ -287,6 +290,33 @@
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://crazyufo.vip/#/fomoGame" target="_blank"
             >https://crazyufo.vip/#/fomoGame</a
+          >
+        </p>
+      </div>
+      <div v-else-if="iboData.name === 'AXN'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text37") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text37") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
+        <p>
+          SC: 0x3a05e86c25366031d92e013cac77ff6c261cb09b
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, '0x3a05e86c25366031d92e013cac77ff6c261cb09b')
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/Axieninjaofficial" target="_blank"
+          >https://t.me/Axieninjaofficial</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://www.axieninja.app/" target="_blank"
+          >https://www.axieninja.app/</a
           >
         </p>
       </div>
@@ -446,6 +476,7 @@ export default {
       //     "IBO_text6": "结算中",
       //     "IBO_text7": "已完成",
       const thisTime = parseInt(new Date().getTime() / 1000);
+      this.now = thisTime
       let t = 0;
       // 倒计时开始
       let statusTxt = "IBO.IBO_text3";
@@ -534,6 +565,7 @@ export default {
         parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount) ||
         this.iboData.purchasedCurrencyOf > 0
+          || this.now > parseInt(this.iboData.timeClose)
       ) {
         return;
       }
@@ -584,10 +616,9 @@ export default {
     onMax() {
       const available = this.getAvailable();
       if (
-        this.iboData.pool_info.min_allocation <= available &&
-        available >= this.iboData.pool_info.max_allocation
+        this.iboData.pool_info.min_allocation <= available
       ) {
-        this.amount = available;
+        this.amount = Math.min(this.iboData.pool_info.max_allocation, available);
       }
     },
   },
@@ -597,6 +628,9 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
+.claim-time-tip{
+
+}
 .copy {
   display: inline-block;
   width: 12px;

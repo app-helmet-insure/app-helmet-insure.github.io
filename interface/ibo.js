@@ -124,10 +124,10 @@ export const getPoolInfo = (pool) => {
     }
 
     const totalPurchasedAmount = new BigNumber(
-      Web3.utils.toWei(pool.amount, "ether")
+      fromWei(pool.amount, pool.decimal)
     )
       .multipliedBy(new BigNumber(price))
-      .div(new BigNumber(Web3.utils.toWei("1", "ether")));
+      .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
 
     const totalPurchasedUnderlying = Web3.utils.toWei(
       new BigNumber(totalPurchasedCurrency)
@@ -144,12 +144,16 @@ export const getPoolInfo = (pool) => {
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
-      console.log(new BigNumber(totalPurchasedCurrency)
-        .dividedBy(totalPurchasedAmount)
-        .toFixed(2, 1)
-        .toString()*1)
+      let num = 0
+      if (pool.currency.decimal !== pool.underlying.decimal) {
+        num = new BigNumber(10).pow(pool.currency.decimal)
+          .multipliedBy( new BigNumber(10).pow(pool.underlying.decimal))
+          .div(new BigNumber(price)).toFormat(0).toString()
+      } else {
+        num = new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(0).toString()
+      }
     return Object.assign({}, pool, {
-      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(0).toString()} ${
+      ratio: `1 ${pool.currency.symbol} = ${num} ${
         pool.underlying.symbol
       }`,
       progress:

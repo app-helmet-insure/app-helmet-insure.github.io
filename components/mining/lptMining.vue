@@ -1,7 +1,7 @@
 <template>
   <div class="lptMining">
     <div class="lptMiningBorder">
-      <p class="lptMiningTitle">HELMET-BNB Mining</p>
+      <p class="lptMiningTitle">LPT Mining</p>
       <div class="lptMiningWrap">
         <div
           class="lptMiningItemWrap"
@@ -70,32 +70,40 @@
               <span>{{ item.REWARD_TYPE }}</span>
             </section>
             <section class="itemPoolActionWEB WEB">
-              <button
-                @click="HandleClickAction(item, 'STAKE')"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'STAKE'
-                    ? 'activeButton stakeMining'
-                    : 'stakeMining'
-                "
-              >
-                {{ $t("Table.Stakeing") }}
-                <i class="selectDown"></i>
-              </button>
-              <button
-                @click="HandleClickAction(item, 'CLAIM')"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'CLAIM'
-                    ? 'activeButton claimMining'
-                    : 'claimMining'
-                "
-              >
-                {{ $t("Table.Claim") }}
-                <i class="selectDown"></i>
-              </button>
+              <a
+                href="https://www.guard.insure/mining"
+                v-if="item.POOL_TYPE === 'link'"
+                ><img src="~/assets/img/guard/Polygon.png" alt="" />
+                <span>Mining on Polygon</span>
+                <i></i>
+              </a>
+              <template v-else
+                ><button
+                  @click="HandleClickAction(item, 'STAKE')"
+                  :class="
+                    activeMining == item.REWARD_NAME &&
+                    showActiveMining &&
+                    activeType == 'STAKE'
+                      ? 'activeButton stakeMining'
+                      : 'stakeMining'
+                  "
+                >
+                  {{ $t("Table.Stakeing") }}
+                  <i class="selectDown"></i>
+                </button>
+                <button
+                  @click="HandleClickAction(item, 'CLAIM')"
+                  :class="
+                    activeMining == item.REWARD_NAME &&
+                    showActiveMining &&
+                    activeType == 'CLAIM'
+                      ? 'activeButton claimMining'
+                      : 'claimMining'
+                  "
+                >
+                  {{ $t("Table.Claim") }}
+                  <i class="selectDown"></i></button
+              ></template>
             </section>
             <section class="itemPoolNameH5 H5">
               <span
@@ -156,36 +164,45 @@
               </div>
             </section>
             <section class="itemPoolActionH5 H5">
-              <button
-                @click="HandleClickAction(item, 'STAKE', true)"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'STAKE'
-                    ? 'activeButton stakeMining'
-                    : 'stakeMining'
-                "
-                style="margin-right: 10px"
-              >
-                {{ $t("Table.Stakeing") }}
-              </button>
-              <button @click="toCompound" v-if="item.COMPOUND">
-                <i :class="claimLoading ? 'loading_pic' : ''"></i
-                >{{ $t("Table.Compound") }}
-              </button>
-              <button
-                @click="HandleClickAction(item, 'CLAIM', true)"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'CLAIM'
-                    ? 'activeButton claimMining'
-                    : 'claimMining'
-                "
-                style="margin-left: 10px"
-              >
-                {{ $t("Table.Claim") }}
-              </button>
+              <a
+                href="https://www.guard.insure/mining"
+                v-if="item.POOL_TYPE === 'link'"
+                ><img src="~/assets/img/guard/Polygon.png" alt="" />
+                <span>Mining on Polygon</span>
+                <i></i>
+              </a>
+              <template v-else>
+                <button
+                  @click="HandleClickAction(item, 'STAKE', true)"
+                  :class="
+                    activeMining == item.REWARD_NAME &&
+                    showActiveMining &&
+                    activeType == 'STAKE'
+                      ? 'activeButton stakeMining'
+                      : 'stakeMining'
+                  "
+                  style="margin-right: 10px"
+                >
+                  {{ $t("Table.Stakeing") }}
+                </button>
+                <button @click="toCompound" v-if="item.COMPOUND">
+                  <i :class="claimLoading ? 'loading_pic' : ''"></i
+                  >{{ $t("Table.Compound") }}
+                </button>
+                <button
+                  @click="HandleClickAction(item, 'CLAIM', true)"
+                  :class="
+                    activeMining == item.REWARD_NAME &&
+                    showActiveMining &&
+                    activeType == 'CLAIM'
+                      ? 'activeButton claimMining'
+                      : 'claimMining'
+                  "
+                  style="margin-left: 10px"
+                >
+                  {{ $t("Table.Claim") }}
+                </button>
+              </template>
             </section>
           </div>
           <div
@@ -285,8 +302,12 @@ export default {
       let arr = lptPool;
       for (let i = 0; i < arr.length; i++) {
         let item = arr[i];
-        let res = await GetPoolAPR(item);
-        item.REWARD_YEAR = res;
+        if (item.REWARD_YEAR === "Infinity") {
+          let res = await GetPoolAPR(item);
+          item.REWARD_YEAR = res;
+        } else {
+          item.REWARD_YEAR = item.REWARD_YEAR;
+        }
       }
     },
   },
@@ -544,6 +565,37 @@ export default {
     display: flex;
     justify-content: flex-end;
     min-width: 200px;
+    > a {
+      width: 200px;
+      height: 40px;
+      background: rgba(#9f66ff, $alpha: 0.2);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      position: relative;
+      > img {
+        width: 24px;
+        height: 24px;
+      }
+      > span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #9f66ff;
+        line-height: 18px;
+        margin-left: 4px;
+      }
+      i {
+        position: absolute;
+        right: 10px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/img/guard/right_double.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+    }
     button {
       padding: 0px 10px;
       height: 36px;
@@ -778,6 +830,37 @@ export default {
     .activeButton {
       border: 2px solid #fd7e14 !important;
       color: #fd7e14 !important;
+    }
+    > a {
+      width: 100%;
+      height: 40px;
+      background: rgba(#9f66ff, $alpha: 0.2);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      position: relative;
+      > img {
+        width: 24px;
+        height: 24px;
+      }
+      > span {
+        font-size: 14px;
+        font-weight: 600;
+        color: #9f66ff;
+        line-height: 18px;
+        margin-left: 4px;
+      }
+      i {
+        position: absolute;
+        right: 10px;
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: url("../../assets/img/guard/right_double.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
     }
     button {
       flex: 1;

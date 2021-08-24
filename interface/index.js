@@ -86,6 +86,17 @@ export const fromWei = (FixNumber, Decimals) => {
     return Web3.utils.fromWei(FixNumber, FixDecimals);
   }
 };
+export const toWei = (FixNumber, Decimals) => {
+  let FixDecimals = getDecimals(Decimals);
+  if (typeof FixDecimals === "number") {
+    return new BigNumber(FixNumber)
+      .multipliedBy(new BigNumber(10).pow(FixDecimals))
+      .toNumber()
+      .toString();
+  } else {
+    return Web3.utils.toWei(FixNumber, FixDecimals);
+  }
+};
 export const getCurrentAccount = async () => {
   return web3().then((res) => res.currentProvider.selectedAddress);
 };

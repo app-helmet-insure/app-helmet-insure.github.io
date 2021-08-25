@@ -48,7 +48,7 @@
         </section>
         <section class="flash_pool_reward_web WEB">
           <span
-            >{{ fixD((item.total_rewards / item.pool_process) * 7, 2) }}
+            >{{ addCommom((item.total_rewards / item.pool_process) * 7, 2) }}
             {{ item.reward_symbol }}</span
           >
           <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
@@ -125,7 +125,7 @@
         </section>
         <section class="flash_pool_reward_h5 H5">
           <span
-            >{{ fixD((item.total_rewards / item.pool_process) * 7, 2) }}
+            >{{ addCommom((item.total_rewards / item.pool_process) * 7, 2) }}
             {{ item.reward_symbol }}</span
           >
           <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
@@ -206,11 +206,11 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
-import { fixD } from "~/assets/js/util.js";
+import { fixD, addCommom } from "~/assets/js/util.js";
 import POOL from "./flashPool.vue";
 import { PoolList, formatMiningPool } from "../../config/flashMining.js";
 export default {
-  components: {
+  components: { 
     POOL,
     Wraper,
     PHeader,
@@ -225,6 +225,7 @@ export default {
       activeData: {},
       activeFlag: "",
       fixD,
+      addCommom,
     };
   },
   mounted() {

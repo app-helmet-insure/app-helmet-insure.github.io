@@ -274,7 +274,6 @@ export default {
     });
   },
   methods: {
-    
     buyInsurance_h5(insuranceType) {
       this.activeInsurance = insuranceType;
       this.TradeType = "BUY";
@@ -335,6 +334,18 @@ export default {
         {
           InsuranceType: "SHIB",
           InsuranceImg: "SHIB",
+        },
+        {
+          InsuranceType: "FOR",
+          InsuranceImg: "FOR",
+        },
+        {
+          InsuranceType: "BABY",
+          InsuranceImg: "BABY",
+        },
+        {
+          InsuranceType: "MCRN",
+          InsuranceImg: "MCRN",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];

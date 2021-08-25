@@ -74,6 +74,9 @@ export const state = () => ({
     "WBNB",
     "MATH",
     "SHIB",
+    "FOR",
+    "BABY",
+    "MCRN",
   ],
   longMap: null,
   sellMap: null,
@@ -116,6 +119,9 @@ export const state = () => ({
       WBNB: "2021/09/24 24:00",
       MATH: "2021/09/24 24:00",
       SHIB: "2021/09/24 24:00",
+      FOR: "2021/09/24 24:00",
+      BABY: "2021/09/24 24:00",
+      MCRN: "2021/09/24 24:00",
     },
   ],
   strikePriceArray: [
@@ -130,6 +136,9 @@ export const state = () => ({
       WBNB: 856,
       MATH: 0.0058,
       SHIB: "0.0000002004",
+      FOR: 0.0004,
+      BABY: 0.0016,
+      MCRN: 0.03,
     },
     // 腰斩价格
     {
@@ -142,6 +151,9 @@ export const state = () => ({
       WBNB: 214,
       MATH: 0.0014,
       SHIB: "0.0000000501",
+      FOR: 0.0001,
+      BABY: 0.0004,
+      MCRN: 0.0075,
     },
   ],
   // 抵押物
@@ -157,6 +169,9 @@ export const state = () => ({
       WBNB: "WBNB",
       MATH: "MATH",
       SHIB: "SHIB",
+      FOR: "FOR",
+      BABY: "BABY",
+      MCRN: "MCRN",
     },
     // 腰斩抵押物
     {
@@ -169,6 +184,9 @@ export const state = () => ({
       WBNB: "BUSD",
       MATH: "WBNB",
       SHIB: "WBNB",
+      FOR: "WBNB",
+      BABY: "WBNB",
+      MCRN: "WBNB",
     },
   ],
   // 标的物
@@ -184,6 +202,9 @@ export const state = () => ({
       WBNB: "BUSD",
       MATH: "WBNB",
       SHIB: "WBNB",
+      FOR: "WBNB",
+      BABY: "WBNB",
+      MCRN: "WBNB",
     },
     // 腰斩标的物
     {
@@ -196,6 +217,9 @@ export const state = () => ({
       WBNB: "WBNB",
       MATH: "MATH",
       SHIB: "SHIB",
+      FOR: "FOR",
+      BABY: "BABY",
+      MCRN: "MCRN",
     },
   ],
   allIndexPrice: [
@@ -210,6 +234,9 @@ export const state = () => ({
       BURGER: 0,
       MATH: 0,
       SHIB: 0,
+      FOR: 0,
+      BABY: 0,
+      MCRN: 0,
     },
     {
       HELMET: 0,
@@ -222,6 +249,9 @@ export const state = () => ({
       BURGER: 0,
       MATH: 0,
       SHIB: 0,
+      FOR: 0,
+      BABY: 0,
+      MCRN: 0,
     },
   ],
   allHelmetPrice: [
@@ -236,6 +266,9 @@ export const state = () => ({
       BURGER: 0,
       MATH: 0,
       SHIB: 0,
+      FOR: 0,
+      BABY: 0,
+      MCRN: 0,
     },
     {
       HELMET: 0,
@@ -248,6 +281,9 @@ export const state = () => ({
       BURGER: 0,
       MATH: 0,
       SHIB: 0,
+      FOR: 0,
+      BABY: 0,
+      MCRN: 0,
     },
   ],
   balanceCoin: [
@@ -261,6 +297,9 @@ export const state = () => ({
     "MATH",
     "BUSD",
     "SHIB",
+    "FOR",
+    "BABY",
+    "MCRN",
   ],
   BalanceArray: {
     HELMET: 0,
@@ -274,6 +313,9 @@ export const state = () => ({
     MATH: 0,
     BUSD: 0,
     SHIB: 0,
+    FOR: 0,
+    BABY: 0,
+    MCRN: 0,
   },
   transferMap: [],
 });

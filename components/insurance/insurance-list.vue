@@ -15,7 +15,17 @@
         v-for="item in InsuanceData"
         :key="item.InsuranceType"
       >
+        <div v-if="item.InsuranceType === 'APPLY'" class="apply">
+          <div>
+            <img src="~/assets/img/insurancetype/APPLY.png" alt="" />
+            <p>Want to add the insurance for your project?</p>
+          </div>
+          <a href="https://forms.gle/3Cd4Rk5YMLHMhDZp9" target="_blank">
+            <i></i> Apply Now
+          </a>
+        </div>
         <div
+          v-else
           :class="
             activeInsurance == item.InsuranceType && showActiveInsurance
               ? 'activeInsurance insurance_show'
@@ -35,15 +45,15 @@
             <span v-if="item.InsuranceType == 'SHIB'"
               >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
             >
-            <span v-else
-              >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
-            >
-            <span v-if="item.InsuranceType == 'SHIB'"
-              >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
-            >
-            <span v-else
-              >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
-            >
+            <span v-else>
+              {{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB
+            </span>
+            <span v-if="item.InsuranceType == 'SHIB'">
+              ${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}
+            </span>
+            <span v-else>
+              ${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}
+            </span>
           </section>
           <section>
             <div>
@@ -133,47 +143,50 @@
         v-for="item in InsuanceData"
         :key="item.InsuranceType"
       >
-        <section>
+        <div v-if="item.InsuranceType === 'APPLY'" class="apply">
+          <img src="~/assets/img/insurancetype/APPLY.png" alt="" />
           <div>
-            <img
-              :src="
-                require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
-              "
-              alt=""
-            />
-            <span>{{ item.InsuranceType }}</span>
+            <p>Want to add the insurance for your project?</p>
+            <a href="https://forms.gle/3Cd4Rk5YMLHMhDZp9" target="_blank">
+              <i></i> Apply Now
+            </a>
           </div>
-          <p>
-            <span v-if="item.InsuranceType == 'SHIB'"
-              >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
-            >
-            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">-- BNB</span>
-            <span v-else
-              >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
-            >
-            <span v-if="item.InsuranceType == 'SHIB'"
-              >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
-            >
-            <span v-else-if="item.InsuranceType == 'COIN(BSC)'">$--</span>
-            <span v-else
-              >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
-            >
-          </p>
-        </section>
-        <section>
-          <button
-            @click="buyInsurance_h5(item.InsuranceType)"
-            :class="item.InsuranceImg == 'COIN' ? 'disable_insurance' : ''"
-          >
-            {{ $t("Insurance.Insurance_text24") }}
-          </button>
-          <button
-            @click="issueInsurance_h5(item.InsuranceType)"
-            :class="item.InsuranceImg == 'COIN' ? 'disable_insurance' : ''"
-          >
-            {{ $t("Insurance.Insurance_text8") }}
-          </button>
-        </section>
+        </div>
+        <div v-else>
+          <section>
+            <div>
+              <img
+                :src="
+                  require(`~/assets/img/insurancetype/${item.InsuranceImg}.png`)
+                "
+                alt=""
+              />
+              <span>{{ item.InsuranceType }}</span>
+            </div>
+            <p>
+              <span v-if="item.InsuranceType == 'SHIB'"
+                >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
+              >
+              <span v-else
+                >{{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB</span
+              >
+              <span v-if="item.InsuranceType == 'SHIB'"
+                >${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}</span
+              >
+              <span v-else
+                >${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}</span
+              >
+            </p>
+          </section>
+          <section>
+            <button @click="buyInsurance_h5(item.InsuranceType)">
+              {{ $t("Insurance.Insurance_text24") }}
+            </button>
+            <button @click="issueInsurance_h5(item.InsuranceType)">
+              {{ $t("Insurance.Insurance_text8") }}
+            </button>
+          </section>
+        </div>
       </div>
     </div>
     <Wraper>
@@ -274,7 +287,6 @@ export default {
     });
   },
   methods: {
-    
     buyInsurance_h5(insuranceType) {
       this.activeInsurance = insuranceType;
       this.TradeType = "BUY";
@@ -313,6 +325,9 @@ export default {
           InsuranceImg: "BTCB",
         },
         {
+          InsuranceType: "APPLY",
+        },
+        {
           InsuranceType: "CAKE",
           InsuranceImg: "CAKE",
         },
@@ -335,6 +350,18 @@ export default {
         {
           InsuranceType: "SHIB",
           InsuranceImg: "SHIB",
+        },
+        {
+          InsuranceType: "FOR",
+          InsuranceImg: "FOR",
+        },
+        {
+          InsuranceType: "BABY",
+          InsuranceImg: "BABY",
+        },
+        {
+          InsuranceType: "MCRN",
+          InsuranceImg: "MCRN",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];
@@ -658,6 +685,55 @@ export default {
       }
     }
   }
+  .apply {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    > div {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    img {
+      height: 100%;
+    }
+    p {
+      font-size: 16px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+       @include themeify {
+              color: themed("color-17173a");
+            }
+      line-height: 22px;
+      margin-left: 15px;
+    }
+    > a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 36px;
+      background: #fd7e14;
+      box-shadow: 0px 2px 6px 0px rgba(253, 126, 20, 0.6);
+      border-radius: 3px;
+      font-size: 12px;
+      font-family: IBMPlexSans-Bold, IBMPlexSans;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 15px;
+      i {
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-image: url("../../assets/img/iio/add_bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+        margin-right: 4px;
+      }
+    }
+  }
 }
 @media screen and (max-width: 750px) {
   .insurance_list {
@@ -874,6 +950,56 @@ export default {
     }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
+  }
+  .apply {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    > div {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    img {
+      height: 100%;
+    }
+    p {
+      font-size: 14px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 600;
+      @include themeify {
+        color: themed("color-17173a");
+      }
+      line-height: 22px;
+      margin-left: 15px;
+    }
+    a {
+      margin-left: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 36px;
+      background: #fd7e14;
+      box-shadow: 0px 2px 6px 0px rgba(253, 126, 20, 0.6);
+      border-radius: 3px;
+      font-size: 12px;
+      font-family: IBMPlexSans-Bold, IBMPlexSans;
+      font-weight: bold;
+      color: #ffffff;
+      line-height: 15px;
+      i {
+        display: block;
+        width: 16px;
+        height: 16px;
+        background-image: url("../../assets/img/iio/add_bg.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-position: center center;
+        margin-right: 4px;
+      }
+    }
   }
 }
 </style>

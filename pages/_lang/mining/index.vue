@@ -2,7 +2,7 @@
   <div class="main_container">
     <MiningTitle></MiningTitle>
     <div class="mining_container">
-      <LPTMINING />
+      <LptMining />
       <MiningList></MiningList>
       <Onepager></Onepager>
       <Compound></Compound>
@@ -17,16 +17,16 @@
 </template>
 
 <script>
-import MiningTitle from "~/components/mining/mining_title.vue";
-import LPTMINING from '~/components/mining/lptMining.vue'
-import MiningList from "~/components/mining/mining_list.vue";
+import MiningTitle from "~/components/mining/miningTitle.vue";
+import LptMining from '~/components/mining/lptMining.vue'
+import MiningList from "~/components/mining/miningList.vue";
 import Onepager from "~/components/common/onepager.vue";
 import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "home",
   components: {
     MiningTitle,
-    LPTMINING,
+    LptMining,
     MiningList,
     Onepager,
     Compound,

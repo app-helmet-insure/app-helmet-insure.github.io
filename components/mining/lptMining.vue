@@ -5,7 +5,7 @@
       <div class="lptMiningWrap">
         <div
           class="lptMiningItemWrap"
-          v-for="item in lptPool"
+          v-for="item in lptPoolList"
           :key="item.REWARD_NAME"
         >
           <div :class="`lptMiningItem lp_${storeThemes}`">
@@ -258,7 +258,7 @@
 </template>
 
 <script>
-import { lptPool } from "~/config/mining.js";
+import { lptPoolList } from "~/config/mining.js";
 import POOL from "./pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import { GetPoolAPR } from "./mining_apr.js";
@@ -271,7 +271,7 @@ export default {
   },
   data() {
     return {
-      lptPool,
+      lptPoolList,
       activeType: "",
       showActiveMining: false,
       activeMining: "",
@@ -299,7 +299,7 @@ export default {
       this.activeMining = PoolData.REWARD_NAME;
     },
     async GetPoolItemAPR() {
-      let arr = lptPool;
+      let arr = lptPoolList;
       for (let i = 0; i < arr.length; i++) {
         let item = arr[i];
         if (item.REWARD_YEAR === "Infinity") {

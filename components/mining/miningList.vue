@@ -1,243 +1,34 @@
 <template>
   <div class="mining_list">
-    <!-- <div class="mining_title">
-      <h3>{{ $t("Header.Mining") }}</h3>
-    </div> -->
-    <div class="mining_web">
-      <div v-for="item in FixPoolList" :key="item.REWARD_NAME">
-        <div
-          :class="['finshed_line', 'finshed_pc']"
-          v-if="item.REWARD_NAME == 'helmet_mcrn'"
-        >
-          <p></p>
-          <i :class="storeThemes + '_star'"></i>
-          <span>Finished</span>
-          <i :class="storeThemes + '_star'"></i>
-          <p></p>
-        </div>
-        <div class="mining_item">
-          <div
-            :class="
-              activeMining == item.REWARD_NAME && showActiveMining
-                ? 'activeMining mining_show'
-                : 'mining_show'
-            "
-          >
-            <img
-              class="combo_img"
-              :src="
-                require(`~/assets/img/mining/combo_${
-                  item.MING_TIME == 'Finished'
-                    ? 'expired_' + storeThemes
-                    : 'web'
-                }.png`)
-              "
-              alt=""
-              v-if="item.COMBO_FLAG"
-            />
-            <img
-              class="combo_img"
-              style="width: 116px"
-              :src="
-                require(`~/assets/img/mining/${
-                  item.MING_TIME == 'Finished'
-                    ? 'serial_web_expired_' + storeThemes
-                    : 'serial_web'
-                }.png`)
-              "
-              alt=""
-              v-if="item.SERIAL_FLAG"
-            />
-            <img
-              class="combo_img"
-              style="width: 32px; height: 32px; left: 10px"
-              :src="
-                require(`~/assets/img/mining/${
-                  item.MING_TIME == 'Finished'
-                    ? 'serialnext_web_expired_' + storeThemes
-                    : 'serialnext_web'
-                }.png`)
-              "
-              alt=""
-              v-if="item.SERIAL_NEXT_FLAG"
-            />
-            <img
-              class="combo_img"
-              style="width: 83px; height: 28px; left: 376px"
-              src="~/assets/img/mining/iiostark.png"
-              alt=""
-              v-if="item.iio"
-            />
-
-            <section>
-              <span
-                class="onePager"
-                v-html="item.POOL_NAME"
-                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-              ></span>
-            </section>
-            <section>
-              <p>
-                {{ $t("Table.EarnList") }}
-                <span>
-                  <img
-                    v-if="item.REARD_IMGSHOW"
-                    :src="
-                      require(`~/assets/img/mining/${
-                        item.MING_TIME == 'Finished'
-                          ? item.REWARD_NAME + '_expired'
-                          : item.REWARD_NAME
-                      }.png`)
-                    "
-                    :class="item.REARD_VOLUME"
-                    alt=""
-                  />
-                  <template v-else style="color: #17173a">{{
-                    item.REWARD_NAME
-                  }}</template>
-                </span>
-              </p>
-            </section>
-            <section>
-              <i></i>
-              <p>
-                <span v-if="typeof item.OPEN_TIME == 'object'">
-                  {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                  <i>/</i>
-                  {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                  <i>/</i>
-                </span>
-                <span v-else-if="typeof item.MING_TIME == 'object'">
-                  <template v-if="item.MING_TIME.day != '00'">
-                    {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
-                    <i>/</i>
-                  </template>
-                  <template>
-                    {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                    <i>/</i>
-                  </template>
-                  <template v-if="item.MING_TIME.day == '00'">
-                    {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                    <i>/</i>
-                  </template>
-                </span>
-                <span v-else> {{ item.MING_TIME }} </span>
-                <span>{{ $t("Table.MIningCutdown") }}</span>
-              </p>
-            </section>
-            <section v-if="!item.APY">
-              <span>{{ item.REWARD_YEAR }}</span>
-              <span>{{ item.REWARD_TYPE }}</span>
-            </section>
-
-            <section class="APY" v-else>
-              <span>{{ item.APY }}</span>
-              <span>
-                {{ item.REWARD_TYPE }}
-                <el-tooltip effect="dark" placement="top-start">
-                  <div slot="content" style="width: 200px">
-                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
-                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
-                    <p>{{ $t("Tip.EarnTip1") }}</p>
-                    <p>{{ $t("Tip.EarnTip2") }}</p>
-                  </div>
-                  <svg
-                    t="1617039040708"
-                    class="icon"
-                    viewBox="0 0 1024 1024"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    p-id="1287"
-                    width="16"
-                    height="16"
-                  >
-                    <path
-                      d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                      p-id="1288"
-                    ></path>
-                  </svg>
-                </el-tooltip>
-              </span>
-            </section>
-            <section>
-              <button
-                @click="HandleClickAction(item, 'STAKE')"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'STAKE'
-                    ? 'activeButton stakeMining'
-                    : 'stakeMining'
-                "
-              >
-                {{ $t("Table.Stakeing") }}
-                <i class="selectDown"></i>
-              </button>
-              <button
-                @click="HandleClickAction(item, 'CLAIM')"
-                :class="
-                  activeMining == item.REWARD_NAME &&
-                  showActiveMining &&
-                  activeType == 'CLAIM'
-                    ? 'activeButton claimMining'
-                    : 'claimMining'
-                "
-              >
-                {{ $t("Table.Claim") }}
-                <i class="selectDown"></i>
-              </button>
-            </section>
-          </div>
-          <div
-            class="mining_detail"
-            v-if="showActiveMining && activeMining == item.REWARD_NAME"
-          >
-            <svg
-              class="close"
-              aria-hidden="true"
-              @click="showActiveMining = false"
-            >
-              <use xlink:href="#icon-close"></use>
-            </svg>
-            <POOL
-              :activeData="activeData"
-              :activeFlag="activeFlag"
-              :activeType="activeType"
-            />
-          </div>
-        </div>
+    <div v-for="item in FixPoolList" :key="item.key">
+      <div
+        :class="['finshed_line', 'finshed_pc']"
+        v-if="item.key == 'HELMETMCRN'"
+      >
+        <p></p>
+        <i :class="storeThemes + '_star'"></i>
+        <span>Finished</span>
+        <i :class="storeThemes + '_star'"></i>
+        <p></p>
       </div>
-    </div>
-    <div class="mining_h5">
-      <div v-for="item in FixPoolList" :key="item.REWARD_NAME + '1'">
-        <div
-          class="finshed_line finshed_h5"
-          v-if="item.REWARD_NAME == 'helmet_mcrn'"
-        >
-          <p></p>
-          <i></i>
-          <span>Finished</span>
-          <i></i>
-          <p></p>
-        </div>
-
-        <div class="mining_item_h5">
+      <div class="mining_item_wrap">
+        <div class="mining_item">
           <img
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                item.MING_TIME == 'Finished' ? 'expired_' + storeThemes : 'web'
+                item.status === 3 ? 'expired_' + storeThemes : 'web'
               }.png`)
             "
             alt=""
-            v-if="item.COMBO_FLAG"
+            v-if="item.iscombo"
           />
           <img
             class="combo_img"
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${
-                item.MING_TIME == 'Finished'
+                item.status === 3
                   ? 'serial_web_expired_' + storeThemes
                   : 'serial_web'
               }.png`)
@@ -250,59 +41,154 @@
             style="width: 32px; height: 32px; left: 10px"
             :src="
               require(`~/assets/img/mining/${
-                item.MING_TIME == 'Finished'
+                item.status === 3
                   ? 'serialnext_web_expired_' + storeThemes
                   : 'serialnext_web'
               }.png`)
             "
             alt=""
             v-if="item.SERIAL_NEXT_FLAG"
-          /><img
+          />
+          <img
             class="combo_img"
-            style="
-              width: 83px;
-              height: 28px;
-              left: 100%;
-              transform: translateX(-100%);
-            "
+            style="width: 83px; height: 28px; left: 376px"
             src="~/assets/img/mining/iiostark.png"
             alt=""
             v-if="item.iio"
           />
-          <section>
+
+          <section class="mining_pool_name_web WEB">
             <span
               class="onePager"
-              v-html="item.POOL_NAME"
+              v-html="item.pool_name"
+              @click="hadnleShowOnePager($event, item.ONE_PAGER)"
+            ></span>
+          </section>
+          <section class="mining_pool_earn_web WEB">
+            <p>
+              {{ $t("Table.EarnList") }}
+              <span>
+                <img
+                  v-if="item.reward_img"
+                  :src="
+                    require(`~/assets/img/mining/${
+                      item.status === 3
+                        ? item.reward_name + '_expired'
+                        : item.reward_name
+                    }.png`)
+                  "
+                  :class="item.reward_volume"
+                  alt=""
+                />
+                <template v-else style="color: #17173a">{{
+                  item.reward_name
+                }}</template>
+              </span>
+            </p>
+          </section>
+          <section class="mining_pool_time_web WEB">
+            <i></i>
+            <p>
+              <span v-html="item.show_time"></span>
+              <span>{{ $t("Table.MIningCutdown") }}</span>
+            </p>
+          </section>
+          <section v-if="!item.APY" class="mining_pool_reward_web WEB">
+            <span>{{ item.apr }}</span>
+            <span>{{ item.reward_year_type }}</span>
+          </section>
+          <section class="APY" v-else>
+            <span>{{ item.APY }}</span>
+            <span>
+              {{ item.reward_year_type }}
+              <el-tooltip effect="dark" placement="top-start">
+                <div slot="content" style="width: 200px">
+                  <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
+                  <p>{{ $t("Tip.APY") }} : {{ item.apr }}</p>
+                  <p>{{ $t("Tip.EarnTip1") }}</p>
+                  <p>{{ $t("Tip.EarnTip2") }}</p>
+                </div>
+                <svg
+                  t="1617039040708"
+                  class="icon"
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1287"
+                  width="16"
+                  height="16"
+                >
+                  <path
+                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                    p-id="1288"
+                  ></path>
+                </svg>
+              </el-tooltip>
+            </span>
+          </section>
+          <section class="mining_pool_action_web WEB">
+            <button
+              @click="HandleClickAction(item, 'STAKE')"
+              :class="
+                activeMining == item.reward_name &&
+                showActiveMining &&
+                activeType == 'STAKE'
+                  ? 'activeButton stakeMining'
+                  : 'stakeMining'
+              "
+            >
+              {{ $t("Table.Stakeing") }}
+              <i class="selectDown"></i>
+            </button>
+            <button
+              @click="HandleClickAction(item, 'CLAIM')"
+              :class="
+                activeMining == item.reward_name &&
+                showActiveMining &&
+                activeType == 'CLAIM'
+                  ? 'activeButton claimMining'
+                  : 'claimMining'
+              "
+            >
+              {{ $t("Table.Claim") }}
+              <i class="selectDown"></i>
+            </button>
+          </section>
+          <!-- -------------------------- -->
+          <section class="mining_pool_name_h5 H5">
+            <span
+              class="onePager"
+              v-html="item.pool_name"
               @click="hadnleShowOnePager($event, item.ONE_PAGER)"
             ></span>
             <p>
               {{ $t("Table.EarnList") }}
               <span>
                 <img
-                  v-if="item.REARD_IMGSHOW"
-                  :src="require(`~/assets/img/mining/${item.REWARD_NAME}.png`)"
-                  :class="item.REARD_VOLUME"
+                  v-if="item.reward_img"
+                  :src="require(`~/assets/img/mining/${item.reward_name}.png`)"
+                  :class="item.reward_volume"
                   alt=""
                 />
                 <template v-else style="color: #17173a">{{
-                  item.REWARD_NAME
+                  item.reward_name
                 }}</template>
               </span>
             </p>
           </section>
-          <section>
+          <section class="mining_pool_reward_h5 H5">
             <p v-if="!item.APY">
-              <span>{{ item.REWARD_YEAR }}</span>
-              <span>{{ item.REWARD_TYPE }}</span>
+              <span>{{ item.apr }}</span>
+              <span>{{ item.reward_year_type }}</span>
             </p>
             <p class="APY" v-else>
               <span>{{ item.APY }}</span>
               <span>
-                {{ item.REWARD_TYPE }}
+                {{ item.reward_year_type }}
                 <el-tooltip effect="dark" placement="top-start">
                   <div slot="content" style="width: 150px">
                     <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
-                    <p>{{ $t("Tip.APY") }} : {{ item.REWARD_YEAR }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.apr }}</p>
                     <p>{{ $t("Tip.EarnTip1") }}</p>
                     <p>{{ $t("Tip.EarnTip2") }}</p>
                   </div>
@@ -354,11 +240,11 @@
               </p>
             </div>
           </section>
-          <section>
+          <section class="mining_pool_action_h5 H5">
             <button
               @click="HandleClickAction(item, 'STAKE', true)"
               :class="
-                activeMining == item.REWARD_NAME &&
+                activeMining == item.reward_name &&
                 showActiveMining &&
                 activeType == 'STAKE'
                   ? 'activeButton stakeMining'
@@ -375,7 +261,7 @@
             <button
               @click="HandleClickAction(item, 'CLAIM', true)"
               :class="
-                activeMining == item.REWARD_NAME &&
+                activeMining == item.reward_name &&
                 showActiveMining &&
                 activeType == 'CLAIM'
                   ? 'activeButton claimMining'
@@ -388,8 +274,25 @@
           </section>
         </div>
         <div
-          class="wraper_title"
-          v-if="showActiveMining && activeMining == item.REWARD_NAME"
+          class="mining_detail WEB"
+          v-if="showActiveMining && activeMining == item.reward_name"
+        >
+          <svg
+            class="close"
+            aria-hidden="true"
+            @click="showActiveMining = false"
+          >
+            <use xlink:href="#icon-close"></use>
+          </svg>
+          <POOL
+            :activeData="activeData"
+            :activeFlag="activeFlag"
+            :activeType="activeType"
+          />
+        </div>
+        <div
+          class="wraper_title H5"
+          v-if="showActiveMining && activeMining == item.reward_name"
         >
           <PHeader></PHeader>
           <div class="wraper">
@@ -425,7 +328,7 @@
 import { Earned } from "~/interface/read_contract.js";
 import Wraper from "~/components/common/wraper.vue";
 import { fixD } from "~/assets/js/util.js";
-import POOL from "./pool.vue";
+import POOL from "./miningPool.vue";
 import moment from "moment";
 import PHeader from "~/components/common/header.vue";
 import { comboPoolList, formatMiningPool } from "../../config/mining.js";
@@ -502,7 +405,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeMining = PoolData.REWARD_NAME;
+      this.activeMining = PoolData.reward_name;
     },
     async getHelmetBalance() {
       let Helmet = await Earned(
@@ -587,7 +490,7 @@ export default {
 }
 
 @media screen and (min-width: 750px) {
-  .mining_h5 {
+  .H5 {
     display: none;
   }
   .icon {
@@ -615,263 +518,238 @@ export default {
       }
     }
   }
-  .mining_title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    h3 {
-      font-size: 18px;
-      font-family: Helvetica;
-      @include themeify {
-        color: themed("color-17173a");
-      }
-      line-height: 24px;
-    }
-    span {
-      font-size: 24px;
-      font-weight: 600;
-      margin-right: 20px;
-    }
-  }
-
-  .mining_item {
+  .mining_item_wrap {
     width: 100%;
     margin-top: 10px;
     padding: 0 20px;
     @include themeify {
       background: themed("color-ffffff");
     }
+  }
+  .mining_item {
+    width: 100%;
+    height: 70px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     position: relative;
     .combo_img {
       position: absolute;
       width: 156px;
       height: 37px;
-      left: -8px;
+      left: -28px;
       top: -11px;
     }
-    .mining_show {
-      width: 100%;
-      height: 70px;
-      border-radius: 5px;
+    .mining_pool_name_web {
       display: flex;
       align-items: center;
-      section {
-        &:nth-of-type(1) {
-          display: flex;
-          align-items: center;
-          flex: 3;
-          span {
-            font-size: 16px;
-            font-family: IBMPlexSans-Medium, IBMPlexSans;
-            font-weight: 600;
+      flex: 3;
+      span {
+        font-size: 16px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 600;
+        @include themeify {
+          color: themed("color-17173a");
+        }
+        line-height: 16px;
+      }
+      > i {
+        margin: 0 4px 0 2px;
+        cursor: pointer;
+        svg {
+          fill: rgba(164, 162, 178, 1);
+        }
+        &:hover {
+          svg {
+            fill: #fd8a2b;
+          }
+        }
+      }
+    }
+    .mining_pool_earn_web {
+      flex: 3;
+      p {
+        font-size: 14px;
+        font-family: IBMPlexSans;
+        @include themeify {
+          color: darken($color: themed("color-17173a"), $amount: 45%);
+        }
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+      }
+      span {
+        @include themeify {
+          background: themed("mining_earn");
+          color: darken($color: themed("color-17173a"), $amount: 45%);
+        }
+        padding: 2px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 57px;
+        height: 28px;
+
+        border-radius: 5px;
+        padding: 0 11px;
+        margin-left: 4px;
+        .two {
+          width: 35px;
+          height: 20px;
+        }
+        .one {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    .mining_pool_time_web {
+      display: flex;
+      align-items: center;
+      flex: 3;
+      > i {
+        display: block;
+        width: 30px;
+        height: 30px;
+        background-image: url("../../assets/img/insurancelist/insuranceTime.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        margin-right: 8px;
+      }
+      p {
+        display: flex;
+        flex-direction: column;
+        > span {
+          &:nth-of-type(1) {
+            @include themeify {
+              background: themed("mining_earn");
+            }
+            padding: 0 4px;
+            display: flex;
+            align-items: center;
+            align-self: flex-start;
+            border-radius: 3px;
+            font-size: 14px;
+            font-family: IBMPlexSans;
             @include themeify {
               color: themed("color-17173a");
             }
-            line-height: 16px;
-          }
-          > i {
-            margin: 0 4px 0 2px;
-            cursor: pointer;
-            svg {
-              fill: rgba(164, 162, 178, 1);
+            line-height: 14px;
+            font-weight: 600;
+            height: 18px;
+            b {
+              font-size: 10px;
             }
-            &:hover {
-              svg {
-                fill: #fd8a2b;
+            i {
+              font-size: 12px;
+              font-family: IBMPlexSans-Bold, IBMPlexSans;
+              font-weight: bold;
+              color: #cfcfd2;
+              margin: 0 2px;
+              &:last-of-type {
+                display: none;
               }
             }
           }
-        }
-        &:nth-of-type(2) {
-          flex: 3;
-          p {
-            font-size: 14px;
+          &:nth-of-type(2) {
+            margin-top: 4px;
+            font-size: 12px;
             font-family: IBMPlexSans;
             @include themeify {
               color: darken($color: themed("color-17173a"), $amount: 45%);
             }
-            line-height: 18px;
-            display: flex;
-            align-items: center;
+            line-height: 12px;
           }
-          span {
+        }
+      }
+    }
+    .mining_pool_reward_web {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      span {
+        &:nth-of-type(1) {
+          font-size: 14px;
+          font-family: IBMPlexSans;
+          @include themeify {
+            color: themed("color-17173a");
+          }
+          line-height: 18px;
+        }
+        &:nth-of-type(2) {
+          font-size: 12px;
+          font-family: IBMPlexSans;
+          @include themeify {
+            color: darken($color: themed("color-17173a"), $amount: 45%);
+          }
+          line-height: 12px;
+          margin-top: 4px;
+        }
+      }
+    }
+    .mining_pool_action_web {
+      flex: 3;
+      display: flex;
+      justify-content: flex-end;
+      min-width: 200px;
+      button {
+        padding: 0px 10px;
+        height: 36px;
+        @include themeify {
+          background: themed("insure_button");
+          color: themed("insure_button_text");
+          border: 1px solid themed("insure_button_border");
+        }
+        border-radius: 5px;
+        margin-left: 20px;
+        font-size: 14px;
+        font-family: HelveticaNeue;
+        line-height: 24px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        &:hover {
+          padding: 0px 9px;
+          height: 36px;
+          border: 2px solid #fd7e14 !important;
+          color: #fd7e14 !important;
+          i {
+            border-right: 5px solid transparent;
+            border-top: 6px solid #fd7e14 !important;
+            border-left: 5px solid transparent;
+          }
+        }
+        i {
+          position: relative;
+          @include themeify {
+            border-top: 6px solid themed("color-17173a");
+          }
+          margin-left: 6px;
+          border-right: 5px solid transparent;
+          border-left: 5px solid transparent;
+          &::after {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -3px;
+            border-right: 3px solid transparent;
             @include themeify {
-              background: themed("mining_earn");
-              color: darken($color: themed("color-17173a"), $amount: 45%);
+              border-top: 4px solid themed("color-f8f9fa");
             }
-            padding: 2px 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 57px;
-            height: 28px;
-
-            border-radius: 5px;
-            padding: 0 11px;
-            margin-left: 4px;
-            .two {
-              width: 35px;
-              height: 20px;
-            }
-            .one {
-              width: 20px;
-              height: 20px;
-            }
+            border-left: 3px solid transparent;
           }
         }
-        &:nth-of-type(3) {
-          display: flex;
-          align-items: center;
-          flex: 3;
-          > i {
-            display: block;
-            width: 30px;
-            height: 30px;
-            background-image: url("../../assets/img/insurancelist/insuranceTime.png");
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-            margin-right: 8px;
-          }
-          p {
-            display: flex;
-            flex-direction: column;
-            > span {
-              &:nth-of-type(1) {
-                @include themeify {
-                  background: themed("mining_earn");
-                }
-                padding: 0 4px;
-                display: flex;
-                align-items: center;
-                align-self: flex-start;
-                border-radius: 3px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-                font-weight: 600;
-                height: 18px;
-                b {
-                  font-size: 10px;
-                }
-                i {
-                  font-size: 12px;
-                  font-family: IBMPlexSans-Bold, IBMPlexSans;
-                  font-weight: bold;
-                  color: #cfcfd2;
-                  margin: 0 2px;
-                  &:last-of-type {
-                    display: none;
-                  }
-                }
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 12px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: darken($color: themed("color-17173a"), $amount: 45%);
-                }
-                line-height: 12px;
-              }
-            }
-          }
-        }
-        &:nth-of-type(4) {
-          flex: 2;
-          display: flex;
-          flex-direction: column;
-          span {
-            &:nth-of-type(1) {
-              font-size: 14px;
-              font-family: IBMPlexSans;
-              @include themeify {
-                color: themed("color-17173a");
-              }
-              line-height: 18px;
-            }
-            &:nth-of-type(2) {
-              font-size: 12px;
-              font-family: IBMPlexSans;
-              @include themeify {
-                color: darken($color: themed("color-17173a"), $amount: 45%);
-              }
-              line-height: 12px;
-              margin-top: 4px;
-            }
-          }
-        }
-        &:nth-of-type(5) {
-          flex: 3;
-          display: flex;
-          justify-content: flex-end;
-          min-width: 200px;
-          button {
-            padding: 0px 10px;
-            height: 36px;
-            @include themeify {
-              background: themed("insure_button");
-              color: themed("insure_button_text");
-              border: 1px solid themed("insure_button_border");
-            }
-            border-radius: 5px;
-            margin-left: 20px;
-            font-size: 14px;
-            font-family: HelveticaNeue;
-            line-height: 24px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            &:hover {
-              padding: 0px 9px;
-              height: 36px;
-              border: 2px solid #fd7e14 !important;
-              color: #fd7e14 !important;
-              i {
-                border-right: 5px solid transparent;
-                border-top: 6px solid #fd7e14 !important;
-                border-left: 5px solid transparent;
-              }
-            }
-            i {
-              position: relative;
-              @include themeify {
-                border-top: 6px solid themed("color-17173a");
-              }
-              margin-left: 6px;
-              border-right: 5px solid transparent;
-              border-left: 5px solid transparent;
-              &::after {
-                content: "";
-                position: absolute;
-                top: -6px;
-                left: -3px;
-                border-right: 3px solid transparent;
-                @include themeify {
-                  border-top: 4px solid themed("color-f8f9fa");
-                }
-                border-left: 3px solid transparent;
-              }
-            }
-          }
-          .activeButton {
-            border: 2px solid #fd7e14 !important;
-            padding: 0px 9px !important;
-            color: #fd7e14 !important;
-            i {
-              border-right: 5px solid transparent;
-              border-top: 6px solid #fd7e14 !important;
-              border-left: 5px solid transparent;
-              transform: rotate(180deg);
-            }
-          }
+      }
+      .activeButton {
+        border: 2px solid #fd7e14 !important;
+        padding: 0px 9px !important;
+        color: #fd7e14 !important;
+        i {
+          border-right: 5px solid transparent;
+          border-top: 6px solid #fd7e14 !important;
+          border-left: 5px solid transparent;
+          transform: rotate(180deg);
         }
       }
     }
@@ -880,7 +758,7 @@ export default {
     position: relative;
     .close {
       position: absolute;
-      right: 0;
+      right: 10px;
       width: 24px;
       height: 24px;
       top: 10px;
@@ -890,8 +768,8 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .mining_web {
-    display: none;
+  .WEB {
+    display: none !important;
   }
   .icon {
     width: 20px;
@@ -922,9 +800,7 @@ export default {
       }
     }
   }
-  .mining_title {
-    display: none;
-  }
+
   .mining_item_h5 {
     width: 100%;
     padding: 24px 10px;
@@ -940,7 +816,7 @@ export default {
       position: absolute;
       width: 156px;
       height: 37px;
-      left: -8px;
+      left: -28px;
       top: -11px;
     }
     section {

@@ -10,7 +10,7 @@
           <countTo
             v-if="isLogin"
             :startVal="Number(0)"
-            :endVal="Number(balance.Deposite)"
+            :endVal="Number(CanDeposite)"
             :duration="2000"
             :decimals="8"
           />
@@ -26,9 +26,7 @@
             v-model="DepositeNum"
             :class="activeType == 'STAKE' ? 'activeInput' : ''"
           />
-          <span @click="DepositeNum = balance.Deposite">{{
-            $t("Table.Max")
-          }}</span>
+          <span @click="DepositeNum = CanDeposite">{{ $t("Table.Max") }}</span>
         </div>
       </div>
       <div class="button">
@@ -36,9 +34,7 @@
           @click="toDeposite"
           :class="
             (stakeLoading ? 'disable b_button' : 'b_button',
-            this.activeData.MING_TIME == 'Finished'
-              ? 'disable_button b_button'
-              : 'b_button')
+            activeData.status == 3 ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -50,7 +46,7 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Withdraw)"
+              :endVal="Number(CanWithdraw)"
               :duration="2000"
               :decimals="4"
             />
@@ -64,50 +60,52 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Staking)"
+              :endVal="Number(TotalDeposite)"
               :duration="2000"
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ activeData.STAKE_UNIT }}</span
+            &nbsp;{{ activeData.stake_unit }}</span
           >
         </p>
         <section>
           <p>
             <span>{{ $t("Table.MyPoolShare") }}：</span>
-            <span> {{ isLogin ? balance.Share : "--" }} %</span>
+            <span> {{ isLogin ? MyPoolShare : "--" }} %</span>
           </p>
           <div style="display: flex">
             <p
               class="jump_text"
-              v-html="activeData.JUMP1_TEXT"
-              v-if="activeData.JUMP1_TEXT"
+              v-html="activeData.lpt_link1"
+              v-if="activeData.lpt_link1"
             ></p>
             <p
               class="jump_text"
-              v-html="activeData.JUMP2_TEXT"
-              v-if="activeData.JUMP2_TEXT"
+              v-html="activeData.lpt_link2"
+              v-if="activeData.lpt_link2"
             ></p>
           </div>
         </section>
       </div>
-      <div class="ContractAddress" v-if="activeData.LEFTTOKEN">
+      <div class="ContractAddress" v-if="activeData.left_show_token">
         <span
-          >{{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }}
+          >{{ activeData.left_show_token.add_token_symbol }}
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.LEFTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
+          {{ activeData.left_show_token.add_token_address.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.LEFTTOKEN.ADDTOKEN_ADDRESS)"
+            @click="
+              copyAdress($event, activeData.left_show_token.add_token_address)
+            "
           ></i>
         </p>
       </div>
-      <div class="addToken" v-if="activeData.LEFTTOKEN">
-        <p @click="addTokenFn(activeData.LEFTTOKEN)">
-          Add {{ activeData.LEFTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
+      <div class="addToken" v-if="activeData.left_show_token">
+        <p @click="addTokenFn(activeData.left_show_token)">
+          Add {{ activeData.left_show_token.add_token_symbol }} to MetaMask
         </p>
         <i></i>
       </div>
@@ -122,7 +120,7 @@
           <countTo
             v-if="isLogin"
             :startVal="Number(0)"
-            :endVal="Number(balance.Withdraw)"
+            :endVal="Number(CanWithdraw)"
             :duration="2000"
             :decimals="8"
           />
@@ -135,11 +133,11 @@
           <input
             name="withdraw"
             type="text"
-            v-model="balance.Withdraw"
+            v-model="CanWithdraw"
             disabled
             :class="activeType == 'CLAIM' ? 'activeInput' : ''"
           />
-          <!-- <span @click="WithdrawNum = balance.Withdraw">{{
+          <!-- <span @click="WithdrawNum = CanWithdraw">{{
             $t("Insurance.Insurance_text18")
           }}</span> -->
         </div>
@@ -153,43 +151,43 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <p v-if="activeData.REWARD1_SYMBOL">
+        <p v-if="activeData.reward1_symbol">
           <span
-            ><i>{{ activeData.REWARD1_SYMBOL }}</i>
+            ><i>{{ activeData.reward1_symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Reward1)"
+              :endVal="Number(CanClaim1)"
               :duration="2000"
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ activeData.REWARD1_SYMBOL }}</span
+            {{ activeData.reward1_symbol }}</span
           >
         </p>
-        <p v-if="activeData.REWARD2_SYMBOL">
+        <p v-if="activeData.reward2_symbol">
           <span
-            ><i>{{ activeData.REWARD2_SYMBOL }}</i>
+            ><i>{{ activeData.reward2_symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(balance.Reward2)"
+              :endVal="Number(CanClaim2)"
               :duration="2000"
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ activeData.REWARD2_SYMBOL }}</span
+            {{ activeData.reward2_symbol }}</span
           >
         </p>
         <!-- compound -->
         <button
-          v-if="activeData.COMPOUND"
+          v-if="activeData.compound"
           @click="toCompound"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
         >
@@ -202,32 +200,32 @@
           @click="toClaim"
           :class="
             (claimLoading ? 'disable o_button' : 'o_button',
-            activeData.MING_TIME == 'Finished'
-              ? 'disable_button o_button'
-              : 'o_button')
+            activeData.status === 3 ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
-      <div class="ContractAddress" v-if="activeData.RIGHTTOKEN">
+      <div class="ContractAddress" v-if="activeData.right_show_token">
         <span
-          >{{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }}
+          >{{ activeData.right_show_token.add_token_symbol }}
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS.toLowerCase() }}
+          {{ activeData.right_show_token.add_token_address.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
-            @click="copyAdress($event, activeData.RIGHTTOKEN.ADDTOKEN_ADDRESS)"
+            @click="
+              copyAdress($event, activeData.right_show_token.add_token_address)
+            "
           ></i>
         </p>
       </div>
-      <div class="addToken" v-if="activeData.RIGHTTOKEN">
-        <p @click="addTokenFn(activeData.RIGHTTOKEN)">
-          Add {{ activeData.RIGHTTOKEN.ADDTOKEN_SYMBOL }} to MetaMask
+      <div class="addToken" v-if="activeData.right_show_token">
+        <p @click="addTokenFn(activeData.right_show_token)">
+          Add {{ activeData.right_show_token.add_token_symbol }} to MetaMask
         </p>
         <i></i>
       </div>
@@ -254,8 +252,14 @@ import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import { getAddress } from "~/assets/utils/address-pool.js";
 import addToken from "~/assets/utils/addtoken.js";
+import MiningABI from "../../abi/MiningABI.json";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+} from "~/interface/index.js";
 export default {
   props: ["activeData", "activeFlag", "activeType"],
   components: {
@@ -263,15 +267,12 @@ export default {
   },
   data() {
     return {
-      balance: {
-        Deposite: 0,
-        Withdraw: 0,
-        Reward1: 0,
-        Reward2: 0,
-        Cake: 0,
-        Staking: 0,
-        Share: 0,
-      },
+      CanDeposite: 0,
+      CanWithdraw: 0,
+      TotalDeposite: 0,
+      CanClaim1: 0,
+      CanClaim2: 0,
+      MyPoolShare: 0,
       DepositeNum: "",
       WithdrawNum: "",
       stakeLoading: false,
@@ -284,8 +285,11 @@ export default {
     };
   },
   mounted() {
+    this.$nextTick(() => {
+      this.getPoolInfo();
+    });
     this.NeedApprove();
-    this.getBalance();
+
     this.$bus.$on("GET_BALANCE", () => {
       this.getBalance();
     });
@@ -313,8 +317,8 @@ export default {
   methods: {
     async addTokenFn(options) {
       let data = {
-        tokenAddress: options.ADDTOKEN_ADDRESS,
-        tokenSymbol: options.ADDTOKEN_SYMBOL,
+        tokenAddress: options.add_token_address,
+        tokenSymbol: options.add_token_symbol,
         tokenDecimals: options.ADDTOKEN_DECIMALS,
         tokenImage: "",
       };
@@ -354,40 +358,37 @@ export default {
         copys.destroy();
       });
     },
-    async getBalance() {
-      // 可抵押数量
-      let Deposite = await BalanceOf(
-        this.activeData.STAKE_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可赎回数量
-      let Withdraw = await BalanceOf(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 总抵押
-      let Staking = await TotalSupply(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可领取Helmet
-      let Reward1 = await Earned(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.REWARD1_DECIMALS
-      );
-      if (this.activeData.REWARD2_SYMBOL) {
-        let Reward2 = await Earned2(
-          this.activeData.POOL_ADDRESS,
-          this.activeData.REWARD2_DECIMALS
+    getPoolInfo() {
+      let {
+        stake_address,
+        pool_address,
+        stake_decimals_number,
+        reward_decimals_number,
+      } = this.activeData;
+      const PoolContracts = new Contract(pool_address, MiningABI);
+      const StakeContracts = new Contract(stake_address, MiningABI);
+      const Account = window.CURRENTADDRESS;
+      const PromiseList = [
+        StakeContracts.balanceOf(Account),
+        PoolContracts.balanceOf(Account),
+        PoolContracts.totalSupply(),
+        PoolContracts.earned(Account),
+        PoolContracts.earned2(Account),
+      ];
+      const MulticallProvider = getOnlyMultiCallProvider();
+      MulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim1,CanClaim2] = FixData;
+        this.CanDeposite = fromWei(CanDeposite, stake_decimals_number);
+        this.CanWithdraw = fromWei(CanWithdraw, stake_decimals_number);
+        this.TotalDeposite = fromWei(TotalDeposite, stake_decimals_number);
+        this.CanClaim1 = fromWei(CanClaim1, reward_decimals_number);
+        this.CanClaim2 = fromWei(CanClaim2, reward_decimals_number);
+        this.MyPoolShare = fixD(
+          (this.CanWithdraw / this.TotalDeposite) * 100,
+          2
         );
-        this.balance.Reward2 = Reward2;
-      }
-      // 赋值
-      this.balance.Deposite = Deposite;
-      this.balance.Withdraw = Withdraw;
-      this.balance.Reward1 = Reward1;
-      this.balance.Staking = Staking;
-      this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
+      });
     },
     // 抵押
     async toDeposite() {

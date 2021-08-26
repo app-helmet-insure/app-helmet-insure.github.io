@@ -259,7 +259,7 @@
 
 <script>
 import { lptPoolList } from "~/config/mining.js";
-import POOL from "./pool.vue";
+import POOL from "./miningPool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import { GetPoolAPR } from "./mining_apr.js";
 import PHeader from "~/components/common/header.vue";

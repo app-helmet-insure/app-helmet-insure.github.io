@@ -1,6 +1,5 @@
 import { getTokenPrice } from "~/interface/event.js";
 import { fixD } from "~/assets/js/util.js";
-import { TotalSupply, BalanceOf } from "~/interface/read_contract.js";
 import MiningABI from "~/abi/MiningABI.json";
 import { Contract } from "ethers-multicall-x";
 import {
@@ -464,7 +463,7 @@ const getPoolAPR = async (PoolData) => {
   const TotalRewards = PoolData.total_rewards;
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const HelmetDecimals = 18;
-  const Amount = toWei("1", PoolData.reward_decimals_number);
+  const Amount = toWei("1", RewardDecimals);
   const Data = await getTokenPrice({
     fromTokenAddress: RewardAddress,
     toTokenAddress: HelmetAddress,

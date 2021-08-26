@@ -3,7 +3,7 @@
     <MiningTitle></MiningTitle>
     <div class="mining_container">
       <LptMining />
-      <MiningList></MiningList>
+      <MiningList />
       <Onepager></Onepager>
       <Compound></Compound>
       <Deposite

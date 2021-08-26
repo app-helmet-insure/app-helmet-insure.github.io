@@ -1,6 +1,8 @@
 import { getTokenPrice } from "~/interface/event.js";
 import { fixD } from "~/assets/js/util.js";
+import ProxyPoolABI from "~/abi/ProxyPoolABI.json";
 import MiningABI from "~/abi/MiningABI.json";
+import ApproveABI from "~/abi/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
 import {
   toWei,
@@ -28,6 +30,11 @@ export const lptPoolList = [
     token2_decimals_number: 18,
     token2_symbol: "WBNB",
     token2_address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    reward1_have: false,
+    reward1_decimals_number: 18,
+    reward1_symbol: "HELMET",
+    reward1_address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    reward2_have: true,
     reward2_symbol: "MDX",
     reward2_address: "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
     reward2_decimals_number: 18,
@@ -43,6 +50,7 @@ export const lptPoolList = [
     stake_decimals_number: 18,
     lpt_link1:
       "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
+    pool_type: "lpt",
   },
   {
     pool_name: `HELMET-BNB LPT`,
@@ -67,18 +75,21 @@ export const lptPoolList = [
     proxy_address: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
     pool_address: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
     stake_address: "0xC869A9943b702B03770B6A92d2b2d25cf3a3f571",
+    reward1_have: true,
     reward1_decimals_number: 18,
     reward1_symbol: "HELMET",
     reward1_address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    reward2_have: false,
     reward2_decimals_number: 18,
     reward2_symbol: "CAKE",
     reward2_address: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
     stake_decimals_number: 18,
     lpt_link1:
       "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
+    pool_type: "lpt",
   },
   {
-    pool_name: `HELMET-USDT LPT</i>`,
+    pool_name: `HELMET-USDT LPT`,
     stake_symbol: "HELMET-USDT LPT",
     stake_unit: "LPT",
     reward_volume: "one",
@@ -100,15 +111,18 @@ export const lptPoolList = [
     proxy_address: "0xdfaa0e08e357db0153927c7eabb492d1f60ac730",
     pool_address: "0x50a9C123536e69290a5dAb32ce514D0b9afcaDCc",
     stake_address: "0xdB4d03b1659fe7FAD33F840de481773A629d256b",
-    // reward1_decimals_number: 18,
-    // reward1_symbol: "HELMET",
-    // reward1_address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    reward1_have: false,
+    reward1_decimals_number: 18,
+    reward1_symbol: "HELMET",
+    reward1_address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    reward2_have: true,
     reward2_decimals_number: 18,
     reward2_symbol: "BABY",
     reward2_address: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
     stake_decimals_number: 18,
     lpt_link1:
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
+    pool_type: "lpt",
   },
   {
     pool_name: `GUARD-USDC LPT`,
@@ -120,7 +134,7 @@ export const lptPoolList = [
     start_time: "Ongoing",
     finish_time: "Mining",
     reward_year_type: "APR",
-    POOL_TYPE: "link",
+    pool_type: "link",
   },
 ];
 export const comboPoolList = [
@@ -789,6 +803,9 @@ export const formatMiningPool = (PoolData) => {
         ItemPool.show_time = getShowTime(StartTime);
       } else {
         ItemPool.show_time = "Ongoing";
+        if (ItemPool.pool_type === "lpt") {
+          ItemPool.apr = getLptAPR(ItemPool);
+        }
       }
     }
     if (PoolStarted && !PoolFinished) {
@@ -893,5 +910,54 @@ const getComboAPR = async (PoolData) => {
     });
   } else {
     return "--";
+  }
+};
+const getLptAPR = async (PoolData) => {
+  const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
+  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const ProxyAddress = PoolData.proxy_address;
+  const ProxyPoolPid = PoolData.pool_pid;
+  const HelmetDecimals = 18;
+  const StakeAddress = PoolData.stake_address;
+  const PoolAddress = PoolData.pool_address;
+  const Reward1Have = PoolData.reward1_have;
+  const Reward2Have = PoolData.reward2_have;
+
+  const PoolContracts = new Contract(PoolAddress, MiningABI);
+  const StakeContracts = new Contract(StakeAddress, MiningABI);
+  const HelmetContracts = new Contract(HelmetAddress, MiningABI);
+  const ProxyContracts = new Contract(ProxyAddress, ProxyPoolABI);
+  const ApproveContracts = new Contract(HelmetAddress, ApproveABI);
+  const PromiseList = [
+    PoolContracts.totalSupply(),
+    StakeContracts.totalSupply(),
+    HelmetContracts.balanceOf(StakeAddress),
+    ProxyContracts.cakePerBlock(),
+    ProxyContracts.totalAllocPoint(),
+    ProxyContracts.poolInfo(ProxyPoolPid),
+    ApproveContracts.allowance(HelmetFarm,PoolAddress),
+    PoolContracts.rewards('0x0000000000000000000000000000000000000000'),
+    PoolContracts.rewardsDuration()
+  ];
+  const MulticallProvider = getOnlyMultiCallProvider();
+  MulticallProvider.all(PromiseList).then((res) => {
+
+  });
+  if (Reward1Have) {
+    const Reward1Address = PoolData.reward1_address;
+    const Reward1Decimals = PoolData.reward1_decimals_number;
+    const Reward1HelmetPrice = 1;
+  }
+  if (Reward2Have) {
+    const Reward2Address = PoolData.reward2_address;
+    const Reward2Symbol = PoolData.reward2_symbol;
+    const Reward2Decimals = PoolData.reward2_decimals_number;
+    const Amount = toWei("1", Reward2Decimals);
+    const Data = await getTokenPrice({
+      fromTokenAddress: Reward2Address,
+      toTokenAddress: HelmetAddress,
+      amount: Amount,
+    });
+    const Reward2HelmetPrice = fromWei(Data.data.toTokenAmount);
   }
 };

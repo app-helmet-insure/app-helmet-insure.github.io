@@ -1,6 +1,6 @@
 import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
-import CakePoolABI from "~/abi/cake_pool_abi.json";
+import ProxyPoolABI from "~/abi/ProxyPoolABI.json";
 import MdexPoolABI from "~/abi/mdex_pool_abi.json";
 import OrderABI from "~/abi/order_abi.json";
 import FectoryABI from "~/abi/factory_abi.json";
@@ -29,7 +29,7 @@ export const BalanceOf = async (
   Decimals = 18,
   TokenAddress
 ) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   if (!TokenAddress) {
     TokenAddress = await getAccounts();
   }
@@ -48,7 +48,7 @@ export const BalanceOf = async (
 };
 // TotalSupply
 export const TotalSupply = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
     .totalSupply()
@@ -64,7 +64,7 @@ export const TotalSupply = async (ContractAddress, Decimals = 18) => {
 };
 // Pool Reward
 export const Earned = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
@@ -81,7 +81,7 @@ export const Earned = async (ContractAddress, Decimals = 18) => {
 };
 // Pool Reward2
 export const Earned2 = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
@@ -119,7 +119,7 @@ export const Earned3 = async (
 };
 // Total daily output
 export const TotalAllocPoint = async (ContractAddress) => {
-  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Contracts = await Web3Contract(ProxyPoolABI, ContractAddress);
   return Contracts.methods
     .totalAllocPoint()
     .call()
@@ -129,7 +129,7 @@ export const TotalAllocPoint = async (ContractAddress) => {
 };
 // Daily output
 export const PoolInfo = async (ContractAddress, PoolPid) => {
-  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Contracts = await Web3Contract(ProxyPoolABI, ContractAddress);
   return Contracts.methods
     .poolInfo(PoolPid)
     .call()
@@ -139,7 +139,7 @@ export const PoolInfo = async (ContractAddress, PoolPid) => {
 };
 // Cake per block
 export const CakePerBlock = async (ContractAddress) => {
-  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Contracts = await Web3Contract(ProxyPoolABI, ContractAddress);
   return Contracts.methods
     .cakePerBlock()
     .call()
@@ -206,7 +206,7 @@ export const PoolAllowance = async (
 };
 
 export const Rewards = async (Contractaddress, address) => {
-  let Contracts = await Web3Contract(MiningABI.abi, Contractaddress);
+  let Contracts = await Web3Contract(MiningABI, Contractaddress);
   if (address == 0) {
     address = "0x0000000000000000000000000000000000000000";
   }
@@ -218,7 +218,7 @@ export const Rewards = async (Contractaddress, address) => {
     });
 };
 export const RewardsDuration = async (ContractAddress) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   return Contracts.methods
     .rewardsDuration()
     .call()

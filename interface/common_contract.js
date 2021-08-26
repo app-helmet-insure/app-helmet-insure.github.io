@@ -155,7 +155,7 @@ export const ShowMiningData = async (ContractAdress, ParamsAddress) => {
     let WEB3 = await web3();
     let CurrentProvider = new Web3Provider(WEB3.currentProvider);
     let MulticallProvider = new Provider(CurrentProvider, 56);
-    const MulticallContract = new Contract(ContractAdress, MiningABI.abi);
+    const MulticallContract = new Contract(ContractAdress, MiningABI);
 };
 export const bscNetwork = {
     chainId: '0x38',

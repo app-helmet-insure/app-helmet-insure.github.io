@@ -1,78 +1,58 @@
 <template>
-  <div class="lptMining">
-    <div class="lptMiningBorder">
-      <p class="lptMiningTitle">LPT Mining</p>
-      <div class="lptMiningWrap">
+  <div class="lpt_mining">
+    <div class="lpt_mining_border">
+      <p class="lpt_mining_title">LPT Mining</p>
+      <div class="lpt_mining_wrap">
         <div
-          class="lptMiningItemWrap"
-          v-for="item in lptPoolList"
-          :key="item.REWARD_NAME"
+          class="lpt_mining_item_wrap"
+          v-for="item in FixPoolList"
+          :key="item.reward_name"
         >
-          <div :class="`lptMiningItem lp_${storeThemes}`">
-            <section class="itemPoolNameWEB WEB">
+          <div :class="`lpt_mining_item lp_${storeThemes}`">
+            <section class="item_pool_name_web WEB">
               <span
                 class="onePager"
-                v-html="item.POOL_NAME"
+                v-html="item.pool_name"
                 @click="hadnleShowOnePager($event, item.ONE_PAGER)"
               ></span>
             </section>
-            <section class="itemPoolEarnWEB WEB">
+            <section class="item_pool_earn_web WEB">
               <p>
                 {{ $t("Table.EarnList") }}
                 <span>
                   <img
-                    v-if="item.REARD_IMGSHOW"
+                    v-if="item.reward_img"
                     :src="
                       require(`~/assets/img/mining/${
-                        item.MING_TIME == 'Finished'
-                          ? item.REWARD_NAME + '_expired'
-                          : item.REWARD_NAME
+                        item.status === 3
+                          ? item.reward_name + '_expired'
+                          : item.reward_name
                       }.png`)
                     "
-                    :class="item.REARD_VOLUME"
+                    :class="item.reward_volume"
                     alt=""
                   />
                   <template v-else style="color: #17173a">{{
-                    item.REWARD_NAME
+                    item.reward_name
                   }}</template>
                 </span>
               </p>
             </section>
-            <section class="itemPoolTimeWEB WEB">
+            <section class="item_pool_item_time WEB">
               <i></i>
               <p>
-                <span v-if="typeof item.OPEN_TIME == 'object'">
-                  {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                  <i>/</i>
-                  {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                  <i>/</i>
-                </span>
-                <span v-else-if="typeof item.MING_TIME == 'object'">
-                  <template v-if="item.MING_TIME.day != '00'">
-                    {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
-                    <i>/</i>
-                  </template>
-                  <template>
-                    {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                    <i>/</i>
-                  </template>
-                  <template v-if="item.MING_TIME.day == '00'">
-                    {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                    <i>/</i>
-                  </template>
-                </span>
-                <span v-else> {{ item.MING_TIME }} </span>
+                <span v-html="item.show_time"></span>
                 <span>{{ $t("Table.MIningCutdown") }}</span>
               </p>
             </section>
-            <section class="itemPoolYearWEB WEB">
-              <span>{{ item.REWARD_YEAR }}</span>
-              <span>{{ item.REWARD_TYPE }}</span>
+            <section class="item_pool_year_web WEB">
+              <span>{{ item.apr }}</span>
+              <span>{{ item.reward_year_type }}</span>
             </section>
-            <section class="itemPoolActionWEB WEB">
+            <section class="item_pool_action_web WEB">
               <a
                 href="https://www.guard.insure/mining"
-                v-if="item.POOL_TYPE === 'link'"
+                v-if="item.pool_type === 'link'"
                 ><img src="~/assets/img/guard/Polygon.png" alt="" />
                 <span>Mining on Polygon</span>
                 <i></i>
@@ -81,7 +61,7 @@
                 ><button
                   @click="HandleClickAction(item, 'STAKE')"
                   :class="
-                    activeMining == item.REWARD_NAME &&
+                    activeMining == item.reward_name &&
                     showActiveMining &&
                     activeType == 'STAKE'
                       ? 'activeButton stakeMining'
@@ -94,7 +74,7 @@
                 <button
                   @click="HandleClickAction(item, 'CLAIM')"
                   :class="
-                    activeMining == item.REWARD_NAME &&
+                    activeMining == item.reward_name &&
                     showActiveMining &&
                     activeType == 'CLAIM'
                       ? 'activeButton claimMining'
@@ -105,65 +85,43 @@
                   <i class="selectDown"></i></button
               ></template>
             </section>
-            <section class="itemPoolNameH5 H5">
+            <section class="item_pool_name_h5 H5">
               <span
                 class="onePager"
-                v-html="item.POOL_NAME"
+                v-html="item.pool_name"
                 @click="hadnleShowOnePager($event, item.ONE_PAGER)"
               ></span>
               <p>
                 {{ $t("Table.EarnList") }}
                 <span>
                   <img
-                    v-if="item.REARD_IMGSHOW"
+                    v-if="item.reward_img"
                     :src="
-                      require(`~/assets/img/mining/${item.REWARD_NAME}.png`)
+                      require(`~/assets/img/mining/${item.reward_name}.png`)
                     "
-                    :class="item.REARD_VOLUME"
+                    :class="item.reward_volume"
                     alt=""
                   />
                   <template v-else style="color: #17173a">{{
-                    item.REWARD_NAME
+                    item.reward_name
                   }}</template>
                 </span>
               </p>
             </section>
-            <section class="itemPoolYearH5 H5">
+            <section class="item_pool_year_h5 H5">
               <p>
-                <span>{{ item.REWARD_YEAR }}</span>
-                <span>{{ item.REWARD_TYPE }}</span>
+                <span>{{ item.apr }}</span>
+                <span>{{ item.reward_year_type }}</span>
               </p>
               <div>
                 <i></i>
                 <p>
-                  <span v-if="typeof item.OPEN_TIME == 'object'">
-                    {{ item.OPEN_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                    <i>/</i>
-                    {{ item.OPEN_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                    <i>/</i>
-                  </span>
-                  <span v-else-if="typeof item.MING_TIME == 'object'">
-                    <template v-if="item.MING_TIME.day != '00'">
-                      {{ item.MING_TIME.day }}<b>{{ $t("Content.DayM") }}</b>
-                      <i>/</i>
-                    </template>
-                    <template>
-                      {{ item.MING_TIME.hour }}<b>{{ $t("Content.HourM") }}</b>
-                      <i>/</i>
-                    </template>
-                    <template v-if="item.MING_TIME.day == '00'">
-                      {{ item.MING_TIME.minute }}<b>{{ $t("Content.MinM") }}</b>
-                      <i>/</i>
-                    </template>
-                  </span>
-                  <span v-else>
-                    {{ item.MING_TIME }}
-                  </span>
+                  <span v-html="item.show_time"></span>
                   <span>{{ $t("Table.MIningCutdown") }}</span>
                 </p>
               </div>
             </section>
-            <section class="itemPoolActionH5 H5">
+            <section class="item_pool_action_h5 H5">
               <a
                 href="https://www.guard.insure/mining"
                 v-if="item.POOL_TYPE === 'link'"
@@ -175,7 +133,7 @@
                 <button
                   @click="HandleClickAction(item, 'STAKE', true)"
                   :class="
-                    activeMining == item.REWARD_NAME &&
+                    activeMining == item.reward_name &&
                     showActiveMining &&
                     activeType == 'STAKE'
                       ? 'activeButton stakeMining'
@@ -192,7 +150,7 @@
                 <button
                   @click="HandleClickAction(item, 'CLAIM', true)"
                   :class="
-                    activeMining == item.REWARD_NAME &&
+                    activeMining == item.reward_name &&
                     showActiveMining &&
                     activeType == 'CLAIM'
                       ? 'activeButton claimMining'
@@ -207,7 +165,7 @@
           </div>
           <div
             class="mining_detail WEB"
-            v-if="showActiveMining && activeMining == item.REWARD_NAME"
+            v-if="showActiveMining && activeMining == item.reward_name"
           >
             <svg
               class="close"
@@ -224,7 +182,7 @@
           </div>
           <div
             class="wraper_title H5"
-            v-if="showActiveMining && activeMining == item.REWARD_NAME"
+            v-if="showActiveMining && activeMining == item.reward_name"
           >
             <PHeader></PHeader>
             <div class="wraper">
@@ -258,7 +216,7 @@
 </template>
 
 <script>
-import { lptPoolList } from "~/config/mining.js";
+import { lptPoolList, formatMiningPool } from "~/config/mining.js";
 import POOL from "./miningPool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import { GetPoolAPR } from "./mining_apr.js";
@@ -271,7 +229,7 @@ export default {
   },
   data() {
     return {
-      lptPoolList,
+      FixPoolList: [],
       activeType: "",
       showActiveMining: false,
       activeMining: "",
@@ -288,7 +246,7 @@ export default {
     },
   },
   mounted() {
-    this.GetPoolItemAPR();
+    this.FixPoolList = formatMiningPool(lptPoolList);
   },
   methods: {
     HandleClickAction(PoolData, Action, Flag = false) {
@@ -296,19 +254,7 @@ export default {
       this.activeData = PoolData;
       this.activeType = Action;
       this.activeFlag = Flag;
-      this.activeMining = PoolData.REWARD_NAME;
-    },
-    async GetPoolItemAPR() {
-      let arr = lptPoolList;
-      for (let i = 0; i < arr.length; i++) {
-        let item = arr[i];
-        if (item.REWARD_YEAR === "Infinity") {
-          let res = await GetPoolAPR(item);
-          item.REWARD_YEAR = res;
-        } else {
-          item.REWARD_YEAR = item.REWARD_YEAR;
-        }
-      }
+      this.activeMining = PoolData.reward_name;
     },
   },
 };
@@ -316,7 +262,7 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/base.scss";
-.lptMining {
+.lpt_mining {
   width: 100%;
   background: #ffffff;
   padding: 2px;
@@ -325,7 +271,7 @@ export default {
     background: themed("lptmining_border");
   }
   box-sizing: border-box;
-  &Border {
+  &_border {
     @include themeify {
       background: themed("swap_background");
     }
@@ -336,7 +282,7 @@ export default {
     overflow: hidden;
     padding: 20px;
   }
-  &Title {
+  &_title {
     font-size: 20px;
     font-family: IBMPlexSans-SemiBold, IBMPlexSans;
     font-weight: 600;
@@ -394,11 +340,11 @@ export default {
   .H5 {
     display: none !important;
   }
-  .lptMiningItemWrap {
+  .lpt_mining_item_wrap {
     display: flex;
     flex-direction: column;
   }
-  .lptMiningItem {
+  .lpt_mining_item {
     margin-top: 10px;
     width: 100%;
     height: 70px;
@@ -415,7 +361,7 @@ export default {
   .lp_light {
     background-image: url("../../assets/img/mining/lpmining_bg_light.png");
   }
-  .itemPoolNameWEB {
+  .item_pool_name_web {
     display: flex;
     align-items: center;
     flex: 3;
@@ -441,7 +387,7 @@ export default {
       }
     }
   }
-  .itemPoolEarnWEB {
+  .item_pool_earn_web {
     flex: 3;
     p {
       font-size: 14px;
@@ -478,7 +424,7 @@ export default {
       }
     }
   }
-  .itemPoolTimeWEB {
+  .item_pool_item_time {
     display: flex;
     align-items: center;
     flex: 3;
@@ -536,7 +482,7 @@ export default {
       }
     }
   }
-  .itemPoolYearWEB {
+  .item_pool_year_web {
     flex: 2;
     display: flex;
     flex-direction: column;
@@ -560,7 +506,7 @@ export default {
       }
     }
   }
-  .itemPoolActionWEB {
+  .item_pool_action_web {
     flex: 3;
     display: flex;
     justify-content: flex-end;
@@ -663,13 +609,13 @@ export default {
   .WEB {
     display: none !important;
   }
-  .lptMining {
+  .lpt_mining {
     margin-top: 20px;
   }
-  .lptMiningBorder {
+  .lpt_mining_border {
     padding: 10px;
   }
-  .lptMiningItem {
+  .lpt_mining_item {
     width: 100%;
     padding: 24px 10px;
     display: flex;
@@ -683,7 +629,7 @@ export default {
   .lp_light {
     background-image: url("../../assets/img/mining/lpmining_bg_light_h5.png");
   }
-  .itemPoolNameH5 {
+  .item_pool_name_h5 {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -740,7 +686,7 @@ export default {
       }
     }
   }
-  .itemPoolYearH5 {
+  .item_pool_year_h5 {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -823,7 +769,7 @@ export default {
       }
     }
   }
-  .itemPoolActionH5 {
+  .item_pool_action_h5 {
     display: flex;
     justify-content: space-between;
     margin-top: 12px;

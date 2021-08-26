@@ -1051,7 +1051,7 @@ export default {
     margin-top: 10px;
     @include themeify {
       border-top: 1px solid themed("price_line");
-    }
+    } 
     > a {
       margin-top: 20px;
       height: 40px;

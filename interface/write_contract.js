@@ -26,7 +26,7 @@ export const Stake = async (
   { ContractAddress, DepositeVolume, Decimals },
   callback
 ) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   if (DecimalsUnit) {
@@ -71,7 +71,7 @@ export const Stake = async (
   } catch (error) {}
 };
 export const GetReward = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -146,7 +146,7 @@ export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
   } catch (error) {}
 };
 export const GetDoubleReward = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -183,7 +183,7 @@ export const GetDoubleReward = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const Exit = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods

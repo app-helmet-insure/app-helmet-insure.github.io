@@ -6,13 +6,13 @@
         <div
           class="lpt_mining_item_wrap"
           v-for="item in FixPoolList"
-          :key="item.reward_name"
+          :key="item.RewardSymbol"
         >
           <div :class="`lpt_mining_item lp_${storeThemes}`">
             <section class="item_pool_name_web WEB">
               <span
                 class="onePager"
-                v-html="item.pool_name"
+                v-html="item.PoolName"
                 @click="hadnleShowOnePager($event, item.ONE_PAGER)"
               ></span>
             </section>
@@ -21,19 +21,19 @@
                 {{ $t("Table.EarnList") }}
                 <span>
                   <img
-                    v-if="item.reward_img"
+                    v-if="item.ImgReward"
                     :src="
                       require(`~/assets/img/mining/${
                         item.status === 3
-                          ? item.reward_name + '_expired'
-                          : item.reward_name
+                          ? item.RewardSymbol + '_expired'
+                          : item.RewardSymbol
                       }.png`)
                     "
-                    :class="item.reward_volume"
+                    :class="item.RewardVolume"
                     alt=""
                   />
                   <template v-else style="color: #17173a">{{
-                    item.reward_name
+                    item.RewardSymbol
                   }}</template>
                 </span>
               </p>
@@ -41,18 +41,18 @@
             <section class="item_pool_item_time WEB">
               <i></i>
               <p>
-                <span v-html="item.show_time"></span>
+                <span v-html="item.ShowTime"></span>
                 <span>{{ $t("Table.MIningCutdown") }}</span>
               </p>
             </section>
             <section class="item_pool_year_web WEB">
-              <span>{{ item.apr }}</span>
-              <span>{{ item.reward_year_type }}</span>
+              <span>{{ item.APR }}</span>
+              <span>{{ item.YearEarnType }}</span>
             </section>
             <section class="item_pool_action_web WEB">
               <a
                 href="https://www.guard.insure/mining"
-                v-if="item.pool_type === 'link'"
+                v-if="item.PoolType === 'link'"
                 ><img src="~/assets/img/guard/Polygon.png" alt="" />
                 <span>Mining on Polygon</span>
                 <i></i>
@@ -61,9 +61,9 @@
                 ><button
                   @click="HandleClickAction(item, 'STAKE')"
                   :class="
-                    activeMining == item.reward_name &&
-                    showActiveMining &&
-                    activeType == 'STAKE'
+                    ActiveMining == item.RewardSymbol &&
+                    ShowActiveMining &&
+                    ActiveType == 'STAKE'
                       ? 'activeButton stakeMining'
                       : 'stakeMining'
                   "
@@ -74,9 +74,9 @@
                 <button
                   @click="HandleClickAction(item, 'CLAIM')"
                   :class="
-                    activeMining == item.reward_name &&
-                    showActiveMining &&
-                    activeType == 'CLAIM'
+                    ActiveMining == item.RewardSymbol &&
+                    ShowActiveMining &&
+                    ActiveType == 'CLAIM'
                       ? 'activeButton claimMining'
                       : 'claimMining'
                   "
@@ -88,35 +88,35 @@
             <section class="item_pool_name_h5 H5">
               <span
                 class="onePager"
-                v-html="item.pool_name"
+                v-html="item.PoolName"
                 @click="hadnleShowOnePager($event, item.ONE_PAGER)"
               ></span>
               <p>
                 {{ $t("Table.EarnList") }}
                 <span>
                   <img
-                    v-if="item.reward_img"
+                    v-if="item.ImgReward"
                     :src="
-                      require(`~/assets/img/mining/${item.reward_name}.png`)
+                      require(`~/assets/img/mining/${item.RewardSymbol}.png`)
                     "
-                    :class="item.reward_volume"
+                    :class="item.RewardVolume"
                     alt=""
                   />
                   <template v-else style="color: #17173a">{{
-                    item.reward_name
+                    item.RewardSymbol
                   }}</template>
                 </span>
               </p>
             </section>
             <section class="item_pool_year_h5 H5">
               <p>
-                <span>{{ item.apr }}</span>
-                <span>{{ item.reward_year_type }}</span>
+                <span>{{ item.APR }}</span>
+                <span>{{ item.YearEarnType }}</span>
               </p>
               <div>
                 <i></i>
                 <p>
-                  <span v-html="item.show_time"></span>
+                  <span v-html="item.ShowTime"></span>
                   <span>{{ $t("Table.MIningCutdown") }}</span>
                 </p>
               </div>
@@ -124,7 +124,7 @@
             <section class="item_pool_action_h5 H5">
               <a
                 href="https://www.guard.insure/mining"
-                v-if="item.POOL_TYPE === 'link'"
+                v-if="item.PoolType === 'link'"
                 ><img src="~/assets/img/guard/Polygon.png" alt="" />
                 <span>Mining on Polygon</span>
                 <i></i>
@@ -133,9 +133,9 @@
                 <button
                   @click="HandleClickAction(item, 'STAKE', true)"
                   :class="
-                    activeMining == item.reward_name &&
-                    showActiveMining &&
-                    activeType == 'STAKE'
+                    ActiveMining == item.RewardSymbol &&
+                    ShowActiveMining &&
+                    ActiveType == 'STAKE'
                       ? 'activeButton stakeMining'
                       : 'stakeMining'
                   "
@@ -143,16 +143,12 @@
                 >
                   {{ $t("Table.Stakeing") }}
                 </button>
-                <button @click="toCompound" v-if="item.COMPOUND">
-                  <i :class="claimLoading ? 'loading_pic' : ''"></i
-                  >{{ $t("Table.Compound") }}
-                </button>
                 <button
                   @click="HandleClickAction(item, 'CLAIM', true)"
                   :class="
-                    activeMining == item.reward_name &&
-                    showActiveMining &&
-                    activeType == 'CLAIM'
+                    ActiveMining == item.RewardSymbol &&
+                    ShowActiveMining &&
+                    ActiveType == 'CLAIM'
                       ? 'activeButton claimMining'
                       : 'claimMining'
                   "
@@ -165,31 +161,31 @@
           </div>
           <div
             class="mining_detail WEB"
-            v-if="showActiveMining && activeMining == item.reward_name"
+            v-if="ShowActiveMining && ActiveMining == item.RewardSymbol"
           >
             <svg
               class="close"
               aria-hidden="true"
-              @click="showActiveMining = false"
+              @click="ShowActiveMining = false"
             >
               <use xlink:href="#icon-close"></use>
             </svg>
             <POOL
-              :activeData="activeData"
-              :activeFlag="activeFlag"
-              :activeType="activeType"
+              :ActiveData="ActiveData"
+              :ActiveFlag="ActiveFlag"
+              :ActiveType="ActiveType"
             />
           </div>
           <div
             class="wraper_title H5"
-            v-if="showActiveMining && activeMining == item.reward_name"
+            v-if="ShowActiveMining && ActiveMining == item.RewardSymbol"
           >
             <PHeader></PHeader>
             <div class="wraper">
               <div class="wraper_header">
                 <h3 class="">
                   {{
-                    activeType == "STAKE"
+                    ActiveType == "STAKE"
                       ? $t("Insurance.Insurance_text23")
                       : $t("Table.Claim")
                   }}
@@ -197,15 +193,15 @@
                 <svg
                   class="close"
                   aria-hidden="true"
-                  @click="showActiveMining = false"
+                  @click="ShowActiveMining = false"
                 >
                   <use xlink:href="#icon-close"></use>
                 </svg>
               </div>
               <POOL
-                :activeData="activeData"
-                :activeFlag="activeFlag"
-                :activeType="activeType"
+                :ActiveData="ActiveData"
+                :ActiveFlag="ActiveFlag"
+                :ActiveType="ActiveType"
               />
             </div>
           </div>
@@ -230,14 +226,14 @@ export default {
   data() {
     return {
       FixPoolList: [],
-      activeType: "",
-      showActiveMining: false,
-      activeMining: "",
+      ActiveType: "",
+      ShowActiveMining: false,
+      ActiveMining: "",
       TradeType: "", //H5 tradingType
       claimLoading: false,
       HelmetBalance: 0,
-      activeData: {},
-      activeFlag: "",
+      ActiveData: {},
+      ActiveFlag: "",
     };
   },
   computed: {
@@ -250,11 +246,11 @@ export default {
   },
   methods: {
     HandleClickAction(PoolData, Action, Flag = false) {
-      this.showActiveMining = true;
-      this.activeData = PoolData;
-      this.activeType = Action;
-      this.activeFlag = Flag;
-      this.activeMining = PoolData.reward_name;
+      this.ShowActiveMining = true;
+      this.ActiveData = PoolData;
+      this.ActiveType = Action;
+      this.ActiveFlag = Flag;
+      this.ActiveMining = PoolData.RewardSymbol;
     },
   },
 };

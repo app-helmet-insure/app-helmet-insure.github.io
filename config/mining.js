@@ -54,6 +54,7 @@ export const lptPoolList = [
     IsCombo: false,
     HaveOnePager: false,
     YearEarnType: "APR",
+    APR: "--",
     JumpLink1:
       "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
   },
@@ -92,6 +93,7 @@ export const lptPoolList = [
     IsIIO: false,
     HaveOnePager: false,
     YearEarnType: "APR",
+    APR: "--",
     JumpLink1:
       "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
   },
@@ -131,6 +133,7 @@ export const lptPoolList = [
     IsIIO: false,
     HaveOnePager: false,
     YearEarnType: "APR",
+    APR: "--",
     JumpLink1:
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
   },
@@ -144,6 +147,7 @@ export const lptPoolList = [
     StartTime: "Ongoing",
     FinishTime: "Mining",
     YearEarnType: "APR",
+    APR: "686.19%",
     PoolType: "link",
   },
 ];
@@ -949,19 +953,18 @@ const getLptAPR = async (PoolData) => {
     const ProxyContracts = new Contract(ProxyAddress, ProxyABI);
     const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
     const Amount = toWei("1", Reward2Decimals);
-    const Data1 = await getTokenPrice({
-      fromTokenAddress: Reward1Address,
-      toTokenAddress: BNBAddress,
-      amount: Amount,
-    });
+    // const Data1 = await getTokenPrice({
+    //   fromTokenAddress: Reward1Address,
+    //   toTokenAddress: HelmetAddress,
+    //   amount: Amount,
+    // });
     const Data2 = await getTokenPrice({
       fromTokenAddress: Reward2Address,
-      toTokenAddress: BNBAddress,
+      toTokenAddress: HelmetAddress,
       amount: Amount,
     });
-    const Reward1BNBPrice = fromWei(Data1.data.toTokenAmount);
-    const Reward2BNBPrice = fromWei(Data2.data.toTokenAmount);
-    console.log(Reward1BNBPrice, Reward2BNBPrice);
+    const Reward1HelmetPrice = 1;
+    const Reward2HelmetPrice = fromWei(Data2.data.toTokenAmount);
     let PerBlock;
     if (ProxySwap === "PANCAKE") {
       PerBlock = await CakePerBlock(ProxyAddress);
@@ -1003,18 +1006,17 @@ const getLptAPR = async (PoolData) => {
       const FixOutPutReward1 = fromWei(OutPutReward1, Reward1Decimals);
       const FixReward1Time = Reward1Time / 86400;
       // ------------------------------------------ //
-
       const Reward1Daily =
         (FixTotalReward1 - FixOutPutReward1) / FixReward1Time;
       const Reward2Daily =
         (FixAllocPoint / FixTotalAllocPoint) * (PerBlock * 28800);
       const FixReward1Daily = Reward1Daily > 0 ? Reward1Daily : 0;
       const FixReward2Daily = Reward2Daily > 0 ? Reward2Daily : 0;
-      const NumberatorReward1 = 365 * Reward1BNBPrice * FixReward1Daily;
-      const NumberatorReward2 = 365 * Reward2BNBPrice * FixReward2Daily;
-      const DenominatorReward1 = FixStakeValue * Reward1BNBPrice;
+      const NumberatorReward1 = 365 * Reward1HelmetPrice * FixReward1Daily;
+      const NumberatorReward2 = 365 * Reward2HelmetPrice * FixReward2Daily;
+      const DenominatorReward1 = FixStakeValue * Reward1HelmetPrice;
       const DenominatorReward2 =
-        ((FixStakeValue * Reward2BNBPrice) / FixLptVolume) * FixStakeVolume;
+        (FixStakeValue / FixLptVolume) * FixStakeVolume;
       const YearReward1 = NumberatorReward1 / DenominatorReward1;
       const YearReward2 = NumberatorReward2 / DenominatorReward2;
       console.log(YearReward1, YearReward2);

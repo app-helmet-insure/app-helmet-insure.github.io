@@ -2,7 +2,7 @@
   <div class="mining_pool">
     <div
       class="deposit"
-      v-if="!activeFlag || (activeFlag && activeType == 'STAKE')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'STAKE')"
     >
       <div class="title">
         <span>{{ $t("Table.DAvailable") }}：</span>
@@ -15,7 +15,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ activeData.STAKE_UNIT }}
+          {{ ActiveData.StakeUnit }}
         </p>
       </div>
       <div class="content">
@@ -24,7 +24,7 @@
             name="deposit"
             type="text"
             v-model="DepositeNum"
-            :class="activeType == 'STAKE' ? 'activeInput' : ''"
+            :class="ActiveType == 'STAKE' ? 'activeInput' : ''"
           />
           <span @click="DepositeNum = CanDeposite">{{ $t("Table.Max") }}</span>
         </div>
@@ -34,7 +34,7 @@
           @click="toDeposite"
           :class="
             (stakeLoading ? 'disable b_button' : 'b_button',
-            activeData.status == 3 ? 'disable_button b_button' : 'b_button')
+            ActiveData.status == 3 ? 'disable_button b_button' : 'b_button')
           "
         >
           <i :class="stakeLoading ? 'loading_pic' : ''"></i
@@ -51,7 +51,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ activeData.STAKE_UNIT }}</span
+            &nbsp;{{ ActiveData.StakeUnit }}</span
           >
         </p>
         <p>
@@ -65,7 +65,7 @@
               :decimals="4"
             />
             <span v-else>--</span>
-            &nbsp;{{ activeData.stake_unit }}</span
+            &nbsp;{{ ActiveData.StakeUnit }}</span
           >
         </p>
         <section>
@@ -76,43 +76,43 @@
           <div style="display: flex">
             <p
               class="jump_text"
-              v-html="activeData.lpt_link1"
-              v-if="activeData.lpt_link1"
+              v-html="ActiveData.JumpLink1"
+              v-if="ActiveData.JumpLink1"
             ></p>
             <p
               class="jump_text"
-              v-html="activeData.lpt_link2"
-              v-if="activeData.lpt_link2"
+              v-html="ActiveData.JumpLink2"
+              v-if="ActiveData.JumpLink2"
             ></p>
           </div>
         </section>
       </div>
-      <div class="ContractAddress" v-if="activeData.left_show_token">
+      <div class="ContractAddress" v-if="ActiveData.LeftShowToken">
         <span
-          >{{ activeData.left_show_token.add_token_symbol }}
+          >{{ ActiveData.LeftShowToken.AddTokenSymbol }}
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.left_show_token.add_token_address.toLowerCase() }}
+          {{ ActiveData.LeftShowToken.AddTokenAddress.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, activeData.left_show_token.add_token_address)
+              copyAdress($event, ActiveData.LeftShowToken.AddTokenAddress)
             "
           ></i>
         </p>
       </div>
-      <div class="addToken" v-if="activeData.left_show_token">
-        <p @click="addTokenFn(activeData.left_show_token)">
-          Add {{ activeData.left_show_token.add_token_symbol }} to MetaMask
+      <div class="addToken" v-if="ActiveData.LeftShowToken">
+        <p @click="addTokenFn(ActiveData.LeftShowToken)">
+          Add {{ ActiveData.LeftShowToken.AddTokenSymbol }} to MetaMask
         </p>
         <i></i>
       </div>
     </div>
     <div
       class="withdraw"
-      v-if="!activeFlag || (activeFlag && activeType == 'CLAIM')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'CLAIM')"
     >
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -125,7 +125,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ activeData.STAKE_UNIT }}
+          {{ ActiveData.StakeUnit }}
         </p>
       </div>
       <div class="content">
@@ -135,7 +135,7 @@
             type="text"
             v-model="CanWithdraw"
             disabled
-            :class="activeType == 'CLAIM' ? 'activeInput' : ''"
+            :class="ActiveType == 'CLAIM' ? 'activeInput' : ''"
           />
           <!-- <span @click="WithdrawNum = CanWithdraw">{{
             $t("Insurance.Insurance_text18")
@@ -151,9 +151,9 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <p v-if="activeData.reward1_symbol">
+        <p v-if="ActiveData.reward1_symbol">
           <span
-            ><i>{{ activeData.reward1_symbol }}</i>
+            ><i>{{ ActiveData.reward1_symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
@@ -165,12 +165,12 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ activeData.reward1_symbol }}</span
+            {{ ActiveData.reward1_symbol }}</span
           >
         </p>
-        <p v-if="activeData.reward2_symbol">
+        <p v-if="ActiveData.Reward2Symbol">
           <span
-            ><i>{{ activeData.reward2_symbol }}</i>
+            ><i>{{ ActiveData.Reward2Symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
@@ -182,12 +182,12 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ activeData.reward2_symbol }}</span
+            {{ ActiveData.Reward2Symbol }}</span
           >
         </p>
         <!-- compound -->
         <button
-          v-if="activeData.compound"
+          v-if="ActiveData.compound"
           @click="toCompound"
           :class="claimLoading ? 'disable o_button' : 'o_button'"
         >
@@ -200,32 +200,32 @@
           @click="toClaim"
           :class="
             (claimLoading ? 'disable o_button' : 'o_button',
-            activeData.status === 3 ? 'disable_button o_button' : 'o_button')
+            ActiveData.status === 3 ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="claimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
-      <div class="ContractAddress" v-if="activeData.right_show_token">
+      <div class="ContractAddress" v-if="ActiveData.RightShowToken">
         <span
-          >{{ activeData.right_show_token.add_token_symbol }}
+          >{{ ActiveData.RightShowToken.AddTokenSymbol }}
           {{ $t("Table.ContractAddress") }}</span
         >
         <p>
-          {{ activeData.right_show_token.add_token_address.toLowerCase() }}
+          {{ ActiveData.RightShowToken.AddTokenAddress.toLowerCase() }}
           <i
             class="copy"
             id="copy_default"
             @click="
-              copyAdress($event, activeData.right_show_token.add_token_address)
+              copyAdress($event, ActiveData.RightShowToken.AddTokenAddress)
             "
           ></i>
         </p>
       </div>
-      <div class="addToken" v-if="activeData.right_show_token">
-        <p @click="addTokenFn(activeData.right_show_token)">
-          Add {{ activeData.right_show_token.add_token_symbol }} to MetaMask
+      <div class="addToken" v-if="ActiveData.RightShowToken">
+        <p @click="addTokenFn(ActiveData.RightShowToken)">
+          Add {{ ActiveData.RightShowToken.AddTokenSymbol }} to MetaMask
         </p>
         <i></i>
       </div>
@@ -261,7 +261,7 @@ import {
   fromWei,
 } from "~/interface/index.js";
 export default {
-  props: ["activeData", "activeFlag", "activeType"],
+  props: ["ActiveData", "ActiveFlag", "ActiveType"],
   components: {
     countTo,
   },
@@ -299,7 +299,7 @@ export default {
       handler: "userInfoWatch",
       immediate: true,
     },
-    activeData(newValue) {
+    ActiveData(newValue) {
       if (newValue) {
         this.NeedApprove();
         this.getBalance();
@@ -317,8 +317,8 @@ export default {
   methods: {
     async addTokenFn(options) {
       let data = {
-        tokenAddress: options.add_token_address,
-        tokenSymbol: options.add_token_symbol,
+        tokenAddress: options.AddTokenAddress,
+        tokenSymbol: options.AddTokenSymbol,
         tokenDecimals: options.ADDTOKEN_DECIMALS,
         tokenImage: "",
       };
@@ -364,7 +364,7 @@ export default {
         pool_address,
         stake_decimals_number,
         reward_decimals_number,
-      } = this.activeData;
+      } = this.ActiveData;
       const PoolContracts = new Contract(pool_address, MiningABI);
       const StakeContracts = new Contract(stake_address, MiningABI);
       const Account = window.CURRENTADDRESS;
@@ -378,7 +378,8 @@ export default {
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
-        const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim1,CanClaim2] = FixData;
+        const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim1, CanClaim2] =
+          FixData;
         this.CanDeposite = fromWei(CanDeposite, stake_decimals_number);
         this.CanWithdraw = fromWei(CanWithdraw, stake_decimals_number);
         this.TotalDeposite = fromWei(TotalDeposite, stake_decimals_number);
@@ -398,11 +399,11 @@ export default {
       if (this.stakeLoading) {
         return;
       }
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      let StakeAddress = this.activeData.STAKE_ADDRESS;
-      let TokenSymbol = this.activeData.STAKE_SYMBOL;
+      let ContractAddress = this.ActiveData.POOL_ADDRESS;
+      let StakeAddress = this.ActiveData.STAKE_ADDRESS;
+      let TokenSymbol = this.ActiveData.STAKE_SYMBOL;
       let DepositeVolume = this.DepositeNum;
-      let Decimals = this.activeData.STAKE_DECIMALS;
+      let Decimals = this.ActiveData.STAKE_DECIMALS;
       this.stakeLoading = true;
       if (this.ApproveFlag) {
         await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
@@ -421,8 +422,8 @@ export default {
       }
     },
     async NeedApprove() {
-      let SpenderAddress = this.activeData.POOL_ADDRESS;
-      let TokenAddress = this.activeData.STAKE_ADDRESS;
+      let SpenderAddress = this.ActiveData.POOL_ADDRESS;
+      let TokenAddress = this.ActiveData.STAKE_ADDRESS;
       let flag = await Allowance(TokenAddress, SpenderAddress);
       this.ApproveFlag = flag;
     },
@@ -432,8 +433,8 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let ContractAddress = this.activeData.POOL_ADDRESS;
-      let RewardVolume = this.activeData.REWARD_VOLUME;
+      let ContractAddress = this.ActiveData.POOL_ADDRESS;
+      let RewardVolume = this.ActiveData.REWARD_VOLUME;
       if (RewardVolume == "one") {
         await GetReward(ContractAddress, (res) => {
           if (res == "success" || res == "error") {
@@ -454,7 +455,7 @@ export default {
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
         number: this.balance.Reward1,
-        poolAddress: this.activeData.POOL_ADDRESS,
+        poolAddress: this.ActiveData.POOL_ADDRESS,
       });
     },
     // 退出
@@ -463,7 +464,7 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let ContractAddress = this.activeData.POOL_ADDRESS;
+      let ContractAddress = this.ActiveData.POOL_ADDRESS;
       await Exit(ContractAddress, (res) => {
         if (res == "success" || res == "error") {
           this.getBalance();

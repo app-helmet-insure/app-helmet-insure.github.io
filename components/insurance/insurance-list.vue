@@ -43,13 +43,22 @@
           </section>
           <section>
             <span v-if="item.InsuranceType == 'SHIB'"
-              >{{ fixD(item.InsurancePriceBNB, 10) || "--" }} BNB</span
+              >{{
+                fixD(item.InsurancePriceBNB, 10) > 0
+                  ? fixD(item.InsurancePriceBNB, 10)
+                  : "--"
+              }}
+              BNB</span
             >
             <span v-else>
               {{ toRounding(item.InsurancePriceBNB, 4) || "--" }} BNB
             </span>
             <span v-if="item.InsuranceType == 'SHIB'">
-              ${{ fixD(item.InsurancePriceBUSD, 10) || "--" }}
+              ${{
+                fixD(item.InsurancePriceBUSD, 10) > 0
+                  ? fixD(item.InsurancePriceBUSD, 10)
+                  : "--"
+              }}
             </span>
             <span v-else>
               ${{ toRounding(item.InsurancePriceBUSD, 4) || "--" }}
@@ -362,6 +371,18 @@ export default {
         {
           InsuranceType: "MCRN",
           InsuranceImg: "MCRN",
+        },
+        {
+          InsuranceType: "FARA",
+          InsuranceImg: "FARA",
+        },
+        {
+          InsuranceType: "ALPACA",
+          InsuranceImg: "ALPACA",
+        },
+        {
+          InsuranceType: "BANANA",
+          InsuranceImg: "BANANA",
         },
       ];
       let InsuranceDate = this.$store.state.allDueDate[0];
@@ -702,9 +723,9 @@ export default {
       font-size: 16px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
-       @include themeify {
-              color: themed("color-17173a");
-            }
+      @include themeify {
+        color: themed("color-17173a");
+      }
       line-height: 22px;
       margin-left: 15px;
     }

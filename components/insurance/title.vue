@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide newinsure"><div></div></div>
       <div class="swiper-slide insure"><div></div></div>
       <div class="swiper-slide ibo"><div></div></div>
       <div class="swiper-slide guard"><div></div></div>
@@ -132,6 +133,12 @@ export default {
         background-position: center;
       }
     }
+    .newinsure {
+      background: #295336;
+      > div {
+        background-image: url("../../assets/img/banner/newinsure_web.png");
+      }
+    }
     .insure {
       background: #ffffe4;
       > div {
@@ -184,6 +191,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .newinsure {
+      background: #295336;
+      > div {
+        background-image: url("../../assets/img/banner/newinsure_h5.png");
       }
     }
     .insure {

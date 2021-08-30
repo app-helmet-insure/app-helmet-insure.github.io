@@ -11,7 +11,7 @@
             <img
               :src="
                 require(`~/assets/img/burnmining/${
-                  item.status === 3
+                  item.Status === 3
                     ? 'expired_' + item.stake_symbol
                     : item.stake_symbol
                 }.png`)
@@ -79,7 +79,7 @@
             <img
               :src="
                 require(`~/assets/img/burnmining/${
-                  item.status === 3
+                  item.Status === 3
                     ? 'expired_' + item.stake_symbol
                     : item.stake_symbol
                 }.png`)

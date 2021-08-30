@@ -174,8 +174,9 @@ export const comboPoolList = [
     StakeDecimals: 18,
     Reward1Decimals: 18,
     PoolType: "compound",
+    DailyReward: 22471,
     APR: "--",
-    apy: "--",
+    APY: "--",
   },
   {
     Key: "HELMETMCRN",
@@ -812,27 +813,21 @@ export const formatMiningPool = (PoolData) => {
     const PoolStarted = PresentTime > FixStartTime ? true : false;
     const PoolFinished = PresentTime > FixFinishTime ? true : false;
     if (!PoolStarted) {
-      ItemPool.status = 1;
+      ItemPool.Status = 1;
       if (StartTime !== "Ongoing" && FinishTime !== "Mining") {
         ItemPool.ShowTime = getShowTime(FixStartTime);
       } else {
         ItemPool.ShowTime = "Ongoing";
-        if (ItemPool.PoolType === "lpt") {
-          ItemPool.APR = getLptAPR(ItemPool);
-        }
       }
     }
     if (PoolStarted && !PoolFinished) {
-      ItemPool.status = 2;
+      ItemPool.Status = 2;
       if (StartTime !== "Ongoing" && FinishTime !== "Mining") {
         ItemPool.ShowTime = getShowTime(FixFinishTime);
       }
-      if (ItemPool.PoolType === "combo") {
-        ItemPool.APR = getComboAPR(ItemPool);
-      }
     }
     if (PoolFinished) {
-      ItemPool.status = 3;
+      ItemPool.Status = 3;
       ItemPool.ShowTime = "Finished";
     }
   }
@@ -862,7 +857,10 @@ const getShowTime = (time) => {
   }
   return template;
 };
-const getComboAPR = async (PoolData) => {
+export const getComboAPR = async (PoolData) => {
+  if (PoolData.Status !== 2) {
+    return;
+  }
   const Reward1Address = PoolData.Reward1Address;
   const Reward2Address = PoolData.Reward2Address;
   const StakeAddress = PoolData.StakeAddress;
@@ -926,7 +924,7 @@ const getComboAPR = async (PoolData) => {
     return "--";
   }
 };
-const getLptAPR = async (PoolData) => {
+export const getLptAPR = async (PoolData) => {
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const BNBAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
@@ -946,32 +944,32 @@ const getLptAPR = async (PoolData) => {
     HaveReward1,
     HaveReward2,
   } = PoolData;
-  try {
-    const PoolContracts = new Contract(PoolAddress, MiningABI);
-    const StakeContracts = new Contract(StakeAddress, MiningABI);
-    const HelmetContracts = new Contract(HelmetAddress, MiningABI);
-    const ProxyContracts = new Contract(ProxyAddress, ProxyABI);
-    const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
-    const Amount = toWei("1", Reward2Decimals);
-    // const Data1 = await getTokenPrice({
-    //   fromTokenAddress: Reward1Address,
-    //   toTokenAddress: HelmetAddress,
-    //   amount: Amount,
-    // });
-    const Data2 = await getTokenPrice({
-      fromTokenAddress: Reward2Address,
-      toTokenAddress: HelmetAddress,
-      amount: Amount,
-    });
-    const Reward1HelmetPrice = 1;
-    const Reward2HelmetPrice = fromWei(Data2.data.toTokenAmount);
-    let PerBlock;
-    if (ProxySwap === "PANCAKE") {
-      PerBlock = await CakePerBlock(ProxyAddress);
-    }
-    if (ProxySwap === "MDEX") {
-      PerBlock = await Reward(ProxyAddress);
-    }
+  const PoolContracts = new Contract(PoolAddress, MiningABI);
+  const StakeContracts = new Contract(StakeAddress, MiningABI);
+  const HelmetContracts = new Contract(HelmetAddress, MiningABI);
+  const ProxyContracts = new Contract(ProxyAddress, ProxyABI);
+  const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
+  const Amount = toWei("1", Reward2Decimals);
+  // const Data1 = await getTokenPrice({
+  //   fromTokenAddress: Reward1Address,
+  //   toTokenAddress: HelmetAddress,
+  //   amount: Amount,
+  // });
+  const Data2 = await getTokenPrice({
+    fromTokenAddress: Reward2Address,
+    toTokenAddress: HelmetAddress,
+    amount: Amount,
+  });
+  const Reward1HelmetPrice = 1;
+  const Reward2HelmetPrice = fromWei(Data2.data.toTokenAmount);
+  let PerBlock;
+  if (ProxySwap === "PANCAKE") {
+    PerBlock = await CakePerBlock(ProxyAddress);
+  }
+  if (ProxySwap === "MDEX") {
+    PerBlock = await Reward(ProxyAddress);
+  }
+  if (Reward1HelmetPrice && Reward2HelmetPrice) {
     const PromiseList = [
       StakeContracts.balanceOf(ProxyAddress),
       StakeContracts.totalSupply(),
@@ -983,7 +981,7 @@ const getLptAPR = async (PoolData) => {
       PoolContracts.rewardsDuration(),
     ];
     const MulticallProvider = getOnlyMultiCallProvider();
-    MulticallProvider.all(PromiseList).then((res) => {
+    return MulticallProvider.all(PromiseList).then((res) => {
       const FixData = processResult(res);
       const [
         StakeVolume,
@@ -1019,11 +1017,29 @@ const getLptAPR = async (PoolData) => {
         (FixStakeValue / FixLptVolume) * FixStakeVolume;
       const YearReward1 = NumberatorReward1 / DenominatorReward1;
       const YearReward2 = NumberatorReward2 / DenominatorReward2;
-      console.log(YearReward1, YearReward2);
-      const APR = fixD((Number(YearReward1) + Number(YearReward2)) * 100, 2);
-      return (PoolData.APR = APR + "%" || "--");
+      const APR =
+        fixD((Number(YearReward1) + Number(YearReward2)) * 100, 2) + "%";
+      return (PoolData.APR = APR);
     });
-  } catch (error) {
-    console.log(error);
+  } else {
+    PoolData.APR = "--";
+    return;
   }
+};
+export const getAPRAndAPY = async (PoolData) => {
+  let { PoolAddress, StakeDecimals, DailyReward } = PoolData;
+  const PoolContracts = new Contract(PoolAddress, MiningABI);
+  const PromiseList = [PoolContracts.totalSupply()];
+  const MulticallProvider = getOnlyMultiCallProvider();
+  return MulticallProvider.all(PromiseList).then((res) => {
+    console.log(res);
+    const FixData = processResult(res);
+    let [TotalStakeVolume] = FixData;
+    const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
+    const RewardValues = 1 + DailyReward / FixTotalStakeVolume;
+    const APR = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
+    const APY = fixD((DailyReward / FixTotalStakeVolume) * 365 * 100, 2) + "%";
+    console.log(APR, APY);
+    return (PoolData.APR = APR), (PoolData.APY = APY);
+  });
 };

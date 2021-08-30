@@ -17,7 +17,7 @@
             class="combo_img"
             :src="
               require(`~/assets/img/mining/combo_${
-                item.status === 3 ? 'expired_' + storeThemes : 'web'
+                item.Status === 3 ? 'expired_' + storeThemes : 'web'
               }.png`)
             "
             alt=""
@@ -28,7 +28,7 @@
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${
-                item.status === 3
+                item.Status === 3
                   ? 'serial_web_expired_' + storeThemes
                   : 'serial_web'
               }.png`)
@@ -41,7 +41,7 @@
             style="width: 32px; height: 32px; left: 10px"
             :src="
               require(`~/assets/img/mining/${
-                item.status === 3
+                item.Status === 3
                   ? 'serialnext_web_expired_' + storeThemes
                   : 'serialnext_web'
               }.png`)
@@ -72,7 +72,7 @@
                   v-if="item.ImgReward"
                   :src="
                     require(`~/assets/img/mining/${
-                      item.status === 3
+                      item.Status === 3
                         ? item.RewardSymbol + '_expired'
                         : item.RewardSymbol
                     }.png`)
@@ -97,7 +97,7 @@
             <span>{{ item.APR }}</span>
             <span>{{ item.YearEarnType }}</span>
           </section>
-          <section class="APY" v-else>
+          <section class="APY mining_pool_reward_web WEB" v-else>
             <span>{{ item.APY }}</span>
             <span>
               {{ item.YearEarnType }}
@@ -305,11 +305,14 @@
 <script>
 import { Earned } from "~/interface/read_contract.js";
 import Wraper from "~/components/common/wraper.vue";
-import { fixD } from "~/assets/js/util.js";
 import POOL from "./miningPool.vue";
-import moment from "moment";
 import PHeader from "~/components/common/header.vue";
-import { comboPoolList, formatMiningPool } from "../../config/mining.js";
+import {
+  comboPoolList,
+  formatMiningPool,
+  getComboAPR,
+  getAPRAndAPY,
+} from "../../config/mining.js";
 export default {
   components: {
     Wraper,
@@ -332,6 +335,9 @@ export default {
   },
   mounted() {
     this.FixPoolList = formatMiningPool(comboPoolList);
+    this.$nextTick(() => {
+      this.initPool();
+    });
     this.getHelmetBalance();
     let flag = navigator.userAgent.match(
       /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
@@ -356,8 +362,17 @@ export default {
       return this.$store.state.themes;
     },
   },
-  watch: {},
   methods: {
+    initPool() {
+      comboPoolList.forEach(async (item) => {
+        if (item.PoolType === "combo") {
+          await getComboAPR(item);
+        }
+        if (item.PoolType === "compound") {
+          await getAPRAndAPY(item);
+        }
+      });
+    },
     hadnleShowOnePager(e, ONE_PAGER) {
       if (e.target.tagName === "I" && ONE_PAGER) {
         let Earn = ONE_PAGER;
@@ -764,6 +779,7 @@ export default {
   .APY {
     display: flex;
     flex-direction: column;
+    flex: 3;
     span {
       display: flex;
       align-items: center;

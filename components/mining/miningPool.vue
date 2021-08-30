@@ -220,7 +220,7 @@
             @click="
               copyAdress($event, ActiveData.RightShowToken.AddTokenAddress)
             "
-          ></i>
+          ></i> 
         </p>
       </div>
       <div class="addToken" v-if="ActiveData.RightShowToken">

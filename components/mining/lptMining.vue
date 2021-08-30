@@ -24,7 +24,7 @@
                     v-if="item.ImgReward"
                     :src="
                       require(`~/assets/img/mining/${
-                        item.status === 3
+                        item.Status === 3
                           ? item.RewardSymbol + '_expired'
                           : item.RewardSymbol
                       }.png`)
@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import { lptPoolList, formatMiningPool } from "~/config/mining.js";
+import { lptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
 import POOL from "./miningPool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import { GetPoolAPR } from "./mining_apr.js";
@@ -243,8 +243,18 @@ export default {
   },
   mounted() {
     this.FixPoolList = formatMiningPool(lptPoolList);
+    this.$nextTick(() => {
+      this.initPool();
+    });
   },
   methods: {
+    initPool() {
+      lptPoolList.forEach(async (item) => {
+        if (item.PoolType === "lpt") {
+          await getLptAPR(item);
+        }
+      });
+    },
     HandleClickAction(PoolData, Action, Flag = false) {
       this.ShowActiveMining = true;
       this.ActiveData = PoolData;

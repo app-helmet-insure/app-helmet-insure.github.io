@@ -9,10 +9,10 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 export const iboPools = [
   {
     name: 'DSN',
-    address: '0xa1D653b0fd3E56F7c389a6132472A9c2F37157A3',
+    address: '0x374fBC93F4b835572CD4927ffF7D2d7C4a0245f3',
     abi: starterLimitAbi,
     start_at: '1630321200',
-    is_coming: true, // is_coming 为 true 则不请求合约
+    is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -20,15 +20,15 @@ export const iboPools = [
     },
     icon: 'DSN.png',
     underlying: {
-      address: '0x3A05E86c25366031d92e013Cac77Ff6c261cb09B',
-      decimal: 9,
+      address: '0x53f7C1dC33A6dBFCaDbBB07391D488D4Edca7Ff4',
+      decimal: 18,
       symbol: 'DSN',
       name: 'DSN',
       total_supply: '100,000,000',
       holders: '-',
       transfers: '-',
     },
-    amount: '30000000000', // token 总额
+    amount: '16558500', // token 总额
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -40,7 +40,7 @@ export const iboPools = [
     ratio: '1 HELMET= 415 DSN',
     time: '1630328400',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '16558500',//总释放
+    totalPurchasedAmount: '39900000000000008778000',//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

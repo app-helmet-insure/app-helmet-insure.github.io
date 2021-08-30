@@ -325,12 +325,12 @@
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text39") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
         <p>
-          SC: 0xxxxxxxxx
+          SC: {{ iboData.underlying.address }}
           <i
               class="copy"
               id="copy_default"
               @click="
-              copyAdress($event, 'xxxxxxxxxxxxx')
+              copyAdress($event, iboData.underlying.address)
             "
           ></i>
         </p>

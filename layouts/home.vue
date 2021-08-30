@@ -371,6 +371,11 @@ export default {
       let forHelmet = callIndexPirce["FOR"] / callIndexPirce["HELMET"] || 0;
       let babyHelmet = callIndexPirce["BABY"] / callIndexPirce["HELMET"] || 0;
       let mcrnbHelmet = callIndexPirce["MCRN"] / callIndexPirce["HELMET"] || 0;
+      let faraHelmet = callIndexPirce["FARA"] / callIndexPirce["HELMET"] || 0;
+      let alpacaHelmet =
+        callIndexPirce["ALPACA"] / callIndexPirce["HELMET"] || 0;
+      let bananaHelmet =
+        callIndexPirce["BANANA"] / callIndexPirce["HELMET"] || 0;
       let HelmetPirce = {
         HELMET: bnbHelmet,
         CAKE: cakeHelmet,
@@ -385,6 +390,9 @@ export default {
         FOR: forHelmet,
         BABY: babyHelmet,
         MCRN: mcrnbHelmet,
+        FARA: faraHelmet,
+        ALPACA: alpacaHelmet,
+        BANANA: bananaHelmet,
       };
       let Helmetbnb = putIndexPirce["HELMET"] || 0;
       let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
@@ -399,6 +407,9 @@ export default {
       let Helmetfor = putIndexPirce["FOR"] / putIndexPirce["HELMET"] || 0;
       let Helmetbaby = putIndexPirce["BABY"] / putIndexPirce["HELMET"] || 0;
       let Helmetmcrn = putIndexPirce["MCRN"] / putIndexPirce["HELMET"] || 0;
+      let Helmetfara = putIndexPirce["FARA"] / putIndexPirce["HELMET"] || 0;
+      let Helmetalpaca = putIndexPirce["ALPACA"] / putIndexPirce["HELMET"] || 0;
+      let Helmetbanana = putIndexPirce["BANANA"] / putIndexPirce["HELMET"] || 0;
       let CoinPirce = {
         HELMET: Helmetbnb,
         CAKE: Helmetcake,
@@ -413,6 +424,9 @@ export default {
         FOR: Helmetfor,
         BABY: Helmetbaby,
         MCRN: Helmetmcrn,
+        FARA: Helmetfara,
+        ALPACA: Helmetalpaca,
+        BANANA: Helmetbanana,
       };
       arr1.push(HelmetPirce);
       arr1.push(CoinPirce);

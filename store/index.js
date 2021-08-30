@@ -77,6 +77,9 @@ export const state = () => ({
     "FOR",
     "BABY",
     "MCRN",
+    "FARA",
+    "ALPACA",
+    "BANANA",
   ],
   longMap: null,
   sellMap: null,
@@ -122,6 +125,9 @@ export const state = () => ({
       FOR: "2021/09/24 24:00",
       BABY: "2021/09/24 24:00",
       MCRN: "2021/09/24 24:00",
+      FARA: "2021/09/24 24:00",
+      ALPACA: "2021/09/24 24:00",
+      BANANA: "2021/09/24 24:00",
     },
   ],
   strikePriceArray: [
@@ -139,6 +145,9 @@ export const state = () => ({
       FOR: 0.0004,
       BABY: 0.0016,
       MCRN: 0.03,
+      FARA: 0.016,
+      ALPACA: 0.0054,
+      BANANA: 0.0196,
     },
     // 腰斩价格
     {
@@ -154,6 +163,9 @@ export const state = () => ({
       FOR: 0.0001,
       BABY: 0.0004,
       MCRN: 0.0075,
+      FARA: 0.004,
+      ALPACA: 0.0013,
+      BANANA: 0.0049,
     },
   ],
   // 抵押物
@@ -172,6 +184,9 @@ export const state = () => ({
       FOR: "FOR",
       BABY: "BABY",
       MCRN: "MCRN",
+      FARA: "FARA",
+      ALPACA: "ALPACA",
+      BANANA: "BANANA",
     },
     // 腰斩抵押物
     {
@@ -187,6 +202,9 @@ export const state = () => ({
       FOR: "WBNB",
       BABY: "WBNB",
       MCRN: "WBNB",
+      FARA: "WBNB",
+      ALPACA: "WBNB",
+      BANANA: "WBNB",
     },
   ],
   // 标的物
@@ -205,6 +223,9 @@ export const state = () => ({
       FOR: "WBNB",
       BABY: "WBNB",
       MCRN: "WBNB",
+      FARA: "WBNB",
+      ALPACA: "WBNB",
+      BANANA: "WBNB",
     },
     // 腰斩标的物
     {
@@ -220,6 +241,9 @@ export const state = () => ({
       FOR: "FOR",
       BABY: "BABY",
       MCRN: "MCRN",
+      FARA: "FARA",
+      ALPACA: "ALPACA",
+      BANANA: "BANANA",
     },
   ],
   allIndexPrice: [
@@ -237,6 +261,9 @@ export const state = () => ({
       FOR: 0,
       BABY: 0,
       MCRN: 0,
+      FARA: 0,
+      ALPACA: 0,
+      BANANA: 0,
     },
     {
       HELMET: 0,
@@ -252,6 +279,9 @@ export const state = () => ({
       FOR: 0,
       BABY: 0,
       MCRN: 0,
+      FARA: 0,
+      ALPACA: 0,
+      BANANA: 0,
     },
   ],
   allHelmetPrice: [
@@ -269,6 +299,9 @@ export const state = () => ({
       FOR: 0,
       BABY: 0,
       MCRN: 0,
+      FARA: 0,
+      ALPACA: 0,
+      BANANA: 0,
     },
     {
       HELMET: 0,
@@ -284,6 +317,9 @@ export const state = () => ({
       FOR: 0,
       BABY: 0,
       MCRN: 0,
+      FARA: 0,
+      ALPACA: 0,
+      BANANA: 0,
     },
   ],
   balanceCoin: [
@@ -300,6 +336,9 @@ export const state = () => ({
     "FOR",
     "BABY",
     "MCRN",
+    "FARA",
+    "ALPACA",
+    "BANANA",
   ],
   BalanceArray: {
     HELMET: 0,
@@ -316,6 +355,9 @@ export const state = () => ({
     FOR: 0,
     BABY: 0,
     MCRN: 0,
+    FARA: 0,
+    ALPACA: 0,
+    BANANA: 0,
   },
   transferMap: [],
 });

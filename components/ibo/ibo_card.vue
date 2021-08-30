@@ -588,8 +588,7 @@ export default {
             this.burnLoading = true;
             onBurn_(
               this.amount,
-              this.iboData.address,
-              this.iboData.abi,
+              this.iboData,
               (success) => {
                 success && this.init();
                 this.burnLoading = false;

@@ -131,7 +131,7 @@
               $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
-            ) || this.iboData.purchasedCurrencyOf > 0
+            ) || iboData.purchasedCurrencyOf > 0 || now > parseInt(iboData.timeClose)
               ? 'disabled ibo_item_btn'
               : 'ibo_item_btn'
           "
@@ -320,6 +320,33 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'DSN'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text38") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text39") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          SC: 0xxxxxxxxx
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, 'xxxxxxxxxxxxx')
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/DimensionCommChinese" target="_blank"
+          >https://t.me/DimensionCommChinese</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://dimension.best" target="_blank"
+          >https://dimension.best</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>
@@ -476,6 +503,7 @@ export default {
       //     "IBO_text6": "结算中",
       //     "IBO_text7": "已完成",
       const thisTime = parseInt(new Date().getTime() / 1000);
+      this.now = thisTime
       let t = 0;
       // 倒计时开始
       let statusTxt = "IBO.IBO_text3";
@@ -564,6 +592,7 @@ export default {
         parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount) ||
         this.iboData.purchasedCurrencyOf > 0
+          || this.now > parseInt(this.iboData.timeClose)
       ) {
         return;
       }
@@ -586,8 +615,7 @@ export default {
             this.burnLoading = true;
             onBurn_(
               this.amount,
-              this.iboData.address,
-              this.iboData.abi,
+              this.iboData,
               (success) => {
                 success && this.init();
                 this.burnLoading = false;
@@ -650,6 +678,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 .el-slider__button-wrapper {
   z-index: 99;

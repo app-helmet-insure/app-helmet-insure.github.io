@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide insure"><div></div></div>
       <div class="swiper-slide ibo"><div></div></div>
       <div class="swiper-slide guard"><div></div></div>
       <a
@@ -131,6 +132,12 @@ export default {
         background-position: center;
       }
     }
+    .insure {
+      background: #ffffe4;
+      > div {
+        background-image: url("../../assets/img/banner/insure_web.png");
+      }
+    }
     .ibo {
       background: #96f6d1;
       > div {
@@ -177,6 +184,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .insure {
+      background: #ffffe4;
+      > div {
+        background-image: url("../../assets/img/banner/insure_h5.png");
       }
     }
     .ibo {

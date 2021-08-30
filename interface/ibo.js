@@ -39,6 +39,18 @@ export const fromWei = (value, decimals = 18) => {
   return new BigNumber(value).dividedBy(new BigNumber(10).pow(decimals))
 }
 
+const toWei = (value, decimals) => {
+  return new BigNumber(value).multipliedBy(new BigNumber(10).pow(decimals))
+}
+
+export const numToWei = (value, decimals = 18) => {
+  return new BigNumber(
+    toWei(value, decimals)
+      .toNumber()
+      .toFixed(decimals)
+  ).toString()
+}
+
 export const getPoolInfo = (pool) => {
   const poolContract = new Contract(pool.address, pool.abi)
   const account = window.CURRENTADDRESS
@@ -50,7 +62,7 @@ export const getPoolInfo = (pool) => {
     ? null
     : new Contract(pool.currency.address, ERC20.abi)
   const promiseList = [
-    poolContract.price(), // 结算时间点
+    poolContract.price(),
     poolContract.totalPurchasedCurrency(), //总申购的量
     poolContract.purchasedCurrencyOf(account),
     poolContract.totalSettleable(),
@@ -124,32 +136,30 @@ export const getPoolInfo = (pool) => {
     }
 
     const totalPurchasedAmount = new BigNumber(
-      Web3.utils.toWei(pool.amount, 'ether')
+      fromWei(pool.amount, pool.decimal)
     )
       .multipliedBy(new BigNumber(price))
-      .div(new BigNumber(Web3.utils.toWei('1', 'ether')))
+      .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
 
-    const totalPurchasedUnderlying = Web3.utils.toWei(
+    const totalPurchasedUnderlying = numToWei(
       new BigNumber(totalPurchasedCurrency)
         .dividedBy(new BigNumber(price))
         .toFixed(0, 1),
-      'ether'
+      pool.currency.decimal
     )
+      console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
     let is_join = false
     if (purchasedCurrencyOf > 0) {
       is_join = true
     }
-
+      console.log('price', pool.title,price)
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
-      console.log(new BigNumber(totalPurchasedCurrency)
-        .dividedBy(totalPurchasedAmount)
-        .toFixed(2, 1)
-        .toString()*1)
+      const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
     return Object.assign({}, pool, {
-      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(10).pow(pool.currency.decimal).div(new BigNumber(price)).toFormat(0).toString()} ${
+      ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
         pool.underlying.symbol
       }`,
       progress:
@@ -161,7 +171,6 @@ export const getPoolInfo = (pool) => {
       time: time,
       timeClose,//结束时间time
       timeSettle,//claim开始时间
-      price: Web3.utils.fromWei(price, 'ether'),
       is_join,
       totalPurchasedCurrency,
       totalPurchasedAmount: totalPurchasedAmount,
@@ -185,8 +194,8 @@ export const getPoolInfo = (pool) => {
         ...pool.pool_info,
         maxAccount: maxUser, // 最多参与人数
         curUserCount, // 当前参与人数
-        min_allocation: Web3.utils.fromWei(amtLow, 'ether')*1,
-        max_allocation: Web3.utils.fromWei(amtHigh, 'ether')*1,
+        min_allocation: fromWei(amtLow, pool.currency.decimal)*1,
+        max_allocation: fromWei(amtHigh, pool.currency.decimal)*1,
       }
     })
   })
@@ -210,12 +219,11 @@ export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => 
     })
 }
 // 质押
-export const onBurn_ = (_amount, poolAddress, abi, callback) => {
-  console.log(_amount, Web3.utils.toWei(String(_amount), 'ether'))
+export const onBurn_ = (_amount, iboData, callback) => {
   let web3_ = new Web3(window.ethereum)
-  let myContract = new web3_.eth.Contract(abi, poolAddress);
+  let myContract = new web3_.eth.Contract(iboData.abi, iboData.address);
   myContract.methods
-    .purchase(Web3.utils.toWei(String(_amount), 'ether'))
+    .purchase(numToWei(String(_amount), iboData.currency.decimal))
     .send({ from: window.CURRENTADDRESS })
     .on('receipt', function() {
       callback(true)

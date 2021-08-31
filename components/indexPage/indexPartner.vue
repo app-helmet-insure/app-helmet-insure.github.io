@@ -61,10 +61,10 @@ export default {};
     position: relative;
   }
   .helmet_partner_wrap {
-    width: 670px;
+    width: 2020px;
   }
   .helmet_partner_bg {
-    width: 335px;
+    width: 1010px;
     background-image: url("../../assets/img/home/partner_h5.png");
     background-size: 100% 100%;
   }

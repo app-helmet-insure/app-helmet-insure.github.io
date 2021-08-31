@@ -141,7 +141,11 @@ export default {
   },
   watch: {
     ChainID(newValue) {
-      if (newValue == 56) {
+      console.log(newValue);
+      if (newValue == 56 || newValue == 137) {
+        if (newValue == 137) {
+          window.location.href = "https://www.guard.insure/insurance/";
+        }
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();

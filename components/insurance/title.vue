@@ -87,6 +87,7 @@ export default {
 }
 .swiper-container-horizontal {
   > .swiper-pagination-bullets > .swiper-pagination-bullet {
+    outline: none !important;
     width: 24px;
     height: 2px;
     border-radius: 0;
@@ -95,9 +96,11 @@ export default {
   }
   /* 分页器选中 */
   .swiper-pagination-bullet-active {
+    outline: none !important;
     background-color: #fd7e14 !important;
   }
   .swiper-button-black {
+    outline: none !important;
     &::after {
       font-size: 20px !important;
       color: #fff !important;

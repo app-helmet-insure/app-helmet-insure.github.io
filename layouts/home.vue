@@ -142,10 +142,7 @@ export default {
   watch: {
     ChainID(newValue) {
       console.log(newValue);
-      if (newValue == 56 || newValue == 137) {
-        if (newValue == 137) {
-          window.location.href = "https://www.guard.insure/insurance/";
-        }
+      if (newValue == 56) {
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();
@@ -257,6 +254,9 @@ export default {
       if (window.ethereum) {
         ethereum.on("chainChanged", (chainID) => {
           window.chainID = chainID;
+          if (chainID * 1 === 137) {
+            window.location.href = "https://www.guard.insure/insurance/";
+          }
           this.$store.commit("SET_CHAINID", chainID);
         });
       } else {

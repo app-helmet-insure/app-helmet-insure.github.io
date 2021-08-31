@@ -39,7 +39,7 @@ export default {
       this.showFlag = true;
       this.title = data.title;
       this.number = data.number;
-      this.poolAddress = data.poolAddress;
+      this.poolAddress = data.PoolAddress;
     });
     this.$bus.$on("CLOSE_COMPOUND", () => {
       this.showFlag = false;

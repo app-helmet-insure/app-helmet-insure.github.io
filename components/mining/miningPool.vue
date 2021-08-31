@@ -220,7 +220,7 @@
             @click="
               copyAdress($event, ActiveData.RightShowToken.AddTokenAddress)
             "
-          ></i> 
+          ></i>
         </p>
       </div>
       <div class="addToken" v-if="ActiveData.RightShowToken">
@@ -289,10 +289,6 @@ export default {
       this.getPoolInfo();
     });
     this.NeedApprove();
-
-    this.$bus.$on("GET_BALANCE", () => {
-      this.getBalance();
-    });
   },
   watch: {
     userInfo: {
@@ -302,7 +298,6 @@ export default {
     ActiveData(newValue) {
       if (newValue) {
         this.NeedApprove();
-        this.getBalance();
       }
     },
   },
@@ -359,14 +354,10 @@ export default {
       });
     },
     getPoolInfo() {
-      let {
-        stake_address,
-        pool_address,
-        stake_decimals_number,
-        reward_decimals_number,
-      } = this.ActiveData;
-      const PoolContracts = new Contract(pool_address, MiningABI);
-      const StakeContracts = new Contract(stake_address, MiningABI);
+      let { StakeAddress, PoolAddress, StakeDecimals, RewardDecimals } =
+        this.ActiveData;
+      const PoolContracts = new Contract(PoolAddress, MiningABI);
+      const StakeContracts = new Contract(StakeAddress, MiningABI);
       const Account = window.CURRENTADDRESS;
       const PromiseList = [
         StakeContracts.balanceOf(Account),
@@ -380,11 +371,11 @@ export default {
         const FixData = processResult(res);
         const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim1, CanClaim2] =
           FixData;
-        this.CanDeposite = fromWei(CanDeposite, stake_decimals_number);
-        this.CanWithdraw = fromWei(CanWithdraw, stake_decimals_number);
-        this.TotalDeposite = fromWei(TotalDeposite, stake_decimals_number);
-        this.CanClaim1 = fromWei(CanClaim1, reward_decimals_number);
-        this.CanClaim2 = fromWei(CanClaim2, reward_decimals_number);
+        this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
+        this.CanWithdraw = fromWei(CanWithdraw, StakeDecimals);
+        this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
+        this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
+        this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
         this.MyPoolShare = fixD(
           (this.CanWithdraw / this.TotalDeposite) * 100,
           2
@@ -399,11 +390,11 @@ export default {
       if (this.stakeLoading) {
         return;
       }
-      let ContractAddress = this.ActiveData.POOL_ADDRESS;
-      let StakeAddress = this.ActiveData.STAKE_ADDRESS;
-      let TokenSymbol = this.ActiveData.STAKE_SYMBOL;
+      let ContractAddress = this.ActiveData.PoolAddress;
+      let StakeAddress = this.ActiveData.StakeAddress;
+      let TokenSymbol = this.ActiveData.StakeSymbol;
       let DepositeVolume = this.DepositeNum;
-      let Decimals = this.ActiveData.STAKE_DECIMALS;
+      let Decimals = this.ActiveData.StakeDecimals;
       this.stakeLoading = true;
       if (this.ApproveFlag) {
         await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
@@ -415,15 +406,14 @@ export default {
       } else {
         await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
           if (res == "success" || res == "error") {
-            this.getBalance();
             this.stakeLoading = false;
           }
         });
       }
     },
     async NeedApprove() {
-      let SpenderAddress = this.ActiveData.POOL_ADDRESS;
-      let TokenAddress = this.ActiveData.STAKE_ADDRESS;
+      let SpenderAddress = this.ActiveData.PoolAddress;
+      let TokenAddress = this.ActiveData.StakeAddress;
       let flag = await Allowance(TokenAddress, SpenderAddress);
       this.ApproveFlag = flag;
     },
@@ -433,19 +423,17 @@ export default {
         return;
       }
       this.claimLoading = true;
-      let ContractAddress = this.ActiveData.POOL_ADDRESS;
-      let RewardVolume = this.ActiveData.REWARD_VOLUME;
+      let ContractAddress = this.ActiveData.PoolAddress;
+      let RewardVolume = this.ActiveData.RewardVolume;
       if (RewardVolume == "one") {
         await GetReward(ContractAddress, (res) => {
           if (res == "success" || res == "error") {
-            this.getBalance();
             this.claimLoading = false;
           }
         });
       } else {
         await GetDoubleReward(ContractAddress, (res) => {
           if (res == "success" || res == "error") {
-            this.getBalance();
             this.claimLoading = false;
           }
         });
@@ -454,8 +442,8 @@ export default {
     toCompound() {
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
-        number: this.balance.Reward1,
-        poolAddress: this.ActiveData.POOL_ADDRESS,
+        number: this.CanClaim1,
+        PoolAddress: this.ActiveData.PoolAddress,
       });
     },
     // 退出
@@ -464,10 +452,9 @@ export default {
         return;
       }
       this.exitLoading = true;
-      let ContractAddress = this.ActiveData.POOL_ADDRESS;
+      let ContractAddress = this.ActiveData.PoolAddress;
       await Exit(ContractAddress, (res) => {
         if (res == "success" || res == "error") {
-          this.getBalance();
           this.exitLoading = false;
         }
       });

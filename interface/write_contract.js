@@ -1,7 +1,7 @@
 import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import CompoundABI from "~/abi/helmet_abi.json";
-import OrderABI from "~/abi/order_abi.json";
+import OrderABI from "~/abi/OrderABI.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import MigrationABI from "~/abi/Migration.json";
@@ -354,7 +354,7 @@ export const Approve = async (
   }
 };
 export const Buy = async (data, callback) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   let Account = await getAccounts();
   let SubmitVolume = TokenNameToWei(data.buyNum, data.currentInsurance);
   let AskID = data.askID;
@@ -405,7 +405,7 @@ export const Cancel = async (askID, callBack) => {
   if (!askID) {
     return;
   }
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   let Account = await getAccounts();
   if (!window.CURRENTADDRESS) {
     return;

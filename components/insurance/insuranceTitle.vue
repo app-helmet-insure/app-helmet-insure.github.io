@@ -3,18 +3,10 @@
     <div class="strikePrice">
       <span>{{ $t("Content.InsurancePrice") }}</span>
       <span>
-        {{ activeInsurance }} :
-        {{
-          activeType == "CALL"
-            ? callStrikePrice[activeInsurance]
-            : putStrikePrice[activeInsurance]
-        }}
-        {{
-          activeType == "CALL"
-            ? callStrikeUnit[activeInsurance]
-            : putStrikeUnit[activeInsurance]
-        }}</span
-      >
+        {{ ActiveData.InsuranceName }} :
+        {{ ActiveData[ActiveType].StrikePrice }}
+        {{ ActiveData.Call.UnderlyingSymbol }}
+      </span>
     </div>
     <div class="echartPrice">
       <div class="bg_progress_bar">
@@ -22,27 +14,22 @@
         <div class="progress_bar_left" style="width: 33.3%">
           <p style="right: 0">
             {{ $t("Insurance.Insurance_text19") }}
-            <span>{{ putStrikePrice[activeInsurance] }}</span>
+            <span>{{ ActiveData.Put.StrikePrice }}</span>
           </p>
         </div>
         <div class="progress_bar_center" style="width: 33.3%">
           <i :style="`left: ${positionLeft}%`"></i>
           <p style="left: 50%">
             {{ $t("Insurance.Insurance_text20") }}
-            <span v-if="activeInsurance == 'SHIB'">
-              {{ fixD(indexPrice[activeInsurance], 10) }}
-            </span>
-            <span v-else>{{
-              activeInsurance == "WBNB"
-                ? toRounding(indexPrice[activeInsurance] * BNB_BUSD, 4)
-                : toRounding(indexPrice[activeInsurance], 4)
+            <span>{{
+              fixD(ActiveData.LastPrice, ActiveData.LastPriceDecimals)
             }}</span>
           </p>
         </div>
         <div class="progress_bar_right" style="width: 33.3%">
           <p style="left: 0">
             {{ $t("Insurance.Insurance_text21") }}
-            <span>{{ callStrikePrice[activeInsurance] }}</span>
+            <span>{{ ActiveData.Call.StrikePrice }}</span>
           </p>
         </div>
       </div>
@@ -74,7 +61,7 @@ import {
   fixDEAdd,
 } from "~/assets/js/util.js";
 export default {
-  props: ["activeInsurance", "activeType"],
+  props: ["ActiveData", "ActiveType"],
   data() {
     return {
       fixD,
@@ -86,32 +73,13 @@ export default {
     };
   },
   computed: {
-    putStrikePrice() {
-      return this.$store.state.strikePriceArray[1];
-    },
-    putStrikeUnit() {
-      return this.$store.state.policyColArray[1];
-    },
-    callStrikePrice() {
-      return this.$store.state.strikePriceArray[0];
-    },
-    callStrikeUnit() {
-      return this.$store.state.policyUndArray[0];
-    },
-    indexPrice() {
-      return this.$store.state.allIndexPrice[1];
-    },
     BalanceArray() {
       return this.$store.state.BalanceArray;
-    },
-    BNB_BUSD() {
-      return this.$store.state.BNB_BUSD;
     },
   },
   mounted() {
     let timer = setTimeout(() => {
       this.initEchart();
-      clearTimeout();
     }, 1000);
     this.$once("hook:beforeDestroy", () => {
       clearTimeout(timer);
@@ -119,14 +87,12 @@ export default {
   },
   methods: {
     initEchart() {
-      let callPrice = this.callStrikePrice[this.activeInsurance];
-      let putPrice = this.putStrikePrice[this.activeInsurance];
-
-      let curPrice =
-        this.activeInsurance == "WBNB"
-          ? this.indexPrice[this.activeInsurance] * this.BNB_BUSD
-          : this.indexPrice[this.activeInsurance];
-      let number = (curPrice - putPrice) / (callPrice - putPrice);
+      const callPrice = this.ActiveData.Call.StrikePrice;
+      const putPrice = this.ActiveData.Put.StrikePrice;
+      const curPrice = this.ActiveData.LastPrice;
+      const number =
+        (Number(curPrice) - Number(putPrice)) /
+        (Number(callPrice) - Number(putPrice));
       this.positionLeft = number * 100;
     },
   },

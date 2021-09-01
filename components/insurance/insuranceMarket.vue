@@ -1,10 +1,10 @@
 <template>
   <div class="call-insurance">
     <InsuranceTitle
-      :activeInsurance="activeInsurance"
-      :activeType="'CALL'"
+      :ActiveData="ActiveData"
+      :ActiveType="ActiveType"
     ></InsuranceTitle>
-    <div class="insurance_list" v-if="isLogin">
+    <div class="insurance_list">
       <table>
         <thead>
           <tr>
@@ -12,13 +12,13 @@
             <td>{{ $t("Table.Rent") }}</td>
             <td>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</td>
             <td>
-              {{ $t("Table.Tips", { type: activeInsurance }) }}
+              {{ $t("Table.Tips", { type: ActiveData.InsuranceName }) }}
             </td>
             <td class="option">{{ $t("Table.Options") }}</td>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in showList" :key="index">
+          <tr v-for="(item, index) in PolicyList" :key="index">
             <td>
               {{ item.show_ID }}
               <i
@@ -27,13 +27,13 @@
                 @click="copyAdress($event, item.seller)"
               ></i>
             </td>
-            <td>{{ item.show_price }}</td>
+            <td>{{ item.premium.toFixed(8) }}</td>
             <td>{{ item.show_volume }}</td>
             <td>
               <input
                 type="text"
                 name=""
-                v-model="item.buyNum"
+                v-model="item.buy_volume"
                 :max="item.show_volume"
                 :maxlength="8"
                 :placeholder="$t('Table.NumberSubscriptions')"
@@ -47,7 +47,7 @@
                   : ''
               "
             >
-              <button @click="handleClickBuy(item)">
+              <button @click="buyInsurance(item)">
                 {{ $t("Table.Subscribe") }}
               </button>
             </td>
@@ -56,7 +56,11 @@
       </table>
     </div>
     <div class="insurance_list_H5">
-      <div class="list_item_H5" v-for="(item, index) in showList" :key="index">
+      <div
+        class="list_item_H5"
+        v-for="(item, index) in PolicyList"
+        :key="index"
+      >
         <section>
           <p>
             <span>{{ $t("Table.Rent") }}</span>
@@ -77,7 +81,7 @@
             :placeholder="$t('Table.NumberSubscriptions')"
           />
           <button
-            @click="handleClickBuy(item)"
+            @click="waitingConfirm(item)"
             :style="
               item.status == 'dated' || item.show_volume == 0
                 ? 'visibility:hidden;'
@@ -89,15 +93,12 @@
         </section>
       </div>
     </div>
-    <div class="loading" v-if="isLoading && isLogin">
+    <div class="loading" v-if="isLoading">
       <img src="~/assets/img/loading.png" />
       <div class="shadow"></div>
       <p>{{ $t("Table.LoadingWallet") }}</p>
     </div>
-    <section
-      class="noData"
-      v-if="(FilterList.length < 1 && !isLoading) || !isLogin"
-    >
+    <section class="noData" v-if="FilterList.length < 1 && !isLoading">
       <div>
         <img
           :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
@@ -106,7 +107,7 @@
         <p>{{ $t("Table.NoData") }}</p>
       </div>
     </section>
-    <section class="pages" v-if="FilterList.length > 10 && isLogin">
+    <section class="pages" v-if="FilterList.length > 10">
       <Page
         :total="FilterList.length"
         :limit="limit"
@@ -114,70 +115,54 @@
         @page-change="handleClickChagePage"
       />
     </section>
+    <WaitingConfirmationDialog :DialogVisible="WaitingVisible" />
   </div>
 </template>
 
 <script>
 import PInput from "~/components/common/p-input.vue";
-import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
-import { getTokenName } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import Page from "~/components/common/page.vue";
-import InsuranceTitle from "./insurance-title";
-import { getAddress } from "~/assets/utils/address-pool.js";
+import InsuranceTitle from "./insuranceTitle";
 import { getInsuranceList } from "~/interface/event.js";
-import {
-  TokenDecimals,
-  getDecimals,
-  DecimalsFormWei,
-  fromWei,
-  AddressFormWei,
-} from "~/interface/common_contract.js";
-import { Asks } from "~/interface/read_contract.js";
 import { Buy } from "~/interface/write_contract.js";
-import moment from "moment";
-
+import OrderABI from "../../abi/OrderABI.json";
+import { toWei, fromWei } from "~/interface/index.js";
+import { getContract } from "../../web3/index.js";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import BigNumber from "bignumber.js";
+const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
+    WaitingConfirmationDialog,
     InsuranceTitle,
     PInput,
     Page,
   },
-  props: ["activeInsurance"],
+  props: ["ActiveData", "ActiveType"],
   data() {
     return {
       page: 0,
       limit: 10,
       page_h5: 0,
       limit_h5: 3,
-      showList: [],
+      PolicyList: [],
       FilterList: [],
       isLoading: true,
       fixD,
+      WaitingVisible: false,
     };
   },
   computed: {
-    userInfo() {
-      return this.$store.state.userInfo;
-    },
     storeThemes() {
       return this.$store.state.themes;
     },
-    strikePriceArray() {
-      return this.$store.state.strikePriceArray;
-    },
   },
-  watch: {
-    userInfo: {
-      handler: "userInfoWatch",
-      immediate: true,
-    },
-    FilterList: {
-      handler: "fliterListWatch",
-      immediate: true,
-    },
+  watch: {},
+  mounted() {
+    this.getPolicyList();
   },
   methods: {
     copyAdress(e, text) {
@@ -197,176 +182,182 @@ export default {
         copys.destroy();
       });
     },
-    userInfoWatch(newValue) {
-      let isLogin = newValue.data.isLogin;
-      this.isLogin = isLogin;
-      if (isLogin) {
-        this.isLoading = true;
-        this.getList();
-      } else {
-        this.isLoading = false;
-      }
-    },
-    fliterListWatch(newValue) {
-      if (newValue) {
-        let list = newValue;
-        this.showList = list.slice(0, this.limit);
-      }
-    },
-    getList() {
+    getPolicyList() {
       this.isLoading = true;
-      // Current Insurance
-      let coinAddress = getAddress(this.activeInsurance);
-      // Now Time
-      let nowDate = parseInt(moment.now() / 1000);
-      try {
-        // Map List
-        getInsuranceList().then((res) => {
-          if (res && res.data.data.options) {
-            let ReturnList = res.data.data.options;
-            let FixList = [];
-            let FixListPush = [];
-            if (this.activeInsurance != "WBNB") {
-              ReturnList = ReturnList.filter(
-                (item) =>
-                  item.collateral.toLowerCase() == coinAddress &&
-                  Number(item.expiry) + 2592000 > nowDate &&
-                  item.asks.length
-              );
-            } else {
-              ReturnList = ReturnList.filter(
-                (item) =>
-                  item.collateral.toLowerCase() == coinAddress &&
-                  item.underlying.toLowerCase() ==
-                    "0xe9e7cea3dedca5984780bafc599bd69add087d56" &&
-                  Number(item.expiry) + 2592000 > nowDate &&
-                  item.asks.length
-              );
-            }
-            ReturnList = ReturnList.forEach((item) => {
-              // 标的
-              let UnderlyingDecimals = TokenDecimals(item.underlying);
-              // 抵押
-              let CollateralDecimals = TokenDecimals(item.collateral);
-              // 执行
-              let StrikePriceDecimals =
-                18 + UnderlyingDecimals - CollateralDecimals;
-              let ResultItem = {
+      const {
+        StrikePrice,
+        StrikePriceDecimals,
+        PolicyPriceDecimals,
+        CollateralSymbol,
+        CollateralAddress,
+        CollateralDecimals,
+        UnderlyingSymbol,
+        UnderlyingAddress,
+        UnderlyingDecimals,
+      } = this.ActiveData[this.ActiveType];
+      const { Expiry, InsuranceName, SettleTokenSymbol } = this.ActiveData;
+      const FixStrikePrice =
+        this.ActiveType === "Call"
+          ? toWei(StrikePrice + "", StrikePriceDecimals)
+          : toWei(Number(1 / StrikePrice) + "", StrikePriceDecimals);
+      getInsuranceList().then((res) => {
+        if (res && res.data.data.options) {
+          const ReturnList = res.data.data.options;
+          const FixListPush = [];
+          const FilterList = ReturnList.filter(
+            (item) =>
+              this.ActiveData &&
+              item.collateral.toLocaleLowerCase() ===
+                CollateralAddress.toLocaleLowerCase() &&
+              item.underlying.toLocaleLowerCase() ===
+                UnderlyingAddress.toLocaleLowerCase() &&
+              item.expiry === Expiry + "" &&
+              item.strikePrice === FixStrikePrice
+          );
+          if (FilterList) {
+            FilterList.forEach((item) => {
+              const ResultItem = {
+                type: this.ActiveType,
                 expiry: item.expiry,
                 long: item.long,
                 short: item.short,
-                show_strikePrice: fixD(
-                  DecimalsFormWei(item.strikePrice, StrikePriceDecimals),
-                  8
+                show_strikePrice: fromWei(
+                  item.strikePrice,
+                  StrikePriceDecimals
                 ),
                 strikePrice: item.strikePrice,
                 collateral: item.collateral,
-                collateral_symbol: getTokenName(item.collateral),
-                collateral_decimals: getDecimals(CollateralDecimals),
+                collateral_symbol: CollateralSymbol,
+                collateral_decimals: CollateralDecimals,
                 underlying: item.underlying,
-                underlying_symbol: getTokenName(item.underlying),
-                underlying_decimals: getDecimals(UnderlyingDecimals),
-                currentInsurance: getTokenName(item.collateral),
+                underlying_symbol: UnderlyingSymbol,
+                underlying_decimals: UnderlyingDecimals,
+                currentInsurance: InsuranceName,
               };
-              item.asks.filter(async (item) => {
-                item.settleToken_symbol = getTokenName(item.settleToken);
-                item.show_price = fixD(
-                  DecimalsFormWei(item.price, StrikePriceDecimals),
-                  8
-                );
-                let AsksInfo = await Asks(item.askID);
-                item.show_volume = fixD(
-                  AddressFormWei(AsksInfo.remain, ResultItem.collateral),
-                  8
-                );
-                item.show_ID =
-                  item.seller.substr(0, 2) +
-                  item.seller.substr(2, 3) +
-                  "..." +
-                  item.seller.substr(-4).toUpperCase();
-                if (
-                  item.show_volume == 0 ||
-                  Number(ResultItem.expiry) < nowDate
-                ) {
-                  item.status = "dated";
-                  ResultItem.sort = 0;
+              item.asks.filter((itemAsk) => {
+                const ResultItemAsk = {
+                  askID: itemAsk.askID,
+                  isCancel: itemAsk.isCancel,
+                  show_ID:
+                    itemAsk.seller.substr(0, 2) +
+                    itemAsk.seller.substr(2, 3) +
+                    "..." +
+                    itemAsk.seller.substr(-4).toUpperCase(),
+                  settleToken_symbol: SettleTokenSymbol,
+                  show_price: fromWei(itemAsk.price, PolicyPriceDecimals),
+                  price: itemAsk.price,
+                  volume: itemAsk.volume,
+                };
+                if (itemAsk.binds.length) {
+                  let number = 0;
+                  if (itemAsk.binds.length) {
+                    itemAsk.binds.forEach(
+                      (itembid) =>
+                        (number += Number(
+                          fromWei(itembid.volume, CollateralDecimals)
+                        ))
+                    );
+                  }
+                  ResultItem.remain =
+                    Number(fromWei(itemAsk.volume, CollateralDecimals)) -
+                    number;
                 } else {
-                  ResultItem.sort = 1;
+                  ResultItem.remain = Number(
+                    fromWei(itemAsk.volume, CollateralDecimals)
+                  );
                 }
-                let AllItem = Object.assign(item, ResultItem);
-                if (AllItem.show_price != 0) {
+                const AllItem = Object.assign(ResultItemAsk, ResultItem);
+                if (AllItem.type === "Put") {
+                  AllItem.show_volume = Number(
+                    AllItem.remain / (1 / AllItem.show_strikePrice)
+                  ).toFixed(8);
+                } else {
+                  AllItem.show_volume = Number(AllItem.remain).toFixed(8);
+                }
+                AllItem.premium = AllItem.remain * AllItem.show_price;
+                if (!AllItem.isCancel && AllItem.price.length <= 40) {
                   FixListPush.push(AllItem);
-
-                  FixListPush = FixListPush.sort(function (a, b) {
-                    return Number(a.show_price) - Number(b.show_price);
-                  });
-                  FixListPush = FixListPush.sort(function (a, b) {
-                    return Number(b.sort) - Number(a.sort);
-                  });
                 }
               });
             });
-            FixList = FixListPush;
-            console.log(FixList);
-            this.FilterList = FixList;
-            this.isLoading = false;
+            const FixList = FixListPush.sort(
+              (a, b) => Number(b.show_volume) - Number(a.show_volume)
+            );
+            this.PolicyList = FixList;
           }
-        });
-      } catch (error) {
-        console.log(error, "callInsurance");
-        this.isLoading = false;
-      }
-    },
-    handleClickChagePage(index) {
-      index = index - 1;
-      this.page = index;
-      let page = index;
-      let list = this.FilterList.slice(
-        this.page * this.limit,
-        (page + 1) * this.limit
-      );
-      this.showList = list;
-    },
-    // 承保按钮
-    handleClickBuy(data) {
-      if (!data.buyNum || data.buyNum > data.show_volume) {
-        return;
-      }
-      let datas = {
-        askID: data.askID,
-        buyNum: data.buyNum,
-        showNum: data.buyNum,
-        show_strikePrice: this.strikePriceArray[0][data.collateral_symbol],
-        currentInsurance: data.currentInsurance,
-        settleToken_symbol: data.settleToken_symbol,
-      };
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "WARNING",
-        layout: "layout1",
-        conText: `<p>Buy <span>${datas.buyNum} ${data.currentInsurance}
-                  </span> Policys, with the premium of <span>
-                  ${fixD(data.show_price * datas.buyNum, 8)} ${
-          datas.settleToken_symbol
+        } else {
+          this.isLoading = false;
         }
-                  </span></p>`,
-        activeTip: true,
-        activeTipText1: "Please double check the price above，",
-        activeTipText2: "Helmet team will not cover your loss on this.",
-        loading: false,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: true,
       });
-      this.$bus.$on("PROCESS_ACTION", (res) => {
-        if (res) {
-          Buy(datas, (status) => {
-            if (status == "success") {
-              this.getList();
-            }
-          });
+    },
+    WaitingConfirmationClose() {
+      this.WaitingConfirmationVisible = false;
+    },
+    waitingConfirm() {
+      this.WaitingConfirmationVisible = true;
+    },
+    WaitingConfirmationConfirm() {},
+    buyInsurance(data) {
+      this.WaitingVisible = true;
+      // const Text = this.$t("Dialogs.WaitText1", {
+      //   type: this.ActiveType,
+      //   symbol: this.ActiveData.InsuranceName,
+      //   collateral: this.ActiveData.CollateralSymbol,
+      //   volume: 1,
+      //   strikeprice: this.ActiveData.StrikePrice,
+      //   price: 1,
+      //   expiry: this.ActiveData.ShowExpiry,
+      // });
+      // this.$confirm(Text, "提示", {
+      //   confirmButtonText: "确定",
+      //   cancelButtonText: "取消",
+      // })
+      //   .then(() => {
+      //     this.$message({
+      //       type: "success",
+      //       message: "删除成功!",
+      //     });
+      //   })
+      //   .catch(() => {
+      //     this.$message({
+      //       type: "info",
+      //       message: "已取消删除",
+      //     });
+      //   });
+      if (Number(data.buy_volume) <= Number(data.show_volume)) {
+        const BuyContracts = getContract(OrderABI, OrderAddress);
+        const AskID = data.askID;
+        let Volume;
+        if (data.type === "Put") {
+          if (data.buy_volume >= data.show_volume) {
+            Volume = data.volume;
+          } else {
+            Volume = toWei(
+              new BigNumber(
+                (data.buy_volume * (1 / data.show_strikePrice)).toFixed(6)
+              ).toString(),
+              data.collateral_decimals
+            );
+          }
+        } else {
+          if (data.buy_volume >= data.show_volume) {
+            Volume = data.volume;
+          } else {
+            Volume = toWei(data.buy_volume, data.collateral_decimals);
+          }
         }
-        datas = {};
-      });
+        const Account = window.CURRENTADDRESS;
+        console.log(Account);
+        console.log(AskID, Volume);
+        BuyContracts.methods
+          .buy(AskID, Volume)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {})
+          .on("receipt", (_, receipt) => {
+            getPolicyList();
+          })
+          .on("error", (ereor) => {});
+      }
     },
   },
 };

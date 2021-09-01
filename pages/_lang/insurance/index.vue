@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import InsuranceData from "~/components/insurance/insurance-data.vue";
+import InsuranceData from "~/components/insurance/insuranceData.vue";
 import HelmetBurning from "~/components/insurance/helmetBurning.vue";
 import InsureanceList from "~/components/insurance/insuranceList.vue";
 import Banner from "~/components/insurance/banner.vue";

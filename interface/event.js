@@ -1,6 +1,6 @@
 import Axios from "axios";
 import factory_abi from "~/abi/factory_abi.json";
-import order_abi from "~/abi/order_abi.json";
+import OrderABI from "~/abi/OrderABI.json";
 import moment from "moment";
 import BigNumber from "bignumber.js";
 import qs from "qs";
@@ -46,7 +46,7 @@ export const getLongList = async function(callback) {
 // 创建Sell 映射对象
 export const getSellList = async function(callback) {
   // let ContractAddress = getContract();
-  let EventABI = order_abi.abi;
+  let EventABI = OrderABI;
   let EventObject = EventABI.filter((item) => {
     return item.name == "Sell" && item.type == "event";
   })[0];
@@ -79,7 +79,7 @@ export const getSellList = async function(callback) {
 // 创建Buy 映射对象
 export const getBuyList = async function(callback) {
   // let ContractAddress = getContract();
-  let EventABI = order_abi.abi;
+  let EventABI = OrderABI;
   let EventObject = EventABI.filter((item) => {
     return item.name == "Buy" && item.type == "event";
   })[0];
@@ -112,7 +112,7 @@ export const getBuyList = async function(callback) {
 // 创建修改价格 映射对象
 export const getRePriceList = async function(callback) {
   // let ContractAddress = getContract();
-  let EventABI = order_abi.abi;
+  let EventABI = OrderABI;
   let EventObject = EventABI.filter((item) => {
     return item.name == "Reprice" && item.type == "event";
   })[0];
@@ -145,7 +145,7 @@ export const getRePriceList = async function(callback) {
 //获取 mint
 export const getMintList = async function(callback) {
   // let ContractAddress = getContract();
-  let EventABI = order_abi.abi;
+  let EventABI = OrderABI;
   let EventObject = EventABI.filter((item) => {
     return item.name == "Reprice" && item.type == "event";
   })[0];
@@ -177,7 +177,7 @@ export const getMintList = async function(callback) {
 //获取 mint
 export const getExerciseList = async function() {
   // let ContractAddress = getContract();
-  let EventABI = order_abi.abi;
+  let EventABI = OrderABI;
   let EventObject = EventABI.filter((item) => {
     return item.name == "Exercise" && item.type == "event";
   })[0];

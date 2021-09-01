@@ -131,24 +131,20 @@
         </div>
         <div
           class="insurance_detail WEB"
-          v-if="showActiveInsurance && activeInsurance == item.InsuranceName"
+          v-if="activeInsurance === item.InsuranceName"
         >
-          <svg
-            class="close"
-            aria-hidden="true"
-            @click="showActiveInsurance = false"
-          >
+          <svg class="close" aria-hidden="true" @click="activeInsurance = ''">
             <use xlink:href="#icon-close"></use>
           </svg>
           <InsuranceMarket :ActiveData="ActiveData" :ActiveType="ActiveType" />
-          <PutInsurance
+          <!-- <PutInsurance
             :activeInsurance="activeInsurance"
             v-if="activeType == 'PUT'"
           ></PutInsurance>
           <CallInsurance
             :activeInsurance="activeInsurance"
             v-if="activeType == 'CALL'"
-          ></CallInsurance
+          ></CallInsurance -->
           ><IssueInsurance
             :activeInsurance="activeInsurance"
             :InsureTypeActive="'ALL'"
@@ -271,6 +267,7 @@ export default {
       });
     },
     buyInsurance(data, type) {
+      this.activeInsurance = data.InsuranceName;
       this.ActiveData = data;
       this.ActiveType = type;
     },
@@ -367,18 +364,16 @@ export default {
       }
     }
   }
-  .insurance_item {
+  .insurance_item_wrap {
     width: 100%;
     margin-top: 10px;
     padding: 0 20px;
     @include themeify {
       background: themed("color-ffffff");
     }
-    .activeInsurance {
-      @include themeify {
-        border-bottom: 1px solid themed("color-e8e8eb");
-      }
-    }
+  }
+  .insurance_item {
+    width: 100%;
     div {
       width: 100%;
       display: flex;
@@ -556,10 +551,13 @@ export default {
     }
   }
   .insurance_detail {
+    @include themeify {
+      border-top: 1px solid themed("color-e8e8eb");
+    }
     position: relative;
     .close {
       position: absolute;
-      right: 0;
+      right: 10px;
       width: 24px;
       height: 24px;
       top: 10px;
@@ -666,7 +664,7 @@ export default {
       }
     }
   }
-  .insurance_item {
+  .insurance_item_wrap {
     width: 100%;
     padding: 16px 10px 20px;
     @include themeify {
@@ -675,6 +673,8 @@ export default {
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
     margin-top: 12px;
+  }
+  .insurance_item {
     .insurance_name_h5 {
       display: flex;
       align-items: center;

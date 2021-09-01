@@ -1,6 +1,6 @@
 @import url("//unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css");
-@import './themes.scss'; 
-@import './base.scss'; 
+@import "./themes.scss";
+@import "./base.scss";
 
 .block {
   position: relative;
@@ -15,9 +15,10 @@
   float: none;
   width: 100%;
 }
-.el-input.is-active .el-input__inner, .el-input__inner:focus {
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
   @include themeify {
-    border: 1px solid themed('color-fd7e14') !important;
+    border: 1px solid themed("color-fd7e14") !important;
   }
 }
 .el-input-number--small .el-input__inner {
@@ -27,12 +28,13 @@
   line-height: 40px;
   text-align: left;
   @include themeify {
-    color: themed('color-17173a');
-    background: themed('ibo_input');
-    border: 1px solid themed('color-e8e8eb');
+    color: themed("color-17173a");
+    background: themed("ibo_input");
+    border: 1px solid themed("color-e8e8eb");
   }
 }
-.el-input-number--small .el-input-number__decrease, .el-input-number--small .el-input-number__increase {
+.el-input-number--small .el-input-number__decrease,
+.el-input-number--small .el-input-number__increase {
   display: none;
 }
 .el-slider__runway.show-input {
@@ -48,10 +50,24 @@
   padding: 3;
   width: 14px;
   height: 14px;
-  background: #FD7E14;
+  background: #fd7e14;
   box-shadow: 0px 0px 4px 0px rgba(232, 232, 235, 0.9);
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
 }
 .el-slider__bar {
-  background: #FD7E14;
+  background: #fd7e14;
+}
+.el-button--primary {
+  border: none;
+  @include themeify {
+    background: themed("black_button");
+    color: themed("black_button_text");
+  }
+  font-size: 14px;
+  font-weight: bold;
+  &:hover {
+    @include themeify {
+      background: themed("black_button_hover");
+    }
+  }
 }

@@ -26,8 +26,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8, 
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0018",
       StrikePriceDecimals: 18,
@@ -63,7 +63,7 @@ export const InsuranceTypeList = [
     LastPrice: "--",
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
-    LastUsdtPriceDecimals:4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "15.0154",
       StrikePriceDecimals: 18,
@@ -99,7 +99,7 @@ export const InsuranceTypeList = [
     LastPrice: "--",
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
-    LastUsdtPriceDecimals:4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "219.436",
       StrikePriceDecimals: 18,
@@ -137,8 +137,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.1034",
       StrikePriceDecimals: 18,
@@ -174,7 +174,7 @@ export const InsuranceTypeList = [
     LastPrice: "--",
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
-    LastUsdtPriceDecimals:8,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0094",
       StrikePriceDecimals: 30,
@@ -209,8 +209,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0254",
       StrikePriceDecimals: 18,
@@ -246,7 +246,7 @@ export const InsuranceTypeList = [
     LastPrice: "--",
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
-    LastUsdtPriceDecimals:8,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "856",
 
@@ -283,8 +283,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0058",
       StrikePriceDecimals: 18,
@@ -320,7 +320,7 @@ export const InsuranceTypeList = [
     LastPrice: "--",
     LastUsdtPrice: "--",
     LastPriceDecimals: 10,
-    LastUsdtPriceDecimals:8,
+    LastUsdtPriceDecimals: 10,
     Call: {
       StrikePrice: "0.0000002004",
       StrikePriceDecimals: 18,
@@ -355,8 +355,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0004",
       StrikePriceDecimals: 18,
@@ -391,8 +391,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0016",
       StrikePriceDecimals: 18,
@@ -427,8 +427,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.03",
 
@@ -464,8 +464,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.016",
       StrikePriceDecimals: 18,
@@ -501,8 +501,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0054",
       StrikePriceDecimals: 18,
@@ -537,8 +537,8 @@ export const InsuranceTypeList = [
     Expiry: 1632499200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 8,
-    LastUsdtPriceDecimals:8,
+    LastPriceDecimals: 4,
+    LastUsdtPriceDecimals: 4,
     Call: {
       StrikePrice: "0.0196",
       StrikePriceDecimals: 18,

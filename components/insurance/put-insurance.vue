@@ -127,7 +127,7 @@ import { getTokenName } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import Page from "~/components/common/page.vue";
-import InsuranceTitle from "./insurance-title";
+import InsuranceTitle from "./insuranceTitle";
 import { getAddress } from "~/assets/utils/address-pool.js";
 import { getInsuranceList } from "~/interface/event.js";
 import {

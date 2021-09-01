@@ -2,7 +2,7 @@ import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import CakePoolABI from "~/abi/CakePoolABI.json";
 import MdexPoolABI from "~/abi/MdexPoolABI.json";
-import OrderABI from "~/abi/order_abi.json";
+import OrderABI from "~/abi/OrderABI.json";
 import FectoryABI from "~/abi/factory_abi.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
@@ -227,11 +227,11 @@ export const RewardsDuration = async (ContractAddress) => {
     });
 };
 export const Asks = async (AskID) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   return Contracts.methods.asks(AskID).call();
 };
 export const Bids = async (BidID) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   return Contracts.methods.bids(BidID).call();
 };
 export const Settleable = async (seller, short) => {

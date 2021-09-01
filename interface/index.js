@@ -3,7 +3,7 @@ import Web3 from "web3";
 import ERC20_abi from "~/abi/ERC20_abi.json";
 import payaso_abi from "~/abi/payaso_abi.json";
 import factory_abi from "~/abi/factory_abi.json";
-import order_abi from "~/abi/order_abi.json";
+import OrderABI from "~/abi/OrderABI.json";
 import MiningABI from "~/abi/MiningABI.json";
 import token_abi from "~/abi/token_abi.json";
 import helmet_abi from "~/abi/helmet_abi.json";
@@ -130,7 +130,7 @@ export const Factory = async (adress) => {
 export const Order = async () => {
   const WEB3 = await web3();
   return await new WEB3.eth.Contract(
-    order_abi.abi,
+    OrderABI,
     getContract("ORDER", window.chainID)
   );
 };
@@ -153,7 +153,7 @@ export const TokenExpERC20 = async (address) => {
 };
 export const TokenOrder = async (address) => {
   const WEB3 = await web3();
-  return await new WEB3.eth.Contract(order_abi.abi, address);
+  return await new WEB3.eth.Contract(OrderABI, address);
 };
 export const HelmetMining = async (address) => {
   const WEB3 = await web3();

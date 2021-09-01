@@ -347,6 +347,33 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'RHINO'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text40") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text41") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/rhinobsc" target="_blank"
+          >https://t.me/rhinobsc</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://rhinobsc.com" target="_blank"
+          >https://rhinobsc.com</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>

@@ -146,7 +146,7 @@ export default {
     this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
       this.buyDialog = res;
     });
-    if (window.chainId === 56) {
+    if (window.chainID === 56) {
       this.getBalance(this.activeData);
       this.HelmetPriceHigh(this.activeData);
       this.ApproveFlag(this.activeData);

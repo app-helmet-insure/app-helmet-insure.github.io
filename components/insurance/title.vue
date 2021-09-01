@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide newinsure"><div></div></div>
       <div class="swiper-slide insure"><div></div></div>
       <div class="swiper-slide ibo"><div></div></div>
       <div class="swiper-slide guard"><div></div></div>
@@ -86,6 +87,7 @@ export default {
 }
 .swiper-container-horizontal {
   > .swiper-pagination-bullets > .swiper-pagination-bullet {
+    outline: none !important;
     width: 24px;
     height: 2px;
     border-radius: 0;
@@ -94,9 +96,11 @@ export default {
   }
   /* 分页器选中 */
   .swiper-pagination-bullet-active {
+    outline: none !important;
     background-color: #fd7e14 !important;
   }
   .swiper-button-black {
+    outline: none !important;
     &::after {
       font-size: 20px !important;
       color: #fff !important;
@@ -130,6 +134,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 1026px 180px;
         background-position: center;
+      }
+    }
+    .newinsure {
+      background: #295336;
+      > div {
+        background-image: url("../../assets/img/banner/newinsure_web.png");
       }
     }
     .insure {
@@ -184,6 +194,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .newinsure {
+      background: #295336;
+      > div {
+        background-image: url("../../assets/img/banner/newinsure_h5.png");
       }
     }
     .insure {

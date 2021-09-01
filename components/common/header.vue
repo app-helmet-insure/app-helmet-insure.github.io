@@ -23,7 +23,10 @@
           alt=""
         />
       </div>
-      <span class="migration" @click="jump">To Polygon</span>
+      <span class="migration" @click="jump">
+        <img src="~/assets/img/guard/Polygon.png" alt="" />
+        Migration</span
+      >
       <a
         v-if="!userInfo.data.isLogin"
         class="connect-wallet-btn"
@@ -188,7 +191,8 @@ export default {
       min-width: 100px;
       height: 40px;
       padding: 0 15px;
-      background: #9f66ff;
+      // background: #9f66ff;
+      background: rgba(#9f66ff, $alpha: 0.2);
       border-radius: 5px;
       font-size: 16px;
       font-weight: 600;
@@ -198,6 +202,14 @@ export default {
       line-height: 40px;
       margin-right: 10px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+        color: #9f66ff;
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+      }
     }
     .wrong {
       min-width: 171px;

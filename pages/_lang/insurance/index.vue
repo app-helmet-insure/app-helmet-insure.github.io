@@ -1,6 +1,6 @@
 <template>
   <div class="main_container">
-    <Title />
+    <Banner />
     <div class="home_container">
       <InsuranceData />
       <HelmetBurning />
@@ -10,12 +10,12 @@
 </template>
 <script>
 import InsuranceData from "~/components/insurance/insurance-data.vue";
-import HelmetBurning from "~/components/insurance/HelmetBurning.vue";
-import InsureanceList from "~/components/insurance/insurance-list.vue";
-import Title from "~/components/insurance/title.vue";
+import HelmetBurning from "~/components/insurance/helmetBurning.vue";
+import InsureanceList from "~/components/insurance/insuranceList.vue";
+import Banner from "~/components/insurance/banner.vue";
 export default {
   layout: "home",
-  components: { InsuranceData, InsureanceList, HelmetBurning, Title }, 
+  components: { InsuranceData, InsureanceList, HelmetBurning, Banner },
 };
 </script>
 <style lang="scss">

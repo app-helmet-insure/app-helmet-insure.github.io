@@ -210,7 +210,7 @@
             :class="routeObj.name.includes('migration') ? 'active' : ''"
           >
             <img src="~/assets/img/guard/Polygon.png" alt="" />
-            <span>To Polygon</span>
+            <span>Migration</span>
             <i></i>
           </nuxt-link>
         </div>

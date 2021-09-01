@@ -206,6 +206,39 @@ export const getExerciseList = async function() {
     return data;
   });
 };
+export const getInsuranceStatus = () => {
+  return Axios({
+    method: "post",
+    url: "https://api.thegraph.com/index-node/graphql",
+    data: {
+      query: `{
+        indexingStatusForCurrentVersion(subgraphName: "app-helmet-insure/helmet-insure") {
+            synced
+            health
+            fatalError {
+                message
+                block {
+                    number
+                    hash
+                }
+                handler
+            }
+            chains {
+                chainHeadBlock {
+                    number
+                }
+                latestBlock {
+                    number
+                }
+            }
+        }
+    }`,
+    },
+  }).then((res) => {
+    let Status = res.data.data.indexingStatusForCurrentVersion.health;
+  });
+};
+getInsuranceStatus();
 //get Insurance
 export const getInsuranceList = async function() {
   return Axios({

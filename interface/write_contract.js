@@ -70,6 +70,54 @@ export const Stake = async (
       });
   } catch (error) {}
 };
+export const StakeAndComound = async (
+  { ContractAddress, DepositeVolume, Decimals },
+  callback
+) => {
+  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Account = await getAccounts();
+  let DecimalsUnit = getDecimals(Decimals);
+  if (DecimalsUnit) {
+    DepositeVolume = toWei(DepositeVolume, DecimalsUnit);
+  } else {
+    let powNumber = new BigNumber(10).pow(Decimals).toString();
+    DepositeVolume = new BigNumber(DepositeVolume).times(powNumber).toString();
+  }
+  console.log(DepositeVolume);
+  try {
+    Contracts.methods
+      .stakeAndCompound(DepositeVolume)
+      .send({ from: Account })
+      .on("transactionHash", (hash) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Waiting For Confirmation",
+          layout: "layout2",
+          loading: true,
+          buttonText: "Confirm",
+          conTit: "Please Confirm the transaction in your wallet",
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+        });
+      })
+      .on("receipt", (receipt) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Transation submitted",
+          layout: "layout2",
+          buttonText: "Confirm",
+          conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+          button: true,
+          buttonText: "Confirm",
+          showDialog: false,
+        });
+        callback("success");
+      })
+      .on("error", (error) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        callback("error");
+      });
+  } catch (error) {}
+};
 export const GetReward = async (ContractAddress, callback) => {
   let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();

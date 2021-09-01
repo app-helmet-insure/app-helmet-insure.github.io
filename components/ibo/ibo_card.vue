@@ -320,6 +320,33 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'DSN'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text38") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text39") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/DimensionCommChinese" target="_blank"
+          >https://t.me/DimensionCommChinese</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://dimension.best" target="_blank"
+          >https://dimension.best</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>
@@ -588,8 +615,7 @@ export default {
             this.burnLoading = true;
             onBurn_(
               this.amount,
-              this.iboData.address,
-              this.iboData.abi,
+              this.iboData,
               (success) => {
                 success && this.init();
                 this.burnLoading = false;
@@ -652,6 +678,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 .el-slider__button-wrapper {
   z-index: 99;

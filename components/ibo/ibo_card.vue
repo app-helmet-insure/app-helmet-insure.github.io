@@ -349,7 +349,7 @@
       </div>
       <div v-else-if="iboData.name === 'RHINO'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text40") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text41") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text40") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
         <p>
           SC: {{ iboData.underlying.address }}
@@ -586,7 +586,7 @@ export default {
           this.amount = purchasedCurrencyOf;
         }
         this.initLoading = false;
-        console.log("newPool", JSON.parse(JSON.stringify(newPool)));
+        // console.log("newPool", JSON.parse(JSON.stringify(newPool)));
       });
     },
     showClaim() {

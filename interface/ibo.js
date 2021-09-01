@@ -103,7 +103,6 @@ export const getPoolInfo = (pool) => {
       //   timeSettle = 1629118800
       // curUserCount=0
       // purchasedCurrencyOf=0
-      console.log('resData', resData)
     const [
       total_completed_,
       total_amount,
@@ -147,13 +146,12 @@ export const getPoolInfo = (pool) => {
         .toFixed(0, 1),
       pool.currency.decimal
     )
-      // console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
+      console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
     let is_join = false
     if (purchasedCurrencyOf > 0) {
       is_join = true
     }
-      console.log('price', pool.title,price)
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
@@ -221,7 +219,9 @@ export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => 
 // 质押
 export const onBurn_ = (_amount, iboData, callback) => {
   let web3_ = new Web3(window.ethereum)
-  let myContract = new web3_.eth.Contract(iboData.abi, iboData.address);
+  let myContract = new web3_.eth.Contract(iboData.abi, iboData.address, {
+    gasPrice: Web3.utils.toWei('6', 'gwei')
+  });
   myContract.methods
     .purchase(numToWei(String(_amount), iboData.currency.decimal))
     .send({ from: window.CURRENTADDRESS })

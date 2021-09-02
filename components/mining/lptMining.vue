@@ -10,11 +10,7 @@
         >
           <div :class="`lptMiningItem lp_${storeThemes}`">
             <section class="itemPoolNameWEB WEB">
-              <span
-                class="onePager"
-                v-html="item.POOL_NAME"
-                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-              ></span>
+              <span>{{ item.POOL_NAME }}</span>
             </section>
             <section class="itemPoolEarnWEB WEB">
               <p>
@@ -106,11 +102,8 @@
               ></template>
             </section>
             <section class="itemPoolNameH5 H5">
-              <span
-                class="onePager"
-                v-html="item.POOL_NAME"
-                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-              ></span>
+              <span>{{ item.POOL_NAME }}</span>
+
               <p>
                 {{ $t("Table.EarnList") }}
                 <span>

@@ -1,5 +1,5 @@
 <template>
-  <div class="call-insurance">
+  <div class="insurance_market">
     <InsuranceTitle
       :ActiveData="ActiveData"
       :ActiveType="ActiveType"
@@ -115,7 +115,14 @@
         @page-change="handleClickChagePage"
       />
     </section>
-    <WaitingConfirmationDialog :DialogVisible="WaitingVisible" />
+    <WaitingConfirmationDialog :DialogVisible="WaitingVisible">
+      <p>
+        Buy <b>{{ WaitingBuyNumber }} {{ WaitingBuyPolicys }}</b> Policys,
+      </p>
+      <p>
+        the Premium is <b>{{ WaitingPremium }}</b> HELMET
+      </p>
+    </WaitingConfirmationDialog>
   </div>
 </template>
 
@@ -127,7 +134,6 @@ import ClipboardJS from "clipboard";
 import Page from "~/components/common/page.vue";
 import InsuranceTitle from "./insuranceTitle";
 import { getInsuranceList } from "~/interface/event.js";
-import { Buy } from "~/interface/write_contract.js";
 import OrderABI from "../../abi/OrderABI.json";
 import { toWei, fromWei } from "~/interface/index.js";
 import { getContract } from "../../web3/index.js";
@@ -153,6 +159,9 @@ export default {
       isLoading: true,
       fixD,
       WaitingVisible: false,
+      WaitingBuyNumber: "",
+      WaitingBuyPolicys: "",
+      WaitingPremium: "",
     };
   },
   computed: {
@@ -290,14 +299,11 @@ export default {
         }
       });
     },
-    WaitingConfirmationClose() {
-      this.WaitingConfirmationVisible = false;
-    },
-    waitingConfirm() {
-      this.WaitingConfirmationVisible = true;
-    },
-    WaitingConfirmationConfirm() {},
     buyInsurance(data) {
+      console.log(data);
+      this.WaitingBuyNumber = fixD(data.buy_volume, 4);
+      this.WaitingBuyPolicys = data.currentInsurance;
+      this.WaitingPremium = fixD(data.premium * data.buy_volume, 4);
       this.WaitingVisible = true;
       // const Text = this.$t("Dialogs.WaitText1", {
       //   type: this.ActiveType,

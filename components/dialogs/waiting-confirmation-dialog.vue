@@ -2,9 +2,11 @@
   <el-dialog top="35vh" :visible.sync="DialogVisible" center>
     <div class="waiting_dialog_body">
       <h3 class="waiting_title">Waiting For Confirmation</h3>
-      <a href="11" class="waiting_tx">View on BscScan</a>
+      <p class="waiting_info">Please Confirm the transaction in your wallet</p>
+      <div class="waiting_content">
+        <slot></slot>
+      </div>
       <i class="waiting_loading"></i>
-      <button class="waiting_confirm">Confirm</button>
     </div>
   </el-dialog>
 </template>
@@ -27,12 +29,23 @@ export default {
   color: #17173a;
   line-height: 16px;
 }
-.waiting_tx {
+.waiting_info {
   font-size: 14px;
   font-family: IBMPlexSans;
-  color: #fd7e14;
-  line-height: 18px;
+  color: #17173a;
+  line-height: 16px;
   margin-top: 10px;
+}
+.waiting_content {
+  margin-top: 10px;
+  width: 236px;
+  p {
+    text-align: center;
+    font-size: 14px;
+    font-family: IBMPlexSans;
+    color: #fd7e14;
+    line-height: 20px;
+  }
 }
 .waiting_loading {
   display: block;

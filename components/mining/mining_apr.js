@@ -98,6 +98,7 @@ const CakeDoublePoolAPR = async ({
   let SPEED_REWARD1 = await Rewards(POOL_ADDRESS, "0");
   let TIME_REWARD1 = await RewardsDuration(POOL_ADDRESS);
   let DAYILY_REWARD1 = (TOTAL_REWARD1 - SPEED_REWARD1) / (TIME_REWARD1 / 86400);
+  console.log(DAYILY_REWARD1)
   // reward1 value to bnb
   let REWARD1_BNB_VALUE = await GetTokenForBNBValue(
     REWARD1_ADDRESS,

@@ -120,35 +120,27 @@
               </p>
             </section>
             <section class="insurance_action_h5 H5">
-              <button @click="buyInsurance_h5(item.InsuranceType)">
+              <button @click="buyInsurance(item, ActiveType, true)">
                 {{ $t("Insurance.Insurance_text24") }}
               </button>
-              <button @click="issueInsurance_h5(item.InsuranceType)">
+              <button @click="sellInsurance(item.InsuranceType)">
                 {{ $t("Insurance.Insurance_text8") }}
               </button>
             </section>
           </div>
         </div>
         <div
-          class="insurance_detail WEB"
+          class="insurance_detail_web WEB"
           v-if="activeInsurance === item.InsuranceName"
         >
           <svg class="close" aria-hidden="true" @click="activeInsurance = ''">
             <use xlink:href="#icon-close"></use>
           </svg>
           <InsuranceMarket :ActiveData="ActiveData" :ActiveType="ActiveType" />
-          <!-- <PutInsurance
+          <IssueInsurance
             :activeInsurance="activeInsurance"
-            v-if="activeType == 'PUT'"
-          ></PutInsurance>
-          <CallInsurance
-            :activeInsurance="activeInsurance"
-            v-if="activeType == 'CALL'"
-          ></CallInsurance -->
-          ><IssueInsurance
-            :activeInsurance="activeInsurance"
-            :InsureTypeActive="'ALL'"
-            v-if="activeType == 'SELL'"
+            :InsureTypeActive="'All'"
+            v-if="activeType == 'Sell'"
           ></IssueInsurance>
         </div>
         <Wraper>
@@ -157,35 +149,31 @@
               <h3>
                 {{ $t("Insurance.Insurance_text1") }}
               </h3>
-              <svg class="icon close" aria-hidden="true" @click="close_wraper">
+              <svg class="icon close" aria-hidden="true" @click="closeWarpper">
                 <use xlink:href="#icon-close"></use>
               </svg>
             </div>
             <div class="checkType">
               <span
-                @click="InsureTypeActive = 'CALL'"
-                :class="InsureTypeActive == 'CALL' ? 'activeAction' : ''"
+                @click="ActiveType = 'Call'"
+                :class="ActiveType == 'Call' ? 'activeAction' : ''"
                 >{{ $t("Insurance.Insurance_text7") }}</span
               >
               <span
-                @click="InsureTypeActive = 'PUT'"
-                :class="InsureTypeActive == 'PUT' ? 'activeAction' : ''"
+                @click="ActiveType = 'Put'"
+                :class="ActiveType == 'Put' ? 'activeAction' : ''"
                 >{{ $t("Insurance.Insurance_text6") }}</span
               >
             </div>
             <div class="activePage">
-              <PutInsurance
-                :activeInsurance="activeInsurance"
-                v-if="InsureTypeActive == 'PUT' && TradeType == 'BUY'"
-              ></PutInsurance>
-              <CallInsurance
-                :activeInsurance="activeInsurance"
-                v-if="InsureTypeActive == 'CALL' && TradeType == 'BUY'"
-              ></CallInsurance>
+              <InsuranceMarket
+                :ActiveData="ActiveData"
+                :ActiveType="ActiveType"
+              />
               <IssueInsurance
                 :activeInsurance="activeInsurance"
                 :InsureTypeActive="InsureTypeActive"
-                v-if="TradeType == 'SELL'"
+                v-if="TradeType == 'Sell'"
               ></IssueInsurance>
             </div>
           </template>
@@ -224,7 +212,7 @@ export default {
       fixD,
       InsuanceData: [],
       ActiveData: [],
-      ActiveType: "",
+      ActiveType: "Call",
     };
   },
   mounted() {
@@ -266,41 +254,19 @@ export default {
         }
       });
     },
-    buyInsurance(data, type) {
+    buyInsurance(data, type, isH5) {
       this.activeInsurance = data.InsuranceName;
       this.ActiveData = data;
       this.ActiveType = type;
+      if (isH5) {
+        this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+      }
     },
     sellInsurance(data, type) {
       console.log(data);
     },
-    buyInsurance_h5(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.TradeType = "BUY";
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    issueInsurance_h5(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.TradeType = "SELL";
-      this.$bus.$emit("OPEN_WRAPER_PAFE", true);
-    },
-    close_wraper() {
+    closeWarpper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);
-    },
-    buyPutInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "PUT";
-    },
-    buyCallInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "CALL";
-    },
-    issueInsurance(insuranceType) {
-      this.activeInsurance = insuranceType;
-      this.showActiveInsurance = true;
-      this.activeType = "SELL";
     },
   },
 };
@@ -550,7 +516,7 @@ export default {
       }
     }
   }
-  .insurance_detail {
+  .insurance_detail_web {
     @include themeify {
       border-top: 1px solid themed("color-e8e8eb");
     }
@@ -626,7 +592,7 @@ export default {
     }
     padding: 20px 10px 50px;
   }
-  .insurance_title_H5 {
+  .insurance_title_h5 {
     height: 44px;
     line-height: 44px;
     padding: 0 10px;
@@ -763,6 +729,9 @@ export default {
         }
       }
     }
+  }
+  .insurance_detail_h5{
+
   }
   .checkType {
     display: flex;

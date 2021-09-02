@@ -1,7 +1,27 @@
 @import url("//unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css");
 @import "./themes.scss";
 @import "./base.scss";
-
+.el-pagination {
+  .btn-prev {
+    background-color: transparent !important;
+  }
+  .btn-next {
+    background-color: transparent !important;
+  }
+  .el-pager {
+    li:not(.disabled):hover {
+      color: #fd7e14 !important;
+    }
+    li:not(.disabled).active {
+      background-color: #e8e8eb !important;
+      color: #17173a !important;
+    }
+    li {
+      background-color: transparent !important;
+      color: rgba(23, 23, 58, 0.7) !important;
+    }
+  }
+}
 .block {
   position: relative;
 }

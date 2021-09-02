@@ -5,20 +5,23 @@
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >
-    <div class="waiting_dialog_body">
-      <h3 class="waiting_title">Waiting For Confirmation</h3>
-      <p class="waiting_info">Please Confirm the transaction in your wallet</p>
-      <div class="waiting_content">
-        <slot></slot>
-      </div>
-      <i class="waiting_loading"></i>
+    <div class="success_dialog_body">
+      <h3 class="success_title">Transation submitted</h3>
+      <a
+        :href="`https://bscscan.com/tx/${SuccessHash}`"
+        class="success_tx"
+        target="_blank"
+        >View on BscScan</a
+      >
+      <i class="success_loading"></i>
+      <button class="success_confirm" @click="DialogClose">Confirm</button>
     </div>
   </el-dialog>
 </template>
 
 <script>
 export default {
-  props: ["DialogVisible", "DialogClose"],
+  props: ["DialogVisible", "DialogClose", "SuccessHash"],
   data() {
     return {};
   },
@@ -27,21 +30,33 @@ export default {
 
 <style lang='scss' >
 @import "~/assets/css/base.scss";
-.waiting_title {
+.success_title {
   font-size: 16px;
   font-family: IBMPlexSans-Bold, IBMPlexSans;
   font-weight: bold;
   color: #17173a;
   line-height: 16px;
 }
-.waiting_info {
+.success_tx {
+  height: 18px;
+  font-size: 14px;
+  font-family: IBMPlexSans;
+  color: #fd7e14;
+  line-height: 18px;
+  margin-top: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.success_info {
   font-size: 14px;
   font-family: IBMPlexSans;
   color: #17173a;
   line-height: 16px;
   margin-top: 10px;
 }
-.waiting_content {
+
+.success_content {
   margin-top: 10px;
   width: 236px;
   p {
@@ -52,17 +67,17 @@ export default {
     line-height: 20px;
   }
 }
-.waiting_loading {
+.success_loading {
   display: block;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   background-image: url("../../assets/img/helmet/jiazai.png");
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
   margin-top: 10px;
 }
-.waiting_confirm {
+.success_confirm {
   width: 140px;
   height: 40px;
   font-size: 14px;
@@ -87,7 +102,7 @@ export default {
   .el-dialog__close::before {
     font-size: 24px;
   }
-  .waiting_dialog_body {
+  .success_dialog_body {
     display: flex;
     flex-direction: column;
     align-items: center;

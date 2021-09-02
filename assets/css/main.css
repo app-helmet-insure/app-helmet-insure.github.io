@@ -299,30 +299,7 @@ button:disabled {
     background: #cfcfd2;
 }
 
-.noData {
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.noData div {
-    width: 80px;
-    margin: 0 auto;
-}
-
-.noData div img {
-    width: 80px;
-    height: 80px;
-}
-
-.noData div p {
-    text-align: center;
-    font-size: 12px;
-    @include themeify {
-        color: darken($color: themed('color-17173a'), $amount: 60%);
-    }
-}
 
 @media screen and (max-width: 750px) {
     html,

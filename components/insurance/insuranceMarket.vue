@@ -4,118 +4,104 @@
       :ActiveData="ActiveData"
       :ActiveType="ActiveType"
     ></InsuranceTitle>
-    <div class="insurance_list">
-      <table>
-        <thead>
-          <tr>
-            <td>{{ $t("Table.ID") }}</td>
-            <td>{{ $t("Table.Rent") }}</td>
-            <td>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</td>
-            <td>
-              {{ $t("Table.Tips", { type: ActiveData.InsuranceName }) }}
-            </td>
-            <td class="option">{{ $t("Table.Options") }}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in PolicyList" :key="index">
-            <td>
-              {{ item.show_ID }}
-              <i
-                class="copy"
-                id="copy"
-                @click="copyAdress($event, item.seller)"
-              ></i>
-            </td>
-            <td>{{ item.premium.toFixed(8) }}</td>
-            <td>{{ item.show_volume }}</td>
-            <td>
-              <input
-                type="text"
-                name=""
-                v-model="item.buy_volume"
-                :max="item.show_volume"
-                :maxlength="8"
-                :placeholder="$t('Table.NumberSubscriptions')"
-              />
-            </td>
-            <td
-              class="option"
-              :style="
-                item.status == 'dated' || item.show_volume == 0
-                  ? 'visibility: hidden;'
-                  : ''
-              "
-            >
-              <button @click="buyInsurance(item)">
-                {{ $t("Table.Subscribe") }}
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="insurance_list_H5">
-      <div
-        class="list_item_H5"
-        v-for="(item, index) in PolicyList"
-        :key="index"
-      >
-        <section>
-          <p>
-            <span>{{ $t("Table.Rent") }}</span>
-            <span>{{ item.show_price }}</span>
-          </p>
-          <p>
-            <span>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</span>
-            <span>{{ item.show_volume }}</span>
-          </p>
-        </section>
-        <section>
-          <input
-            type="text"
-            name=""
-            v-model="item.buyNum"
-            :max="item.show_volume"
-            :maxlength="8"
-            :placeholder="$t('Table.NumberSubscriptions')"
-          />
-          <button
-            @click="waitingConfirm(item)"
+    <div class="policy_wrap" v-if="PolicyList && PolicyList.length">
+      <div class="policy_title WEB">
+        <div class="title_index">{{ $t("Table.ID") }}</div>
+        <div class="title_price">{{ $t("Table.Rent") }}</div>
+        <div class="title_amount">
+          {{ $t("Table.Amount") }}({{ $t("Table.Cont") }})
+        </div>
+        <div class="title_info">
+          {{ $t("Table.Tips", { type: ActiveData.InsuranceName }) }}
+        </div>
+        <div class="title_options">{{ $t("Table.Options") }}</div>
+      </div>
+      <div class="policy_list">
+        <div
+          class="policy_item"
+          v-for="(item, index) in PolicyList.slice(MinNumber, MaxNumber)"
+          :key="index"
+        >
+          <div class="policy_item_id_web WEB">
+            {{ item.show_ID }}
+          </div>
+          <div class="policy_item_price_web WEB">
+            {{ item.premium.toFixed(8) }}
+          </div>
+          <div class="policy_item_volume_web WEB">{{ item.show_volume }}</div>
+          <div class="policy_item_input_web WEB">
+            <input
+              type="text"
+              name=""
+              v-model="item.buy_volume"
+              :max="item.show_volume"
+              :maxlength="8"
+              :placeholder="$t('Table.NumberSubscriptions')"
+            />
+          </div>
+          <div
+            class="policy_item_option_web WEB"
             :style="
               item.status == 'dated' || item.show_volume == 0
-                ? 'visibility:hidden;'
+                ? 'visibility: hidden;'
                 : ''
             "
           >
-            {{ $t("Table.Subscribe") }}
-          </button>
-        </section>
+            <button @click="buyInsurance(item)">
+              {{ $t("Table.Subscribe") }}
+            </button>
+          </div>
+          <div class="policy_item_price_h5 H5">
+            <p>
+              <span>{{ $t("Table.Rent") }}</span>
+              <span>{{ item.premium.toFixed(8) }}</span>
+            </p>
+            <p>
+              <span>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</span>
+              <span>{{ item.show_volume }}</span>
+            </p>
+          </div>
+          <div class="policy_item_option_h5 H5">
+            <input
+              type="text"
+              name=""
+              v-model="item.buyNum"
+              :max="item.show_volume"
+              :maxlength="8"
+              :placeholder="$t('Table.NumberSubscriptions')"
+            />
+            <button
+              @click="waitingConfirm(item)"
+              :style="
+                item.status == 'dated' || item.show_volume == 0
+                  ? 'visibility:hidden;'
+                  : ''
+              "
+            >
+              {{ $t("Table.Subscribe") }}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="loading" v-if="isLoading">
-      <img src="~/assets/img/loading.png" />
-      <div class="shadow"></div>
-      <p>{{ $t("Table.LoadingWallet") }}</p>
+    <NoData v-else />
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :pager-count="5"
+        :hide-on-single-page="PolicyList.length < PageSize"
+        :total="PolicyList.length"
+        @current-change="changePage"
+      >
+      </el-pagination>
     </div>
-    <section class="noData" v-if="FilterList.length < 1 && !isLoading">
-      <div>
-        <img
-          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
-          alt=""
-        />
-        <p>{{ $t("Table.NoData") }}</p>
-      </div>
-    </section>
-    <section class="pages" v-if="FilterList.length > 10">
-      <Page
-        :total="FilterList.length"
-        :limit="limit"
-        :page="page + 1"
-        @page-change="handleClickChagePage"
-      />
-    </section>
-    <WaitingConfirmationDialog :DialogVisible="WaitingVisible">
+
+    <!-- dialog -->
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
+    >
       <p>
         Buy <b>{{ WaitingBuyNumber }} {{ WaitingBuyPolicys }}</b> Policys,
       </p>
@@ -123,14 +109,16 @@
         the Premium is <b>{{ WaitingPremium }}</b> HELMET
       </p>
     </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
-import PInput from "~/components/common/p-input.vue";
 import { fixD } from "~/assets/js/util.js";
-import Message from "~/components/common/Message";
-import ClipboardJS from "clipboard";
 import Page from "~/components/common/page.vue";
 import InsuranceTitle from "./insuranceTitle";
 import { getInsuranceList } from "~/interface/event.js";
@@ -138,30 +126,34 @@ import OrderABI from "../../abi/OrderABI.json";
 import { toWei, fromWei } from "~/interface/index.js";
 import { getContract } from "../../web3/index.js";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import NoData from "~/components/common/no-data.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import BigNumber from "bignumber.js";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
     WaitingConfirmationDialog,
+    SuccessConfirmationDialog,
+    NoData,
     InsuranceTitle,
-    PInput,
     Page,
   },
   props: ["ActiveData", "ActiveType"],
   data() {
     return {
-      page: 0,
-      limit: 10,
-      page_h5: 0,
-      limit_h5: 3,
       PolicyList: [],
-      FilterList: [],
       isLoading: true,
       fixD,
       WaitingVisible: false,
+      SuccessVisible: false,
       WaitingBuyNumber: "",
       WaitingBuyPolicys: "",
       WaitingPremium: "",
+      SuccessHash: "",
+      CurrentPage: 1,
+      PageSize: 10,
+      MinNumber: 0,
+      MaxNumber: 10,
     };
   },
   computed: {
@@ -169,27 +161,32 @@ export default {
       return this.$store.state.themes;
     },
   },
-  watch: {},
+  watch: {
+    ActiveType(value) {
+      if (value) {
+        this.getPolicyList();
+      }
+    },
+  },
   mounted() {
     this.getPolicyList();
   },
   methods: {
-    copyAdress(e, text) {
-      let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
-      copys.on("success", function (e) {
-        Message({
-          message: "Successfully copied",
-          type: "success",
-          // duration: 0,
-        });
-        copys.destroy();
-      });
-      copys.on("error", function (e) {
-        console.error("Action:", e.action);
-        console.error("Trigger:", e.trigger);
-        copys.destroy();
-      });
+    waitingClose() {
+      this.WaitingVisible = false;
+    },
+    successClose() {
+      this.SuccessVisible = false;
+    },
+    changePage(value) {
+      this.CurrentPage = value;
+      if (this.CurrentPage <= 1) {
+        this.MinNumber = 0;
+        this.MinNumber = this.PageSize;
+      } else {
+        this.MaxNumber = (value - 1) * this.PageSize;
+        this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
+      }
     },
     getPolicyList() {
       this.isLoading = true;
@@ -208,7 +205,10 @@ export default {
       const FixStrikePrice =
         this.ActiveType === "Call"
           ? toWei(StrikePrice + "", StrikePriceDecimals)
-          : toWei(Number(1 / StrikePrice) + "", StrikePriceDecimals);
+          : toWei(
+              fixD(Number(1 / StrikePrice), StrikePriceDecimals) + "",
+              StrikePriceDecimals
+            );
       getInsuranceList().then((res) => {
         if (res && res.data.data.options) {
           const ReturnList = res.data.data.options;
@@ -300,36 +300,6 @@ export default {
       });
     },
     buyInsurance(data) {
-      console.log(data);
-      this.WaitingBuyNumber = fixD(data.buy_volume, 4);
-      this.WaitingBuyPolicys = data.currentInsurance;
-      this.WaitingPremium = fixD(data.premium * data.buy_volume, 4);
-      this.WaitingVisible = true;
-      // const Text = this.$t("Dialogs.WaitText1", {
-      //   type: this.ActiveType,
-      //   symbol: this.ActiveData.InsuranceName,
-      //   collateral: this.ActiveData.CollateralSymbol,
-      //   volume: 1,
-      //   strikeprice: this.ActiveData.StrikePrice,
-      //   price: 1,
-      //   expiry: this.ActiveData.ShowExpiry,
-      // });
-      // this.$confirm(Text, "提示", {
-      //   confirmButtonText: "确定",
-      //   cancelButtonText: "取消",
-      // })
-      //   .then(() => {
-      //     this.$message({
-      //       type: "success",
-      //       message: "删除成功!",
-      //     });
-      //   })
-      //   .catch(() => {
-      //     this.$message({
-      //       type: "info",
-      //       message: "已取消删除",
-      //     });
-      //   });
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(OrderABI, OrderAddress);
         const AskID = data.askID;
@@ -353,16 +323,29 @@ export default {
           }
         }
         const Account = window.CURRENTADDRESS;
-        console.log(Account);
-        console.log(AskID, Volume);
         BuyContracts.methods
           .buy(AskID, Volume)
           .send({ from: Account })
-          .on("transactionHash", (hash) => {})
-          .on("receipt", (_, receipt) => {
-            getPolicyList();
+          .on("transactionHash", (hash) => {
+            this.WaitingBuyNumber = fixD(data.buy_volume, 4);
+            this.WaitingBuyPolicys = data.currentInsurance;
+            this.WaitingPremium = fixD(
+              (data.premium / data.show_volume) * data.buy_volume,
+              4
+            );
+            this.WaitingVisible = true;
           })
-          .on("error", (ereor) => {});
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              getPolicyList();
+            }
+          })
+          .on("error", function (ereor) {
+            this.WaitingVisible = false;
+          });
       }
     },
   },

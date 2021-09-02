@@ -545,6 +545,9 @@ export default {
     .babyswap {
       background-image: url("../../assets/img/icon/babyswap@2x.png");
     }
+    .acsi {
+      background-image: url("../../assets/img/icon/acsi@2x.png");
+    }
   }
   .H5_link {
     display: none;

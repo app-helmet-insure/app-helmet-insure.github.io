@@ -1,9 +1,6 @@
 <template>
   <div class="insurance_market">
-    <InsuranceTitle
-      :ActiveData="ActiveData"
-      :ActiveType="ActiveType"
-    ></InsuranceTitle>
+    <Chart :ActiveData="ActiveData" :ActiveType="ActiveType"></Chart>
     <div class="policy_wrap" v-if="PolicyList && PolicyList.length">
       <div class="policy_title WEB">
         <div class="title_index">{{ $t("Table.ID") }}</div>
@@ -120,7 +117,7 @@
 <script>
 import { fixD } from "~/assets/js/util.js";
 import Page from "~/components/common/page.vue";
-import InsuranceTitle from "./insuranceTitle";
+import Chart from "./chart";
 import { getInsuranceList } from "~/interface/event.js";
 import OrderABI from "../../abi/OrderABI.json";
 import { toWei, fromWei } from "~/interface/index.js";
@@ -135,7 +132,7 @@ export default {
     WaitingConfirmationDialog,
     SuccessConfirmationDialog,
     NoData,
-    InsuranceTitle,
+    Chart,
     Page,
   },
   props: ["ActiveData", "ActiveType"],

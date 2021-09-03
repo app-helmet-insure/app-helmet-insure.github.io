@@ -3,23 +3,17 @@
     <MiningTitle></MiningTitle>
     <div class="mining_container">
       <LptMining />
-      <MiningList />
+      <TokenMinig />
       <Onepager></Onepager>
       <Compound></Compound>
-      <Deposite
-        :current="current"
-        :TradeType="TradeType"
-        @close="closeDeposite"
-        v-if="showDeposite"
-      ></Deposite>
     </div>
   </div>
 </template>
 
 <script>
-import MiningTitle from "~/components/mining/miningTitle.vue";
-import LptMining from '~/components/mining/lptMining.vue'
-import MiningList from "~/components/mining/miningList.vue";
+import MiningTitle from "~/components/mining/mining-title.vue";
+import LptMining from "~/components/mining/lpt-mining";
+import TokenMinig from "~/components/mining/token-mining.vue";
 import Onepager from "~/components/common/onepager.vue";
 import Compound from "~/components/mining/compound.vue";
 export default {
@@ -27,7 +21,7 @@ export default {
   components: {
     MiningTitle,
     LptMining,
-    MiningList,
+    TokenMinig,
     Onepager,
     Compound,
   },

@@ -6,7 +6,7 @@ import { Contract } from "@ethersproject/contracts";
 import { getNetwork } from "@ethersproject/networks";
 import { getDefaultProvider } from "@ethersproject/providers";
 import IPancakePair from "~/abi/IPancakePair.json";
-import ERC20 from "~/abi/ERC20_abi.json";
+import ERC20 from "~/abi/ERC20ABI.json";
 
 const selectNetwork = (charID) => {
     switch (charID) {

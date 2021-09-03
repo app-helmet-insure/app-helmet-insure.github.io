@@ -2,6 +2,7 @@
   <el-dialog
     top="35vh"
     center
+    append-to-body
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >
@@ -13,7 +14,7 @@
         target="_blank"
         >View on BscScan</a
       >
-      <i class="success_loading"></i>
+      <!-- <i class="success_loading"></i> -->
       <button class="success_confirm" @click="DialogClose">Confirm</button>
     </div>
   </el-dialog>
@@ -43,7 +44,7 @@ export default {
   font-family: IBMPlexSans;
   color: #fd7e14;
   line-height: 18px;
-  margin-top: 10px;
+  margin-top: 15px;
   &:hover {
     text-decoration: underline;
   }
@@ -53,11 +54,11 @@ export default {
   font-family: IBMPlexSans;
   color: #17173a;
   line-height: 16px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .success_content {
-  margin-top: 10px;
+  margin-top: 15px;
   width: 236px;
   p {
     text-align: center;
@@ -75,7 +76,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .success_confirm {
   width: 140px;
@@ -83,7 +84,7 @@ export default {
   font-size: 14px;
   font-weight: bold;
   border-radius: 5px;
-  margin-top: 10px;
+  margin-top: 15px;
   @include themeify {
     background: themed("black_button");
     color: themed("black_button_text");

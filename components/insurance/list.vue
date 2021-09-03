@@ -136,12 +136,12 @@
           <svg class="close" aria-hidden="true" @click="activeInsurance = ''">
             <use xlink:href="#icon-close"></use>
           </svg>
-          <InsuranceMarket :ActiveData="ActiveData" :ActiveType="ActiveType" />
-          <IssueInsurance
+          <Market :ActiveData="ActiveData" :ActiveType="ActiveType" />
+          <Supply
             :activeInsurance="activeInsurance"
             :InsureTypeActive="'All'"
             v-if="activeType == 'Sell'"
-          ></IssueInsurance>
+          />
         </div>
         <Wraper>
           <template class="insurance_detail_h5 H5">
@@ -166,15 +166,15 @@
               >
             </div>
             <div class="activePage">
-              <InsuranceMarket
+              <Market
                 :ActiveData="ActiveData"
                 :ActiveType="ActiveType"
               />
-              <IssueInsurance
+              <Supply
                 :activeInsurance="activeInsurance"
                 :InsureTypeActive="InsureTypeActive"
                 v-if="TradeType == 'Sell'"
-              ></IssueInsurance>
+              />
             </div>
           </template>
         </Wraper>
@@ -185,20 +185,16 @@
 
 <script>
 import { fixD, toRounding } from "~/assets/js/util.js";
-import PutInsurance from "./put-insurance";
-import CallInsurance from "./call-insurance";
-import InsuranceMarket from "./insuranceMarket";
-import IssueInsurance from "./issue-insurance";
+import Market from "./market";
+import Supply from "./supply";
 import Wraper from "~/components/common/wraper.vue";
 import { InsuranceTypeList } from "../../config/insurance.js";
 import { getTokenPrice } from "../../interface/event.js";
 import { fromWei, toWei } from "../../interface/index.js";
 export default {
   components: {
-    InsuranceMarket,
-    PutInsurance,
-    CallInsurance,
-    IssueInsurance,
+    Market,
+    Supply,
     Wraper,
   },
   data() {
@@ -730,8 +726,7 @@ export default {
       }
     }
   }
-  .insurance_detail_h5{
-
+  .insurance_detail_h5 {
   }
   .checkType {
     display: flex;

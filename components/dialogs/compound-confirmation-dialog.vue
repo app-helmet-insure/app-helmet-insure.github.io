@@ -6,43 +6,47 @@
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >
-    <div class="waiting_dialog_body">
-      <h3 class="waiting_title">Waiting For Confirmation</h3>
-      <p class="waiting_info">Please Confirm the transaction in your wallet</p>
-      <div class="waiting_content">
-        <slot></slot>
-      </div>
-      <i class="waiting_loading"></i>
+    <div class="compound_dialog_body">
+      <h3 class="compound_title">Compound HELMET Earned</h3>
+      <p class="compound_earn"></p>
+      <i class="compound_loading"></i>
+      <button class="compound_confirm" @click="DialogClose">Confirm</button>
     </div>
   </el-dialog>
 </template>
 
 <script>
 export default {
-  props: ["DialogVisible", "DialogClose"],
+  props: ["DialogVisible", "DialogClose", "CompoundNumber", "ActiveData"],
   data() {
     return {};
+  },
+  mounted() {
+    console.log(this.CompoundNumber, this.ActiveData);
   },
 };
 </script>
 
 <style lang='scss' >
 @import "~/assets/css/base.scss";
-.waiting_title {
+.compound_title {
   font-size: 16px;
   font-family: IBMPlexSans-Bold, IBMPlexSans;
   font-weight: bold;
   color: #17173a;
   line-height: 16px;
 }
-.waiting_info {
+.compound_earn {
+}
+.compound_info {
   font-size: 14px;
   font-family: IBMPlexSans;
   color: #17173a;
   line-height: 16px;
   margin-top: 15px;
 }
-.waiting_content {
+
+.compound_content {
   margin-top: 15px;
   width: 236px;
   p {
@@ -53,17 +57,17 @@ export default {
     line-height: 20px;
   }
 }
-.waiting_loading {
+.compound_loading {
   display: block;
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   background-image: url("../../assets/img/helmet/jiazai.png");
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 2s 0s linear infinite;
   margin-top: 15px;
 }
-.waiting_confirm {
+.compound_confirm {
   width: 140px;
   height: 40px;
   font-size: 14px;
@@ -84,12 +88,11 @@ export default {
   .el-dialog {
     border-radius: 10px !important;
     width: 400px !important;
-    min-height: 220px;
   }
   .el-dialog__close::before {
     font-size: 24px;
   }
-  .waiting_dialog_body {
+  .compound_dialog_body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,7 +102,6 @@ export default {
   .el-dialog {
     border-radius: 10px;
     width: 95% !important;
-    min-height: 220px;
   }
   .el-dialog__close::before {
     font-size: 24px;

@@ -3,40 +3,40 @@
     <div class="helmet_logo animate__animated animate__bounce">
       <a></a>
     </div>
-    <IndexView />
-    <IndexCity :ClassName="HelmetCityInfoClass" />
+    <View />
+    <City :ClassName="HelmetCityInfoClass" />
     <div class="helmet_info">
-      <IndexCourse
+      <Course
         :LeftClassName="HelmetCourseLeftClass"
         :RightClassName="HelmetCourseRightClass"
       />
-      <IndexMore />
+      <More />
       <h3>Strategic partners</h3>
     </div>
-    <IndexPartner />
-    <IndexInvested />
-    <IndexMedia />
+    <Partner />
+    <Invested />
+    <Media />
   </div>
 </template>
 <script>
-import IndexView from "~/components/indexPage/indexView.vue";
-import IndexCity from "~/components/indexPage/indexCity.vue";
-import IndexCourse from "~/components/indexPage/indexCourse.vue";
-import IndexMore from "~/components/indexPage/indexMore.vue";
-import IndexPartner from "~/components/indexPage/indexPartner.vue";
-import IndexInvested from "~/components/indexPage/indexInvested.vue";
-import IndexMedia from "~/components/indexPage/indexMedia.vue";
+import View from "~/components/indexPage/view.vue";
+import City from "~/components/indexPage/city.vue";
+import Course from "~/components/indexPage/course.vue";
+import More from "~/components/indexPage/more.vue";
+import Partner from "~/components/indexPage/partner.vue";
+import Invested from "~/components/indexPage/invested.vue";
+import Media from "~/components/indexPage/media.vue";
 
 export default {
   layout: "page",
   components: {
-    IndexView,
-    IndexCity,
-    IndexCourse,
-    IndexMore,
-    IndexPartner,
-    IndexInvested,
-    IndexMedia,
+    View,
+    City,
+    Course,
+    More,
+    Partner,
+    Invested,
+    Media,
   },
   data() {
     return {

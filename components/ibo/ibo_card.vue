@@ -1,6 +1,6 @@
 <template>
   <div class="ibo_item_warp" v-if="iboData">
-    <div class="ibo_item" :class="{ active: iboData.status === 2 && (now - iboData.timeSettle) < 86400*2 }">
+    <div class="ibo_item" :class="{ active: iboData.light }">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />
@@ -347,6 +347,33 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'RHINO'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text40") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text40") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/rhinobsc" target="_blank"
+          >https://t.me/rhinobsc</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://rhinobsc.com" target="_blank"
+          >https://rhinobsc.com</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>
@@ -559,7 +586,7 @@ export default {
           this.amount = purchasedCurrencyOf;
         }
         this.initLoading = false;
-        console.log("newPool", JSON.parse(JSON.stringify(newPool)));
+        // console.log("newPool", JSON.parse(JSON.stringify(newPool)));
       });
     },
     showClaim() {

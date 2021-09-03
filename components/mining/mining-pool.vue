@@ -2,7 +2,7 @@
   <div class="mining_pool">
     <div
       class="deposit"
-      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'STAKE')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Stake')"
     >
       <div class="title">
         <span>{{ $t("Table.DAvailable") }}：</span>
@@ -23,28 +23,26 @@
           <input
             name="deposit"
             type="text"
-            v-model="DepositeNum"
-            :class="ActiveType == 'STAKE' ? 'activeInput' : ''"
+            v-model="StakeVolume"
+            :class="ActiveType == 'Stake' ? 'activeInput' : ''"
           />
-          <span @click="DepositeNum = CanDeposite">{{ $t("Table.Max") }}</span>
+          <span @click="StakeVolume = CanDeposite">{{ $t("Table.Max") }}</span>
         </div>
       </div>
       <div class="button">
         <button
-          v-if="this.activeData.STAKE_SYMBOL === 'HELMET'"
+          v-if="ActiveData.StakeSymbol === 'HELMET'"
           @click="toDeposite"
           :class="
-            (stakeLoading ? 'disable b_button' : 'b_button',
-            this.activeData.MING_TIME == 'Finished'
-              ? 'disable_button b_button'
-              : 'b_button')
+            (StakeLoading ? 'disable b_button' : 'b_button',
+            ActiveData.Status == 3 ? 'disable_button b_button' : 'b_button')
           "
         >
-          <i :class="stakeLoading ? 'loading_pic' : ''"></i
+          <i :class="StakeLoading ? 'loading_pic' : ''"></i
           >{{
-            ApproveFlag
+            !ApproveStatus
               ? $t("Table.Approve")
-              : balance.Reward1
+              : CanClaim1
               ? $t("Table.StakeAndCompound")
               : $t("Table.ConfirmDeposit")
           }}
@@ -53,12 +51,14 @@
           v-else
           @click="toDeposite"
           :class="
-            (stakeLoading ? 'disable b_button' : 'b_button',
-            ActiveData.status == 3 ? 'disable_button b_button' : 'b_button')
+            (StakeLoading ? 'disable b_button' : 'b_button',
+            ActiveData.Status == 3 ? 'disable_button b_button' : 'b_button')
           "
         >
-          <i :class="stakeLoading ? 'loading_pic' : ''"></i
-          >{{ ApproveFlag ? $t("Table.Approve") : $t("Table.ConfirmDeposit") }}
+          <i :class="StakeLoading ? 'loading_pic' : ''"></i
+          >{{
+            !ApproveStatus ? $t("Table.Approve") : $t("Table.ConfirmDeposit")
+          }}
         </button>
         <p>
           <span>{{ $t("Table.MyDeposits") }}</span>
@@ -132,7 +132,7 @@
     </div>
     <div
       class="withdraw"
-      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'CLAIM')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Claim')"
     >
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -155,25 +155,22 @@
             type="text"
             v-model="CanWithdraw"
             disabled
-            :class="ActiveType == 'CLAIM' ? 'activeInput' : ''"
+            :class="ActiveType == 'Claim' ? 'activeInput' : ''"
           />
-          <!-- <span @click="WithdrawNum = CanWithdraw">{{
-            $t("Insurance.Insurance_text18")
-          }}</span> -->
         </div>
       </div>
       <div class="button">
         <button
           @click="toExit"
-          :class="exitLoading ? 'disable b_button' : 'b_button'"
+          :class="ExitLoading ? 'disable b_button' : 'b_button'"
         >
-          <i :class="exitLoading ? 'loading_pic' : ''"></i
+          <i :class="ExitLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <p v-if="ActiveData.reward1_symbol">
+        <p v-if="ActiveData.HaveReward1">
           <span
-            ><i>{{ ActiveData.reward1_symbol }}</i>
+            ><i>{{ ActiveData.Reward1Symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
@@ -185,10 +182,10 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ ActiveData.reward1_symbol }}</span
+            {{ ActiveData.Reward1Symbol }}</span
           >
         </p>
-        <p v-if="ActiveData.Reward2Symbol">
+        <p v-if="ActiveData.HaveReward2">
           <span
             ><i>{{ ActiveData.Reward2Symbol }}</i>
             {{ $t("Table.HELMETRewards") }}：</span
@@ -209,9 +206,9 @@
         <button
           v-if="ActiveData.compound"
           @click="toCompound"
-          :class="claimLoading ? 'disable o_button' : 'o_button'"
+          :class="ClaimLoading ? 'disable o_button' : 'o_button'"
         >
-          <i :class="claimLoading ? 'loading_pic' : ''"></i
+          <i :class="ClaimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.Compound") }}
         </button>
         <!-- claim -->
@@ -219,11 +216,11 @@
           v-else
           @click="toClaim"
           :class="
-            (claimLoading ? 'disable o_button' : 'o_button',
-            ActiveData.status === 3 ? 'disable_button o_button' : 'o_button')
+            (ClaimLoading ? 'disable o_button' : 'o_button',
+            ActiveData.Status === 3 ? 'disable_button o_button' : 'o_button')
           "
         >
-          <i :class="claimLoading ? 'loading_pic' : ''"></i
+          <i :class="ClaimLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ClaimAllRewards") }}
         </button>
       </div>
@@ -250,41 +247,46 @@
         <i></i>
       </div>
     </div>
+    <!-- dialog -->
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
+    >
+      <p>{{ WaitingText }}</p>
+    </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
-import {
-  BalanceOf,
-  TotalSupply,
-  Earned,
-  Earned2,
-  Allowance,
-} from "~/interface/read_contract.js";
-import {
-  Stake,
-  GetReward,
-  GetDoubleReward,
-  Approve,
-  Exit,
-  StakeAndComound,
-} from "~/interface/write_contract.js";
 import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
 import addToken from "~/assets/utils/addtoken.js";
 import MiningABI from "../../abi/MiningABI.json";
+import ERC20ABI from "../../abi/ERC20ABI.json";
 import { Contract } from "ethers-multicall-x";
+import { exit } from "~/interface/mining.js";
+import { getContract } from "../../web3/index.js";
+import { toWei } from "~/interface/index";
 import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
 } from "~/interface/index.js";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 export default {
   props: ["ActiveData", "ActiveFlag", "ActiveType"],
   components: {
     countTo,
+    SuccessConfirmationDialog,
+    WaitingConfirmationDialog,
   },
   data() {
     return {
@@ -294,32 +296,27 @@ export default {
       CanClaim1: 0,
       CanClaim2: 0,
       MyPoolShare: 0,
-      DepositeNum: "",
-      WithdrawNum: "",
-      stakeLoading: false,
-      claimLoading: false,
-      exitLoading: false,
-      helmetPrice: 0,
-      MingTime: "",
+      StakeVolume: "",
+      StakeLoading: false,
+      ClaimLoading: false,
+      ExitLoading: false,
       isLogin: false,
-      ApproveFlag: false,
+      ApproveStatus: false,
+      WaitingVisible: false,
+      SuccessVisible: false,
+      SuccessHash: "",
+      WaitingText: "",
     };
   },
   mounted() {
     this.$nextTick(() => {
       this.getPoolInfo();
     });
-    this.NeedApprove();
   },
   watch: {
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
-    },
-    ActiveData(newValue) {
-      if (newValue) {
-        this.NeedApprove();
-      }
     },
   },
   computed: {
@@ -331,6 +328,12 @@ export default {
     },
   },
   methods: {
+    waitingClose() {
+      this.WaitingVisible = false;
+    },
+    successClose() {
+      this.SuccessVisible = false;
+    },
     async addTokenFn(options) {
       let data = {
         tokenAddress: options.AddTokenAddress,
@@ -379,6 +382,7 @@ export default {
         this.ActiveData;
       const PoolContracts = new Contract(PoolAddress, MiningABI);
       const StakeContracts = new Contract(StakeAddress, MiningABI);
+      const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = window.CURRENTADDRESS;
       const PromiseList = [
         StakeContracts.balanceOf(Account),
@@ -386,12 +390,19 @@ export default {
         PoolContracts.totalSupply(),
         PoolContracts.earned(Account),
         PoolContracts.earned2(Account),
+        ApproveContracts.allowance(Account, PoolAddress),
       ];
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
-        const [CanDeposite, CanWithdraw, TotalDeposite, CanClaim1, CanClaim2] =
-          FixData;
+        const [
+          CanDeposite,
+          CanWithdraw,
+          TotalDeposite,
+          CanClaim1,
+          CanClaim2,
+          ApproveStatus,
+        ] = FixData;
         this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
         this.CanWithdraw = fromWei(CanWithdraw, StakeDecimals);
         this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
@@ -401,63 +412,126 @@ export default {
           (this.CanWithdraw / this.TotalDeposite) * 100,
           2
         );
+        this.ApproveStatus = ApproveStatus > 0;
       });
     },
     // 抵押
     async toDeposite() {
-      if (!this.DepositeNum) {
+      if (!this.StakeVolume || this.StakeLoading) {
         return;
       }
-      if (this.stakeLoading) {
-        return;
-      }
-      let ContractAddress = this.ActiveData.PoolAddress;
-      let StakeAddress = this.ActiveData.StakeAddress;
-      let TokenSymbol = this.ActiveData.StakeSymbol;
-      let DepositeVolume = this.DepositeNum;
-      let Decimals = this.ActiveData.StakeDecimals;
-      this.stakeLoading = true;
-      if (this.ApproveFlag) {
-        await Approve(StakeAddress, ContractAddress, TokenSymbol, (res) => {
-          if (res == "success" || res == "error") {
-            this.NeedApprove();
-            this.stakeLoading = false;
-          }
-        });
+      const PoolAddress = this.ActiveData.PoolAddress;
+      const StakeAddress = this.ActiveData.StakeAddress;
+      const TokenSymbol = this.ActiveData.StakeSymbol;
+      const Decimals = this.ActiveData.StakeDecimals;
+      const Volume = toWei(this.StakeVolume, Decimals);
+      const Account = window.CURRENTADDRESS;
+      const Infinity =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      this.StakeLoading = true;
+
+      if (!this.ApproveStatus) {
+        const Contracts = getContract(ERC20ABI.abi, StakeAddress);
+        Contracts.methods
+          .approve(PoolAddress, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingText = `You will approve ${TokenSymbol} to Helmet.insure`;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.StakeLoading = false;
+              this.ApproveStatus = true;
+              this.getPoolInfo();
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.ApproveStatus = false;
+            this.StakeLoading = false;
+          });
       } else {
-        await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
-          if (res == "success" || res == "error") {
-            this.stakeLoading = false;
-          }
-        });
+        const Contracts = getContract(MiningABI, PoolAddress);
+        Contracts.methods
+          .stake(Volume)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.StakeLoading = false;
+              this.getPoolInfo();
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.StakeLoading = false;
+          });
       }
     },
-    async NeedApprove() {
-      let SpenderAddress = this.ActiveData.PoolAddress;
-      let TokenAddress = this.ActiveData.StakeAddress;
-      let flag = await Allowance(TokenAddress, SpenderAddress);
-      this.ApproveFlag = flag;
-    },
+
     // 结算Paya
     async toClaim() {
-      if (this.claimLoading) {
+      if (this.ClaimLoading) {
         return;
       }
-      this.claimLoading = true;
-      let ContractAddress = this.ActiveData.PoolAddress;
-      let RewardVolume = this.ActiveData.RewardVolume;
+      this.ClaimLoading = true;
+      const ContractAddress = this.ActiveData.PoolAddress;
+      const RewardVolume = this.ActiveData.RewardVolume;
+      const Account = window.CURRENTADDRESS;
+      const Contracts = getContract(MiningABI, ContractAddress);
       if (RewardVolume == "one") {
-        await GetReward(ContractAddress, (res) => {
-          if (res == "success" || res == "error") {
-            this.claimLoading = false;
-          }
-        });
+        Contracts.methods
+          .getReward()
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.ClaimLoading = false;
+              this.getPoolInfo();
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.ClaimLoading = false;
+          });
       } else {
-        await GetDoubleReward(ContractAddress, (res) => {
-          if (res == "success" || res == "error") {
-            this.claimLoading = false;
-          }
-        });
+        Contracts.methods
+          .getDoubleReward()
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.ClaimLoading = false;
+              this.getPoolInfo();
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.ClaimLoading = false;
+          });
       }
     },
     toCompound() {
@@ -469,16 +543,33 @@ export default {
     },
     // 退出
     async toExit() {
-      if (this.exitLoading) {
+      if (this.ExitLoading) {
         return;
       }
-      this.exitLoading = true;
+      this.ExitLoading = true;
       let ContractAddress = this.ActiveData.PoolAddress;
-      await Exit(ContractAddress, (res) => {
-        if (res == "success" || res == "error") {
-          this.exitLoading = false;
-        }
-      });
+      const Account = window.CURRENTADDRESS;
+      const Contracts = getContract(MiningABI, ContractAddress);
+      Contracts.methods
+        .exit()
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.ExitLoading = false;
+            this.getPoolInfo();
+          }
+        })
+        .on("error", function (error) {
+          this.WaitingVisible = false;
+          this.SuccessVisible = false;
+          this.ExitLoading = false;
+        });
     },
   },
 };
@@ -521,6 +612,9 @@ export default {
     }
     .babyswap {
       background-image: url("../../assets/img/icon/babyswap@2x.png");
+    }
+    .acsi {
+      background-image: url("../../assets/img/icon/acsi@2x.png");
     }
   }
   .H5_link {

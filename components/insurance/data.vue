@@ -85,7 +85,7 @@
 <script>
 import precision from "~/assets/js/precision.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import ERC20 from "~/abi/ERC20_abi.json";
+import ERC20 from "~/abi/ERC20ABI.json";
 import {
   getLongType,
   getLongTokenValue,

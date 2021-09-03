@@ -2,11 +2,18 @@ import { getTokenPrice } from "~/interface/event.js";
 import { fixD } from "~/assets/js/util.js";
 import CakePoolABI from "~/abi/CakePoolABI.json";
 import MdexPoolABI from "~/abi/MdexPoolABI.json";
+import SuShiPoolABI from "~/abi/SuShiPoolABI.json";
 import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
 import { getBlockNumber } from "~/interface/common_contract.js";
-import { CakePerBlock, Reward } from "~/interface/read_contract.js";
+import {
+  CakePerBlock,
+  Reward,
+  SushiPerBlock,
+  BalanceOf,
+  getPoolTokens,
+} from "~/interface/read_contract.js";
 import {
   toWei,
   getOnlyMultiCallProvider,
@@ -16,6 +23,7 @@ import {
 export const lptPoolList = [
   {
     PoolName: "HELMET-BNB MLP",
+    PoolSwap: "mdx",
     PoolType: "lpt",
     PoolAddress: "0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B",
     ProxyPid: "0x38",
@@ -60,6 +68,7 @@ export const lptPoolList = [
   },
   {
     PoolName: `HELMET-BNB LPT`,
+    PoolSwap: "pancake",
     PoolType: "lpt",
     PoolAddress: "0xA21B692B92Bbf0E34334f1548a0b51837CDDD0Bb",
     Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
@@ -99,6 +108,7 @@ export const lptPoolList = [
   },
   {
     PoolName: `HELMET-USDT LPT`,
+    PoolSwap: "babyswap",
     PoolType: "lpt",
     PoolAddress: "0x50a9C123536e69290a5dAb32ce514D0b9afcaDCc",
     ProxyPid: "33",
@@ -111,13 +121,12 @@ export const lptPoolList = [
     StakeAddress: "0xdB4d03b1659fe7FAD33F840de481773A629d256b",
     StartTime: "Ongoing",
     FinishTime: "Mining",
-
     LptToken1Decimals: 18,
     LptToken1Symbol: "HELMET",
     LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
     LptToken2Decimals: 18,
-    LptToken2Symbol: "BABY",
-    LptToken2Address: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
+    LptToken2Symbol: "USDT",
+    LptToken2Address: "0x55d398326f99059ff775485246999027b3197955",
     RewardVolume: "one",
     RewardSymbol: "baby",
     HaveReward1: false,
@@ -138,7 +147,49 @@ export const lptPoolList = [
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
   },
   {
+    PoolName: `HELMET-BNB LPT`,
+    PoolSwap: "acsi",
+    PoolType: "lpt",
+    PoolTokens:
+      "0x86ddc49f66fa166e72e650a72752b43ce23ecbe500020000000000000000000b",
+    PoolAddress: "0x1ECc83c300bCe18Ab7452aE2C4c78fc4BBf04c66",
+    ProxyPid: "0x86ddc49f66fa166e72e650a72752b43ce23ecbe5",
+    ProxyABI: SuShiPoolABI,
+    ProxySwap: "SUSHI",
+    ProxyAddress: "0x0C3B6058c25205345b8f22578B27065a7506671C",
+    StakeSymbol: "HELMET-BNB LPT",
+    StakeUnit: "LPT",
+    StakeDecimals: 18,
+    StakeAddress: "0x86ddc49f66fa166e72e650a72752b43ce23ecbe5",
+    StartTime: "Ongoing",
+    FinishTime: "Mining",
+    LptToken1Decimals: 18,
+    LptToken1Symbol: "HELMET",
+    LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    LptToken2Decimals: 18,
+    LptToken2Symbol: "WBNB",
+    LptToken2Address: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    RewardVolume: "two",
+    RewardSymbol: "helmet_acsi",
+    HaveReward1: true,
+    Reward1Decimals: 18,
+    Reward1Symbol: "HELMET",
+    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    HaveReward2: true,
+    Reward2Decimals: 18,
+    Reward2Symbol: "ACSI",
+    Reward2Address: "0x5b17b4d5e4009b5c43e3e3d63a5229f794cba389",
+    ImgReward: true,
+    IsCombo: false,
+    IsIIO: false,
+    HaveOnePager: false,
+    YearEarnType: "APR",
+    JumpLink1:
+      "<a href='https://app.acsi.finance/#/pool/0x86ddc49f66fa166e72e650a72752b43ce23ecbe500020000000000000000000b' target='_blank'>From <i class='acsi'></i>Get HELMET-BNB LPT</a>",
+  },
+  {
     PoolName: `GUARD-USDC LPT`,
+    PoolSwap: "quick",
     StakeSymbol: "GUARD-USDC LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
@@ -163,13 +214,14 @@ export const comboPoolList = [
     StartTime: "Ongoing",
     FinishTime: "Mining",
     IsCombo: false,
-    flash: false,
+    Flash: false,
     YearEarnType: "APR",
     compound: true,
     HaveOnePager: false,
     Reward1Symbol: "HELMET",
     PoolAddress: "0x279a073c491c873df040b05cc846a3c47252b52c",
     StakeAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    HaveReward1: true,
     Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
     StakeDecimals: 18,
     Reward1Decimals: 18,
@@ -191,6 +243,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hMCRN",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "MCRN",
     Reward1Decimals: 18,
@@ -231,6 +285,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hWIZARD",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "WIZARD",
     Reward1Decimals: 18,
@@ -272,6 +328,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hARGON",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "ARGON",
     Reward1Decimals: 18,
@@ -312,6 +370,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hBMXX",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "BMXX",
     Reward1Decimals: 18,
@@ -352,6 +412,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hBABY",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "BABY",
     Reward1Decimals: 18,
@@ -392,6 +454,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hMTRG",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "MTRG",
     Reward1Decimals: 18,
@@ -433,6 +497,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hWINGS",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "WINGS",
     Reward1Decimals: 18,
@@ -474,6 +540,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: false,
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "BHELMET",
     Reward2Symbol: "DODO",
     LeftShowToken: {
@@ -511,9 +579,11 @@ export const comboPoolList = [
     StartTime: "2021/05/02 12:00 UTC+8",
     FinishTime: "2021/05/22 00:00 UTC+8",
     IsCombo: true,
-    flash: false,
+    Flash: false,
     YearEarnType: "APR",
     HaveOnePager: "hxBURGER",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "BHELMET",
     Reward2Symbol: "xBURGER",
     LeftShowToken: {
@@ -553,6 +623,7 @@ export const comboPoolList = [
     SERIAL_FLAG: true,
     YearEarnType: "APR",
     HaveOnePager: false,
+    HaveReward1: true,
     Reward1Symbol: "QFEI",
     LeftShowToken: {
       AddTokenSymbol: "FEI",
@@ -589,6 +660,7 @@ export const comboPoolList = [
     YearEarnType: "APR",
     HaveOnePager: "QFEI",
     Reward1Symbol: "KUN",
+    HaveReward1: true,
     LeftShowToken: {
       AddTokenSymbol: "QSD",
       AddTokenAddress: "0x07AaA29E63FFEB2EBf59B33eE61437E1a91A3bb2",
@@ -623,6 +695,7 @@ export const comboPoolList = [
     FinishTime: "2021/05/10 00:00 UTC+8",
     SERIAL_NEXT_FLAG: true,
     YearEarnType: "APR",
+    HaveReward1: true,
     HaveOnePager: false,
     Reward1Symbol: "QHELMET",
     LeftShowToken: {
@@ -660,6 +733,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: false,
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "CAKE",
     LeftShowToken: {
@@ -699,6 +774,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hDODO",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "DODO",
     LeftShowToken: {
@@ -738,6 +815,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hFOR",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "FOR",
     LeftShowToken: {
@@ -777,6 +856,8 @@ export const comboPoolList = [
     IsCombo: true,
     YearEarnType: "APR",
     HaveOnePager: "hBURGER",
+    HaveReward1: true,
+    HaveReward2: true,
     Reward1Symbol: "HELMET",
     Reward2Symbol: "BURGER",
     LeftShowToken: {
@@ -925,12 +1006,14 @@ export const getComboAPR = async (PoolData) => {
   }
 };
 export const getLptAPR = async (PoolData) => {
+  const SushiFarm = "0xa82f327BBbF0667356D2935C6532d164b06cEced";
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const BNBAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
   const HelmetDecimals = 18;
   const {
     PoolAddress,
+    PoolTokens,
     StakeDecimals,
     StakeAddress,
     ProxyAddress,
@@ -963,17 +1046,29 @@ export const getLptAPR = async (PoolData) => {
   const Reward1HelmetPrice = 1;
   const Reward2HelmetPrice = fromWei(Data2.data.toTokenAmount);
   let PerBlock;
+  let FixStakeValue;
   if (ProxySwap === "PANCAKE") {
     PerBlock = await CakePerBlock(ProxyAddress);
+    const StakeValue = await BalanceOf(HelmetAddress, 18, StakeAddress);
+    FixStakeValue = StakeValue * 2;
+    console.log(StakeValue * 2);
   }
   if (ProxySwap === "MDEX") {
     PerBlock = await Reward(ProxyAddress);
+    const StakeValue = await BalanceOf(HelmetAddress, 18, StakeAddress);
+    FixStakeValue = StakeValue * 2;
+    console.log(StakeValue * 2);
+  }
+  if (ProxySwap === "SUSHI") {
+    PerBlock = await SushiPerBlock(ProxyAddress);
+    const StakeValue = await getPoolTokens(SushiFarm, PoolTokens);
+    FixStakeValue = fromWei(StakeValue.balances[0]) * 2;
   }
   if (Reward1HelmetPrice && Reward2HelmetPrice) {
     const PromiseList = [
       StakeContracts.balanceOf(ProxyAddress),
       StakeContracts.totalSupply(),
-      HelmetContracts.balanceOf(StakeAddress),
+      // HelmetContracts.balanceOf(StakeAddress),
       ProxyContracts.totalAllocPoint(),
       ProxyContracts.poolInfo(ProxyPid),
       ApproveContracts.allowance(HelmetFarm, PoolAddress),
@@ -986,7 +1081,7 @@ export const getLptAPR = async (PoolData) => {
       const [
         StakeVolume,
         LptVolume,
-        StakeValue,
+        // StakeValue,
         TotalAllocPoint,
         PoolInfo,
         TotalReward1,
@@ -995,7 +1090,7 @@ export const getLptAPR = async (PoolData) => {
       ] = FixData;
       const FixStakeVolume = fromWei(StakeVolume, StakeDecimals);
       const FixLptVolume = fromWei(LptVolume, StakeDecimals);
-      const FixStakeValue = fromWei(StakeValue, HelmetDecimals) * 2;
+      // const FixStakeValue = fromWei(StakeValue, HelmetDecimals) * 2;
       const FixTotalAllocPoint = fromWei(TotalAllocPoint, 18);
       const FixAllocPoint = fromWei(PoolInfo[1], 18);
       const FixTotalReward1 = Number(TotalReward1)
@@ -1008,6 +1103,7 @@ export const getLptAPR = async (PoolData) => {
         (FixTotalReward1 - FixOutPutReward1) / FixReward1Time;
       const Reward2Daily =
         (FixAllocPoint / FixTotalAllocPoint) * (PerBlock * 28800);
+      console.log(Reward2Daily);
       const FixReward1Daily = Reward1Daily > 0 ? Reward1Daily : 0;
       const FixReward2Daily = Reward2Daily > 0 ? Reward2Daily : 0;
       const NumberatorReward1 = 365 * Reward1HelmetPrice * FixReward1Daily;
@@ -1017,6 +1113,12 @@ export const getLptAPR = async (PoolData) => {
         (FixStakeValue / FixLptVolume) * FixStakeVolume;
       const YearReward1 = NumberatorReward1 / DenominatorReward1;
       const YearReward2 = NumberatorReward2 / DenominatorReward2;
+      console.log(
+        NumberatorReward1,
+        DenominatorReward1,
+        DenominatorReward2,
+        PoolData
+      );
       const APR =
         fixD((Number(YearReward1) + Number(YearReward2)) * 100, 2) + "%";
       return (PoolData.APR = APR);

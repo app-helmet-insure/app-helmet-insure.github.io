@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { cloneDeep } from "lodash";
 import Web3 from "web3";
-import ERC20 from "../abi/ERC20_abi.json";
+import ERC20 from "../abi/ERC20ABI.json";
 import { Contract, Provider } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
 const BSCChainId = 56
@@ -103,7 +103,6 @@ export const getPoolInfo = (pool) => {
       //   timeSettle = 1629118800
       // curUserCount=0
       // purchasedCurrencyOf=0
-      console.log('resData', resData)
     const [
       total_completed_,
       total_amount,
@@ -153,7 +152,6 @@ export const getPoolInfo = (pool) => {
     if (purchasedCurrencyOf > 0) {
       is_join = true;
     }
-      console.log('price', pool.title,price)
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
@@ -221,7 +219,9 @@ export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => 
 // 质押
 export const onBurn_ = (_amount, iboData, callback) => {
   let web3_ = new Web3(window.ethereum)
-  let myContract = new web3_.eth.Contract(iboData.abi, iboData.address);
+  let myContract = new web3_.eth.Contract(iboData.abi, iboData.address, {
+    gasPrice: Web3.utils.toWei('6', 'gwei')
+  });
   myContract.methods
     .purchase(numToWei(String(_amount), iboData.currency.decimal))
     .send({ from: window.CURRENTADDRESS })

@@ -1,6 +1,6 @@
 import { web3 } from "~/assets/utils/web3-obj.js";
 import Web3 from "web3";
-import ERC20_abi from "~/abi/ERC20_abi.json";
+import ERC20ABI from "~/abi/ERC20ABI.json";
 import payaso_abi from "~/abi/payaso_abi.json";
 import factory_abi from "~/abi/factory_abi.json";
 import OrderABI from "~/abi/OrderABI.json";
@@ -105,7 +105,7 @@ export const getCurrentAccount = async () => {
 export const Long = async () => {
   const WEB3 = await web3();
   const charID = await getID();
-  return await new WEB3.eth.Contract(ERC20_abi.abi, getAddress("LONG", charID));
+  return await new WEB3.eth.Contract(ERC20ABI.abi, getAddress("LONG", charID));
 };
 
 export const Payaso = async () => {
@@ -143,7 +143,7 @@ export const Deposite = async (adress) => {
 export const expERC20 = async (address) => {
   const WEB3 = await web3();
   // console.log('window.WEB3###', window.WEB3);
-  return await new WEB3.eth.Contract(ERC20_abi.abi, address);
+  return await new WEB3.eth.Contract(ERC20ABI.abi, address);
 };
 // 获取四要素
 export const TokenExpERC20 = async (address) => {

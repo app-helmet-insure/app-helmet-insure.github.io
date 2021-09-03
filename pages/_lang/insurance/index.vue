@@ -2,20 +2,20 @@
   <div class="main_container">
     <Banner />
     <div class="home_container">
-      <InsuranceData />
-      <HelmetBurning />
-      <InsureanceList />
+      <Data />
+      <Burn />
+      <List />
     </div>
   </div>
 </template>
 <script>
-import InsuranceData from "~/components/insurance/insuranceData.vue";
-import HelmetBurning from "~/components/insurance/helmetBurning.vue";
-import InsureanceList from "~/components/insurance/insuranceList.vue";
+import Data from "~/components/insurance/data.vue";
+import Burn from "~/components/insurance/burn.vue";
+import List from "~/components/insurance/list.vue";
 import Banner from "~/components/insurance/banner.vue";
 export default {
   layout: "home",
-  components: { InsuranceData, InsureanceList, HelmetBurning, Banner },
+  components: { data, List, burn, Banner },
 };
 </script>
 <style lang="scss">

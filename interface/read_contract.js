@@ -2,9 +2,11 @@ import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import CakePoolABI from "~/abi/CakePoolABI.json";
 import MdexPoolABI from "~/abi/MdexPoolABI.json";
+import SushiPoolABI from "~/abi/SushiPoolABI.json";
 import OrderABI from "~/abi/OrderABI.json";
 import FectoryABI from "~/abi/factory_abi.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
+import SushiSwapABI from "~/abi/SushiSwap.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import MigrationABI from "~/abi/Migration.json";
 import IIOABI from "~/abi/iio_abi.json";
@@ -118,8 +120,28 @@ export const Earned3 = async (
     });
 };
 // Total daily output
+export const getPoolTokens = async (ContractAddress, pid) => {
+  let Contracts = await Web3Contract(SushiSwapABI, ContractAddress);
+  return Contracts.methods
+    .getPoolTokens(pid)
+    .call()
+    .then((res) => {
+      return res;
+    });
+};
+// Total daily output
 export const TotalAllocPoint = async (ContractAddress) => {
   let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  return Contracts.methods
+    .totalAllocPoint()
+    .call()
+    .then((res) => {
+      return fromWei(res);
+    });
+};
+// Total daily output
+export const SushiTotalAllocPoint = async (ContractAddress) => {
+  let Contracts = await Web3Contract(SushiPoolABI, ContractAddress);
   return Contracts.methods
     .totalAllocPoint()
     .call()
@@ -132,6 +154,15 @@ export const PoolInfo = async (ContractAddress, PoolPid) => {
   let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
   return Contracts.methods
     .poolInfo(PoolPid)
+    .call()
+    .then((res) => {
+      return res;
+    });
+};
+export const SushiPoolInfo = async (ContractAddress, LptAddress) => {
+  let Contracts = await Web3Contract(SushiPoolABI, ContractAddress);
+  return Contracts.methods
+    .poolInfo(LptAddress)
     .call()
     .then((res) => {
       return res;
@@ -152,6 +183,16 @@ export const MdexPerBlock = async (ContractAddress) => {
   let Contracts = await Web3Contract(MdexPoolABI, ContractAddress);
   return Contracts.methods
     .mdxPerBlock()
+    .call()
+    .then((res) => {
+      return fromWei(res);
+    });
+};
+// Sushi per block
+export const SushiPerBlock = async (ContractAddress) => {
+  let Contracts = await Web3Contract(SushiPoolABI, ContractAddress);
+  return Contracts.methods
+    .sushiPerBlock()
     .call()
     .then((res) => {
       return fromWei(res);

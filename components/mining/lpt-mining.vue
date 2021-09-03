@@ -10,11 +10,12 @@
         >
           <div :class="`lpt_mining_item lp_${storeThemes}`">
             <section class="item_pool_name_web WEB">
-              <span
-                class="onePager"
-                v-html="item.PoolName"
-                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-              ></span>
+              <span>
+                <img
+                  :src="require(`~/assets/img/icon/${item.PoolSwap}@2x.png`)"
+                  alt=""
+                />{{ item.PoolName }}
+              </span>
             </section>
             <section class="item_pool_earn_web WEB">
               <p>
@@ -59,11 +60,11 @@
               </a>
               <template v-else
                 ><button
-                  @click="HandleClickAction(item, 'STAKE')"
+                  @click="HandleClickAction(item, 'Stake')"
                   :class="
                     ActiveMining == item.RewardSymbol &&
                     ShowActiveMining &&
-                    ActiveType == 'STAKE'
+                    ActiveType == 'Stake'
                       ? 'activeButton stakeMining'
                       : 'stakeMining'
                   "
@@ -72,11 +73,11 @@
                   <i class="selectDown"></i>
                 </button>
                 <button
-                  @click="HandleClickAction(item, 'CLAIM')"
+                  @click="HandleClickAction(item, 'Claim')"
                   :class="
                     ActiveMining == item.RewardSymbol &&
                     ShowActiveMining &&
-                    ActiveType == 'CLAIM'
+                    ActiveType == 'Claim'
                       ? 'activeButton claimMining'
                       : 'claimMining'
                   "
@@ -86,11 +87,12 @@
               ></template>
             </section>
             <section class="item_pool_name_h5 H5">
-              <span
-                class="onePager"
-                v-html="item.PoolName"
-                @click="hadnleShowOnePager($event, item.ONE_PAGER)"
-              ></span>
+              <span>
+                <img
+                  :src="require(`~/assets/img/icon/${item.PoolSwap}@2x.png`)"
+                  alt=""
+                />{{ item.PoolName }}
+              </span>
               <p>
                 {{ $t("Table.EarnList") }}
                 <span>
@@ -131,11 +133,11 @@
               </a>
               <template v-else>
                 <button
-                  @click="HandleClickAction(item, 'STAKE', true)"
+                  @click="HandleClickAction(item, 'Stake', true)"
                   :class="
                     ActiveMining == item.RewardSymbol &&
                     ShowActiveMining &&
-                    ActiveType == 'STAKE'
+                    ActiveType == 'Stake'
                       ? 'activeButton stakeMining'
                       : 'stakeMining'
                   "
@@ -144,11 +146,11 @@
                   {{ $t("Table.Stakeing") }}
                 </button>
                 <button
-                  @click="HandleClickAction(item, 'CLAIM', true)"
+                  @click="HandleClickAction(item, 'Claim', true)"
                   :class="
                     ActiveMining == item.RewardSymbol &&
                     ShowActiveMining &&
-                    ActiveType == 'CLAIM'
+                    ActiveType == 'Claim'
                       ? 'activeButton claimMining'
                       : 'claimMining'
                   "
@@ -170,7 +172,7 @@
             >
               <use xlink:href="#icon-close"></use>
             </svg>
-            <POOL
+            <Pool
               :ActiveData="ActiveData"
               :ActiveFlag="ActiveFlag"
               :ActiveType="ActiveType"
@@ -185,7 +187,7 @@
               <div class="wraper_header">
                 <h3 class="">
                   {{
-                    ActiveType == "STAKE"
+                    ActiveType == "Stake"
                       ? $t("Insurance.Insurance_text23")
                       : $t("Table.Claim")
                   }}
@@ -198,7 +200,7 @@
                   <use xlink:href="#icon-close"></use>
                 </svg>
               </div>
-              <POOL
+              <Pool
                 :ActiveData="ActiveData"
                 :ActiveFlag="ActiveFlag"
                 :ActiveType="ActiveType"
@@ -213,14 +215,13 @@
 
 <script>
 import { lptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
-import POOL from "./miningPool.vue";
+import Pool from "./mining-pool.vue";
 import Wraper from "~/components/common/wraper.vue";
-import { GetPoolAPR } from "./mining_apr.js";
 import PHeader from "~/components/common/header.vue";
 export default {
   components: {
     Wraper,
-    POOL,
+    Pool,
     PHeader,
   },
   data() {
@@ -379,6 +380,13 @@ export default {
         color: themed("lptmining_color1");
       }
       line-height: 16px;
+      display: flex;
+      align-items: center;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+      }
     }
     > i {
       margin: 0 4px 0 2px;
@@ -647,17 +655,12 @@ export default {
         color: themed("lptmining_color1");
       }
       line-height: 16px;
-      > i {
-        margin: 0 4px 0 2px;
-        cursor: pointer;
-        svg {
-          fill: rgba(164, 162, 178, 1);
-        }
-        &:hover {
-          svg {
-            fill: #fd8a2b;
-          }
-        }
+      display: flex;
+      align-items: center;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
       }
     }
     p {

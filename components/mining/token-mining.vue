@@ -262,7 +262,7 @@
           >
             <use xlink:href="#icon-close"></use>
           </svg>
-          <POOL
+          <Pool
             :ActiveData="ActiveData"
             :ActiveFlag="ActiveFlag"
             :ActiveType="ActiveType"
@@ -290,7 +290,7 @@
                 <use xlink:href="#icon-close"></use>
               </svg>
             </div>
-            <POOL
+            <Pool
               :ActiveData="ActiveData"
               :ActiveFlag="ActiveFlag"
               :ActiveType="ActiveType"
@@ -305,7 +305,7 @@
 <script>
 import { Earned } from "~/interface/read_contract.js";
 import Wraper from "~/components/common/wraper.vue";
-import POOL from "./miningPool.vue";
+import Pool from "./mining-pool.vue";
 import PHeader from "~/components/common/header.vue";
 import {
   comboPoolList,
@@ -316,7 +316,7 @@ import {
 export default {
   components: {
     Wraper,
-    POOL,
+    Pool,
     PHeader,
   },
   data() {

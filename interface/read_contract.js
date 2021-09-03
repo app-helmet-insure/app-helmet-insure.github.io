@@ -6,6 +6,7 @@ import SushiPoolABI from "~/abi/sushi_pool_abi.json";
 import OrderABI from "~/abi/order_abi.json";
 import FectoryABI from "~/abi/factory_abi.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
+import SushiSwapABI from "~/abi/SushiSwap.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import MigrationABI from "~/abi/Migration.json";
 import IIOABI from "~/abi/iio_abi.json";
@@ -119,6 +120,16 @@ export const Earned3 = async (
     });
 };
 // Total daily output
+export const getPoolTokens = async (ContractAddress, pid) => {
+  let Contracts = await Web3Contract(SushiSwapABI, ContractAddress);
+  return Contracts.methods
+    .getPoolTokens(pid)
+    .call()
+    .then((res) => {
+      return res; 
+    });
+};
+// Total daily output
 export const TotalAllocPoint = async (ContractAddress) => {
   let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
   return Contracts.methods
@@ -127,7 +138,7 @@ export const TotalAllocPoint = async (ContractAddress) => {
     .then((res) => {
       return fromWei(res);
     });
-}; 
+};
 // Total daily output
 export const SushiTotalAllocPoint = async (ContractAddress) => {
   let Contracts = await Web3Contract(SushiPoolABI, ContractAddress);

@@ -10,7 +10,12 @@
         >
           <div :class="`lptMiningItem lp_${storeThemes}`">
             <section class="itemPoolNameWEB WEB">
-              <span>{{ item.POOL_NAME }}</span>
+              <span>
+                <img
+                  :src="require(`~/assets/img/icon/${item.POOL_SWAP}@2x.png`)"
+                  alt=""
+                />{{ item.POOL_NAME }}</span
+              >
             </section>
             <section class="itemPoolEarnWEB WEB">
               <p>
@@ -102,7 +107,12 @@
               ></template>
             </section>
             <section class="itemPoolNameH5 H5">
-              <span>{{ item.POOL_NAME }}</span>
+              <span>
+                <img
+                  :src="require(`~/assets/img/icon/${item.POOL_SWAP}@2x.png`)"
+                  alt=""
+                />{{ item.POOL_NAME }}</span
+              >
 
               <p>
                 {{ $t("Table.EarnList") }}
@@ -412,6 +422,7 @@ export default {
     display: flex;
     align-items: center;
     flex: 3;
+
     span {
       font-size: 16px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
@@ -420,6 +431,13 @@ export default {
         color: themed("lptmining_color1");
       }
       line-height: 16px;
+      display: flex;
+      align-items: center;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
+      }
     }
     > i {
       margin: 0 4px 0 2px;
@@ -688,17 +706,12 @@ export default {
         color: themed("lptmining_color1");
       }
       line-height: 16px;
-      > i {
-        margin: 0 4px 0 2px;
-        cursor: pointer;
-        svg {
-          fill: rgba(164, 162, 178, 1);
-        }
-        &:hover {
-          svg {
-            fill: #fd8a2b;
-          }
-        }
+      display: flex;
+      align-items: center;
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 4px;
       }
     }
     p {

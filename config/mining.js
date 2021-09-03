@@ -2,6 +2,7 @@ export const lptPool = [
   {
     POOL_NAME: "HELMET-BNB MLP",
     STAKE_SYMBOL: "HELMET-BNB MLP",
+    POOL_SWAP: "mdx",
     STAKE_UNIT: "MLP",
     REARD_VOLUME: "two",
     REWARD_NAME: "mdx",
@@ -40,6 +41,7 @@ export const lptPool = [
   {
     POOL_NAME: `HELMET-BNB LPT`,
     STAKE_SYMBOL: "HELMET-BNB LPT",
+    POOL_SWAP: "pancake",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "one",
     REWARD_NAME: "helmet1",
@@ -76,6 +78,7 @@ export const lptPool = [
   {
     POOL_NAME: `HELMET-USDT LPT`,
     STAKE_SYMBOL: "HELMET-USDT LPT",
+    POOL_SWAP: "babyswap",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "one",
     REWARD_NAME: "baby",
@@ -112,6 +115,7 @@ export const lptPool = [
   {
     POOL_NAME: `HELMET-BNB LPT`,
     STAKE_SYMBOL: "HELMET-BNB LPT",
+    POOL_SWAP: "acsi",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "two",
     REWARD_NAME: "helmet_acsi",
@@ -122,7 +126,8 @@ export const lptPool = [
     iio: false,
     REWARD_TYPE: "APR",
     ONE_PAGER: false,
-    POOL_PID: "33",
+    POOL_PID:
+      "0x86ddc49f66fa166e72e650a72752b43ce23ecbe500020000000000000000000b",
     TOKEN1_DECIMALS: 18,
     TOKEN1_SYMBOL: "HELMET",
     TOKEN1_ADDRESS: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
@@ -148,6 +153,7 @@ export const lptPool = [
   {
     POOL_NAME: `GUARD-USDC LPT`,
     STAKE_SYMBOL: "GUARD-USDC LPT",
+    POOL_SWAP: "quick",
     STAKE_UNIT: "LPT",
     REARD_VOLUME: "two",
     REWARD_NAME: "guard_quick",

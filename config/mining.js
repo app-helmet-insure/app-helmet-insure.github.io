@@ -1,3 +1,4 @@
+
 export const lptPool = [
   {
     POOL_NAME: "HELMET-BNB MLP",
@@ -121,7 +122,7 @@ export const lptPool = [
     REWARD_NAME: "helmet_acsi",
     REARD_IMGSHOW: true,
     MING_TIME: "Ongoing",
-    OPEN_TIME: "Mining",
+    OPEN_TIME: "2021/09/04 08:00",
     COMBO_FLAG: false,
     iio: false,
     REWARD_TYPE: "APR",

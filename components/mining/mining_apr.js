@@ -360,21 +360,12 @@ const SushiDoublePoolAPR = async ({
   let ASCI_FARM = "0xa82f327BBbF0667356D2935C6532d164b06cEced";
   let POOL_TOKENS = await getPoolTokens(ASCI_FARM, POOL_PID);
   let LPT_TOKEN1 = fromWei(POOL_TOKENS.balances[0]);
-  let LPT_TOKEN2 = fromWei(POOL_TOKENS.balances[1]);
-  let BNB_HELMET = await GetTokenForHELMETValue(
-    "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-    "WBNB",
-    18
-  );
-  let LPT_VALUE = Number(LPT_TOKEN1) + Number(LPT_TOKEN2 * BNB_HELMET);
-  console.log(LPT_VALUE);
+  let LPT_VALUE = Number(LPT_TOKEN1) * 2;
   let STAKE_BNB_VALUE = fromWei(Data.data.toTokenAmount);
   let TOTAL_VOLUME = await TotalSupply(STAKE_ADDRESS, 18);
   let STAKE_VOLUME = await BalanceOf(STAKE_ADDRESS, 18, PROXY_ADDRESS);
-  console.log(STAKE_VOLUME);
   let VOLUME_OF_STAKE =
     (await BalanceOf(REWARD2_ADDRESS, STAKE_DECIMALS, STAKE_ADDRESS)) * 2;
-  console.log(VOLUME_OF_STAKE);
   // total alloc of pool
   let POOL_TOTAL_ALLOC_POINT = await SushiTotalAllocPoint(PROXY_ADDRESS);
   // cake per block
@@ -386,9 +377,9 @@ const SushiDoublePoolAPR = async ({
   let DAYILY_REWARD2 =
     (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (CAKE_PER_BLOCK * 28800) + "";
   console.log(DAYILY_REWARD2);
-  let DENOMINATOR_REWARD = LPT_VALUE * STAKE_VOLUME;
+  let DENOMINATOR_REWARD2 = (LPT_VALUE / TOTAL_VOLUME) * STAKE_VOLUME;
   let NUMBERATOR_REWARD2 = 365 * STAKE_BNB_VALUE * DAYILY_REWARD2;
-  let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR_REWARD;
+  let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR_REWARD2;
   let TOTAL_REWARD1 = await PoolAllowance(
     REWARD1_ADDRESS,
     HELMET_FARM,
@@ -399,8 +390,10 @@ const SushiDoublePoolAPR = async ({
   let TIME_REWARD1 = await RewardsDuration(POOL_ADDRESS);
   let DAYILY_REWARD1 = (TOTAL_REWARD1 - SPEED_REWARD1) / (TIME_REWARD1 / 86400);
   let NUMBERATOR_REWARD1 = 365 * 1 * DAYILY_REWARD1;
-  let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR_REWARD;
-  console.log(APR_REWARD1, APR_REWARD2);
+  console.log(LPT_VALUE, STAKE_VOLUME);
+  let DENOMINATOR_REWARD1 = LPT_VALUE * STAKE_VOLUME;
+  let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR_REWARD1;
+  console.log(NUMBERATOR_REWARD1, DENOMINATOR_REWARD1, "###########");
   let APR = fixD((APR_REWARD1 + APR_REWARD2) * 100, 2) + "%";
   return APR;
 };

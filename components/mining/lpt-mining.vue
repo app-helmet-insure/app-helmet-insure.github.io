@@ -218,6 +218,7 @@ import { lptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
 import Pool from "./mining-pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
+import moment from "moment";
 export default {
   components: {
     Wraper,
@@ -226,10 +227,17 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD:components/mining/lpt-mining.vue
       FixPoolList: [],
       ActiveType: "",
       ShowActiveMining: false,
       ActiveMining: "",
+=======
+      poolList: [],
+      activeType: "",
+      showActiveMining: false,
+      activeMining: "",
+>>>>>>> master:components/mining/lptMining.vue
       TradeType: "", //H5 tradingType
       claimLoading: false,
       HelmetBalance: 0,
@@ -243,10 +251,22 @@ export default {
     },
   },
   mounted() {
+<<<<<<< HEAD:components/mining/lpt-mining.vue
     this.FixPoolList = formatMiningPool(lptPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
+=======
+    this.GetPoolItemAPR();
+    lptPool.map((item) => {
+      console.log(item.OPEN_TIME, item.OPEN_TIME != "Mining");
+      if (item.OPEN_TIME != "Mining") {
+        item.OPEN_TIME = this.getMiningTime(item.OPEN_TIME);
+      }
+    });
+    console.log(lptPool);
+    this.poolList = lptPool;
+>>>>>>> master:components/mining/lptMining.vue
   },
   methods: {
     initPool() {
@@ -262,6 +282,31 @@ export default {
       this.ActiveType = Action;
       this.ActiveFlag = Flag;
       this.ActiveMining = PoolData.RewardSymbol;
+    },
+    getMiningTime(time) {
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        return template;
+      } else {
+        return "Mining";
+      }
     },
   },
 };

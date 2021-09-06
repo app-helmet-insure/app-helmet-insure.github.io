@@ -145,12 +145,33 @@ export const lptPoolList = [
     APR: "--",
     JumpLink1:
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
+<<<<<<< HEAD
   },
   {
     PoolName: `HELMET-BNB LPT`,
     PoolSwap: "acsi",
     PoolType: "lpt",
     PoolTokens:
+=======
+    APRTYPE: "TokenDoublePoolAPR",
+    REWARD_YEAR: "Infinity",
+  },
+  {
+    POOL_NAME: `HELMET-BNB LPT`,
+    STAKE_SYMBOL: "HELMET-BNB LPT",
+    POOL_SWAP: "acsi",
+    STAKE_UNIT: "LPT",
+    REARD_VOLUME: "two",
+    REWARD_NAME: "helmet_acsi",
+    REARD_IMGSHOW: true,
+    MING_TIME: "Ongoing",
+    OPEN_TIME: "2021/09/04 08:00",
+    COMBO_FLAG: false,
+    iio: false,
+    REWARD_TYPE: "APR",
+    ONE_PAGER: false,
+    POOL_PID:
+>>>>>>> master
       "0x86ddc49f66fa166e72e650a72752b43ce23ecbe500020000000000000000000b",
     PoolAddress: "0x1ECc83c300bCe18Ab7452aE2C4c78fc4BBf04c66",
     ProxyPid: "0x86ddc49f66fa166e72e650a72752b43ce23ecbe5",

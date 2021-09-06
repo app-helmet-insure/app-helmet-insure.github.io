@@ -1,7 +1,11 @@
 <template>
   <div class="insurance_market">
     <Chart :ActiveData="ActiveData" :ActiveType="ActiveType"></Chart>
-    <div class="policy_wrap" v-if="PolicyList && PolicyList.length">
+    <Loading v-if="isLoading" :isLoading="isLoading" />
+    <div
+      class="policy_wrap"
+      v-if="!isLoading && PolicyList && PolicyList.length"
+    >
       <div class="policy_title WEB">
         <div class="title_index">{{ $t("Table.ID") }}</div>
         <div class="title_price">{{ $t("Table.Rent") }}</div>
@@ -81,7 +85,7 @@
         </div>
       </div>
     </div>
-    <NoData v-else />
+    <NoData v-if="!isLoading && (!PolicyList || !PolicyList.length)" />
     <div class="pagination">
       <el-pagination
         background
@@ -116,16 +120,16 @@
 
 <script>
 import { fixD } from "~/assets/js/util.js";
-import Page from "~/components/common/page.vue";
 import Chart from "./chart";
 import { getInsuranceList } from "~/interface/event.js";
 import OrderABI from "../../abi/OrderABI.json";
 import { toWei, fromWei } from "~/interface/index.js";
 import { getContract } from "../../web3/index.js";
-import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
-import NoData from "~/components/common/no-data.vue";
-import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import BigNumber from "bignumber.js";
+import NoData from "./no-data.vue";
+import Loading from "./loading.vue";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
@@ -133,7 +137,7 @@ export default {
     SuccessConfirmationDialog,
     NoData,
     Chart,
-    Page,
+    Loading,
   },
   props: ["ActiveData", "ActiveType"],
   data() {
@@ -161,6 +165,7 @@ export default {
   watch: {
     ActiveType(value) {
       if (value) {
+        this.isLoading = true;
         this.getPolicyList();
       }
     },
@@ -186,7 +191,6 @@ export default {
       }
     },
     getPolicyList() {
-      this.isLoading = true;
       const {
         StrikePrice,
         StrikePriceDecimals,
@@ -290,6 +294,7 @@ export default {
               (a, b) => Number(b.show_volume) - Number(a.show_volume)
             );
             this.PolicyList = FixList;
+            this.isLoading = false;
           }
         } else {
           this.isLoading = false;

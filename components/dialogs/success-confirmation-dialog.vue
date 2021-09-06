@@ -3,6 +3,7 @@
     top="35vh"
     center
     append-to-body
+    custom-class="success_dialog"
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >
@@ -96,26 +97,26 @@ export default {
   }
 }
 @media screen and(min-width:750px) {
-  .el-dialog {
+  .success_dialog {
     border-radius: 10px !important;
     width: 400px !important;
-  }
-  .el-dialog__close::before {
-    font-size: 24px;
-  }
-  .success_dialog_body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
+    .success_dialog_body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 @media screen and(max-width:750px) {
-  .el-dialog {
+  .success_dialog {
     border-radius: 10px;
     width: 95% !important;
-  }
-  .el-dialog__close::before {
-    font-size: 24px;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
   }
 }
 </style>

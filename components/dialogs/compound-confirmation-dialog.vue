@@ -4,6 +4,7 @@
     center
     append-to-body
     :visible.sync="DialogVisible"
+    custom-class="compound_dialog"
     @close="DialogClose"
   >
     <div class="compound_dialog_body">
@@ -85,25 +86,25 @@ export default {
   }
 }
 @media screen and(min-width:750px) {
-  .el-dialog {
+  .compound_dialog {
     border-radius: 10px !important;
     width: 400px !important;
-  }
-  .el-dialog__close::before {
-    font-size: 24px;
-  }
-  .compound_dialog_body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
+    .compound_dialog_body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 @media screen and(max-width:750px) {
-  .el-dialog {
-    border-radius: 10px;
+  .compound_dialog {
+    border-radius: 10px !important;
     width: 95% !important;
-  }
-  .el-dialog__close::before {
+    .el-dialog__close::before {
+    }
     font-size: 24px;
   }
 }

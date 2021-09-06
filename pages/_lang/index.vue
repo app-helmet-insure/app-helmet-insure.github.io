@@ -3,7 +3,7 @@
     <div class="helmet_logo animate__animated animate__bounce">
       <a></a>
     </div>
-    <View />
+    <Views />
     <City :ClassName="HelmetCityInfoClass" />
     <div class="helmet_info">
       <Course
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import View from "~/components/indexPage/view.vue";
+import Views from "~/components/indexPage/views.vue";
 import City from "~/components/indexPage/city.vue";
 import Course from "~/components/indexPage/course.vue";
 import More from "~/components/indexPage/more.vue";
@@ -30,7 +30,7 @@ import Media from "~/components/indexPage/media.vue";
 export default {
   layout: "page",
   components: {
-    View,
+    Views,
     City,
     Course,
     More,

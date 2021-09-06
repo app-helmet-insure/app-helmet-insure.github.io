@@ -32,11 +32,6 @@
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
-    <RiskWarning
-      v-if="showRiskWarning"
-      @close="closeRiskWarning"
-      @confirm="closeRiskWarning"
-    />
     <!-- 下载钱包指引界面 -->
     <WallectDownLoad />
     <!-- 钱包交互状态提示弹框 -->
@@ -46,7 +41,15 @@
       @close="closeStatusDialog"
     />
     <Airdrop />
-    <buyDialog />
+    <BuyDialog />
+    <RiskConfirmationDialog
+      :DialogVisible="RiskVisible"
+      :DialogClose="RiskClose"
+    />
+    <NetWorkConfirmationDialog
+      :DialogVisible="NetWorkVisible"
+      :DialogClose="NetWorkClose"
+    />
   </div>
 </template>
 <script>
@@ -54,11 +57,10 @@ import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
 import Airdrop from "~/components/common/airdrop.vue";
-import buyDialog from "~/components/common/buy-dialog.vue";
+import BuyDialog from "~/components/common/buy-dialog.vue";
 import { web3 } from "~/assets/utils/web3-obj.js";
 import { getID } from "~/assets/utils/address-pool.js";
 import { mateMaskInfo } from "~/assets/utils/matemask.js";
-import RiskWarning from "~/components/common/risk-warning.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
 import { pancakeswap } from "~/assets/utils/pancakeswap.js";
@@ -67,22 +69,24 @@ import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
+import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
 export default {
   name: "home",
   components: {
     PHeader,
     PSlider,
     PFooter,
-    RiskWarning,
     StatusDialog,
     Airdrop,
-    buyDialog,
+    BuyDialog,
     WallectDownLoad,
+    NetWorkConfirmationDialog,
+    RiskConfirmationDialog,
   },
   data() {
     return {
       times: 0,
-      showRiskWarning: false,
       statusData: {
         type: "",
         title: "",
@@ -93,36 +97,13 @@ export default {
       showStatusDialog: false,
       TitleTextShow: true,
       canShow: false,
+      NetWorkVisible: false,
+      RiskVisible: false,
     };
   },
   computed: {
     routeObj() {
       return this.$route;
-    },
-    longMap() {
-      return this.$store.state.longMap;
-    },
-    sellMap() {
-      return this.$store.state.sellMap;
-    },
-    buyMap() {
-      return this.$store.state.buyMap;
-    },
-    longMapAndSellMap() {
-      if (this.longMap && this.sellMap) {
-        return {
-          longMap: this.longMap,
-          sellMap: this.sellMap,
-        };
-      }
-      return null;
-    },
-    aboutInfoSell() {
-      return this.$store.state.aboutInfoSell;
-    },
-    // 抵押物
-    policyColArray() {
-      return this.$store.state.policyColArray;
     },
     // 标的物
     policyUndArray() {
@@ -141,11 +122,10 @@ export default {
   },
   watch: {
     ChainID(newValue) {
-      console.log(newValue);
       if (newValue == 56) {
-        this.closeNetWorkTip();
+        this.NetWorkVisible = false;
       } else {
-        this.showNetWorkTip();
+        this.NetWorkVisible = true;
       }
     },
     storeThemes(newValue) {
@@ -159,7 +139,7 @@ export default {
   async mounted() {
     // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
-      this.showRiskWarning = true;
+      this.RiskVisible = true;
     }
     this.copy();
     window.WEB3 = await web3();
@@ -194,29 +174,14 @@ export default {
     this.canShow = true;
   },
   methods: {
+    NetWorkClose() {
+      this.NetWorkVisible = false;
+    },
+    RiskClose() {
+      this.RiskVisible = false;
+    },
     openBUY() {
       this.$bus.$emit("OPEN_BUY_DIALOG", true);
-    },
-    closeNetWorkTip() {
-      this.$bus.$emit("CLOSE_STATUS_DIALOG", (data) => {
-        this.closeStatusDialog();
-        window.statusDialog = false;
-      });
-    },
-    showNetWorkTip() {
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "WARNING",
-        layout: "layout1",
-        activeTip: true,
-        activeTipText1: "",
-        activeTipText2: "",
-        loading: false,
-        button: true,
-        buttonText: "Change",
-        showDialog: true,
-        conText: "You need to change Binance Smart Chain NetWork",
-        action: "netWork",
-      });
     },
     copy() {
       let copy = new ClipboardJS("#copy_default");
@@ -243,12 +208,6 @@ export default {
     closeStatusDialog() {
       window.statusDialog = false;
       this.showStatusDialog = false;
-    },
-    openRiskWarning() {
-      this.showRiskWarning = true;
-    },
-    closeRiskWarning() {
-      this.showRiskWarning = false;
     },
     monitorNetWorkChange() {
       if (window.ethereum) {
@@ -303,9 +262,6 @@ export default {
       } catch (error) {
         alert(error);
       }
-    },
-    refreshAllData() {
-      this.$store.dispatch("setAllMap");
     },
     // 获取余额
     async getBalance() {

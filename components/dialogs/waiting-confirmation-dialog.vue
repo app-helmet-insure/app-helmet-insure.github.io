@@ -3,6 +3,7 @@
     top="35vh"
     center
     append-to-body
+    custom-class="waiting_dialog"
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >
@@ -81,28 +82,28 @@ export default {
   }
 }
 @media screen and(min-width:750px) {
-  .el-dialog {
+  .waiting_dialog {
     border-radius: 10px !important;
     width: 400px !important;
     min-height: 220px;
-  }
-  .el-dialog__close::before {
-    font-size: 24px;
-  }
-  .waiting_dialog_body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
+    .waiting_dialog_body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 @media screen and(max-width:750px) {
-  .el-dialog {
+  .waiting_dialog {
     border-radius: 10px;
     width: 95% !important;
     min-height: 220px;
-  }
-  .el-dialog__close::before {
-    font-size: 24px;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
   }
 }
 </style>

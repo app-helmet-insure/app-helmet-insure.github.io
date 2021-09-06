@@ -227,17 +227,10 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD:components/mining/lpt-mining.vue
       FixPoolList: [],
       ActiveType: "",
       ShowActiveMining: false,
       ActiveMining: "",
-=======
-      poolList: [],
-      activeType: "",
-      showActiveMining: false,
-      activeMining: "",
->>>>>>> master:components/mining/lptMining.vue
       TradeType: "", //H5 tradingType
       claimLoading: false,
       HelmetBalance: 0,
@@ -251,22 +244,10 @@ export default {
     },
   },
   mounted() {
-<<<<<<< HEAD:components/mining/lpt-mining.vue
     this.FixPoolList = formatMiningPool(lptPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
-=======
-    this.GetPoolItemAPR();
-    lptPool.map((item) => {
-      console.log(item.OPEN_TIME, item.OPEN_TIME != "Mining");
-      if (item.OPEN_TIME != "Mining") {
-        item.OPEN_TIME = this.getMiningTime(item.OPEN_TIME);
-      }
-    });
-    console.log(lptPool);
-    this.poolList = lptPool;
->>>>>>> master:components/mining/lptMining.vue
   },
   methods: {
     initPool() {

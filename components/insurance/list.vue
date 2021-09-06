@@ -67,9 +67,9 @@
               <button
                 @click="buyInsurance(item, 'Put')"
                 :class="
-                  activeInsurance == item.InsuranceType &&
-                  showActiveInsurance &&
-                  activeType == 'PUT'
+                  ActiveInsurance == item.InsuranceName &&
+                  TradeType == 'Buy' &&
+                  ActiveType == 'Put'
                     ? 'activeButton buyPutInsurance'
                     : 'buyPutInsurance'
                 "
@@ -80,9 +80,9 @@
               <button
                 @click="buyInsurance(item, 'Call')"
                 :class="
-                  activeInsurance == item.InsuranceType &&
-                  showActiveInsurance &&
-                  activeType == 'CALL'
+                  ActiveInsurance == item.InsuranceName &&
+                  TradeType == 'Buy' &&
+                  ActiveType == 'Call'
                     ? 'activeButton buyCallInsurance'
                     : 'buyCallInsurance'
                 "
@@ -93,9 +93,7 @@
               <button
                 @click="sellInsurance(item)"
                 :class="
-                  activeInsurance == item.InsuranceType &&
-                  showActiveInsurance &&
-                  activeType == 'SELL'
+                  ActiveInsurance == item.InsuranceName && TradeType == 'Sell'
                     ? 'activeButton issueInsurance'
                     : 'issueInsurance'
                 "
@@ -123,7 +121,7 @@
               <button @click="buyInsurance(item, ActiveType, true)">
                 {{ $t("Insurance.Insurance_text24") }}
               </button>
-              <button @click="sellInsurance(item.InsuranceType)">
+              <button @click="sellInsurance(item, true)">
                 {{ $t("Insurance.Insurance_text8") }}
               </button>
             </section>
@@ -131,16 +129,20 @@
         </div>
         <div
           class="insurance_detail_web WEB"
-          v-if="activeInsurance === item.InsuranceName"
+          v-if="ActiveInsurance === item.InsuranceName"
         >
-          <svg class="close" aria-hidden="true" @click="activeInsurance = ''">
+          <svg class="close" aria-hidden="true" @click="ActiveInsurance = ''">
             <use xlink:href="#icon-close"></use>
           </svg>
-          <Market :ActiveData="ActiveData" :ActiveType="ActiveType" />
+          <Market
+            :ActiveData="ActiveData"
+            :ActiveType="ActiveType"
+            v-if="TradeType == 'Buy'"
+          />
           <Supply
-            :activeInsurance="activeInsurance"
+            :ActiveData="ActiveData"
             :InsureTypeActive="'All'"
-            v-if="activeType == 'Sell'"
+            v-if="TradeType == 'Sell'"
           />
         </div>
         <Wraper>
@@ -166,12 +168,9 @@
               >
             </div>
             <div class="activePage">
-              <Market
-                :ActiveData="ActiveData"
-                :ActiveType="ActiveType"
-              />
+              <Market :ActiveData="ActiveData" :ActiveType="ActiveType" />
               <Supply
-                :activeInsurance="activeInsurance"
+                :ActiveInsurance="ActiveInsurance"
                 :InsureTypeActive="InsureTypeActive"
                 v-if="TradeType == 'Sell'"
               />
@@ -199,16 +198,16 @@ export default {
   },
   data() {
     return {
-      activeInsurance: "",
-      showActiveInsurance: false,
-      activeType: "",
-      InsureTypeActive: "CALL", //H5 tab
-      TradeType: "", // h5 action type
+      ActiveType: "",
+
       toRounding,
       fixD,
       InsuanceData: [],
       ActiveData: [],
       ActiveType: "Call",
+      ActiveInsurance: "",
+      InsureTypeActive: "Put", //H5 tab
+      TradeType: "Buy",
     };
   },
   mounted() {
@@ -251,15 +250,21 @@ export default {
       });
     },
     buyInsurance(data, type, isH5) {
-      this.activeInsurance = data.InsuranceName;
+      this.ActiveInsurance = data.InsuranceName;
       this.ActiveData = data;
       this.ActiveType = type;
+      this.TradeType = "Buy";
       if (isH5) {
         this.$bus.$emit("OPEN_WRAPER_PAFE", true);
       }
     },
-    sellInsurance(data, type) {
-      console.log(data);
+    sellInsurance(data, type, isH5) {
+      this.ActiveInsurance = data.InsuranceName;
+      this.ActiveData = data;
+      this.TradeType = "Sell";
+      if (isH5) {
+        this.$bus.$emit("OPEN_WRAPER_PAFE", true);
+      }
     },
     closeWarpper() {
       this.$bus.$emit("OPEN_WRAPER_PAFE", false);

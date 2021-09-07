@@ -236,6 +236,11 @@ export default {
             toTokenAddress: BUSD,
             amount: Amount,
           });
+          let Data2 = await getTokenPrice({
+            fromTokenAddress: CollateralAddress,
+            toTokenAddress: BUSD,
+            amount: Amount,
+          });
           return (
             (Item.LastPrice = fromWei(
               Data.data.toTokenAmount,

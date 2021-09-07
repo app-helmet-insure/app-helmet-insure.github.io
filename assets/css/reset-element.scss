@@ -78,7 +78,7 @@
   background: #fd7e14;
 }
 .el-button--primary {
-  border: none;
+  border: none !important;
   @include themeify {
     background: themed("black_button");
     color: themed("black_button_text");
@@ -89,5 +89,12 @@
     @include themeify {
       background: themed("black_button_hover");
     }
+  }
+}
+.el-button--default {
+  &:hover {
+    background: none;
+    border: 1px solid #fd7e14;
+    color: #fd7e14;
   }
 }

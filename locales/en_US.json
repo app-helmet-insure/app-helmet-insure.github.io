@@ -127,7 +127,7 @@
     "HELMETRewards": "Rewards",
     "ClaimAllRewards": "Claim Rewards",
     "Stake": "Stake",
-    "StakeAndCompound":"Confirm Deposit & Compound",
+    "StakeAndCompound": "Confirm Deposit & Compound",
     "Unstake": "Unstake",
     "Claim": "Claim",
     "DenAssets": "Denominated Asset",
@@ -273,10 +273,10 @@
     "MiningTip2": "You can farm dedicated Helmet tokens, or earn COMBO rewards by staking different Liquidity Provider Tokens (LPTs).",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
     "IIOTip2": "New assets distribution model with European option logic.",
-    "APY":"APY",
-    "APR":"APR",
-    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
-    "EarnTip2":"The return on compound interest will get higher and higher over time."
+    "APY": "APY",
+    "APR": "APR",
+    "EarnTip1": "Daily income withdrawal and manual reinvestment.",
+    "EarnTip2": "The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "Account",
@@ -346,7 +346,7 @@
     "Tips6": "Update at 22:00 SGT daily",
     "Tips7": "New polygon dev plan in!!!  Better&healthier bridge approach rush on its way and your GUARD Credits are still valid!!!",
     "ToStake": "Go Deposit",
-    "Pause":"Temporarily closed"
+    "Pause": "Temporarily closed"
   },
   "IBO": {
     "IBO_text1": "m",
@@ -394,5 +394,8 @@
     "IBO_text39": "Aug.31st 20:00 UTC+8",
     "IBO_text40": "Sep.3th 23:00 UTC+8",
     "IBO_text41": "Sep.1st 19:00 UTC+8"
+  },
+  "Dialogs": {
+    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."
   }
 }

@@ -37,29 +37,31 @@
             </svg>
           </el-tooltip>
         </div>
-        <el-select v-model="CallDpr" style="width: 100%">
+        <el-select
+          v-model="ShowCallDPR"
+          style="width: 100%"
+          @change="handleChangeCallDPR"
+        >
           <el-option key="0.0014" value="0.0014" label="0.14%">0.14%</el-option>
           <el-option key="0.0028" value="0.0028" label="0.28%">0.28%</el-option>
           <el-option key="0.0056" value="0.0056" label="0.56%">0.56%</el-option>
         </el-select>
       </div>
       <p class="expect_earn">
-        {{ $t("Content.Earning") }}: {{ callRent }} HELMET
+        {{ $t("Content.Earning") }}: {{ CallPremium }} HELMET
       </p>
       <div class="input">
         <el-input v-model="CallPolicyNumber" type="number" />
         <span class="text">{{ ActiveData.Call.CollateralSymbol }}</span>
-        <span
-          class="max"
-          @click="callInsuranceNum = BalanceArray[activeInsurance]"
-          >{{ $t("Table.ALL") }}</span
-        >
+        <span class="max" @click="CallPolicyNumber = CallBalance">{{
+          $t("Table.ALL")
+        }}</span>
       </div>
       <p class="balance">
-        {{ $t("Content.UsableBalance") }}: {{ BalanceArray[activeInsurance] }}
-        {{ activeInsurance }}
+        {{ $t("Content.UsableBalance") }}: {{ CallBalance }}
+        {{ ActiveData.Call.CollateralSymbol }}
       </p>
-      <button class="button call" @click="submitSupply(1)">
+      <button class="button call" @click="handleClickConfirm('Call')">
         {{ $t("Insurance.Insurance_text9") }}
       </button>
     </div>
@@ -101,303 +103,356 @@
             </svg>
           </el-tooltip>
         </div>
-        <el-select v-model="CallDpr" style="width: 100%">
+        <el-select
+          v-model="ShowPutDPR"
+          style="width: 100%"
+          @change="handleChangePutDPR"
+        >
           <el-option key="0.0014" value="0.0014" label="0.14%">0.14%</el-option>
           <el-option key="0.0028" value="0.0028" label="0.28%">0.28%</el-option>
           <el-option key="0.0056" value="0.0056" label="0.56%">0.56%</el-option>
         </el-select>
       </div>
       <p class="expect_earn">
-        {{ $t("Content.Earning") }}: {{ putRent }} HELMET
+        {{ $t("Content.Earning") }}: {{ PutPremium }} HELMET
       </p>
       <div class="input">
         <el-input v-model="PutPolicyNumber" type="number" />
         <span class="text">{{ ActiveData.Put.CollateralSymbol }}</span>
-        <span
-          class="max"
-          @click="callInsuranceNum = BalanceArray[activeInsurance]"
-          >{{ $t("Table.ALL") }}</span
-        >
+        <span class="max" @click="PutPolicyNumber = PutBalance">{{
+          $t("Table.ALL")
+        }}</span>
       </div>
       <p class="balance">
         {{ $t("Content.UsableBalance") }}:
-        {{ BalanceArray[putType] }}
-        {{ putType }}
+        {{ PutBalance }}
+        {{ ActiveData.Put.CollateralSymbol }}
       </p>
-      <button class="button put" @click="submitSupply(2)">
+      <button class="button put" @click="handleClickConfirm('Put')">
         {{ $t("Insurance.Insurance_text10") }}
       </button>
     </div>
+    <!-- dialog -->
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
+    >
+      <p>
+        Supply
+        <b>{{ WaitingSupplyNumber }} {{ WaitingSupplyPolicys }}</b> Policys,
+      </p>
+      <p>
+        Expected maximum is <b>{{ WaitingPremium }}</b> HELMET
+      </p>
+    </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
 import precision from "~/assets/js/precision.js";
-import { onIssueSell, onIssueSellOnETH } from "~/interface/order.js";
-import { fixD, toRounding } from "~/assets/js/util.js";
-import BigNumber from "bignumber.js";
+import { fixD } from "~/assets/js/util.js";
+import MiningABI from "../../abi/MiningABI.json";
+import { getContract } from "../../web3/index.js";
+import { fromWei, toWei } from "~/interface/index.js";
+import { getTokenPrice } from "~/interface/event.js";
+import OrderABI from "../../abi/OrderABI.json";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   props: ["ActiveData", "InsureTypeActive"],
+  components: {
+    WaitingConfirmationDialog,
+    SuccessConfirmationDialog,
+  },
   data() {
     return {
-      dprList: [
-        { num: 0.14, warn: false, show: "0.14%" },
-        { num: 0.28, warn: false, show: "0.28%" },
-        { num: 0.56, warn: true, show: "0.56%" },
-      ],
       precision,
-      callDpr: 0.14,
-      callDprShow: "0.14%",
-      callRent: 0,
-      callOptionFlag: false,
-      putDpr: 0.14,
-      putDprShow: "0.14%",
-      putRent: 0,
-      putOptionFlag: false,
+      CallPremium: 0,
+      PutPremium: 0,
       CallPolicyNumber: "",
       PutPolicyNumber: "",
-      putType: "",
-      CallDpr: "0.14%",
-      PutDpr: "0.14%",
+      ShowCallDPR: "0.14%",
+      ShowPutDPR: "0.14%",
+      CallDPR: 0.0014,
+      PutDPR: 0.0014,
+      PutBalance: 0,
+      CallBalance: 0,
+      CallTokenToHelmetPrice: 0,
+      PutTokenToHelmetPrice: 0,
+      WaitingVisible: false,
+      SuccessVisible: false,
+      WaitingSellNumber: "",
+      WaitingSellPolicys: "",
+      WaitingPremium: "",
+      SuccessHash: "",
     };
   },
   computed: {
-    allDueDate() {
-      return this.$store.state.allDueDate;
-    },
-    // 保费参数
-    RentGrounp() {
+    PremiumGroup() {
       return {
-        callDpr: this.callDpr,
-        putDpr: this.putDpr,
-        callInsuranceNum: this.callInsuranceNum,
-        putInsuranceNum: this.putInsuranceNum,
-        _expiry: this.getTime(this.activeInsurance),
+        CallDPR: this.CallDPR,
+        PutDPR: this.CallDPR,
+        CallPolicyNumber: this.CallPolicyNumber,
+        PutPolicyNumber: this.PutPolicyNumber,
       };
-    },
-    IndexPxArray() {
-      return this.$store.state.allIndexPrice;
-    },
-    BalanceArray() {
-      return this.$store.state.BalanceArray;
-    },
-    strikePriceArray() {
-      return this.$store.state.strikePriceArray;
-    },
-    HelmetPrice() {
-      return this.$store.state.allHelmetPrice;
-    },
-    HELMET_BUSD() {
-      return this.$store.state.HELMET_BUSD;
-    }, // 抵押物
-    policyColArray() {
-      return this.$store.state.policyColArray;
-    },
-    // 标的物
-    policyUndArray() {
-      return this.$store.state.policyUndArray;
     },
   },
   mounted() {
-    this.getPutType();
+    this.getBalance();
+    this.$nextTick(() => {
+      this.getPrice();
+    });
   },
   watch: {
-    RentGrounp: {
+    PremiumGroup: {
       handler: {
-        handler: "watchRent",
+        handler: "watchPremium",
         immediate: true,
       },
     },
   },
   methods: {
-    getPutType() {
-      let putType =
-        this.policyColArray[1][this.activeInsurance] == "WBNB"
-          ? "BNB"
-          : this.policyColArray[1][this.activeInsurance];
-      this.putType = putType;
+    waitingClose() {
+      this.WaitingVisible = false;
     },
-    handleClickDpr(type) {
-      if (type == "call") {
-        this.callOptionFlag = !this.callOptionFlag;
+    successClose() {
+      this.SuccessVisible = false;
+    },
+    getBalance() {
+      const Data = this.ActiveData;
+      const CallCollateralAddress = Data.Call.CollateralAddress;
+      const CallCollateralSymbol = Data.Call.CollateralSymbol;
+      const PutCollateralAddress = Data.Put.CollateralAddress;
+      const PutCollateralSymbol = Data.Put.CollateralSymbol;
+      const Account = window.CURRENTADDRESS;
+      if (CallCollateralSymbol === "BNB") {
+        window.WEB3.eth.getBalance(Account).then((res) => {
+          this.CallBalance = fixD(fromWei(res), 8);
+        });
       } else {
-        this.putOptionFlag = !this.putOptionFlag;
+        const Contracts = getContract(MiningABI, CallCollateralAddress);
+        Contracts.methods
+          .balanceOf(Account)
+          .call()
+          .then((res) => {
+            this.CallBalance = fixD(fromWei(res), 8);
+          });
+      }
+      if (PutCollateralSymbol === "BNB") {
+        window.WEB3.eth.getBalance(Account).then((res) => {
+          this.PutBalance = fixD(fromWei(res), 8);
+        });
+      } else {
+        const Contracts = getContract(MiningABI, PutCollateralAddress);
+        Contracts.methods
+          .balanceOf(Account)
+          .call()
+          .then((res) => {
+            this.PutBalance = fixD(fromWei(res), 8);
+          });
       }
     },
-    checkDpr(item, type) {
-      if (type == "call") {
-        this.callDpr = item.num;
-        this.callDprShow = item.show;
-        this.callOptionFlag = false;
+    handleChangeCallDPR(value) {
+      this.CallDPR = value;
+    },
+    handleChangePutDPR(value) {
+      this.PutDPR = value;
+    },
+    async getPrice() {
+      const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
+      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
+      let CallCollateralDecimals = this.ActiveData.Call.CollateralDecimals;
+      let CallAmount = toWei("1", CallCollateralDecimals);
+      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
+      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
+      let PutCollateralDecimals = this.ActiveData.Put.CollateralDecimals;
+      let PutAmount = toWei("1", PutCollateralDecimals);
+      let CallData;
+      if (CallCollateralSymbol === "HELMET") {
+        CallData = "1";
       } else {
-        this.putDpr = item.num;
-        this.putDprShow = item.show;
-        this.putOptionFlag = false;
+        CallData = await getTokenPrice({
+          fromTokenAddress: CallCollateralAddress,
+          toTokenAddress: HelmetAddress,
+          amount: CallAmount,
+        });
+      }
+      let PutData = await getTokenPrice({
+        fromTokenAddress: PutCollateralAddress,
+        toTokenAddress: HelmetAddress,
+        amount: PutAmount,
+      });
+      this.CallTokenToHelmetPrice =
+        CallCollateralSymbol === "HELMET"
+          ? "1"
+          : fromWei(CallData.data.toTokenAmount);
+      this.PutTokenToHelmetPrice = fromWei(PutData.data.toTokenAmount);
+    },
+    async watchPremium(newValue) {
+      let { CallDPR, PutDPR, CallPolicyNumber, PutPolicyNumber } = newValue;
+
+      let { ShowExpiryDay, LastPrice } = this.ActiveData;
+      let CallStrikePrice = this.ActiveData.Call.StrikePrice;
+      let PutStrikePrice = this.ActiveData.Put.StrikePrice;
+      let CallTokenToHelmetPrice = this.CallTokenToHelmetPrice;
+      let PutTokenToHelmetPrice = this.PutTokenToHelmetPrice;
+      if (CallPolicyNumber) {
+        const NumberDPR =
+          CallDPR * CallTokenToHelmetPrice * CallPolicyNumber * ShowExpiryDay;
+        const NumberMIN =
+          (Math.min(LastPrice - CallStrikePrice, 0) * CallPolicyNumber) /
+          CallTokenToHelmetPrice;
+        const Premium = NumberDPR - NumberMIN;
+        this.CallPremium = Premium > 0 ? fixD(Premium, 8) : 0;
+      }
+      if (PutPolicyNumber) {
+        console.log(PutPolicyNumber);
+        const NumberDPR =
+          PutDPR * PutTokenToHelmetPrice * PutPolicyNumber * ShowExpiryDay;
+        const NumberMIN =
+          (Math.min(PutStrikePrice - LastPrice, 0) * PutPolicyNumber) /
+          PutTokenToHelmetPrice;
+        const Premium = NumberDPR - NumberMIN;
+        this.PutPremium = Premium > 0 ? fixD(Premium, 8) : 0;
       }
     },
-    toAll() {
-      if (this.currentType == 1) {
-        if (this.BalanceArray) {
-          this.volume = this.BalanceArray[this.activeInsurance];
-        }
-      } else {
-        this.volume = this.BalanceArray["BNB"];
-      }
-    },
-    watchRent(newValue) {
-      if (
-        (!newValue.callDpr && !newValue.callInsuranceNum) ||
-        (!newValue.putDpr && !newValue.putInsuranceNum)
-      ) {
-        this.Rent = 0;
+    handleClickConfirm(Type) {
+      if (!this.CallPolicyNumber && !this.PutPolicyNumber) {
         return;
       }
-      let { callDpr, putDpr, callInsuranceNum, putInsuranceNum, _expiry } =
-        newValue;
-      if (
-        (newValue.callDpr && newValue.callInsuranceNum && newValue._expiry) ||
-        (newValue.putDpr && newValue.putInsuranceNum && newValue._expiry)
-      ) {
-        // 翻倍执行价
-        let callStrikePrice = this.strikePriceArray[0][this.activeInsurance];
-        // 翻倍指数价
-        let callIndexPx = this.IndexPxArray[0][this.activeInsurance];
-        // 腰斩执行价
-        let putStrikePrice = this.strikePriceArray[1][this.activeInsurance];
-        // 腰斩指数价
-        let putIndexPx = this.IndexPxArray[1][this.activeInsurance];
-        // 翻倍DPR
-        let callDPR = precision.divide(callDpr, 100);
-        // 腰斩DPR
-        let putDPR = precision.divide(putDpr, 100);
-        // 保险到期时间
-        let time1 = new Date(_expiry).getTime();
-        // 当前时间
-        let time2 = new Date().getTime();
-        // 剩余天数 不足一天按一天算
-        let day = parseInt((time1 - time2) / (1000 * 60 * 60 * 24)) + 1;
-        let premium;
-        let earnings;
-        let number;
-        // call
-        if (callInsuranceNum.length) {
-          if (this.activeInsurance == "HELMET") {
-            number = precision.times(callDPR, callInsuranceNum, day);
-          } else {
-            number = precision.times(
-              callDPR,
-              this.HelmetPrice[1][this.activeInsurance] *
-                Number(callInsuranceNum),
-              day
-            );
-          }
-          premium = precision.minus(
-            number,
-            Math.min(precision.minus(callStrikePrice, callIndexPx), 0)
-          );
-          earnings = -(Math.max(callIndexPx - callStrikePrice, 0) - premium);
-          earnings = BigNumber(earnings.toString()).toFixed();
-          this.callRent = fixD(earnings < 0 ? 0 : earnings, 8);
-        } else {
-          this.callRent = 0;
-        }
-        // put
-        if (putInsuranceNum.length) {
-          if (this.activeInsurance == "WBNB") {
-            number = precision.times(
-              putDPR,
-              this.HELMET_BUSD * putInsuranceNum,
-              day
-            );
-          } else {
-            number = precision.times(
-              putDPR,
-              precision.times(this.IndexPxArray[0]["HELMET"], putInsuranceNum),
-              day
-            );
-          }
-          premium = precision.minus(
-            number,
-            Math.min(precision.minus(putIndexPx, putStrikePrice), 0)
-          );
-          earnings = -(Math.max(putStrikePrice - putIndexPx, 0) - premium);
-          this.putRent = fixD(earnings < 0 ? 0 : earnings, 8);
-        } else {
-          this.putRent = 0;
-        }
-      }
-    },
-    // 获取保险时间
-    getTime(coin) {
-      return this.allDueDate[0][coin];
-    },
-    submitSupply(type) {
-      // 私有化  不要
-      // 标的物
-      // 执行价格 行权价
-      // 到期日
-      // 结算token
-      // 单价
-      data = {};
-      let data = {
-        private: false, //
-        annual: type == 1 ? this.callDpr : this.putDpr,
-        category: this.policyUndArray[type - 1][this.activeInsurance], //标的物
-        currency: this.policyColArray[type - 1][this.activeInsurance], //抵押物
-        expire: this.getTime(this.activeInsurance), //
-        premium: type == 1 ? this.callRent : this.putRent,
-        price: this.strikePriceArray[type - 1][this.activeInsurance],
-        volume: type == 1 ? this.callInsuranceNum : this.putInsuranceNum, //
-        settleToken: "HELMET",
-        showType: this.activeInsurance == "WBNB" ? "BUSD" : "BNB",
-        _yield: 0,
-      };
-      let object = {
-        title: "WARNING",
-        layout: "layout1",
-        activeTip: true,
-        activeTipText1: "Please double check the price above，",
-        activeTipText2: "Helmet team will not cover your loss on this.",
-        loading: false,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: true,
-      };
-      if (data.category == "WBNB" && data.currency == "BUSD") {
-        data["divide"] = true;
-      }
-      if (data.currency == "WBNB" && data.category != "BUSD" && type == 2) {
-        object.conText = `<p>You will supply <span>${
-          data.volume
-        } ${"BNB"}</span> Policies, with strike price of <span>${
-          data.price
-        } ${"BNB"}</span></p>`;
-        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
-        this.$bus.$on("PROCESS_ACTION", (res) => {
-          if (res) {
-            onIssueSellOnETH(data, (status) => {
-              data = {};
-            });
-          } else {
-            data = {};
-            return;
-          }
-          data = {};
-          return;
-        });
+      let ActiveData = this.ActiveData;
+      let symbol = ActiveData.InsuranceName;
+      let volume, price;
+      let collateral = ActiveData[Type].CollateralSymbol;
+      let underlying = ActiveData[Type].UnderlyingSymbol;
+      let strikeprice = ActiveData[Type].StrikePrice;
+      let expiry = ActiveData.ShowExpiry;
+      let type = Type;
+      if (Type === "Call") {
+        volume = this.CallPolicyNumber;
+        price = this.CallPremium;
       } else {
-        object.conText = `<p>You will supply <span>${data.volume} ${data.currency}</span> Policies , with strike price of <span>${data.price} ${data.showType}</span></p>`;
-        this.$bus.$emit("OPEN_STATUS_DIALOG", object);
-        this.$bus.$on("PROCESS_ACTION", (res) => {
-          if (res) {
-            onIssueSell(data, (status) => {});
-          } else {
-            data = {};
-            return;
-          }
-          data = {};
-          return;
-        });
+        volume = this.PutPolicyNumber;
+        price = this.PutPremium;
+      }
+      this.$confirm(
+        this.$t("Dialogs.WaitText1", {
+          symbol,
+          type,
+          volume,
+          collateral,
+          strikeprice,
+          underlying,
+          price,
+          expiry,
+        }),
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(() => {
+          this.supplyPolicy(Type);
+        })
+        .catch(() => {});
+    },
+    supplyPolicy(Type) {
+      let ActiveData = this.ActiveData;
+      let CallPolicyNumber = this.CallPolicyNumber;
+      let PutPolicyNumber = this.PutPolicyNumber;
+      let CallPremium = this.CallPremium;
+      let PutPremium = this.PutPremium;
+      let Private = false;
+      let InsuranceType = ActiveData.InsuranceName;
+      let StrikePriceDecimals = ActiveData[Type].StrikePriceDecimals;
+      let PolicyPriceDecimals = ActiveData[Type].PolicyPriceDecimals;
+      let CollateralDecimals = ActiveData[Type].CollateralDecimals;
+      let CollateralSymbol = ActiveData[Type].CollateralSymbol;
+      let Collateral = ActiveData[Type].CollateralAddress;
+      let Underlying = ActiveData[Type].UnderlyingAddress;
+      let Expiry = ActiveData.Expiry;
+      let SettleToken = ActiveData.SettleTokenAddress;
+      let Volume, Price, StrikePrice, Premium;
+      if (Type === "Call") {
+        Volume = CallPolicyNumber;
+        Premium = CallPremium;
+        Price = fixD(CallPremium / CallPolicyNumber, 8) + "";
+        StrikePrice = ActiveData[Type].StrikePrice;
+      } else {
+        Volume = PutPolicyNumber;
+        Premium = PutPremium;
+        Price = fixD(PutPremium / PutPolicyNumber, 8) + "";
+        StrikePrice = Number(1 / ActiveData[Type].StrikePrice) + "";
+      }
+      const SellContracts = getContract(OrderABI, OrderAddress);
+      const Account = window.CURRENTADDRESS;
+      if (CollateralSymbol !== "BNB") {
+        SellContracts.methods
+          .sell(
+            Private,
+            Collateral,
+            Underlying,
+            toWei(StrikePrice, StrikePriceDecimals),
+            Expiry,
+            toWei(Volume, CollateralDecimals),
+            SettleToken,
+            toWei(Price, PolicyPriceDecimals)
+          )
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingSupplyNumber = Volume;
+            this.WaitingSupplyPolicys = InsuranceType;
+            this.WaitingPremium = Premium;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              getPolicyList();
+            }
+          })
+          .on("error", function (ereor) {
+            this.WaitingVisible = false;
+          });
+      } else {
+        SellContracts.methods
+          .sellOnETH(
+            Private,
+            Underlying,
+            toWei(StrikePrice, StrikePriceDecimals),
+            Expiry,
+            SettleToken,
+            toWei(Price, PolicyPriceDecimals)
+          )
+          .send({ from: Account, value: toWei(Volume, CollateralDecimals) })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingSupplyNumber = Volume;
+            this.WaitingSupplyPolicys = InsuranceType;
+            this.WaitingPremium = Premium;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              getPolicyList();
+            }
+          })
+          .on("error", function (ereor) {
+            this.WaitingVisible = false;
+          });
       }
     },
   },
@@ -471,15 +526,15 @@ export default {
   }
 }
 .expect_earn {
+  height: 40px;
+  line-height: 40px;
   font-size: 14px;
   font-family: IBMPlexSans;
-  line-height: 20px;
   @include themeify {
     color: darken($color: themed("color-17173a"), $amount: 30%);
   }
 }
 .input {
-  margin-top: 16px;
   width: 370px;
   height: 40px;
   border-radius: 5px;
@@ -533,9 +588,10 @@ export default {
   }
 }
 .balance {
+  height: 40px;
+  line-height: 40px;
   font-size: 14px;
   font-family: IBMPlexSans;
-  line-height: 20px;
   @include themeify {
     color: darken($color: themed("color-17173a"), $amount: 30%);
   }
@@ -548,7 +604,6 @@ export default {
   font-size: 14px;
   color: #fff;
   font-weight: 600;
-  margin-top: 20px;
 }
 .call {
   background: #28a745;

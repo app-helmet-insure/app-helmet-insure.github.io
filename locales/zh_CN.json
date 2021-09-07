@@ -396,6 +396,6 @@
     "IBO_text41": "9.1 19:00 UTC+8"
   },
   "Dialogs": {
-    "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} USDC，预计保费收益 {price} ，到期时间 {expiry}"
+    "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}"
   }
 }

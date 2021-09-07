@@ -45,7 +45,7 @@ export default {
 }
 .waiting_content {
   margin-top: 15px;
-  width: 236px;
+  text-align: center;
   p {
     text-align: center;
     font-size: 14px;

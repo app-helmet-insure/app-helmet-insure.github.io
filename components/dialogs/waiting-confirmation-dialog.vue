@@ -10,9 +10,7 @@
     <div class="waiting_dialog_body">
       <h3 class="waiting_title">Waiting For Confirmation</h3>
       <p class="waiting_info">Please Confirm the transaction in your wallet</p>
-      <div class="waiting_content">
-        <slot></slot>
-      </div>
+      <slot></slot>
       <i class="waiting_loading"></i>
     </div>
   </el-dialog>

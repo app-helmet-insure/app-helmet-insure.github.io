@@ -252,7 +252,9 @@
       :DialogVisible="WaitingVisible"
       :DialogClose="waitingClose"
     >
-      <p>{{ WaitingText }}</p>
+      <div class="waiting_content">
+        <p>{{ WaitingText }}</p>
+      </div>
     </WaitingConfirmationDialog>
     <SuccessConfirmationDialog
       :DialogVisible="SuccessVisible"

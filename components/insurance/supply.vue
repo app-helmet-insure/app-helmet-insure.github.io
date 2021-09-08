@@ -62,7 +62,7 @@
         {{ ActiveData.Call.CollateralSymbol }}
       </p>
       <button class="button call" @click="handleClickConfirm('Call')">
-        {{ $t("Insurance.Insurance_text9") }}
+        {{ CallApproveStatus ? $t("Insurance.Insurance_text9") : "授权" }}
       </button>
     </div>
     <i></i>
@@ -129,7 +129,7 @@
         {{ ActiveData.Put.CollateralSymbol }}
       </p>
       <button class="button put" @click="handleClickConfirm('Put')">
-        {{ $t("Insurance.Insurance_text10") }}
+        {{ PutApproveStatus ? $t("Insurance.Insurance_text10") : "授权" }}
       </button>
     </div>
     <!-- dialog -->
@@ -137,13 +137,7 @@
       :DialogVisible="WaitingVisible"
       :DialogClose="waitingClose"
     >
-      <p>
-        Supply
-        <b>{{ WaitingSupplyNumber }} {{ WaitingSupplyPolicys }}</b> Policys,
-      </p>
-      <p>
-        Expected maximum is <b>{{ WaitingPremium }}</b> HELMET
-      </p>
+      <div class="waiting_content" v-html="WaitingText"></div>
     </WaitingConfirmationDialog>
     <SuccessConfirmationDialog
       :DialogVisible="SuccessVisible"
@@ -161,8 +155,10 @@ import { getContract } from "../../web3/index.js";
 import { fromWei, toWei } from "~/interface/index.js";
 import { getTokenPrice } from "~/interface/event.js";
 import OrderABI from "../../abi/OrderABI.json";
+import ERC20ABI from "../../abi/ERC20ABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+import { Order } from "../../interface";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   props: ["ActiveData", "InsureTypeActive"],
@@ -185,11 +181,11 @@ export default {
       CallBalance: 0,
       CallTokenToHelmetPrice: 0,
       PutTokenToHelmetPrice: 0,
+      CallApproveStatus: false,
+      PutApproveStatus: false,
       WaitingVisible: false,
       SuccessVisible: false,
-      WaitingSellNumber: "",
-      WaitingSellPolicys: "",
-      WaitingPremium: "",
+      WaitingText: "",
       SuccessHash: "",
     };
   },
@@ -205,6 +201,7 @@ export default {
   },
   mounted() {
     this.getBalance();
+    this.getApproveStatus();
     this.$nextTick(() => {
       this.getPrice();
     });
@@ -264,6 +261,32 @@ export default {
     handleChangePutDPR(value) {
       this.PutDPR = value;
     },
+    async watchPremium(newValue) {
+      let { CallDPR, PutDPR, CallPolicyNumber, PutPolicyNumber } = newValue;
+      let { ShowExpiryDay, LastPrice } = this.ActiveData;
+      let CallStrikePrice = this.ActiveData.Call.StrikePrice;
+      let PutStrikePrice = this.ActiveData.Put.StrikePrice;
+      let CallTokenToHelmetPrice = this.CallTokenToHelmetPrice;
+      let PutTokenToHelmetPrice = this.PutTokenToHelmetPrice;
+      if (CallPolicyNumber) {
+        const NumberDPR =
+          CallDPR * CallTokenToHelmetPrice * CallPolicyNumber * ShowExpiryDay;
+        const NumberMIN =
+          (Math.min(LastPrice - CallStrikePrice, 0) * CallPolicyNumber) /
+          CallTokenToHelmetPrice;
+        const Premium = NumberDPR - NumberMIN;
+        this.CallPremium = Premium > 0 ? fixD(Premium, 8) : 0;
+      }
+      if (PutPolicyNumber) {
+        const NumberDPR =
+          PutDPR * PutTokenToHelmetPrice * PutPolicyNumber * ShowExpiryDay;
+        const NumberMIN =
+          (Math.min(PutStrikePrice - LastPrice, 0) * PutPolicyNumber) /
+          PutTokenToHelmetPrice;
+        const Premium = NumberDPR - NumberMIN;
+        this.PutPremium = Premium > 0 ? fixD(Premium, 8) : 0;
+      }
+    },
     async getPrice() {
       const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
       let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
@@ -295,35 +318,113 @@ export default {
           : fromWei(CallData.data.toTokenAmount);
       this.PutTokenToHelmetPrice = fromWei(PutData.data.toTokenAmount);
     },
-    async watchPremium(newValue) {
-      let { CallDPR, PutDPR, CallPolicyNumber, PutPolicyNumber } = newValue;
-
-      let { ShowExpiryDay, LastPrice } = this.ActiveData;
-      let CallStrikePrice = this.ActiveData.Call.StrikePrice;
-      let PutStrikePrice = this.ActiveData.Put.StrikePrice;
-      let CallTokenToHelmetPrice = this.CallTokenToHelmetPrice;
-      let PutTokenToHelmetPrice = this.PutTokenToHelmetPrice;
-      if (CallPolicyNumber) {
-        const NumberDPR =
-          CallDPR * CallTokenToHelmetPrice * CallPolicyNumber * ShowExpiryDay;
-        const NumberMIN =
-          (Math.min(LastPrice - CallStrikePrice, 0) * CallPolicyNumber) /
-          CallTokenToHelmetPrice;
-        const Premium = NumberDPR - NumberMIN;
-        this.CallPremium = Premium > 0 ? fixD(Premium, 8) : 0;
+    getApproveStatus() {
+      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
+      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
+      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
+      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
+      let Account = window.CURRENTADDRESS;
+      if (CallCollateralSymbol !== "BNB") {
+        let CallContracts = getContract(ERC20ABI.abi, CallCollateralAddress);
+        CallContracts.methods
+          .allowance(Account, OrderAddress)
+          .call()
+          .then((res) => {
+            if (Number(res) > 0) {
+              this.CallApproveStatus = true;
+            } else {
+              this.CallApproveStatus = false;
+            }
+          });
+      } else {
+        this.CallApproveStatus = true;
       }
-      if (PutPolicyNumber) {
-        console.log(PutPolicyNumber);
-        const NumberDPR =
-          PutDPR * PutTokenToHelmetPrice * PutPolicyNumber * ShowExpiryDay;
-        const NumberMIN =
-          (Math.min(PutStrikePrice - LastPrice, 0) * PutPolicyNumber) /
-          PutTokenToHelmetPrice;
-        const Premium = NumberDPR - NumberMIN;
-        this.PutPremium = Premium > 0 ? fixD(Premium, 8) : 0;
+      if (PutCollateralSymbol !== "BNB") {
+        let PutContracts = getContract(ERC20ABI.abi, PutCollateralAddress);
+        PutContracts.methods
+          .allowance(Account, OrderAddress)
+          .call()
+          .then((res) => {
+            if (Number(res) > 0) {
+              this.PutApproveStatus = true;
+            } else {
+              this.PutApproveStatus = false;
+            }
+          });
+      } else {
+        this.PutApproveStatus = true;
+      }
+    },
+    ApproveToken(Type) {
+      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
+      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
+      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
+      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
+      let Account = window.CURRENTADDRESS;
+      const Infinity =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      if (Type === "Call") {
+        let CallContracts = getContract(ERC20ABI.abi, CallCollateralAddress);
+        CallContracts.methods
+          .approve(OrderAddress, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingText = `<p>You will approve <b>${CallCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.CallApproveStatus = true;
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.CallApproveStatus = false;
+          });
+      } else {
+        let PutContracts = getContract(ERC20ABI.abi, PutCollateralAddress);
+        PutContracts.methods
+          .approve(OrderAddress, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingText = `<p>You will approve <b>${PutCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.PutApproveStatus = true;
+            }
+          })
+          .on("error", function (error) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.PutApproveStatus = false;
+          });
       }
     },
     handleClickConfirm(Type) {
+      if (Type === "Call") {
+        if (this.CallApproveStatus) {
+          this.waitConfirm(Type);
+        } else {
+          this.ApproveToken(Type);
+        }
+      } else {
+        if (this.PutApproveStatus) {
+          this.waitConfirm(Type);
+        } else {
+          this.ApproveToken(Type);
+        }
+      }
+    },
+    waitConfirm(Type) {
       if (!this.CallPolicyNumber && !this.PutPolicyNumber) {
         return;
       }
@@ -410,16 +511,16 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingSupplyNumber = Volume;
-            this.WaitingSupplyPolicys = InsuranceType;
-            this.WaitingPremium = Premium;
+            this.WaitingText = `
+              <p>Supply <b>${Volume} ${InsuranceType}</b> Policys,</p>
+              <p>Expected maximum is <b>${Premium}</b> HELMET</p>
+            `;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
               this.SuccessVisible = true;
-              getPolicyList();
             }
           })
           .on("error", function (ereor) {
@@ -438,16 +539,16 @@ export default {
           .send({ from: Account, value: toWei(Volume, CollateralDecimals) })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingSupplyNumber = Volume;
-            this.WaitingSupplyPolicys = InsuranceType;
-            this.WaitingPremium = Premium;
+            this.WaitingText = `
+              <p>Supply <b>${Volume} ${InsuranceType}</b> Policys,</p>
+              <p>Expected maximum is <b>${Premium}</b> HELMET</p>
+            `;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
               this.SuccessVisible = true;
-              getPolicyList();
             }
           })
           .on("error", function (ereor) {

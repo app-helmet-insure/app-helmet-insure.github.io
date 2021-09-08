@@ -1,7 +1,7 @@
 <template>
   <div class="insurance_market">
     <Chart :ActiveData="ActiveData" :ActiveType="ActiveType"></Chart>
-    <Loading v-if="isLoading" :isLoading="isLoading" />
+    <Loading v-if="isLoading" />
     <div
       class="policy_wrap"
       v-if="!isLoading && PolicyList && PolicyList.length"
@@ -103,12 +103,14 @@
       :DialogVisible="WaitingVisible"
       :DialogClose="waitingClose"
     >
-      <p>
-        Buy <b>{{ WaitingBuyNumber }} {{ WaitingBuyPolicys }}</b> Policys,
-      </p>
-      <p>
-        the Premium is <b>{{ WaitingPremium }}</b> HELMET
-      </p>
+      <div class="waiting_content">
+        <p>
+          Buy <b>{{ WaitingBuyNumber }} {{ WaitingBuyPolicys }}</b> Policys,
+        </p>
+        <p>
+          the Premium is <b>{{ WaitingPremium }}</b> HELMET
+        </p>
+      </div>
     </WaitingConfirmationDialog>
     <SuccessConfirmationDialog
       :DialogVisible="SuccessVisible"
@@ -184,9 +186,9 @@ export default {
       this.CurrentPage = value;
       if (this.CurrentPage <= 1) {
         this.MinNumber = 0;
-        this.MinNumber = this.PageSize;
+        this.MaxNumber = this.PageSize;
       } else {
-        this.MaxNumber = (value - 1) * this.PageSize;
+        this.MinNumber = (value - 1) * this.PageSize;
         this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
       }
     },

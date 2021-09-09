@@ -4,7 +4,7 @@ import CakePoolABI from "~/abi/CakePoolABI.json";
 import MdexPoolABI from "~/abi/MdexPoolABI.json";
 import SushiPoolABI from "~/abi/SushiPoolABI.json";
 import OrderABI from "~/abi/OrderABI.json";
-import FectoryABI from "~/abi/factory_abi.json";
+import FactoryABI from "~/abi/FactoryABI.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import SushiSwapABI from "~/abi/SushiSwap.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
@@ -276,7 +276,7 @@ export const Bids = async (BidID) => {
   return Contracts.methods.bids(BidID).call();
 };
 export const Settleable = async (seller, short) => {
-  let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
+  let Contracts = await Web3Contract(FactoryABI, FectoryContractAddress);
   return Contracts.methods.settleable(seller, short).call();
 };
 export const RestQuota = async (ContractAddress, Address = null) => {

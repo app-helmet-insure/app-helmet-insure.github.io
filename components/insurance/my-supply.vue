@@ -4,7 +4,7 @@
       <h3>{{ $t("Type.IssueInsurance") }}</h3>
     </div>
     <!-- pc -->
-    <Loading v-if="isLoading" :isLoading="isLoading" />
+    <Loading v-if="isLoading" />
     <div
       class="my_supply_wrap"
       v-if="!isLoading && PolicyList && PolicyList.length"
@@ -211,7 +211,6 @@ export default {
       }
     },
     getPolicysList() {
-      this.isLoading = true;
       getInsuranceList().then((res) => {
         let nowDate = parseInt(moment.now() / 1000);
         if (res && res.data.data.options) {

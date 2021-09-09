@@ -1,5 +1,5 @@
 import Axios from "axios";
-import factory_abi from "~/abi/factory_abi.json";
+import FactoryABI from "~/abi/FactoryABI.json";
 import OrderABI from "~/abi/OrderABI.json";
 import moment from "moment";
 import BigNumber from "bignumber.js";
@@ -14,7 +14,7 @@ export const decodeLogs = function(event, log) {
 // 获取long, Sell, Buy映射
 export const getLongList = async function(callback) {
   // let ContractAddress = getContract();
-  let EventABI = factory_abi.abi;
+  let EventABI = FactoryABI.abi;
   let EventObject = EventABI.filter((item) => {
     return item.name == "OptionCreated" && item.type == "event";
   })[0];

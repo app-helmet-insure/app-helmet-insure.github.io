@@ -2,7 +2,7 @@ import { web3 } from "~/assets/utils/web3-obj.js";
 import Web3 from "web3";
 import ERC20ABI from "~/abi/ERC20ABI.json";
 import payaso_abi from "~/abi/payaso_abi.json";
-import factory_abi from "~/abi/factory_abi.json";
+import FactoryABI from "~/abi/FactoryABI.json";
 import OrderABI from "~/abi/OrderABI.json";
 import MiningABI from "~/abi/MiningABI.json";
 import token_abi from "~/abi/token_abi.json";
@@ -121,7 +121,7 @@ export const Payaso = async () => {
 export const Factory = async (adress) => {
   const WEB3 = await web3();
   return await new WEB3.eth.Contract(
-    factory_abi,
+    FactoryABI,
     getContract("FACTORY", window.chainID)
   );
 };

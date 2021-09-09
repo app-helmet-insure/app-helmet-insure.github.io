@@ -1403,7 +1403,6 @@ export default {
   fill: #787878;
   overflow: hidden;
 }
-@import "~/assets/css/base.scss";
 .pagination {
   width: 100%;
   display: flex;

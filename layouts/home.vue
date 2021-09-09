@@ -148,8 +148,6 @@ export default {
     this.$store.commit("SET_CHAINID", window.chainID);
     this.getUserInfo();
     // 获取映射
-    this.getBalance();
-    this.getIndexPirce();
     this.monitorNetWorkChange();
     this.mointorAccountChange();
     // 显示状态弹框
@@ -230,8 +228,6 @@ export default {
         ethereum.on("accountsChanged", async (account) => {
           let userInfo = await mateMaskInfo(account[0], "MetaMask");
           this.$store.dispatch("setUserInfo", userInfo);
-          this.getBalance();
-          this.getIndexPirce();
           this.$bus.$emit("REFRESH_MINING");
           this.$bus.$emit("GET_CARD_BALANCE");
           this.$bus.$emit("NFT_WINDOW_STATUS");
@@ -262,142 +258,6 @@ export default {
       } catch (error) {
         alert(error);
       }
-    },
-    // 获取余额
-    async getBalance() {
-      let BalanceArray = {};
-      let coinList = this.$store.state.balanceCoin;
-      for (let i = 0; i < coinList.length; i++) {
-        let balance = await getBalance(coinList[i]);
-        let key = coinList[i];
-        BalanceArray[key] = fixD(balance, 4);
-      }
-      if (window.CURRENTADDRESS) {
-        window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
-          BalanceArray["BNB"] = fixD(fromWei(res), 4);
-        });
-      }
-      this.$store.commit("SET_BALANCE", BalanceArray);
-    },
-    // 保存指数价格
-    async getIndexPirce() {
-      let list = this.$store.state.coinList;
-      // bnb
-      let callIndexPirce = {};
-      let putIndexPirce = {};
-      // helmet
-      let bnbbusd = await pancakeswap("WBNB", "BUSD");
-      let cakebusd = await pancakeswap("CAKE", "BUSD");
-      let helmetbusd = await pancakeswap("BUSD", "HELMET");
-      for (let i = 0; i < list.length; i++) {
-        let px;
-        let indexPx;
-        if ("WBNB" != list[i]) {
-          px = await pancakeswap("WBNB", list[i]);
-        } else {
-          px = 1;
-        }
-        indexPx = await pancakeswap(
-          this.policyUndArray[1][list[i]],
-          this.policyUndArray[0][list[i]]
-        );
-
-        let key = list[i];
-        callIndexPirce[key] = px;
-      }
-      for (let i = 0; i < list.length; i++) {
-        let px;
-        if ("WBNB" != list[i]) {
-          px = await pancakeswap(list[i], "WBNB");
-        } else {
-          px = 1;
-        }
-        const key = list[i];
-        putIndexPirce[key] = px;
-      }
-      let arr = [];
-      let arr1 = [];
-      let bnbHelmet = callIndexPirce["HELMET"] || 0;
-      let cakeHelmet = callIndexPirce["CAKE"] / callIndexPirce["HELMET"] || 0;
-      let ctkHelmet = callIndexPirce["CTK"] / callIndexPirce["HELMET"] || 0;
-      // let forHelmet = callIndexPirce["FORTUBE"] / callIndexPirce["HELMET"] || 0;
-      let btcHelmet = callIndexPirce["BTCB"] / callIndexPirce["HELMET"] || 0;
-      let ethHelmet = callIndexPirce["ETH"] / callIndexPirce["HELMET"] || 0;
-      let burgerHelmet =
-        callIndexPirce["BURGER"] / callIndexPirce["HELMET"] || 0;
-      let wbnbHelmet = callIndexPirce["WBNB"] / callIndexPirce["HELMET"] || 0;
-      let mathHelmet = callIndexPirce["MATH"] / callIndexPirce["HELMET"] || 0;
-      let shibHelmet = callIndexPirce["SHIB"] / callIndexPirce["HELMET"] || 0;
-      let forHelmet = callIndexPirce["FOR"] / callIndexPirce["HELMET"] || 0;
-      let babyHelmet = callIndexPirce["BABY"] / callIndexPirce["HELMET"] || 0;
-      let mcrnbHelmet = callIndexPirce["MCRN"] / callIndexPirce["HELMET"] || 0;
-      let faraHelmet = callIndexPirce["FARA"] / callIndexPirce["HELMET"] || 0;
-      let alpacaHelmet =
-        callIndexPirce["ALPACA"] / callIndexPirce["HELMET"] || 0;
-      let bananaHelmet =
-        callIndexPirce["BANANA"] / callIndexPirce["HELMET"] || 0;
-      let HelmetPirce = {
-        HELMET: bnbHelmet,
-        CAKE: cakeHelmet,
-        CTK: ctkHelmet,
-        // FORTUBE: forHelmet,
-        BTCB: btcHelmet,
-        ETH: ethHelmet,
-        BURGER: burgerHelmet,
-        WBNB: wbnbHelmet,
-        MATH: mathHelmet,
-        SHIB: shibHelmet,
-        FOR: forHelmet,
-        BABY: babyHelmet,
-        MCRN: mcrnbHelmet,
-        FARA: faraHelmet,
-        ALPACA: alpacaHelmet,
-        BANANA: bananaHelmet,
-      };
-      let Helmetbnb = putIndexPirce["HELMET"] || 0;
-      let Helmetcake = putIndexPirce["CAKE"] / putIndexPirce["HELMET"] || 0;
-      let Helmetctk = putIndexPirce["CTK"] / putIndexPirce["HELMET"] || 0;
-      // let Helmetfor = putIndexPirce["FORTUBE"] / putIndexPirce["HELMET"] || 0;
-      let Helmetbtc = putIndexPirce["BTCB"] / putIndexPirce["HELMET"] || 0;
-      let Helmeteth = putIndexPirce["ETH"] / putIndexPirce["HELMET"] || 0;
-      let Helmetburger = putIndexPirce["BURGER"] / putIndexPirce["HELMET"] || 0;
-      let Helmetwbnb = putIndexPirce["WBNB"] / putIndexPirce["HELMET"] || 0;
-      let Helmetmath = putIndexPirce["MATH"] / putIndexPirce["HELMET"] || 0;
-      let Helmetshib = putIndexPirce["SHIB"] / putIndexPirce["HELMET"] || 0;
-      let Helmetfor = putIndexPirce["FOR"] / putIndexPirce["HELMET"] || 0;
-      let Helmetbaby = putIndexPirce["BABY"] / putIndexPirce["HELMET"] || 0;
-      let Helmetmcrn = putIndexPirce["MCRN"] / putIndexPirce["HELMET"] || 0;
-      let Helmetfara = putIndexPirce["FARA"] / putIndexPirce["HELMET"] || 0;
-      let Helmetalpaca = putIndexPirce["ALPACA"] / putIndexPirce["HELMET"] || 0;
-      let Helmetbanana = putIndexPirce["BANANA"] / putIndexPirce["HELMET"] || 0;
-      let CoinPirce = {
-        HELMET: Helmetbnb,
-        CAKE: Helmetcake,
-        CTK: Helmetctk,
-        // FORTUBE: Helmetfor,
-        BTCB: Helmetbtc,
-        ETH: Helmeteth,
-        BURGER: Helmetburger,
-        WBNB: Helmetwbnb,
-        MATH: Helmetmath,
-        SHIB: Helmetshib,
-        FOR: Helmetfor,
-        BABY: Helmetbaby,
-        MCRN: Helmetmcrn,
-        FARA: Helmetfara,
-        ALPACA: Helmetalpaca,
-        BANANA: Helmetbanana,
-      };
-      arr1.push(HelmetPirce);
-      arr1.push(CoinPirce);
-      this.$store.commit("SET_ALL_HELMET_PRICE", arr1);
-      arr.push(callIndexPirce);
-      arr.push(putIndexPirce);
-      this.$store.commit("SET_ALL_INDEX_PRICE", arr);
-      this.$store.commit("SET_BNB_BUSD", bnbbusd);
-      this.$store.commit("SET_CAKE_BUSD", cakebusd);
-      this.$store.commit("SET_HELMET_BUSD", helmetbusd);
-      this.$bus.$emit("DRAW_ECHART", { drawFlag: true });
     },
   },
 };

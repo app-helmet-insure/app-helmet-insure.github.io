@@ -174,38 +174,7 @@ export const getMintList = async function(callback) {
     callback(data);
   });
 };
-//获取 mint
-export const getExerciseList = async function() {
-  // let ContractAddress = getContract();
-  let EventABI = OrderABI;
-  let EventObject = EventABI.filter((item) => {
-    return item.name == "Exercise" && item.type == "event";
-  })[0];
 
-  let topic0 = window.WEB3.eth.abi.encodeEventSignature(EventObject);
-  return Axios({
-    method: "get",
-    url: "https://api.helmet.insure/contract/logs",
-    params: {
-      contract: "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D",
-      include_data: true,
-      topic0,
-    },
-    headers: {
-      Authorization: "Bearer e5fa8358-42f3-4fa1-918d-2a972f4c5de0",
-    },
-  }).then((res) => {
-    let data = res.data.data;
-    data.forEach((item) => {
-      let returnValues = decodeLogs(EventObject, {
-        data: item.data,
-        topics: item.topics,
-      });
-      item.returnValues = returnValues;
-    });
-    return data;
-  });
-};
 export const getInsuranceStatus = () => {
   return Axios({
     method: "post",

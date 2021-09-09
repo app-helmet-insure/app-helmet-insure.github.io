@@ -6,7 +6,7 @@
           <!-- 已成交保单 -->
           <p>
             <label>{{ $t("Banner.HelmetBurn") }}</label>
-            <span>{{ isLogin ? addCommom(helmetvolume, 0) : "--" }}</span>
+            <span>{{ isLogin ? addCommom(Helmetvolume, 0) : "--" }}</span>
           </p>
         </div>
         <!-- 销毁 -->
@@ -15,14 +15,14 @@
 
           <p>
             <span class="title_name">{{ $t("Banner.HelmetBurn") }}</span
-            ><span class="number">{{ addCommom(helmetvolume, 0) }}</span>
+            ><span class="number">{{ addCommom(Helmetvolume, 0) }}</span>
           </p>
         </div> -->
         <!-- <div>
           <p><img src="~/assets/img/icon/guard.svg" alt="" /></p>
           <p>
             <span class="title_name">{{ $t("Banner.GuardSupply") }}</span
-            ><span class="number">{{ addCommom(guardVolume, 0) }}</span>
+            ><span class="number">{{ addCommom(GuardVolume, 0) }}</span>
           </p>
         </div> -->
       </li>
@@ -31,7 +31,7 @@
           <!-- 已成交保单 -->
           <p>
             <label>{{ $t("Banner.ClosedPolicy") }}</label>
-            <span>{{ isLogin ? helmetVarieties : "--" }}</span>
+            <span>{{ isLogin ? HelmetVarieties : "--" }}</span>
           </p>
         </div>
       </li>
@@ -44,7 +44,7 @@
               <template>
                 $<countTo
                   :startVal="Number(0)"
-                  :endVal="Number(totalHelmetsBorrowedVolume)"
+                  :endVal="Number(TotalHelmetsBorrowedVolume)"
                   :duration="2000"
                   :decimals="2"
                 />
@@ -61,7 +61,7 @@
             <label>
               <span>{{ $t("Banner.HelmetPcice") }}</span>
               <span>
-                $ {{ isLogin ? helmetPrice : "--" }}
+                $ {{ isLogin ? addCommom(HelmetPrice, 4) : "--" }}
                 <a @click="handleClickBuy">Buy</a></span
               >
             </label>
@@ -83,22 +83,16 @@
   </div>
 </template>
 <script>
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import ERC20 from "~/abi/ERC20ABI.json";
+import { fixD, addCommom } from "~/assets/js/util.js";
+import ERC20ABI from "~/abi/ERC20ABI.json";
 import {
   getLongType,
   getLongTokenValue,
+  getTokenPrice,
 } from "~/interface/event.js";
 import { BalanceOf } from "~/interface/read_contract.js";
 import countTo from "vue-count-to";
-import BigNumber from "bignumber.js";
-import {
-  fromWei,
-  getAccounts,
-  getDecimals,
-  Web3Contract,
-} from "../../interface/common_contract";
+import { fromWei } from "../../interface/index.js";
 import Web3 from "web3";
 export default {
   name: "insurance-banner",
@@ -107,15 +101,13 @@ export default {
   },
   data() {
     return {
-      precision: precision,
-      fixD: fixD,
-      addCommom: addCommom,
-      helmetPrice: 0,
+      addCommom,
+      HelmetPrice: 0,
       isLogin: false,
-      helmetVarieties: "--",
-      totalHelmetsBorrowedVolume: 0,
-      helmetvolume: 0,
-      guardVolume: 0,
+      HelmetVarieties: "--",
+      TotalHelmetsBorrowedVolume: 0,
+      Helmetvolume: 0,
+      GuardVolume: 0,
     };
   },
   computed: {
@@ -128,34 +120,30 @@ export default {
     },
   },
   watch: {
-    indexArray: {
-      handler: "IndexWacth",
-      immediate: true,
-    },
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
     },
   },
   mounted() {
-    if (window.chainID == 56) {
-      this.getBannerData();
-    }
     this.$nextTick(async () => {
       getLongType().then((res) => {
-        this.helmetVarieties = res;
+        this.HelmetVarieties = res;
       });
       getLongTokenValue().then((res) => {
-        this.totalHelmetsBorrowedVolume = res;
+        this.TotalHelmetsBorrowedVolume = res;
       });
       this.getHelmetVolume().then((res) => {
-        this.helmetvolume = res;
+        this.Helmetvolume = res;
       });
-      this.getGuardVolume().then((res) => {
-        // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
-        this.guardVolume = new BigNumber(4000000)
-          .minus(new BigNumber(res))
-          .plus(100000);
+      // this.getGuardVolume().then((res) => {
+      //   // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
+      //   this.GuardVolume = new BigNumber(4000000)
+      //     .minus(new BigNumber(res))
+      //     .plus(100000);
+      // });
+      this.getHelmetPrice().then((res) => {
+        this.HelmetPrice = fromWei(res.data.toTokenAmount);
       });
     });
   },
@@ -168,28 +156,14 @@ export default {
         this.isLogin = newValue.data.isLogin;
       }
     },
-    async getBannerData() {
-      let timer = setTimeout(() => {
-        this.getPrice();
-        clearTimeout();
-      }, 2000);
-      this.$once("hook:beforeDestroy", () => {
-        clearTimeout(timer);
+    async getHelmetPrice() {
+      let helmetConrtact = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+      let usdtConrtact = "0x55d398326f99059ff775485246999027b3197955";
+      return getTokenPrice({
+        fromTokenAddress: helmetConrtact,
+        toTokenAddress: usdtConrtact,
+        amount: "1000000000000000000",
       });
-    },
-    getPrice() {
-      this.helmetPrice = toRounding(
-        precision.times(
-          this.indexArray[1]["HELMET"],
-          this.$store.state.BNB_BUSD
-        ),
-        4
-      );
-    },
-    IndexWacth(newValue, val) {
-      if (newValue) {
-        this.getPrice();
-      }
     },
     async getHelmetVolume() {
       let helmetConrtact = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
@@ -201,15 +175,14 @@ export default {
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
       );
       let Contracts = new HttpWeb3.eth.Contract(
-        ERC20.abi,
+        ERC20ABI.abi,
         "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
       );
-      let DecimalsUnit = getDecimals(18);
       return await Contracts.methods
         .balanceOf("0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699")
         .call()
         .then((res) => {
-          return fromWei(res, DecimalsUnit);
+          return fromWei(res);
         });
     },
   },

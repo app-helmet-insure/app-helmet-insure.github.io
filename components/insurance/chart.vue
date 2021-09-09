@@ -39,13 +39,11 @@
       <p>
         <span>
           <img src="~/assets/img/insurancelist/bnbCoin.png" alt="" />
-          <i>{{ BalanceArray["BNB"] ? BalanceArray["BNB"] : 0 }} BNB</i>
+          <i>{{ ETHBalance }} BNB</i>
         </span>
         <span>
           <img src="~/assets/img/insurancelist/helmetCoin.png" alt="" />
-          <i
-            >{{ BalanceArray["HELMET"] ? BalanceArray["HELMET"] : 0 }} HELMET</i
-          ></span
+          <i>{{ HelmetBalance }} HELMET</i></span
         >
       </p>
     </div>
@@ -60,6 +58,7 @@ import {
   toRounding,
   fixDEAdd,
 } from "~/assets/js/util.js";
+import { HelmetBalance, ETHBalance } from "../../web3/index.js";
 export default {
   props: ["ActiveData", "ActiveType"],
   data() {
@@ -70,6 +69,8 @@ export default {
       toRounding,
       fixDEAdd,
       positionLeft: 50,
+      HelmetBalance: 0,
+      ETHBalance: 0,
     };
   },
   computed: {
@@ -78,6 +79,7 @@ export default {
     },
   },
   mounted() {
+    this.getBalance();
     let timer = setTimeout(() => {
       this.initEchart();
     }, 1000);
@@ -86,6 +88,10 @@ export default {
     });
   },
   methods: {
+    async getBalance() {
+      this.HelmetBalance = await HelmetBalance();
+      this.ETHBalance = await ETHBalance();
+    },
     initEchart() {
       const callPrice = this.ActiveData.Call.StrikePrice;
       const putPrice = this.ActiveData.Put.StrikePrice;

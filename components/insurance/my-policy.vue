@@ -144,6 +144,7 @@ import { fromWei } from "~/interface/index.js";
 import { getCurrentInsurance } from "~/config/insurance.js";
 import BigNumber from "bignumber.js";
 import OrderABI from "../../abi/OrderABI.json";
+import ERC20ABI from "../../abi/ERC20ABI.json";
 import { getContract } from "../../web3/index.js";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
@@ -293,7 +294,6 @@ export default {
             let { StrikePriceDecimals, CollateralDecimals } = CurrentInsurance;
             if (itemAsks.Binds.length) {
               itemAsks.Binds.forEach((itemBid) => {
-                console.log(itemBid);
                 if (
                   Account &&
                   itemBid.buyer.toUpperCase() === Account.toUpperCase()
@@ -341,87 +341,137 @@ export default {
               return list;
             });
             returnList = returnList.filter((filter) => filter.remain !== "0");
-            console.log(returnList);
             this.PolicyList = returnList;
             this.isLoading = false;
           });
         }
       });
     },
-    // 行权
-    toActive(item) {
-      let data;
-      if (item.type == "Call") {
-        data = {
-          token: item.underlying_symbol || getTokenName(item._underlying),
-          totoken: item.collateral_symbol || getTokenName(item._collateral),
-          _underlying_vol: precision.times(item.show_strikePrice, item.volume),
-          vol: item.volume,
-          bidID: item.bidID,
-          long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
-          _underlying: item.collateral_symbol || getTokenName(item._collateral),
-          _collateral: item.underlying_symbol || getTokenName(item._underlying),
-          settleToken:
-            item.settleToken_symbol || getTokenName(item.settleToken),
-          flag: item.transfer ? true : false,
-          approveAddress1: item.approveAddress1,
-          approveAddress2: item.approveAddress2,
-          unit: item.unit ? item.unit : "",
-          showVolume: item.showVolume,
-          show_strikePrice: item.show_strikePrice,
-          ShowVolume: item.buyVolume,
-        };
-      } else {
-        data = {
-          token: item.collateral_symbol || getTokenName(item._collateral),
-          totoken: item.underlying_symbol || getTokenName(item._underlying),
-          _underlying_vol: item.volume,
-          vol: item.volume,
-          bidID: item.bidID,
-          long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
-          _underlying: item.collateral_symbol || getTokenName(item._collateral),
-          _collateral: item.underlying_symbol || getTokenName(item._underlying),
-          settleToken:
-            item.settleToken_symbol || getTokenName(item.settleToken),
-          flag: item.transfer ? true : false,
-          approveAddress1: item.approveAddress1,
-          approveAddress2: item.approveAddress2,
-          unit: item.unit ? item.unit : "",
-          showVolume: item.volume * item.outPrice,
-          show_strikePrice: item.show_strikePrice,
-          buyVolume: item.buyVolume,
-        };
-      }
-
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "WARNING",
-        layout: "layout1",
-        conText: `<p>you will swap<span> ${fixD(
-          data.show_strikePrice * data.buyVolume,
-          8
-        )} ${data.token}</span> to <span> ${fixD(data.buyVolume, 8)} ${
-          data.totoken
-        }</span></p>`,
-        activeTip: true,
-        activeTipText1: "Please double check the price above，",
-        activeTipText2: "Helmet team will not cover your loss on this.",
-        loading: false,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: true,
-      });
-      this.$bus.$on("PROCESS_ACTION", (res) => {
-        if (res) {
-          onExercise(data, data.flag, (status) => {
-            if (status == "success") {
-              this.getList();
+    getLongApporve(data) {
+      let Account = window.CURRENTADDRESS;
+      const Erc20ContractsLong = getContract(ERC20ABI.abi, data.Long);
+      return Erc20ContractsLong.methods
+        .allowance(Account, OrderAddress)
+        .call()
+        .then((res) => {
+          if (Number(res) > 0) {
+            return true;
+          }
+          return false;
+        });
+    },
+    getUnderlyingApprove(data) {
+      let Account = window.CURRENTADDRESS;
+      const Erc20ContractsLong = getContract(
+        ERC20ABI.abi,
+        data.UnderlyingAddress
+      );
+      return Erc20ContractsLong.methods
+        .allowance(Account, OrderAddress)
+        .call()
+        .then((res) => {
+          if (Number(res) > 0) {
+            return true;
+          }
+          return false;
+        });
+    },
+    actionApproveUnderlying(data) {
+      this.SuccessVisible = false;
+      const Erc20Contracts = getContract(ERC20ABI.abi, data.UnderlyingAddress);
+      const Infinitys =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      let Account = window.CURRENTADDRESS;
+      Erc20Contracts.methods
+        .approve(OrderAddress, Infinitys)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          this.WaitingText = `<p>You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.SuccessHash = receipt.transactionHash;
+            this.actionWithDraw(data);
+          }
+        })
+        .on("error", (ereor) => {
+          this.WaitingVisible = false;
+        });
+    },
+    actionApproveLong(data, approveFlag) {
+      const Erc20Contracts = getContract(ERC20ABI.abi, data.Long);
+      const Infinitys =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      let Account = window.CURRENTADDRESS;
+      Erc20Contracts.methods
+        .approve(OrderAddress, Infinitys)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          this.WaitingText = `<p>You will approve <b>LONG</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.SuccessHash = receipt.transactionHash;
+            if (approveFlag) {
+              this.actionWithDraw(data);
+            } else {
+              this.actionApproveUnderlying(data);
             }
-          });
-        }
-        data = {};
-      });
+          }
+        })
+        .on("error", (ereor) => {
+          this.WaitingVisible = false;
+        });
+    },
+    async toActive(data) {
+      let LongApproveStatus = await this.getLongApporve(data);
+      let UnderlyingApproveStatus = await this.getUnderlyingApprove(data);
+      console.log(LongApproveStatus, UnderlyingApproveStatus);
+      if (!LongApproveStatus && !UnderlyingApproveStatus) {
+        this.actionApproveLong(data);
+        return;
+      }
+      if (!LongApproveStatus && UnderlyingApproveStatus) {
+        this.actionApproveLong(data, true);
+        return;
+      }
+      if (!UnderlyingApproveStatus && LongApproveStatus) {
+        this.actionApproveUnderlying(data);
+        return;
+      }
+      if (LongApproveStatus && UnderlyingApproveStatus) {
+        this.actionWithDraw(data);
+        return;
+      }
+    },
+    actionWithDraw(data) {
+      let Account = window.CURRENTADDRESS;
+      let Contracts = getContract(OrderABI, OrderAddress);
+      Contracts.methods
+        .exercise(data.BidID)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          // this.WaitingText = `<p>You will approve <b>LONG</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.getPolicysList();
+          }
+        })
+        .on("error", function (error) {
+          this.WaitingVisible = false;
+          this.SuccessVisible = false;
+        });
     },
     async HBURGERPolicy() {
       let myAddress =

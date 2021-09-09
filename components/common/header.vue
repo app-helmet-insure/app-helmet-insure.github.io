@@ -43,7 +43,7 @@
         <template v-else>
           <div class="balance-wrap">
             <img src="~/assets/img/helmet/helmetCoin.png" alt="" />
-            <span>{{ BalanceArray["HELMET"] }}</span>
+            <span>{{ HelmetBalance }}</span>
           </div>
           <div class="wallet-address" @click="openCurrentAccount">
             <span>{{ accountText }}</span>
@@ -81,6 +81,7 @@ import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
 import { maticNetwork, bscNetwork } from "~/interface/common_contract.js";
+import { HelmetBalance } from "../../web3/index.js";
 export default {
   name: "p-header",
   props: ["account"],
@@ -98,18 +99,12 @@ export default {
       showCurrentAccount: false, // 显示当前账户信息
       showChangeWallet: false,
       WallectSelectType: "ALL",
+      HelmetBalance: 0,
     };
   },
   computed: {
     userInfo() {
       return this.$store.state.userInfo;
-    },
-    routeObj() {
-      return this.$route;
-    },
-    BalanceArray() {
-      let obj = this.$store.state.BalanceArray;
-      return obj;
     },
     ChainID() {
       let chainID = this.$store.state.chainID;
@@ -128,10 +123,15 @@ export default {
       this.chainID = newValue;
     },
   },
-
+  mounted() {
+    this.getHelmetBalance();
+  },
   methods: {
     jump() {
       this.$router.push("/migration");
+    },
+    async getHelmetBalance() {
+      this.HelmetBalance = await HelmetBalance();
     },
     handleClickAirdrop() {
       this.$bus.$emit("AIRDROP_DIALOG", true);
@@ -204,7 +204,7 @@ export default {
       cursor: pointer;
       display: flex;
       align-items: center;
-        color: #9f66ff;
+      color: #9f66ff;
       img {
         width: 24px;
         height: 24px;

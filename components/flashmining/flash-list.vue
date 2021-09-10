@@ -6,7 +6,7 @@
     <div
       class="flash_item_wrap"
       v-for="(item, index) in FixPoolList"
-      :key="item.key"
+      :Key="item.Key"
     >
       <div class="flash_item">
         <img
@@ -19,51 +19,51 @@
         />
         <section class="flash_pool_name_web WEB">
           <img
-            :src="require(`~/assets/img/flashmining/${item.reward_symbol}.png`)"
+            :src="require(`~/assets/img/flashmining/${item.RewardSymbol}.png`)"
             alt=""
           />
           <div>
             <span
               class="onePager"
-              v-html="item.pool_name"
-              @click="hadnleShowOnePager($event, item.reward_symbol)"
+              v-html="item.PoolName"
+              @click="hadnleShowOnePager($event, item.RewardSymbol)"
             ></span>
-            <span>{{ item.pool_desc }}</span>
+            <span>{{ item.PoolDesc }}</span>
           </div>
         </section>
         <section class="flash_pool_earn_web WEB">
           <p>
             {{ $t("Table.EarnList") }}
             <span>
-              {{ item.reward_symbol }}
+              {{ item.RewardSymbol }}
             </span>
           </p>
         </section>
         <section class="flash_pool_time_web WEB">
           <i></i>
           <p>
-            <span v-html="item.show_time"></span>
+            <span v-html="item.ShowTime"></span>
             <span>{{ $t("Table.MIningCutdown") }}</span>
           </p>
         </section>
         <section class="flash_pool_reward_web WEB">
           <span
-            >{{ addCommom((item.total_rewards / item.pool_process) * 7, 2) }}
-            {{ item.reward_symbol }}</span
+            >{{ addCommom((item.TotalRewards / item.PoolProcess) * 7, 2) }}
+            {{ item.RewardSymbol }}</span
           >
           <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }}</span>
         </section>
         <section class="flash_pool_apr_web WEB">
-          <span>{{ item.apr }}</span>
+          <span>{{ item.APR }}</span>
           <span>APR</span>
         </section>
         <section class="flash_pool_action_web WEB">
           <button
-            @click="HandleClickAction(item, 'STAKE')"
+            @click="HandleClickAction(item, 'Stake')"
             :class="
-              activeFlash == item.key &&
-              showActiveFlash &&
-              activeType == 'STAKE'
+              ActiveFlash == item.Key &&
+              ShowActiveFlash &&
+              ActiveType == 'Stake'
                 ? 'activeButton stakeFlash'
                 : 'stakeFlash'
             "
@@ -72,11 +72,11 @@
             <i class="selectDown"></i>
           </button>
           <button
-            @click="HandleClickAction(item, 'CLAIM')"
+            @click="HandleClickAction(item, 'Claim')"
             :class="
-              activeFlash == item.key &&
-              showActiveFlash &&
-              activeType == 'CLAIM'
+              ActiveFlash == item.Key &&
+              ShowActiveFlash &&
+              ActiveType == 'Claim'
                 ? 'activeButton claimFlash'
                 : 'claimFlash'
             "
@@ -90,53 +90,53 @@
           <div>
             <img
               :src="
-                require(`~/assets/img/flashmining/${item.reward_symbol}.png`)
+                require(`~/assets/img/flashmining/${item.RewardSymbol}.png`)
               "
               alt=""
             />
             <p>
               <span
                 class="onePager"
-                v-html="item.pool_name"
-                @click="hadnleShowOnePager($event, item.reward_symbol)"
+                v-html="item.PoolName"
+                @click="hadnleShowOnePager($event, item.RewardSymbol)"
               ></span>
-              <span>{{ item.pool_desc }}</span>
+              <span>{{ item.PoolDesc }}</span>
             </p>
           </div>
           <p>
             {{ $t("Table.EarnList") }}
             <span>
-              {{ item.reward_symbol }}
+              {{ item.RewardSymbol }}
             </span>
           </p>
         </section>
         <section class="flash_pool_time_h5 H5">
           <p>
-            <span>{{ item.apr }}</span>
+            <span>{{ item.APR }}</span>
             <span>APR</span>
           </p>
           <div>
             <i></i>
             <p>
-              <span v-html="item.show_time"></span>
+              <span v-html="item.ShowTime"></span>
               <span>{{ $t("Table.MIningCutdown") }}</span>
             </p>
           </div>
         </section>
         <section class="flash_pool_reward_h5 H5">
           <span
-            >{{ addCommom((item.total_rewards / item.pool_process) * 7, 2) }}
-            {{ item.reward_symbol }}</span
+            >{{ addCommom((item.TotalRewards / item.PoolProcess) * 7, 2) }}
+            {{ item.RewardSymbol }}</span
           >
           <span>{{ $t("Table.RewardsDistribution") + "(weekly)" }} </span>
         </section>
         <section class="flash_pool_action_h5 H5">
           <button
-            @click="HandleClickAction(item, 'STAKE', true)"
+            @click="HandleClickAction(item, 'Stake', true)"
             :class="
-              activeFlash == item.key &&
-              showActiveFlash &&
-              activeType == 'STAKE'
+              ActiveFlash == item.Key &&
+              ShowActiveFlash &&
+              ActiveType == 'Stake'
                 ? 'activeButton stakeFlash'
                 : 'stakeFlash'
             "
@@ -144,11 +144,11 @@
             {{ $t("Insurance.Insurance_text23") }}
           </button>
           <button
-            @click="HandleClickAction(item, 'CLAIM', true)"
+            @click="HandleClickAction(item, 'Claim', true)"
             :class="
-              activeFlash == item.key &&
-              showActiveFlash &&
-              activeType == 'CLAIM'
+              ActiveFlash == item.Key &&
+              ShowActiveFlash &&
+              ActiveType == 'Claim'
                 ? 'activeButton claimFlash'
                 : 'claimFlash'
             "
@@ -159,27 +159,27 @@
       </div>
       <div
         class="flash_detail WEB"
-        v-if="showActiveFlash && activeFlash == item.key"
+        v-if="ShowActiveFlash && ActiveFlash == item.Key"
       >
-        <svg class="close" aria-hidden="true" @click="showActiveFlash = false">
+        <svg class="close" aria-hidden="true" @click="ShowActiveFlash = false">
           <use xlink:href="#icon-close"></use>
         </svg>
         <POOL
-          :activeData="activeData"
-          :activeFlag="activeFlag"
-          :activeType="activeType"
+          :ActiveData="ActiveData"
+          :ActiveFlag="ActiveFlag"
+          :ActiveType="ActiveType"
         />
       </div>
       <div
         class="wraper_title H5"
-        v-if="showActiveFlash && activeFlash == item.key"
+        v-if="ShowActiveFlash && ActiveFlash == item.Key"
       >
         <PHeader></PHeader>
         <div class="wraper">
           <div class="wraper_header">
             <h3 class="">
               {{
-                activeType == "STAKE"
+                ActiveType == "Stake"
                   ? $t("Insurance.Insurance_text23")
                   : $t("Table.Claim")
               }}
@@ -187,15 +187,15 @@
             <svg
               class="close"
               aria-hidden="true"
-              @click="showActiveFlash = false"
+              @click="ShowActiveFlash = false"
             >
               <use xlink:href="#icon-close"></use>
             </svg>
           </div>
           <POOL
-            :activeData="activeData"
-            :activeFlag="activeFlag"
-            :activeType="activeType"
+            :ActiveData="ActiveData"
+            :ActiveFlag="ActiveFlag"
+            :ActiveType="ActiveType"
           />
         </div>
       </div>
@@ -207,10 +207,10 @@
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
 import { fixD, addCommom } from "~/assets/js/util.js";
-import POOL from "./flashPool.vue";
+import POOL from "./flash-pool.vue";
 import { PoolList, formatMiningPool } from "../../config/flashMining.js";
 export default {
-  components: { 
+  components: {
     POOL,
     Wraper,
     PHeader,
@@ -218,12 +218,12 @@ export default {
   data() {
     return {
       FixPoolList: [],
-      showActiveFlash: false,
-      activeFlash: "",
+      ShowActiveFlash: false,
+      ActiveFlash: "",
       TradeType: "",
-      activeType: "",
-      activeData: {},
-      activeFlag: "",
+      ActiveType: "",
+      ActiveData: {},
+      ActiveFlag: "",
       fixD,
       addCommom,
     };
@@ -249,11 +249,11 @@ export default {
       }
     },
     HandleClickAction(PoolData, Action, Flag = false) {
-      this.showActiveFlash = true;
-      this.activeData = PoolData;
-      this.activeType = Action;
-      this.activeFlag = Flag;
-      this.activeFlash = PoolData.key;
+      this.ShowActiveFlash = true;
+      this.ActiveData = PoolData;
+      this.ActiveType = Action;
+      this.ActiveFlag = Flag;
+      this.ActiveFlash = PoolData.Key;
     },
   },
 };
@@ -645,7 +645,7 @@ export default {
       left: 10px;
       top: -21px;
     }
-    .activeFlash {
+    .ActiveFlash {
       @include themeify {
         border-bottom: 1px solid themed("color-e8e8eb");
       }

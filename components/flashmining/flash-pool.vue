@@ -1,5 +1,5 @@
 <template>
-  <div class="mining_pool">
+  <div class="flash_pool">
     <div
       class="deposit"
       v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Stake')"
@@ -15,7 +15,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ ActiveData.StakeUnit }}
+          LPT
         </p>
       </div>
       <div class="content">
@@ -31,24 +31,6 @@
       </div>
       <div class="button">
         <button
-          v-if="ActiveData.StakeSymbol === 'HELMET'"
-          @click="toDeposite"
-          :class="
-            (StakeLoading ? 'disable b_button' : 'b_button',
-            ActiveData.Status == 3 ? 'disable_button b_button' : 'b_button')
-          "
-        >
-          <i :class="StakeLoading ? 'loading_pic' : ''"></i
-          >{{
-            !ApproveStatus
-              ? $t("Table.Approve")
-              : CanClaim1
-              ? $t("Table.StakeAndCompound")
-              : $t("Table.ConfirmDeposit")
-          }}
-        </button>
-        <button
-          v-else
           @click="toDeposite"
           :class="
             (StakeLoading ? 'disable b_button' : 'b_button',
@@ -68,10 +50,10 @@
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
-            &nbsp;{{ ActiveData.StakeUnit }}</span
+            &nbsp;LPT</span
           >
         </p>
         <p>
@@ -82,31 +64,23 @@
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
               :duration="2000"
-              :decimals="4"
+              :decimals="8"
             />
             <span v-else>--</span>
-            &nbsp;{{ ActiveData.StakeUnit }}</span
+            &nbsp;LPT</span
           >
         </p>
-        <section>
-          <p>
-            <span>{{ $t("Table.MyPoolShare") }}：</span>
-            <span> {{ isLogin ? MyPoolShare : "--" }} %</span>
-          </p>
-          <div style="display: flex">
-            <p
-              class="jump_text"
-              v-html="ActiveData.JumpLink1"
-              v-if="ActiveData.JumpLink1"
-            ></p>
-            <p
-              class="jump_text"
-              v-html="ActiveData.JumpLink2"
-              v-if="ActiveData.JumpLink2"
-            ></p>
-          </div>
-        </section>
+        <p>
+          <span>{{ $t("Table.MyPoolShare") }}：</span>
+          <span> {{ isLogin ? MyPoolShare : "--" }} %</span>
+        </p>
       </div>
+      <a
+        :href="`https://exchange.pancakeswap.finance/#/add/${ActiveData.OneLpAddress}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
+        target="_blank"
+        >From <i class="pancake"></i>Get {{ ActiveData.OneLpSymbol }}-HELMET
+        LPT</a
+      >
       <div class="ContractAddress" v-if="ActiveData.LeftShowToken">
         <span
           >{{ ActiveData.LeftShowToken.AddTokenSymbol }}
@@ -130,9 +104,10 @@
         <i></i>
       </div>
     </div>
+    <i></i>
     <div
       class="withdraw"
-      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Claim')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'CLAIM')"
     >
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -145,7 +120,7 @@
             :decimals="8"
           />
           <span v-else>--</span>
-          {{ ActiveData.StakeUnit }}
+          LPT
         </p>
       </div>
       <div class="content">
@@ -155,7 +130,7 @@
             type="text"
             v-model="CanWithdraw"
             disabled
-            :class="ActiveType == 'Claim' ? 'activeInput' : ''"
+            :class="ActiveType == 'CLAIM' ? 'activeInput' : ''"
           />
         </div>
       </div>
@@ -168,56 +143,30 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
-        <p v-if="ActiveData.HaveReward1">
-          <span
-            ><i>{{ ActiveData.Reward1Symbol }}</i>
+        <p>
+          <span>
+            {{ ActiveData.RewardSymbol }}
             {{ $t("Table.HELMETRewards") }}：</span
           >
           <span>
-            <countTo
-              v-if="isLogin"
-              :startVal="Number(0)"
-              :endVal="Number(CanClaim1)"
-              :duration="2000"
-              :decimals="8"
-            />
-            <span v-else>--</span>
-            {{ ActiveData.Reward1Symbol }}</span
-          >
+            <span>
+              <countTo
+                v-if="isLogin"
+                :startVal="Number(0)"
+                :endVal="Number(CanClaim)"
+                :duration="2000"
+                :decimals="8"
+              />
+              <span v-else>--</span>
+              {{ ActiveData.RewardSymbol }}</span
+            >
+          </span>
         </p>
-        <p v-if="ActiveData.HaveReward2">
-          <span
-            ><i>{{ ActiveData.Reward2Symbol }}</i>
-            {{ $t("Table.HELMETRewards") }}：</span
-          >
-          <span>
-            <countTo
-              v-if="isLogin"
-              :startVal="Number(0)"
-              :endVal="Number(CanClaim2)"
-              :duration="2000"
-              :decimals="8"
-            />
-            <span v-else>--</span>
-            {{ ActiveData.Reward2Symbol }}</span
-          >
-        </p>
-        <!-- compound -->
         <button
-          v-if="ActiveData.compound"
-          @click="toCompound"
-          :class="ClaimLoading ? 'disable o_button' : 'o_button'"
-        >
-          <i :class="ClaimLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.Compound") }}
-        </button>
-        <!-- claim -->
-        <button
-          v-else
           @click="toClaim"
           :class="
             (ClaimLoading ? 'disable o_button' : 'o_button',
-            ActiveData.Status === 3 ? 'disable_button o_button' : 'o_button')
+            ActiveData.Status == 3 ? 'disable_button o_button' : 'o_button')
           "
         >
           <i :class="ClaimLoading ? 'loading_pic' : ''"></i
@@ -247,7 +196,6 @@
         <i></i>
       </div>
     </div>
-    <!-- dialog -->
     <WaitingConfirmationDialog
       :DialogVisible="WaitingVisible"
       :DialogClose="waitingClose"
@@ -272,16 +220,16 @@ import countTo from "vue-count-to";
 import addToken from "~/assets/utils/addtoken.js";
 import MiningABI from "../../abi/MiningABI.json";
 import ERC20ABI from "../../abi/ERC20ABI.json";
-import { Contract } from "ethers-multicall-x";
 import { getContract } from "../../web3/index.js";
+import { Contract } from "ethers-multicall-x";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import { toWei } from "~/interface/index";
 import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
 } from "~/interface/index.js";
-import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
-import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 export default {
   props: ["ActiveData", "ActiveFlag", "ActiveType"],
   components: {
@@ -291,11 +239,11 @@ export default {
   },
   data() {
     return {
+      fixD,
       CanDeposite: 0,
       CanWithdraw: 0,
       TotalDeposite: 0,
-      CanClaim1: 0,
-      CanClaim2: 0,
+      CanClaim: 0,
       MyPoolShare: 0,
       StakeVolume: "",
       StakeLoading: false,
@@ -309,7 +257,7 @@ export default {
       WaitingText: "",
     };
   },
-  mounted() {
+  async mounted() {
     this.$nextTick(() => {
       this.getPoolInfo();
     });
@@ -336,22 +284,10 @@ export default {
       let data = {
         tokenAddress: options.AddTokenAddress,
         tokenSymbol: options.AddTokenSymbol,
-        tokenDecimals: options.ADDTOKEN_DECIMALS,
+        tokenDecimals: options.add_token_decimals,
         tokenImage: "",
       };
       await addToken(data);
-    },
-    hadnleShowOnePager(e, onePager) {
-      if (e.target.tagName === "I" && onePager) {
-        let Earn = onePager;
-        this.$bus.$emit("OPEN_ONEPAGER", {
-          showFlag: true,
-          title: `What is $${onePager}?`,
-          text: onePager,
-        });
-      } else {
-        return;
-      }
     },
     userInfoWatch(newValue) {
       if (newValue) {
@@ -359,7 +295,6 @@ export default {
       }
     },
     copyAdress(e, text) {
-      let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
       copys.on("success", function (e) {
         Message({
@@ -387,7 +322,6 @@ export default {
         PoolContracts.balanceOf(Account),
         PoolContracts.totalSupply(),
         PoolContracts.earned(Account),
-        PoolContracts.earned2(Account),
         ApproveContracts.allowance(Account, PoolAddress),
       ];
       const MulticallProvider = getOnlyMultiCallProvider();
@@ -397,15 +331,13 @@ export default {
           CanDeposite,
           CanWithdraw,
           TotalDeposite,
-          CanClaim1,
-          CanClaim2,
+          CanClaim,
           ApproveStatus,
         ] = FixData;
         this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
         this.CanWithdraw = fromWei(CanWithdraw, StakeDecimals);
         this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
-        this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
-        this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
+        this.CanClaim = fromWei(CanClaim, RewardDecimals);
         this.MyPoolShare = fixD(
           (this.CanWithdraw / this.TotalDeposite) * 100,
           2
@@ -477,67 +409,34 @@ export default {
           });
       }
     },
-
-    // 结算Paya
     async toClaim() {
       if (this.ClaimLoading) {
         return;
       }
       this.ClaimLoading = true;
       const ContractAddress = this.ActiveData.PoolAddress;
-      const RewardVolume = this.ActiveData.RewardVolume;
       const Account = window.CURRENTADDRESS;
       const Contracts = getContract(MiningABI, ContractAddress);
-      if (RewardVolume == "one") {
-        Contracts.methods
-          .getReward()
-          .send({ from: Account })
-          .on("transactionHash", (hash) => {
-            this.WaitingVisible = true;
-          })
-          .on("receipt", (receipt) => {
-            if (!this.SuccessVisible) {
-              this.SuccessHash = receipt.transactionHash;
-              this.WaitingVisible = false;
-              this.SuccessVisible = true;
-              this.ClaimLoading = false;
-              this.getPoolInfo();
-            }
-          })
-          .on("error", function (error) {
+      Contracts.methods
+        .getReward()
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
             this.WaitingVisible = false;
-            this.SuccessVisible = false;
+            this.SuccessVisible = true;
             this.ClaimLoading = false;
-          });
-      } else {
-        Contracts.methods
-          .getDoubleReward()
-          .send({ from: Account })
-          .on("transactionHash", (hash) => {
-            this.WaitingVisible = true;
-          })
-          .on("receipt", (receipt) => {
-            if (!this.SuccessVisible) {
-              this.SuccessHash = receipt.transactionHash;
-              this.WaitingVisible = false;
-              this.SuccessVisible = true;
-              this.ClaimLoading = false;
-              this.getPoolInfo();
-            }
-          })
-          .on("error", function (error) {
-            this.WaitingVisible = false;
-            this.SuccessVisible = false;
-            this.ClaimLoading = false;
-          });
-      }
-    },
-    toCompound() {
-      this.$bus.$emit("OPEN_COMPOUND", {
-        title: "Compound HELMET Earned",
-        number: this.CanClaim1,
-        PoolAddress: this.ActiveData.PoolAddress,
-      });
+            this.getPoolInfo();
+          }
+        })
+        .on("error", function (error) {
+          this.WaitingVisible = false;
+          this.SuccessVisible = false;
+          this.ClaimLoading = false;
+        });
     },
     // 退出
     async toExit() {
@@ -572,54 +471,6 @@ export default {
   },
 };
 </script>
-<style lang='scss'>
-.jump_text {
-  a {
-    margin-top: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #fd7e14;
-    line-height: 20px;
-    display: flex;
-    align-items: center;
-    i {
-      display: block;
-      width: 20px;
-      height: 20px;
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      margin: 0 4px;
-    }
-    .pancake {
-      background-image: url("../../assets/img/icon/pancake@2x.png");
-    }
-    .dodo {
-      background-image: url("../../assets/img/icon/dodo@2x.png");
-    }
-    .chainswap {
-      background-image: url("../../assets/img/icon/chainswap@2x.png");
-    }
-    .qian {
-      background-image: url("../../assets/img/icon/qian@2x.png");
-    }
-    .mdx {
-      background-image: url("../../assets/img/icon/mdx@2x.png");
-    }
-    .burger {
-      background-image: url("../../assets/img/icon/burgerswap@2x.png");
-    }
-    .babyswap {
-      background-image: url("../../assets/img/icon/babyswap@2x.png");
-    }
-    .acsi {
-      background-image: url("../../assets/img/icon/acsi@2x.png");
-    }
-  }
-  .H5_link {
-    display: none;
-  }
-}
-</style>
-<style lang='scss'scoped>
-@import "../../assets/css/mining_pool.scss";
+<style lang="scss" soped>
+@import "../../assets/css/flash_pool.scss";
 </style>

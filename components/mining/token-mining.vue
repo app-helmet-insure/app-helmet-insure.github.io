@@ -321,7 +321,6 @@ export default {
   },
   data() {
     return {
-      miningList: [],
       ActiveType: "",
       ShowActiveMining: false,
       ActiveMining: "",

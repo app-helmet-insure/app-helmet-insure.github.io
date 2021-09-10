@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import FlashList from "~/components/flashmining/flashList.vue";
-import FlashTitle from "~/components/flashmining/flashTitle.vue";
+import FlashList from "~/components/flashmining/flash-list.vue";
+import FlashTitle from "~/components/flashmining/flash-title.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",

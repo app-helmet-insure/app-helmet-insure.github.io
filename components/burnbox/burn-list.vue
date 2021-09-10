@@ -11,7 +11,7 @@
             <img
               :src="
                 require(`~/assets/img/burnmining/${
-                  item.Status === 3
+                  item.status === 3
                     ? 'expired_' + item.stake_symbol
                     : item.stake_symbol
                 }.png`)
@@ -79,7 +79,7 @@
             <img
               :src="
                 require(`~/assets/img/burnmining/${
-                  item.Status === 3
+                  item.status === 3
                     ? 'expired_' + item.stake_symbol
                     : item.stake_symbol
                 }.png`)
@@ -186,8 +186,8 @@
 <script>
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
-import { PoolList, formatMiningPool } from "../../config/burningBox.js";
-import POOL from "./burnPool.vue";
+import { PoolList, formatMiningPool } from "../../config/burning.js";
+import POOL from "./burn-pool.vue";
 export default {
   components: {
     Wraper,
@@ -226,7 +226,6 @@ export default {
       this.activeFlag = Flag;
       this.activeBurn = PoolData.key;
     },
-    
   },
 };
 </script>

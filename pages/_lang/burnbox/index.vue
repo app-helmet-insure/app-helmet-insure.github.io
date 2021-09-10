@@ -1,22 +1,22 @@
 <template>
   <div class="main_container">
-    <BURNTITLE></BURNTITLE>
+    <BurnTitle></BurnTitle>
     <div class="burn_container">
-      <BURNLIST></BURNLIST>
+      <BurnList></BurnList>
       <Onepager></Onepager>
     </div>
   </div>
 </template>
 
 <script>
-import BURNTITLE from "~/components/burnbox/burnTitle.vue";
-import BURNLIST from "~/components/burnbox/burnList.vue";
+import BurnTitle from "~/components/burnbox/burn-title.vue";
+import BurnList from "~/components/burnbox/burn-list.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",
   components: {
-    BURNTITLE,
-    BURNLIST,
+    BurnTitle,
+    BurnList,
     Onepager,
   },
 };

@@ -208,7 +208,7 @@ import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import POOL from "./flash-pool.vue";
-import { PoolList, formatMiningPool } from "../../config/flashMining.js";
+import { PoolList, formatMiningPool } from "../../config/flash.js";
 export default {
   components: {
     POOL,

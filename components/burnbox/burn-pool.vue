@@ -48,9 +48,7 @@
       </div>
       <button
         :class="
-          this.activeData.status === 3
-            ? 'disable_button submit_burn'
-            : 'submit_burn'
+          activeData.status === 3 ? 'disable_button submit_burn' : 'submit_burn'
         "
         @click="toDeposite"
       >
@@ -259,6 +257,8 @@ export default {
       this.$once("hook:beforeDestroy", () => {
         clearInterval(timer1);
       });
+    } else {
+      this.process = 100;
     }
   },
   methods: {

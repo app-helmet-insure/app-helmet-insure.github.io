@@ -197,6 +197,10 @@ export const getLongTokenValue = (data) => {
   });
 };
 export const getTokenPrice = (data) => {
+  let HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8".toUpperCase();
+  if (data.fromTokenAddress.toUpperCase() === HelmetAddress) {
+    data.protocols = "PANCAKESWAP_V2";
+  }
   return Axios({
     method: "get",
     url: "https://api.1inch.exchange/v3.0/56/quote",

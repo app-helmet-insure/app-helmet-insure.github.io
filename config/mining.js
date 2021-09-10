@@ -1010,6 +1010,7 @@ export const getLptAPR = async (PoolData) => {
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const BNBAddress = "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
+  const USDTAddress = "0x55d398326f99059ff775485246999027b3197955";
   const HelmetDecimals = 18;
   const {
     PoolAddress,
@@ -1032,39 +1033,38 @@ export const getLptAPR = async (PoolData) => {
   const HelmetContracts = new Contract(HelmetAddress, MiningABI);
   const ProxyContracts = new Contract(ProxyAddress, ProxyABI);
   const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
-  const Amount = toWei("1", Reward2Decimals);
-  // const Data1 = await getTokenPrice({
-  //   fromTokenAddress: Reward1Address,
-  //   toTokenAddress: HelmetAddress,
-  //   amount: Amount,
-  // });
+  const Amount1 = toWei("1", Reward1Decimals);
+  const Amount2 = toWei("1", Reward2Decimals);
+  const Data1 = await getTokenPrice({
+    fromTokenAddress: Reward1Address,
+    toTokenAddress: USDTAddress,
+    amount: Amount1,
+  });
   const Data2 = await getTokenPrice({
     fromTokenAddress: Reward2Address,
-    toTokenAddress: HelmetAddress,
-    amount: Amount,
+    toTokenAddress: USDTAddress,
+    amount: Amount2,
   });
-  const Reward1HelmetPrice = 1;
-  const Reward2HelmetPrice = fromWei(Data2.data.toTokenAmount);
+  const Reward1USDTPrice = fromWei(Data1.data.toTokenAmount);
+  const Reward2USDTPrice = fromWei(Data2.data.toTokenAmount);
   let PerBlock;
   let FixStakeValue;
   if (ProxySwap === "PANCAKE") {
     PerBlock = await CakePerBlock(ProxyAddress);
     const StakeValue = await BalanceOf(HelmetAddress, 18, StakeAddress);
     FixStakeValue = StakeValue * 2;
-    console.log(StakeValue * 2);
   }
   if (ProxySwap === "MDEX") {
     PerBlock = await Reward(ProxyAddress);
     const StakeValue = await BalanceOf(HelmetAddress, 18, StakeAddress);
     FixStakeValue = StakeValue * 2;
-    console.log(StakeValue * 2);
   }
   if (ProxySwap === "SUSHI") {
     PerBlock = await SushiPerBlock(ProxyAddress);
     const StakeValue = await getPoolTokens(SushiFarm, PoolTokens);
     FixStakeValue = fromWei(StakeValue.balances[0]) * 2;
   }
-  if (Reward1HelmetPrice && Reward2HelmetPrice) {
+  if (Reward1USDTPrice && Reward2USDTPrice) {
     const PromiseList = [
       StakeContracts.balanceOf(ProxyAddress),
       StakeContracts.totalSupply(),
@@ -1106,11 +1106,11 @@ export const getLptAPR = async (PoolData) => {
       console.log(Reward2Daily);
       const FixReward1Daily = Reward1Daily > 0 ? Reward1Daily : 0;
       const FixReward2Daily = Reward2Daily > 0 ? Reward2Daily : 0;
-      const NumberatorReward1 = 365 * Reward1HelmetPrice * FixReward1Daily;
-      const NumberatorReward2 = 365 * Reward2HelmetPrice * FixReward2Daily;
-      const DenominatorReward1 = FixStakeValue * Reward1HelmetPrice;
+      const NumberatorReward1 = 365 * Reward1USDTPrice * FixReward1Daily;
+      const NumberatorReward2 = 365 * Reward2USDTPrice * FixReward2Daily;
+      const DenominatorReward1 = FixStakeValue * Reward1USDTPrice;
       const DenominatorReward2 =
-        (FixStakeValue / FixLptVolume) * FixStakeVolume;
+        ((FixStakeValue * Reward1USDTPrice) / FixLptVolume) * FixStakeVolume;
       const YearReward1 = NumberatorReward1 / DenominatorReward1;
       const YearReward2 = NumberatorReward2 / DenominatorReward2;
       console.log(

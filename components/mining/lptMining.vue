@@ -5,7 +5,7 @@
       <div class="lptMiningWrap">
         <div
           class="lptMiningItemWrap"
-          v-for="item in lptPool"
+          v-for="item in poolList"
           :key="item.REWARD_NAME"
         >
           <div :class="`lptMiningItem lp_${storeThemes}`">
@@ -266,6 +266,7 @@ import POOL from "./pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import { GetPoolAPR } from "./mining_apr.js";
 import PHeader from "~/components/common/header.vue";
+import moment from "moment";
 export default {
   components: {
     Wraper,
@@ -274,7 +275,7 @@ export default {
   },
   data() {
     return {
-      lptPool,
+      poolList: [],
       activeType: "",
       showActiveMining: false,
       activeMining: "",
@@ -292,6 +293,14 @@ export default {
   },
   mounted() {
     this.GetPoolItemAPR();
+    lptPool.map((item) => {
+      console.log(item.OPEN_TIME, item.OPEN_TIME != "Mining");
+      if (item.OPEN_TIME != "Mining") {
+        item.OPEN_TIME = this.getMiningTime(item.OPEN_TIME);
+      }
+    });
+    console.log(lptPool);
+    this.poolList = lptPool;
   },
   methods: {
     HandleClickAction(PoolData, Action, Flag = false) {
@@ -311,6 +320,31 @@ export default {
         } else {
           item.REWARD_YEAR = item.REWARD_YEAR;
         }
+      }
+    },
+    getMiningTime(time) {
+      let now = new Date() * 1;
+      let dueDate = time;
+      dueDate = new Date(moment(dueDate + " UTC+8")) * 1;
+      let DonwTime = dueDate - now;
+      let day = Math.floor(DonwTime / (24 * 3600000));
+      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
+      let minute = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
+      );
+      let second = Math.floor(
+        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
+      );
+      let template;
+      if (dueDate > now) {
+        template = {
+          day: day > 9 ? day : "0" + day,
+          hour: hour > 9 ? hour : "0" + hour,
+          minute: minute > 9 ? minute : "0" + minute,
+        };
+        return template;
+      } else {
+        return "Mining";
       }
     },
   },

@@ -8,6 +8,49 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const iboPools = [
   {
+    name: 'PRED',
+    address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
+    abi: starterLimitAbi,
+    start_at: '1631538000',
+    is_coming: false, // is_coming 为 true 则不请求合约
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'RHINO.png',
+    underlying: {
+      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      decimal: 18,
+      symbol: 'PRED',
+      name: 'PRED',
+    },
+    amount: '2000', // token 总额
+    pool_info: {
+      min_allocation: 200,
+      max_allocation: 500,
+      min_swap_level: '200 Helmet',
+      maxAccount: 300,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 0.036 PRED',
+    time: '1631624400',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '1388888888888888888900000000',//总释放
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '', // 完成时间
+    winningRate: '-', // 申请中签率
+    committed: '', // 超募比例
+    total: '', // 参与资金规模
+    poolType: 0, // 值为 1 代表定向
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text42',
+    light: true
+  },
+  {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',
     abi: starterLimitAbi,
@@ -24,9 +67,6 @@ export const iboPools = [
       decimal: 18,
       symbol: 'RHINO',
       name: 'RHINO',
-      total_supply: '100,000,000',
-      holders: '-',
-      transfers: '-',
     },
     amount: '50000000', // token 总额
     pool_info: {
@@ -51,9 +91,8 @@ export const iboPools = [
     poolType: 0, // 值为 1 代表定向
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text40',
-    light: true
+    light: false
   },
-
   {
     name: 'DSN',
     address: '0x374fBC93F4b835572CD4927ffF7D2d7C4a0245f3',
@@ -71,9 +110,6 @@ export const iboPools = [
       decimal: 18,
       symbol: 'DSN',
       name: 'DSN',
-      total_supply: '100,000,000',
-      holders: '-',
-      transfers: '-',
     },
     amount: '16558500', // token 总额
     pool_info: {
@@ -116,9 +152,6 @@ export const iboPools = [
       decimal: 9,
       symbol: 'AXN',
       name: 'AXN',
-      total_supply: '100,000,000',
-      holders: '-',
-      transfers: '-',
     },
     amount: '30000000000', // token 总额
     pool_info: {
@@ -162,9 +195,6 @@ export const iboPools = [
       decimal: 18,
       symbol: 'UFOMO',
       name: 'UFOMO',
-      total_supply: '100,000,000',
-      holders: '-',
-      transfers: '-',
     },
     amount: '1100000000', // token 总额
     pool_info: {
@@ -203,9 +233,6 @@ export const iboPools = [
       decimal: 18,
       symbol: 'GAME1',
       name: 'GAME1',
-      total_supply: '100,000,000',
-      holders: '-',
-      transfers: '-',
     },
     amount: '111111', // token 总额
     pool_info: {

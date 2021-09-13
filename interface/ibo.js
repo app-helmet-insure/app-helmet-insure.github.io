@@ -65,7 +65,7 @@ export const getPoolInfo = (pool) => {
     poolContract.price(),
     poolContract.totalPurchasedCurrency(), //总申购的量
     poolContract.purchasedCurrencyOf(account),
-    poolContract.totalSettleable(),
+    // poolContract.totalSettleable(),
     poolContract.settleable(account),
     poolContract.totalSettledUnderlying(),
     poolContract.maxUser(),//最多参与人数
@@ -87,7 +87,7 @@ export const getPoolInfo = (pool) => {
       price,
       totalPurchasedCurrency,
       purchasedCurrencyOf,
-      totalSettleable,
+      // totalSettleable,
       settleable,
       totalSettledUnderlying,
       maxUser,//最多参与人数
@@ -103,12 +103,12 @@ export const getPoolInfo = (pool) => {
       //   timeSettle = 1629118800
       // curUserCount=0
       // purchasedCurrencyOf=0
-    const [
-      total_completed_,
-      total_amount,
-      total_volume,
-      total_rate,
-    ] = totalSettleable
+    // const [
+    //   total_completed_,
+    //   total_amount,
+    //   total_volume,
+    //   total_rate,
+    // ] = totalSettleable
     const [completed_, amount, volume, rate] = settleable
 
     let status = pool.status || 0 // 即将上线
@@ -126,13 +126,13 @@ export const getPoolInfo = (pool) => {
       status = 2
     }
 
-    // 招募满了
-    if (
-      totalSettleable.volume == totalSettledUnderlying &&
-      totalSettleable.volume > 0
-    ) {
-      status = 3
-    }
+    // // 招募满了
+    // if (
+    //   totalSettleable.volume == totalSettledUnderlying &&
+    //   totalSettleable.volume > 0
+    // ) {
+    //   status = 3
+    // }
 
     const totalPurchasedAmount = new BigNumber(
       fromWei(pool.amount, pool.decimal)
@@ -175,12 +175,12 @@ export const getPoolInfo = (pool) => {
       totalPurchasedUnderlying,
       balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
       purchasedCurrencyOf,
-      totalSettleable: {
-        completed_: total_completed_,
-        amount: total_amount, // 预计获得
-        volume: total_volume,
-        rate: total_rate,
-      },
+      // totalSettleable: {
+      //   completed_: total_completed_,
+      //   amount: total_amount, // 预计获得
+      //   volume: total_volume,
+      //   rate: total_rate,
+      // },
       totalSettledUnderlying,
       settleable: {
         completed_,

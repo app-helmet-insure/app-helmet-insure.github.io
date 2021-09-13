@@ -380,6 +380,16 @@
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
         <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
           TG:
           <a href="https://t.me/Predictcoin" target="_blank"
           >https://t.me/Predictcoin</a

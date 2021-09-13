@@ -526,10 +526,8 @@ export const Deposit = async (
   { ContractAddress, Pid, DepositeVolume },
   callback
 ) => {
-  console.log(callBack);
   let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
   let Account = await getAccounts();
-  console.log(Amount);
   let DecimalsUnit = getDecimals(18);
   const Amount = toWei(DepositeVolume, DecimalsUnit);
   try {
@@ -578,7 +576,7 @@ export const Withdraw = async (
   const Amount = toWei(DepositeVolume, DecimalsUnit);
   try {
     Contracts.methods
-      .withdraw(Pid, Amount)
+      .withdraw(Pid, DepositeVolume === 0 ? DepositeVolume : Amount)
       .send({ from: Account })
       .on("transactionHash", (hash) => {
         bus.$emit("CLOSE_STATUS_DIALOG");

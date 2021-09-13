@@ -120,7 +120,7 @@
               parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
                 ? "IBO.IBO_text34"
-                : "Table.Approve"
+                : "IBO.Approve"
             )
           }}
         </a>

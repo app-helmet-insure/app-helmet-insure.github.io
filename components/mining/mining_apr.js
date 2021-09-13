@@ -29,6 +29,7 @@ import {
   Reward,
 } from "~/interface/read_contract.js";
 import BigNumber from "bignumber.js";
+import { conformsTo } from "lodash";
 export const GetPoolAPR = async (poolData) => {
   let { MING_TIME, OPEN_TIME } = poolData;
   if (MING_TIME == "Finished") {
@@ -57,6 +58,8 @@ const getAPRMethods = async (poolData) => {
       return await TokenDoublePoolAPR(poolData);
     case "SushiDoublePoolAPR":
       return await SushiDoublePoolAPR(poolData);
+    case "CafeDoublePoolAPR":
+      return await CafeDoublePoolAPR(poolData);
     default:
       return "--";
   }
@@ -394,5 +397,82 @@ const SushiDoublePoolAPR = async ({
   let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR_REWARD1;
   console.log(NUMBERATOR_REWARD1, DENOMINATOR_REWARD1, "###########");
   let APR = fixD((APR_REWARD1 + APR_REWARD2) * 100, 2) + "%";
+  return APR;
+};
+const CafeDoublePoolAPR = async ({
+  POOL_PID,
+  PROXY_ADDRESS,
+  POOL_ADDRESS,
+  STAKE_ADDRESS,
+  STAKE_DECIMALS,
+  REWARD1_DECIMALS,
+  REWARD1_ADDRESS,
+  REWARD1_SYMBOL,
+  REWARD2_DECIMALS,
+  REWARD2_ADDRESS,
+  REWARD2_SYMBOL,
+  TOKEN1_SYMBOL,
+  TOKEN1_ADDRESS,
+  TOKEN1_DECIMALS,
+}) => {
+  // stake balance of pool
+  let Data = await getTokenPrice({
+    fromTokenAddress: REWARD2_ADDRESS,
+    toTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    amount: 1000000000000000000,
+  });
+  let BREW_HELMET_PRICE = fromWei(Data.data.toTokenAmount);
+  let HELMET_FARM = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
+  let STAKE_VOLUME = await BalanceOf(STAKE_ADDRESS, 18, PROXY_ADDRESS);
+  let TOTAL_VOLUME = await TotalSupply(STAKE_ADDRESS, 18);
+  // total alloc of pool
+  let POOL_TOTAL_ALLOC_POINT = await TotalAllocPoint(PROXY_ADDRESS);
+  // cake per block
+  let CAKE_PER_BLOCK = await CakePerBlock(PROXY_ADDRESS);
+  console.log(CAKE_PER_BLOCK);
+  // alloc of pool
+  let POOL_ALLOC_POINT = await PoolInfo(PROXY_ADDRESS, POOL_PID);
+  POOL_ALLOC_POINT = fromWei(POOL_ALLOC_POINT.allocPoint);
+  // reward 1 decimals
+  let DecimalsUnit1 = getDecimals(REWARD1_DECIMALS);
+  // reward 2 decimals
+  let DecimalsUnit2 = getDecimals(REWARD2_DECIMALS);
+  // dayily reward
+  let DAYILY_REWARD2 =
+    (POOL_ALLOC_POINT / POOL_TOTAL_ALLOC_POINT) * (CAKE_PER_BLOCK * 28800) + "";
+  console.log(DAYILY_REWARD2);
+  // let TOTAL_REWARD1 = await PoolAllowance(
+  //   REWARD1_ADDRESS,
+  //   HELMET_FARM,
+  //   POOL_ADDRESS,
+  //   REWARD1_DECIMALS
+  // );
+  // let SPEED_REWARD1 = await Rewards(POOL_ADDRESS, "0");
+  // let TIME_REWARD1 = await RewardsDuration(POOL_ADDRESS);
+  // let DAYILY_REWARD1 = (TOTAL_REWARD1 - SPEED_REWARD1) / (TIME_REWARD1 / 86400);
+  // reward1 value to bnb
+  // let REWARD1_BNB_VALUE = await GetTokenForBNBValue(
+  //   REWARD1_ADDRESS,
+  //   REWARD1_SYMBOL,
+  //   REWARD1_DECIMALS
+  // );
+  // reward2 value to bnb
+  // let REWARD2_BNB_VALUE = await GetTokenForBNBValue(
+  //   REWARD2_ADDRESS,
+  //   REWARD2_SYMBOL,
+  //   REWARD2_DECIMALS
+  // );
+  // stake valume
+  let VOLUME_OF_STAKE =
+    (await BalanceOf(TOKEN1_ADDRESS, STAKE_DECIMALS, STAKE_ADDRESS)) * 2;
+  // stake value
+
+  // let NUMBERATOR_REWARD1 = 365 * REWARD1_BNB_VALUE * DAYILY_REWARD1;
+  let NUMBERATOR_REWARD2 = 365 * BREW_HELMET_PRICE * DAYILY_REWARD2;
+  // let DENOMINATOR_REWARD1 = VOLUME_OF_STAKE * 1;
+  let DENOMINATOR_REWARD2 = (VOLUME_OF_STAKE / TOTAL_VOLUME) * STAKE_VOLUME;
+  // let APR_REWARD1 = NUMBERATOR_REWARD1 / DENOMINATOR_REWARD1;
+  let APR_REWARD2 = NUMBERATOR_REWARD2 / DENOMINATOR_REWARD2;
+  let APR = APR_REWARD2 * 100;
   return APR;
 };

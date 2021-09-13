@@ -189,7 +189,7 @@ import Supply from "./supply";
 import Wraper from "~/components/common/wraper.vue";
 import { InsuranceTypeList } from "../../config/insurance.js";
 import { getTokenPrice } from "../../interface/event.js";
-import { fromWei, toWei } from "../../interface/index.js";
+import { fromWei, toWei } from "../../web3/index.js";
 export default {
   components: {
     Market,

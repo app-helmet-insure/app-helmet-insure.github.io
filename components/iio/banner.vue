@@ -42,12 +42,8 @@
 </template>
 
 <script>
-import ClipboardJS from "clipboard";
-import Message from "~/components/common/Message";
 import { totalSupply, getLPTOKEN } from "~/interface/deposite";
 import { fixD, addCommom } from "~/assets/js/util.js";
-import { getLongValue } from "~/interface/event.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import { applied3 } from "~/interface/iio.js";
 import { Information } from "../../config/iio.js";
 export default {

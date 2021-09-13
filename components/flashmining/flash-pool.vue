@@ -217,19 +217,18 @@ import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import addToken from "~/assets/utils/addtoken.js";
+import { addToken } from "~/web3/wallet.js";
 import MiningABI from "../../abi/MiningABI.json";
 import ERC20ABI from "../../abi/ERC20ABI.json";
-import { getContract } from "../../web3/index.js";
+import { getContract, toWei } from "../../web3/index.js";
 import { Contract } from "ethers-multicall-x";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
-import { toWei } from "~/interface/index";
 import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
-} from "~/interface/index.js";
+} from "~/web3/index.js";
 export default {
   props: ["ActiveData", "ActiveFlag", "ActiveType"],
   components: {
@@ -291,7 +290,7 @@ export default {
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
     copyAdress(e, text) {

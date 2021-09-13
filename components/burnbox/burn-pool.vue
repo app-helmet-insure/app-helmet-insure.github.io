@@ -205,7 +205,7 @@ import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
-} from "~/interface/index.js";
+} from "~/web3/index.js";
 export default {
   props: ["activeData", "activeFlag", "activeType"],
   components: {
@@ -281,7 +281,7 @@ export default {
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
     getPoolInfo() {

@@ -73,8 +73,8 @@ export default {
       this.closeDialog();
     },
     userInfoWatch(newValue) {
-      let account = newValue.data.account;
-      this.account = newValue.data.account;
+      let account = newValue.account;
+      this.account = newValue.account;
       if (account) {
         this.accountText =
           account.substr(0, 1) +

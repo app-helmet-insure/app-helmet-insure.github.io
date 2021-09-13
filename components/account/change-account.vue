@@ -17,13 +17,13 @@
         <span class="address-text">{{ accountText }}</span>
         <img
           :src="
-            require(`~/assets/img/wallet-icon/${userInfo.data.name}@2x.png`)
+            require(`~/assets/img/wallet-icon/${userInfo.name}@2x.png`)
           "
         />
       </div>
       <ul class="wallet-list">
         <li
-          v-if="userInfo.data.name === 'WalletConnect'"
+          v-if="userInfo.name === 'WalletConnect'"
           @click="changeWallet('MetaMask')"
         >
           <span>MetaMask</span>
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     userInfoWatch(newValue) {
-      let account = newValue.data.account;
+      let account = newValue.account;
       this.accountText =
         account.substr(0, 1) +
         " " +

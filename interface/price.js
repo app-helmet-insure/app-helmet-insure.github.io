@@ -1,6 +1,6 @@
 import { expERC20, Payaso, TokenExpERC20 } from './index';
 import bus from '~/assets/js/bus';
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
+import { toWei, fromWei } from "~/web3/index.js";
 import Message from '~/components/common/Message';
 import {
     getAddress,

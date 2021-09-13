@@ -145,7 +145,7 @@ import { getContract } from "../../web3/index.js";
 import moment from "moment";
 import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
-import { fromWei } from "~/interface/index.js";
+import { fromWei } from "~/web3/index.js";
 import { getCurrentInsurance } from "~/config/insurance.js";
 import OrderABI from "../../abi/OrderABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
@@ -207,7 +207,7 @@ export default {
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
     getPolicysList() {

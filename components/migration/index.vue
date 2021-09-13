@@ -34,7 +34,9 @@ import Stake from "./stake.vue";
 import Swap from "./swap.vue";
 import Web3 from "web3";
 import { fixD, addCommom } from "~/assets/js/util.js";
-import { getAccounts, fromWei } from "~/interface/common_contract.js";
+import { getAccounts } from "~/interface/common_contract.js";
+import { fromWei } from "~/web3/index.js";
+
 import { TotalBurns } from "~/interface/read_contract.js";
 import GuardClaimABI from "~/abi/GuardClaim.json";
 const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";

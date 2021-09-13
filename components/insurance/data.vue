@@ -1,5 +1,5 @@
 <template>
-  <div class="insurance-banner">
+  <div class="insurance_data">
     <ul>
       <li>
         <div class="label_data">
@@ -92,10 +92,11 @@ import {
 } from "~/interface/event.js";
 import { BalanceOf } from "~/interface/read_contract.js";
 import countTo from "vue-count-to";
-import { fromWei } from "../../interface/index.js";
+import { fromWei } from "../../web3/index.js";
+import { TokenBalance } from "~/web3/index.js";
 import Web3 from "web3";
 export default {
-  name: "insurance-banner",
+  name: "insurance_data",
   components: {
     countTo,
   },
@@ -153,7 +154,7 @@ export default {
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
     async getHelmetPrice() {
@@ -168,7 +169,7 @@ export default {
     async getHelmetVolume() {
       let helmetConrtact = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
       let deadContract = "0x000000000000000000000000000000000000dead";
-      return await BalanceOf(helmetConrtact, 18, deadContract);
+      return await TokenBalance(helmetConrtact, 18, deadContract);
     },
     async getGuardVolume() {
       const HttpWeb3 = new Web3(
@@ -190,7 +191,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/css/base.scss";
-.insurance-banner {
+.insurance_data {
   ul {
     height: 100%;
     label {
@@ -204,7 +205,7 @@ export default {
   }
 }
 @media screen and (min-width: 750px) {
-  .insurance-banner {
+  .insurance_data {
     width: 100%;
     height: 200px;
     margin: 0 auto;
@@ -409,7 +410,7 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .insurance-banner {
+  .insurance_data {
     width: 100%;
     height: 160px;
     font-size: 16px;

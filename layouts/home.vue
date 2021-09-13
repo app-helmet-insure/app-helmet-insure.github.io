@@ -58,17 +58,15 @@ import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
 import Airdrop from "~/components/common/airdrop.vue";
 import BuyDialog from "~/components/common/buy-dialog.vue";
-import { web3 } from "~/assets/utils/web3-obj.js";
-import { getID } from "~/assets/utils/address-pool.js";
-import { mateMaskInfo } from "~/assets/utils/matemask.js";
 import StatusDialog from "~/components/common/status-dialog.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
-import { pancakeswap } from "~/assets/utils/pancakeswap.js";
-import { getBalance } from "~/interface/order.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
+import {
+  openMetaMaskWallet,
+  watchAccountChange,
+  watchNetWorkChange,
+} from "../web3/wallet.js";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
 export default {
@@ -105,16 +103,8 @@ export default {
     routeObj() {
       return this.$route;
     },
-    // 标的物
-    policyUndArray() {
-      return this.$store.state.policyUndArray;
-    },
     ChainID() {
-      let chainID = this.$store.state.chainID;
-      return chainID;
-    },
-    localeList() {
-      return this.$store.state.localeList;
+      return this.$store.state.chainID;
     },
     storeThemes() {
       return this.$store.state.themes;
@@ -142,14 +132,10 @@ export default {
       this.RiskVisible = true;
     }
     this.copy();
-    window.WEB3 = await web3();
-    window.chainID = await getID();
-    this.showWallet();
-    this.$store.commit("SET_CHAINID", window.chainID);
-    this.getUserInfo();
     // 获取映射
-    this.monitorNetWorkChange();
-    this.mointorAccountChange();
+    openMetaMaskWallet();
+    watchAccountChange();
+    watchNetWorkChange();
     // 显示状态弹框
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       this.statusData = data;
@@ -161,10 +147,7 @@ export default {
       this.closeStatusDialog();
       window.statusDialog = false;
     });
-    this.$bus.$on("REFRESH_BALANCE", () => {
-      this.getBalance();
-    });
-    this.$bus.$emit("GET_SLIDER_NUMBER");
+
     let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
     localStorage.setItem("themes", themes);
@@ -196,68 +179,6 @@ export default {
         console.error("Trigger:", e.trigger);
         copy.destroy();
       });
-    },
-    closeDialog() {
-      this.$emit("close");
-    },
-    openStatusDialog() {
-      this.showStatusDialog = true;
-    },
-    closeStatusDialog() {
-      window.statusDialog = false;
-      this.showStatusDialog = false;
-    },
-    monitorNetWorkChange() {
-      if (window.ethereum) {
-        ethereum.on("chainChanged", (chainID) => {
-          window.chainID = chainID;
-          if (chainID * 1 === 137) {
-            window.location.href = "https://www.guard.insure/insurance/";
-          }
-          this.$store.commit("SET_CHAINID", chainID);
-        });
-      } else {
-        if (this.times < 10) {
-          this.times = this.times + 1;
-          this.monitorNetWorkChange();
-        }
-      }
-    },
-    mointorAccountChange() {
-      if (window.ethereum) {
-        ethereum.on("accountsChanged", async (account) => {
-          let userInfo = await mateMaskInfo(account[0], "MetaMask");
-          this.$store.dispatch("setUserInfo", userInfo);
-          this.$bus.$emit("REFRESH_MINING");
-          this.$bus.$emit("GET_CARD_BALANCE");
-          this.$bus.$emit("NFT_WINDOW_STATUS");
-        });
-      }
-    },
-    showWallet() {
-      try {
-        window.ethereum
-          .request({ method: "eth_requestAccounts" })
-          .then(async (account) => {
-            window.localStorage.setItem("currentType", "MetaMask");
-
-            let userInfo = await mateMaskInfo(account[0], "MetaMask");
-            this.$store.dispatch("setUserInfo", userInfo);
-            this.$bus.$emit("REFRESH_MINING");
-            this.closeDialog();
-          });
-      } catch (error) {}
-    },
-    async getUserInfo() {
-      let res = await mateMaskInfo();
-      try {
-        if (res.status === -1) {
-          return;
-        }
-        this.$store.dispatch("setUserInfo", res);
-      } catch (error) {
-        alert(error);
-      }
     },
   },
 };

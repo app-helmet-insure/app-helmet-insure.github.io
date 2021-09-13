@@ -38,12 +38,8 @@ export const state = () => ({
   ],
   userInfo: {
     // 用户信息
-    data: {
-      isLogin: false,
-      account: null,
-      balace: "--",
-    },
-    status: 0,
+    isLogin: false,
+    account: null,
   },
   walletType: "", // 钱包类型
 });
@@ -59,6 +55,9 @@ export const mutations = {
   },
   SET_CHAINID(state, data) {
     state.chainID = data;
+  },
+  SET_WALLET_RYPE(state, data) {
+    state.walletType = data;
   },
   SET_USER_INFO(state, data) {
     state.userInfo = data;
@@ -78,7 +77,10 @@ export const actions = {
   setWalletType({ commit }, data) {
     commit("SET_WALLET_RYPE", data);
   },
-  setUserInfo({ commit, state }, data) {
+  setUserInfo({ commit }, data) {
     commit("SET_USER_INFO", data);
+  },
+  setChainID({ commit }, data) {
+    commit("SET_CHAINID", data);
   },
 };

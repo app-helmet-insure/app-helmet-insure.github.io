@@ -28,7 +28,7 @@
         Migration</span
       >
       <a
-        v-if="!userInfo.data.isLogin"
+        v-if="!userInfo.isLogin"
         class="connect-wallet-btn"
         @click="openWallectSelect"
         >{{ $t("Header.ConnectWallet") }}
@@ -153,8 +153,8 @@ export default {
       this.showCurrentAccount = false;
     },
     userInfoWatch(newValue) {
-      if (newValue.data && newValue.data.account) {
-        let account = newValue.data.account;
+      if (newValue && newValue.account) {
+        let account = newValue.account;
         account = account.toUpperCase();
         this.accountText =
           account.substr(0, 1) +

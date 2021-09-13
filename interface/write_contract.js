@@ -12,9 +12,8 @@ import {
   getAccounts,
   getDecimals,
   TokenNameToWei,
-  toWei,
-  fromWei,
 } from "./common_contract.js";
+import { toWei, fromWei } from "~/web3/index.js";
 import BigNumber from "bignumber.js";
 import bus from "~/assets/js/bus";
 import { fixD } from "~/assets/js/util.js";

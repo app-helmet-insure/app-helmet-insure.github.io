@@ -42,7 +42,7 @@
 <script>
 import { CangetPAYA, getBalance, getPAYA } from "~/interface/deposite";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import addToken from "~/assets/utils/addtoken.js";
+import { addToken } from "~/web3/wallet.js";
 import { getAddress, getContract } from "~/assets/utils/address-pool.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";

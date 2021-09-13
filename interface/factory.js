@@ -1,6 +1,6 @@
 import { Factory } from './index.js';
 import { getWei } from '~/assets/utils/address-pool.js';
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
+import { toWei, fromWei } from '~/web3/index.js';
 import bus from '~/assets/js/bus';
 import Message from '~/components/common/Message';
 import { fixD, addCommom } from '~/assets/js/util.js';

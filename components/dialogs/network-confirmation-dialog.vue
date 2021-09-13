@@ -39,9 +39,8 @@ export default {
     };
   },
   methods: {
-    async handleClickChangeNetwork() {
+    handleClickChangeNetwork() {
       this.Loading = true;
-      let ethereum = window.ethereum;
       const data = [
         {
           chainId: "0x38",
@@ -55,9 +54,7 @@ export default {
           blockExplorerUrls: ["https://bscscan.com/"],
         },
       ];
-      await ethereum
-        .request({ method: "wallet_addEthereumChain", params: data })
-        .catch();
+      ethereum.request({ method: "wallet_addEthereumChain", params: data });
     },
   },
 };

@@ -14,11 +14,11 @@ import {
   Web3Contract,
   getAccounts,
   getDecimals,
-  toWei,
-  fromWei,
   BlockNumber,
   getBlockNumber,
 } from "./common_contract.js";
+import { toWei, fromWei } from "~/web3/index.js";
+
 import BigNumber from "bignumber.js";
 let OrderContractAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 let FectoryContractAddress = "0x021297e233550eDBa8e6487EB7c6696cFBB63b88";

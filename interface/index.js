@@ -14,92 +14,9 @@ import nft_user_abi from "~/abi/nft_user_abi.json";
 import IPancakePair from "~/abi/IPancakePair.json";
 import IPancakeSwap from "~/abi/IPancakeSwap.json";
 import { getAddress, getContract, getID } from "~/assets/utils/address-pool.js";
-import { cloneDeep } from "lodash";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Provider } from "ethers-multicall-x";
-import BigNumber from "bignumber.js";
-const BSCChainId = 56;
-const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
 
-export const getDecimals = (Decimals) => {
-  switch (Decimals) {
-    case 0:
-      return "noether";
-    case 1:
-      return "wei";
-    case 3:
-      return "kwei";
-    case 6:
-      return "mwei";
-    case 9:
-      return "gwei";
-    case 12:
-      return "microether";
-    case 15:
-      return "milliether";
-    case 18:
-      return "ether";
-    case 21:
-      return "kether";
-    case 24:
-      return "mether";
-    case 27:
-      return "gether";
-    case 30:
-      return "tether";
-    default:
-      return Decimals;
-  }
-};
 
-export const getOnlyMultiCallProvider = () =>
-  new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId);
 
-export const processResult = (data) => {
-  data = cloneDeep(data);
-  if (Array.isArray(data)) {
-    data.map((o, i) => {
-      data[i] = processResult(o);
-    });
-    return data;
-  } else if (data.toString) {
-    return data.toString();
-  } else if (typeof data === "object") {
-    for (let key in data) {
-      Object.assign(data, {
-        [key]: processResult(0),
-      });
-    }
-    return data;
-  } else {
-    return data;
-  }
-};
-export const fromWei = (FixNumber, Decimals) => {
-  let FixDecimals = getDecimals(Decimals);
-  if (typeof FixDecimals === "number") {
-    return new BigNumber(FixNumber)
-      .dividedBy(new BigNumber(10).pow(FixDecimals))
-      .toNumber()
-      .toString();
-  } else {
-    return Web3.utils.fromWei(FixNumber, FixDecimals);
-  }
-};
-export const toWei = (FixNumber, Decimals) => {
-  let FixDecimals = getDecimals(Decimals);
-  if (typeof FixDecimals === "number") {
-    return new BigNumber(FixNumber)
-      .multipliedBy(new BigNumber(10).pow(FixDecimals))
-      .toNumber()
-      .toString();
-  } else {
-    return Web3.utils.toWei(FixNumber, FixDecimals);
-  }
-};
-export const getCurrentAccount = async () => {
-  return web3().then((res) => res.currentProvider.selectedAddress);
-};
 
 // 买家凭证，用于行权
 export const Long = async () => {

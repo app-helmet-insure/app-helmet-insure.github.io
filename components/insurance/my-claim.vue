@@ -127,7 +127,7 @@ import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
 const FactoryAddress = "0x021297e233550eDBa8e6487EB7c6696cFBB63b88";
 import { getCurrentInsurance } from "~/config/insurance.js";
-import { fromWei, toWei } from "../../interface/index.js";
+import { fromWei, toWei } from "../../web3/index.js";
 export default {
   components: {
     WaitingConfirmationDialog,
@@ -191,7 +191,7 @@ export default {
     },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
     getList() {
@@ -244,7 +244,7 @@ export default {
               });
             }
             let ShortMinusLong =
-              precision.minus(ShortBalance, LongBalance) + "";
+              Number(ShortBalance) - Number(LongBalance) + "";
             if (Number(ShortMinusLong) > 0) {
               const SettleInfo = await Settleable(
                 item.short,

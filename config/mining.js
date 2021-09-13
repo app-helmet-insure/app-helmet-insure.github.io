@@ -6,7 +6,6 @@ import SushiPoolABI from "~/abi/SushiPoolABI.json";
 import MiningABI from "~/abi/MiningABI.json";
 import ApproveABI from "~/abi/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
-import { getBlockNumber } from "~/interface/common_contract.js";
 import {
   CakePerBlock,
   Reward,
@@ -19,7 +18,7 @@ import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
-} from "~/interface/index.js";
+} from "~/web3/index.js";
 export const lptPoolList = [
   {
     PoolName: "HELMET-BNB MLP",

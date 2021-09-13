@@ -7,7 +7,7 @@ import {
   getOnlyMultiCallProvider,
   processResult,
   fromWei,
-} from "~/interface/index.js";
+} from "~/web3/index.js";
 export const PoolList = [
   {
     Key: "SHIBARGON",

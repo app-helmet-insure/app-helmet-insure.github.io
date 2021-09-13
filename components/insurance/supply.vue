@@ -152,7 +152,7 @@ import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import MiningABI from "../../abi/MiningABI.json";
 import { getContract } from "../../web3/index.js";
-import { fromWei, toWei } from "~/interface/index.js";
+import { fromWei, toWei } from "~/web3/index.js";
 import { getTokenPrice } from "~/interface/event.js";
 import OrderABI from "../../abi/OrderABI.json";
 import ERC20ABI from "../../abi/ERC20ABI.json";

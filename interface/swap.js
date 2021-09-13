@@ -1,7 +1,7 @@
 import { Token, Pair } from '@pancakeswap-libs/sdk-v2';
 import BigNumber from 'bignumber.js';
 import { PairContract, SwapContract } from '~/interface/index.js';
-import { toWei, fromWei } from '~/assets/utils/web3-fun.js';
+import { toWei, fromWei } from "~/web3/index.js";
 import bus from '~/assets/js/bus';
 import Message from '~/components/common/Message';
 import { web3 } from '~/assets/utils/web3-obj.js';

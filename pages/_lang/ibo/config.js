@@ -50,6 +50,51 @@ export const iboPools = [
     claimTimeTipI18n: 'IBO.IBO_text42',
     light: true
   },
+
+  {
+    name: 'PRB',
+    address: '0xE057daBC7630326819390e5D97B69633921cda65',
+    abi: starterLimitAbi,
+    start_at: '1631617200',
+    is_coming: true, // is_coming 为 true 则不请求合约
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'PRB.png',
+    underlying: {
+      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      decimal: 18,
+      symbol: 'PRB',
+      name: 'PRB',
+    },
+    amount: '1600000', // token 总额
+    pool_info: {
+      min_allocation: 200,
+      max_allocation: 500,
+      min_swap_level: '200 Helmet',
+      maxAccount: 200,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 30 PRB',
+    time: '1631802600',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '1388888888888888888900000000',//总释放
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '', // 完成时间
+    winningRate: '-', // 申请中签率
+    committed: '', // 超募比例
+    total: '', // 参与资金规模
+    poolType: 0, // 值为 1 代表定向
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text43',
+    light: true
+  },
+
   {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',

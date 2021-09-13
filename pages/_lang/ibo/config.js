@@ -18,7 +18,7 @@ export const iboPools = [
       decimal: 18,
       symbol: 'HELMET',
     },
-    icon: 'RHINO.png',
+    icon: 'PRED.png',
     underlying: {
       address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
       decimal: 18,

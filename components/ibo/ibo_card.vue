@@ -374,6 +374,25 @@
           >
         </p>
       </div>
+
+      <div v-else-if="iboData.name === 'PRED'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text42") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          TG:
+          <a href="https://t.me/Predictcoin" target="_blank"
+          >https://t.me/Predictcoin</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://predictcoin.finance" target="_blank"
+          >https://predictcoin.finance</a
+          >
+        </p>
+      </div>
+
     </Dialog>
   </div>
 </template>

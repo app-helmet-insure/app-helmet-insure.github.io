@@ -476,7 +476,7 @@ export default {
           );
         } else if (this.activeData.ONLY) {
           await Deposit({ ContractAddress, Pid, DepositeVolume }, (res) => {
-            console.log(res)
+            console.log(res);
             if (res == "success" || res == "error") {
               this.getBalance();
               this.stakeLoading = false;
@@ -516,15 +516,12 @@ export default {
           }
         });
       } else if (this.activeData.ONLY) {
-        await Withdraw(
-          { ContractAddress, Pid, DepositeVolume: this.balance.Withdraw },
-          (res) => {
-            if (res == "success" || res == "error") {
-              this.getBalance();
-              this.claimLoading = false;
-            }
+        await Withdraw({ ContractAddress, Pid, DepositeVolume: 0 }, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.claimLoading = false;
           }
-        );
+        });
       } else {
         await GetDoubleReward(ContractAddress, (res) => {
           if (res == "success" || res == "error") {
@@ -553,7 +550,7 @@ export default {
         await Withdraw(
           { ContractAddress, Pid, DepositeVolume: this.balance.Withdraw },
           (res) => {
-            console.log(res)
+            console.log(res);
             if (res == "success" || res == "error") {
               this.getBalance();
               this.exitLoading = false;

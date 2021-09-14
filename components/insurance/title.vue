@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide lpt"><div></div></div>
       <div class="swiper-slide newinsure"><div></div></div>
       <div class="swiper-slide insure"><div></div></div>
       <div class="swiper-slide ibo"><div></div></div>
@@ -136,6 +137,12 @@ export default {
         background-position: center;
       }
     }
+    .lpt {
+      background: #ac000a;
+      > div {
+        background-image: url("../../assets/img/banner/lpt_web.png");
+      }
+    }
     .newinsure {
       background: #295336;
       > div {
@@ -194,6 +201,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .lpt {
+      background: #ac000a;
+      > div {
+        background-image: url("../../assets/img/banner/lpt_h5.png");
       }
     }
     .newinsure {

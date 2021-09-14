@@ -126,7 +126,7 @@ export const getPoolTokens = async (ContractAddress, pid) => {
     .getPoolTokens(pid)
     .call()
     .then((res) => {
-      return res; 
+      return res;
     });
 };
 // Total daily output
@@ -317,4 +317,24 @@ export const Applied3 = async (ContractAddress, RewardAdress) => {
   let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
   let Account = await getAccounts();
   return Contracts.methods.applied3(RewardAdress, Account).call();
+};
+export const PendingCake = async (ContractAddress, Pid) => {
+  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Account = await getAccounts();
+  return Contracts.methods
+    .pendingCake(Pid, Account)
+    .call()
+    .then((res) => {
+      return fromWei(res);
+    });
+};
+export const UserInfo = async (ContractAddress, Pid) => {
+  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Account = await getAccounts();
+  return Contracts.methods
+    .userInfo(Pid, Account)
+    .call()
+    .then((res) => {
+      return fromWei(res.amount)
+    });
 };

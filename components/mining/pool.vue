@@ -262,6 +262,8 @@ import {
   Earned,
   Earned2,
   Allowance,
+  PendingCake,
+  UserInfo,
 } from "~/interface/read_contract.js";
 import {
   Stake,
@@ -270,6 +272,8 @@ import {
   Approve,
   Exit,
   StakeAndComound,
+  Deposit,
+  Withdraw,
 } from "~/interface/write_contract.js";
 import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
@@ -376,39 +380,67 @@ export default {
       });
     },
     async getBalance() {
-      // 可抵押数量
-      let Deposite = await BalanceOf(
-        this.activeData.STAKE_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可赎回数量
-      let Withdraw = await BalanceOf(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 总抵押
-      let Staking = await TotalSupply(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.STAKE_DECIMALS
-      );
-      // 可领取Helmet
-      let Reward1 = await Earned(
-        this.activeData.POOL_ADDRESS,
-        this.activeData.REWARD1_DECIMALS
-      );
-      if (this.activeData.REWARD2_SYMBOL) {
-        let Reward2 = await Earned2(
+      if (!this.activeData.ONLY) {
+        // 可抵押数量
+        let Deposite = await BalanceOf(
+          this.activeData.STAKE_ADDRESS,
+          this.activeData.STAKE_DECIMALS
+        );
+        this.balance.Deposite = Deposite;
+        console.log(Deposite, 3333333333333333);
+        // 可赎回数量
+        let Withdraw = await BalanceOf(
           this.activeData.POOL_ADDRESS,
-          this.activeData.REWARD2_DECIMALS
+          this.activeData.STAKE_DECIMALS
+        );
+        this.balance.Withdraw = Withdraw;
+        // 总抵押
+        let Staking = await TotalSupply(
+          this.activeData.POOL_ADDRESS,
+          this.activeData.STAKE_DECIMALS
+        );
+        console.log(Staking, 11111111111111111);
+        this.balance.Staking = Staking;
+        // 可领取Helmet
+        let Reward1 = await Earned(
+          this.activeData.POOL_ADDRESS,
+          this.activeData.REWARD1_DECIMALS
+        );
+        this.balance.Reward1 = Reward1;
+        if (this.activeData.REWARD2_SYMBOL) {
+          let Reward2 = await Earned2(
+            this.activeData.POOL_ADDRESS,
+            this.activeData.REWARD2_DECIMALS
+          );
+          this.balance.Reward2 = Reward2;
+        }
+        // 赋值
+        this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
+      } else {
+        let Deposite = await BalanceOf(
+          this.activeData.STAKE_ADDRESS,
+          this.activeData.STAKE_DECIMALS
+        );
+        this.balance.Deposite = Deposite;
+        // 可赎回数量
+        let Withdraw = await UserInfo(
+          this.activeData.POOL_ADDRESS,
+          this.activeData.POOL_PID
+        );
+        this.balance.Withdraw = Withdraw;
+        let Staking = await TotalSupply(
+          this.activeData.STAKE_ADDRESS,
+          this.activeData.STAKE_DECIMALS,
+          this.activeData.POOL_ADDRESS
+        );
+        this.balance.Staking = Staking;
+        let Reward2 = await PendingCake(
+          this.activeData.POOL_ADDRESS,
+          this.activeData.POOL_PID
         );
         this.balance.Reward2 = Reward2;
+        this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
       }
-      // 赋值
-      this.balance.Deposite = Deposite;
-      this.balance.Withdraw = Withdraw;
-      this.balance.Reward1 = Reward1;
-      this.balance.Staking = Staking;
-      this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
     },
     // 抵押
     async toDeposite() {
@@ -419,6 +451,7 @@ export default {
         return;
       }
       let ContractAddress = this.activeData.POOL_ADDRESS;
+      let Pid = this.activeData.POOL_PID;
       let StakeAddress = this.activeData.STAKE_ADDRESS;
       let TokenSymbol = this.activeData.STAKE_SYMBOL;
       let DepositeVolume = this.DepositeNum;
@@ -442,6 +475,14 @@ export default {
               }
             }
           );
+        } else if (this.activeData.ONLY) {
+          await Deposit({ ContractAddress, Pid, DepositeVolume }, (res) => {
+            console.log(res);
+            if (res == "success" || res == "error") {
+              this.getBalance();
+              this.stakeLoading = false;
+            }
+          });
         } else {
           await Stake({ ContractAddress, DepositeVolume, Decimals }, (res) => {
             if (res == "success" || res == "error") {
@@ -456,6 +497,7 @@ export default {
       let SpenderAddress = this.activeData.POOL_ADDRESS;
       let TokenAddress = this.activeData.STAKE_ADDRESS;
       let flag = await Allowance(TokenAddress, SpenderAddress);
+      console.log(flag);
       this.ApproveFlag = flag;
     },
     // 结算Paya
@@ -466,8 +508,16 @@ export default {
       this.claimLoading = true;
       let ContractAddress = this.activeData.POOL_ADDRESS;
       let RewardVolume = this.activeData.REWARD_VOLUME;
+      let Pid = this.activeData.POOL_PID;
       if (RewardVolume == "one") {
         await GetReward(ContractAddress, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.claimLoading = false;
+          }
+        });
+      } else if (this.activeData.ONLY) {
+        await Withdraw({ ContractAddress, Pid, DepositeVolume: 0 }, (res) => {
           if (res == "success" || res == "error") {
             this.getBalance();
             this.claimLoading = false;
@@ -496,12 +546,26 @@ export default {
       }
       this.exitLoading = true;
       let ContractAddress = this.activeData.POOL_ADDRESS;
-      await Exit(ContractAddress, (res) => {
-        if (res == "success" || res == "error") {
-          this.getBalance();
-          this.exitLoading = false;
-        }
-      });
+      let Pid = this.activeData.POOL_PID;
+      if (this.activeData.ONLY) {
+        await Withdraw(
+          { ContractAddress, Pid, DepositeVolume: this.balance.Withdraw },
+          (res) => {
+            console.log(res);
+            if (res == "success" || res == "error") {
+              this.getBalance();
+              this.exitLoading = false;
+            }
+          }
+        );
+      } else {
+        await Exit(ContractAddress, (res) => {
+          if (res == "success" || res == "error") {
+            this.getBalance();
+            this.exitLoading = false;
+          }
+        });
+      }
     },
   },
 };
@@ -547,6 +611,9 @@ export default {
     }
     .acsi {
       background-image: url("../../assets/img/icon/acsi@2x.png");
+    }
+    .cafeswap {
+      background-image: url("../../assets/img/icon/cafeswap@2x.png");
     }
   }
   .H5_link {

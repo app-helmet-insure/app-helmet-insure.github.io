@@ -5,6 +5,7 @@ import OrderABI from "~/abi/order_abi.json";
 import ChainSwapABI from "~/abi/ChainSwap.json";
 import BurnSwapABI from "~/abi/BurnSwap.json";
 import MigrationABI from "~/abi/Migration.json";
+import CakePoolABI from "~/abi/cake_pool_abi.json";
 import IIOABI from "~/abi/iio_abi.json";
 
 import {
@@ -520,4 +521,93 @@ export const ApplyRewards3 = async (ContractAddress, EarnAddress, callBack) => {
     .on("error", (err, receipt) => {
       callBack("error");
     });
+};
+export const Deposit = async (
+  { ContractAddress, Pid, DepositeVolume },
+  callback
+) => {
+  console.log(callBack);
+  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Account = await getAccounts();
+  console.log(Amount);
+  let DecimalsUnit = getDecimals(18);
+  const Amount = toWei(DepositeVolume, DecimalsUnit);
+  try {
+    Contracts.methods
+      .deposit(Pid, Amount)
+      .send({ from: Account })
+      .on("transactionHash", (hash) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Waiting For Confirmation",
+          layout: "layout2",
+          loading: true,
+          buttonText: "Confirm",
+          conTit: "Please Confirm the transaction in your wallet",
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+        });
+      })
+      .on("receipt", (receipt) => {
+        if (window.statusDialog) {
+          bus.$emit("CLOSE_STATUS_DIALOG");
+          bus.$emit("OPEN_STATUS_DIALOG", {
+            title: "Transation submitted",
+            layout: "layout2",
+            buttonText: "Confirm",
+            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+            button: true,
+            buttonText: "Confirm",
+            showDialog: false,
+          });
+          callback("success");
+        }
+      })
+      .on("error", (err, receipt) => {
+        callback("error");
+      });
+  } catch (error) {}
+};
+export const Withdraw = async (
+  { ContractAddress, Pid, DepositeVolume },
+  callback
+) => {
+  let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
+  let Account = await getAccounts();
+  console.log(ContractAddress, Pid, DepositeVolume);
+  let DecimalsUnit = getDecimals(18);
+  const Amount = toWei(DepositeVolume, DecimalsUnit);
+  try {
+    Contracts.methods
+      .withdraw(Pid, Amount)
+      .send({ from: Account })
+      .on("transactionHash", (hash) => {
+        bus.$emit("CLOSE_STATUS_DIALOG");
+        bus.$emit("OPEN_STATUS_DIALOG", {
+          title: "Waiting For Confirmation",
+          layout: "layout2",
+          loading: true,
+          buttonText: "Confirm",
+          conTit: "Please Confirm the transaction in your wallet",
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">View on BscScan</a>`,
+        });
+      })
+      .on("receipt", (receipt) => {
+        if (window.statusDialog) {
+          bus.$emit("CLOSE_STATUS_DIALOG");
+          bus.$emit("OPEN_STATUS_DIALOG", {
+            title: "Transation submitted",
+            layout: "layout2",
+            buttonText: "Confirm",
+            conText: `<a href="https://bscscan.com/tx/${receipt.transactionHash}" target="_blank">View on BscScan</a>`,
+            button: true,
+            buttonText: "Confirm",
+            showDialog: false,
+          });
+          callback("success");
+        }
+      })
+      .on("error", (err, receipt) => {
+        callback("error");
+      });
+  } catch (error) {}
 };

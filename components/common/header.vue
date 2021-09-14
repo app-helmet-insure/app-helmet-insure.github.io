@@ -80,7 +80,6 @@ import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
-import { maticNetwork, bscNetwork } from "~/interface/common_contract.js";
 import { HelmetBalance } from "../../web3/index.js";
 export default {
   name: "p-header",

@@ -393,7 +393,10 @@
     "IBO_text38": "8.31 20:00 UTC+8",
     "IBO_text39": "8.31 20:00 UTC+8",
     "IBO_text40": "9.3 23:00 UTC+8",
-    "IBO_text41": "9.1 19:00 UTC+8"
+    "IBO_text41": "9.1 19:00 UTC+8",
+    "IBO_text42": "9.14 23:00 UTC+8",
+    "IBO_text43": "9.16 22:30 UTC+8",
+    "Approve": "授权"
   },
   "Dialogs": {
     "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}"

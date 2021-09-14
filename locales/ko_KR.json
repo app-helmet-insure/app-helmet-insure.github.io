@@ -382,7 +382,10 @@
     "IBO_text38": "Aug.31st 20:00 UTC+8",
     "IBO_text39": "Aug.31st 20:00 UTC+8",
     "IBO_text40": "Sep.3th 23:00 UTC+8",
-    "IBO_text41": "Sep.1st 19:00 UTC+8"
+    "IBO_text41": "Sep.1st 19:00 UTC+8",
+    "IBO_text42": "Sep 14th 23:00 UTC+8",
+    "Approve": "Approve",
+    "IBO_text43": "16th Sep 22:30  UTC+8"
   },
   "Dialogs": {
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."

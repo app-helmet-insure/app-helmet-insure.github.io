@@ -118,7 +118,7 @@
     "HELMETRewards": "報酬",
     "ClaimAllRewards": "報酬請求",
     "Stake": "ステーキング",
-    "StakeAndCompound":"Confirm Deposit & Compound",
+    "StakeAndCompound": "Confirm Deposit & Compound",
     "Unstake": "アンステ＝キング",
     "Claim": "請求",
     "DenAssets": "額面資産",
@@ -260,10 +260,10 @@
     "MiningTip2": "専用のHelmetトークンをファームすることもできますし、異なるLiquidity Provider Tokens（LPT）をステークすることでCOMBO報酬を得ることもできます。",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
     "IIOTip2": "ヨーロピアン・オプション・ロジックを用いた新しい資産分配モデル。",
-    "APY":"APY",
-    "APR":"APR",
-    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
-    "EarnTip2":"The return on compound interest will get higher and higher over time."
+    "APY": "APY",
+    "APR": "APR",
+    "EarnTip1": "Daily income withdrawal and manual reinvestment.",
+    "EarnTip2": "The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "アカウント",
@@ -313,18 +313,18 @@
     "Available1": "Available",
     "MyStake": "My Stake",
     "Total": "Total",
-    "GuardCredit":"Guard Credit",
-    "SwapTitle":"Get Guard",
-    "AvailableGuard":"Available GUARD today",
-    "MyCredits":"My Credits",
-    "Approve":"Approve",
-    "Burn":"Burn",
-    "Notice":"Notice",
-    "Claim":"Claim",
+    "GuardCredit": "Guard Credit",
+    "SwapTitle": "Get Guard",
+    "AvailableGuard": "Available GUARD today",
+    "MyCredits": "My Credits",
+    "Approve": "Approve",
+    "Burn": "Burn",
+    "Notice": "Notice",
+    "Claim": "Claim",
     "Jump": "You will swich to guard.insure in {number}s (to claim GUARD)",
     "Dialog": "0 HELMET for GUARD Credits Confirm",
-    "Confirm":"Confirm",
-    "FreeDay":"FREE DAYS",
+    "Confirm": "Confirm",
+    "FreeDay": "FREE DAYS",
     "Tips1": "STAKING in HELMET-BNB LP Mining Pool to get GUARD credits reward;",
     "Tips2": "Daily GUARD credits distribution hard cap: 10,000 . Your credits are based on your LPT share in the pool; ",
     "Tips3": "You should claim your GUARD credits before using it.",
@@ -333,7 +333,7 @@
     "Tips6": "Update at 22:00 SGT daily",
     "Tips7": "New polygon dev plan in!!!  Better&healthier bridge approach rush on its way and your GUARD Credits are still valid!!!",
     "ToStake": "Go Deposit",
-    "Pause":"Temporarily closed"
+    "Pause": "Temporarily closed"
   },
   "IBO": {
     "IBO_text1": "m",
@@ -380,7 +380,10 @@
     "IBO_text38": "Aug.31st 20:00 UTC+8",
     "IBO_text39": "Aug.31st 20:00 UTC+8",
     "IBO_text40": "Sep.3th 23:00 UTC+8",
-    "IBO_text41": "Sep.1st 19:00 UTC+8"
+    "IBO_text41": "Sep.1st 19:00 UTC+8",
+    "IBO_text42": "Sep 14th 23:00 UTC+8",
+    "Approve": "Approve",
+    "IBO_text43": "16th Sep 22:30  UTC+8"
   },
   "Dialogs": {
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."

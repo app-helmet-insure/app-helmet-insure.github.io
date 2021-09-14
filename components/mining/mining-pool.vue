@@ -269,15 +269,15 @@ import { fixD } from "~/assets/js/util.js";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
-import {addToken} from "~/web3/wallet.js";
-import MiningABI from "../../abi/MiningABI.json";
+import { addToken } from "~/web3/wallet.js";
 import ERC20ABI from "../../abi/ERC20ABI.json";
 import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,
   processResult,
-  fromWei,toWei,
-  getContract
+  fromWei,
+  toWei,
+  getContract,
 } from "~/web3/index.js";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
@@ -375,20 +375,41 @@ export default {
       });
     },
     getPoolInfo() {
-      let { StakeAddress, PoolAddress, StakeDecimals, RewardDecimals } =
-        this.ActiveData;
-      const PoolContracts = new Contract(PoolAddress, MiningABI);
-      const StakeContracts = new Contract(StakeAddress, MiningABI);
+      let {
+        StakeAddress,
+        PoolAddress,
+        StakeDecimals,
+        RewardDecimals,
+        NoProxy,
+        PoolABI,
+        StakeABI,
+        ProxyPid,
+      } = this.ActiveData;
+      const PoolContracts = new Contract(PoolAddress, PoolABI);
+      const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = window.CURRENTADDRESS;
-      const PromiseList = [
-        StakeContracts.balanceOf(Account),
-        PoolContracts.balanceOf(Account),
-        PoolContracts.totalSupply(),
-        PoolContracts.earned(Account),
-        PoolContracts.earned2(Account),
-        ApproveContracts.allowance(Account, PoolAddress),
-      ];
+      let PromiseList;
+      if (NoProxy) {
+        PromiseList = [
+          StakeContracts.balanceOf(Account),
+          PoolContracts.userInfo(ProxyPid, Account),
+          StakeContracts.totalSupply(),
+          PoolContracts.pendingCake(ProxyPid, Account),
+          PoolContracts.pendingCake(ProxyPid, Account),
+          ApproveContracts.allowance(Account, PoolAddress),
+        ];
+      } else {
+        PromiseList = [
+          StakeContracts.balanceOf(Account),
+          PoolContracts.balanceOf(Account),
+          PoolContracts.totalSupply(),
+          PoolContracts.earned(Account),
+          PoolContracts.earned2(Account),
+          ApproveContracts.allowance(Account, PoolAddress),
+        ];
+      }
+
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
@@ -401,7 +422,10 @@ export default {
           ApproveStatus,
         ] = FixData;
         this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
-        this.CanWithdraw = fromWei(CanWithdraw, StakeDecimals);
+        this.CanWithdraw = fromWei(
+          NoProxy ? CanWithdraw[0] : CanWithdraw,
+          StakeDecimals
+        );
         this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
         this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
         this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
@@ -421,6 +445,10 @@ export default {
       const StakeAddress = this.ActiveData.StakeAddress;
       const TokenSymbol = this.ActiveData.StakeSymbol;
       const Decimals = this.ActiveData.StakeDecimals;
+      const PoolABI = this.ActiveData.PoolABI;
+      const ProxyPid = this.ActiveData.ProxyPid;
+      const StakeMethods = this.ActiveData.StakeMethods;
+      const NoProxy = this.ActiveData.NoProxy;
       const Volume = toWei(this.StakeVolume, Decimals);
       const Account = window.CURRENTADDRESS;
       const Infinity =
@@ -446,16 +474,21 @@ export default {
               this.getPoolInfo();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
             this.ApproveStatus = false;
             this.StakeLoading = false;
           });
       } else {
-        const Contracts = getContract(MiningABI, PoolAddress);
-        Contracts.methods
-          .stake(Volume)
+        const Contracts = getContract(PoolABI, PoolAddress);
+        let Params;
+        if (NoProxy) {
+          Params = [ProxyPid, Volume];
+        } else {
+          Params = [Volume];
+        }
+        Contracts.methods[StakeMethods](...Params)
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
@@ -469,10 +502,10 @@ export default {
               this.getPoolInfo();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
+            this.StakeLoading = false;
             this.WaitingVisible = false;
             this.SuccessVisible = false;
-            this.StakeLoading = false;
           });
       }
     },
@@ -484,52 +517,37 @@ export default {
       }
       this.ClaimLoading = true;
       const ContractAddress = this.ActiveData.PoolAddress;
-      const RewardVolume = this.ActiveData.RewardVolume;
+      const RewardMethods = this.ActiveData.RewardMethods;
+      const PoolABI = this.ActiveData.PoolABI;
+      const NoProxy = this.ActiveData.NoProxy;
+      const ProxyPid = this.ActiveData.ProxyPid;
       const Account = window.CURRENTADDRESS;
-      const Contracts = getContract(MiningABI, ContractAddress);
-      if (RewardVolume == "one") {
-        Contracts.methods
-          .getReward()
-          .send({ from: Account })
-          .on("transactionHash", (hash) => {
-            this.WaitingVisible = true;
-          })
-          .on("receipt", (receipt) => {
-            if (!this.SuccessVisible) {
-              this.SuccessHash = receipt.transactionHash;
-              this.WaitingVisible = false;
-              this.SuccessVisible = true;
-              this.ClaimLoading = false;
-              this.getPoolInfo();
-            }
-          })
-          .on("error", function (error) {
-            this.WaitingVisible = false;
-            this.SuccessVisible = false;
-            this.ClaimLoading = false;
-          });
+      const Contracts = getContract(PoolABI, ContractAddress);
+      let Params;
+      if (NoProxy) {
+        Params = [ProxyPid, 0];
       } else {
-        Contracts.methods
-          .getDoubleReward()
-          .send({ from: Account })
-          .on("transactionHash", (hash) => {
-            this.WaitingVisible = true;
-          })
-          .on("receipt", (receipt) => {
-            if (!this.SuccessVisible) {
-              this.SuccessHash = receipt.transactionHash;
-              this.WaitingVisible = false;
-              this.SuccessVisible = true;
-              this.ClaimLoading = false;
-              this.getPoolInfo();
-            }
-          })
-          .on("error", function (error) {
-            this.WaitingVisible = false;
-            this.SuccessVisible = false;
-            this.ClaimLoading = false;
-          });
+        Params = [];
       }
+      Contracts.methods[RewardMethods](...Params)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.ClaimLoading = false;
+            this.getPoolInfo();
+          }
+        })
+        .on("error", (error) => {
+          this.WaitingVisible = false;
+          this.SuccessVisible = false;
+          this.ClaimLoading = false;
+        });
     },
     toCompound() {
       this.$bus.$emit("OPEN_COMPOUND", {
@@ -545,10 +563,20 @@ export default {
       }
       this.ExitLoading = true;
       let ContractAddress = this.ActiveData.PoolAddress;
+      const PoolABI = this.ActiveData.PoolABI;
+      const NoProxy = this.ActiveData.NoProxy;
+      const ProxyPid = this.ActiveData.ProxyPid;
+      const Decimals = this.ActiveData.StakeDecimals;
+      const ExitMethods = this.ActiveData.ExitMethods;
       const Account = window.CURRENTADDRESS;
-      const Contracts = getContract(MiningABI, ContractAddress);
-      Contracts.methods
-        .exit()
+      const Contracts = getContract(PoolABI, ContractAddress);
+      let Params;
+      if (NoProxy) {
+        Params = [ProxyPid, toWei(this.CanWithdraw, Decimals)];
+      } else {
+        Params = [];
+      }
+      Contracts.methods[ExitMethods](...Params)
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
@@ -562,7 +590,7 @@ export default {
             this.getPoolInfo();
           }
         })
-        .on("error", function (error) {
+        .on("error", (error) => {
           this.WaitingVisible = false;
           this.SuccessVisible = false;
           this.ExitLoading = false;
@@ -612,6 +640,9 @@ export default {
     }
     .acsi {
       background-image: url("../../assets/img/icon/acsi@2x.png");
+    }
+    .cafeswap {
+      background-image: url("../../assets/img/icon/cafeswap@2x.png");
     }
   }
   .H5_link {

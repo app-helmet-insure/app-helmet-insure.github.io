@@ -120,7 +120,7 @@
               parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
                 ? "IBO.IBO_text34"
-                : "Table.Approve"
+                : "IBO.Approve"
             )
           }}
         </a>
@@ -374,6 +374,63 @@
           >
         </p>
       </div>
+
+      <div v-else-if="iboData.name === 'PRED'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text42") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/Predictcoin" target="_blank"
+          >https://t.me/Predictcoin</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://predictcoin.finance" target="_blank"
+          >https://predictcoin.finance</a
+          >
+        </p>
+      </div>
+
+      <div v-else-if="iboData.name === 'PRB'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap, Babyswap</p>
+<!--        <p>-->
+<!--          SC: {{ iboData.underlying.address }}-->
+<!--          <i-->
+<!--              class="copy"-->
+<!--              id="copy_default"-->
+<!--              @click="-->
+<!--              copyAdress($event, iboData.underlying.address)-->
+<!--            "-->
+<!--          ></i>-->
+<!--        </p>-->
+        <p>
+          TG:
+          <a href="https://t.me/premiumblock" target="_blank"
+          >https://t.me/premiumblock</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://www.premiumblock.org" target="_blank"
+          >https://www.premiumblock.org</a
+          >
+        </p>
+      </div>
+
     </Dialog>
   </div>
 </template>

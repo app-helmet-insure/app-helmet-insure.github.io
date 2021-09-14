@@ -56,7 +56,7 @@ export const iboPools = [
     address: '0xE057daBC7630326819390e5D97B69633921cda65',
     abi: starterLimitAbi,
     start_at: '1631617200',
-    is_coming: true, // is_coming 为 true 则不请求合约
+    is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -64,7 +64,7 @@ export const iboPools = [
     },
     icon: 'PRB.png',
     underlying: {
-      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      address: '0x59ff585AA42939853E2587b07ee8F94017584A88',
       decimal: 18,
       symbol: 'PRB',
       name: 'PRB',
@@ -81,7 +81,7 @@ export const iboPools = [
     ratio: '1 HELMET = 30 PRB',
     time: '1631802600',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '1388888888888888888900000000',//总释放
+    totalPurchasedAmount: '53333333333333332800000',//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

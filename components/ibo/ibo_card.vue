@@ -407,16 +407,16 @@
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap, Babyswap</p>
-<!--        <p>-->
-<!--          SC: {{ iboData.underlying.address }}-->
-<!--          <i-->
-<!--              class="copy"-->
-<!--              id="copy_default"-->
-<!--              @click="-->
-<!--              copyAdress($event, iboData.underlying.address)-->
-<!--            "-->
-<!--          ></i>-->
-<!--        </p>-->
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
         <p>
           TG:
           <a href="https://t.me/premiumblock" target="_blank"

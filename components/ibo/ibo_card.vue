@@ -430,6 +430,33 @@
           >
         </p>
       </div>
+      <div v-else-if="iboData.name === 'MONI'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text46") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text44") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+              class="copy"
+              id="copy_default"
+              @click="
+              copyAdress($event, iboData.underlying.address)
+            "
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/monstainfinite" target="_blank"
+          >https://t.me/monstainfinite</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://monstainfinite.com" target="_blank"
+          >https://monstainfinite.com</a
+          >
+        </p>
+      </div>
 
     </Dialog>
   </div>

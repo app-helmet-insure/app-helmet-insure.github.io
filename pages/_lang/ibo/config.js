@@ -8,6 +8,53 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const iboPools = [
   {
+    name: 'MONI',
+    address: '',
+    abi: starterLimitAbi,
+    start_at: '1631790000',
+    is_coming: true, // is_coming 为 true 则不请求合约
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'MONI.png',
+    underlying: {
+      address: '0x9573c88aE3e37508f87649f87c4dd5373C9F31e0',
+      decimal: 18,
+      symbol: 'MONI',
+      name: 'MONI',
+    },
+    amount: '400000', // token 总额
+    pool_info: {
+      min_allocation: 400,
+      max_allocation: 1000,
+      min_swap_level: '400 Helmet',
+      maxAccount: 600,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 0.75 MONI',
+    time: '1631815500',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '53333333333333332800000',//总释放
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '', // 完成时间
+    winningRate: '-', // 申请中签率
+    committed: '', // 超募比例
+    total: '', // 参与资金规模
+    poolType: 0, // 值为 1 代表定向
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text44',
+    light: true,
+    airdrop: { // 空投
+      start_at: '1634407500'
+    }
+  },
+
+  {
     name: 'PRB',
     address: '0xE057daBC7630326819390e5D97B69633921cda65',
     abi: starterLimitAbi,
@@ -93,8 +140,6 @@ export const iboPools = [
     claimTimeTipI18n: 'IBO.IBO_text42',
     light: true
   },
-
-
   {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',

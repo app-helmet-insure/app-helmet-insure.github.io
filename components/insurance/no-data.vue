@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "../../assets/css/base.scss";
+@import "../../assets/css/themes.scss";
 .noData {
   height: 500px;
   display: flex;

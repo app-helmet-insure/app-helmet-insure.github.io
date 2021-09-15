@@ -230,7 +230,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .onePager {
   > i {
     cursor: pointer;
@@ -246,7 +246,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .burn_list {
   width: 100%;
   margin: 0 auto;

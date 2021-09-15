@@ -141,7 +141,7 @@
           />
           <Supply
             :ActiveData="ActiveData"
-            :InsureTypeActive="'All'"
+            :ActiveType="'All'"
             v-if="TradeType == 'Sell'"
           />
         </div>
@@ -168,10 +168,14 @@
               >
             </div>
             <div class="activePage">
-              <Market :ActiveData="ActiveData" :ActiveType="ActiveType" />
+              <Market
+                :ActiveData="ActiveData"
+                :ActiveType="ActiveType"
+                v-if="TradeType == 'Buy'"
+              />
               <Supply
-                :ActiveInsurance="ActiveInsurance"
-                :InsureTypeActive="InsureTypeActive"
+                :ActiveData="ActiveData"
+                :ActiveType="ActiveType"
                 v-if="TradeType == 'Sell'"
               />
             </div>
@@ -206,7 +210,6 @@ export default {
       ActiveData: [],
       ActiveType: "Call",
       ActiveInsurance: "",
-      InsureTypeActive: "Put", //H5 tab
       TradeType: "Buy",
     };
   },
@@ -263,7 +266,7 @@ export default {
         this.$bus.$emit("OPEN_WRAPER_PAFE", true);
       }
     },
-    sellInsurance(data, type, isH5) {
+    sellInsurance(data, isH5) {
       this.ActiveInsurance = data.InsuranceName;
       this.ActiveData = data;
       this.TradeType = "Sell";
@@ -279,7 +282,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .insurance_title {
   display: flex;
   align-items: center;

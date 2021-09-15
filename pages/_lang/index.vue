@@ -110,7 +110,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .helmet_home {
   margin: 0 auto;
 }

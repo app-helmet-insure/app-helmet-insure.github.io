@@ -288,11 +288,11 @@
     "Insurance_text3": "Harga terakhir",
     "Insurance_text4": "Periode Asuransi",
     "Insurance_text5": "Operasional",
-    "Insurance_text6": "Tanggungan 50% Off ",
-    "Insurance_text7": "Tanggungan Miss Out ",
+    "Insurance_text6": "Put Policys",
+    "Insurance_text7": "Call Policys",
     "Insurance_text8": "Suplai",
-    "Insurance_text9": "Konfirmasi suplai tanggungan Miss Out",
-    "Insurance_text10": "Konfirmasi suplay tanggungan 50% Off",
+    "Insurance_text9": "Confirm Supply Call Policys",
+    "Insurance_text10": "Confirm Supply Put Policys",
     "Insurance_text11": "Harga aktivasi",
     "Insurance_text13": "Kadaluarsa",
     "Insurance_text14": "Komplit",
@@ -388,6 +388,7 @@
     "IBO_text43": "16th Sep 22:30  UTC+8"
   },
   "Dialogs": {
-    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."
+    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",
+    "InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
   }
 }

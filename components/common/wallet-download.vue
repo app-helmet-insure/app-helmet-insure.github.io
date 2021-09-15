@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" soped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .wallet-download-mask {
   width: 100%;
   height: 100%;
@@ -76,7 +76,7 @@ export default {
 }
 .wallet-download {
   position: fixed;
-  background-color: $bg-w;
+  background-color: #ffffff;
   text-align: left;
   @include themeify {
     color: themed("color-17173a");
@@ -132,7 +132,7 @@ export default {
     span {
       font-size: 20px;
       font-weight: 500;
-      color: $text-d;
+      color: #7d7d7d;
       margin-left: 8px;
     }
   }
@@ -204,7 +204,7 @@ export default {
     span {
       font-size: 20px;
       font-weight: 500;
-      color: $text-d;
+      color: #7d7d7d;
       margin-left: 8px;
     }
   }

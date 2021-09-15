@@ -288,11 +288,11 @@
         "Insurance_text3": "Dernier prix",
         "Insurance_text4": "Période d'assurance",
         "Insurance_text5": "Opération",
-        "Insurance_text6": "Couverture 50% de réduction ",
-        "Insurance_text7": "Couverture Miss Out ",
+        "Insurance_text6": "Put Policys",
+        "Insurance_text7": "Call Policys",
         "Insurance_text8": "Fournir",
-        "Insurance_text9": "Confirmer l'absence de couverture de fournitures",
-        "Insurance_text10": "Confirmer la couverture d'approvisionnement à 50% de réduction",
+        "Insurance_text9": "Confirm Supply Call Policys",
+        "Insurance_text10": "Confirm Supply Put Policys",
         "Insurance_text11": "Activer le prix",
         "Insurance_text13": "Expiré",
         "Insurance_text14": "Complété",
@@ -389,5 +389,6 @@
     },
     "Dialogs": {
         "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."
-    }
+    ,"InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
+}
 }

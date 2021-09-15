@@ -302,8 +302,8 @@
     "Insurance_text6": "腰斩险",
     "Insurance_text7": "翻倍险",
     "Insurance_text8": "发行保险",
-    "Insurance_text9": "立即创建翻倍险",
-    "Insurance_text10": "立即创建腰斩险",
+    "Insurance_text9": "立即创建看涨险",
+    "Insurance_text10": "立即创建看跌险",
     "Insurance_text11": "出险价",
     "Insurance_text13": "已到期",
     "Insurance_text14": "已全部成交",
@@ -399,6 +399,7 @@
     "Approve": "授权"
   },
   "Dialogs": {
-    "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}"
+    "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}",
+    "InsuranceTip1": "现在发行保险有立即被行权的风险，请谨慎发行保险。"
   }
 }

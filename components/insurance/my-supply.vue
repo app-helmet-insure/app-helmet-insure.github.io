@@ -361,7 +361,7 @@ export default {
             getPolicysList();
           }
         })
-        .on("error", function (ereor) {
+        .on("error", (ereor)=>  {
           this.WaitingVisible = false;
         });
     },
@@ -373,7 +373,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .pagination {
   width: 100%;
   display: flex;

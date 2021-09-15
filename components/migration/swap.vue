@@ -219,7 +219,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .title {
   height: 18px;
   font-size: 16px;

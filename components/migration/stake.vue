@@ -104,7 +104,7 @@ export default {
 
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .loading_pic {
   display: block;
   width: 24px;
@@ -284,7 +284,7 @@ export default {
 }
 </style>
 <style lang='scss'>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .tips_wrap {
   > div {
     p {

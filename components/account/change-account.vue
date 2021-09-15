@@ -128,7 +128,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .change-account-block {
     padding: 30px 56px 56px;

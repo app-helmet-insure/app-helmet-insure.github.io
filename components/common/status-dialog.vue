@@ -96,7 +96,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .loading_wrap {
   display: flex;
   align-items: center;

@@ -67,6 +67,7 @@ import {
   watchAccountChange,
   watchNetWorkChange,
 } from "../web3/wallet.js";
+import {WEB3} from '../web3/index.js'
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
 export default {
@@ -132,6 +133,7 @@ export default {
       this.RiskVisible = true;
     }
     this.copy();
+    window.WEB3 =WEB3();
     // 获取映射
     openMetaMaskWallet();
     watchAccountChange();
@@ -184,7 +186,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

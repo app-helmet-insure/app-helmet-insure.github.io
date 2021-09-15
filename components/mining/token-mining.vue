@@ -443,7 +443,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .finshed_line {
   width: 100%;
   margin: 20px 0 21px 0;

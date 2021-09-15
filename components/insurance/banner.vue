@@ -80,7 +80,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .swiper-pagination {
   display: flex;
   align-items: center;
@@ -110,7 +110,7 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .swiper-container {
     width: 100%;

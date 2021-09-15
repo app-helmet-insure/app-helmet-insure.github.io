@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style  lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .page {
   display: flex;
   height: 30px;

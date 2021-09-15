@@ -1,137 +1,173 @@
 <template>
-  <div class="issue-insurance">
-    <div
-      class="issue-call"
-      v-if="InsureTypeActive == 'Call' || InsureTypeActive == 'All'"
-    >
-      <p class="insure">
-        <span>{{ $t("Content.InsurancePrice") }}</span>
-        <span>
-          {{ ActiveData.InsuranceName }} :
-          {{ ActiveData.Call.StrikePrice }}
-          {{ ActiveData.Call.UnderlyingSymbol }}
-        </span>
-      </p>
-      <div class="dpr">
-        <span class="left">DPR</span>
-        <div class="info">
-          <el-tooltip
-            effect="dark"
-            placement="top-start"
-            :content="$t(`Tip.Dpr`)"
-          >
-            <svg
-              t="1617039040708"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="1287"
-              width="16px"
-              height="16px"
+  <div class="issue_insurance">
+    <div class="issue_insurance_wrap">
+      <div
+        class="issue_call"
+        v-if="ActiveType == 'Call' || ActiveType == 'All'"
+      >
+        <div class="insure_price">
+          <p>{{ $t("Content.InsurancePrice") }}</p>
+          <div class="input">
+            <el-input v-model="CallStrikePrice" type="number" />
+            <span
+              >{{ ActiveData.Call.CollateralSymbol }}/{{
+                ActiveData.Call.UnderlyingSymbol
+              }}</span
             >
-              <path
-                d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                p-id="1288"
-              ></path>
-            </svg>
-          </el-tooltip>
+          </div>
         </div>
-        <el-select
-          v-model="ShowCallDPR"
-          style="width: 100%"
-          @change="handleChangeCallDPR"
-        >
-          <el-option key="0.0014" value="0.0014" label="0.14%">0.14%</el-option>
-          <el-option key="0.0028" value="0.0028" label="0.28%">0.28%</el-option>
-          <el-option key="0.0056" value="0.0056" label="0.56%">0.56%</el-option>
-        </el-select>
-      </div>
-      <p class="expect_earn">
-        {{ $t("Content.Earning") }}: {{ CallPremium }} HELMET
-      </p>
-      <div class="input">
-        <el-input v-model="CallPolicyNumber" type="number" />
-        <span class="text">{{ ActiveData.Call.CollateralSymbol }}</span>
-        <span class="max" @click="CallPolicyNumber = CallBalance">{{
-          $t("Table.ALL")
-        }}</span>
-      </div>
-      <p class="balance">
-        {{ $t("Content.UsableBalance") }}: {{ CallBalance }}
-        {{ ActiveData.Call.CollateralSymbol }}
-      </p>
-      <button class="button call" @click="handleClickConfirm('Call')">
-        {{ CallApproveStatus ? $t("Insurance.Insurance_text9") : "授权" }}
-      </button>
-    </div>
-    <i></i>
-    <div
-      class="issue-put"
-      v-if="InsureTypeActive == 'Put' || InsureTypeActive == 'All'"
-    >
-      <p class="insure">
-        <span>{{ $t("Content.InsurancePrice") }}</span>
-        <span>
-          {{ ActiveData.InsuranceName }} :
-          {{ ActiveData.Put.StrikePrice }}
-          {{ ActiveData.Call.UnderlyingSymbol }}
-        </span>
-      </p>
-      <div class="dpr">
-        <span class="left">DPR</span>
-        <div class="info">
-          <el-tooltip
-            effect="dark"
-            placement="top-start"
-            :content="$t(`Tip.Dpr`)"
-          >
-            <svg
-              t="1617039040708"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="1287"
-              width="16px"
-              height="16px"
+        <div class="insure_dpr">
+          <div class="dpr_desc">
+            <span class="left">DPR</span>
+            <span class="info">
+              <el-tooltip
+                effect="dark"
+                placement="top-start"
+                :content="$t(`Tip.Dpr`)"
+              >
+                <svg
+                  t="1617039040708"
+                  class="icon"
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1287"
+                  width="16px"
+                  height="16px"
+                >
+                  <path
+                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                    p-id="1288"
+                  ></path>
+                </svg>
+              </el-tooltip>
+            </span>
+          </div>
+          <div class="dpr_check">
+            <span
+              v-for="DPR in PremiumDPR"
+              :key="DPR.Number"
+              :class="CallDPR === DPR.Number ? 'current_dpr' : ''"
+              @click="CallDPR = DPR.Number"
             >
-              <path
-                d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                p-id="1288"
-              ></path>
-            </svg>
-          </el-tooltip>
+              {{ DPR.ShowNumber }}
+            </span>
+          </div>
         </div>
-        <el-select
-          v-model="ShowPutDPR"
-          style="width: 100%"
-          @change="handleChangePutDPR"
+        <p class="expect_earn">
+          {{ $t("Content.Earning") }}: {{ CallPremium }} HELMET
+        </p>
+        <div class="input">
+          <el-input v-model="CallPolicyNumber" type="number" />
+          <span class="text">{{ ActiveData.Call.CollateralSymbol }}</span>
+          <span class="max" @click="CallPolicyNumber = CallBalance">{{
+            $t("Table.ALL")
+          }}</span>
+        </div>
+        <p class="balance">
+          {{ $t("Content.UsableBalance") }}: {{ CallBalance }}
+          {{ ActiveData.Call.CollateralSymbol }}
+        </p>
+        <button class="button call" @click="handleClickConfirm('Call')">
+          {{ CallApproveStatus ? $t("Insurance.Insurance_text9") : "授权" }}
+        </button>
+        <p
+          class="insurance_tip"
+          v-show="
+            Number(CallStrikePrice) > 0 &&
+            Number(CallStrikePrice) < Number(ActiveData.LastPrice)
+          "
         >
-          <el-option key="0.0014" value="0.0014" label="0.14%">0.14%</el-option>
-          <el-option key="0.0028" value="0.0028" label="0.28%">0.28%</el-option>
-          <el-option key="0.0056" value="0.0056" label="0.56%">0.56%</el-option>
-        </el-select>
+          <i></i
+          ><span>{{
+            $t("Dialogs.InsuranceTip1", { name: ActiveData.InsuranceName })
+          }}</span>
+        </p>
       </div>
-      <p class="expect_earn">
-        {{ $t("Content.Earning") }}: {{ PutPremium }} HELMET
-      </p>
-      <div class="input">
-        <el-input v-model="PutPolicyNumber" type="number" />
-        <span class="text">{{ ActiveData.Put.CollateralSymbol }}</span>
-        <span class="max" @click="PutPolicyNumber = PutBalance">{{
-          $t("Table.ALL")
-        }}</span>
+      <i></i>
+      <div class="issue_put" v-if="ActiveType == 'Put' || ActiveType == 'All'">
+        <div class="insure_price">
+          <p>{{ $t("Content.InsurancePrice") }}</p>
+          <div class="input">
+            <el-input v-model="PutStrikePrice" type="number" />
+            <span
+              >{{ ActiveData.Call.CollateralSymbol }}/{{
+                ActiveData.Call.UnderlyingSymbol
+              }}</span
+            >
+          </div>
+        </div>
+        <div class="insure_dpr">
+          <div class="dpr_desc">
+            <span class="left">DPR</span>
+            <span class="info">
+              <el-tooltip
+                effect="dark"
+                placement="top-start"
+                :content="$t(`Tip.Dpr`)"
+              >
+                <svg
+                  t="1617039040708"
+                  class="icon"
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1287"
+                  width="16px"
+                  height="16px"
+                >
+                  <path
+                    d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                    p-id="1288"
+                  ></path>
+                </svg>
+              </el-tooltip>
+            </span>
+          </div>
+          <div class="dpr_check">
+            <span
+              v-for="DPR in PremiumDPR"
+              :key="DPR.Number"
+              :class="PutDPR === DPR.Number ? 'current_dpr' : ''"
+              @click="PutDPR = DPR.Number"
+            >
+              {{ DPR.ShowNumber }}
+            </span>
+          </div>
+        </div>
+        <p class="expect_earn">
+          {{ $t("Content.Earning") }}: {{ PutPremium }} HELMET
+        </p>
+        <div class="input">
+          <el-input v-model="PutPolicyNumber" type="number" />
+          <span class="text">{{ ActiveData.Put.CollateralSymbol }}</span>
+          <span class="max" @click="PutPolicyNumber = PutBalance">{{
+            $t("Table.ALL")
+          }}</span>
+        </div>
+        <p class="balance">
+          {{ $t("Content.UsableBalance") }}:
+          {{ PutBalance }}
+          {{ ActiveData.Put.CollateralSymbol }}
+        </p>
+        <button class="button put" @click="handleClickConfirm('Put')">
+          {{ PutApproveStatus ? $t("Insurance.Insurance_text10") : "授权" }}
+        </button>
+        <p
+          class="insurance_tip"
+          v-show="
+            Number(PutStrikePrice) > 0 &&
+            Number(PutStrikePrice) > Number(ActiveData.LastPrice)
+          "
+        >
+          <i></i
+          ><span>{{
+            $t("Dialogs.InsuranceTip1", { name: ActiveData.InsuranceName })
+          }}</span>
+        </p>
       </div>
-      <p class="balance">
-        {{ $t("Content.UsableBalance") }}:
-        {{ PutBalance }}
-        {{ ActiveData.Put.CollateralSymbol }}
-      </p>
-      <button class="button put" @click="handleClickConfirm('Put')">
-        {{ PutApproveStatus ? $t("Insurance.Insurance_text10") : "授权" }}
-      </button>
     </div>
+
     <!-- dialog -->
     <WaitingConfirmationDialog
       :DialogVisible="WaitingVisible"
@@ -161,7 +197,7 @@ import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation
 import { Order } from "../../interface";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
-  props: ["ActiveData", "InsureTypeActive"],
+  props: ["ActiveData", "ActiveType"],
   components: {
     WaitingConfirmationDialog,
     SuccessConfirmationDialog,
@@ -173,8 +209,6 @@ export default {
       PutPremium: 0,
       CallPolicyNumber: "",
       PutPolicyNumber: "",
-      ShowCallDPR: "0.14%",
-      ShowPutDPR: "0.14%",
       CallDPR: 0.0014,
       PutDPR: 0.0014,
       PutBalance: 0,
@@ -183,6 +217,8 @@ export default {
       PutTokenToHelmetPrice: 0,
       CallApproveStatus: false,
       PutApproveStatus: false,
+      CallStrikePrice: "",
+      PutStrikePrice: "",
       WaitingVisible: false,
       SuccessVisible: false,
       WaitingText: "",
@@ -193,10 +229,28 @@ export default {
     PremiumGroup() {
       return {
         CallDPR: this.CallDPR,
-        PutDPR: this.CallDPR,
+        PutDPR: this.PutDPR,
         CallPolicyNumber: this.CallPolicyNumber,
         PutPolicyNumber: this.PutPolicyNumber,
+        CallStrikePrice: this.CallStrikePrice,
+        PutStrikePrice: this.PutStrikePrice,
       };
+    },
+    PremiumDPR() {
+      return [
+        {
+          Number: 0.0014,
+          ShowNumber: "0.14%",
+        },
+        {
+          Number: 0.0028,
+          ShowNumber: "0.28%",
+        },
+        {
+          Number: 0.0056,
+          ShowNumber: "0.56%",
+        },
+      ];
     },
   },
   mounted() {
@@ -221,6 +275,7 @@ export default {
     successClose() {
       this.SuccessVisible = false;
     },
+
     getBalance() {
       const Data = this.ActiveData;
       const CallCollateralAddress = Data.Call.CollateralAddress;
@@ -262,17 +317,23 @@ export default {
       this.PutDPR = value;
     },
     async watchPremium(newValue) {
-      let { CallDPR, PutDPR, CallPolicyNumber, PutPolicyNumber } = newValue;
+      let {
+        CallDPR,
+        PutDPR,
+        CallPolicyNumber,
+        PutPolicyNumber,
+        CallStrikePrice,
+        PutStrikePrice,
+      } = newValue;
       let { ShowExpiryDay, LastPrice } = this.ActiveData;
-      let CallStrikePrice = this.ActiveData.Call.StrikePrice;
-      let PutStrikePrice = this.ActiveData.Put.StrikePrice;
       let CallTokenToHelmetPrice = this.CallTokenToHelmetPrice;
       let PutTokenToHelmetPrice = this.PutTokenToHelmetPrice;
       if (CallPolicyNumber) {
         const NumberDPR =
           CallDPR * CallTokenToHelmetPrice * CallPolicyNumber * ShowExpiryDay;
         const NumberMIN =
-          (Math.min(LastPrice - CallStrikePrice, 0) * CallPolicyNumber) /
+          (Math.min(Number(LastPrice) - Number(CallStrikePrice), 0) *
+            CallPolicyNumber) /
           CallTokenToHelmetPrice;
         const Premium = NumberDPR - NumberMIN;
         this.CallPremium = Premium > 0 ? fixD(Premium, 8) : 0;
@@ -281,7 +342,8 @@ export default {
         const NumberDPR =
           PutDPR * PutTokenToHelmetPrice * PutPolicyNumber * ShowExpiryDay;
         const NumberMIN =
-          (Math.min(PutStrikePrice - LastPrice, 0) * PutPolicyNumber) /
+          (Math.min(Number(PutStrikePrice) - Number(LastPrice), 0) *
+            PutPolicyNumber) /
           PutTokenToHelmetPrice;
         const Premium = NumberDPR - NumberMIN;
         this.PutPremium = Premium > 0 ? fixD(Premium, 8) : 0;
@@ -380,7 +442,7 @@ export default {
               this.CallApproveStatus = true;
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
             this.CallApproveStatus = false;
@@ -402,7 +464,7 @@ export default {
               this.PutApproveStatus = true;
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
             this.PutApproveStatus = false;
@@ -425,23 +487,27 @@ export default {
       }
     },
     waitConfirm(Type) {
-      if (!this.CallPolicyNumber && !this.PutPolicyNumber) {
+      if (
+        (Type === "Call" && !this.CallPolicyNumber && !this.CallStrikePrice) ||
+        (Type === "Put" && !this.PutPolicyNumber && !this.PutStrikePrice)
+      ) {
         return;
       }
       let ActiveData = this.ActiveData;
       let symbol = ActiveData.InsuranceName;
-      let volume, price;
+      let volume, price, strikeprice;
       let collateral = ActiveData[Type].CollateralSymbol;
       let underlying = ActiveData[Type].UnderlyingSymbol;
-      let strikeprice = ActiveData[Type].StrikePrice;
       let expiry = ActiveData.ShowExpiry;
       let type = Type;
       if (Type === "Call") {
         volume = this.CallPolicyNumber;
         price = this.CallPremium;
+        strikeprice = Number(this.CallStrikePrice);
       } else {
         volume = this.PutPolicyNumber;
         price = this.PutPremium;
+        strikeprice = Number(this.PutStrikePrice);
       }
       this.$confirm(
         this.$t("Dialogs.WaitText1", {
@@ -454,10 +520,10 @@ export default {
           price,
           expiry,
         }),
-        "提示",
+        "NOTICE",
         {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
+          confirmButtonText: "Confirm",
+          cancelButtonText: "Cancel",
           type: "warning",
         }
       )
@@ -487,12 +553,12 @@ export default {
         Volume = CallPolicyNumber;
         Premium = CallPremium;
         Price = fixD(CallPremium / CallPolicyNumber, 8) + "";
-        StrikePrice = ActiveData[Type].StrikePrice;
+        StrikePrice = this.CallStrikePrice;
       } else {
         Volume = PutPolicyNumber;
         Premium = PutPremium;
         Price = fixD(PutPremium / PutPolicyNumber, 8) + "";
-        StrikePrice = Number(1 / ActiveData[Type].StrikePrice) + "";
+        StrikePrice = Number(1 / this.PutStrikePrice) + "";
       }
       const SellContracts = getContract(OrderABI, OrderAddress);
       const Account = window.CURRENTADDRESS;
@@ -523,7 +589,7 @@ export default {
               this.SuccessVisible = true;
             }
           })
-          .on("error", function (ereor) {
+          .on("error", (ereor) => {
             this.WaitingVisible = false;
           });
       } else {
@@ -551,7 +617,7 @@ export default {
               this.SuccessVisible = true;
             }
           })
-          .on("error", function (ereor) {
+          .on("error", (ereor) => {
             this.WaitingVisible = false;
           });
       }
@@ -561,69 +627,109 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
-.insure {
+@import "~/assets/css/themes.scss";
+
+.insure_price {
   display: flex;
   flex-direction: column;
-  span {
-    &:nth-of-type(1) {
-      font-size: 14px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      @include themeify {
-        color: darken($color: themed("color-17173a"), $amount: 50%);
-      }
-      line-height: 14px;
+  p {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    @include themeify {
+      color: themed("color-17173a");
     }
-    &:nth-of-type(2) {
-      font-size: 16px;
+    opacity: 0.4;
+    line-height: 14px;
+  }
+  .input {
+    margin-top: 6px;
+    width: 100%;
+    position: relative;
+    .el-input__inner {
+      padding-right: 50px;
+    }
+    span {
+      position: absolute;
+      right: 10px;
+      font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
       @include themeify {
         color: themed("color-17173a");
       }
+
       line-height: 16px;
-      margin-top: 12px;
     }
   }
 }
-.dpr {
-  margin-top: 20px;
-  width: 370px;
-  height: 40px;
+.insure_dpr {
+  margin-top: 16px;
+  width: 100%;
   border-radius: 5px;
   display: flex;
   align-items: center;
   font-size: 14px;
-  position: relative;
-  .left {
-    position: absolute;
-    @include themeify {
-      color: themed("color-17173a");
-    }
-    left: 12px;
-    z-index: 9;
-  }
-  .info {
-    position: absolute;
+  .dpr_desc {
     display: flex;
     align-items: center;
-    left: 40px;
-    height: 100%;
-    justify-content: center;
-    z-index: 9;
-    svg {
-      margin: 0 4px 0 2px;
-      cursor: pointer;
-      width: 16px !important;
-      height: 16px !important;
-      fill: rgba(164, 162, 178, 1);
-      &:hover {
-        fill: #fd7e14;
+    .left {
+      @include themeify {
+        color: themed("color-17173a");
+      }
+      opacity: 0.4;
+      left: 12px;
+      z-index: 9;
+    }
+    .info {
+      display: flex;
+      align-items: center;
+      left: 40px;
+      height: 100%;
+      justify-content: center;
+      z-index: 9;
+      svg {
+        margin: 0 4px 0 2px;
+        cursor: pointer;
+        width: 16px !important;
+        height: 16px !important;
+        fill: rgba(164, 162, 178, 1);
+        &:hover {
+          fill: #fd7e14;
+        }
       }
     }
+    ::v-deep .el-input__inner {
+      padding-left: 60px;
+    }
   }
-  ::v-deep .el-input__inner {
-    padding-left: 60px;
+  .dpr_check {
+    display: flex;
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 20px;
+      width: 60px;
+      height: 32px;
+      border-radius: 5px;
+      font-size: 14px;
+      line-height: 24px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      @include themeify {
+        color: themed("insure_button_text");
+        background: themed("insure_button");
+        border: 1px solid themed("insure_button_border");
+      }
+      &:hover {
+        color: #fd7e14 !important;
+        border: 1px solid #fd7e14 !important;
+      }
+    }
+    .current_dpr {
+      color: #fd7e14 !important;
+      border: 1px solid #fd7e14 !important;
+    }
   }
 }
 .expect_earn {
@@ -632,11 +738,12 @@ export default {
   font-size: 14px;
   font-family: IBMPlexSans;
   @include themeify {
-    color: darken($color: themed("color-17173a"), $amount: 30%);
+    color: themed("color-17173a");
   }
+  opacity: 0.7;
 }
 .input {
-  width: 370px;
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   @include themeify {
@@ -694,12 +801,13 @@ export default {
   font-size: 14px;
   font-family: IBMPlexSans;
   @include themeify {
-    color: darken($color: themed("color-17173a"), $amount: 30%);
+    color: themed("color-17173a");
   }
+  opacity: 0.7;
 }
 .button {
   display: block;
-  width: 370px;
+  width: 100%;
   height: 40px;
   border-radius: 5px;
   font-size: 14px;
@@ -718,12 +826,28 @@ export default {
     background: #df4857;
   }
 }
+.insurance_tip {
+  margin-top: 14px;
+  padding: 6px 20px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffb801;
+  background: rgba(255, 184, 1, 0.1);
+}
+.issue_insurance {
+  padding-bottom: 50px;
+}
 @media screen and (min-width: 750px) {
-  .issue-insurance {
+  .issue_insurance_wrap {
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     padding: 40px 0;
-
+    .issue_call,
+    .issue_put {
+      width: 370px;
+    }
     > i {
       display: block;
       width: 1px;
@@ -739,125 +863,14 @@ export default {
     width: 20px;
     height: 20px;
   }
-  .issue-insurance {
+  .issue_call,
+  .issue_put {
+    width: 100%;
+  }
+  .issue_insurance_wrap {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    padding: 16px 18px;
-    > div {
-      width: 100%;
-      > p {
-        display: flex;
-        flex-direction: column;
-        span {
-          &:nth-of-type(1) {
-            font-size: 14px;
-            font-family: PingFangSC-Regular, PingFang SC;
-            @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 50%);
-            }
-            line-height: 14px;
-          }
-          &:nth-of-type(2) {
-            font-size: 16px;
-            font-family: IBMPlexSans-Medium, IBMPlexSans;
-            font-weight: 600;
-            @include themeify {
-              color: themed("color-17173a");
-            }
-            line-height: 16px;
-            margin-top: 12px;
-          }
-        }
-      }
-      > span {
-        font-size: 12px;
-        font-family: IBMPlexSans;
-        @include themeify {
-          color: darken($color: themed("color-17173a"), $amount: 30%);
-        }
-        line-height: 14px;
-      }
-      > button {
-        display: block;
-        width: 100%;
-        height: 40px;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #fff;
-        margin-top: 20px;
-      }
-      .call {
-        background: #28a745;
-        &:hover {
-          background: #3daf57;
-        }
-      }
-      .put {
-        background: #dc3545;
-        &:hover {
-          background: #df4857;
-        }
-      }
-    }
-
-    .input {
-      margin-top: 16px;
-      width: 100%;
-      height: 40px;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      position: relative;
-      @include themeify {
-        background: themed("color-ffffff");
-        border: 2px solid themed("color-e8e8eb");
-      }
-      input {
-        width: 100%;
-        height: 100%;
-        padding-left: 10px;
-        font-size: 14px;
-        font-family: IBMPlexSans;
-        @include themeify {
-          background: themed("color-ffffff");
-          color: themed("color-17173a");
-        }
-      }
-      .text {
-        position: absolute;
-        font-size: 14px;
-        font-family: IBMPlexSans;
-        @include themeify {
-          color: themed("color-17173a");
-        }
-        right: 62px;
-      }
-      .max {
-        position: absolute;
-        right: 12px;
-        padding: 0px 8px;
-        min-width: 40px;
-        height: 24px;
-        @include themeify {
-          background: themed("color-f8f9fa");
-          border: 1px solid themed("color-e8e8eb");
-          color: themed("color-17173a");
-        }
-        &:hover {
-          border: 1px solid themed("color-fd7e14") !important;
-          color: themed("color-fd7e14") !important;
-        }
-        border-radius: 5px;
-        font-size: 12px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-      }
-    }
-
     > i {
       display: none;
     }

@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .langauage {
   > span {
     .icon {

@@ -179,7 +179,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .ex-notification {
   position: fixed;
   padding: 16px;
@@ -204,25 +204,25 @@ export default {
     /* @include themeify {
       border-left-color: rgba(themed('color-info'), 0.4);
     } */
-    border-left-color: $info-color;
+    border-left-color: #177ddc;
   }
   &.warning {
     /* @include themeify {
       border-left-color: rgba(themed('color-warning'), 0.4);
     } */
-    border-left-color: $warning-color;
+    border-left-color: #ffc819;
   }
   &.success {
     /* @include themeify {
       border-left-color: rgba(themed('color-success'), 0.4);
     } */
-    border-left-color: $success-color;
+    border-left-color: #73be3a;
   }
   &.error {
     /* @include themeify {
       border-left-color: rgba(themed('color-error'), 0.4);
     } */
-    border-left-color: $error-color;
+    border-left-color: #471111;
   }
   .ex-notification-group {
     position: relative;
@@ -245,7 +245,7 @@ export default {
     /* @include themeify {
       color: themed('text-t');
     } */
-    color: $text-m;
+    color: #ffffff;
     .icon {
       margin-right: 12px;
       width: 20px;
@@ -276,7 +276,7 @@ export default {
     font-size: 12px;
     padding-left: 32px;
     margin-top: 8px;
-    color: $text-t;
+    color: #dbdbdb;
     /* @include themeify {
       color: themed('text-p');
     } */

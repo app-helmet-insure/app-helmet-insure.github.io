@@ -349,7 +349,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .openSlider {
     display: block;

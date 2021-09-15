@@ -82,6 +82,7 @@ export const processResult = (data) => {
     return data;
   }
 };
+export const WEB3 = () => new Web3(window.ethereum);
 export const getContract = (abi, address) => {
   const web3 = new Web3(window.ethereum);
   return new web3.eth.Contract(abi, address);

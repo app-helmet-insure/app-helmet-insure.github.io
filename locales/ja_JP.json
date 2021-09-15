@@ -286,11 +286,11 @@
     "Insurance_text3": "last price",
     "Insurance_text4": "保険期間",
     "Insurance_text5": "オペレーション",
-    "Insurance_text6": "50% Offカバー ",
-    "Insurance_text7": "カバーミスアウト ",
+    "Insurance_text6": "Put Policys",
+    "Insurance_text7": "Call Policys",
     "Insurance_text8": "供給",
-    "Insurance_text9": "Confirm Supply Cover Miss Out",
-    "Insurance_text10": "Confirm Supply Cover 50% Off",
+    "Insurance_text9": "Confirm Supply Call Policys",
+    "Insurance_text10": "Confirm Supply Put Policys",
     "Insurance_text11": "アクティベート価格",
     "Insurance_text13": "失効",
     "Insurance_text14": "成功",
@@ -387,5 +387,6 @@
   },
   "Dialogs": {
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."
+    ,"InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
   }
 }

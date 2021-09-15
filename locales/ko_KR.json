@@ -288,11 +288,11 @@
     "Insurance_text3": "마지막 가격",
     "Insurance_text4": "보험 기간",
     "Insurance_text5": "조작",
-    "Insurance_text6": "하락 보호",
-    "Insurance_text7": "상승 보호",
+    "Insurance_text6": "Put Policys",
+    "Insurance_text7": "Call Policys",
     "Insurance_text8": "공급하기",
-    "Insurance_text9": "상승 보호를 확인하기",
-    "Insurance_text10": "하락 보호를 확인하기",
+    "Insurance_text9": "Confirm Supply Call Policys",
+    "Insurance_text10": "Confirm Supply Put Policys",
     "Insurance_text11": "활성화 가격",
     "Insurance_text13": "만료되었습니다.",
     "Insurance_text14": "완료되었습니다.",
@@ -388,6 +388,7 @@
     "IBO_text43": "16th Sep 22:30  UTC+8"
   },
   "Dialogs": {
-    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}."
+    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",
+    "InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
   }
 }

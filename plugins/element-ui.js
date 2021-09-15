@@ -10,6 +10,8 @@ import {
   Select,
   Option,
   Input,
+  Radio,
+  RadioButton
 } from "element-ui";
 Vue.use(Slider);
 Vue.use(Tooltip);
@@ -19,6 +21,8 @@ Vue.use(Pagination);
 Vue.use(Select);
 Vue.use(Option);
 Vue.use(Input);
+Vue.use(Radio);
+Vue.use(RadioButton);
 Vue.prototype.$confirm = MessageBox.confirm;
 export default ({ store }) => {
   // 由于通过全局参数传入,所以 this.$notify 不能通过 this.$notify.success 调用,只可以使用 this.$notify({type: 'success'}) 方式调用

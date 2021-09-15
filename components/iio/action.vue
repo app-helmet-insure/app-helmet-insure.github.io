@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .action_wrap {
     width: 1200px;

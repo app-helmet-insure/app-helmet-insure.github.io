@@ -8,6 +8,11 @@
     >
       <div class="policy_title WEB">
         <div class="title_index">{{ $t("Table.ID") }}</div>
+        <div class="titke_strikeprice">
+          {{ $t("Content.InsurancePrice") }}({{
+            ActiveData.Call.UnderlyingSymbol
+          }})
+        </div>
         <div class="title_price">{{ $t("Table.Rent") }}</div>
         <div class="title_amount">
           {{ $t("Table.Amount") }}({{ $t("Table.Cont") }})
@@ -25,6 +30,9 @@
         >
           <div class="policy_item_id_web WEB">
             {{ item.show_ID }}
+          </div>
+          <div class="policy_item_strikeprice_web WEB">
+            {{ item.show_strikePrice }}
           </div>
           <div class="policy_item_price_web WEB">
             {{ item.premium.toFixed(8) }}
@@ -54,9 +62,19 @@
           </div>
           <div class="policy_item_price_h5 H5">
             <p>
+              <span
+                >{{ $t("Content.InsurancePrice") }}({{
+                  ActiveData.Call.UnderlyingSymbol
+                }})</span
+              >
+              <span>{{ item.show_strikePrice }}</span>
+            </p>
+            <p>
               <span>{{ $t("Table.Rent") }}</span>
               <span>{{ item.premium.toFixed(8) }}</span>
             </p>
+          </div>
+          <div class="policy_item_volume_h5 H5">
             <p>
               <span>{{ $t("Table.Amount") }}({{ $t("Table.Cont") }})</span>
               <span>{{ item.show_volume }}</span>
@@ -125,7 +143,7 @@ import { fixD } from "~/assets/js/util.js";
 import Chart from "./chart";
 import { getInsuranceList } from "~/interface/event.js";
 import OrderABI from "../../abi/OrderABI.json";
-import { getContract,toWei, fromWei } from "../../web3/index.js";
+import { getContract, toWei, fromWei } from "../../web3/index.js";
 import BigNumber from "bignumber.js";
 import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
@@ -222,8 +240,7 @@ export default {
                 CollateralAddress.toLocaleLowerCase() &&
               item.underlying.toLocaleLowerCase() ===
                 UnderlyingAddress.toLocaleLowerCase() &&
-              item.expiry === Expiry + "" &&
-              item.strikePrice === FixStrikePrice
+              item.expiry === Expiry + ""
           );
           if (FilterList) {
             FilterList.forEach((item) => {
@@ -346,7 +363,7 @@ export default {
               getPolicyList();
             }
           })
-          .on("error", function (ereor) {
+          .on("error", (ereor) => {
             this.WaitingVisible = false;
           });
       }

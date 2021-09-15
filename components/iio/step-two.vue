@@ -239,7 +239,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .disable {
   pointer-events: none;
 }

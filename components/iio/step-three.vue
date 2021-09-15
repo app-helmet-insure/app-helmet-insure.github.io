@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .stepThree {
     width: 420px;

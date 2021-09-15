@@ -1,4 +1,4 @@
-@import "./base.scss";
+@import "./themes.scss";
 .pagination {
   width: 100%;
   display: flex;
@@ -125,7 +125,41 @@
               font-size: 12px;
               font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
-                color: darken($color: themed("color-17173a"), $amount: 50%);
+                color: themed("color-17173a");
+                opacity: 0.5;
+              }
+            }
+            &:nth-of-type(2) {
+              margin-top: 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              font-weight: 600;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+            }
+          }
+        }
+      }
+      .policy_item_volume_h5 {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        p {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          &:nth-of-type(2) {
+            text-align: right;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 12px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: themed("color-17173a");
+                opacity: 0.5;
               }
             }
             &:nth-of-type(2) {
@@ -159,7 +193,8 @@
           &::placeholder {
             font-family: IBMPlexSans;
             @include themeify {
-              color: darken($color: themed("color-17173a"), $amount: 60%);
+              color: themed("color-17173a");
+              opacity: 0.6;
             }
           }
           &:focus {

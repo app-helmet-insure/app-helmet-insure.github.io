@@ -190,7 +190,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .insurance_data {
   ul {
     height: 100%;
@@ -210,7 +210,7 @@ export default {
     height: 200px;
     margin: 0 auto;
     font-size: 16px;
-    color: $text-m;
+    color: #ffffff;
     margin-bottom: 10px;
     ul {
       display: flex;

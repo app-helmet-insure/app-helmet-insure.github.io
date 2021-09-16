@@ -333,15 +333,17 @@ export default {
                 }
                 const AllItem = Object.assign(ResultItemAsk, ResultItem);
                 if (AllItem.type === "Put") {
-                  AllItem.show_strikePrice =
-                    1 / fromWei(AllItem.strikePrice, StrikePriceDecimals);
+                  AllItem.show_strikePrice = fixD(
+                    1 / fromWei(AllItem.strikePrice, StrikePriceDecimals),
+                    8
+                  );
                   AllItem.show_volume = Number(
                     AllItem.remain / AllItem.show_strikePrice
                   ).toFixed(8);
                 } else {
-                  AllItem.show_strikePrice = fromWei(
-                    AllItem.strikePrice,
-                    StrikePriceDecimals
+                  AllItem.show_strikePrice = fixD(
+                    fromWei(AllItem.strikePrice, StrikePriceDecimals),
+                    8
                   );
                   AllItem.show_volume = Number(AllItem.remain).toFixed(8);
                 }
@@ -497,7 +499,7 @@ export default {
         cursor: pointer;
         display: flex;
         align-items: center;
-        >span{
+        > span {
           margin-left: 4px;
         }
       }

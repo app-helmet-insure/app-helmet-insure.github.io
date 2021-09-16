@@ -279,8 +279,10 @@ export default {
     getBalance() {
       const Data = this.ActiveData;
       const CallCollateralAddress = Data.Call.CollateralAddress;
+      const CallCollateralDecimals = Data.Call.CollateralDecimals;
       const CallCollateralSymbol = Data.Call.CollateralSymbol;
       const PutCollateralAddress = Data.Put.CollateralAddress;
+      const PutCollateralDecimals = Data.Put.CollateralDecimals;
       const PutCollateralSymbol = Data.Put.CollateralSymbol;
       const Account = window.CURRENTADDRESS;
       if (CallCollateralSymbol === "BNB") {
@@ -293,7 +295,7 @@ export default {
           .balanceOf(Account)
           .call()
           .then((res) => {
-            this.CallBalance = fixD(fromWei(res), 8);
+            this.CallBalance = fixD(fromWei(res, CallCollateralDecimals), 8);
           });
       }
       if (PutCollateralSymbol === "BNB") {
@@ -306,7 +308,7 @@ export default {
           .balanceOf(Account)
           .call()
           .then((res) => {
-            this.PutBalance = fixD(fromWei(res), 8);
+            this.PutBalance = fixD(fromWei(res, PutCollateralDecimals), 8);
           });
       }
     },

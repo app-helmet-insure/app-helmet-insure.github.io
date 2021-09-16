@@ -1,5 +1,6 @@
 
 import starterLimitAbi from '../../../abi/IBO_StarterLimit.json'
+import AirAllowListAbi from '../../../abi/AirAllowList.json'
 import IBOTest from '../../../abi/ibo_test.json'
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
@@ -9,10 +10,10 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 export const iboPools = [
   {
     name: 'MONI',
-    address: '',
+    address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
     abi: starterLimitAbi,
     start_at: '1631790000',
-    is_coming: true, // is_coming 为 true 则不请求合约
+    is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -25,7 +26,7 @@ export const iboPools = [
       symbol: 'MONI',
       name: 'MONI',
     },
-    amount: '400000', // token 总额
+    amount: '175000', // token 总额
     pool_info: {
       min_allocation: 400,
       max_allocation: 1000,
@@ -34,10 +35,10 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 0.75 MONI',
-    time: '1631815500',
+    ratio: '1 HELMET = 0.675 MONI',
+    time: '1634407500',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '53333333333333332800000',//总释放
+    totalPurchasedAmount: '259259259259259259175000',//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
@@ -47,10 +48,15 @@ export const iboPools = [
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
     networkId: 56,
-    claimTimeTipI18n: 'IBO.IBO_text44',
+    claimTimeTipI18n: 'IBO.IBO_text47',
     light: true,
     airdrop: { // 空投
-      start_at: '1634407500'
+      begin: '1634407500',
+      address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
+      abi: AirAllowListAbi,
+      amount: '175000', // 空投总额
+      withdrawList: true,//是否已领取
+      allowList: 0//可以领取的量
     }
   },
 

@@ -3,38 +3,39 @@
     <div class="ibo_item" :class="{ active: iboData.light }">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
-          <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />
+          <img :src="require(`~/assets/img/ibo/${iboData.icon}`)"/>
           <span>{{ iboData.name }}</span>
           <span
-            style="margin-left: 5px; cursor: pointer"
-            @click="showTip = true"
+              style="margin-left: 5px; cursor: pointer"
+              @click="showTip = true"
           >
             <svg
-              :fill="$store.state.themes === 'dark' ? '#ffffff' : '#000000'"
-              t="1617039040708"
-              class="icon"
-              viewBox="0 0 1024 1024"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              p-id="1287"
-              width="16"
-              height="16"
+                :fill="$store.state.themes === 'dark' ? '#ffffff' : '#000000'"
+                t="1617039040708"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="1287"
+                width="16"
+                height="16"
             >
               <path
-                d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
-                p-id="1288"
+                  d="M512 43.904c258.112 0 468.096 209.984 468.096 468.096 0 258.112-209.984 468.096-468.096 468.096C253.888 980.096 43.904 770.112 43.904 512 43.904 253.888 253.888 43.904 512 43.904z m0 643.648a58.432 58.432 0 1 0-0.128 116.928A58.432 58.432 0 0 0 512 687.552z m0-468.096c-96.768 0-175.552 71.424-175.552 159.232 0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.112-20.352 50.112-45.568 0-37.632 33.792-68.224 75.264-68.224 41.472 0 75.264 30.592 75.264 68.224 0 37.696-33.792 68.288-75.264 68.288-27.712 0-50.176 20.352-50.176 45.504v91.008c0 25.216 22.4 45.568 50.176 45.568 27.712 0 50.176-20.352 50.176-45.568V530.56c72.192-19.712 125.376-79.936 125.376-151.872 0-87.808-78.72-159.232-175.552-159.232z"
+                  p-id="1288"
               ></path>
             </svg>
           </span>
         </p>
         <p class="ibo_item_title_right">
           <span class="ibo_item_countdown"
-            >{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{ countdown.m
+          >{{ countdown.h }}{{ $t("IBO.IBO_text2") }}/{{
+              countdown.m
             }}{{ $t("IBO.IBO_text1") }}</span
           >
           <span class="ibo_item_status ibo_item_status_ongoing">{{
-            $t(countdown.statusTxt)
-          }}</span>
+              $t(countdown.statusTxt)
+            }}</span>
         </p>
       </div>
       <div v-if="iboData.status !== 3">
@@ -42,7 +43,7 @@
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text8") }}</span>
           <span class="value"
-            >{{ totalTokenAmount }} {{ iboData.underlying.symbol }}</span
+          >{{ totalTokenAmount }} {{ iboData.underlying.symbol }}</span
           >
         </p>
         <p class="ibo_item_value">
@@ -55,8 +56,8 @@
         </p>
         <a class="ibo_item_progress">
           <i
-            class="ibo_item_progress_bar"
-            :style="
+              class="ibo_item_progress_bar"
+              :style="
               iboData.progress > 1
                 ? 'width: 100%'
                 : iboData.progress == 0
@@ -68,64 +69,66 @@
         </a>
         <div class="block">
           <span
-            class="slider-max"
-            v-if="this.iboData.purchasedCurrencyOf <= 0"
-            @click="onMax"
-            >{{ $t("Table.Max") }}</span
+              class="slider-max"
+              v-if="this.iboData.purchasedCurrencyOf <= 0"
+              @click="onMax"
+          >{{ $t("Table.Max") }}</span
           >
           <el-slider
-            v-model="amount"
-            :min="iboData.pool_info.min_allocation"
-            :max="iboData.pool_info.max_allocation"
-            show-input
-            :disabled="this.iboData.purchasedCurrencyOf > 0"
+              v-model="amount"
+              :min="iboData.pool_info.min_allocation"
+              :max="iboData.pool_info.max_allocation"
+              show-input
+              :disabled="this.iboData.purchasedCurrencyOf > 0"
           >
           </el-slider>
           <p class="ibo_item_value slider_content">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
             <span class="value"
-              >{{ available }} {{ iboData.currency.symbol }}</span
+            >{{ available }} {{ iboData.currency.symbol }}</span
             >
           </p>
           <p class="min_max_value">
             <span
-              >{{ $t("IBO.IBO_text12")
+            >{{
+                $t("IBO.IBO_text12")
               }}{{ iboData.pool_info.min_allocation }}</span
             >
             <span
-              >{{ $t("IBO.IBO_text13")
+            >{{
+                $t("IBO.IBO_text13")
               }}{{ iboData.pool_info.max_allocation }}</span
             >
           </p>
         </div>
         <a
-          class="ibo_item_btn"
-          :class="
+            class="ibo_item_btn"
+            :class="
             iboData.status !== 1 ||
             parseInt(iboData.pool_info.curUserCount) >=
               parseInt(iboData.pool_info.maxAccount)
               ? 'disabled'
               : ''
           "
-          v-if="iboData.currency.allowance === '0'"
-          :style="{
+            v-if="iboData.currency.allowance === '0'"
+            :style="{
             background: $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
             color: $store.state.themes === 'dark' ? '#000000' : '#ffffff',
           }"
-          @click="onApprove"
+            @click="onApprove"
         >
           <i class="el-icon-loading" v-if="approvalLoading"></i>
           {{
             $t(
-              parseInt(iboData.pool_info.curUserCount) >=
+                parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
-                ? "IBO.IBO_text34"
-                : "IBO.Approve"
+                    ? "IBO.IBO_text34"
+                    : "IBO.Approve"
             )
           }}
         </a>
         <a
-          :class="
+            :class="
             !(
               iboData.status === 1 &&
               $store.state.userInfo.status === 1 &&
@@ -135,20 +138,20 @@
               ? 'disabled ibo_item_btn'
               : 'ibo_item_btn'
           "
-          :style="{
+            :style="{
             background: $store.state.themes === 'dark' ? '#ffffff' : '#17173A',
             color: $store.state.themes === 'dark' ? '#000000' : '#ffffff',
           }"
-          @click="onBurn"
-          v-else
+            @click="onBurn"
+            v-else
         >
           <i class="el-icon-loading" v-if="burnLoading"></i>
           {{
             $t(
-              parseInt(iboData.pool_info.curUserCount) >=
+                parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
-                ? "IBO.IBO_text34"
-                : "Table.Burn"
+                    ? "IBO.IBO_text34"
+                    : "Table.Burn"
             )
           }}
         </a>
@@ -178,8 +181,8 @@
 
       <p class="ibo_item_value">
         <span class="ibo_item_value_title">{{
-          $t("IBO.IBO_text14", { icon: iboData.currency.symbol })
-        }}</span>
+            $t("IBO.IBO_text14", {icon: iboData.currency.symbol})
+          }}</span>
         <span class="value">{{ purchasedCurrencyOf }}</span>
       </p>
       <p class="ibo_item_value">
@@ -198,8 +201,8 @@
       <div v-if="claimFlag">
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{
-            $t("IBO.IBO_text18", { icon: iboData.currency.symbol })
-          }}</span>
+              $t("IBO.IBO_text18", {icon: iboData.currency.symbol})
+            }}</span>
           <span class="value">{{ notUsed }}</span>
         </p>
         <p class="ibo_item_value">
@@ -207,19 +210,19 @@
           <span class="value">{{ volume }}</span>
         </p>
         <a
-          :class="
-            !(iboData.status === 2 && $store.state.userInfo.status === 1)
-              ? 'disabled ibo_item_btn ibo_item_claim'
-              : 'ibo_item_btn ibo_item_claim'
+            :class="
+           this.activeClaim()
+              ? 'ibo_item_btn ibo_item_claim'
+              : 'ibo_item_btn ibo_item_claim disabled'
           "
-          :style="{
+            :style="{
             color:
               $store.state.themes === 'dark' &&
-              !(iboData.status === 2 && $store.state.userInfo.status === 1)
+              !(this.activeClaim())
                 ? '#000000'
                 : '#ffffff',
           }"
-          @click="onClaim"
+            @click="onClaim"
         >
           <i class="el-icon-loading" v-if="claimLoading"></i>
           {{ $t("Table.Claim") }}
@@ -227,13 +230,38 @@
         <p class="ibo_item_value" v-if="iboData.claimTimeTipI18n">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span>
         </p>
+        <template v-if="iboData.airdrop">
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text48") }}</span>
+            <span class="value">{{ iboData.airdrop.allowList }}</span>
+          </p>
+          <a
+              :class=" activeAirdrop()? 'ibo_item_btn ibo_item_claim'
+              : 'ibo_item_btn ibo_item_claim disabled'
+          "
+              :style="{
+            color:
+              $store.state.themes === 'dark' &&
+              !(activeAirdrop())
+                ? '#000000'
+                : '#ffffff',
+          }"
+              @click="onAirdrop"
+          >
+            <i class="el-icon-loading" v-if="airdropLoading"></i>
+            {{ $t("Table.Claim") }}
+          </a>
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text49", {token: iboData.name}) }}</span>
+          </p>
+        </template>
       </div>
     </div>
     <Dialog
-      title="Tip"
-      :visible="showTip"
-      :before-close="() => (showTip = false)"
-      width="200"
+        title="Tip"
+        :visible="showTip"
+        :before-close="() => (showTip = false)"
+        width="200"
     >
       <div v-if="iboData.name === 'GAME1'" class="tip_box">
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_august") }}</p>
@@ -241,9 +269,9 @@
         <p>
           SC: 0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb
           <i
-            class="copy"
-            id="copy_default"
-            @click="
+              class="copy"
+              id="copy_default"
+              @click="
               copyAdress($event, '0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb')
             "
           ></i>
@@ -251,13 +279,13 @@
         <p>
           TG:
           <a href="T.me/game1networkchat" target="_blank"
-            >T.me/game1networkchat</a
+          >T.me/game1networkchat</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://game1network.com" target="_blank"
-            >https://game1network.com</a
+          >https://game1network.com</a
           >
         </p>
       </div>
@@ -267,9 +295,9 @@
         <p>
           SC: 0xc9354034968f79f181b76a2f8a015fcdbaed2692
           <i
-            class="copy"
-            id="copy_default"
-            @click="
+              class="copy"
+              id="copy_default"
+              @click="
               copyAdress($event, '0xc9354034968f79f181b76a2f8a015fcdbaed2692')
             "
           ></i>
@@ -277,19 +305,19 @@
         <p>
           TG(EN):
           <a href="https://t.me/UFOMO_EN" target="_blank"
-            >https://t.me/UFOMO_EN</a
+          >https://t.me/UFOMO_EN</a
           >
         </p>
         <p>
           TG(CN):
           <a href="https://t.me/UFOMO_cn" target="_blank"
-            >https://t.me/UFOMO_cn</a
+          >https://t.me/UFOMO_cn</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://crazyufo.vip/#/fomoGame" target="_blank"
-            >https://crazyufo.vip/#/fomoGame</a
+          >https://crazyufo.vip/#/fomoGame</a
           >
         </p>
       </div>
@@ -374,7 +402,6 @@
           >
         </p>
       </div>
-
       <div v-else-if="iboData.name === 'PRED'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text42") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
@@ -402,7 +429,6 @@
           >
         </p>
       </div>
-
       <div v-else-if="iboData.name === 'PRB'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
@@ -431,7 +457,7 @@
         </p>
       </div>
       <div v-else-if="iboData.name === 'MONI'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text46") }}</p>
+        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text47") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text44") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
         <p>
@@ -466,17 +492,18 @@
 import {
   formatAmount,
   fromWei,
-  getPoolInfo,
+  getPoolInfo, onAirdrop_,
   onApprove_,
   onBurn_,
   onClaim_,
 } from "../../interface/ibo";
 import BigNumber from "bignumber.js";
-import { Dialog, Input, MessageBox } from "element-ui";
+import {Dialog, Input, MessageBox} from "element-ui";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+
 export default {
-  components: { Dialog, Input },
+  components: {Dialog, Input},
   props: {
     pool: {
       type: Object,
@@ -500,6 +527,7 @@ export default {
       burnLoading: false,
       initLoading: false,
       initTimer: null,
+      airdropLoading: false
     };
   },
   computed: {
@@ -520,9 +548,9 @@ export default {
         return "-";
       }
       return fromWei(this.iboData.settleable.rate)
-        .multipliedBy(new BigNumber(100))
-        .toFixed(2, 1)
-        .toString();
+          .multipliedBy(new BigNumber(100))
+          .toFixed(2, 1)
+          .toString();
     },
     // 预计获得
     rateValue: function () {
@@ -530,16 +558,16 @@ export default {
         return "-";
       }
       return formatAmount(
-        this.iboData.settleable.volume,
-        this.iboData.underlying.decimal
+          this.iboData.settleable.volume,
+          this.iboData.underlying.decimal
       );
     },
     // 可领取
     volume: function () {
       if (this.iboData.settleable) {
         return formatAmount(
-          this.iboData.settleable.volume,
-          this.iboData.underlying.decimal
+            this.iboData.settleable.volume,
+            this.iboData.underlying.decimal
         );
       }
       return 0;
@@ -551,7 +579,7 @@ export default {
           return 0;
         }
         return new BigNumber(fromWei(this.iboData.settleable.amount)).toFormat(
-          6
+            6
         );
       }
       return 0;
@@ -581,7 +609,7 @@ export default {
   methods: {
     copyAdress(e, text) {
       let _this = this;
-      let copys = new ClipboardJS(".copy", { text: () => text });
+      let copys = new ClipboardJS(".copy", {text: () => text});
       copys.on("success", function (e) {
         Message({
           message: "Successfully copied",
@@ -599,12 +627,12 @@ export default {
     getAvailable() {
       // 我的质押
       const purchasedCurrencyOf =
-        fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
+          fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
       // 我的余额
       const balanceOf = this.iboData.balanceOf || 0;
       // 我的剩余额度 balanceOf
       const remainingLimit =
-        this.iboData.pool_info.max_allocation - purchasedCurrencyOf;
+          this.iboData.pool_info.max_allocation - purchasedCurrencyOf;
       return Math.min(remainingLimit, balanceOf);
     },
     getCountdownData() {
@@ -626,8 +654,8 @@ export default {
         case 1:
           // 倒计时结束
           if (
-            this.iboData.timeClose === 0 ||
-            this.iboData.timeClose > thisTime
+              this.iboData.timeClose === 0 ||
+              this.iboData.timeClose > thisTime
           ) {
             t = this.iboData.timeClose - thisTime;
             statusTxt = "IBO.IBO_text4";
@@ -665,7 +693,7 @@ export default {
       getPoolInfo(this.pool).then((newPool) => {
         this.iboData = newPool;
         const purchasedCurrencyOf =
-          fromWei(newPool.purchasedCurrencyOf).toFixed(6, 1) * 1;
+            fromWei(newPool.purchasedCurrencyOf).toFixed(6, 1) * 1;
         if (purchasedCurrencyOf > 0) {
           this.amount = purchasedCurrencyOf;
         }
@@ -678,82 +706,103 @@ export default {
     },
     onApprove() {
       if (
-        this.$store.state.userInfo.status !== 1 ||
-        this.iboData.status !== 1 ||
-        this.approvalLoading ||
-        parseInt(this.iboData.pool_info.curUserCount) >=
+          this.$store.state.userInfo.status !== 1 ||
+          this.iboData.status !== 1 ||
+          this.approvalLoading ||
+          parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount)
       ) {
         return;
       }
       this.approvalLoading = true;
       onApprove_(
-        this.iboData.currency.address,
-        this.iboData.address,
-        (success) => {
-          success && this.init();
-          this.approvalLoading = false;
-        }
+          this.iboData.currency.address,
+          this.iboData.address,
+          (success) => {
+            success && this.init();
+            this.approvalLoading = false;
+          }
       );
     },
     onBurn() {
       if (
-        !this.amount ||
-        isNaN(Number(this.amount)) ||
-        parseInt(this.iboData.pool_info.curUserCount) >=
+          !this.amount ||
+          isNaN(Number(this.amount)) ||
+          parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount) ||
-        this.iboData.purchasedCurrencyOf > 0
+          this.iboData.purchasedCurrencyOf > 0
           || this.now > parseInt(this.iboData.timeClose)
       ) {
         return;
       }
       if (
-        this.iboData.status === 1 &&
-        this.$store.state.userInfo.status === 1 &&
-        !this.burnLoading
+          this.iboData.status === 1 &&
+          this.$store.state.userInfo.status === 1 &&
+          !this.burnLoading
       ) {
         MessageBox.confirm(
-          this.$t("IBO.IBO_text27"),
-          this.$t("IBO.IBO_text33"),
-          {
-            confirmButtonText: this.$t("IBO.IBO_text31"),
-            cancelButtonText: this.$t("IBO.IBO_text32"),
-            showCancelButton: true,
-            customClass: "confirm-tip",
-          }
+            this.$t("IBO.IBO_text27"),
+            this.$t("IBO.IBO_text33"),
+            {
+              confirmButtonText: this.$t("IBO.IBO_text31"),
+              cancelButtonText: this.$t("IBO.IBO_text32"),
+              showCancelButton: true,
+              customClass: "confirm-tip",
+            }
         )
-          .then(() => {
-            this.burnLoading = true;
-            onBurn_(
-              this.amount,
-              this.iboData,
-              (success) => {
-                success && this.init();
-                this.burnLoading = false;
-              }
-            );
-          })
-          .catch(() => {});
+            .then(() => {
+              this.burnLoading = true;
+              onBurn_(
+                  this.amount,
+                  this.iboData,
+                  (success) => {
+                    success && this.init();
+                    this.burnLoading = false;
+                  }
+              );
+            })
+            .catch(() => {
+            });
       }
+    },
+    activeClaim() {
+      return this.iboData.status === 2 &&
+          this.$store.state.userInfo.status === 1 &&
+          this.iboData.settleable.volume > 0
     },
     onClaim() {
       if (
-        this.iboData.status === 2 &&
-        this.$store.state.userInfo.status === 1 &&
-        !this.claimLoading &&
-        this.iboData.settleable.volume > 0
+          this.claimLoading || !(this.activeClaim())
       ) {
-        this.claimLoading = true;
-        onClaim_(this.iboData.address, this.iboData.abi, (success) => {
-          success && this.init();
-          this.claimLoading = false;
-        });
+        return
       }
+      this.claimLoading = true;
+      onClaim_(this.iboData.address, this.iboData.abi, (success) => {
+        success && this.init();
+        this.claimLoading = false;
+      });
+    },
+
+    // 展示空投
+    activeAirdrop: function () {
+      // 到了时间 && !withdrawList没领取 && allowList可领取 > 0
+      return this.now > this.iboData.airdrop.begin && !this.iboData.airdrop.withdrawList && this.iboData.airdrop.allowList > 0 && this.$store.state.userInfo.status === 1
+    },
+    // 第二次claim 空投
+    onAirdrop() {
+      if (this.airdropLoading || !this.activeAirdrop()) {
+        return
+      }
+      this.airdropLoading = true
+      onAirdrop_(this.iboData.airdrop.address, this.iboData.airdrop.abi, (success) => {
+        success && this.init();
+        this.airdropLoading = false;
+      })
     },
     onMax() {
       const available = this.getAvailable();
       if (
-        this.iboData.pool_info.min_allocation <= available
+          this.iboData.pool_info.min_allocation <= available
       ) {
         this.amount = Math.min(this.iboData.pool_info.max_allocation, available);
       }
@@ -765,9 +814,11 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/base.scss";
-.claim-time-tip{
+
+.claim-time-tip {
 
 }
+
 .copy {
   display: inline-block;
   width: 12px;
@@ -778,36 +829,43 @@ export default {
   cursor: pointer;
   flex-shrink: 0;
 }
+
 .tip_box {
   transform: translateY(-10px);
+
   p {
     font-size: 16px;
     line-height: 30px;
   }
 }
+
 .ibo_item_warp {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .el-slider__button-wrapper {
   z-index: 99;
 }
 
 .ibo_item_btn {
   background: #17173a;
+
   &.disabled {
     cursor: default;
     background: #cccccc !important;
   }
 }
+
 .ibo_item_claim {
   &.disabled {
     cursor: default;
     background: #cccccc !important;
   }
 }
+
 .input-max-btn {
   position: absolute;
   left: 0;
@@ -819,13 +877,16 @@ export default {
   cursor: pointer;
   border-radius: 4px;
 }
+
 .confirm-tip {
   max-width: 95vw;
+
   .el-button--primary {
     background: #17173a;
     border-color: #17173a;
   }
 }
+
 .slider-max {
   position: absolute;
   right: 5px;
@@ -842,18 +903,21 @@ export default {
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
+
   &:hover {
     background: #fffaf3;
     border: 1px solid #fd7e14;
     color: #fd7e14;
   }
 }
+
 .ibo_item.active {
   @include themeify {
     border-color: themed("color-fd7e14");
     box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
   }
 }
+
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;
@@ -871,6 +935,7 @@ export default {
     width: 20%;
   }
 }
+
 @media screen and (min-width: 750px) {
   .ibo_item {
     padding: 20px;
@@ -1055,6 +1120,7 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
+
       &.disabled {
         cursor: default;
 
@@ -1064,6 +1130,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1073,6 +1140,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("black_button_hover");
@@ -1093,6 +1161,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1364,6 +1433,7 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
+
       &.disabled {
         cursor: default;
 
@@ -1373,6 +1443,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1382,6 +1453,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("ibo_btn_hover");
@@ -1393,6 +1465,7 @@ export default {
       @include themeify {
         background: themed("color-fd7e14");
       }
+
       &.disabled {
         cursor: default;
         @include themeify {
@@ -1401,6 +1474,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1410,6 +1484,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("color-fd7e14");

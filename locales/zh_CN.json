@@ -401,6 +401,8 @@
     "IBO_text44": "9.16 19:00 UTC+8",
     "IBO_text45": "结算50%时间",
     "IBO_text46": "9.17 02:05 UTC+8",
-    "IBO_text47": "10.17 02:05 UTC+8"
+    "IBO_text47": "10.17 02:05 UTC+8",
+    "IBO_text48": "1个月代币锁定",
+    "IBO_text49": "请注意，1个月的代币锁定，{token} IBO风险具有不确定性，Helmet.insure将不对任何投资损失负责。"
   }
 }

@@ -224,22 +224,17 @@ export default {
           const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
           const {
             CollateralAddress,
-            StrikePriceDecimals,
+            CollateralDecimals,
             UnderlyingAddress,
             UnderlyingDecimals,
           } = Item.Call;
-          let Amount = toWei("1", StrikePriceDecimals);
+          let Amount = toWei("1", CollateralDecimals);
           let Data = await getTokenPrice({
             fromTokenAddress: CollateralAddress,
             toTokenAddress: UnderlyingAddress,
             amount: Amount,
           });
           let Data1 = await getTokenPrice({
-            fromTokenAddress: CollateralAddress,
-            toTokenAddress: BUSD,
-            amount: Amount,
-          });
-          let Data2 = await getTokenPrice({
             fromTokenAddress: CollateralAddress,
             toTokenAddress: BUSD,
             amount: Amount,

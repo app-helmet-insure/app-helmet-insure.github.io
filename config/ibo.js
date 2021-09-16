@@ -1,11 +1,65 @@
 
 import starterLimitAbi from '~/web3/abis/IBO_StarterLimit.json'
+import AirAllowListAbi from '~/web3/abis/AirAllowList.json'
+import IBOTest from '~/web3/abis/ibo_test.json'
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
 
 const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const iboPools = [
+  {
+    name: 'MONI',
+    address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
+    abi: starterLimitAbi,
+    start_at: '1631790000',
+    is_coming: false, // is_coming 为 true 则不请求合约
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'MONI.png',
+    underlying: {
+      address: '0x9573c88aE3e37508f87649f87c4dd5373C9F31e0',
+      decimal: 18,
+      symbol: 'MONI',
+      name: 'MONI',
+    },
+    amount: '200000', // token 总额
+    pool_info: {
+      min_allocation: 400,
+      max_allocation: 1000,
+      min_swap_level: '400 Helmet',
+      maxAccount: 600,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 1.35 MONI',
+    time: '1631815380',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '259259259259259259175000',//总释放
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '', // 完成时间
+    winningRate: '-', // 申请中签率
+    committed: '', // 超募比例
+    total: '', // 参与资金规模
+    poolType: 0, // 值为 1 代表定向
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text46',
+    light: true,
+    airdrop: { // 空投
+      begin: '1634407500',
+      address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
+      abi: AirAllowListAbi,
+      amount: '175000', // 空投总额
+      withdrawList: true,//是否已领取
+      allowList: 0//可以领取的量
+    }
+  },
+
   {
     name: 'PRB',
     address: '0xE057daBC7630326819390e5D97B69633921cda65',
@@ -92,8 +146,6 @@ export const iboPools = [
     claimTimeTipI18n: 'IBO.IBO_text42',
     light: true
   },
-
-
   {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',

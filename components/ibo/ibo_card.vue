@@ -131,7 +131,9 @@
               $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
-            ) || iboData.purchasedCurrencyOf > 0 || now > parseInt(iboData.timeClose)
+            ) ||
+            iboData.purchasedCurrencyOf > 0 ||
+            now > parseInt(iboData.timeClose)
               ? 'disabled ibo_item_btn'
               : 'ibo_item_btn'
           "
@@ -208,14 +210,13 @@
         </p>
         <a
           :class="
-            !(iboData.status === 2 && $store.state.userInfo.status === 1)
-              ? 'disabled ibo_item_btn ibo_item_claim'
-              : 'ibo_item_btn ibo_item_claim'
+            this.activeClaim()
+              ? 'ibo_item_btn ibo_item_claim'
+              : 'ibo_item_btn ibo_item_claim disabled'
           "
           :style="{
             color:
-              $store.state.themes === 'dark' &&
-              !(iboData.status === 2 && $store.state.userInfo.status === 1)
+              $store.state.themes === 'dark' && !this.activeClaim()
                 ? '#000000'
                 : '#ffffff',
           }"
@@ -225,8 +226,38 @@
           {{ $t("Table.Claim") }}
         </a>
         <p class="ibo_item_value" v-if="iboData.claimTimeTipI18n">
-          <span class="ibo_item_value_title">{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span>
+          <span class="ibo_item_value_title"
+            >{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span
+          >
         </p>
+        <template v-if="iboData.airdrop">
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_text48") }}</span>
+            <span class="value">{{ iboData.airdrop.allowList }}</span>
+          </p>
+          <a
+            :class="
+              activeAirdrop()
+                ? 'ibo_item_btn ibo_item_claim'
+                : 'ibo_item_btn ibo_item_claim disabled'
+            "
+            :style="{
+              color:
+                $store.state.themes === 'dark' && !activeAirdrop()
+                  ? '#000000'
+                  : '#ffffff',
+            }"
+            @click="onAirdrop"
+          >
+            <i class="el-icon-loading" v-if="airdropLoading"></i>
+            {{ $t("Table.Claim") }}
+          </a>
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{
+              $t("IBO.IBO_text49", { token: iboData.name })
+            }}</span>
+          </p>
+        </template>
       </div>
     </div>
     <Dialog
@@ -300,9 +331,9 @@
         <p>
           SC: 0x3a05e86c25366031d92e013cac77ff6c261cb09b
           <i
-              class="copy"
-              id="copy_default"
-              @click="
+            class="copy"
+            id="copy_default"
+            @click="
               copyAdress($event, '0x3a05e86c25366031d92e013cac77ff6c261cb09b')
             "
           ></i>
@@ -310,13 +341,13 @@
         <p>
           TG:
           <a href="https://t.me/Axieninjaofficial" target="_blank"
-          >https://t.me/Axieninjaofficial</a
+            >https://t.me/Axieninjaofficial</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://www.axieninja.app/" target="_blank"
-          >https://www.axieninja.app/</a
+            >https://www.axieninja.app/</a
           >
         </p>
       </div>
@@ -327,23 +358,21 @@
         <p>
           SC: {{ iboData.underlying.address }}
           <i
-              class="copy"
-              id="copy_default"
-              @click="
-              copyAdress($event, iboData.underlying.address)
-            "
+            class="copy"
+            id="copy_default"
+            @click="copyAdress($event, iboData.underlying.address)"
           ></i>
         </p>
         <p>
           TG:
           <a href="https://t.me/DimensionCommChinese" target="_blank"
-          >https://t.me/DimensionCommChinese</a
+            >https://t.me/DimensionCommChinese</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://dimension.best" target="_blank"
-          >https://dimension.best</a
+            >https://dimension.best</a
           >
         </p>
       </div>
@@ -354,27 +383,24 @@
         <p>
           SC: {{ iboData.underlying.address }}
           <i
-              class="copy"
-              id="copy_default"
-              @click="
-              copyAdress($event, iboData.underlying.address)
-            "
+            class="copy"
+            id="copy_default"
+            @click="copyAdress($event, iboData.underlying.address)"
           ></i>
         </p>
         <p>
           TG:
           <a href="https://t.me/rhinobsc" target="_blank"
-          >https://t.me/rhinobsc</a
+            >https://t.me/rhinobsc</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://rhinobsc.com" target="_blank"
-          >https://rhinobsc.com</a
+            >https://rhinobsc.com</a
           >
         </p>
       </div>
-
       <div v-else-if="iboData.name === 'PRED'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text42") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
@@ -382,27 +408,24 @@
         <p>
           SC: {{ iboData.underlying.address }}
           <i
-              class="copy"
-              id="copy_default"
-              @click="
-              copyAdress($event, iboData.underlying.address)
-            "
+            class="copy"
+            id="copy_default"
+            @click="copyAdress($event, iboData.underlying.address)"
           ></i>
         </p>
         <p>
           TG:
           <a href="https://t.me/Predictcoin" target="_blank"
-          >https://t.me/Predictcoin</a
+            >https://t.me/Predictcoin</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://predictcoin.finance" target="_blank"
-          >https://predictcoin.finance</a
+            >https://predictcoin.finance</a
           >
         </p>
       </div>
-
       <div v-else-if="iboData.name === 'PRB'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
@@ -410,27 +433,49 @@
         <p>
           SC: {{ iboData.underlying.address }}
           <i
-              class="copy"
-              id="copy_default"
-              @click="
-              copyAdress($event, iboData.underlying.address)
-            "
+            class="copy"
+            id="copy_default"
+            @click="copyAdress($event, iboData.underlying.address)"
           ></i>
         </p>
         <p>
           TG:
           <a href="https://t.me/premiumblock" target="_blank"
-          >https://t.me/premiumblock</a
+            >https://t.me/premiumblock</a
           >
         </p>
         <p>
           {{ $t("IBO.IBO_text30") }}:
           <a href="https://www.premiumblock.org" target="_blank"
-          >https://www.premiumblock.org</a
+            >https://www.premiumblock.org</a
           >
         </p>
       </div>
-
+      <div v-else-if="iboData.name === 'MONI'" class="tip_box">
+        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text46") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text46") }}</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
+        <p>
+          SC: {{ iboData.underlying.address }}
+          <i
+            class="copy"
+            id="copy_default"
+            @click="copyAdress($event, iboData.underlying.address)"
+          ></i>
+        </p>
+        <p>
+          TG:
+          <a href="https://t.me/monstainfinite" target="_blank"
+            >https://t.me/monstainfinite</a
+          >
+        </p>
+        <p>
+          {{ $t("IBO.IBO_text30") }}:
+          <a href="https://monstainfinite.com" target="_blank"
+            >https://monstainfinite.com</a
+          >
+        </p>
+      </div>
     </Dialog>
   </div>
 </template>
@@ -440,6 +485,7 @@ import {
   formatAmount,
   fromWei,
   getPoolInfo,
+  onAirdrop_,
   onApprove_,
   onBurn_,
   onClaim_,
@@ -448,6 +494,7 @@ import BigNumber from "bignumber.js";
 import { Dialog, Input, MessageBox } from "element-ui";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+
 export default {
   components: { Dialog, Input },
   props: {
@@ -473,6 +520,7 @@ export default {
       burnLoading: false,
       initLoading: false,
       initTimer: null,
+      airdropLoading: false,
     };
   },
   computed: {
@@ -587,7 +635,7 @@ export default {
       //     "IBO_text6": "结算中",
       //     "IBO_text7": "已完成",
       const thisTime = parseInt(new Date().getTime() / 1000);
-      this.now = thisTime
+      this.now = thisTime;
       let t = 0;
       // 倒计时开始
       let statusTxt = "IBO.IBO_text3";
@@ -675,8 +723,8 @@ export default {
         isNaN(Number(this.amount)) ||
         parseInt(this.iboData.pool_info.curUserCount) >=
           parseInt(this.iboData.pool_info.maxAccount) ||
-        this.iboData.purchasedCurrencyOf > 0
-          || this.now > parseInt(this.iboData.timeClose)
+        this.iboData.purchasedCurrencyOf > 0 ||
+        this.now > parseInt(this.iboData.timeClose)
       ) {
         return;
       }
@@ -697,38 +745,64 @@ export default {
         )
           .then(() => {
             this.burnLoading = true;
-            onBurn_(
-              this.amount,
-              this.iboData,
-              (success) => {
-                success && this.init();
-                this.burnLoading = false;
-              }
-            );
+            onBurn_(this.amount, this.iboData, (success) => {
+              success && this.init();
+              this.burnLoading = false;
+            });
           })
           .catch(() => {});
       }
     },
-    onClaim() {
-      if (
+    activeClaim() {
+      return (
         this.iboData.status === 2 &&
         this.$store.state.userInfo.status === 1 &&
-        !this.claimLoading &&
         this.iboData.settleable.volume > 0
-      ) {
-        this.claimLoading = true;
-        onClaim_(this.iboData.address, this.iboData.abi, (success) => {
-          success && this.init();
-          this.claimLoading = false;
-        });
+      );
+    },
+    onClaim() {
+      if (this.claimLoading || !this.activeClaim()) {
+        return;
       }
+      this.claimLoading = true;
+      onClaim_(this.iboData.address, this.iboData.abi, (success) => {
+        success && this.init();
+        this.claimLoading = false;
+      });
+    },
+
+    // 展示空投
+    activeAirdrop: function () {
+      // 到了时间 && !withdrawList没领取 && allowList可领取 > 0
+      return (
+        this.now > this.iboData.airdrop.begin &&
+        !this.iboData.airdrop.withdrawList &&
+        this.iboData.airdrop.allowList > 0 &&
+        this.$store.state.userInfo.status === 1
+      );
+    },
+    // 第二次claim 空投
+    onAirdrop() {
+      if (this.airdropLoading || !this.activeAirdrop()) {
+        return;
+      }
+      this.airdropLoading = true;
+      onAirdrop_(
+        this.iboData.airdrop.address,
+        this.iboData.airdrop.abi,
+        (success) => {
+          success && this.init();
+          this.airdropLoading = false;
+        }
+      );
     },
     onMax() {
       const available = this.getAvailable();
-      if (
-        this.iboData.pool_info.min_allocation <= available
-      ) {
-        this.amount = Math.min(this.iboData.pool_info.max_allocation, available);
+      if (this.iboData.pool_info.min_allocation <= available) {
+        this.amount = Math.min(
+          this.iboData.pool_info.max_allocation,
+          available
+        );
       }
     },
   },
@@ -738,9 +812,10 @@ export default {
 <style lang='scss'>
 @import "~/assets/css/reset-element.scss";
 @import "~/assets/css/themes.scss";
-.claim-time-tip{
 
+.claim-time-tip {
 }
+
 .copy {
   display: inline-block;
   width: 12px;
@@ -751,36 +826,43 @@ export default {
   cursor: pointer;
   flex-shrink: 0;
 }
+
 .tip_box {
   transform: translateY(-10px);
+
   p {
     font-size: 16px;
     line-height: 30px;
   }
 }
+
 .ibo_item_warp {
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
 }
+
 .el-slider__button-wrapper {
   z-index: 99;
 }
 
 .ibo_item_btn {
   background: #17173a;
+
   &.disabled {
     cursor: default;
     background: #cccccc !important;
   }
 }
+
 .ibo_item_claim {
   &.disabled {
     cursor: default;
     background: #cccccc !important;
   }
 }
+
 .input-max-btn {
   position: absolute;
   left: 0;
@@ -792,13 +874,16 @@ export default {
   cursor: pointer;
   border-radius: 4px;
 }
+
 .confirm-tip {
   max-width: 95vw;
+
   .el-button--primary {
     background: #17173a;
     border-color: #17173a;
   }
 }
+
 .slider-max {
   position: absolute;
   right: 5px;
@@ -815,18 +900,21 @@ export default {
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
+
   &:hover {
     background: #fffaf3;
     border: 1px solid #fd7e14;
     color: #fd7e14;
   }
 }
+
 .ibo_item.active {
   @include themeify {
     border-color: themed("color-fd7e14");
     box-shadow: 0px 0px 4px 0px themed("color-fd7e14");
   }
 }
+
 @media screen and (min-width: 750px) and (max-width: 1860px) {
   .ibo_item_warp {
     width: 33.3%;
@@ -844,6 +932,7 @@ export default {
     width: 20%;
   }
 }
+
 @media screen and (min-width: 750px) {
   .ibo_item {
     padding: 20px;
@@ -1028,6 +1117,7 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
+
       &.disabled {
         cursor: default;
 
@@ -1037,6 +1127,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1046,6 +1137,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("black_button_hover");
@@ -1066,6 +1158,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1337,6 +1430,7 @@ export default {
         background: themed("ibo_btn");
       }
       border-radius: 5px;
+
       &.disabled {
         cursor: default;
 
@@ -1346,6 +1440,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1355,6 +1450,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("ibo_btn_hover");
@@ -1366,6 +1462,7 @@ export default {
       @include themeify {
         background: themed("color-fd7e14");
       }
+
       &.disabled {
         cursor: default;
         @include themeify {
@@ -1374,6 +1471,7 @@ export default {
         @include themeify {
           color: themed("ibo_disable_text");
         }
+
         &:hover {
           @include themeify {
             background: themed("ibo_disable");
@@ -1383,6 +1481,7 @@ export default {
           }
         }
       }
+
       &:hover {
         @include themeify {
           background: themed("color-fd7e14");

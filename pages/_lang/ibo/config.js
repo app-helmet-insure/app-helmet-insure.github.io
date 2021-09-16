@@ -36,7 +36,7 @@ export const iboPools = [
     progress: 0,
     status: 0,
     ratio: '1 HELMET = 1.35 MONI',
-    time: '1634407500',
+    time: '1631815380',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '259259259259259259175000',//总释放
     totalPurchasedUnderlying: '0',
@@ -48,7 +48,7 @@ export const iboPools = [
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
     networkId: 56,
-    claimTimeTipI18n: 'IBO.IBO_text47',
+    claimTimeTipI18n: 'IBO.IBO_text46',
     light: true,
     airdrop: { // 空投
       begin: '1634407500',

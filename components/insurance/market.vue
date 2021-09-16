@@ -374,7 +374,7 @@ export default {
         const AskID = data.askID;
         let Volume;
         if (data.type === "Put") {
-          if (data.buy_volume >= data.show_volume) {
+          if (Number(data.buy_volume) >= Number(data.show_volume)) {
             Volume = data.volume;
           } else {
             Volume = toWei(
@@ -385,7 +385,7 @@ export default {
             );
           }
         } else {
-          if (data.buy_volume >= data.show_volume) {
+          if (Number(data.buy_volume) >= Number(data.show_volume)) {
             Volume = data.volume;
           } else {
             Volume = toWei(data.buy_volume, data.collateral_decimals);

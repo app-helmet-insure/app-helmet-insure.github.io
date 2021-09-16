@@ -242,6 +242,7 @@ export default {
                 StrikePrice,
                 CallToken,
                 PutToken,
+                LastPriceDecimals,
               } = CurrentInsurance;
               const ResultItem = {
                 Type,
@@ -249,7 +250,6 @@ export default {
                 ShowExpiry,
                 Long: item.long,
                 Short: item.short,
-                ShowStrikePrice: StrikePrice,
                 StrikePrice: item.strikePrice,
                 CollateralAddress: item.collateral,
                 CollateralSymbol,
@@ -301,6 +301,9 @@ export default {
                 }
                 const AllItem = Object.assign(ResultItemAsk, ResultItem);
                 if (AllItem.Type === "Put") {
+                  AllItem.ShowStrikePrice = Number(
+                    1 / fromWei(ResultItem.StrikePrice, StrikePriceDecimals)
+                  ).toFixed(LastPriceDecimals);
                   AllItem.ShowBeSold = Number(
                     AllItem.ShowBeSold /
                       (1 / fromWei(ResultItem.StrikePrice, StrikePriceDecimals))
@@ -310,6 +313,10 @@ export default {
                       (1 / fromWei(ResultItem.StrikePrice, StrikePriceDecimals))
                   ).toFixed(8);
                 } else {
+                  AllItem.ShowStrikePrice = fromWei(
+                    ResultItem.StrikePrice,
+                    StrikePriceDecimals
+                  );
                   AllItem.ShowBeSold = Number(AllItem.ShowBeSold).toFixed(8);
                   AllItem.ShowUnSold = Number(AllItem.ShowUnSold).toFixed(8);
                 }
@@ -361,7 +368,7 @@ export default {
             getPolicysList();
           }
         })
-        .on("error", (ereor)=>  {
+        .on("error", (ereor) => {
           this.WaitingVisible = false;
         });
     },

@@ -251,10 +251,6 @@ export default {
                 ShowExpiry,
                 Long: item.long,
                 Short: item.short,
-                ShowStrikePrice:
-                  Type === "Call"
-                    ? fromWei(item.strikePrice, StrikePriceDecimals)
-                    : 1 / fromWei(item.strikePrice, StrikePriceDecimals),
                 StrikePrice: item.strikePrice,
                 CollateralAddress: item.collateral,
                 CollateralSymbol,
@@ -265,6 +261,7 @@ export default {
                 CallToken,
                 PutToken,
               };
+
               item.asks.filter((itemAsk) => {
                 const ResultItemAsk = {
                   Binds: itemAsk.binds,
@@ -291,7 +288,8 @@ export default {
               UnderlyingAddress: itemAsks.UnderlyingAddress,
             });
 
-            let { StrikePriceDecimals, CollateralDecimals } = CurrentInsurance;
+            let { StrikePriceDecimals, CollateralDecimals, LastPriceDecimals } =
+              CurrentInsurance;
             if (itemAsks.Binds.length) {
               itemAsks.Binds.forEach((itemBid) => {
                 if (
@@ -315,7 +313,14 @@ export default {
                       ReturnItem.ShowVolume /
                         (1 / fromWei(itemAsks.StrikePrice, StrikePriceDecimals))
                     ).toFixed(8);
+                    ReturnItem.ShowStrikePrice = Number(
+                      1 / fromWei(itemAsks.StrikePrice, StrikePriceDecimals)
+                    ).toFixed(LastPriceDecimals);
                   } else {
+                    ReturnItem.ShowStrikePrice = fromWei(
+                      itemAsks.StrikePrice,
+                      StrikePriceDecimals
+                    );
                     ReturnItem.ShowVolume = Number(
                       ReturnItem.ShowVolume
                     ).toFixed(8);

@@ -26,7 +26,7 @@ export const iboPools = [
       symbol: 'MONI',
       name: 'MONI',
     },
-    amount: '175000', // token 总额
+    amount: '200000', // token 总额
     pool_info: {
       min_allocation: 400,
       max_allocation: 1000,
@@ -35,7 +35,7 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 0.675 MONI',
+    ratio: '1 HELMET = 1.35 MONI',
     time: '1634407500',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '259259259259259259175000',//总释放

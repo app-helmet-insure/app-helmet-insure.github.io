@@ -131,6 +131,9 @@ export const getPoolInfo = (pool) => {
         currency_allowance = resData[11]
         balanceOf = resData[12]
       }
+      if (pool.name === 'MONI') {
+        price = new BigNumber(price).div(2).toString()
+      }
       // time = 1629118800
       //   timeSettle = 1629118800
       // curUserCount=0

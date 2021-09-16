@@ -457,8 +457,8 @@
         </p>
       </div>
       <div v-else-if="iboData.name === 'MONI'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text47") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text47") }}</p>
+        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text46") }}</p>
+        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text46") }}</p>
         <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
         <p>
           SC: {{ iboData.underlying.address }}

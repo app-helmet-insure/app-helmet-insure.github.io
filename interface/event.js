@@ -35,6 +35,7 @@ export const getInsuranceStatus = () => {
     },
   }).then((res) => {
     let Status = res.data.data.indexingStatusForCurrentVersion.health;
+    console.log(res);
     return Status;
   });
 };
@@ -79,7 +80,7 @@ const getGraphList1 = async function() {
 const getGraphList2 = async function() {
   return Axios({
     method: "post",
-    url: "https://graph.helmet.insure/subgraphs/name/helmet/insure",
+    url: "https://graph.helmet.insure/bsc/subgraphs/name/helmet/insure",
     data: {
       query: `{
                 options(first:1000) {

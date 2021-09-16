@@ -4,206 +4,179 @@
       <h3>{{ $t("Type.IssueInsurance") }}</h3>
     </div>
     <!-- pc -->
-    <template v-if="isLogin">
-      <div class="supply_item" v-for="item in showList" :key="item.askID">
-        <section>
+    <Loading v-if="isLoading" />
+    <div
+      class="my_supply_wrap"
+      v-if="!isLoading && PolicyList && PolicyList.length"
+    >
+      <div
+        class="supply_item"
+        v-for="item in PolicyList.slice(MinNumber, MaxNumber)"
+        :key="item.AskID"
+      >
+        <section class="supply_item_id_web WEB">
           <p>
-            <span>{{ $t("Table.ID") }}:{{ item.askID }}</span>
-            <span>{{ item.show_expiry }}</span>
+            <span>{{ $t("Table.ID") }}:{{ item.AskID }}</span>
+            <span>{{ item.ShowExpiry }}</span>
           </p>
-          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
-            {{ item.outPriceUnit }}
+          <span :class="item.Type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.CallToken }} {{ item.Type }} {{ item.ShowStrikePrice }}
+            {{ item.PutToken }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+            <i :class="item.Type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
           </span>
         </section>
-        <section>
+        <section class="supply_item_strikeprice_web WEB">
           <p>
             <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
+            <span>{{ item.ShowStrikePrice }} {{ item.PutToken }}</span>
           </p>
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
+            <span>{{ fixD(item.ShowPrice, 8) }} HELMET</span>
           </p>
         </section>
-        <section>
+        <section class="supply_item_price_web WEB">
           <p>
             <span>{{ $t("Table.Besold") }}:</span>
-            <span>{{ fixD(item.beSold, 8) }} </span>
+            <span>{{ fixD(item.ShowBeSold, 8) }} </span>
           </p>
           <p>
             <span>{{ $t("Table.Unsold") }}: </span>
-            <span>{{
-                item.remain == "0"
-                  ? 0
-                  : fixD(item.unSold, 8),
-            }}</span>
+            <span>{{ fixD(item.ShowUnSold, 8) }}</span>
           </p>
         </section>
-        <section>
+        <section class="supply_item_action_web WEB">
           <button
-            :class="Number(item.remain) - 0 !== 0 && 'active'"
-            :style="Number(item.remain) == '0' ? 'pointer-events: none;' : ''"
+            v-if="item.Status === 'Nomal'"
+            class="nomal"
             @click="handleClickCancel(item)"
           >
-            {{
-              Number(item.remain) == 0
-                ? $t("Insurance.Insurance_text14")
-                : $t("Insurance.Insurance_text15")
-            }}
+            {{ $t("Insurance.Insurance_text15") }}
+          </button>
+          <button v-if="item.Status === 'Sold'" class="sold">
+            {{ $t("Insurance.Insurance_text14") }}
           </button>
           <!-- <button>{{ $t("Table.StakeMining") }}</button> -->
         </section>
-      </div>
-    </template>
-    <!-- pc -->
-    <template>
-      <div
-        class="supply_item_H5"
-        v-for="item in showList"
-        :key="item.askID + '1'"
-      >
-        <section>
+        <!-- =========================================== -->
+        <section class="supply_item_id_h5 H5">
           <p>
-            <span>{{ $t("Table.ID") }}:{{ item.askID }}</span>
-            <span>{{ item.show_expiry }}</span>
+            <span>{{ $t("Table.ID") }}:{{ item.AskID }}</span>
+            <span>{{ item.ShowExpiry }}</span>
           </p>
         </section>
-        <section>
-          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
-            {{ item.outPriceUnit }}
+        <section class="supply_item_type_h5 H5">
+          <span :class="item.Type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.CallToken }} {{ item.Type }} {{ item.ShowStrikePrice }}
+            {{ item.PutToken }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+            <i :class="item.Type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
           </span>
         </section>
-        <section>
+        <section class="supply_item_price_h5 H5">
           <p>
             <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
+            <span>{{ item.ShowStrikePrice }} {{ item.PutToken }}</span>
           </p>
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
+            <span>{{ fixD(item.ShowPrice, 8) }} HELMET</span>
           </p>
         </section>
-        <section>
+        <section class="supply_item_sold_h5 H5">
           <p>
             <span>{{ $t("Table.Besold") }}:</span>
-            <span
-              >{{ item.beSold == 0 ? fixD(0, 8) : fixD(item.beSold, 8) }}
-            </span>
+            <span>{{ fixD(item.ShowBeSold, 8) }} </span>
           </p>
           <p>
             <span>{{ $t("Table.Unsold") }}: </span>
-            <span>{{
-                Number(item.remain) == "0"
-                  ? fixD(0,8)
-                  : fixD(item.unSold, 8),
-            }}</span>
+            <span>{{ fixD(item.ShowUnSold, 8) }}</span>
           </p>
         </section>
-        <section>
+        <section class="supply_item_action_h5 H5">
           <button
-            :class="Number(item.remain) - 0 !== 0 && 'active'"
-            :style="Number(item.remain) == '0' ? 'pointer-events: none;' : ''"
+            v-if="item.Status === 'Nomal'"
+            class="nomal"
             @click="handleClickCancel(item)"
           >
-            {{
-              item.remain == 0
-                ? $t("Insurance.Insurance_text14")
-                : $t("Insurance.Insurance_text15")
-            }}
+            {{ $t("Insurance.Insurance_text15") }}
+          </button>
+          <button v-if="item.Status === 'Sold'" class="sold">
+            {{ $t("Insurance.Insurance_text14") }}
           </button>
         </section>
       </div>
-    </template>
-    <div class="loading" v-if="isLoading && isLogin">
-      <img src="~/assets/img/loading.png" />
-      <div class="shadow"></div>
-      <p>{{ $t("Table.LoadingWallet") }}</p>
     </div>
-    <section
-      class="noData"
-      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+    <NoData v-if="!isLoading && (!PolicyList || !PolicyList.length)" />
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :pager-count="5"
+        :hide-on-single-page="PolicyList.length < PageSize"
+        :total="PolicyList.length"
+        @current-change="changePage"
+      >
+      </el-pagination>
+    </div>
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
     >
-      <div>
-        <img
-          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
-          alt=""
-        />
-        <p>{{ $t("Table.NoData") }}</p>
+      <div class="waiting_content">
+        <p>
+          {{ WaitingText }}
+        </p>
       </div>
-    </section>
-    <section class="pages" v-if="FilterList.length > 5 && isLogin">
-      <Page
-        :total="FilterList.length"
-        :limit="limit"
-        :page="page + 1"
-        @page-change="handleClickChagePage"
-      />
-    </section>
+    </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
-import precision from "~/assets/js/precision.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { getTokenName } from "~/assets/utils/address-pool.js";
-import { onCancel, getBalance, asks, RePrice } from "~/interface/order.js";
-import Page from "~/components/common/page.vue";
+import { fixD } from "~/assets/js/util.js";
 import { getInsuranceList } from "~/interface/event.js";
-import {
-  TokenDecimals,
-  getDecimals,
-  DecimalsFormWei,
-  fromWei,
-  AddressFormWei,
-  getAccounts,
-} from "~/interface/common_contract.js";
-import { Asks } from "~/interface/read_contract.js";
-import { Cancel } from "~/interface/write_contract.js";
+import { getContract } from "../../web3/index.js";
 import moment from "moment";
+import NoData from "./no-data.vue";
+import Loading from "./loading.vue";
+import { fromWei } from "~/web3/index.js";
+import { getCurrentInsurance } from "~/config/insurance.js";
+import OrderABI from "~/web3/abis/OrderABI.json";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
-    Page,
+    WaitingConfirmationDialog,
+    SuccessConfirmationDialog,
+    NoData,
+    Loading,
   },
   data() {
     return {
-      precision,
-      addCommom: addCommom,
-      autoRounding: autoRounding,
-      toRounding: toRounding,
-      showList: [],
-      getTokenName,
       fixD,
-      page: 0,
-      limit: 10,
+      CurrentPage: 1,
+      PageSize: 10,
+      MinNumber: 0,
+      MaxNumber: 10,
       isLoading: true,
       isLogin: false,
-      FilterList: [],
+      SuccessHash: "",
+      WaitingText: "",
+      WaitingVisible: false,
+      SuccessVisible: false,
+      PolicyList: [],
     };
   },
   computed: {
-    myAboutInfoSell() {
-      return this.$store.state.myAboutInfoSell;
-    },
-    myAboutInfoBuy() {
-      return this.$store.state.aboutInfoBuy;
-    },
-    rePriceMap() {
-      return this.$store.state.repriceMap;
-    },
-    strikePriceArray() {
-      return this.$store.state.strikePriceArray;
-    },
     userInfo() {
       return this.$store.state.userInfo;
-    },
-    storeThemes() {
-      return this.$store.state.themes;
     },
   },
   watch: {
@@ -211,249 +184,186 @@ export default {
       handler: "userInfoWatch",
       immediate: true,
     },
-    FilterList: {
-      handler: "fliterListWatch",
-      immediate: true,
-    },
   },
   mounted() {
-    this.getList();
+    this.getPolicysList();
   },
   methods: {
+    waitingClose() {
+      this.WaitingVisible = false;
+    },
+    successClose() {
+      this.SuccessVisible = false;
+    },
+    changePage(value) {
+      this.CurrentPage = value;
+      if (this.CurrentPage <= 1) {
+        this.MinNumber = 0;
+        this.MaxNumber = this.PageSize;
+      } else {
+        this.MinNumber = (value - 1) * this.PageSize;
+        this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
+      }
+    },
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
-    fliterListWatch(newValue) {
-      if (newValue) {
-        let list = newValue;
-        this.showList = list.slice(0, this.limit);
-      }
-    },
-    getList() {
-      this.isLoading = true;
-      getInsuranceList().then(async (res) => {
-        let CurrentAccount = await getAccounts();
-        let ReturnList = res.data.data.options;
-        let FixListPush = [];
-        let FixList = [];
+    getPolicysList() {
+      getInsuranceList().then((res) => {
         let nowDate = parseInt(moment.now() / 1000);
-        ReturnList = ReturnList.filter((item) => {
-          if (
-            item.asks.length > 0 &&
-            item.strikePrice.length > 2 &&
-            Number(item.expiry) + 5814000 > nowDate
-          ) {
-            return item;
-          }
-        });
-        ReturnList.forEach((item) => {
-          // 标的
-          let UnderlyingDecimals = TokenDecimals(item.underlying);
-          let UnderlyingSymbol = getTokenName(item.underlying);
-          // 抵押
-          let CollateralDecimals = TokenDecimals(item.collateral);
-          let CollateralSymbol = getTokenName(item.collateral);
-          // 执行
-          let CallStrikePriceDecimals =
-            18 + UnderlyingDecimals - CollateralDecimals;
-          let PutStrikePriceDecimals = 18;
-          if (UnderlyingSymbol == "WBNB") {
-            item.TypeCoin = CollateralSymbol;
-            item.type = "Call";
-            item.outPriceUnit = "BNB";
-            item.show_strikePrice = DecimalsFormWei(
-              item.strikePrice,
-              CallStrikePriceDecimals
-            );
-          } else {
-            item.TypeCoin = UnderlyingSymbol;
-            item.type = "Put";
-            item.outPriceUnit = "BNB";
-            item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, CallStrikePriceDecimals);
-          }
-          if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
-            item.TypeCoin = CollateralSymbol;
-            item.type = "Call";
-            item.outPriceUnit = "BUSD";
-            item.show_strikePrice = DecimalsFormWei(
-              item.strikePrice,
-              CallStrikePriceDecimals
-            );
-          }
-          if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
-            item.TypeCoin = UnderlyingSymbol;
-            item.type = "Put";
-            item.outPriceUnit = "BUSD";
-            item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, CallStrikePriceDecimals);
-          }
-          item.show_expiry = moment(new Date(item.expiry * 1000)).format(
-            "YYYY/MM/DD HH:mm:ss"
+        if (res && res.data.data.options) {
+          let Account = window.CURRENTADDRESS;
+          const ReturnList = res.data.data.options;
+          const FixListPush = [];
+          const FilterList = ReturnList.filter(
+            (item) => item.expiry * 1 + 5814000 > nowDate
           );
-          let ResultItem = {
-            TypeCoin: item.TypeCoin,
-            expiry: item.expiry,
-            show_expiry: item.show_expiry,
-            id: item.id,
-            long: item.long,
-            outPriceUnit: item.outPriceUnit,
-            show_strikePrice: fixD(
-              item.show_strikePrice,
-              item.TypeCoin == "SHIB" ? 10 : 4
-            ),
-            short: item.short,
-            strikePrice: item.strikePrice,
-            type: item.type,
-            collateral: item.collateral,
-            collateral_symbol: CollateralSymbol,
-            collateral_decimals: CollateralDecimals,
-            underlying: item.underlying,
-            underlying_symbol: UnderlyingSymbol,
-            underlying_decimals: UnderlyingDecimals,
-          };
-          item.asks.filter(async (item) => {
-            item.settleToken_symbol = getTokenName(item.settleToken);
-            item.show_price = fixD(
-              DecimalsFormWei(
-                item.price,
-                ResultItem.type == "Call"
-                  ? CallStrikePriceDecimals
-                  : PutStrikePriceDecimals
-              ),
-              8
-            );
-
-            let AsksInfo = await Asks(item.askID);
-            let Remain = fixD(
-              AddressFormWei(AsksInfo.remain, ResultItem.collateral),
-              8
-            );
-            item.remain = Remain;
-            let Volume = fixD(
-              AddressFormWei(item.volume, ResultItem.collateral),
-              8
-            );
-            if (parseInt(ResultItem.expiry) < nowDate) {
-              item.status = "Expired";
-              item.sort = 2;
-            }
-            if (Number(Remain) == "0") {
-              item.status = "Beborrowed";
-              item.sort = 1;
-            } else {
-              item.status = "Unborrowed";
-              item.sort = 0;
-            }
-            if (ResultItem.type == "Call") {
-              item.show_volume = Volume;
-              item.unSold = Remain;
-              item.beSold = Volume - Remain;
-            } else {
-              item.show_volume = fixD(
-                Volume / this.strikePriceArray[1][ResultItem.underlying_symbol],
-                8
-              );
-              item.unSold =
-                Remain / this.strikePriceArray[1][ResultItem.underlying_symbol];
-              // item.beSold = item.show_volume - Remain;
-              item.beSold = fixD(
-                (Volume - Remain) /
-                  this.strikePriceArray[1][ResultItem.underlying_symbol],
-                8
-              );
-            }
-            if (item.expiry < nowDate) {
-              item.status = "dated";
-            }
-            Object.assign(item, ResultItem);
-            if (item.seller.toLowerCase() == CurrentAccount.toLowerCase()) {
-              FixListPush.push(item);
-              FixListPush = FixListPush.sort(function (a, b) {
-                return b.askID - a.askID;
-              });
-              FixListPush = FixListPush.sort(function (a, b) {
-                return a.sort - b.sort;
+          FilterList.forEach((item) => {
+            const CurrentInsurance = getCurrentInsurance({
+              CollateralAddress: item.collateral,
+              UnderlyingAddress: item.underlying,
+            });
+            if (CurrentInsurance) {
+              let {
+                Type,
+                ShowExpiry,
+                StrikePriceDecimals,
+                CollateralSymbol,
+                CollateralAddress,
+                CollateralDecimals,
+                UnderlyingSymbol,
+                UnderlyingAddress,
+                UnderlyingDecimals,
+                SettleTokenSymbol,
+                SettleTokenDecimals,
+                PolicyPriceDecimals,
+                StrikePrice,
+                CallToken,
+                PutToken,
+              } = CurrentInsurance;
+              const ResultItem = {
+                Type,
+                Expiry: item.expiry,
+                ShowExpiry,
+                Long: item.long,
+                Short: item.short,
+                ShowStrikePrice: StrikePrice,
+                StrikePrice: item.strikePrice,
+                CollateralAddress: item.collateral,
+                CollateralSymbol,
+                CollateralDecimals,
+                UnderlyingAddress: item.underlying,
+                UnderlyingSymbol,
+                UnderlyingDecimals,
+                CallToken,
+                PutToken,
+              };
+              item.asks.filter((itemAsk) => {
+                const ResultItemAsk = {
+                  AskID: itemAsk.askID,
+                  IsCancel: itemAsk.isCancel,
+                  ShowID:
+                    itemAsk.seller.substr(0, 2) +
+                    itemAsk.seller.substr(2, 3) +
+                    "..." +
+                    itemAsk.seller.substr(-4).toUpperCase(),
+                  SettleTokenSymbol,
+                  ShowPrice: fromWei(itemAsk.price, PolicyPriceDecimals),
+                  Price: itemAsk.price,
+                  Volume: itemAsk.volume,
+                  ShowVolume: fromWei(itemAsk.volume, CollateralDecimals),
+                };
+                if (itemAsk.binds.length) {
+                  let number = 0;
+                  if (itemAsk.binds.length > 1) {
+                    itemAsk.binds.forEach(
+                      (itembid) =>
+                        (number += Number(
+                          fromWei(itembid.volume, CollateralDecimals)
+                        ))
+                    );
+                  } else {
+                    number = Number(
+                      fromWei(itemAsk.binds[0].volume, CollateralDecimals)
+                    );
+                  }
+                  ResultItem.ShowBeSold = number;
+                  ResultItem.ShowUnSold =
+                    Number(fromWei(itemAsk.volume, CollateralDecimals)) -
+                    number;
+                } else {
+                  ResultItem.ShowBeSold = 0;
+                  ResultItem.ShowUnSold = Number(
+                    fromWei(itemAsk.volume, CollateralDecimals)
+                  );
+                }
+                const AllItem = Object.assign(ResultItemAsk, ResultItem);
+                if (AllItem.Type === "Put") {
+                  AllItem.ShowBeSold = Number(
+                    AllItem.ShowBeSold /
+                      (1 / fromWei(ResultItem.StrikePrice, StrikePriceDecimals))
+                  ).toFixed(8);
+                  AllItem.ShowUnSold = Number(
+                    AllItem.ShowUnSold /
+                      (1 / fromWei(ResultItem.StrikePrice, StrikePriceDecimals))
+                  ).toFixed(8);
+                } else {
+                  AllItem.ShowBeSold = Number(AllItem.ShowBeSold).toFixed(8);
+                  AllItem.ShowUnSold = Number(AllItem.ShowUnSold).toFixed(8);
+                }
+                AllItem.Status = "Nomal";
+                AllItem.Sort = 1;
+                if (AllItem.isCancel && Number(AllItem.ShowBeSold) === 0) {
+                  AllItem.Status = "Hidden";
+                  AllItem.Sort = 4;
+                }
+                if (AllItem.isCancel && Number(AllItem.ShowBeSold) > 0) {
+                  AllItem.Status = "Cancel";
+                  AllItem.Sort = 2;
+                }
+                if (!AllItem.isCancel && Number(AllItem.ShowUnSold) === 0) {
+                  AllItem.Status = "Sold";
+                  AllItem.Sort = 3;
+                }
+                if (
+                  AllItem.Status !== "Hidden" &&
+                  itemAsk.seller.toUpperCase() === Account.toUpperCase()
+                ) {
+                  FixListPush.push(AllItem);
+                }
               });
             }
           });
-        });
-        FixList = FixListPush;
-        this.FilterList = FixList;
-        this.isLoading = false;
-        return this.FilterList;
+          const FixList = FixListPush.sort((a, b) => a.Sort - b.Sort);
+          this.PolicyList = FixList;
+          this.isLoading = false;
+        }
       });
-    },
-    //获取已出售
-    getBeSold(id) {
-      let list = this.myAboutInfoBuy;
-      if (!list) {
-        return;
-      }
-      let array = list.filter((item) => item.askID === id);
-      let num = 0;
-      let number = 0;
-      let arrayList = JSON.parse(JSON.stringify(array));
-      if (arrayList.length) {
-        arrayList.forEach((item) => {
-          if (!isNaN(item.vol)) {
-            number = Number(item.vol);
-            num = num + number;
-          }
-        });
-        return num;
-      } else {
-        return 0;
-      }
-    },
-    getNewPrice(id, rtArray) {
-      let list = this.rePriceMap;
-      if (!list) {
-        return;
-      }
-      let array = list.filter((item) => item.askID === id)[0];
-      if (array && array.askID) {
-        let arr = this.getNewPrice(array.newAskID, array);
-        return arr;
-      }
-      return rtArray;
     },
     // 撤销
     handleClickCancel(data) {
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "WARNING",
-        layout: "layout1",
-        conText: `Cancel your Policy supplying order.`,
-        activeTip: true,
-        activeTipText1: "Please double check the price above，",
-        activeTipText2: "Helmet team will not cover your loss on this.",
-        loading: false,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: true,
-      });
-      this.$bus.$on("PROCESS_ACTION", (res) => {
-        if (res) {
-          Cancel(data.askID, (status) => {
-            if (status == "success") {
-              this.getList();
-            }
-          });
-        }
-        data = {};
-      });
-    },
-    handleClickChagePage(index) {
-      index = index - 1;
-      this.page = index;
-      let page = index;
-      let list = this.FilterList.slice(
-        this.page * this.limit,
-        (page + 1) * this.limit
-      );
-      this.showList = list;
+      const Contracts = getContract(OrderABI, OrderAddress);
+      const Account = window.CURRENTADDRESS;
+      Contracts.methods
+        .cancel(data.AskID)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingText = `Cancel your Policy supplying order.`;
+          this.WaitingVisible = true;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            getPolicysList();
+          }
+        })
+        .on("error", (ereor)=>  {
+          this.WaitingVisible = false;
+        });
     },
     toMining() {
       // this.$router.push("/mining");
@@ -463,7 +373,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+}
 .cancel {
   display: inline-block;
   padding: 3px 10px;
@@ -494,7 +410,6 @@ export default {
     }
   }
 }
-
 .put_style {
   background: rgba(255, 100, 0, 0.04);
   &:hover {
@@ -519,6 +434,12 @@ export default {
   color: #dc3545 !important;
 }
 @media screen and (min-width: 750px) {
+  .my_supply_wrap {
+    width: 100%;
+  }
+  .H5 {
+    display: none;
+  }
   .o_button {
     margin-right: 12px;
   }
@@ -556,155 +477,162 @@ export default {
       border-radius: 5px;
       align-items: center;
       padding: 0 20px;
-      section {
-        &:nth-of-type(1) {
-          flex: 5;
-          > p {
-            display: flex;
-            align-items: center;
-            span {
+      .supply_item_id_web {
+        flex: 5;
+        > p {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            @include themeify {
+              color: themed("media_icon");
+            }
+            line-height: 14px;
+            &:nth-of-type(1) {
+              width: 90px;
+              display: block;
+            }
+            &:nth-of-type(2) {
+              margin-left: 52px;
+            }
+          }
+        }
+        > span {
+          margin-top: 10px;
+          font-size: 16px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-left: 4px;
+          }
+          .call_icon {
+            background-image: url("../../assets/img/helmet/tablecall.png");
+          }
+          .put_icon {
+            background-image: url("../../assets/img/helmet/tableput.png");
+          }
+        }
+        > .call_text {
+          color: #28a745;
+        }
+        > .put_text {
+          color: #dc3545;
+        }
+      }
+      .supply_item_strikeprice_web {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        p {
+          &:nth-of-type(2) {
+            margin-top: 12px;
+          }
+          span {
+            &:nth-of-type(1) {
               font-size: 14px;
-              font-family: IBMPlexSans;
+              font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
                 color: themed("media_icon");
               }
               line-height: 14px;
-              &:nth-of-type(1) {
-                width: 90px;
-                display: block;
-              }
-              &:nth-of-type(2) {
-                margin-left: 52px;
-              }
             }
-          }
-          > span {
-            margin-top: 10px;
-            font-size: 16px;
-            font-family: IBMPlexSans-Bold, IBMPlexSans;
-            font-weight: bold;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-            i {
-              display: inline-block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-size: cover;
-              margin-left: 4px;
-            }
-            .call_icon {
-              background-image: url("../../assets/img/helmet/tablecall.png");
-            }
-            .put_icon {
-              background-image: url("../../assets/img/helmet/tableput.png");
-            }
-          }
-          > .call_text {
-            color: #28a745;
-          }
-          > .put_text {
-            color: #dc3545;
-          }
-        }
-        &:nth-of-type(2) {
-          flex: 4;
-          display: flex;
-          flex-direction: column;
-          p {
             &:nth-of-type(2) {
-              margin-top: 12px;
-            }
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
-              &:nth-of-type(2) {
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-              }
+              line-height: 14px;
             }
           }
         }
-        &:nth-of-type(3) {
-          flex: 4;
-          display: flex;
-          flex-direction: column;
-          p {
-            &:nth-of-type(2) {
-              margin-top: 12px;
+      }
+      .supply_item_price_web {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        p {
+          &:nth-of-type(2) {
+            margin-top: 12px;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: themed("media_icon");
+              }
+              line-height: 14px;
             }
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
+            &:nth-of-type(2) {
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
-              &:nth-of-type(2) {
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-              }
+              line-height: 14px;
             }
           }
         }
-        &:nth-of-type(4) {
-          flex: 3;
+      }
+      .supply_item_action_web {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        button {
+          width: 100px;
+          padding: 0px 10px;
+          height: 36px;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
+          &:hover {
+            border: 1px solid themed("color-fd7e14") !important;
+          }
+          border-radius: 5px;
+          margin-left: 20px;
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          line-height: 24px;
+          font-weight: 500;
           display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          button {
-            width: 100px;
-            padding: 0px 10px;
-            height: 36px;
-            @include themeify {
-              background: themed("insure_button");
-              border: 1px solid themed("insure_button_border");
-              color: themed("insure_button_text");
-            }
-            &:hover {
-              border: 1px solid themed("color-fd7e14") !important;
-            }
-            border-radius: 5px;
-            margin-left: 20px;
-            font-size: 14px;
-            font-family: HelveticaNeue;
-            line-height: 24px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 92px;
-            &:nth-of-type(2) {
-              margin-top: 6px;
-            }
+          align-items: center;
+          justify-content: center;
+          min-width: 92px;
+          &:nth-of-type(2) {
+            margin-top: 6px;
           }
-          .active {
-            color: #fff;
-            background: #fd7e14;
-          }
+        }
+        .sold {
+          pointer-events: none;
+        }
+        .active {
+          color: #fff;
+          background: #fd7e14;
         }
       }
     }
   }
 }
 @media screen and (max-width: 750px) {
+  .my_supply_wrap {
+    width: 100%;
+  }
+  .WEB {
+    display: none;
+  }
   .my_supply {
     position: relative;
     display: flex;
@@ -730,7 +658,7 @@ export default {
         color: themed("color-17173a");
       }
     }
-    .supply_item_H5 {
+    .supply_item {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -742,141 +670,142 @@ export default {
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 20px 16px;
-      section {
-        &:nth-of-type(1) {
-          > p {
-            display: flex;
-            align-items: center;
-            span {
+      .supply_item_id_h5 {
+        > p {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            @include themeify {
+              color: themed("media_icon");
+            }
+            line-height: 14px;
+            &:nth-of-type(1) {
+              width: 90px;
+              display: block;
+            }
+          }
+        }
+      }
+      .supply_item_type_h5 {
+        display: flex;
+        flex-direction: column;
+        > span {
+          margin-top: 10px;
+          font-size: 16px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-left: 4px;
+          }
+          .call_icon {
+            background-image: url("../../assets/img/helmet/tablecall.png");
+          }
+          .put_icon {
+            background-image: url("../../assets/img/helmet/tableput.png");
+          }
+        }
+        > .call_text {
+          color: #00b900;
+        }
+        > .put_text {
+          color: #dc3545;
+        }
+      }
+      .supply_item_price_h5 {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        p {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          span {
+            &:nth-of-type(1) {
               font-size: 14px;
-              font-family: IBMPlexSans;
+              font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
                 color: themed("media_icon");
               }
               line-height: 14px;
-              &:nth-of-type(1) {
-                width: 90px;
-                display: block;
+            }
+            &:nth-of-type(2) {
+              margin-top: 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
+              line-height: 14px;
+              font-weight: 500;
             }
           }
         }
-        &:nth-of-type(2) {
+      }
+      .supply_item_sold_h5 {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        p {
           display: flex;
           flex-direction: column;
-          > span {
-            margin-top: 10px;
-            font-size: 16px;
-            font-family: IBMPlexSans-Bold, IBMPlexSans;
-            font-weight: bold;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-            i {
-              display: inline-block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-size: cover;
-              margin-left: 4px;
+          flex: 1;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: themed("media_icon");
+              }
+              line-height: 14px;
             }
-            .call_icon {
-              background-image: url("../../assets/img/helmet/tablecall.png");
+            &:nth-of-type(2) {
+              margin-top: 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+              font-weight: 500;
             }
-            .put_icon {
-              background-image: url("../../assets/img/helmet/tableput.png");
-            }
-          }
-          > .call_text {
-            color: #00b900;
-          }
-          > .put_text {
-            color: #dc3545;
           }
         }
-        &:nth-of-type(3) {
+      }
+      .supply_item_action_h5 {
+        display: flex;
+        margin-top: 16px;
+        button {
+          width: 100%;
+          height: 36px;
+          border-radius: 5px;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
+          &:hover {
+            border: 1px solid themed("color-fd7e14") !important;
+          }
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          line-height: 24px;
+          font-weight: 500;
           display: flex;
           align-items: center;
-          margin-top: 16px;
-          p {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-                font-weight: 500;
-              }
-            }
-          }
+          justify-content: center;
         }
-        &:nth-of-type(4) {
-          display: flex;
-          align-items: center;
-          margin-top: 16px;
-          p {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-                font-weight: 500;
-              }
-            }
-          }
-        }
-        &:nth-of-type(5) {
-          display: flex;
-          margin-top: 16px;
-          button {
-            width: 100%;
-            height: 36px;
-            border-radius: 5px;
-            @include themeify {
-              background: themed("insure_button");
-              border: 1px solid themed("insure_button_border");
-              color: themed("insure_button_text");
-            }
-            &:hover {
-              border: 1px solid themed("color-fd7e14") !important;
-            }
-            font-size: 14px;
-            font-family: HelveticaNeue;
-            line-height: 24px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
+        .sold {
+          pointer-events: none;
         }
       }
     }

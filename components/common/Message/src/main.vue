@@ -141,7 +141,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .ex-message {
     min-width: 640px;

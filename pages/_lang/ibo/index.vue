@@ -14,7 +14,7 @@
 <script>
 import IBOMingTitle from "~/components/ibo/ibo_title.vue";
 import IBOCard from "~/components/ibo/ibo_card.vue";
-import { iboPools } from './config'
+import { iboPools } from '../../../config/ibo'
 export default {
   layout: "home",
   components: {
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 
 @media screen and (min-width: 750px) {
   .main_container {

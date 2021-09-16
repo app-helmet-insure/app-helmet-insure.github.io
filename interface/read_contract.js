@@ -1,24 +1,24 @@
-import MiningABI from "~/abi/deposite_abi.json";
-import ApproveABI from "~/abi/IPancakePair.json";
-import CakePoolABI from "~/abi/cake_pool_abi.json";
-import MdexPoolABI from "~/abi/mdex_pool_abi.json";
-import SushiPoolABI from "~/abi/sushi_pool_abi.json";
-import OrderABI from "~/abi/order_abi.json";
-import FectoryABI from "~/abi/factory_abi.json";
-import BurnSwapABI from "~/abi/BurnSwap.json";
-import SushiSwapABI from "~/abi/SushiSwap.json";
-import ChainSwapABI from "~/abi/ChainSwap.json";
-import MigrationABI from "~/abi/Migration.json";
-import IIOABI from "~/abi/iio_abi.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
+import ApproveABI from "~/web3/abis/IPancakePair.json";
+import CakePoolABI from "~/web3/abis/CakePoolABI.json";
+import MdexPoolABI from "~/web3/abis/MdexPoolABI.json";
+import SushiPoolABI from "~/web3/abis/SushiPoolABI.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
+import FactoryABI from "~/web3/abis/FactoryABI.json";
+import BurnSwapABI from "~/web3/abis/BurnSwap.json";
+import SushiSwapABI from "~/web3/abis/SushiSwap.json";
+import ChainSwapABI from "~/web3/abis/ChainSwap.json";
+import MigrationABI from "~/web3/abis/Migration.json";
+import IIOABI from "~/web3/abis/iio_abi.json";
 import {
   Web3Contract,
   getAccounts,
   getDecimals,
-  toWei,
-  fromWei,
   BlockNumber,
   getBlockNumber,
 } from "./common_contract.js";
+import { toWei, fromWei } from "~/web3/index.js";
+
 import BigNumber from "bignumber.js";
 let OrderContractAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 let FectoryContractAddress = "0x021297e233550eDBa8e6487EB7c6696cFBB63b88";
@@ -31,7 +31,7 @@ export const BalanceOf = async (
   Decimals = 18,
   TokenAddress
 ) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   if (!TokenAddress) {
     TokenAddress = await getAccounts();
   }
@@ -50,7 +50,7 @@ export const BalanceOf = async (
 };
 // TotalSupply
 export const TotalSupply = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
     .totalSupply()
@@ -66,7 +66,7 @@ export const TotalSupply = async (ContractAddress, Decimals = 18) => {
 };
 // Pool Reward
 export const Earned = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
@@ -83,7 +83,7 @@ export const Earned = async (ContractAddress, Decimals = 18) => {
 };
 // Pool Reward2
 export const Earned2 = async (ContractAddress, Decimals = 18) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   return Contracts.methods
@@ -247,7 +247,7 @@ export const PoolAllowance = async (
 };
 
 export const Rewards = async (Contractaddress, address) => {
-  let Contracts = await Web3Contract(MiningABI.abi, Contractaddress);
+  let Contracts = await Web3Contract(MiningABI, Contractaddress);
   if (address == 0) {
     address = "0x0000000000000000000000000000000000000000";
   }
@@ -259,7 +259,7 @@ export const Rewards = async (Contractaddress, address) => {
     });
 };
 export const RewardsDuration = async (ContractAddress) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   return Contracts.methods
     .rewardsDuration()
     .call()
@@ -268,15 +268,15 @@ export const RewardsDuration = async (ContractAddress) => {
     });
 };
 export const Asks = async (AskID) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   return Contracts.methods.asks(AskID).call();
 };
 export const Bids = async (BidID) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   return Contracts.methods.bids(BidID).call();
 };
 export const Settleable = async (seller, short) => {
-  let Contracts = await Web3Contract(FectoryABI.abi, FectoryContractAddress);
+  let Contracts = await Web3Contract(FactoryABI, FectoryContractAddress);
   return Contracts.methods.settleable(seller, short).call();
 };
 export const RestQuota = async (ContractAddress, Address = null) => {

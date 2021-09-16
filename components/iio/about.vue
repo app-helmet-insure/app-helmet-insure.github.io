@@ -182,7 +182,7 @@
 <script>
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
-import Information from "./iio_information.js";
+import { Information } from "../../config/iio.js";
 export default {
   data() {
     return {
@@ -234,7 +234,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .h5_about {
     display: none;

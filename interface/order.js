@@ -8,7 +8,7 @@ import {
   getStrikePriceFix,
   getWeiWithFix,
 } from "~/assets/utils/address-pool.js";
-import { toWei, fromWei } from "~/assets/utils/web3-fun.js";
+import { toWei, fromWei } from "~/web3/index.js";
 import precision from "~/assets/js/precision.js";
 import { fixD, toRounding } from "~/assets/js/util.js";
 import bus from "~/assets/js/bus";
@@ -323,12 +323,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
         // }
       });
   } catch (error) {}
-};
-
-export const getExercise = async (buyer) => {
-  let list = await getExerciseList();
-  list = list.filter((item) => buyer == item.returnValues.buyer);
-  return list;
 };
 
 export const asks = async (askID, type = "default", token = "ether") => {

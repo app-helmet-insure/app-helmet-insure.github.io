@@ -1,7 +1,27 @@
 @import url("//unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css");
-@import './themes.scss'; 
-@import './base.scss'; 
-
+@import "./themes.scss";
+@import "./themes.scss";
+.el-pagination {
+  .btn-prev {
+    background-color: transparent !important;
+  }
+  .btn-next {
+    background-color: transparent !important;
+  }
+  .el-pager {
+    li:not(.disabled):hover {
+      color: #fd7e14 !important;
+    }
+    li:not(.disabled).active {
+      background-color: #e8e8eb !important;
+      color: #17173a !important;
+    }
+    li {
+      background-color: transparent !important;
+      color: rgba(23, 23, 58, 0.7) !important;
+    }
+  }
+}
 .block {
   position: relative;
 }
@@ -15,9 +35,16 @@
   float: none;
   width: 100%;
 }
-.el-input.is-active .el-input__inner, .el-input__inner:focus {
+.el-input .el-input__inner {
+  background-color: transparent !important;
   @include themeify {
-    border: 1px solid themed('color-fd7e14') !important;
+    border: 1px solid themed("insure_button_border") !important;
+  }
+}
+.el-input.is-active .el-input__inner,
+.el-input__inner:focus {
+  @include themeify {
+    border: 1px solid themed("color-fd7e14") !important;
   }
 }
 .el-input-number--small .el-input__inner {
@@ -27,12 +54,13 @@
   line-height: 40px;
   text-align: left;
   @include themeify {
-    color: themed('color-17173a');
-    background: themed('ibo_input');
-    border: 1px solid themed('color-e8e8eb');
+    color: themed("color-17173a");
+    background: themed("ibo_input");
+    border: 1px solid themed("color-e8e8eb");
   }
 }
-.el-input-number--small .el-input-number__decrease, .el-input-number--small .el-input-number__increase {
+.el-input-number--small .el-input-number__decrease,
+.el-input-number--small .el-input-number__increase {
   display: none;
 }
 .el-slider__runway.show-input {
@@ -48,10 +76,37 @@
   padding: 3;
   width: 14px;
   height: 14px;
-  background: #FD7E14;
+  background: #fd7e14;
   box-shadow: 0px 0px 4px 0px rgba(232, 232, 235, 0.9);
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
 }
 .el-slider__bar {
-  background: #FD7E14;
+  background: #fd7e14;
+}
+.el-button--primary {
+  border: none !important;
+  @include themeify {
+    background: themed("black_button");
+    color: themed("black_button_text");
+  }
+  font-size: 14px;
+  font-weight: bold;
+  &:hover {
+    @include themeify {
+      background: themed("black_button_hover");
+    }
+  }
+}
+.el-button--default {
+  &:hover {
+    background: none;
+    border: 1px solid #fd7e14;
+    color: #fd7e14;
+  }
+}
+.el-dialog,
+.el-pager li {
+  @include themeify {
+    background: themed("color-ffffff");
+  }
 }

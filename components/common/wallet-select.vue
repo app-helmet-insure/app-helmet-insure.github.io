@@ -123,7 +123,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .wallet-select-mask {
     .wallet-select-block {
@@ -356,7 +356,7 @@ export default {
 .wallet-select-mask {
   .wallet-select-block {
     position: fixed;
-    background-color: $bg-w;
+    background-color: #ffffff;
     text-align: left;
     .close {
       display: block;
@@ -372,11 +372,11 @@ export default {
     }
     .title {
       font-size: 24px;
-      color: $bg-f;
+      color: #1c1c1c;
     }
     .sub-title {
       font-size: 14px;
-      color: $bg-f;
+      color: #1c1c1c;
       padding-top: 4px;
       padding-bottom: 4px;
     }

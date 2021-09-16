@@ -1,31 +1,31 @@
-import {JsonRpcProvider} from "@ethersproject/providers";
-import {cloneDeep} from 'lodash'
-import Web3 from 'web3'
-import ERC20 from '../abi/ERC20_abi.json'
-import {Contract, Provider} from 'ethers-multicall-x'
+import { JsonRpcProvider } from "@ethersproject/providers";
+import { cloneDeep } from "lodash";
+import Web3 from "web3";
+import ERC20 from "~/web3/abis/ERC20ABI.json";
+import { Contract, Provider } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
 const BSCChainId = 56
 const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
 BigNumber.config({ EXPONENTIAL_AT: 100 })
 export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
 export function processResult(data) {
-  data = cloneDeep(data)
-  if (Array.isArray(data)){
+  data = cloneDeep(data);
+  if (Array.isArray(data)) {
     data.map((o, i) => {
-      data[i] = processResult(o)
-    })
-    return data
-  }else if(data.toString){
-    return data.toString()
-  }else if(typeof data === 'object'){
-    for(let key in data){
+      data[i] = processResult(o);
+    });
+    return data;
+  } else if (data.toString) {
+    return data.toString();
+  } else if (typeof data === "object") {
+    for (let key in data) {
       Object.assign(data, {
-        [key]: processResult(0)
-      })
+        [key]: processResult(0),
+      });
     }
-    return data
-  } else{
-    return data
+    return data;
+  } else {
+    return data;
   }
 }
 export const formatAmount = (value, decimals = 18, fixed = 6) => {
@@ -33,11 +33,11 @@ export const formatAmount = (value, decimals = 18, fixed = 6) => {
     fromWei(value, decimals).toFixed(fixed === -1 ? null : fixed, 1)
   )
     .toNumber()
-    .toString()
-}
+    .toString();
+};
 export const fromWei = (value, decimals = 18) => {
-  return new BigNumber(value).dividedBy(new BigNumber(10).pow(decimals))
-}
+  return new BigNumber(value).dividedBy(new BigNumber(10).pow(decimals));
+};
 
 const toWei = (value, decimals) => {
   return new BigNumber(value).multipliedBy(new BigNumber(10).pow(decimals))
@@ -52,15 +52,15 @@ export const numToWei = (value, decimals = 18) => {
 }
 
 export const getPoolInfo = (pool) => {
-  const poolContract = new Contract(pool.address, pool.abi)
-  const account = window.CURRENTADDRESS
+  const poolContract = new Contract(pool.address, pool.abi);
+  const account = window.CURRENTADDRESS;
   if (!account) {
-    return Promise.all([]).then(()=>pool)
+    return Promise.all([]).then(() => pool);
   }
-  const currencyContract = new Contract(pool.currency.address, ERC20.abi)
+  const currencyContract = new Contract(pool.currency.address, ERC20.abi);
   const currencyToken = pool.currency.is_ht
     ? null
-    : new Contract(pool.currency.address, ERC20.abi)
+    : new Contract(pool.currency.address, ERC20.abi);
   const promiseList = [
     poolContract.price(),
     poolContract.totalPurchasedCurrency(), //总申购的量
@@ -146,19 +146,19 @@ export const getPoolInfo = (pool) => {
     // ] = totalSettleable
     const [completed_, amount, volume, rate] = settleable
 
-    let status = pool.status || 0 // 即将上线
-    const timeClose = time
+    let status = pool.status || 0; // 即将上线
+    const timeClose = time;
     if (timeSettle) {
       // time 如果没有的话，使用timeSettle填充
-      time = timeSettle
+      time = timeSettle;
     }
     if (pool.start_at < now && status < 1) {
       // 募集中
-      status = 1
+      status = 1;
     }
     if (time < now && status < 2) {
       // 结算中
-      status = 2
+      status = 2;
     }
 
     // // 招募满了
@@ -183,9 +183,9 @@ export const getPoolInfo = (pool) => {
     )
       // console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
-    let is_join = false
+    let is_join = false;
     if (purchasedCurrencyOf > 0) {
-      is_join = true
+      is_join = true;
     }
     Object.assign(pool.currency, {
       allowance: currency_allowance,
@@ -220,8 +220,8 @@ export const getPoolInfo = (pool) => {
       settleable: {
         completed_,
         amount, // 未结算数量
-        volume,// 预计中签量
-        rate
+        volume, // 预计中签量
+        rate,
       },
       pool_info: {
         ...pool.pool_info,
@@ -244,13 +244,13 @@ export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => 
       '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
     )
     .send({ from: window.CURRENTADDRESS })
-    .on('receipt', function() {
-      callback(true)
+    .on("receipt", function() {
+      callback(true);
     })
-    .on('error', () => {
-      callback(false)
-    })
-}
+    .on("error", () => {
+      callback(false);
+    });
+};
 // 质押
 export const onBurn_ = (_amount, iboData, callback) => {
   let web3_ = new Web3(window.ethereum)
@@ -260,22 +260,22 @@ export const onBurn_ = (_amount, iboData, callback) => {
   myContract.methods
     .purchase(numToWei(String(_amount), iboData.currency.decimal))
     .send({ from: window.CURRENTADDRESS })
-    .on('receipt', function() {
-      callback(true)
+    .on("receipt", function() {
+      callback(true);
     })
-    .on('error', () => {
-      callback(false)
-    })
-}
+    .on("error", () => {
+      callback(false);
+    });
+};
 // 提取
-export const onClaim_ = (contractAddress,abi, callback) => {
-  let web3_ = new Web3(window.ethereum)
+export const onClaim_ = (contractAddress, abi, callback) => {
+  let web3_ = new Web3(window.ethereum);
   let myContract = new web3_.eth.Contract(abi, contractAddress);
   myContract.methods
     .settle()
     .send({ from: window.CURRENTADDRESS })
-    .on('receipt', function() {
-      callback(true)
+    .on("receipt", function() {
+      callback(true);
     })
     .on('error', () => {
       callback(false)

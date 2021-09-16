@@ -1,21 +1,20 @@
-import MiningABI from "~/abi/deposite_abi.json";
-import ApproveABI from "~/abi/IPancakePair.json";
-import CompoundABI from "~/abi/helmet_abi.json";
-import OrderABI from "~/abi/order_abi.json";
-import ChainSwapABI from "~/abi/ChainSwap.json";
-import BurnSwapABI from "~/abi/BurnSwap.json";
-import MigrationABI from "~/abi/Migration.json";
-import CakePoolABI from "~/abi/cake_pool_abi.json";
-import IIOABI from "~/abi/iio_abi.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
+import ApproveABI from "~/web3/abis/IPancakePair.json";
+import CompoundABI from "~/web3/abis/helmet_abi.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
+import ChainSwapABI from "~/web3/abis/ChainSwap.json";
+import BurnSwapABI from "~/web3/abis/BurnSwap.json";
+import MigrationABI from "~/web3/abis/Migration.json";
+import CakePoolABI from "~/web3/abis/CakePoolABI.json";
+import IIOABI from "~/web3/abis/iio_abi.json";
 
 import {
   Web3Contract,
   getAccounts,
   getDecimals,
   TokenNameToWei,
-  toWei,
-  fromWei,
 } from "./common_contract.js";
+import { toWei, fromWei } from "~/web3/index.js";
 import BigNumber from "bignumber.js";
 import bus from "~/assets/js/bus";
 import { fixD } from "~/assets/js/util.js";
@@ -27,7 +26,7 @@ export const Stake = async (
   { ContractAddress, DepositeVolume, Decimals },
   callback
 ) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   if (DecimalsUnit) {
@@ -120,7 +119,7 @@ export const StakeAndComound = async (
   } catch (error) {}
 };
 export const GetReward = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -195,7 +194,7 @@ export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
   } catch (error) {}
 };
 export const GetDoubleReward = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -232,7 +231,7 @@ export const GetDoubleReward = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const Exit = async (ContractAddress, callback) => {
-  let Contracts = await Web3Contract(MiningABI.abi, ContractAddress);
+  let Contracts = await Web3Contract(MiningABI, ContractAddress);
   let Account = await getAccounts();
   try {
     Contracts.methods
@@ -355,7 +354,7 @@ export const Approve = async (
   }
 };
 export const Buy = async (data, callback) => {
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   let Account = await getAccounts();
   let SubmitVolume = TokenNameToWei(data.buyNum, data.currentInsurance);
   let AskID = data.askID;
@@ -406,7 +405,7 @@ export const Cancel = async (askID, callBack) => {
   if (!askID) {
     return;
   }
-  let Contracts = await Web3Contract(OrderABI.abi, OrderContractAddress);
+  let Contracts = await Web3Contract(OrderABI, OrderContractAddress);
   let Account = await getAccounts();
   if (!window.CURRENTADDRESS) {
     return;

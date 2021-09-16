@@ -74,7 +74,7 @@ import { fixD } from "~/assets/js/util.js";
 import { getTokenName } from "~/assets/utils/address-pool.js";
 import { onExercise } from "~/interface/order.js";
 import precision from "~/assets/js/precision.js";
-import Information from "./iio_information.js";
+import { Information } from "../../config/iio.js";
 import moment from "moment";
 
 export default {
@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .stepThree {
     width: 420px;

@@ -118,7 +118,7 @@
     "HELMETRewards": "Hadiah",
     "ClaimAllRewards": "Klaim Hadiah",
     "Stake": "Stake",
-    "StakeAndCompound":"Confirm Deposit & Compound",
+    "StakeAndCompound": "Confirm Deposit & Compound",
     "Unstake": "cabut stake",
     "Claim": "Klaim",
     "DenAssets": "Aset dalam mata uang",
@@ -262,10 +262,10 @@
     "MiningTip2": "Anda dapat bertani token Helmet khusus, atau mendapatkan hadiah COMBO dengan mempertaruhkan Token Penyedia Likuiditas yang berbeda (LPTs).",
     "IIOTip1": "IIO: Initial BSC Token Offerings",
     "IIOTip2": "Model distribusi aset baru dengan logika opsi Eropa.",
-    "APY":"APY",
-    "APR":"APR",
-    "EarnTip1":"Daily income withdrawal and manual reinvestment.",
-    "EarnTip2":"The return on compound interest will get higher and higher over time."
+    "APY": "APY",
+    "APR": "APR",
+    "EarnTip1": "Daily income withdrawal and manual reinvestment.",
+    "EarnTip2": "The return on compound interest will get higher and higher over time."
   },
   "Account": {
     "Account": "Akun",
@@ -288,11 +288,11 @@
     "Insurance_text3": "Harga terakhir",
     "Insurance_text4": "Periode Asuransi",
     "Insurance_text5": "Operasional",
-    "Insurance_text6": "Tanggungan 50% Off ",
-    "Insurance_text7": "Tanggungan Miss Out ",
+    "Insurance_text6": "Put Policys",
+    "Insurance_text7": "Call Policys",
     "Insurance_text8": "Suplai",
-    "Insurance_text9": "Konfirmasi suplai tanggungan Miss Out",
-    "Insurance_text10": "Konfirmasi suplay tanggungan 50% Off",
+    "Insurance_text9": "Confirm Supply Call Policys",
+    "Insurance_text10": "Confirm Supply Put Policys",
     "Insurance_text11": "Harga aktivasi",
     "Insurance_text13": "Kadaluarsa",
     "Insurance_text14": "Komplit",
@@ -335,7 +335,7 @@
     "Tips6": "Update at 22:00 SGT daily",
     "Tips7": "New polygon dev plan in!!!  Better&healthier bridge approach rush on its way and your GUARD Credits are still valid!!!",
     "ToStake": "Go Deposit",
-    "Pause":"Temporarily closed"
+    "Pause": "Temporarily closed"
   },
   "IBO": {
     "IBO_text1": "m",
@@ -392,5 +392,9 @@
     "IBO_text47": "October 17 UTC +8 02:05",
     "IBO_text48": "1 Month Token Lock-up",
     "IBO_text49": "Notice the uncertaintity of {token} IBO since the 1 month token lock-up. Helmet.insure will not be held responsible for any investment losses."
+  },
+  "Dialogs": {
+    "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",
+    "InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
   }
 }

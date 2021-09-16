@@ -1,5 +1,5 @@
-import ChainSwapABI from '~/abi/ChainSwap.json';
-import BurnSwapABI from '~/abi/BurnSwap.json';
+import ChainSwapABI from '~/web3/abis/ChainSwap.json';
+import BurnSwapABI from '~/web3/abis/BurnSwap.json';
 let ChainSwapConfig = function(FromChain, ToChain) {
     let ReturnName = FromChain.toUpperCase() + 'TO' + ToChain.toUpperCase();
     let Config = {

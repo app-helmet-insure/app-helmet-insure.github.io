@@ -6,34 +6,6 @@ export function hasOwn(obj, key) {
   return hasOwnProperty.call(obj, key);
 }
 
-export function getProtocol() {
-  const p = window.location.protocol;
-  const h = p.split(":")[0];
-  return h;
-}
-
-export function getMainHost() {
-  let key = `mh_${Math.random()}`;
-  let keyR = new RegExp(`(^|;)\\s*${key}=12345`);
-  let expiredTime = new Date(0);
-  let domain = document.domain;
-  let domainList = domain.split(".");
-
-  let urlItems = [];
-  urlItems.unshift(domainList.pop());
-  while (domainList.length) {
-    urlItems.unshift(domainList.pop());
-    let mainHost = urlItems.join(".");
-    let cookie = `${key}=${12345};domain=.${mainHost}`;
-
-    document.cookie = cookie;
-
-    if (keyR.test(document.cookie)) {
-      document.cookie = `${cookie};expires=${expiredTime}`;
-      return mainHost;
-    }
-  }
-}
 
 export const autoprefixer = function(style) {
   if (typeof style !== "object") return style;

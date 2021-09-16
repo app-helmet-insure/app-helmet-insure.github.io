@@ -49,7 +49,7 @@
 import { ticketVol3, applyReward3 } from "~/interface/iio";
 import { getBalance } from "~/interface/deposite";
 import { fixD } from "~/assets/js/util.js";
-import Information from "./iio_information.js";
+import { Information } from "../../config/iio.js";
 import moment from "moment";
 export default {
   data() {
@@ -187,7 +187,7 @@ export default {
 </script>
 
 <style lang='scss' scped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .stepOne {
     width: 420px;

@@ -63,8 +63,8 @@ export const mateMaskInfo = async (address, name) => {
     } else {
       window.CURRENTADDRESS = current;
     }
-    obj.data.isLogin = true;
-    obj.data.account = current;
+    obj.isLogin = true;
+    obj.account = current;
     obj.status = 1;
     return obj;
   } catch (error) {

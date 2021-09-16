@@ -349,7 +349,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .openSlider {
     display: block;
@@ -1051,7 +1051,7 @@ export default {
     margin-top: 10px;
     @include themeify {
       border-top: 1px solid themed("price_line");
-    }
+    } 
     > a {
       margin-top: 20px;
       height: 40px;

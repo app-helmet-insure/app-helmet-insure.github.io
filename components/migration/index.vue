@@ -34,9 +34,11 @@ import Stake from "./stake.vue";
 import Swap from "./swap.vue";
 import Web3 from "web3";
 import { fixD, addCommom } from "~/assets/js/util.js";
-import { getAccounts, fromWei } from "~/interface/common_contract.js";
+import { getAccounts } from "~/interface/common_contract.js";
+import { fromWei } from "~/web3/index.js";
+
 import { TotalBurns } from "~/interface/read_contract.js";
-import GuardClaimABI from "~/abi/GuardClaim.json";
+import GuardClaimABI from "~/web3/abis/GuardClaim.json";
 const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";
 const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
 export default {
@@ -108,7 +110,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 
 .migration_title {
   > p {

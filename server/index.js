@@ -1,7 +1,6 @@
 const Koa = require("koa");
 // const consola = require('consola')
 const { Nuxt, Builder } = require("nuxt");
-const ApiConfig = require("../config/api.config.js");
 const app = new Koa();
 
 // Import and Set Nuxt.js options
@@ -49,18 +48,6 @@ async function start() {
         if (~acceptLanguage.indexOf("fr_FR") > -1) {
           acceptLanguage = "fr_FR";
         }
-        if (
-          ~["en_US", "zh_CN", "ko_KR", "es_MX", "ja_JP", "fr_FR"].indexOf(
-            acceptLanguage
-          )
-        ) {
-          ctx.cookies.set("lang", acceptLanguage, {
-            domain: ApiConfig.domain,
-            maxAge: 3600 * 24 * 10,
-            httpOnly: false,
-          });
-          ctx.req.locale = acceptLanguage;
-        }
       }
     } else {
       if (~ctx.req.locale.indexOf("en_US")) {
@@ -77,7 +64,6 @@ async function start() {
     nuxt.render(ctx.req, ctx.res);
   });
   app.listen(port, host);
-  console.log(`Server listening on http://${host}:${port}`);
 }
 
 start();

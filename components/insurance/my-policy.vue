@@ -3,49 +3,95 @@
     <div class="policy_title">
       <h3>{{ $t("Type.MyGuarantee") }}</h3>
     </div>
-    <template v-if="isLogin">
+    <Loading v-if="isLoading" :isLoading="isLoading" />
+    <div
+      class="my_policy_wrap"
+      v-if="!isLoading && PolicyList && PolicyList.length"
+    >
       <div
         class="policy_item"
-        v-for="item in showList"
-        :key="item.bidID + item.askID"
+        v-for="item in PolicyList.slice(MinNumber, MaxNumber)"
+        :key="item.BidID"
       >
-        <section>
+        <section class="policy_item_id_web WEB">
           <p>
-            <span>{{ $t("Table.ID") }}:{{ item.bidID }}</span>
-            <span>{{ item.dueDate }}</span>
+            <span>{{ $t("Table.ID") }}:{{ item.BidID }}</span>
+            <span>{{ item.ShowExpiry }}</span>
           </p>
-          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
-            {{ item.outPriceUnit }}
+          <span :class="item.Type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.CallToken }} {{ item.Type }} {{ item.ShowStrikePrice }}
+            {{ item.PutToken }}
             {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+            <i :class="item.Type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
           </span>
         </section>
-        <section>
+        <section class="policy_item_strikeprice_web WEB">
           <p>
             <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
+            <span>{{ item.ShowStrikePrice }} {{ item.PutToken }}</span>
           </p>
           <p>
             <span>{{ $t("Table.Position") }}: </span>
-            <span>{{ fixD(item.buyVolume, 8) }}</span>
+            <span>{{ fixD(item.ShowVolume, 8) }}</span>
           </p>
         </section>
-        <section>
+        <section class="policy_item_price_web WEB">
           <p>
             <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
+            <span>{{ fixD(item.ShowPrice, 8) }} HELMET</span>
           </p>
           <p>
             <span>{{ $t("Table.Premium") }}: </span>
-            <span>{{ fixD(item.premium, 8) }} HELMET</span>
+            <span>{{ fixD(item.Premium, 8) }} HELMET</span>
           </p>
         </section>
-        <section>
-          <button
-            :style="item.status == 'Expired' ? 'pointer-events: none;' : ''"
-            @click="toActive(item)"
-          >
+        <section class="policy_item_action_web WEB">
+          <button @click="toActive(item)">
+            {{
+              item.status == "Expired"
+                ? $t("Insurance.Insurance_text13")
+                : $t("Table.outSure")
+            }}
+            <i class="selectDown"></i>
+          </button>
+        </section>
+        <!-- ================= -->
+        <section class="policy_item_id_h5 H5">
+          <p>
+            <span>{{ $t("Table.ID") }}:{{ item.AskID }}</span>
+            <span>{{ item.ShowExpiry }}</span>
+          </p>
+        </section>
+        <section class="policy_item_type_h5 H5">
+          <span :class="item.Type == 'Call' ? 'call_text' : 'put_text'">
+            {{ item.CallToken }} {{ item.Type }} {{ item.ShowStrikePrice }}
+            {{ item.PutToken }}
+            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
+            <i :class="item.Type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
+          </span>
+        </section>
+        <section class="policy_item_price_h5 H5">
+          <p>
+            <span>{{ $t("Insurance.Insurance_text11") }}: </span>
+            <span>{{ item.ShowStrikePrice }} {{ item.PutToken }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.PolicyPrice") }}: </span>
+            <span>{{ fixD(item.ShowPrice, 8) }} HELMET</span>
+          </p>
+        </section>
+        <section class="policy_item_volume_h5 H5">
+          <p>
+            <span>{{ $t("Table.Position") }}: </span>
+            <span>{{ fixD(item.ShowVolume, 8) }}</span>
+          </p>
+          <p>
+            <span>{{ $t("Table.Premium") }}: </span>
+            <span>{{ item.Premium }} HELMET</span>
+          </p>
+        </section>
+        <section class="policy_item_action_h5 H5">
+          <button @click="toActive(item)">
             {{
               item.status == "Expired"
                 ? $t("Insurance.Insurance_text13")
@@ -55,521 +101,383 @@
           </button>
         </section>
       </div>
-    </template>
-    <template>
-      <div
-        class="policy_item_H5"
-        v-for="item in showList"
-        :key="item.bidID + item.askID + '1'"
-      >
-        <section>
-          <p>
-            <span>{{ $t("Table.ID") }}:{{ item.askID }}</span>
-            <span>{{ item.dueDate }}</span>
-          </p>
-        </section>
-        <section>
-          <span :class="item.type == 'Call' ? 'call_text' : 'put_text'">
-            {{ item.TypeCoin }} {{ item.type }} {{ item.show_strikePrice }}
-            {{ item.outPriceUnit }}
-            {{ item.symbol ? "(" + item.symbol + ")" : "" }}
-            <i :class="item.type == 'Call' ? 'call_icon' : 'put_icon'"> </i>
-          </span>
-        </section>
-        <section>
-          <p>
-            <span>{{ $t("Insurance.Insurance_text11") }}: </span>
-            <span>{{ item.show_strikePrice }} {{ item.outPriceUnit }}</span>
-          </p>
-          <p>
-            <span>{{ $t("Table.PolicyPrice") }}: </span>
-            <span>{{ fixD(item.show_price, 8) }} HELMET</span>
-          </p>
-        </section>
-        <section>
-          <p>
-            <span>{{ $t("Table.Position") }}: </span>
-            <span>{{ fixD(item.buyVolume, 8) }}</span>
-          </p>
-          <p>
-            <span>{{ $t("Table.Premium") }}: </span>
-            <span>{{ item.premium }} HELMET</span>
-          </p>
-        </section>
-        <section>
-          <button
-            :style="item.status == 'Expired' ? 'pointer-events: none;' : ''"
-            @click="toActive(item)"
-          >
-            {{
-              item.status == "Expired"
-                ? $t("Insurance.Insurance_text13")
-                : $t("Table.outSure")
-            }}
-            <i class="selectDown"></i>
-          </button>
-        </section>
-      </div>
-    </template>
-    <div class="loading" v-if="isLoading && isLogin">
-      <img src="~/assets/img/loading.png" />
-      <div class="shadow"></div>
-      <p>{{ $t("Table.LoadingWallet") }}</p>
     </div>
-    <section
-      class="noData"
-      v-if="(showList.length < 1 && !isLoading) || !isLogin"
+    <NoData v-if="!isLoading && (!PolicyList || !PolicyList.length)" />
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :pager-count="5"
+        :hide-on-single-page="PolicyList.length < PageSize"
+        :total="PolicyList.length"
+        @current-change="changePage"
+      >
+      </el-pagination>
+    </div>
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
     >
-      <div>
-        <img
-          :src="require(`~/assets/img/helmet/nodata_${storeThemes}.png`)"
-          alt=""
-        />
-        <p>{{ $t("Table.NoData") }}</p>
+      <div class="waiting_content">
+        <p>
+          {{ WaitingText }}
+        </p>
       </div>
-    </section>
-    <section class="pages" v-if="FilterList.length > 10 && isLogin">
-      <Page
-        :total="FilterList.length"
-        :limit="limit"
-        :page="page + 1"
-        @page-change="handleClickChagePage"
-      />
-    </section>
+    </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
-
-import precision from "~/assets/js/precision.js";
-import Page from "~/components/common/page.vue";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
-import { getTokenName } from "~/assets/utils/address-pool.js";
+import { fixD } from "~/assets/js/util.js";
 import { onExercise } from "~/interface/order.js";
 import { getBalance } from "~/interface/deposite";
 import { getInsuranceList } from "~/interface/event.js";
-import {
-  TokenDecimals,
-  DecimalsFormWei,
-  getAccounts,
-} from "~/interface/common_contract.js";
 import moment from "moment";
-import { Bids } from "~/interface/read_contract.js";
+import NoData from "./no-data.vue";
+import Loading from "./loading.vue";
+import { fromWei } from "~/web3/index.js";
+import { getCurrentInsurance } from "~/config/insurance.js";
+import BigNumber from "bignumber.js";
+import OrderABI from "~/web3/abis/OrderABI.json";
+import ERC20ABI from "~/web3/abis/ERC20ABI.json";
+import { getContract } from "../../web3/index.js";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
-    Page,
+    WaitingConfirmationDialog,
+    SuccessConfirmationDialog,
+    NoData,
+    Loading,
   },
   data() {
     return {
-      precision,
-      addCommom: addCommom,
-      autoRounding: autoRounding,
-      toRounding: toRounding,
-      showList: [],
-      guaranteeList: [],
-      FilterList: [],
-      getTokenName,
       fixD,
-      page: 0,
-      limit: 10,
+      CurrentPage: 1,
+      PageSize: 10,
+      MinNumber: 0,
+      MaxNumber: 10,
       isLoading: true,
       isLogin: false,
+      SuccessHash: "",
+      WaitingText: "",
+      WaitingVisible: false,
+      SuccessVisible: false,
+      PolicyList: [],
     };
   },
   computed: {
-    myAboutInfoBuy() {
-      return this.$store.state.myAboutInfoBuy;
-    },
-    transferMap() {
-      return this.$store.state.transferMap;
-    },
-    strikePriceArray() {
-      return this.$store.state.strikePriceArray;
-    },
     userInfo() {
       return this.$store.state.userInfo;
     },
-    storeThemes() {
-      return this.$store.state.themes;
-    },
   },
   mounted() {
-    this.getList();
+    this.getPolicysList();
   },
   watch: {
     userInfo: {
       handler: "userInfoWatch",
       immediate: true,
     },
-    FilterList: {
-      handler: "fliterListWatch",
-      immediate: true,
-    },
   },
   methods: {
     userInfoWatch(newValue) {
       if (newValue) {
-        this.isLogin = newValue.data.isLogin;
+        this.isLogin = newValue.isLogin;
       }
     },
-
-    fliterListWatch(newValue) {
-      if (newValue) {
-        let list = newValue;
-        this.showList = list.slice(0, this.limit);
-      }
+    waitingClose() {
+      this.WaitingVisible = false;
     },
-    getList() {
-      this.isLoading = true;
-      getInsuranceList().then(async (res) => {
-        let CurrentAccount = await getAccounts();
-        let ReturnList = res.data.data.options;
-        let FixList = [];
-        let nowDate = parseInt(moment.now() / 1000);
-        ReturnList = ReturnList.filter((item) => {
-          if (
-            item.asks.length > 0 &&
-            item.strikePrice.length > 2 &&
-            Number(item.expiry) + 5814000 > nowDate
-          ) {
-            return item;
-          }
-        });
-
-        ReturnList.forEach((item) => {
-          // 标的
-          let UnderlyingDecimals = TokenDecimals(item.underlying);
-          let UnderlyingSymbol = getTokenName(item.underlying);
-          // 抵押
-          let CollateralDecimals = TokenDecimals(item.collateral);
-          let CollateralSymbol = getTokenName(item.collateral);
-          // 执行
-          let StrikePriceDecimals =
-            18 + UnderlyingDecimals - CollateralDecimals;
-          if (UnderlyingSymbol == "WBNB") {
-            item.TypeCoin = CollateralSymbol;
-            item.type = "Call";
-            item.outPriceUnit = "BNB";
-            item.show_strikePrice = DecimalsFormWei(
-              item.strikePrice,
-              StrikePriceDecimals
-            );
-          } else {
-            item.TypeCoin = UnderlyingSymbol;
-            item.type = "Put";
-            item.outPriceUnit = "BNB";
-            item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
-          }
-          if (UnderlyingSymbol == "BUSD" && CollateralSymbol == "WBNB") {
-            item.TypeCoin = CollateralSymbol;
-            item.type = "Call";
-            item.outPriceUnit = "BUSD";
-            item.show_strikePrice = DecimalsFormWei(
-              item.strikePrice,
-              StrikePriceDecimals
-            );
-          }
-          if (CollateralSymbol == "BUSD" && UnderlyingSymbol == "WBNB") {
-            item.TypeCoin = UnderlyingSymbol;
-            item.type = "Put";
-            item.outPriceUnit = "BUSD";
-            item.show_strikePrice =
-              1 / DecimalsFormWei(item.strikePrice, StrikePriceDecimals);
-          }
-          item.show_expiry = moment(new Date(item.expiry * 1000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          );
-          let ResultItem = {
-            TypeCoin: item.TypeCoin,
-            expiry: item.expiry,
-            show_expiry: item.show_expiry,
-            dueDate: item.show_expiry,
-            id: item.id,
-            long: item.long,
-            outPriceUnit: item.outPriceUnit,
-            show_strikePrice: fixD(
-              item.show_strikePrice,
-              item.TypeCoin == "SHIB" ? 10 : 4
-            ),
-            short: item.short,
-            strikePrice: item.strikePrice,
-            type: item.type,
-            collateral: item.collateral,
-            collateral_symbol: CollateralSymbol,
-            collateral_decimals: CollateralDecimals,
-            underlying: item.underlying,
-            underlying_symbol: UnderlyingSymbol,
-            underlying_decimals: UnderlyingDecimals,
-          };
-          item.asks.forEach((itemAsk) => {
-            itemAsk.settleToken_symbol = getTokenName(itemAsk.settleToken);
-            itemAsk.show_price = fixD(
-              DecimalsFormWei(itemAsk.price, StrikePriceDecimals),
-              8
-            );
-            let AskArray = Object.assign(ResultItem, itemAsk);
-            itemAsk.binds.forEach((itemBid) => {
-              AskArray.bidID = itemBid.bidID;
-              itemBid.buyVolume =
-                item.type == "Call"
-                  ? DecimalsFormWei(itemBid.volume, CollateralDecimals)
-                  : fixD(
-                      DecimalsFormWei(itemBid.volume, UnderlyingDecimals) /
-                        ResultItem.show_strikePrice,
-                      8
-                    );
-              itemBid.premium =
-                item.type == "Call"
-                  ? itemBid.buyVolume * ResultItem.show_price
-                  : itemBid.buyVolume *
-                    ResultItem.show_price *
-                    ResultItem.show_strikePrice;
-              let AllItem = Object.assign(itemBid, AskArray);
-              if (AllItem.buyer.toLowerCase() == CurrentAccount.toLowerCase()) {
-                FixList.push(AllItem);
-              }
-            });
-          });
-        });
-        let List = [...new Set(FixList)].sort((a, b) => {
-          return b.bidID - a.bidID;
-        });
-        let arr = [];
-        let hburgerPolicy = await this.HBURGERPolicy();
-        let lishiPolicy = await this.LISHIPolicy();
-        let hMATHPolicy = await this.hMATHPolicy();
-        let HCCTIIPolicy = await this.HCCTIIPolicy();
-        let hDODOPolicy = await this.hDODOPolicy();
-        let hTPTPolicy = await this.hTPTPolicy();
-        let QFEIPolicy = await this.QFEIPolicy();
-        let qHELMETPolicy = await this.qHELMETPolicy();
-        let xhBURGERPolicy = await this.xhBURGERPolicy();
-        let SHIBHRPolicy = await this.SHIBHRPolicy();
-        let HWINGSRPolicy = await this.HWINGSRPolicy();
-        let HMTRGPolicy = await this.HMTRGPolicy();
-        let HBABYPolicy = await this.HBABYPolicy();
-        let HBMXXPolicy = await this.HBMXXPolicy();
-        let HARGONPolicy = await this.HARGONPolicy();
-        let HMCRNPolicy = await this.HMCRNPolicy();
-        let HWIZARDPolicy = await this.HWIZARDPolicy();
-        if (HMCRNPolicy) {
-          if (HMCRNPolicy["sort"] != 1 && HMCRNPolicy["sort"] != 3) {
-            arr.push(HMCRNPolicy);
-          }
-        }
-        if (HWIZARDPolicy) {
-          if (HWIZARDPolicy["sort"] != 1 && HWIZARDPolicy["sort"] != 3) {
-            arr.push(HWIZARDPolicy);
-          }
-        }
-        if (HARGONPolicy) {
-          if (HARGONPolicy["sort"] != 1 && HARGONPolicy["sort"] != 3) {
-            arr.push(HARGONPolicy);
-          }
-        }
-        if (HBMXXPolicy) {
-          if (HBMXXPolicy["sort"] != 1 && HBMXXPolicy["sort"] != 3) {
-            arr.push(HBMXXPolicy);
-          }
-        }
-        if (HBABYPolicy) {
-          if (HBABYPolicy["sort"] != 1 && HBABYPolicy["sort"] != 3) {
-            arr.push(HBABYPolicy);
-          }
-        }
-        if (HWINGSRPolicy) {
-          if (HWINGSRPolicy["sort"] != 1 && HWINGSRPolicy["sort"] != 3) {
-            arr.push(HWINGSRPolicy);
-          }
-        }
-        if (hburgerPolicy) {
-          if (hburgerPolicy["sort"] != 1 && hburgerPolicy["sort"] != 3) {
-            arr.push(hburgerPolicy);
-          }
-        }
-        if (lishiPolicy) {
-          if (lishiPolicy["sort"] != 1 && lishiPolicy["sort"] != 3) {
-            arr.push(lishiPolicy);
-          }
-        }
-        if (hMATHPolicy) {
-          if (hMATHPolicy["sort"] != 1 && hMATHPolicy["sort"] != 3) {
-            arr.push(hMATHPolicy);
-          }
-        }
-        if (HCCTIIPolicy) {
-          if (HCCTIIPolicy["sort"] != 1 && HCCTIIPolicy["sort"] != 3) {
-            arr.push(HCCTIIPolicy);
-          }
-        }
-        if (hDODOPolicy) {
-          if (hDODOPolicy["sort"] != 1 && hDODOPolicy["sort"] != 3) {
-            arr.push(hDODOPolicy);
-          }
-        }
-        if (hTPTPolicy) {
-          if (hTPTPolicy["sort"] != 1 && hTPTPolicy["sort"] != 3) {
-            arr.push(hTPTPolicy);
-          }
-        }
-        if (QFEIPolicy) {
-          if (QFEIPolicy["sort"] != 1 && QFEIPolicy["sort"] != 3) {
-            arr.push(QFEIPolicy);
-          }
-        }
-        if (qHELMETPolicy) {
-          if (qHELMETPolicy["sort"] != 1 && qHELMETPolicy["sort"] != 3) {
-            arr.push(qHELMETPolicy);
-          }
-        }
-        if (xhBURGERPolicy) {
-          if (xhBURGERPolicy["sort"] != 1 && xhBURGERPolicy["sort"] != 3) {
-            arr.push(xhBURGERPolicy);
-          }
-        }
-        if (SHIBHRPolicy) {
-          if (SHIBHRPolicy["sort"] != 1 && SHIBHRPolicy["sort"] != 3) {
-            arr.push(SHIBHRPolicy);
-          }
-        }
-        if (HMTRGPolicy) {
-          if (HMTRGPolicy["sort"] != 1 && HMTRGPolicy["sort"] != 3) {
-            arr.push(HMTRGPolicy);
-          }
-        }
-        if (List.length) {
-          List.map(async (item, index) => {
-            let BidsInfo = await Bids(item.bidID);
-            if (BidsInfo.remain == 0) {
-              item.status == "Activated";
-              item.sort = 1;
-            } else {
-              item.status == "Unactivated";
-              item.sort = 0;
-            }
-            if (Number(item.expiry) < nowDate) {
-              item.status = "Expired";
-              item.sort = 2;
-              item.dueDate = "Expired";
-            }
-            if (BidsInfo.remain != 0) {
-              arr.push(item);
-            }
-            this.FilterList = [...new Set(arr)].sort((a, b) => {
-              return a.sort - b.sort;
-            });
-            this.isLoading = false;
-            return this.FilterList;
-          });
-        } else {
-          this.FilterList = [...new Set(arr)].sort((a, b) => {
-            return a.sort - b.sort;
-          });
-          this.isLoading = false;
-          return this.FilterList;
-        }
-      });
+    successClose() {
+      this.SuccessVisible = false;
     },
-    // 倒计时
-    getDownTime(time) {
-      let now = new Date() * 1;
-      let dueDate = time * 1000;
-      dueDate = new Date(dueDate);
-      let DonwTime = dueDate - now;
-      let day = Math.floor(DonwTime / (24 * 3600000));
-      let hour = Math.floor((DonwTime - day * 24 * 3600000) / 3600000);
-      let minute = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000) / 60000
-      );
-      let second = Math.floor(
-        (DonwTime - day * 24 * 3600000 - hour * 3600000 - minute * 60000) / 1000
-      );
-      let template = `${day}${this.$t("Content.DayD")} ${hour}${this.$t(
-        "Content.HourD"
-      )}`;
-      return template;
-    },
-    // 行权
-    toActive(item) {
-      let data;
-      if (item.type == "Call") {
-        data = {
-          token: item.underlying_symbol || getTokenName(item._underlying),
-          totoken: item.collateral_symbol || getTokenName(item._collateral),
-          _underlying_vol: precision.times(item.show_strikePrice, item.volume),
-          vol: item.volume,
-          bidID: item.bidID,
-          long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
-          _underlying: item.collateral_symbol || getTokenName(item._collateral),
-          _collateral: item.underlying_symbol || getTokenName(item._underlying),
-          settleToken:
-            item.settleToken_symbol || getTokenName(item.settleToken),
-          flag: item.transfer ? true : false,
-          approveAddress1: item.approveAddress1,
-          approveAddress2: item.approveAddress2,
-          unit: item.unit ? item.unit : "",
-          showVolume: item.showVolume,
-          show_strikePrice: item.show_strikePrice,
-          buyVolume: item.buyVolume,
-        };
+    changePage(value) {
+      this.CurrentPage = value;
+      if (this.CurrentPage <= 1) {
+        this.MinNumber = 0;
+        this.MaxNumber = this.PageSize;
       } else {
-        data = {
-          token: item.collateral_symbol || getTokenName(item._collateral),
-          totoken: item.underlying_symbol || getTokenName(item._underlying),
-          _underlying_vol: item.volume,
-          vol: item.volume,
-          bidID: item.bidID,
-          long: item.long || item.longAdress,
-          exPrice: fixD(precision.divide(1, item.show_strikePrice), 12),
-          _underlying: item.collateral_symbol || getTokenName(item._collateral),
-          _collateral: item.underlying_symbol || getTokenName(item._underlying),
-          settleToken:
-            item.settleToken_symbol || getTokenName(item.settleToken),
-          flag: item.transfer ? true : false,
-          approveAddress1: item.approveAddress1,
-          approveAddress2: item.approveAddress2,
-          unit: item.unit ? item.unit : "",
-          showVolume: item.volume * item.outPrice,
-          show_strikePrice: item.show_strikePrice,
-          buyVolume: item.buyVolume,
-        };
+        this.MinNumber = (value - 1) * this.PageSize;
+        this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
       }
-
-      this.$bus.$emit("OPEN_STATUS_DIALOG", {
-        title: "WARNING",
-        layout: "layout1",
-        conText: `<p>you will swap<span> ${fixD(
-          data.show_strikePrice * data.buyVolume,
-          8
-        )} ${data.token}</span> to <span> ${fixD(data.buyVolume, 8)} ${
-          data.totoken
-        }</span></p>`,
-        activeTip: true,
-        activeTipText1: "Please double check the price above，",
-        activeTipText2: "Helmet team will not cover your loss on this.",
-        loading: false,
-        button: true,
-        buttonText: "Confirm",
-        showDialog: true,
-      });
-      this.$bus.$on("PROCESS_ACTION", (res) => {
-        if (res) {
-          onExercise(data, data.flag, (status) => {
-            if (status == "success") {
-              this.getList();
+    },
+    getBindItem(bidID) {
+      const BidContracts = getContract(OrderABI, OrderAddress);
+      return BidContracts.methods.bids(bidID).call();
+    },
+    getPolicysList() {
+      getInsuranceList().then((res) => {
+        let nowDate = parseInt(moment.now() / 1000);
+        if (res && res.data.data.options) {
+          let Account = window.CURRENTADDRESS;
+          const ReturnList = res.data.data.options;
+          const AskAssign = [];
+          const BidAssign = [];
+          const FilterList = ReturnList.filter(
+            (item) => item.expiry * 1 + 5814000 > nowDate
+          );
+          FilterList.forEach((item) => {
+            const CurrentInsurance = getCurrentInsurance({
+              CollateralAddress: item.collateral,
+              UnderlyingAddress: item.underlying,
+            });
+            if (CurrentInsurance) {
+              let {
+                Type,
+                ShowExpiry,
+                StrikePriceDecimals,
+                CollateralSymbol,
+                CollateralAddress,
+                CollateralDecimals,
+                UnderlyingSymbol,
+                UnderlyingAddress,
+                UnderlyingDecimals,
+                SettleTokenSymbol,
+                SettleTokenDecimals,
+                PolicyPriceDecimals,
+                CallToken,
+                PutToken,
+              } = CurrentInsurance;
+              const ResultItem = {
+                Type,
+                Expiry: item.expiry,
+                ShowExpiry,
+                Long: item.long,
+                Short: item.short,
+                ShowStrikePrice:
+                  Type === "Call"
+                    ? fromWei(item.strikePrice, StrikePriceDecimals)
+                    : 1 / fromWei(item.strikePrice, StrikePriceDecimals),
+                StrikePrice: item.strikePrice,
+                CollateralAddress: item.collateral,
+                CollateralSymbol,
+                CollateralDecimals,
+                UnderlyingAddress: item.underlying,
+                UnderlyingSymbol,
+                UnderlyingDecimals,
+                CallToken,
+                PutToken,
+              };
+              item.asks.filter((itemAsk) => {
+                const ResultItemAsk = {
+                  Binds: itemAsk.binds,
+                  AskID: itemAsk.askID,
+                  IsCancel: itemAsk.isCancel,
+                  ShowID:
+                    itemAsk.seller.substr(0, 2) +
+                    itemAsk.seller.substr(2, 3) +
+                    "..." +
+                    itemAsk.seller.substr(-4).toUpperCase(),
+                  SettleTokenSymbol,
+                  ShowPrice: fromWei(itemAsk.price, PolicyPriceDecimals),
+                  Price: itemAsk.price,
+                  Volume: itemAsk.volume,
+                };
+                const AllItem = Object.assign(ResultItemAsk, ResultItem);
+                AskAssign.push(AllItem);
+              });
             }
           });
+          AskAssign.forEach((itemAsks) => {
+            const CurrentInsurance = getCurrentInsurance({
+              CollateralAddress: itemAsks.CollateralAddress,
+              UnderlyingAddress: itemAsks.UnderlyingAddress,
+            });
+
+            let { StrikePriceDecimals, CollateralDecimals } = CurrentInsurance;
+            if (itemAsks.Binds.length) {
+              itemAsks.Binds.forEach((itemBid) => {
+                if (
+                  Account &&
+                  itemBid.buyer.toUpperCase() === Account.toUpperCase()
+                ) {
+                  const ResultItemBid = {
+                    BidID: itemBid.bidID,
+                    Volume: itemAsks.volume,
+                    ShowVolume: fromWei(itemBid.volume, CollateralDecimals),
+                    Premium: new BigNumber(
+                      (
+                        itemAsks.ShowPrice *
+                        fromWei(itemBid.volume, CollateralDecimals)
+                      ).toFixed(8)
+                    ).toString(),
+                  };
+                  const ReturnItem = Object.assign(ResultItemBid, itemAsks);
+                  if (ReturnItem.Type === "Put") {
+                    ReturnItem.ShowVolume = Number(
+                      ReturnItem.ShowVolume /
+                        (1 / fromWei(itemAsks.StrikePrice, StrikePriceDecimals))
+                    ).toFixed(8);
+                  } else {
+                    ReturnItem.ShowVolume = Number(
+                      ReturnItem.ShowVolume
+                    ).toFixed(8);
+                  }
+
+                  BidAssign.push(ReturnItem);
+                }
+              });
+            }
+          });
+          if (
+            FilterList.length === 0 ||
+            AskAssign.length === 0 ||
+            BidAssign.length === 0
+          ) {
+            this.isLoading = false;
+          }
+          Promise.all(
+            BidAssign.map((itemBids) => this.getBindItem(itemBids.BidID))
+          ).then((BidAssignList) => {
+            let returnList = BidAssign.map((list, index) => {
+              list.remain = BidAssignList[index].remain;
+              return list;
+            });
+            returnList = returnList.filter((filter) => filter.remain !== "0");
+            this.PolicyList = returnList;
+            this.isLoading = false;
+          });
         }
-        data = {};
       });
+    },
+    getLongApporve(data) {
+      let Account = window.CURRENTADDRESS;
+      const Erc20ContractsLong = getContract(ERC20ABI.abi, data.Long);
+      return Erc20ContractsLong.methods
+        .allowance(Account, OrderAddress)
+        .call()
+        .then((res) => {
+          if (Number(res) > 0) {
+            return true;
+          }
+          return false;
+        });
+    },
+    getUnderlyingApprove(data) {
+      let Account = window.CURRENTADDRESS;
+      const Erc20ContractsLong = getContract(
+        ERC20ABI.abi,
+        data.UnderlyingAddress
+      );
+      return Erc20ContractsLong.methods
+        .allowance(Account, OrderAddress)
+        .call()
+        .then((res) => {
+          if (Number(res) > 0) {
+            return true;
+          }
+          return false;
+        });
+    },
+    actionApproveUnderlying(data) {
+      this.SuccessVisible = false;
+      const Erc20Contracts = getContract(ERC20ABI.abi, data.UnderlyingAddress);
+      const Infinitys =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      let Account = window.CURRENTADDRESS;
+      Erc20Contracts.methods
+        .approve(OrderAddress, Infinitys)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          this.WaitingText = `<p>You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.SuccessHash = receipt.transactionHash;
+            this.actionWithDraw(data);
+          }
+        })
+        .on("error", (ereor) => {
+          this.WaitingVisible = false;
+        });
+    },
+    actionApproveLong(data, approveFlag) {
+      const Erc20Contracts = getContract(ERC20ABI.abi, data.Long);
+      const Infinitys =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      let Account = window.CURRENTADDRESS;
+      Erc20Contracts.methods
+        .approve(OrderAddress, Infinitys)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          this.WaitingText = `<p>You will approve <b>LONG</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.SuccessHash = receipt.transactionHash;
+            if (approveFlag) {
+              this.actionWithDraw(data);
+            } else {
+              this.actionApproveUnderlying(data);
+            }
+          }
+        })
+        .on("error", (ereor) => {
+          this.WaitingVisible = false;
+        });
+    },
+    async toActive(data) {
+      let LongApproveStatus = await this.getLongApporve(data);
+      let UnderlyingApproveStatus = await this.getUnderlyingApprove(data);
+      console.log(LongApproveStatus, UnderlyingApproveStatus);
+      if (!LongApproveStatus && !UnderlyingApproveStatus) {
+        this.actionApproveLong(data);
+        return;
+      }
+      if (!LongApproveStatus && UnderlyingApproveStatus) {
+        this.actionApproveLong(data, true);
+        return;
+      }
+      if (!UnderlyingApproveStatus && LongApproveStatus) {
+        this.actionApproveUnderlying(data);
+        return;
+      }
+      if (LongApproveStatus && UnderlyingApproveStatus) {
+        this.actionWithDraw(data);
+        return;
+      }
+    },
+    actionWithDraw(data) {
+      let Account = window.CURRENTADDRESS;
+      let Contracts = getContract(OrderABI, OrderAddress);
+      Contracts.methods
+        .exercise(data.BidID)
+        .send({ from: Account })
+        .on("transactionHash", (hash) => {
+          this.WaitingVisible = true;
+          // this.WaitingText = `<p>You will approve <b>LONG</b> to <b>Helmet.insure</b></p>`;
+        })
+        .on("receipt", (receipt) => {
+          if (!this.SuccessVisible) {
+            this.SuccessHash = receipt.transactionHash;
+            this.WaitingVisible = false;
+            this.SuccessVisible = true;
+            this.getPolicysList();
+          }
+        })
+        .on("error", function (error) {
+          this.WaitingVisible = false;
+          this.SuccessVisible = false;
+        });
     },
     async HBURGERPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa"
       );
@@ -623,9 +531,9 @@ export default {
     },
     async LISHIPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417"
       );
@@ -680,9 +588,9 @@ export default {
     },
     async hMATHPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0xdD9b5801e8A38ef7A728A42492699521C6A7379b"
       );
@@ -737,9 +645,9 @@ export default {
     },
     async HCCTIIPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522"
       );
@@ -794,9 +702,9 @@ export default {
     },
     async hDODOPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3"
       );
@@ -851,9 +759,9 @@ export default {
     },
     async hTPTPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
         "hTPT"
@@ -910,9 +818,9 @@ export default {
     },
     async QFEIPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a"
       );
@@ -966,9 +874,9 @@ export default {
     },
     async qHELMETPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99"
       );
@@ -1022,9 +930,9 @@ export default {
     },
     async xhBURGERPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0xCa7597633927A98B800738eD5CD2933a74a80e8c"
       );
@@ -1078,9 +986,9 @@ export default {
     },
     async SHIBHRPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
         "SHIBh"
@@ -1137,9 +1045,9 @@ export default {
     },
     async HWINGSRPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026"
       );
@@ -1194,9 +1102,9 @@ export default {
     },
     async HMTRGPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0xa561926e81decb74b3d11e14680b3f6d1c5012bd"
       );
@@ -1251,9 +1159,9 @@ export default {
     },
     async HBABYPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624"
       );
@@ -1308,9 +1216,9 @@ export default {
     },
     async HBMXXPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44"
       );
@@ -1365,9 +1273,9 @@ export default {
     },
     async HARGONPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x4ce2d9804da7583c02f80fec087aea1d137214eb"
       );
@@ -1422,9 +1330,9 @@ export default {
     },
     async HMCRNPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf"
       );
@@ -1478,9 +1386,9 @@ export default {
     },
     async HWIZARDPolicy() {
       let myAddress =
-        this.$store.state.userInfo.data &&
-        this.$store.state.userInfo.data.account &&
-        this.$store.state.userInfo.data.account.toLowerCase();
+        this.$store.state.userInfo &&
+        this.$store.state.userInfo.account &&
+        this.$store.state.userInfo.account.toLowerCase();
       let volume = await getBalance(
         "0x792b733af7b9b83331f90dbbd297e519258b09bc"
       );
@@ -1532,22 +1440,12 @@ export default {
         return resultItem;
       }
     },
-    handleClickChagePage(index) {
-      index = index - 1;
-      this.page = index;
-      let page = index;
-      let list = this.FilterList.slice(
-        this.page * this.limit,
-        (page + 1) * this.limit
-      );
-      this.showList = list;
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .icon {
   width: 24px;
   height: 24px;
@@ -1555,7 +1453,16 @@ export default {
   fill: #787878;
   overflow: hidden;
 }
+.pagination {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 0;
+}
 @media screen and (min-width: 750px) {
+  .H5 {
+    display: none;
+  }
   .my_policy {
     position: relative;
     min-height: 600px;
@@ -1580,6 +1487,9 @@ export default {
         }
       }
     }
+    .my_policy_wrap {
+      width: 100%;
+    }
     .policy_item {
       width: 100%;
       height: 90px;
@@ -1592,143 +1502,141 @@ export default {
       border-radius: 5px;
       align-items: center;
       padding: 0 20px;
-      section {
-        &:nth-of-type(1) {
-          flex: 5;
-          min-width: 300px;
-          > p {
-            display: flex;
-            align-items: center;
-            span {
+      .policy_item_id_web {
+        flex: 5;
+        min-width: 300px;
+        > p {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            @include themeify {
+              color: themed("media_icon");
+            }
+            line-height: 14px;
+            &:nth-of-type(1) {
+              width: 90px;
+              display: block;
+            }
+            &:nth-of-type(2) {
+              margin-left: 52px;
+            }
+          }
+        }
+        > span {
+          margin-top: 10px;
+          font-size: 16px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-left: 4px;
+          }
+          .call_icon {
+            background-image: url("../../assets/img/helmet/tablecall.png");
+          }
+          .put_icon {
+            background-image: url("../../assets/img/helmet/tableput.png");
+          }
+        }
+        > .call_text {
+          color: #00b900;
+        }
+        > .put_text {
+          color: #dc3545;
+        }
+      }
+      .policy_item_strikeprice_web {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        min-width: 150px;
+        p {
+          &:nth-of-type(2) {
+            margin-top: 12px;
+          }
+          span {
+            &:nth-of-type(1) {
               font-size: 14px;
-              font-family: IBMPlexSans;
+              font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
                 color: themed("media_icon");
               }
               line-height: 14px;
-              &:nth-of-type(1) {
-                width: 90px;
-                display: block;
-              }
-              &:nth-of-type(2) {
-                margin-left: 52px;
-              }
             }
-          }
-          > span {
-            margin-top: 10px;
-            font-size: 16px;
-            font-family: IBMPlexSans-Bold, IBMPlexSans;
-            font-weight: bold;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-            i {
-              display: inline-block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-size: cover;
-              margin-left: 4px;
-            }
-            .call_icon {
-              background-image: url("../../assets/img/helmet/tablecall.png");
-            }
-            .put_icon {
-              background-image: url("../../assets/img/helmet/tableput.png");
-            }
-          }
-          > .call_text {
-            color: #00b900;
-          }
-          > .put_text {
-            color: #dc3545;
-          }
-        }
-        &:nth-of-type(2) {
-          flex: 4;
-          display: flex;
-          flex-direction: column;
-          min-width: 150px;
-          p {
             &:nth-of-type(2) {
-              margin-top: 12px;
-            }
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
-              &:nth-of-type(2) {
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-              }
+              line-height: 14px;
             }
           }
         }
-        &:nth-of-type(3) {
-          flex: 4;
-          display: flex;
-          flex-direction: column;
-          min-width: 200px;
-          p {
+      }
+      .policy_item_price_web {
+        flex: 4;
+        display: flex;
+        flex-direction: column;
+        min-width: 200px;
+        p {
+          &:nth-of-type(2) {
+            margin-top: 12px;
+          }
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: themed("media_icon");
+              }
+              line-height: 14px;
+            }
             &:nth-of-type(2) {
-              margin-top: 12px;
-            }
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
-              &:nth-of-type(2) {
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-              }
+              line-height: 14px;
             }
           }
         }
-        &:nth-of-type(4) {
-          flex: 3;
+      }
+      .policy_item_action_web {
+        flex: 3;
+        display: flex;
+        justify-content: flex-end;
+        min-width: 120px;
+        button {
+          padding: 0px 10px;
+          height: 36px;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
+          border-radius: 5px;
+          margin-left: 20px;
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          line-height: 24px;
+          font-weight: 500;
           display: flex;
-          justify-content: flex-end;
-          min-width: 120px;
-          button {
-            padding: 0px 10px;
-            height: 36px;
-            @include themeify {
-              background: themed("insure_button");
-              border: 1px solid themed("insure_button_border");
-              color: themed("insure_button_text");
-            }
-            border-radius: 5px;
-            margin-left: 20px;
-            font-size: 14px;
-            font-family: HelveticaNeue;
-            line-height: 24px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 92px;
-            &:hover {
-              border: 1px solid themed("color-fd7e14") !important;
-            }
+          align-items: center;
+          justify-content: center;
+          min-width: 92px;
+          &:hover {
+            border: 1px solid themed("color-fd7e14") !important;
           }
         }
       }
@@ -1736,22 +1644,16 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .WEB {
+    display: none;
+  }
   .my_policy {
     position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
     margin: 0 10px;
-    .policy_item {
-      display: none;
-    }
-    .loading {
-      width: 100%;
-      margin: auto 0;
-    }
-    .pages {
-      width: 100%;
-    }
+
     .policy_title {
       width: 100%;
       height: 44px;
@@ -1763,7 +1665,10 @@ export default {
         }
       }
     }
-    .policy_item_H5 {
+    .my_policy_wrap {
+      width: 100%;
+    }
+    .policy_item {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -1775,140 +1680,138 @@ export default {
       box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
       border-radius: 5px;
       padding: 20px 16px;
-      section {
-        &:nth-of-type(1) {
-          > p {
-            display: flex;
-            align-items: center;
-            span {
+      .policy_item_id_h5 {
+        > p {
+          display: flex;
+          align-items: center;
+          span {
+            font-size: 14px;
+            font-family: IBMPlexSans;
+            @include themeify {
+              color: themed("media_icon");
+            }
+            line-height: 14px;
+            &:nth-of-type(1) {
+              width: 90px;
+              display: block;
+            }
+          }
+        }
+      }
+      .policy_item_type_h5 {
+        display: flex;
+        flex-direction: column;
+        > span {
+          margin-top: 10px;
+          font-size: 16px;
+          font-family: IBMPlexSans-Bold, IBMPlexSans;
+          font-weight: bold;
+          line-height: 24px;
+          display: flex;
+          align-items: center;
+          i {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            margin-left: 4px;
+          }
+          .call_icon {
+            background-image: url("../../assets/img/helmet/tablecall.png");
+          }
+          .put_icon {
+            background-image: url("../../assets/img/helmet/tableput.png");
+          }
+        }
+        > .call_text {
+          color: #00b900;
+        }
+        > .put_text {
+          color: #dc3545;
+        }
+      }
+      .policy_item_price_h5 {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        p {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          span {
+            &:nth-of-type(1) {
               font-size: 14px;
-              font-family: IBMPlexSans;
+              font-family: PingFangSC-Regular, PingFang SC;
               @include themeify {
                 color: themed("media_icon");
               }
               line-height: 14px;
-              &:nth-of-type(1) {
-                width: 90px;
-                display: block;
+            }
+            &:nth-of-type(2) {
+              margin-top: 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
               }
+              line-height: 14px;
+              font-weight: 500;
             }
           }
         }
-        &:nth-of-type(2) {
+      }
+      .policy_item_volume_h5 {
+        display: flex;
+        align-items: center;
+        margin-top: 16px;
+        p {
           display: flex;
           flex-direction: column;
-          > span {
-            margin-top: 10px;
-            font-size: 16px;
-            font-family: IBMPlexSans-Bold, IBMPlexSans;
-            font-weight: bold;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-            i {
-              display: inline-block;
-              width: 16px;
-              height: 16px;
-              background-repeat: no-repeat;
-              background-size: cover;
-              margin-left: 4px;
+          flex: 1;
+          span {
+            &:nth-of-type(1) {
+              font-size: 14px;
+              font-family: PingFangSC-Regular, PingFang SC;
+              @include themeify {
+                color: themed("media_icon");
+              }
+              line-height: 14px;
             }
-            .call_icon {
-              background-image: url("../../assets/img/helmet/tablecall.png");
+            &:nth-of-type(2) {
+              margin-top: 4px;
+              font-size: 14px;
+              font-family: IBMPlexSans;
+              @include themeify {
+                color: themed("color-17173a");
+              }
+              line-height: 14px;
+              font-weight: 500;
             }
-            .put_icon {
-              background-image: url("../../assets/img/helmet/tableput.png");
-            }
-          }
-          > .call_text {
-            color: #00b900;
-          }
-          > .put_text {
-            color: #dc3545;
           }
         }
-        &:nth-of-type(3) {
+      }
+      .policy_item_action_h5 {
+        display: flex;
+        margin-top: 16px;
+        button {
+          width: 100%;
+          height: 36px;
+          border-radius: 5px;
+          @include themeify {
+            background: themed("insure_button");
+            border: 1px solid themed("insure_button_border");
+            color: themed("insure_button_text");
+          }
+          font-size: 14px;
+          font-family: HelveticaNeue;
+          line-height: 24px;
+          font-weight: 500;
           display: flex;
           align-items: center;
-          margin-top: 16px;
-          p {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-                font-weight: 500;
-              }
-            }
-          }
-        }
-        &:nth-of-type(4) {
-          display: flex;
-          align-items: center;
-          margin-top: 16px;
-          p {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            span {
-              &:nth-of-type(1) {
-                font-size: 14px;
-                font-family: PingFangSC-Regular, PingFang SC;
-                @include themeify {
-                  color: themed("media_icon");
-                }
-                line-height: 14px;
-              }
-              &:nth-of-type(2) {
-                margin-top: 4px;
-                font-size: 14px;
-                font-family: IBMPlexSans;
-                @include themeify {
-                  color: themed("color-17173a");
-                }
-                line-height: 14px;
-                font-weight: 500;
-              }
-            }
-          }
-        }
-        &:nth-of-type(5) {
-          display: flex;
-          margin-top: 16px;
-          button {
-            width: 100%;
-            height: 36px;
-            border-radius: 5px;
-            @include themeify {
-              background: themed("insure_button");
-              border: 1px solid themed("insure_button_border");
-              color: themed("insure_button_text");
-            }
-            font-size: 14px;
-            font-family: HelveticaNeue;
-            line-height: 24px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            &:hover {
-              border: 1px solid themed("color-fd7e14") !important;
-            }
+          justify-content: center;
+          &:hover {
+            border: 1px solid themed("color-fd7e14") !important;
           }
         }
       }

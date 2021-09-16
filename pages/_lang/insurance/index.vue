@@ -1,21 +1,21 @@
 <template>
   <div class="main_container">
-    <Title />
+    <Banner />
     <div class="home_container">
       <InsuranceData />
-      <HelmetBurning />
-      <InsureanceList />
+      <HelmetBurn />
+      <InsuranceList />
     </div>
   </div>
 </template>
 <script>
-import InsuranceData from "~/components/insurance/insurance-data.vue";
-import HelmetBurning from "~/components/insurance/HelmetBurning.vue";
-import InsureanceList from "~/components/insurance/insurance-list.vue";
-import Title from "~/components/insurance/title.vue";
+import InsuranceData from "~/components/insurance/data.vue";
+import HelmetBurn from "~/components/insurance/burn.vue";
+import InsuranceList from "~/components/insurance/list.vue";
+import Banner from "~/components/insurance/banner.vue";
 export default {
   layout: "home",
-  components: { InsuranceData, InsureanceList, HelmetBurning, Title }, 
+  components: { InsuranceData, InsuranceList, HelmetBurn, Banner },
 };
 </script>
 <style lang="scss">

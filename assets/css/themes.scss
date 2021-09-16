@@ -112,3 +112,16 @@ $themes: (
     lptmining_color3: rgba(255, 255, 255, 0.38),
   ),
 );
+@mixin themeify {
+  @each $theme-name, $theme-map in $themes {
+    $theme-map: $theme-map !global;
+    // body[data-theme=#{$theme-name}] & {
+    body.#{$theme-name} & {
+      @content;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}

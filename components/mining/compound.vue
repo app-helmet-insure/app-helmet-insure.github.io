@@ -39,7 +39,7 @@ export default {
       this.showFlag = true;
       this.title = data.title;
       this.number = data.number;
-      this.poolAddress = data.poolAddress;
+      this.poolAddress = data.PoolAddress;
     });
     this.$bus.$on("CLOSE_COMPOUND", () => {
       this.showFlag = false;
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .compound_mask {
   width: 100%;
   height: 100%;

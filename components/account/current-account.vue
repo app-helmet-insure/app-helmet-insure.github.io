@@ -73,8 +73,8 @@ export default {
       this.closeDialog();
     },
     userInfoWatch(newValue) {
-      let account = newValue.data.account;
-      this.account = newValue.data.account;
+      let account = newValue.account;
+      this.account = newValue.account;
       if (account) {
         this.accountText =
           account.substr(0, 1) +
@@ -106,7 +106,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and(min-width:750px) {
   .current-account {
     position: fixed;
@@ -161,7 +161,7 @@ export default {
           flex-direction: column;
           > span {
             font-size: 14px;
-            color: $text-d;
+            color: #7d7d7d;
           }
         }
         .right {
@@ -324,7 +324,7 @@ export default {
           flex-direction: column;
           > span {
             font-size: 14px;
-            color: $text-d;
+            color: #7d7d7d;
           }
         }
         .right {

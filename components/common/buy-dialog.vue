@@ -107,8 +107,7 @@ import {
 } from "~/interface/swap.js";
 import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
 import BigNumber from "bignumber.js";
-import { fromWei } from "~/assets/utils/web3-fun.js";
-import { web3 } from "~/assets/utils/web3-obj.js";
+import { fromWei } from "~/web3/index.js";
 export default {
   components: {
     VueLazyload,
@@ -343,7 +342,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 .mask {
   width: 100%;
   height: 100%;

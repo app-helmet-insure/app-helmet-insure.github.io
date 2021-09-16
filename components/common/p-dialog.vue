@@ -65,7 +65,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and (min-width: 750px) {
   .p-dialog-content {
     width: 496px;
@@ -132,25 +132,25 @@ export default {
       padding: 0px 10px;
       &.cancel {
         background: none;
-        border: 1px solid $main-color;
-        color: $main-color;
+        border: 1px solid #fd7e14;
+        color: #fd7e14;
         &:hover {
-          border: 1px solid $main-hover;
-          color: $main-hover;
+          border: 1px solid #ffa000;
+          color: #ffa000;
         }
       }
       &.confirm {
-        background: $main-color;
-        color: $text-m;
+        background: #fd7e14;
+        color: #ffffff;
         &:hover {
-          background: $main-hover;
+          background: #ffa000;
         }
       }
       &:disabled {
-        background: $text-d !important;
+        background: #7d7d7d !important;
         cursor: not-allowed;
         &:hover {
-          background: $text-d !important;
+          background: #7d7d7d !important;
         }
       }
     }

@@ -33,7 +33,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "~/assets/css/base.scss";
+@import "~/assets/css/themes.scss";
 @media screen and(min-width:750px) {
   .wraper {
     display: none;
@@ -56,7 +56,7 @@ export default {
   }
   .wraper_slot {
     flex: 1;
-    overflow-y: scroll;
+    overflow-x: auto;
   }
 }
 </style>

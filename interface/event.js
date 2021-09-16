@@ -236,11 +236,12 @@ export const getInsuranceStatus = () => {
     },
   }).then((res) => {
     let Status = res.data.data.indexingStatusForCurrentVersion.health;
+    console.log(res);
+    return Status;
   });
 };
-getInsuranceStatus();
-//get Insurance
-export const getInsuranceList = async function() {
+
+const getGraphList1 = async function() {
   return Axios({
     method: "post",
     url:
@@ -276,6 +277,52 @@ export const getInsuranceList = async function() {
               `,
     },
   });
+};
+const getGraphList2 = async function() {
+  return Axios({
+    method: "post",
+    url: "https://graph.helmet.insure/bsc/subgraphs/name/helmet/insure",
+    data: {
+      query: `{
+                options(first:1000) {
+                  id
+                  creator
+                  collateral 
+                  underlying
+                  strikePrice
+                  expiry
+                  long
+                  short
+                  asks(first:1000) {
+                    askID
+                    seller
+                    volume
+                    settleToken
+                    price
+                    isCancel
+                    binds {
+                      bidID
+                      askID
+                      buyer
+                      volume
+                      amount
+                    }
+                  }
+                }
+              }
+              `,
+    },
+  });
+};
+//get Insurance
+export const getInsuranceList = async function() {
+  let Status = await getInsuranceStatus();
+  console.log("The Graph is " + Status);
+  if (Status === "healthy") {
+    return getGraphList1();
+  } else {
+    return getGraphList2();
+  }
 };
 export const getLongType = async function() {
   let rightTime = parseInt(moment.now());

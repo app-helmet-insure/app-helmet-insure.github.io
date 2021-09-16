@@ -1,4 +1,4 @@
-import MiningABI from "../abi/MiningABI.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../web3/index.js";
 import { toWei } from "./index";
 

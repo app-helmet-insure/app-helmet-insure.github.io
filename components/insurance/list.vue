@@ -535,7 +535,7 @@ export default {
       right: 10px;
       width: 24px;
       height: 24px;
-      top: 10px;
+      top: 20px;
       fill: #ccc;
       cursor: pointer;
     }
@@ -739,12 +739,10 @@ export default {
       }
     }
   }
-  .insurance_detail_h5 {
-  }
   .checkType {
     display: flex;
     height: 32px;
-    margin: 16px 10px;
+    margin: 0 10px 16px 10px;
     @include themeify {
       background: themed("color-e8e8eb");
     }

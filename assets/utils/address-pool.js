@@ -1,12 +1,12 @@
 // import {web3} from './web3-obj.js';
-import addressList from "~/abi/config.js";
+import addressList from "~/web3/abis/config.js";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import precision from "~/assets/js/precision.js";
 import { Contract } from "@ethersproject/contracts";
 import { getNetwork } from "@ethersproject/networks";
 import { getDefaultProvider } from "@ethersproject/providers";
-import IPancakePair from "~/abi/IPancakePair.json";
-import ERC20 from "~/abi/ERC20ABI.json";
+import IPancakePair from "~/web3/abis/IPancakePair.json";
+import ERC20 from "~/web3/abis/ERC20ABI.json";
 
 const selectNetwork = (charID) => {
     switch (charID) {

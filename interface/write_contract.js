@@ -1,12 +1,12 @@
-import MiningABI from "~/abi/MiningABI.json";
-import ApproveABI from "~/abi/IPancakePair.json";
-import CompoundABI from "~/abi/helmet_abi.json";
-import OrderABI from "~/abi/OrderABI.json";
-import ChainSwapABI from "~/abi/ChainSwap.json";
-import BurnSwapABI from "~/abi/BurnSwap.json";
-import MigrationABI from "~/abi/Migration.json";
-import CakePoolABI from "~/abi/CakePoolABI.json";
-import IIOABI from "~/abi/iio_abi.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
+import ApproveABI from "~/web3/abis/IPancakePair.json";
+import CompoundABI from "~/web3/abis/helmet_abi.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
+import ChainSwapABI from "~/web3/abis/ChainSwap.json";
+import BurnSwapABI from "~/web3/abis/BurnSwap.json";
+import MigrationABI from "~/web3/abis/Migration.json";
+import CakePoolABI from "~/web3/abis/CakePoolABI.json";
+import IIOABI from "~/web3/abis/iio_abi.json";
 
 import {
   Web3Contract,

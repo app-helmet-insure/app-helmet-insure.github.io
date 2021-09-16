@@ -38,7 +38,7 @@ import { getAccounts } from "~/interface/common_contract.js";
 import { fromWei } from "~/web3/index.js";
 
 import { TotalBurns } from "~/interface/read_contract.js";
-import GuardClaimABI from "~/abi/GuardClaim.json";
+import GuardClaimABI from "~/web3/abis/GuardClaim.json";
 const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";
 const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
 export default {

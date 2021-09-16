@@ -1,7 +1,7 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { cloneDeep } from "lodash";
 import Web3 from "web3";
-import ERC20 from "../abi/ERC20ABI.json";
+import ERC20 from "~/web3/abis/ERC20ABI.json";
 import { Contract, Provider } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
 const BSCChainId = 56

@@ -84,7 +84,7 @@
 </template>
 <script>
 import { fixD, addCommom } from "~/assets/js/util.js";
-import ERC20ABI from "~/abi/ERC20ABI.json";
+import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import {
   getLongType,
   getLongTokenValue,
@@ -135,6 +135,7 @@ export default {
         this.TotalHelmetsBorrowedVolume = res;
       });
       this.getHelmetVolume().then((res) => {
+        console.log(res);
         this.Helmetvolume = res;
       });
       // this.getGuardVolume().then((res) => {

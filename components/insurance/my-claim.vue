@@ -119,7 +119,7 @@ import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { getInsuranceList } from "~/interface/event.js";
 import { BalanceOf, Settleable } from "~/interface/read_contract.js";
-import FactoryABI from "../../abi/FactoryABI.json";
+import FactoryABI from "~/web3/abis/FactoryABI.json";
 import { getContract } from "../../web3/index.js";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";

@@ -1,8 +1,8 @@
 import { web3 } from "~/assets/utils/web3-obj.js";
 import { Contract, Provider } from "ethers-multicall";
-import MiningABI from "~/abi/MiningABI.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
 import { Web3Provider } from "@ethersproject/providers";
-import addressList from "~/abi/config.js";
+import addressList from "~/web3/abis/config.js";
 let OrderContractAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 // 1: '0xeefba1e63905ef1d7acba5a8513c70307c1ce441',
 // 3: '0xF24b01476a55d635118ca848fbc7Dab69d403be3',

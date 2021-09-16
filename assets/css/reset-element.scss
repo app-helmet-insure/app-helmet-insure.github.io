@@ -104,3 +104,9 @@
     color: #fd7e14;
   }
 }
+.el-dialog,
+.el-pager li {
+  @include themeify {
+    background: themed("color-ffffff");
+  }
+}

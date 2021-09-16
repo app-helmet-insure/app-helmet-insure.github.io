@@ -199,7 +199,7 @@ import countTo from "vue-count-to";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
 import moment from "moment";
-import MiningABI from "../../abi/MiningABI.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
 import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,

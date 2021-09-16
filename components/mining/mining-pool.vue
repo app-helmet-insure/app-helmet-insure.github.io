@@ -270,7 +270,7 @@ import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import countTo from "vue-count-to";
 import { addToken } from "~/web3/wallet.js";
-import ERC20ABI from "../../abi/ERC20ABI.json";
+import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,

@@ -147,7 +147,7 @@ import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
 import { fromWei } from "~/web3/index.js";
 import { getCurrentInsurance } from "~/config/insurance.js";
-import OrderABI from "../../abi/OrderABI.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";

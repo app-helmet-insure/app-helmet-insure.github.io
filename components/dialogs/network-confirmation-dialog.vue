@@ -61,16 +61,22 @@ export default {
 </script>
 
 <style lang='scss' >
+@import "~/assets/css/themes.scss";
 .el-dialog__title {
   font-size: 16px;
   font-weight: 600;
+  @include themeify {
+    color: themed("color-17173a");
+  }
 }
 .network_dialog_body {
   > p {
     margin-top: 10px;
     font-size: 14px;
     line-height: 24px;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
   }
 }
 @media screen and(min-width:750px) {
@@ -78,6 +84,11 @@ export default {
     border-radius: 10px !important;
     width: 500px !important;
     padding: 10px 0;
+    .el-dialog__header {
+      @include themeify {
+        color: themed("color-17173a");
+      }
+    }
     .el-dialog__close {
       margin-top: 10px;
     }

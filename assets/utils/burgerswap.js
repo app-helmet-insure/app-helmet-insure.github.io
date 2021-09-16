@@ -1,5 +1,5 @@
-import query_abi from '~/abi/query_abi.json';
-import IPancakePair from '~/abi/IPancakePair.json';
+import query_abi from '~/web3/abis/query_abi.json';
+import IPancakePair from '~/web3/abis/IPancakePair.json';
 import { getAddress, getWei_2 } from './address-pool';
 import Message from '~/components/common/Message';
 import { web3 } from '~/assets/utils/web3-obj.js';

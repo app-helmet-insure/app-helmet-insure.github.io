@@ -1,4 +1,4 @@
-import MiningABI from "~/abi/MiningABI.json";
+import MiningABI from "./abis/MiningABI.json";
 import Web3 from "web3";
 import { cloneDeep } from "lodash";
 import { JsonRpcProvider } from "@ethersproject/providers";
@@ -102,6 +102,7 @@ export const HelmetBalance = () => {
 export const TokenBalance = (TokenAddress, Decimals, Owner) => {
   const Contracts = getContract(MiningABI, TokenAddress);
   const Account = window.CURRENTADDRESS;
+  console.log(TokenAddress, Decimals, Owner, Account);
   return Contracts.methods
     .balanceOf(Owner || Account)
     .call()

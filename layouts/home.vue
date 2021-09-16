@@ -67,7 +67,7 @@ import {
   watchAccountChange,
   watchNetWorkChange,
 } from "../web3/wallet.js";
-import {WEB3} from '../web3/index.js'
+import { WEB3 } from "../web3/index.js";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
 export default {
@@ -112,12 +112,9 @@ export default {
     },
   },
   watch: {
-    ChainID(newValue) {
-      if (newValue == 56) {
-        this.NetWorkVisible = false;
-      } else {
-        this.NetWorkVisible = true;
-      }
+    ChainID: {
+      handler: "watchChainID",
+      immediate: true,
     },
     storeThemes(newValue) {
       if (newValue) {
@@ -133,7 +130,7 @@ export default {
       this.RiskVisible = true;
     }
     this.copy();
-    window.WEB3 =WEB3();
+    window.WEB3 = WEB3();
     // 获取映射
     openMetaMaskWallet();
     watchAccountChange();
@@ -181,6 +178,14 @@ export default {
         console.error("Trigger:", e.trigger);
         copy.destroy();
       });
+    },
+    watchChainID(value) {
+      console.log(value);
+      if (value == 56) {
+        this.NetWorkVisible = false;
+      } else {
+        this.NetWorkVisible = true;
+      }
     },
   },
 };

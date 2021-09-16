@@ -55,16 +55,22 @@ export default {
 </script>
 
 <style lang='scss' >
+@import "~/assets/css/themes.scss";
 .el-dialog__title {
   font-size: 16px;
   font-weight: 600;
+  @include themeify {
+    color: themed("color-17173a");
+  }
 }
 .risk_dialog_body {
   > p {
     margin-top: 10px;
     font-size: 14px;
     line-height: 24px;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
   }
 }
 @media screen and(min-width:750px) {
@@ -99,7 +105,9 @@ export default {
         }
         label {
           font-size: 14px;
-          color: #17173a;
+          @include themeify {
+            color: themed("color-17173a");
+          }
         }
       }
       display: flex;

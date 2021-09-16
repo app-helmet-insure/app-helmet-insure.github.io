@@ -335,7 +335,8 @@ export default {
       this.showList = list;
     },
     handleClickBuy(data) {
-      if (!data.buyNum || data.buyNum > data.show_volume) {
+      console.log(data)
+      if (!data.buyNum || Number(data.buyNum) >Number( data.show_volume)) {
         return;
       }
 

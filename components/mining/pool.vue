@@ -439,6 +439,7 @@ export default {
           this.activeData.POOL_PID
         );
         this.balance.Reward2 = Reward2;
+        this.balance.Share = fixD((Withdraw / Staking) * 100, 2);
       }
     },
     // 抵押

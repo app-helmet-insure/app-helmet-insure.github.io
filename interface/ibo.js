@@ -73,6 +73,12 @@ export const getPoolInfo = (pool) => {
     poolContract.amtLow(),//最少金额
     poolContract.amtHigh(),//最大金额
   ]
+  if (pool.airdrop) {
+    const airdropContract = new Contract(pool.airdrop.address, pool.airdrop.abi)
+    promiseList.push(airdropContract.allowList(account)) // 可领取的量
+    promiseList.push(airdropContract.withdrawList(account)) // 是否已经领取过
+    promiseList.push(airdropContract.begin()) // airdrop开始时间
+  }
   // 追加可能存在的
   poolContract.time && promiseList.push(poolContract.time())
   poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
@@ -94,11 +100,37 @@ export const getPoolInfo = (pool) => {
       curUserCount,//当前参与人数
       amtLow,
       amtHigh,
-      time = 0,
-      timeSettle = 0,
-      currency_allowance = 0,
-      balanceOf = 0
     ] = resData
+      let time,
+        timeSettle,
+        currency_allowance,
+        balanceOf,
+        allowList,
+        withdrawList,
+        airdropBegin
+
+      if (pool.airdrop) {
+        allowList = resData[9]
+        withdrawList = resData[10]
+        airdropBegin = resData[11]
+        time = resData[12]
+        timeSettle = resData[13]
+        currency_allowance = resData[14]
+        balanceOf = resData[15]
+        pool.airdrop = Object.assign(pool.airdrop, {
+          begin: airdropBegin,
+          allowList: fromWei(allowList, 18).toFixed(6)*1,
+          withdrawList: {
+            'true': true,
+            'false': false
+          }[String(withdrawList)]
+        })
+      } else {
+        time = resData[9]
+        timeSettle = resData[10]
+        currency_allowance = resData[11]
+        balanceOf = resData[12]
+      }
       // time = 1629118800
       //   timeSettle = 1629118800
       // curUserCount=0
@@ -155,7 +187,7 @@ export const getPoolInfo = (pool) => {
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
-      const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
+    const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
     return Object.assign({}, pool, {
       ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
         pool.underlying.symbol
@@ -238,6 +270,20 @@ export const onClaim_ = (contractAddress,abi, callback) => {
   let myContract = new web3_.eth.Contract(abi, contractAddress);
   myContract.methods
     .settle()
+    .send({ from: window.CURRENTADDRESS })
+    .on('receipt', function() {
+      callback(true)
+    })
+    .on('error', () => {
+      callback(false)
+    })
+}
+// 第二次claim 空投
+export const onAirdrop_ = (contractAddress,abi, callback) => {
+  let web3_ = new Web3(window.ethereum)
+  let myContract = new web3_.eth.Contract(abi, contractAddress);
+  myContract.methods
+    .withdraw()
     .send({ from: window.CURRENTADDRESS })
     .on('receipt', function() {
       callback(true)

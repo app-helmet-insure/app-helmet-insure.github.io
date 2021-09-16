@@ -330,7 +330,7 @@ export default {
     },
     // 承保按钮
     handleClickBuy(data) {
-      if (!data.buyNum || data.buyNum > data.show_volume) {
+      if (!data.buyNum || Number(data.buyNum) > Number(data.show_volume)) {
         return;
       }
       let datas = {

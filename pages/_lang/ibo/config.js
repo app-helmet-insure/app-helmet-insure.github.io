@@ -1,5 +1,6 @@
 
 import starterLimitAbi from '../../../abi/IBO_StarterLimit.json'
+import AirAllowListAbi from '../../../abi/AirAllowList.json'
 import IBOTest from '../../../abi/ibo_test.json'
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
@@ -8,36 +9,36 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const iboPools = [
   {
-    name: 'PRED',
-    address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
+    name: 'MONI',
+    address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
     abi: starterLimitAbi,
-    start_at: '1631538000',
+    start_at: '1631790000',
     is_coming: false, // is_coming 为 true 则不请求合约
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
       symbol: 'HELMET',
     },
-    icon: 'PRED.png',
+    icon: 'MONI.png',
     underlying: {
-      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      address: '0x9573c88aE3e37508f87649f87c4dd5373C9F31e0',
       decimal: 18,
-      symbol: 'PRED',
-      name: 'PRED',
+      symbol: 'MONI',
+      name: 'MONI',
     },
-    amount: '2000', // token 总额
+    amount: '175000', // token 总额
     pool_info: {
-      min_allocation: 200,
-      max_allocation: 500,
-      min_swap_level: '200 Helmet',
-      maxAccount: 300,
+      min_allocation: 400,
+      max_allocation: 1000,
+      min_swap_level: '400 Helmet',
+      maxAccount: 600,
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 0.036 PRED',
-    time: '1631624400',
+    ratio: '1 HELMET = 0.675 MONI',
+    time: '1634407500',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '1388888888888888888900000000',//总释放
+    totalPurchasedAmount: '259259259259259259175000',//总释放
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
@@ -47,8 +48,16 @@ export const iboPools = [
     total: '', // 参与资金规模
     poolType: 0, // 值为 1 代表定向
     networkId: 56,
-    claimTimeTipI18n: 'IBO.IBO_text42',
-    light: true
+    claimTimeTipI18n: 'IBO.IBO_text47',
+    light: true,
+    airdrop: { // 空投
+      begin: '1634407500',
+      address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
+      abi: AirAllowListAbi,
+      amount: '175000', // 空投总额
+      withdrawList: true,//是否已领取
+      allowList: 0//可以领取的量
+    }
   },
 
   {
@@ -94,7 +103,49 @@ export const iboPools = [
     claimTimeTipI18n: 'IBO.IBO_text43',
     light: true
   },
+  {
+    name: 'PRED',
+    address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
+    abi: starterLimitAbi,
+    start_at: '1631538000',
+    is_coming: false, // is_coming 为 true 则不请求合约
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'PRED.png',
+    underlying: {
+      address: '0xbdd2e3fdb879aa42748e9d47b7359323f226ba22',
+      decimal: 18,
+      symbol: 'PRED',
+      name: 'PRED',
+    },
+    amount: '2000', // token 总额
+    pool_info: {
+      min_allocation: 200,
+      max_allocation: 500,
+      min_swap_level: '200 Helmet',
+      maxAccount: 300,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 0.036 PRED',
+    time: '1631624400',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '1388888888888888888900000000',//总释放
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
 
+    duration: '', // 完成时间
+    winningRate: '-', // 申请中签率
+    committed: '', // 超募比例
+    total: '', // 参与资金规模
+    poolType: 0, // 值为 1 代表定向
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text42',
+    light: true
+  },
   {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',

@@ -378,7 +378,7 @@ export default {
               this.getPoolInfo();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
             this.ApproveStatus = false;
@@ -401,7 +401,7 @@ export default {
               this.getPoolInfo();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
             this.StakeLoading = false;
@@ -431,7 +431,7 @@ export default {
             this.getPoolInfo();
           }
         })
-        .on("error", function (error) {
+        .on("error", (error) => {
           this.WaitingVisible = false;
           this.SuccessVisible = false;
           this.ClaimLoading = false;
@@ -461,7 +461,7 @@ export default {
             this.getPoolInfo();
           }
         })
-        .on("error", function (error) {
+        .on("error", (error) => {
           this.WaitingVisible = false;
           this.SuccessVisible = false;
           this.ExitLoading = false;

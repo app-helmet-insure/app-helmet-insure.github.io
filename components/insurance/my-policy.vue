@@ -475,7 +475,7 @@ export default {
             this.getPolicysList();
           }
         })
-        .on("error", function (error) {
+        .on("error",  (error) =>{
           this.WaitingVisible = false;
           this.SuccessVisible = false;
           this.WaitingText = "";

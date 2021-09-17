@@ -329,7 +329,7 @@ export default {
               this.getList();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
           });
@@ -348,7 +348,7 @@ export default {
               this.getList();
             }
           })
-          .on("error", function (error) {
+          .on("error", (error) => {
             this.WaitingVisible = false;
             this.SuccessVisible = false;
           });

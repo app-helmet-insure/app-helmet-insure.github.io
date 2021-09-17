@@ -238,14 +238,20 @@ export default {
     handleClickSort() {
       if (this.SortBy == 1) {
         this.SortBy = 2;
-        return (this.PolicyList = this.PolicyList.sort(
+        let FixList = this.PolicyList.sort(
           (a, b) => Number(a.show_strikePrice) - Number(b.show_strikePrice)
+        );
+        return (this.PolicyList = FixList.sort(
+          (a, b) => Number(b.sort) - Number(a.sort)
         ));
       }
       if (this.SortBy == 2) {
         this.SortBy = 1;
-        return (this.PolicyList = this.PolicyList.sort(
+        let FixList = this.PolicyList.sort(
           (a, b) => Number(b.show_strikePrice) - Number(a.show_strikePrice)
+        );
+        return (this.PolicyList = FixList.sort(
+          (a, b) => Number(b.sort) - Number(a.sort)
         ));
       }
     },
@@ -297,6 +303,7 @@ export default {
                 underlying_symbol: UnderlyingSymbol,
                 underlying_decimals: UnderlyingDecimals,
                 currentInsurance: InsuranceName,
+                sort: 1,
               };
               item.asks.filter((itemAsk) => {
                 const ResultItemAsk = {
@@ -347,18 +354,20 @@ export default {
                   AllItem.show_volume = Number(AllItem.remain).toFixed(8);
                 }
                 AllItem.premium = AllItem.remain * AllItem.show_price;
+                if (Number(AllItem.remain) === 0) {
+                  AllItem.sort = 0;
+                }
                 if (!AllItem.isCancel && AllItem.price.length <= 40) {
                   FixListPush.push(AllItem);
                 }
               });
             });
             let FixList = FixListPush.sort(
-              (a, b) => Number(b.show_volume) - Number(a.show_volume)
-            );
-            FixList = FixListPush.sort(
               (a, b) => Number(b.show_strikePrice) - Number(a.show_strikePrice)
             );
-
+            FixList = FixListPush.sort(
+              (a, b) => Number(b.sort) - Number(a.sort)
+            );
             this.PolicyList = FixList;
             this.isLoading = false;
           }

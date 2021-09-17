@@ -72,7 +72,11 @@
           {{ ActiveData.Call.CollateralSymbol }}
         </p>
         <button class="button call" @click="handleClickConfirm('Call')">
-          {{ CallApproveStatus ? $t("Insurance.Insurance_text9") : "授权" }}
+          {{
+            CallApproveStatus
+              ? $t("Insurance.Insurance_text9")
+              : $t("Table.Approve")
+          }}
         </button>
         <p
           class="insurance_tip"
@@ -157,7 +161,11 @@
           {{ ActiveData.Put.CollateralSymbol }}
         </p>
         <button class="button put" @click="handleClickConfirm('Put')">
-          {{ PutApproveStatus ? $t("Insurance.Insurance_text10") : "授权" }}
+          {{
+            PutApproveStatus
+              ? $t("Insurance.Insurance_text10")
+              : $t("Table.Approve")
+          }}
         </button>
         <p
           class="insurance_tip"

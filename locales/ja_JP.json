@@ -68,7 +68,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "貸出価格",
+    "Rent": "Premium(HELMET)",
     "Premium": "プレミアム",
     "AllRent": "プレミアム",
     "Amount": "供給ポリシー",

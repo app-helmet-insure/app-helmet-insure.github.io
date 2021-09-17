@@ -68,7 +68,7 @@
     },
     "Table": {
         "ID": "ID",
-        "Rent": "قیمت بیمه نامه(HELMET)",
+        "Rent": "Premium(HELMET)",
         "Premium": "Premium",
         "AllRent": "Premium",
         "Amount": "بیمه نامه های در عرضه",

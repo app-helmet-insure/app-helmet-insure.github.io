@@ -8,7 +8,10 @@
         <div class="insure_price">
           <p>{{ $t("Content.InsurancePrice") }}</p>
           <div class="input">
-            <el-input v-model="CallStrikePrice" type="number" />
+            <el-input
+              v-model="CallStrikePrice"
+              :maxlength="ActiveData.LastPriceDecimals + 4"
+            />
             <span
               >{{ ActiveData.Call.CollateralSymbol }}/{{
                 ActiveData.Call.UnderlyingSymbol
@@ -89,7 +92,10 @@
         <div class="insure_price">
           <p>{{ $t("Content.InsurancePrice") }}</p>
           <div class="input">
-            <el-input v-model="PutStrikePrice" type="number" />
+            <el-input
+              v-model="PutStrikePrice"
+              :maxlength="ActiveData.LastPriceDecimals + 4"
+            />
             <span
               >{{ ActiveData.Call.CollateralSymbol }}/{{
                 ActiveData.Call.UnderlyingSymbol
@@ -194,7 +200,6 @@ import OrderABI from "~/web3/abis/OrderABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
-import { Order } from "../../interface";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   props: ["ActiveData", "ActiveType"],
@@ -205,6 +210,7 @@ export default {
   data() {
     return {
       precision,
+      fixD,
       CallPremium: 0,
       PutPremium: 0,
       CallPolicyNumber: "",

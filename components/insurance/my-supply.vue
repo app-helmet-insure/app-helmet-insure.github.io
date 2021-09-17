@@ -283,7 +283,7 @@ export default {
                         (number += Number(
                           fromWei(itembid.volume, CollateralDecimals)
                         ))
-                    );
+                    );  
                   } else {
                     number = Number(
                       fromWei(itemAsk.binds[0].volume, CollateralDecimals)

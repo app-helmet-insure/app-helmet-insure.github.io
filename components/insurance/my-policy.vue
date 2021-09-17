@@ -119,9 +119,7 @@
       :DialogClose="waitingClose"
     >
       <div class="waiting_content">
-        <p>
-          {{ WaitingText }}
-        </p>
+        <p v-html="WaitingText"></p>
       </div>
     </WaitingConfirmationDialog>
     <SuccessConfirmationDialog
@@ -392,13 +390,14 @@ export default {
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
-          this.WaitingText = `<p>You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet.insure</b></p>`;
+          this.WaitingText = `You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet.insure</b>`;
         })
         .on("receipt", (receipt) => {
           if (!this.SuccessVisible) {
             this.WaitingVisible = false;
             this.SuccessVisible = true;
             this.SuccessHash = receipt.transactionHash;
+            this.WaitingText = "";
             this.actionWithDraw(data);
           }
         })
@@ -416,13 +415,14 @@ export default {
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
-          this.WaitingText = `<p>You will approve <b>LONG</b> to <b>Helmet.insure</b></p>`;
+          this.WaitingText = `You will approve <b>LONG</b> to <b>Helmet.insure</b>`;
         })
         .on("receipt", (receipt) => {
           if (!this.SuccessVisible) {
             this.WaitingVisible = false;
             this.SuccessVisible = true;
             this.SuccessHash = receipt.transactionHash;
+            this.WaitingText = "";
             if (approveFlag) {
               this.actionWithDraw(data);
             } else {
@@ -432,6 +432,7 @@ export default {
         })
         .on("error", (ereor) => {
           this.WaitingVisible = false;
+          this.WaitingText = "";
         });
     },
     async toActive(data) {
@@ -470,12 +471,14 @@ export default {
             this.SuccessHash = receipt.transactionHash;
             this.WaitingVisible = false;
             this.SuccessVisible = true;
+            this.WaitingText = "";
             this.getPolicysList();
           }
         })
         .on("error", function (error) {
           this.WaitingVisible = false;
           this.SuccessVisible = false;
+          this.WaitingText = "";
         });
     },
     async HBURGERPolicy() {

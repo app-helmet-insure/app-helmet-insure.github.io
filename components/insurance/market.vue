@@ -236,7 +236,6 @@ export default {
       }
     },
     handleClickSort() {
-      console.log(1);
       if (this.SortBy == 1) {
         this.SortBy = 2;
         return (this.PolicyList = this.PolicyList.sort(
@@ -369,6 +368,7 @@ export default {
       });
     },
     buyInsurance(data) {
+      console.log(data);
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(OrderABI, OrderAddress);
         const AskID = data.askID;
@@ -379,7 +379,7 @@ export default {
           } else {
             Volume = toWei(
               new BigNumber(
-                (data.buy_volume * (1 / data.show_strikePrice)).toFixed(6)
+                (data.buy_volume * data.show_strikePrice).toFixed(6)
               ).toString(),
               data.collateral_decimals
             );
@@ -391,6 +391,7 @@ export default {
             Volume = toWei(data.buy_volume, data.collateral_decimals);
           }
         }
+        console.log(Volume);
         const Account = window.CURRENTADDRESS;
         BuyContracts.methods
           .buy(AskID, Volume)
@@ -409,7 +410,7 @@ export default {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
               this.SuccessVisible = true;
-              getPolicyList();
+              this.getPolicyList();
             }
           })
           .on("error", (ereor) => {

@@ -68,7 +68,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "정책 가격(HELMET)",
+    "Rent": "Premium(HELMET)",
     "Premium": "프리미엄",
     "AllRent": "프리미엄",
     "Amount": "공급중인 정책",

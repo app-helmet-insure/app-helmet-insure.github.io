@@ -68,7 +68,7 @@
     },
     "Table": {
         "ID": "ID",
-        "Rent": "prix assurance(HELMET)",
+        "Rent": "Premium(HELMET)",
         "Premium": "Prime",
         "AllRent": "Prime",
         "Amount": "Assurance approvisionnement",

@@ -77,7 +77,7 @@
   },
   "Table": {
     "ID": "ID",
-    "Rent": "保单单价(HELMET)",
+    "Rent": "保费(HELMET)",
     "Premium": "保费",
     "AllRent": "总保费",
     "Amount": "保单数量",

@@ -118,8 +118,9 @@
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { getInsuranceList } from "~/interface/event.js";
-import { BalanceOf, Settleable } from "~/interface/read_contract.js";
+import { BalanceOf } from "~/interface/read_contract.js";
 import FactoryABI from "~/web3/abis/FactoryABI.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../../web3/index.js";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
@@ -194,12 +195,26 @@ export default {
         this.isLogin = newValue.isLogin;
       }
     },
+    Settleable(Seller, Short) {
+      let Contracts = getContract(FactoryABI, FactoryAddress);
+      return Contracts.methods.settleable(Seller, Short).call();
+    },
+    BalanceOf(ContractAddress, Decimals) {
+      let Contracts = getContract(MiningABI, ContractAddress);
+      let Account = window.CURRENTADDRESS;
+      return Contracts.methods
+        .balanceOf(Account)
+        .call()
+        .then((res) => {
+          return fromWei(res, Decimals);
+        });
+    },
     getList() {
       getInsuranceList().then((res) => {
         let ReturnList = res.data.data.options;
         let FixList = [];
         this.isLoading = true;
-        ReturnList.forEach(async (item) => {
+        return ReturnList.forEach(async (item) => {
           const CurrentInsurance = getCurrentInsurance({
             CollateralAddress: item.collateral,
             UnderlyingAddress: item.underlying,
@@ -215,8 +230,14 @@ export default {
               SettleTokenDecimals,
             } = CurrentInsurance;
             // 结算
-            let LongBalance = await BalanceOf(item.long, CollateralDecimals);
-            let ShortBalance = await BalanceOf(item.short, CollateralDecimals);
+            let LongBalance = await this.BalanceOf(
+              item.long,
+              CollateralDecimals
+            );
+            let ShortBalance = await this.BalanceOf(
+              item.short,
+              CollateralDecimals
+            );
 
             if (
               Number(fixD(ShortBalance, 8)) > 0 &&
@@ -246,9 +267,9 @@ export default {
             let ShortMinusLong =
               Number(ShortBalance) - Number(LongBalance) + "";
             if (Number(ShortMinusLong) > 0) {
-              const SettleInfo = await Settleable(
+              const SettleInfo = await this.Settleable(
                 item.short,
-                toWei(ShortMinusLong, CollateralDecimals)
+                toWei(fixD(ShortMinusLong, 10), CollateralDecimals)
               );
               FixList.push({
                 collateral: item.collateral,

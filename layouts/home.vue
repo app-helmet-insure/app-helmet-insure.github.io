@@ -163,6 +163,13 @@ export default {
     openBUY() {
       this.$bus.$emit("OPEN_BUY_DIALOG", true);
     },
+    openStatusDialog() {
+      this.showStatusDialog = true;
+    },
+    closeStatusDialog() {
+      window.statusDialog = false;
+      this.showStatusDialog = false;
+    },
     copy() {
       let copy = new ClipboardJS("#copy_default");
       copy.on("success", function (e) {

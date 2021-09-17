@@ -268,6 +268,7 @@ export const Exit = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const Compound = async (ContractAddress, callback) => {
+  console.log(ContractAddress);
   let Contracts = await Web3Contract(CompoundABI.abi, ContractAddress);
   let Account = await getAccounts();
   try {
@@ -302,7 +303,9 @@ export const Compound = async (ContractAddress, callback) => {
         bus.$emit("CLOSE_STATUS_DIALOG");
         callback("error");
       });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const Approve = async (
   TokenAddress,

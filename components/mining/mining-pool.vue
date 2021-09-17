@@ -12,7 +12,7 @@
             :startVal="Number(0)"
             :endVal="Number(CanDeposite)"
             :duration="2000"
-            :decimals="8"
+            :decimals="4"
           />
           <span v-else>--</span>
           {{ ActiveData.StakeUnit }}
@@ -142,7 +142,7 @@
             :startVal="Number(0)"
             :endVal="Number(CanWithdraw)"
             :duration="2000"
-            :decimals="8"
+            :decimals="4"
           />
           <span v-else>--</span>
           {{ ActiveData.StakeUnit }}
@@ -204,7 +204,7 @@
         </p>
         <!-- compound -->
         <button
-          v-if="ActiveData.compound"
+          v-if="ActiveData.Compound"
           @click="toCompound"
           :class="ClaimLoading ? 'disable o_button' : 'o_button'"
         >
@@ -389,7 +389,9 @@ export default {
       const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = window.CURRENTADDRESS;
+      
       let PromiseList;
+      console.log(NoProxy);
       if (NoProxy) {
         PromiseList = [
           StakeContracts.balanceOf(Account),
@@ -553,7 +555,7 @@ export default {
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
         number: this.CanClaim1,
-        PoolAddress: this.ActiveData.PoolAddress,
+        poolAddress: this.ActiveData.PoolAddress,
       });
     },
     // 退出

@@ -39,7 +39,7 @@ export default {
       this.showFlag = true;
       this.title = data.title;
       this.number = data.number;
-      this.poolAddress = data.PoolAddress;
+      this.poolAddress = data.poolAddress;
     });
     this.$bus.$on("CLOSE_COMPOUND", () => {
       this.showFlag = false;
@@ -50,6 +50,7 @@ export default {
       this.$bus.$emit("CLOSE_COMPOUND");
     },
     async confirm() {
+      console.log(1);
       await Compound(this.poolAddress, (res) => {
         if (res == "success" || res == "error") {
           this.$bus.$emit("CLOSE_COMPOUND");

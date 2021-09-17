@@ -289,7 +289,7 @@ export const comboPoolList = [
     IsCombo: false,
     Flash: false,
     YearEarnType: "APR",
-    compound: true,
+    Compound: true,
     HaveOnePager: false,
     Reward1Symbol: "HELMET",
     PoolAddress: "0x279a073c491c873df040b05cc846a3c47252b52c",
@@ -331,7 +331,7 @@ export const comboPoolList = [
     Reward2Address: "0xacb2d47827c9813ae26de80965845d80935afd0b",
     Reward1Volume: 28270,
     Reward2Volume: 2740,
-    pool_process: 14,
+    PoolProcess: 14,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hMCRN",
@@ -378,7 +378,7 @@ export const comboPoolList = [
     Reward2Address: "0x5066c68cae3b9bdacd6a1a37c90f2d1723559d18",
     Reward1Volume: 60280,
     Reward2Volume: 6670,
-    pool_process: 14,
+    PoolProcess: 14,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hWIZARD",
@@ -426,7 +426,7 @@ export const comboPoolList = [
     Reward2Address: "0x851f7a700c5d67db59612b871338a85526752c25",
     Reward1Volume: 35000,
     Reward2Volume: 350000,
-    pool_process: 15,
+    PoolProcess: 15,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hARGON",
@@ -473,7 +473,7 @@ export const comboPoolList = [
     Reward2Address: "0x4131b87f74415190425ccd873048c708f8005823",
     Reward1Volume: 37500,
     Reward2Volume: 3272.46,
-    pool_process: 13,
+    PoolProcess: 13,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hBMXX",
@@ -520,7 +520,7 @@ export const comboPoolList = [
     Reward2Address: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
     Reward1Volume: 37500,
     Reward2Volume: 158931,
-    pool_process: 13,
+    PoolProcess: 13,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hBABY",
@@ -567,7 +567,7 @@ export const comboPoolList = [
     Reward2Address: "0xBd2949F67DcdC549c6Ebe98696449Fa79D988A9F",
     Reward1Volume: 25000,
     Reward2Volume: 2767,
-    pool_process: 9,
+    PoolProcess: 9,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hMTRG",
@@ -615,7 +615,7 @@ export const comboPoolList = [
     Reward2Address: "0x0487b824c8261462f88940f97053e65bdb498446",
     Reward1Volume: 30000,
     Reward2Volume: 4500,
-    pool_process: 14,
+    PoolProcess: 14,
     ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hWINGS",
@@ -1101,7 +1101,7 @@ export const getComboAPR = async (PoolData) => {
   const StakeAddress = PoolData.StakeAddress;
   const PoolAddress = PoolData.PoolAddress;
   const Reward2Decimals = PoolData.Reward2Decimals;
-  const PoolProcess = PoolData.pool_process;
+  const PoolProcess = PoolData.PoolProcess;
   const StakeDecimals = PoolData.StakeDecimals;
   const Reward1Volume = PoolData.Reward1Volume;
   const Reward2Volume = PoolData.Reward2Volume;

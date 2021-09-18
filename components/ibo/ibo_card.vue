@@ -429,7 +429,7 @@
       <div v-else-if="iboData.name === 'PRB'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap, Babyswap</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Apeswap or Babyswap</p>
         <p>
           SC: {{ iboData.underlying.address }}
           <i

@@ -160,10 +160,10 @@ export default {
     },
     async getHelmetPrice() {
       let helmetConrtact = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
-      let usdtConrtact = "0x55d398326f99059ff775485246999027b3197955";
+      let busdConrtact = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
       return getTokenPrice({
         fromTokenAddress: helmetConrtact,
-        toTokenAddress: usdtConrtact,
+        toTokenAddress: busdConrtact,
         amount: "1000000000000000000",
       });
     },

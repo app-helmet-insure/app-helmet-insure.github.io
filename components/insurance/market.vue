@@ -268,13 +268,6 @@ export default {
         UnderlyingDecimals,
       } = this.ActiveData[this.ActiveType];
       const { Expiry, InsuranceName, SettleTokenSymbol } = this.ActiveData;
-      const FixStrikePrice =
-        this.ActiveType === "Call"
-          ? toWei(StrikePrice + "", StrikePriceDecimals)
-          : toWei(
-              fixD(Number(1 / StrikePrice), StrikePriceDecimals) + "",
-              StrikePriceDecimals
-            );
       getInsuranceList().then((res) => {
         if (res && res.data.data.options) {
           const ReturnList = res.data.data.options;

@@ -150,7 +150,7 @@ export default {
     });
   },
   methods: {
-    handleClickBuy() {
+    handleClickBuy() {                            
       this.$bus.$emit("OPEN_BUY_DIALOG", true);
     },
     userInfoWatch(newValue) {

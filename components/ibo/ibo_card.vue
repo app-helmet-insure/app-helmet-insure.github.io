@@ -429,7 +429,7 @@
       <div v-else-if="iboData.name === 'PRB'" class="tip_box">
         <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
         <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap, Babyswap</p>
+        <p>{{ $t("IBO.IBO_text29") }}: Apeswap or Babyswap</p>
         <p>
           SC: {{ iboData.underlying.address }}
           <i
@@ -699,7 +699,6 @@ export default {
     },
     onApprove() {
       if (
-        this.$store.state.userInfo.status !== 1 ||
         this.iboData.status !== 1 ||
         this.approvalLoading ||
         parseInt(this.iboData.pool_info.curUserCount) >=
@@ -730,7 +729,6 @@ export default {
       }
       if (
         this.iboData.status === 1 &&
-        this.$store.state.userInfo.status === 1 &&
         !this.burnLoading
       ) {
         MessageBox.confirm(
@@ -756,7 +754,6 @@ export default {
     activeClaim() {
       return (
         this.iboData.status === 2 &&
-        this.$store.state.userInfo.status === 1 &&
         this.iboData.settleable.volume > 0
       );
     },
@@ -777,8 +774,7 @@ export default {
       return (
         this.now > this.iboData.airdrop.begin &&
         !this.iboData.airdrop.withdrawList &&
-        this.iboData.airdrop.allowList > 0 &&
-        this.$store.state.userInfo.status === 1
+        this.iboData.airdrop.allowList > 0
       );
     },
     // 第二次claim 空投

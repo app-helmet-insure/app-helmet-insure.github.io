@@ -142,7 +142,8 @@ export default {
   watch: {
     ChainID(newValue) {
       console.log(newValue);
-      if (newValue == 56) {
+      // 31337 为hardhat测试网络
+      if (newValue == 56 || newValue == 31337) {
         this.closeNetWorkTip();
       } else {
         this.showNetWorkTip();

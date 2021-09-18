@@ -2,12 +2,30 @@ import {JsonRpcProvider} from "@ethersproject/providers";
 import {cloneDeep} from 'lodash'
 import Web3 from 'web3'
 import ERC20 from '../abi/ERC20_abi.json'
-import {Contract, Provider} from 'ethers-multicall-x'
+import {Contract, Provider, setMulticallAddress} from 'ethers-multicall-x'
 import BigNumber from "bignumber.js";
-const BSCChainId = 56
-const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
+
+const ChainId = {
+  BSC: 56,
+  LOCALHOST: 31337
+}
+export const getMultiCallProvider = (provider, chainId) => {
+  setMulticallAddress(ChainId.LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c') // localhost代理bsc
+  return new Provider(provider, chainId)
+}
+export const getRPCUrl = (chainId) => {
+  switch (chainId){
+    case ChainId.BSC:
+      return 'https://bsc-dataseed.binance.org/'
+    case ChainId.LOCALHOST:
+      return 'http://localhost:8545/'
+    default:
+      return 'https://bsc-dataseed.binance.org/'
+  }
+}
+
 BigNumber.config({ EXPONENTIAL_AT: 100 })
-export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
+export const getOnlyMultiCallProvider = (chainId) => getMultiCallProvider(new JsonRpcProvider(getRPCUrl(chainId), chainId), chainId)
 export function processResult(data) {
   data = cloneDeep(data)
   if (Array.isArray(data)){
@@ -84,7 +102,7 @@ export const getPoolInfo = (pool) => {
   poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
   currencyToken && promiseList.push(currencyToken.allowance(account, pool.address))
   currencyToken && promiseList.push(currencyToken.balanceOf(account))
-  const multicallProvider = getOnlyMultiCallProvider()
+  const multicallProvider = getOnlyMultiCallProvider(window.chainID)
   return multicallProvider
     .all(promiseList).then(res => {
     const now = parseInt(Date.now() / 1000)

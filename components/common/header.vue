@@ -34,7 +34,7 @@
         >{{ $t("Header.ConnectWallet") }}
       </a>
       <div v-else class="address-wrap">
-        <div v-if="ChainID != 56 && ChainID != 137" class="wrong">
+        <div v-if="ChainID != 56 && ChainID != 137 && ChainID !== 31337" class="wrong">
           <svg class="wrongnetwork" aria-hidden="true">
             <use xlink:href="#icon-wrongnetwork"></use>
           </svg>

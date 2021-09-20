@@ -1353,9 +1353,11 @@ export const getCandyAPR = async (PoolData) => {
     const FixData = processResult(res);
     let [TotalStakeVolume] = FixData;
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
-    const RewardValues =
-      1 + (DailyReward * Reward1HelmetPrice) / FixTotalStakeVolume;
-    const APR = fixD(RewardValues * 365 * 100, 2) + "%";
+    const APR =
+      fixD(
+        ((DailyReward * 365 * Reward1HelmetPrice) / FixTotalStakeVolume) * 100,
+        2
+      ) + "%";
     return (PoolData.APR = APR);
   });
 };

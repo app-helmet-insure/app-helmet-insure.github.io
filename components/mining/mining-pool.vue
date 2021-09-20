@@ -26,7 +26,7 @@
             v-model="StakeVolume"
             :class="ActiveType == 'Stake' ? 'activeInput' : ''"
           />
-          <span @click="StakeVolume = CanDeposite">{{ $t("Table.Max") }}</span>
+          <span @click="handleClickMax()">{{ $t("Table.Max") }}</span>
         </div>
       </div>
       <div class="button">
@@ -52,7 +52,10 @@
           @click="toDeposite"
           :class="
             (StakeLoading ? 'disable b_button' : 'b_button',
-            ActiveData.Status == 3 ? 'disable_button b_button' : 'b_button')
+            ActiveData.Status == 3 ||
+            (ActiveData.Max && Number(MaxStaking) === Number(CanWithdraw))
+              ? 'disable_button b_button'
+              : 'b_button')
           "
         >
           <i :class="StakeLoading ? 'loading_pic' : ''"></i
@@ -128,6 +131,11 @@
           Add {{ ActiveData.LeftShowToken.AddTokenSymbol }} to MetaMask
         </p>
         <i></i>
+      </div>
+      <div v-if="ActiveData.Max">
+        <p class="jump_text">
+          <a> {{ $t("Dialogs.MaxStaking", { number: MaxStaking }) }}</a>
+        </p>
       </div>
     </div>
     <div
@@ -306,6 +314,7 @@ export default {
       SuccessVisible: false,
       SuccessHash: "",
       WaitingText: "",
+      MaxStaking: 0,
     };
   },
   mounted() {
@@ -330,6 +339,16 @@ export default {
     },
     successClose() {
       this.SuccessVisible = false;
+    },
+    handleClickMax() {
+      if (this.ActiveData.Max) {
+        this.StakeVolume = Math.min(
+          this.CanDeposite,
+          this.MaxStaking - this.CanWithdraw
+        );
+      } else {
+        this.StakeVolume = this.CanDeposite;
+      }
     },
     async addTokenFn(options) {
       let data = {
@@ -430,7 +449,7 @@ export default {
             CanWithdraw,
             TotalDeposite,
             CanClaim1,
-            StkingMax,
+            MaxStaking,
             ApproveStatus,
           ] = FixData;
           this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
@@ -440,7 +459,7 @@ export default {
           );
           this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
           this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
-          this.StkingMax = fromWei(StkingMax, RewardDecimals);
+          this.MaxStaking = fromWei(MaxStaking, RewardDecimals);
           this.MyPoolShare = fixD(
             (this.CanWithdraw / this.TotalDeposite) * 100,
             2
@@ -455,14 +474,6 @@ export default {
             CanClaim2,
             ApproveStatus,
           ] = FixData;
-          console.log(
-            CanDeposite,
-            CanWithdraw,
-            TotalDeposite,
-            CanClaim1,
-            CanClaim2,
-            ApproveStatus
-          );
           this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
           this.CanWithdraw = fromWei(
             NoProxy ? CanWithdraw[0] : CanWithdraw,
@@ -492,7 +503,7 @@ export default {
       const ProxyPid = this.ActiveData.ProxyPid;
       const StakeMethods = this.ActiveData.StakeMethods;
       const NoProxy = this.ActiveData.NoProxy;
-      const Volume = toWei(this.StakeVolume, Decimals);
+      const Volume = toWei(this.StakeVolume + "", Decimals);
       const Account = window.CURRENTADDRESS;
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -514,6 +525,7 @@ export default {
               this.SuccessVisible = true;
               this.StakeLoading = false;
               this.ApproveStatus = true;
+              this.WaitingText = "";
               this.getPoolInfo();
             }
           })

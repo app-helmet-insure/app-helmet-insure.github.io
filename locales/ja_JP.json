@@ -394,5 +394,6 @@
   "Dialogs": {
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",
     "InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price."
+    ,"MaxStaking": "Max {number} HELMET"
   }
 }

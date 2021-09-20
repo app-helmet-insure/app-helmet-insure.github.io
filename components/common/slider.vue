@@ -88,12 +88,16 @@
             <nuxt-link
               to="/mining"
               :class="routeObj.name === 'mining' ? 'active' : ''"
-            >
+              ><svg class="hot" aria-hidden="true">
+                <use
+                  :href="`#icon-${routeObj.name == 'mining' ? 'new1' : 'new'}`"
+                ></use>
+              </svg>
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-mining1"></use>
               </svg>
               {{ $t("Header.Mining") }}
-              <i class="num">6</i>
+              <i class="num">7</i>
             </nuxt-link>
           </div>
           <div class="menu_item">
@@ -1051,7 +1055,7 @@ export default {
     margin-top: 10px;
     @include themeify {
       border-top: 1px solid themed("price_line");
-    } 
+    }
     > a {
       margin-top: 20px;
       height: 40px;

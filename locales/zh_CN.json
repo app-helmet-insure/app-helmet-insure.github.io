@@ -406,6 +406,7 @@
   },
   "Dialogs": {
     "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}",
-    "InsuranceTip1": "现在发行保险有立即被行权的风险，请谨慎发行保险。"
+    "InsuranceTip1": "现在发行保险有立即被行权的风险，请谨慎发行保险。",
+    "MaxStaking": "最多抵押 {number} HELMET"
   }
 }

@@ -319,7 +319,7 @@ export const comboPoolList = [
     ImgReward: true,
     StartTime: "Ongoing",
     FinishTime: "Mining",
-    IsCombo: true,
+    IsCombo: false,
     Flash: false,
     YearEarnType: "APR",
     Compound: false,
@@ -334,6 +334,7 @@ export const comboPoolList = [
     Reward1Decimals: 18,
     PoolType: "candy",
     DailyReward: 1000,
+    Max:1000,
     APR: "--",
   },
   {

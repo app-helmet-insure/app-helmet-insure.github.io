@@ -31,7 +31,7 @@
       </div>
       <div class="button">
         <button
-          v-if="ActiveData.StakeSymbol === 'HELMET'"
+          v-if="ActiveData.PoolType === 'compound'"
           @click="toDeposite"
           :class="
             (StakeLoading ? 'disable b_button' : 'b_button',
@@ -384,14 +384,14 @@ export default {
         PoolABI,
         StakeABI,
         ProxyPid,
+        PoolType,
       } = this.ActiveData;
       const PoolContracts = new Contract(PoolAddress, PoolABI);
       const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = window.CURRENTADDRESS;
-      
+
       let PromiseList;
-      console.log(NoProxy);
       if (NoProxy) {
         PromiseList = [
           StakeContracts.balanceOf(Account),
@@ -399,6 +399,15 @@ export default {
           StakeContracts.totalSupply(),
           PoolContracts.pendingCake(ProxyPid, Account),
           PoolContracts.pendingCake(ProxyPid, Account),
+          ApproveContracts.allowance(Account, PoolAddress),
+        ];
+      } else if (PoolType === "candy") {
+        PromiseList = [
+          StakeContracts.balanceOf(Account),
+          PoolContracts.balanceOf(Account),
+          PoolContracts.totalSupply(),
+          PoolContracts.earned(Account),
+          PoolContracts.stakingMax(),
           ApproveContracts.allowance(Account, PoolAddress),
         ];
       } else {
@@ -415,27 +424,59 @@ export default {
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
-        const [
-          CanDeposite,
-          CanWithdraw,
-          TotalDeposite,
-          CanClaim1,
-          CanClaim2,
-          ApproveStatus,
-        ] = FixData;
-        this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
-        this.CanWithdraw = fromWei(
-          NoProxy ? CanWithdraw[0] : CanWithdraw,
-          StakeDecimals
-        );
-        this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
-        this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
-        this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
-        this.MyPoolShare = fixD(
-          (this.CanWithdraw / this.TotalDeposite) * 100,
-          2
-        );
-        this.ApproveStatus = ApproveStatus > 0;
+        if (PoolType === "candy") {
+          const [
+            CanDeposite,
+            CanWithdraw,
+            TotalDeposite,
+            CanClaim1,
+            StkingMax,
+            ApproveStatus,
+          ] = FixData;
+          this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
+          this.CanWithdraw = fromWei(
+            NoProxy ? CanWithdraw[0] : CanWithdraw,
+            StakeDecimals
+          );
+          this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
+          this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
+          this.StkingMax = fromWei(StkingMax, RewardDecimals);
+          this.MyPoolShare = fixD(
+            (this.CanWithdraw / this.TotalDeposite) * 100,
+            2
+          );
+          this.ApproveStatus = ApproveStatus > 0;
+        } else {
+          const [
+            CanDeposite,
+            CanWithdraw,
+            TotalDeposite,
+            CanClaim1,
+            CanClaim2,
+            ApproveStatus,
+          ] = FixData;
+          console.log(
+            CanDeposite,
+            CanWithdraw,
+            TotalDeposite,
+            CanClaim1,
+            CanClaim2,
+            ApproveStatus
+          );
+          this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
+          this.CanWithdraw = fromWei(
+            NoProxy ? CanWithdraw[0] : CanWithdraw,
+            StakeDecimals
+          );
+          this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
+          this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
+          this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
+          this.MyPoolShare = fixD(
+            (this.CanWithdraw / this.TotalDeposite) * 100,
+            2
+          );
+          this.ApproveStatus = ApproveStatus > 0;
+        }
       });
     },
     // 抵押

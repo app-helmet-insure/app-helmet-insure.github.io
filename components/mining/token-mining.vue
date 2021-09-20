@@ -98,13 +98,13 @@
             <span>{{ item.YearEarnType }}</span>
           </section>
           <section class="APY mining_pool_reward_web WEB" v-else>
-            <span>{{ item.APY }}</span>
+            <span>{{ item.APR }}</span>
             <span>
               {{ item.YearEarnType }}
               <el-tooltip effect="dark" placement="top-start">
                 <div slot="content" style="width: 200px">
-                  <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
-                  <p>{{ $t("Tip.APY") }} : {{ item.APR }}</p>
+                  <p>{{ $t("Tip.APR") }} : {{ item.APR }}</p>
+                  <p>{{ $t("Tip.APY") }} : {{ item.APY }}</p>
                   <p>{{ $t("Tip.EarnTip1") }}</p>
                   <p>{{ $t("Tip.EarnTip2") }}</p>
                 </div>
@@ -182,13 +182,13 @@
               <span>{{ item.YearEarnType }}</span>
             </p>
             <p class="APY" v-else>
-              <span>{{ item.APY }}</span>
+              <span>{{ item.APR }}</span>
               <span>
                 {{ item.YearEarnType }}
                 <el-tooltip effect="dark" placement="top-start">
                   <div slot="content" style="width: 150px">
-                    <p>{{ $t("Tip.APR") }} : {{ item.APY }}</p>
-                    <p>{{ $t("Tip.APY") }} : {{ item.APR }}</p>
+                    <p>{{ $t("Tip.APR") }} : {{ item.APR }}</p>
+                    <p>{{ $t("Tip.APY") }} : {{ item.APY }}</p>
                     <p>{{ $t("Tip.EarnTip1") }}</p>
                     <p>{{ $t("Tip.EarnTip2") }}</p>
                   </div>
@@ -312,6 +312,7 @@ import {
   formatMiningPool,
   getComboAPR,
   getAPRAndAPY,
+  getCandyAPR,
 } from "../../config/mining.js";
 export default {
   components: {
@@ -370,7 +371,11 @@ export default {
         if (item.PoolType === "compound") {
           await getAPRAndAPY(item);
         }
+        if (item.PoolType === "candy") {
+          await getCandyAPR(item);
+        }
       });
+      console.log(comboPoolList);
     },
     hadnleShowOnePager(e, ONE_PAGER) {
       if (e.target.tagName === "I" && ONE_PAGER) {

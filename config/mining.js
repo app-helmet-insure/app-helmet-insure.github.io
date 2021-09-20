@@ -4,6 +4,7 @@ import CakePoolABI from "~/web3/abis/CakePoolABI.json";
 import MdexPoolABI from "~/web3/abis/MdexPoolABI.json";
 import SushiPoolABI from "~/web3/abis/SushiPoolABI.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
+import CandyABI from "~/web3/abis/CandyABI.json";
 import ApproveABI from "~/web3/abis/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
 import {
@@ -303,6 +304,37 @@ export const comboPoolList = [
     DailyReward: 22471,
     APR: "--",
     APY: "--",
+  },
+  {
+    Key: "KALA",
+    PoolName: "KALA POOL",
+    PoolABI: CandyABI,
+    StakeABI: CandyABI,
+    StakeMethods: "stake",
+    StakeSymbol: "HELMET",
+    StakeUnit: "HELMET",
+    RewardVolume: "one",
+    RewardSymbol: "kala",
+    RewardMethods: "getReward",
+    ImgReward: true,
+    StartTime: "Ongoing",
+    FinishTime: "Mining",
+    IsCombo: true,
+    Flash: false,
+    YearEarnType: "APR",
+    Compound: false,
+    HaveOnePager: false,
+    Reward1Symbol: "KALA",
+    PoolAddress: "0x4dFeCeE12bd7cA3899D26643F20C79F4a2147EBf",
+    StakeAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    HaveReward1: true,
+    Reward1Address: "0x32299c93960bb583a43c2220dc89152391a610c5",
+    ExitMethods: "exit",
+    StakeDecimals: 18,
+    Reward1Decimals: 18,
+    PoolType: "candy",
+    DailyReward: 1000,
+    APR: "--",
   },
   {
     Key: "HELMETMCRN",
@@ -1272,7 +1304,6 @@ export const getLptAPR = async (PoolData) => {
         ((FixStakeValue * Reward1USDTPrice) / FixLptVolume) * FixStakeVolume;
       const YearReward1 = NumberatorReward1 / DenominatorReward1;
       const YearReward2 = NumberatorReward2 / DenominatorReward2;
-      console.log(YearReward1, YearReward2, "##############3");
       const APR =
         fixD((Number(YearReward1) + Number(YearReward2)) * 100, 2) + "%";
       return (PoolData.APR = APR);
@@ -1288,14 +1319,41 @@ export const getAPRAndAPY = async (PoolData) => {
   const PromiseList = [PoolContracts.totalSupply()];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {
-    console.log(res);
     const FixData = processResult(res);
     let [TotalStakeVolume] = FixData;
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
     const RewardValues = 1 + DailyReward / FixTotalStakeVolume;
-    const APR = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
-    const APY = fixD((DailyReward / FixTotalStakeVolume) * 365 * 100, 2) + "%";
-    console.log(APR, APY);
+    const APR = fixD((DailyReward / FixTotalStakeVolume) * 365 * 100, 2) + "%";
+    const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
     return (PoolData.APR = APR), (PoolData.APY = APY);
+  });
+};
+export const getCandyAPR = async (PoolData) => {
+  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const {
+    PoolAddress,
+    StakeDecimals,
+    DailyReward,
+    Reward1Address,
+    Reward1Decimals,
+  } = PoolData;
+  const PoolContracts = new Contract(PoolAddress, MiningABI);
+  const Amount = toWei("1", Reward1Decimals);
+  const Data = await getTokenPrice({
+    fromTokenAddress: Reward1Address,
+    toTokenAddress: HelmetAddress,
+    amount: Amount,
+  });
+  const Reward1HelmetPrice = fromWei(Data.data.toTokenAmount);
+  const PromiseList = [PoolContracts.totalSupply()];
+  const MulticallProvider = getOnlyMultiCallProvider();
+  return MulticallProvider.all(PromiseList).then((res) => {
+    const FixData = processResult(res);
+    let [TotalStakeVolume] = FixData;
+    const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
+    const RewardValues =
+      1 + (DailyReward * Reward1HelmetPrice) / FixTotalStakeVolume;
+    const APR = fixD(RewardValues * 365 * 100, 2) + "%";
+    return (PoolData.APR = APR);
   });
 };

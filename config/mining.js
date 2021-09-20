@@ -334,7 +334,7 @@ export const comboPoolList = [
     Reward1Decimals: 18,
     PoolType: "candy",
     DailyReward: 1000,
-    Max:1000,
+    Max: 1000,
     APR: "--",
   },
   {
@@ -1346,6 +1346,7 @@ export const getCandyAPR = async (PoolData) => {
     amount: Amount,
   });
   const Reward1HelmetPrice = fromWei(Data.data.toTokenAmount);
+  console.log(Reward1HelmetPrice);
   const PromiseList = [PoolContracts.totalSupply()];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {

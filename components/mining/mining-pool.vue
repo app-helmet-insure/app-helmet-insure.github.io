@@ -465,6 +465,12 @@ export default {
             2
           );
           this.ApproveStatus = ApproveStatus > 0;
+          if (this.ActiveData.Max) {
+            this.StakeVolume = Math.min(
+              this.CanDeposite,
+              Number(this.MaxStaking) - Number(this.CanWithdraw)
+            );
+          }
         } else {
           const [
             CanDeposite,

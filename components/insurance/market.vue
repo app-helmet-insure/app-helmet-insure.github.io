@@ -30,9 +30,7 @@
       <div class="policy_title WEB">
         <div class="title_index">{{ $t("Table.ID") }}</div>
         <div class="titke_strikeprice" @click="handleClickSort()">
-          {{ $t("Content.InsurancePrice") }}({{
-            ActiveData.Call.UnderlyingSymbol
-          }})
+          {{ $t("Content.InsurancePrice") }}({{ ActiveData.InsurancePut }})
           <span class="sort_btn">
             <i class="top" :class="SortBy === 1 ? 'active_sort_top' : ''"></i>
             <i class="bot" :class="SortBy === 2 ? 'active_sort_bot' : ''"></i>
@@ -89,7 +87,7 @@
             <p>
               <span
                 >{{ $t("Content.InsurancePrice") }}({{
-                  ActiveData.Call.UnderlyingSymbol
+                  ActiveData.InsurancePut
                 }})</span
               >
               <span>{{ item.show_strikePrice }}</span>
@@ -174,6 +172,7 @@ import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+import { getCurrentInsurance } from "../../config/insurance";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   components: {
@@ -256,8 +255,14 @@ export default {
       }
     },
     getPolicyList() {
+      let CurrentInsurance = getCurrentInsurance({
+        Type: this.ActiveType,
+        Insurance: this.ActiveData.InsuranceName,
+      });
       const {
-        StrikePrice,
+        Expiry,
+        InsuranceName,
+        SettleTokenSymbol,
         StrikePriceDecimals,
         PolicyPriceDecimals,
         CollateralSymbol,
@@ -266,8 +271,7 @@ export default {
         UnderlyingSymbol,
         UnderlyingAddress,
         UnderlyingDecimals,
-      } = this.ActiveData[this.ActiveType];
-      const { Expiry, InsuranceName, SettleTokenSymbol } = this.ActiveData;
+      } = CurrentInsurance;
       getInsuranceList().then((res) => {
         if (res && res.data.data.options) {
           const ReturnList = res.data.data.options;

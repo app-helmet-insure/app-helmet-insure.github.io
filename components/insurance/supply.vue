@@ -13,8 +13,8 @@
               :maxlength="ActiveData.LastPriceDecimals + 4"
             />
             <span
-              >{{ ActiveData.Call.CollateralSymbol }}/{{
-                ActiveData.Call.UnderlyingSymbol
+              >{{ ActiveData.InsuranceName }}/{{
+                ActiveData.InsurancePut
               }}</span
             >
           </div>
@@ -62,14 +62,14 @@
         </p>
         <div class="input">
           <el-input v-model="CallPolicyNumber" type="number" />
-          <span class="text">{{ ActiveData.Call.CollateralSymbol }}</span>
+          <span class="text">{{ ActiveData.InsuranceName }}</span>
           <span class="max" @click="CallPolicyNumber = CallBalance">{{
             $t("Table.ALL")
           }}</span>
         </div>
         <p class="balance">
           {{ $t("Content.UsableBalance") }}: {{ CallBalance }}
-          {{ ActiveData.Call.CollateralSymbol }}
+          {{ ActiveData.InsuranceName }}
         </p>
         <button class="button call" @click="handleClickConfirm('Call')">
           {{
@@ -101,8 +101,8 @@
               :maxlength="ActiveData.LastPriceDecimals + 4"
             />
             <span
-              >{{ ActiveData.Call.CollateralSymbol }}/{{
-                ActiveData.Call.UnderlyingSymbol
+              >{{ ActiveData.InsuranceName }}/{{
+                ActiveData.InsurancePut
               }}</span
             >
           </div>
@@ -150,7 +150,7 @@
         </p>
         <div class="input">
           <el-input v-model="PutPolicyNumber" type="number" />
-          <span class="text">{{ ActiveData.Put.CollateralSymbol }}</span>
+          <span class="text">{{ ActiveData.InsurancePut }}</span>
           <span class="max" @click="PutPolicyNumber = PutBalance">{{
             $t("Table.ALL")
           }}</span>
@@ -158,7 +158,7 @@
         <p class="balance">
           {{ $t("Content.UsableBalance") }}:
           {{ PutBalance }}
-          {{ ActiveData.Put.CollateralSymbol }}
+          {{ ActiveData.InsurancePut }}
         </p>
         <button class="button put" @click="handleClickConfirm('Put')">
           {{
@@ -208,6 +208,7 @@ import OrderABI from "~/web3/abis/OrderABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+import { getCurrentInsurance } from "../../config/insurance.js";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
 export default {
   props: ["ActiveData", "ActiveType"],
@@ -291,13 +292,20 @@ export default {
     },
 
     getBalance() {
-      const Data = this.ActiveData;
-      const CallCollateralAddress = Data.Call.CollateralAddress;
-      const CallCollateralDecimals = Data.Call.CollateralDecimals;
-      const CallCollateralSymbol = Data.Call.CollateralSymbol;
-      const PutCollateralAddress = Data.Put.CollateralAddress;
-      const PutCollateralDecimals = Data.Put.CollateralDecimals;
-      const PutCollateralSymbol = Data.Put.CollateralSymbol;
+      let CallInsurance = getCurrentInsurance({
+        Type: "Call",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let PutInsurance = getCurrentInsurance({
+        Type: "Put",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      const CallCollateralAddress = CallInsurance.CollateralAddress;
+      const CallCollateralDecimals = CallInsurance.CollateralDecimals;
+      const CallCollateralSymbol = CallInsurance.CollateralSymbol;
+      const PutCollateralAddress = PutInsurance.CollateralAddress;
+      const PutCollateralDecimals = PutInsurance.CollateralDecimals;
+      const PutCollateralSymbol = PutInsurance.CollateralSymbol;
       const Account = window.CURRENTADDRESS;
       if (CallCollateralSymbol === "BNB") {
         window.WEB3.eth.getBalance(Account).then((res) => {
@@ -366,14 +374,22 @@ export default {
       }
     },
     async getPrice() {
-      const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
-      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
-      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
-      let CallCollateralDecimals = this.ActiveData.Call.CollateralDecimals;
+      let CallInsurance = getCurrentInsurance({
+        Type: "Call",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let PutInsurance = getCurrentInsurance({
+        Type: "Put",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      const CallCollateralAddress = CallInsurance.CollateralAddress;
+      const CallCollateralDecimals = CallInsurance.CollateralDecimals;
+      const CallCollateralSymbol = CallInsurance.CollateralSymbol;
       let CallAmount = toWei("1", CallCollateralDecimals);
-      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
-      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
-      let PutCollateralDecimals = this.ActiveData.Put.CollateralDecimals;
+      const PutCollateralAddress = PutInsurance.CollateralAddress;
+      const PutCollateralDecimals = PutInsurance.CollateralDecimals;
+      const PutCollateralSymbol = PutInsurance.CollateralSymbol;
+      const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
       let PutAmount = toWei("1", PutCollateralDecimals);
       let CallData;
       if (CallCollateralSymbol === "HELMET") {
@@ -397,10 +413,18 @@ export default {
       this.PutTokenToHelmetPrice = fromWei(PutData.data.toTokenAmount);
     },
     getApproveStatus() {
-      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
-      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
-      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
-      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
+      let CallInsurance = getCurrentInsurance({
+        Type: "Call",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let PutInsurance = getCurrentInsurance({
+        Type: "Put",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let CallCollateralSymbol = CallInsurance.CollateralSymbol;
+      let CallCollateralAddress = CallInsurance.CollateralAddress;
+      let PutCollateralSymbol = PutInsurance.CollateralSymbol;
+      let PutCollateralAddress = PutInsurance.CollateralAddress;
       let Account = window.CURRENTADDRESS;
       if (CallCollateralSymbol !== "BNB") {
         let CallContracts = getContract(ERC20ABI.abi, CallCollateralAddress);
@@ -434,10 +458,18 @@ export default {
       }
     },
     ApproveToken(Type) {
-      let CallCollateralSymbol = this.ActiveData.Call.CollateralSymbol;
-      let CallCollateralAddress = this.ActiveData.Call.CollateralAddress;
-      let PutCollateralSymbol = this.ActiveData.Put.CollateralSymbol;
-      let PutCollateralAddress = this.ActiveData.Put.CollateralAddress;
+      let CallInsurance = getCurrentInsurance({
+        Type: "Call",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let PutInsurance = getCurrentInsurance({
+        Type: "Put",
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let CallCollateralSymbol = CallInsurance.CollateralSymbol;
+      let CallCollateralAddress = CallInsurance.CollateralAddress;
+      let PutCollateralSymbol = PutInsurance.CollateralSymbol;
+      let PutCollateralAddress = PutInsurance.CollateralAddress;
       let Account = window.CURRENTADDRESS;
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -509,12 +541,15 @@ export default {
       ) {
         return;
       }
-      let ActiveData = this.ActiveData;
-      let symbol = ActiveData.InsuranceName;
+      let CurrentInsurance = getCurrentInsurance({
+        Type: Type,
+        Insurance: this.ActiveData.InsuranceName,
+      });
+      let symbol = CurrentInsurance.InsuranceName;
+      let collateral = CurrentInsurance.CollateralSymbol;
+      let underlying = CurrentInsurance.UnderlyingSymbol;
+      let expiry = CurrentInsurance.ShowExpiry;
       let volume, price, strikeprice;
-      let collateral = ActiveData[Type].CollateralSymbol;
-      let underlying = ActiveData[Type].UnderlyingSymbol;
-      let expiry = ActiveData.ShowExpiry;
       let type = Type;
       if (Type === "Call") {
         volume = this.CallPolicyNumber;
@@ -549,21 +584,26 @@ export default {
         .catch(() => {});
     },
     supplyPolicy(Type) {
-      let ActiveData = this.ActiveData;
+      let CurrentInsurance = getCurrentInsurance({
+        Type: Type,
+        Insurance: this.ActiveData.InsuranceName,
+      });
       let CallPolicyNumber = this.CallPolicyNumber;
       let PutPolicyNumber = this.PutPolicyNumber;
       let CallPremium = this.CallPremium;
       let PutPremium = this.PutPremium;
       let Private = false;
-      let InsuranceType = ActiveData.InsuranceName;
-      let StrikePriceDecimals = ActiveData[Type].StrikePriceDecimals;
-      let PolicyPriceDecimals = ActiveData[Type].PolicyPriceDecimals;
-      let CollateralDecimals = ActiveData[Type].CollateralDecimals;
-      let CollateralSymbol = ActiveData[Type].CollateralSymbol;
-      let Collateral = ActiveData[Type].CollateralAddress;
-      let Underlying = ActiveData[Type].UnderlyingAddress;
-      let Expiry = ActiveData.Expiry;
-      let SettleToken = ActiveData.SettleTokenAddress;
+      const {
+        InsuranceName,
+        StrikePriceDecimals,
+        PolicyPriceDecimals,
+        CollateralDecimals,
+        CollateralSymbol,
+        CollateralAddress,
+        UnderlyingAddress,
+        Expiry,
+        SettleTokenAddress,
+      } = CurrentInsurance;
       let Volume, Price, StrikePrice, Premium;
       if (Type === "Call") {
         Volume = CallPolicyNumber;
@@ -582,19 +622,19 @@ export default {
         SellContracts.methods
           .sell(
             Private,
-            Collateral,
-            Underlying,
+            CollateralAddress,
+            UnderlyingAddress,
             toWei(StrikePrice, StrikePriceDecimals),
             Expiry,
             toWei(Volume, CollateralDecimals),
-            SettleToken,
+            SettleTokenAddress,
             toWei(Price, PolicyPriceDecimals)
           )
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
             this.WaitingText = `
-              <p>Supply <b>${Volume} ${InsuranceType}</b> Policys,</p>
+              <p>Supply <b>${Volume} ${InsuranceName}</b> Policys,</p>
               <p>Expected maximum is <b>${Premium}</b> HELMET</p>
             `;
           })
@@ -612,17 +652,17 @@ export default {
         SellContracts.methods
           .sellOnETH(
             Private,
-            Underlying,
+            UnderlyingAddress,
             toWei(StrikePrice, StrikePriceDecimals),
             Expiry,
-            SettleToken,
+            SettleTokenAddress,
             toWei(Price, PolicyPriceDecimals)
           )
           .send({ from: Account, value: toWei(Volume, CollateralDecimals) })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
             this.WaitingText = `
-              <p>Supply <b>${Volume} ${InsuranceType}</b> Policys,</p>
+              <p>Supply <b>${Volume} ${InsuranceName}</b> Policys,</p>
               <p>Expected maximum is <b>${Premium}</b> HELMET</p>
             `;
           })

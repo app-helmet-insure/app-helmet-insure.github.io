@@ -1408,7 +1408,7 @@ export const getCurrentInsurance = ({
       StrikePriceDecimals: 18,
       PolicyPriceDecimals: 18,
       CollateralSymbol: "KALA",
-      CollateralAddress: "0x603c7f932ed1fc6575303d8fb018fdcbb0f39a95",
+      CollateralAddress: "0x32299c93960bb583a43c2220dc89152391a610c5",
       CollateralDecimals: 18,
       UnderlyingSymbol: "BNB",
       UnderlyingAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",

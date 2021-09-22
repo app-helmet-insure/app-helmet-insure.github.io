@@ -320,6 +320,7 @@ export const comboPoolList = [
     StartTime: "2021/09/21 01:00 UTC+8",
     FinishTime: "2021/10/21 01:00 UTC+8",
     IsCombo: false,
+    IsPartner: true,
     Flash: false,
     YearEarnType: "APR",
     Compound: false,

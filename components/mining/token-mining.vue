@@ -25,6 +25,17 @@
           />
           <img
             class="combo_img"
+            style="width: 148px"
+            :src="
+              require(`~/assets/img/mining/partner_${
+                item.Status === 3 ? 'expired_' + storeThemes : 'web'
+              }.png`)
+            "
+            alt=""
+            v-if="item.IsPartner"
+          />
+          <img
+            class="combo_img"
             style="width: 116px"
             :src="
               require(`~/assets/img/mining/${

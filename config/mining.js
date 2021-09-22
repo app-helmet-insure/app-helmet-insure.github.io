@@ -268,7 +268,7 @@ export const lptPoolList = [
     StartTime: "Ongoing",
     FinishTime: "Mining",
     YearEarnType: "APR",
-    APR: "686.19%",
+    APR: "305.78%",
     PoolType: "link",
   },
 ];

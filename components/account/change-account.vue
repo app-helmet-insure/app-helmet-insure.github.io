@@ -15,11 +15,7 @@
           </g>
         </svg>
         <span class="address-text">{{ accountText }}</span>
-        <img
-          :src="
-            require(`~/assets/img/wallet-icon/${userInfo.name}@2x.png`)
-          "
-        />
+        <img :src="require(`~/assets/img/wallet-icon/MetaMask@2x.png`)" />
       </div>
       <ul class="wallet-list">
         <li

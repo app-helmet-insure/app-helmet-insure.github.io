@@ -25,10 +25,20 @@ export const openMetaMaskWallet = () => {
 };
 export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {
-    window.$nuxt.$store.dispatch("setUserInfo", {
-      isLogin: true,
-      account: account[0],
-    });
+    console.log(account, "################Account");
+    if (account && account.length) {
+      console.log(1);
+      window.$nuxt.$store.dispatch("setUserInfo", {
+        isLogin: true,
+        account: account[0],
+      });
+    } else {
+      console.log(2);
+      window.$nuxt.$store.dispatch("setUserInfo", {
+        isLogin: false,
+        account: "",
+      });
+    }
   });
 };
 export const watchNetWorkChange = () => {

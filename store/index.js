@@ -38,6 +38,7 @@ export const state = () => ({
   ],
   userInfo: {
     // 用户信息
+    name: "MetaMask",
     isLogin: false,
     account: null,
   },

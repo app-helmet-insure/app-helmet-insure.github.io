@@ -267,15 +267,15 @@ export default {
         },
       ];
     },
-  },
-  mounted() {
-    this.getBalance();
-    this.getApproveStatus();
-    this.$nextTick(() => {
-      this.getPrice();
-    });
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
   },
   watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
     PremiumGroup: {
       handler: {
         handler: "watchPremium",
@@ -284,6 +284,16 @@ export default {
     },
   },
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        console.log(Value);
+        this.getBalance();
+        this.getApproveStatus();
+        this.$nextTick(() => {
+          this.getPrice();
+        });
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -306,7 +316,7 @@ export default {
       const PutCollateralAddress = PutInsurance.CollateralAddress;
       const PutCollateralDecimals = PutInsurance.CollateralDecimals;
       const PutCollateralSymbol = PutInsurance.CollateralSymbol;
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       if (CallCollateralSymbol === "BNB") {
         window.WEB3.eth.getBalance(Account).then((res) => {
           this.CallBalance = fixD(fromWei(res), 8);
@@ -425,7 +435,7 @@ export default {
       let CallCollateralAddress = CallInsurance.CollateralAddress;
       let PutCollateralSymbol = PutInsurance.CollateralSymbol;
       let PutCollateralAddress = PutInsurance.CollateralAddress;
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       if (CallCollateralSymbol !== "BNB") {
         let CallContracts = getContract(ERC20ABI.abi, CallCollateralAddress);
         CallContracts.methods
@@ -470,7 +480,7 @@ export default {
       let CallCollateralAddress = CallInsurance.CollateralAddress;
       let PutCollateralSymbol = PutInsurance.CollateralSymbol;
       let PutCollateralAddress = PutInsurance.CollateralAddress;
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
       if (Type === "Call") {
@@ -617,7 +627,7 @@ export default {
         StrikePrice = Number(1 / this.PutStrikePrice) + "";
       }
       const SellContracts = getContract(OrderABI, OrderAddress);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       if (CollateralSymbol !== "BNB") {
         SellContracts.methods
           .sell(

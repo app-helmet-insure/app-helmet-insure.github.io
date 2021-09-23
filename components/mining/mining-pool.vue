@@ -317,23 +317,28 @@ export default {
       MaxStaking: 0,
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      this.getPoolInfo();
-    });
-  },
-  watch: {
-    userInfo: {
-      handler: "userInfoWatch",
-      immediate: true,
-    },
-  },
   computed: {
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
     },
   },
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
+  },
+
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        console.log(Value);
+        this.isLogin = Value.isLogin;
+        this.$nextTick(() => {
+          this.getPoolInfo();
+        });
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -371,11 +376,7 @@ export default {
         return;
       }
     },
-    userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.isLogin;
-      }
-    },
+
     copyAdress(e, text) {
       let _this = this;
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -408,7 +409,7 @@ export default {
       const PoolContracts = new Contract(PoolAddress, PoolABI);
       const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
 
       let PromiseList;
       if (NoProxy) {
@@ -510,7 +511,7 @@ export default {
       const StakeMethods = this.ActiveData.StakeMethods;
       const NoProxy = this.ActiveData.NoProxy;
       const Volume = toWei(this.StakeVolume + "", Decimals);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
       this.StakeLoading = true;
@@ -582,7 +583,7 @@ export default {
       const PoolABI = this.ActiveData.PoolABI;
       const NoProxy = this.ActiveData.NoProxy;
       const ProxyPid = this.ActiveData.ProxyPid;
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Contracts = getContract(PoolABI, ContractAddress);
       let Params;
       if (NoProxy) {
@@ -629,7 +630,7 @@ export default {
       const ProxyPid = this.ActiveData.ProxyPid;
       const Decimals = this.ActiveData.StakeDecimals;
       const ExitMethods = this.ActiveData.ExitMethods;
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Contracts = getContract(PoolABI, ContractAddress);
       let Params;
       if (NoProxy) {

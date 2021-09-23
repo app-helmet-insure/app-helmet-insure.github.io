@@ -4,7 +4,10 @@
       <h3>{{ $t("Type.Claim") }}</h3>
     </div>
     <Loading v-if="isLoading" />
-    <div class="claim_text" v-if="PolicyList && PolicyList.length">
+    <div
+      class="claim_text"
+      v-if="!isLoading && PolicyList && PolicyList.length"
+    >
       <span>{{ $t("Table.Type") }}</span>
       <span>{{ $t("Table.DenAssets") }}</span>
       <span>{{ $t("Table.BaseAssets") }}</span>
@@ -118,7 +121,6 @@
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
 import { getInsuranceList } from "~/interface/event.js";
-import { BalanceOf } from "~/interface/read_contract.js";
 import FactoryABI from "~/web3/abis/FactoryABI.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../../web3/index.js";
@@ -154,26 +156,25 @@ export default {
     };
   },
   computed: {
-    myAboutInfoSell() {
-      return this.$store.state.myAboutInfoSell;
-    },
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
-    },
-    storeThemes() {
-      return this.$store.state.themes;
     },
   },
   watch: {
-    userInfo: {
-      handler: "userInfoWatch",
+    CurrentAccount: {
+      handler: "reloadData",
       immediate: true,
     },
   },
-  mounted() {
-    this.getList();
-  },
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        console.log(Value);
+        this.isLogin = Value.isLogin;
+        this.isLoading = true;
+        this.getPolicysList();
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -190,18 +191,14 @@ export default {
         this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
       }
     },
-    userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.isLogin;
-      }
-    },
+
     Settleable(Seller, Short) {
       let Contracts = getContract(FactoryABI, FactoryAddress);
       return Contracts.methods.settleable(Seller, Short).call();
     },
     BalanceOf(ContractAddress, Decimals) {
       let Contracts = getContract(MiningABI, ContractAddress);
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       return Contracts.methods
         .balanceOf(Account)
         .call()
@@ -209,7 +206,7 @@ export default {
           return fromWei(res, Decimals);
         });
     },
-    getList() {
+    getPolicysList() {
       getInsuranceList().then((res) => {
         let ReturnList = res.data.data.options;
         let FixList = [];
@@ -238,7 +235,6 @@ export default {
               item.short,
               CollateralDecimals
             );
-
             if (
               Number(fixD(ShortBalance, 8)) > 0 &&
               Number(fixD(LongBalance, 8)) > 0
@@ -302,6 +298,7 @@ export default {
                 fixD(newItem.und, 8) > 0 ||
                 precision.plus(newItem.col, newItem.claimBalance) > 0
             );
+            // console.log(1);
             this.isLoading = false;
             return this.PolicyList;
           }
@@ -313,7 +310,7 @@ export default {
       let data = item;
       console.log(data);
       let Contracts = getContract(FactoryABI, FactoryAddress);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       if (data.claimBalance != 0) {
         Contracts.methods
           .burn(data.short, toWei(data.claimBalance, data.collateral_decimals))
@@ -326,7 +323,7 @@ export default {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
               this.SuccessVisible = true;
-              this.getList();
+              this.getPolicysList();
             }
           })
           .on("error", (error) => {
@@ -345,7 +342,7 @@ export default {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
               this.SuccessVisible = true;
-              this.getList();
+              this.getPolicysList();
             }
           })
           .on("error", (error) => {

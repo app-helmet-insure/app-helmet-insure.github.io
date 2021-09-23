@@ -256,23 +256,27 @@ export default {
       WaitingText: "",
     };
   },
-  async mounted() {
-    this.$nextTick(() => {
-      this.getPoolInfo();
-    });
-  },
-  watch: {
-    userInfo: {
-      handler: "userInfoWatch",
-      immediate: true,
-    },
-  },
   computed: {
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
     },
   },
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
+  },
+
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        this.isLogin = Value.isLogin;
+        this.$nextTick(() => {
+          this.getPoolInfo();
+        });
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -287,11 +291,6 @@ export default {
         tokenImage: "",
       };
       await addToken(data);
-    },
-    userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.isLogin;
-      }
     },
     copyAdress(e, text) {
       let copys = new ClipboardJS(".copy", { text: () => text });
@@ -315,7 +314,7 @@ export default {
       const PoolContracts = new Contract(PoolAddress, MiningABI);
       const StakeContracts = new Contract(StakeAddress, MiningABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const PromiseList = [
         StakeContracts.balanceOf(Account),
         PoolContracts.balanceOf(Account),
@@ -354,7 +353,7 @@ export default {
       const TokenSymbol = this.ActiveData.StakeSymbol;
       const Decimals = this.ActiveData.StakeDecimals;
       const Volume = toWei(this.StakeVolume, Decimals);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
       this.StakeLoading = true;
@@ -414,7 +413,7 @@ export default {
       }
       this.ClaimLoading = true;
       const ContractAddress = this.ActiveData.PoolAddress;
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Contracts = getContract(MiningABI, ContractAddress);
       Contracts.methods
         .getReward()
@@ -444,7 +443,7 @@ export default {
       }
       this.ExitLoading = true;
       let ContractAddress = this.ActiveData.PoolAddress;
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       const Contracts = getContract(MiningABI, ContractAddress);
       Contracts.methods
         .exit()

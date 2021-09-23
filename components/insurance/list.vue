@@ -48,7 +48,7 @@
             <section class="insurance_price_web WEB">
               <span>
                 {{ fixD(item.LastPrice, item.LastPriceDecimals) }}
-                {{ item.Call.UnderlyingSymbol }}
+                {{ item.InsurancePut }}
               </span>
               <span>
                 $ {{ fixD(item.LastUsdtPrice, item.LastUsdtPriceDecimals) }}
@@ -110,7 +110,7 @@
               <p>
                 <span>
                   {{ fixD(item.LastPrice, item.LastPriceDecimals) }}
-                  {{ item.Call.UnderlyingSymbol }}
+                  {{ item.InsurancePut }}
                 </span>
                 <span>
                   $ {{ fixD(item.LastUsdtPrice, item.LastUsdtPriceDecimals) }}
@@ -191,7 +191,10 @@ import { fixD, toRounding } from "~/assets/js/util.js";
 import Market from "./market";
 import Supply from "./supply";
 import Wraper from "~/components/common/wraper.vue";
-import { InsuranceTypeList } from "../../config/insurance.js";
+import {
+  getCurrentInsurance,
+  InsuranceTypeList,
+} from "../../config/insurance.js";
 import { getTokenPrice } from "../../interface/event.js";
 import { fromWei, toWei } from "../../web3/index.js";
 export default {
@@ -220,14 +223,18 @@ export default {
   methods: {
     formatInsuranceData() {
       InsuranceTypeList.map(async (Item) => {
-        if (Item.Call) {
+        if (!Item.Ads) {
+          let CurrentInsurance = getCurrentInsurance({
+            Type: "Call",
+            Insurance: Item.InsuranceName,
+          });
           const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
           const {
             CollateralAddress,
             CollateralDecimals,
             UnderlyingAddress,
             UnderlyingDecimals,
-          } = Item.Call;
+          } = CurrentInsurance;
           let Amount = toWei("1", CollateralDecimals);
           let Data = await getTokenPrice({
             fromTokenAddress: CollateralAddress,

@@ -28,7 +28,7 @@
         Migration</span
       >
       <a
-        v-if="!userInfo.isLogin"
+        v-if="!CurrentAccount.isLogin"
         class="connect-wallet-btn"
         @click="openWallectSelect"
         >{{ $t("Header.ConnectWallet") }}
@@ -102,7 +102,7 @@ export default {
     };
   },
   computed: {
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
     },
     ChainID() {
@@ -114,18 +114,29 @@ export default {
     },
   },
   watch: {
-    userInfo: {
-      handler: "userInfoWatch",
+    CurrentAccount: {
+      handler: "reloadData",
       immediate: true,
     },
     ChainID(newValue) {
       this.chainID = newValue;
     },
   },
-  mounted() {
-    this.getHelmetBalance();
-  },
   methods: {
+    reloadData(Value) {
+      if (Value && Value.account) {
+        console.log(Value);
+        let account = Value.account;
+        account = account.toUpperCase();
+        this.accountText =
+          account.substr(0, 1) +
+          account.substr(1, 1).toLowerCase() +
+          account.substr(2, 3) +
+          "..." +
+          account.substr(-4);
+        this.getHelmetBalance();
+      }
+    },
     jump() {
       this.$router.push("/migration");
     },
@@ -151,18 +162,7 @@ export default {
     closeCurrentAccount() {
       this.showCurrentAccount = false;
     },
-    userInfoWatch(newValue) {
-      if (newValue && newValue.account) {
-        let account = newValue.account;
-        account = account.toUpperCase();
-        this.accountText =
-          account.substr(0, 1) +
-          account.substr(1, 1).toLowerCase() +
-          account.substr(2, 3) +
-          "..." +
-          account.substr(-4);
-      }
-    },
+
     openWallectSelect() {
       this.showWallectSelect = true;
       this.WallectSelectType = "ALL";

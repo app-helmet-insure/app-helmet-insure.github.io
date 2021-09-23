@@ -175,20 +175,25 @@ export default {
     };
   },
   computed: {
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
     },
   },
   watch: {
-    userInfo: {
-      handler: "userInfoWatch",
+    CurrentAccount: {
+      handler: "reloadData",
       immediate: true,
     },
   },
-  mounted() {
-    this.getPolicysList();
-  },
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        console.log(Value);
+        this.isLogin = Value.isLogin;
+        this.isLoading = true;
+        this.getPolicysList();
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -205,16 +210,11 @@ export default {
         this.MaxNumber = (value - 1) * this.PageSize + this.PageSize;
       }
     },
-    userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.isLogin;
-      }
-    },
     getPolicysList() {
       getInsuranceList().then((res) => {
         let nowDate = parseInt(moment.now() / 1000);
         if (res && res.data.data.options) {
-          let Account = window.CURRENTADDRESS;
+          let Account = this.CurrentAccount.account;
           const ReturnList = res.data.data.options;
           const FixListPush = [];
           const FilterList = ReturnList.filter(
@@ -283,7 +283,7 @@ export default {
                         (number += Number(
                           fromWei(itembid.volume, CollateralDecimals)
                         ))
-                    );  
+                    );
                   } else {
                     number = Number(
                       fromWei(itemAsk.binds[0].volume, CollateralDecimals)
@@ -352,7 +352,7 @@ export default {
     // 撤销
     handleClickCancel(data) {
       const Contracts = getContract(OrderABI, OrderAddress);
-      const Account = window.CURRENTADDRESS;
+      const Account = this.CurrentAccount.account;
       Contracts.methods
         .cancel(data.AskID)
         .send({ from: Account })

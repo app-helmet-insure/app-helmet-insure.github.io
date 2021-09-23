@@ -171,23 +171,23 @@ export default {
     };
   },
   computed: {
-    userInfo() {
+    CurrentAccount() {
       return this.$store.state.userInfo;
     },
   },
-  mounted() {
-    this.getPolicysList();
-  },
   watch: {
-    userInfo: {
-      handler: "userInfoWatch",
+    CurrentAccount: {
+      handler: "reloadData",
       immediate: true,
     },
   },
   methods: {
-    userInfoWatch(newValue) {
-      if (newValue) {
-        this.isLogin = newValue.isLogin;
+    reloadData(Value) {
+      if (Value) {
+        console.log(Value);
+        this.isLogin = Value.isLogin;
+        this.isLoading = true;
+        this.getPolicysList();
       }
     },
     waitingClose() {
@@ -214,7 +214,7 @@ export default {
       getInsuranceList().then((res) => {
         let nowDate = parseInt(moment.now() / 1000);
         if (res && res.data.data.options) {
-          let Account = window.CURRENTADDRESS;
+          let Account = this.CurrentAccount.account;
           const ReturnList = res.data.data.options;
           const AskAssign = [];
           const BidAssign = [];
@@ -351,7 +351,7 @@ export default {
       });
     },
     getLongApporve(data) {
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       const Erc20ContractsLong = getContract(ERC20ABI.abi, data.Long);
       return Erc20ContractsLong.methods
         .allowance(Account, OrderAddress)
@@ -364,7 +364,7 @@ export default {
         });
     },
     getUnderlyingApprove(data) {
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       const Erc20ContractsLong = getContract(
         ERC20ABI.abi,
         data.UnderlyingAddress
@@ -384,7 +384,7 @@ export default {
       const Erc20Contracts = getContract(ERC20ABI.abi, data.UnderlyingAddress);
       const Infinitys =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
         .send({ from: Account })
@@ -409,7 +409,7 @@ export default {
       const Erc20Contracts = getContract(ERC20ABI.abi, data.Long);
       const Infinitys =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       Erc20Contracts.methods
         .approve(OrderAddress, Infinitys)
         .send({ from: Account })
@@ -457,7 +457,7 @@ export default {
       }
     },
     actionWithDraw(data) {
-      let Account = window.CURRENTADDRESS;
+      let Account = this.CurrentAccount.account;
       let Contracts = getContract(OrderABI, OrderAddress);
       Contracts.methods
         .exercise(data.BidID)
@@ -475,7 +475,7 @@ export default {
             this.getPolicysList();
           }
         })
-        .on("error",  (error) =>{
+        .on("error", (error) => {
           this.WaitingVisible = false;
           this.SuccessVisible = false;
           this.WaitingText = "";

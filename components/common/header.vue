@@ -105,6 +105,9 @@ export default {
     CurrentAccount() {
       return this.$store.state.userInfo;
     },
+    RefreshData() {
+      return this.$store.state.refreshNumber;
+    },
     ChainID() {
       let chainID = this.$store.state.chainID;
       return chainID;
@@ -121,11 +124,14 @@ export default {
     ChainID(newValue) {
       this.chainID = newValue;
     },
+    RefreshData: {
+      handler: "refreshData",
+      immediate: true,
+    },
   },
   methods: {
     reloadData(Value) {
       if (Value && Value.account) {
-        console.log(Value);
         let account = Value.account;
         account = account.toUpperCase();
         this.accountText =
@@ -134,6 +140,11 @@ export default {
           account.substr(2, 3) +
           "..." +
           account.substr(-4);
+        this.getHelmetBalance();
+      }
+    },
+    refreshData(Value, NewValue) {
+      if (Value != NewValue) {
         this.getHelmetBalance();
       }
     },

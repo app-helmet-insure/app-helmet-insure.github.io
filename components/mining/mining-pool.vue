@@ -533,6 +533,7 @@ export default {
               this.StakeLoading = false;
               this.ApproveStatus = true;
               this.WaitingText = "";
+              this.$store.dispatch("refreshData");
               this.getPoolInfo();
             }
           })
@@ -561,6 +562,7 @@ export default {
               this.WaitingVisible = false;
               this.SuccessVisible = true;
               this.StakeLoading = false;
+              this.$store.dispatch("refreshData");
               this.getPoolInfo();
             }
           })
@@ -602,6 +604,7 @@ export default {
             this.WaitingVisible = false;
             this.SuccessVisible = true;
             this.ClaimLoading = false;
+            this.$store.dispatch("refreshData");
             this.getPoolInfo();
           }
         })
@@ -649,6 +652,7 @@ export default {
             this.WaitingVisible = false;
             this.SuccessVisible = true;
             this.ExitLoading = false;
+            this.$store.dispatch("refreshData");
             this.getPoolInfo();
           }
         })

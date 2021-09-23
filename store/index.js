@@ -43,6 +43,7 @@ export const state = () => ({
     account: null,
   },
   walletType: "", // 钱包类型
+  refreshNumber: 0,
 });
 
 export const mutations = {
@@ -62,6 +63,10 @@ export const mutations = {
   },
   SET_USER_INFO(state, data) {
     state.userInfo = data;
+  },
+  SET_REFRESH_DATA(state) {
+    console.log(state)
+    state.refreshNumber = state.refreshNumber + 1;
   },
 };
 
@@ -83,5 +88,8 @@ export const actions = {
   },
   setChainID({ commit }, data) {
     commit("SET_CHAINID", data);
+  },
+  refreshData({ commit }) {
+    commit("SET_REFRESH_DATA");
   },
 };

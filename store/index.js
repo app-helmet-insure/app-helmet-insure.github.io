@@ -69,7 +69,6 @@ export const mutations = {
     state.refreshNumber = state.refreshNumber + 1;
   },
 };
-
 export const actions = {
   // nuxtServerInit(store, { req }) {
   //     if (req.locale) {

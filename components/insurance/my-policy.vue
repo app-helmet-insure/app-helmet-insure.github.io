@@ -347,6 +347,9 @@ export default {
               return list;
             });
             returnList = returnList.filter((filter) => filter.remain !== "0");
+            returnList = returnList.sort(
+              (a, b) => Number(b.BidID) - Number(a.BidID)
+            );
             this.PolicyList = returnList;
             this.isLoading = false;
           });

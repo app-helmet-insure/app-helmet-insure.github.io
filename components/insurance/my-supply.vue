@@ -345,7 +345,10 @@ export default {
               });
             }
           });
-          const FixList = FixListPush.sort((a, b) => a.Sort - b.Sort);
+          let FixList = FixListPush.sort(
+            (a, b) => Number(b.AskID) - Number(a.AskID)
+          );
+          FixList = FixList.sort((a, b) => a.Sort - b.Sort);
           this.PolicyList = FixList;
           this.isLoading = false;
         }

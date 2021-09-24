@@ -374,7 +374,7 @@ export default {
             this.SuccessHash = receipt.transactionHash;
             this.WaitingVisible = false;
             this.SuccessVisible = true;
-            getPolicysList();
+            this.getPolicysList();
           }
         })
         .on("error", (ereor) => {

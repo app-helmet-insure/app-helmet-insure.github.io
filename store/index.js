@@ -1,6 +1,6 @@
 export const state = () => ({
   locale: "en_US",
-  chainID: 56,
+  chainID: null,
   themes: "light",
   localeList: [
     {
@@ -65,7 +65,7 @@ export const mutations = {
     state.userInfo = data;
   },
   SET_REFRESH_DATA(state) {
-    console.log(state)
+    console.log(state);
     state.refreshNumber = state.refreshNumber + 1;
   },
 };

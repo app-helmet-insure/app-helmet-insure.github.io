@@ -222,6 +222,7 @@ export default {
             (item) => item.expiry * 1 + 5814000 > nowDate
           );
           FilterList.forEach((item) => {
+            console.log(item, "######################");
             const CurrentInsurance = getCurrentInsurance({
               CollateralAddress: item.collateral,
               UnderlyingAddress: item.underlying,
@@ -246,7 +247,9 @@ export default {
               const ResultItem = {
                 Type,
                 Expiry: item.expiry,
-                ShowExpiry,
+                ShowExpiry: moment(new Date(item.expiry * 1000)).format(
+                  "YYYY/MM/DD HH:mm:ss"
+                ),
                 Long: item.long,
                 Short: item.short,
                 StrikePrice: item.strikePrice,

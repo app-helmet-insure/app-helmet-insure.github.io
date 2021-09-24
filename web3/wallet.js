@@ -1,4 +1,5 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import Web3 from "web3";
 export const openMetaMaskWallet = () => {
   try {
     ethereum
@@ -27,13 +28,11 @@ export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {
     console.log(account, "################Account");
     if (account && account.length) {
-      console.log(1);
       window.$nuxt.$store.dispatch("setUserInfo", {
         isLogin: true,
         account: account[0],
       });
     } else {
-      console.log(2);
       window.$nuxt.$store.dispatch("setUserInfo", {
         isLogin: false,
         account: "",
@@ -41,13 +40,18 @@ export const watchAccountChange = () => {
     }
   });
 };
+export const getNetworkChainID = () => {
+  const web3 = new Web3(window.ethereum);
+  return new web3.eth.net.getId();
+};
 export const watchNetWorkChange = () => {
   ethereum.on("chainChanged", (chainID) => {
     window.chainID = chainID;
     if (chainID * 1 === 137) {
       window.location.href = "https://www.guard.insure/insurance/";
     }
-    window.$nuxt.$store.dispatch("setChainID", chainID);
+    console.log(chainID);
+    window.$nuxt.$store.dispatch("setChainID", chainID * 1);
   });
 };
 export const addToken = ({

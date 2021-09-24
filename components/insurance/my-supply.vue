@@ -247,7 +247,9 @@ export default {
               const ResultItem = {
                 Type,
                 Expiry: item.expiry,
-                ShowExpiry,
+                ShowExpiry: moment(new Date(item.expiry * 1000)).format(
+                  "YYYY/MM/DD HH:mm:ss"
+                ),
                 Long: item.long,
                 Short: item.short,
                 StrikePrice: item.strikePrice,

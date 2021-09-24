@@ -66,6 +66,7 @@ import {
   openMetaMaskWallet,
   watchAccountChange,
   watchNetWorkChange,
+  getNetworkChainID,
 } from "../web3/wallet.js";
 import { WEB3 } from "../web3/index.js";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
@@ -131,6 +132,8 @@ export default {
     }
     this.copy();
     window.WEB3 = WEB3();
+    let NetWork = await getNetworkChainID();
+    this.$store.dispatch("setChainID", NetWork);
     // 获取映射
     openMetaMaskWallet();
     watchAccountChange();
@@ -146,7 +149,6 @@ export default {
       this.closeStatusDialog();
       window.statusDialog = false;
     });
-
     let themes = localStorage.themes || this.storeThemes || "light";
     document.body.setAttribute("class", themes);
     localStorage.setItem("themes", themes);

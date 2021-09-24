@@ -54,6 +54,9 @@
           >
             {{ $t("Insurance.Insurance_text15") }}
           </button>
+          <button v-if="item.Status === 'Cancel'" class="sold">
+            {{ $t("Insurance.Insurance_text25") }}
+          </button>
           <button v-if="item.Status === 'Sold'" class="sold">
             {{ $t("Insurance.Insurance_text14") }}
           </button>
@@ -247,7 +250,9 @@ export default {
               const ResultItem = {
                 Type,
                 Expiry: item.expiry,
-                ShowExpiry,
+                ShowExpiry: moment(new Date(item.expiry * 1000)).format(
+                  "YYYY/MM/DD HH:mm:ss"
+                ),
                 Long: item.long,
                 Short: item.short,
                 StrikePrice: item.strikePrice,
@@ -322,15 +327,15 @@ export default {
                 }
                 AllItem.Status = "Nomal";
                 AllItem.Sort = 1;
-                if (AllItem.isCancel && Number(AllItem.ShowBeSold) === 0) {
+                if (AllItem.IsCancel && Number(AllItem.ShowBeSold) === 0) {
                   AllItem.Status = "Hidden";
                   AllItem.Sort = 4;
                 }
-                if (AllItem.isCancel && Number(AllItem.ShowBeSold) > 0) {
+                if (AllItem.IsCancel && Number(AllItem.ShowBeSold) > 0) {
                   AllItem.Status = "Cancel";
                   AllItem.Sort = 2;
                 }
-                if (!AllItem.isCancel && Number(AllItem.ShowUnSold) === 0) {
+                if (!AllItem.IsCancel && Number(AllItem.ShowUnSold) === 0) {
                   AllItem.Status = "Sold";
                   AllItem.Sort = 3;
                 }
@@ -343,7 +348,11 @@ export default {
               });
             }
           });
-          const FixList = FixListPush.sort((a, b) => a.Sort - b.Sort);
+          let FixList = FixListPush.sort(
+            (a, b) => Number(b.AskID) - Number(a.AskID)
+          );
+          console.log(FixList);
+          FixList = FixList.sort((a, b) => a.Sort - b.Sort);
           this.PolicyList = FixList;
           this.isLoading = false;
         }
@@ -365,7 +374,7 @@ export default {
             this.SuccessHash = receipt.transactionHash;
             this.WaitingVisible = false;
             this.SuccessVisible = true;
-            getPolicysList();
+            this.getPolicysList();
           }
         })
         .on("error", (ereor) => {

@@ -1,28 +1,35 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3 from "web3";
+import {mateMaskInfo} from "../assets/utils/matemask";
 export const openMetaMaskWallet = () => {
-  try {
-    ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then(async (account) => {
-        window.CURRENTADDRESS = account[0];
-        window.localStorage.setItem("currentType", "MetaMask");
-        // const walletConnectProvider = new WalletConnectProvider({
-        //   chainId: 56,
-        //   rpc: {
-        //     56: "https://bsc-dataseed1.binance.org/",
-        //   },
-        //   qrcode: true,
-        //   pollingInterval: 10000,
-        // });
-        // let userInfo = await mateMaskInfo(account[0], "MetaMask");
-        window.$nuxt.$store.dispatch("setUserInfo", {
-          isLogin: true,
-          account: account[0],
+  return new Promise((resolve,reject) => {
+    try {
+      ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(async (account) => {
+          window.CURRENTADDRESS = account[0];
+          window.localStorage.setItem("currentType", "MetaMask");
+          // const walletConnectProvider = new WalletConnectProvider({
+          //   chainId: 56,
+          //   rpc: {
+          //     56: "https://bsc-dataseed1.binance.org/",
+          //   },
+          //   qrcode: true,
+          //   pollingInterval: 10000,
+          // });
+          let userInfo = await mateMaskInfo(account[0], "MetaMask");
+          window.$nuxt.$store.dispatch("setUserInfo", {
+            isLogin: true,
+            account: account[0],
+          });
+          window.$nuxt.$store.dispatch("setWalletType", "MetaMask");
+          resolve()
         });
-        window.$nuxt.$store.dispatch("setWalletType", "MetaMask");
-      });
-  } catch (error) {}
+    } catch (error) {
+      reject(error)
+    }
+  })
+
 };
 export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {

@@ -135,7 +135,7 @@ export default {
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
     // 获取映射
-    openMetaMaskWallet();
+    await openMetaMaskWallet();
     watchAccountChange();
     watchNetWorkChange();
     // 显示状态弹框

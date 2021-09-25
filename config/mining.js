@@ -5,6 +5,7 @@ import MdexPoolABI from "~/web3/abis/MdexPoolABI.json";
 import SushiPoolABI from "~/web3/abis/SushiPoolABI.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import CandyABI from "~/web3/abis/CandyABI.json";
+import DepositeABI from "~/web3/abis/deposite_abi.json";
 import ApproveABI from "~/web3/abis/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
 import {
@@ -278,7 +279,7 @@ export const comboPoolList = [
     PoolName: "HELMET POOL",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
+    StakeMethods: "stakeAndCompound",
     StakeSymbol: "HELMET",
     StakeUnit: "HELMET",
     RewardVolume: "one",

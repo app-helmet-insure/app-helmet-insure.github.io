@@ -48,8 +48,8 @@
         </section>
         <section class="supply_item_action_web WEB">
           <button
-            v-if="item.Status === 'Nomal'"
-            class="nomal"
+            v-if="item.Status === 'Normal'"
+            class="normal"
             @click="handleClickCancel(item)"
           >
             {{ $t("Insurance.Insurance_text15") }}
@@ -99,8 +99,8 @@
         </section>
         <section class="supply_item_action_h5 H5">
           <button
-            v-if="item.Status === 'Nomal'"
-            class="nomal"
+            v-if="item.Status === 'Normal'"
+            class="normal"
             @click="handleClickCancel(item)"
           >
             {{ $t("Insurance.Insurance_text15") }}
@@ -325,7 +325,7 @@ export default {
                   AllItem.ShowBeSold = Number(AllItem.ShowBeSold).toFixed(8);
                   AllItem.ShowUnSold = Number(AllItem.ShowUnSold).toFixed(8);
                 }
-                AllItem.Status = "Nomal";
+                AllItem.Status = "Normal";
                 AllItem.Sort = 1;
                 if (AllItem.IsCancel && Number(AllItem.ShowBeSold) === 0) {
                   AllItem.Status = "Hidden";

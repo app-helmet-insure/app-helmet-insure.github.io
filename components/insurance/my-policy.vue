@@ -46,12 +46,20 @@
           </p>
         </section>
         <section class="policy_item_action_web WEB">
-          <button @click="toActive(item)">
+          <!-- <button @click="toActive(item)">
             {{
-              item.status == "Expired"
+              item.Status == "Expired"
                 ? $t("Insurance.Insurance_text13")
                 : $t("Table.outSure")
             }}
+            <i class="selectDown"></i>
+          </button> -->
+          <button v-if="item.Status == 'Normal'" @click="toActive(item)">
+            {{ $t("Insurance.outSure") }}
+            <i class="selectDown"></i>
+          </button>
+          <button v-if="item.Status == 'Expired'">
+            {{ $t("Insurance.Insurance_text13") }}
             <i class="selectDown"></i>
           </button>
         </section>
@@ -93,7 +101,7 @@
         <section class="policy_item_action_h5 H5">
           <button @click="toActive(item)">
             {{
-              item.status == "Expired"
+              item.Status == "Expired"
                 ? $t("Insurance.Insurance_text13")
                 : $t("Table.outSure")
             }}
@@ -184,7 +192,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.isLoading = true;
         this.getPolicysList();
@@ -222,7 +229,6 @@ export default {
             (item) => item.expiry * 1 + 5814000 > nowDate
           );
           FilterList.forEach((item) => {
-            console.log(item, "######################");
             const CurrentInsurance = getCurrentInsurance({
               CollateralAddress: item.collateral,
               UnderlyingAddress: item.underlying,
@@ -262,7 +268,8 @@ export default {
                 CallToken,
                 PutToken,
               };
-
+              ResultItem.Status =
+                item.expiry * 1 > nowDate ? "Normal" : "Expired";
               item.asks.filter((itemAsk) => {
                 const ResultItemAsk = {
                   Binds: itemAsk.binds,
@@ -351,6 +358,7 @@ export default {
               (a, b) => Number(b.BidID) - Number(a.BidID)
             );
             this.PolicyList = returnList;
+            console.log(returnList);
             this.isLoading = false;
           });
         }
@@ -444,7 +452,6 @@ export default {
     async toActive(data) {
       let LongApproveStatus = await this.getLongApporve(data);
       let UnderlyingApproveStatus = await this.getUnderlyingApprove(data);
-      console.log(LongApproveStatus, UnderlyingApproveStatus);
       if (!LongApproveStatus && !UnderlyingApproveStatus) {
         this.actionApproveLong(data);
         return;

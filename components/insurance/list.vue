@@ -219,6 +219,7 @@ export default {
   mounted() {
     this.formatInsuranceData();
     this.InsuanceData = InsuranceTypeList;
+    console.log(this.InsuanceData);
   },
   methods: {
     formatInsuranceData() {
@@ -229,32 +230,30 @@ export default {
             Insurance: Item.InsuranceName,
           });
           const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+          const BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
           const {
             CollateralAddress,
             CollateralDecimals,
             UnderlyingAddress,
             UnderlyingDecimals,
           } = CurrentInsurance;
-          let Amount = toWei("1", CollateralDecimals);
+          let Amount = toWei("1");
+          let Amount1 = toWei("1", CollateralDecimals);
           let Data = await getTokenPrice({
-            fromTokenAddress: CollateralAddress,
-            toTokenAddress: UnderlyingAddress,
+            fromTokenAddress: BNB,
+            toTokenAddress: BUSD,
             amount: Amount,
           });
           let Data1 = await getTokenPrice({
             fromTokenAddress: CollateralAddress,
             toTokenAddress: BUSD,
-            amount: Amount,
+            amount: Amount1,
           });
+          let BnbUsdtPrice = fromWei(Data.data.toTokenAmount);
+          let TokenUsdtPrice = fromWei(Data1.data.toTokenAmount);
           return (
-            (Item.LastPrice = fromWei(
-              Data.data.toTokenAmount,
-              UnderlyingDecimals
-            )),
-            (Item.LastUsdtPrice = fromWei(
-              Data1.data.toTokenAmount,
-              UnderlyingDecimals
-            ))
+            (Item.LastPrice = TokenUsdtPrice / BnbUsdtPrice),
+            (Item.LastUsdtPrice = TokenUsdtPrice)
           );
         }
       });

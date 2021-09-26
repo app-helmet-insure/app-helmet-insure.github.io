@@ -1,10 +1,10 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide kala"><div></div></div>
       <div class="swiper-slide lpt"><div></div></div>
       <div class="swiper-slide newinsure"><div></div></div>
       <div class="swiper-slide insure"><div></div></div>
-      <div class="swiper-slide ibo"><div></div></div>
       <div class="swiper-slide guard"><div></div></div>
       <a
         class="swiper-slide dis"
@@ -137,6 +137,12 @@ export default {
         background-position: center;
       }
     }
+    .kala {
+      background: #288d59;
+      > div {
+        background-image: url("../../assets/img/banner/kala_web.png");
+      }
+    }
     .lpt {
       background: #ac000a;
       > div {
@@ -201,6 +207,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .kala {
+      background: #288d59;
+      > div {
+        background-image: url("../../assets/img/banner/kala_h5.png");
       }
     }
     .lpt {

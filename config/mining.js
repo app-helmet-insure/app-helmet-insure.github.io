@@ -1332,7 +1332,8 @@ export const getAPRAndAPY = async (PoolData) => {
   });
 };
 export const getCandyAPR = async (PoolData) => {
-  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const HELMETAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const USDTAddress = "0x55d398326f99059ff775485246999027b3197955";
   const {
     PoolAddress,
     StakeDecimals,
@@ -1341,14 +1342,20 @@ export const getCandyAPR = async (PoolData) => {
     Reward1Decimals,
   } = PoolData;
   const PoolContracts = new Contract(PoolAddress, MiningABI);
-  const Amount = toWei("1", Reward1Decimals);
+  const Amount = toWei("1");
+  const Amount1 = toWei("1", Reward1Decimals);
   const Data = await getTokenPrice({
-    fromTokenAddress: Reward1Address,
-    toTokenAddress: HelmetAddress,
+    fromTokenAddress: HELMETAddress,
+    toTokenAddress: USDTAddress,
     amount: Amount,
   });
-  const Reward1HelmetPrice = fromWei(Data.data.toTokenAmount);
-  console.log(Reward1HelmetPrice);
+  const Data1 = await getTokenPrice({
+    fromTokenAddress: Reward1Address,
+    toTokenAddress: USDTAddress,
+    amount: Amount1,
+  });
+  const HelmetUsdtPrice = fromWei(Data.data.toTokenAmount);
+  const Reward1UsdtPrice = fromWei(Data1.data.toTokenAmount);
   const PromiseList = [PoolContracts.totalSupply()];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {
@@ -1357,7 +1364,9 @@ export const getCandyAPR = async (PoolData) => {
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
     const APR =
       fixD(
-        ((DailyReward * 365 * Reward1HelmetPrice) / FixTotalStakeVolume) * 100,
+        ((DailyReward * 365 * Reward1UsdtPrice) /
+          (FixTotalStakeVolume * HelmetUsdtPrice)) *
+          100,
         2
       ) + "%";
     return (PoolData.APR = APR);

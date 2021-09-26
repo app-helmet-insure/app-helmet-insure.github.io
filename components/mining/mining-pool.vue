@@ -42,7 +42,7 @@
           >{{
             !ApproveStatus
               ? $t("Table.Approve")
-              : CanClaim1
+              : Number(CanClaim1)
               ? $t("Table.StakeAndCompound")
               : $t("Table.ConfirmDeposit")
           }}

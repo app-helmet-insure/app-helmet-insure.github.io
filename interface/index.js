@@ -18,7 +18,6 @@ import { getAddress, getContract, getID } from "~/assets/utils/address-pool.js";
 
 
 
-// 买家凭证，用于行权
 export const Long = async () => {
   const WEB3 = await web3();
   const charID = await getID();
@@ -34,7 +33,6 @@ export const Payaso = async () => {
   );
 };
 
-// 期权工厂合约, 用于创建期权实例合约，铸造期权通证，销毁期权通证，并实现了行权和结算入口。
 export const Factory = async (adress) => {
   const WEB3 = await web3();
   return await new WEB3.eth.Contract(
@@ -43,7 +41,6 @@ export const Factory = async (adress) => {
   );
 };
 
-// 期权市场，卖家挂单，买家吃单，并实现了买家行权和弃权入口。
 export const Order = async () => {
   const WEB3 = await web3();
   return await new WEB3.eth.Contract(
@@ -51,7 +48,6 @@ export const Order = async () => {
     getContract("ORDER", window.chainID)
   );
 };
-// 质押挖矿 UNI+PAYA双挖入口
 export const Deposite = async (adress) => {
   const WEB3 = await web3();
   // const charID = await getID();
@@ -62,7 +58,6 @@ export const expERC20 = async (address) => {
   // console.log('window.WEB3###', window.WEB3);
   return await new WEB3.eth.Contract(ERC20ABI.abi, address);
 };
-// 获取四要素
 export const TokenExpERC20 = async (address) => {
   const WEB3 = await web3();
   // console.log('window.WEB3###', window.WEB3);

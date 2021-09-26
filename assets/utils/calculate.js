@@ -1,4 +1,3 @@
-//相乘
 export function mul(num1, num2) {
   var m = 0,
     r1,
@@ -23,7 +22,6 @@ export function mul(num1, num2) {
   return res;
 }
 
-//求和
 export function add(num1, num2) {
   var r1, r2, m;
   try {
@@ -47,7 +45,6 @@ export function add(num1, num2) {
   return res;
 }
 
-//相减
 export function sub(num1, num2) {
   var r1, r2, m, n;
   try {
@@ -73,7 +70,6 @@ export function sub(num1, num2) {
   return res;
 }
 
-//相除
 export function accDiv(num1, num2) {
   var t1, t2, r1, r2;
   try {
@@ -99,7 +95,6 @@ export function accDiv(num1, num2) {
   return res;
 }
 
-// 精确有效数字
 export const toPrecision = (num, wei = 2) => {
   let n = Number(num).toPrecision(wei);
   return Number(n);

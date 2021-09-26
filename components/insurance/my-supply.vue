@@ -358,7 +358,6 @@ export default {
         }
       });
     },
-    // 撤销
     handleClickCancel(data) {
       const Contracts = getContract(OrderABI, OrderAddress);
       const Account = this.CurrentAccount.account;

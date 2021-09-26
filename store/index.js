@@ -37,12 +37,12 @@ export const state = () => ({
     },
   ],
   userInfo: {
-    // 用户信息
+    
     name: "MetaMask",
     isLogin: false,
     account: null,
   },
-  walletType: "", // 钱包类型
+  walletType: "", 
   refreshNumber: 0,
 });
 
@@ -78,7 +78,6 @@ export const actions = {
   setThemes({ commit }, data) {
     commit("SET_THEMES", data);
   },
-  // 设置钱包类型
   setWalletType({ commit }, data) {
     commit("SET_WALLET_RYPE", data);
   },

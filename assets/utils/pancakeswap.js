@@ -23,11 +23,8 @@ export const pancakeswap = async (token1, token2) => {
         );
         const WEB3 = await web3();
         try {
-            // 获取交易对地址
             const address = Pair.getAddress(TOKEN1, TOKEN2);
-            // 获取合约方法
             const Contracts = await PairContract(address);
-            // 获取getReserves
             let result = await Contracts.methods
                 .getReserves()
                 .call()

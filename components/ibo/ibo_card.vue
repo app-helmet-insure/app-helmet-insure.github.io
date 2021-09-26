@@ -524,18 +524,13 @@ export default {
     };
   },
   computed: {
-    // 总释放
     totalTokenAmount: function () {
       return new BigNumber(this.iboData.amount).toFormat();
     },
-    // 我的质押
     purchasedCurrencyOf: function () {
-      // if (this.initLoading){
-      //   return '-'
-      // }
+     
       return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
     },
-    // 中签率
     rate: function () {
       if (!this.iboData.settleable || this.iboData.status === 0) {
         return "-";
@@ -545,7 +540,6 @@ export default {
         .toFixed(2, 1)
         .toString();
     },
-    // 预计获得
     rateValue: function () {
       if (!this.iboData.settleable) {
         return "-";
@@ -555,7 +549,6 @@ export default {
         this.iboData.underlying.decimal
       );
     },
-    // 可领取
     volume: function () {
       if (this.iboData.settleable) {
         return formatAmount(
@@ -565,7 +558,6 @@ export default {
       }
       return 0;
     },
-    // 未使用
     notUsed: function () {
       if (this.iboData.settleable) {
         if (this.iboData.settleable.amount == "0") {
@@ -577,11 +569,8 @@ export default {
       }
       return 0;
     },
-    // 可用
     available: function () {
-      // if (this.initLoading) {
-      //   return '-'
-      // }
+     
       return this.getAvailable();
     },
   },
@@ -618,26 +607,18 @@ export default {
       });
     },
     getAvailable() {
-      // 我的质押
       const purchasedCurrencyOf =
         fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
-      // 我的余额
       const balanceOf = this.iboData.balanceOf || 0;
-      // 我的剩余额度 balanceOf
       const remainingLimit =
         this.iboData.pool_info.max_allocation - purchasedCurrencyOf;
       return Math.min(remainingLimit, balanceOf);
     },
     getCountdownData() {
-      // "IBO_text3": "倒计时",
-      //     "IBO_text4": "进行中",
-      //     "IBO_text5": "等待",
-      //     "IBO_text6": "结算中",
-      //     "IBO_text7": "已完成",
+     
       const thisTime = parseInt(new Date().getTime() / 1000);
       this.now = thisTime;
       let t = 0;
-      // 倒计时开始
       let statusTxt = "IBO.IBO_text3";
       switch (this.iboData.status) {
         case 0:
@@ -645,7 +626,6 @@ export default {
           statusTxt = "IBO.IBO_text3";
           break;
         case 1:
-          // 倒计时结束
           if (
             this.iboData.timeClose === 0 ||
             this.iboData.timeClose > thisTime
@@ -657,7 +637,6 @@ export default {
           }
           break;
         case 2:
-          // 倒计时claim
           t = this.iboData.timeSettle - thisTime;
           statusTxt = "IBO.IBO_text7";
           break;
@@ -691,7 +670,6 @@ export default {
           this.amount = purchasedCurrencyOf;
         }
         this.initLoading = false;
-        // console.log("newPool", JSON.parse(JSON.stringify(newPool)));
       });
     },
     showClaim() {
@@ -768,16 +746,13 @@ export default {
       });
     },
 
-    // 展示空投
     activeAirdrop: function () {
-      // 到了时间 && !withdrawList没领取 && allowList可领取 > 0
       return (
         this.now > this.iboData.airdrop.begin &&
         !this.iboData.airdrop.withdrawList &&
         this.iboData.airdrop.allowList > 0
       );
     },
-    // 第二次claim 空投
     onAirdrop() {
       if (this.airdropLoading || !this.activeAirdrop()) {
         return;

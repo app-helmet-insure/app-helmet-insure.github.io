@@ -328,7 +328,7 @@ export default {
           process > 0 ? fixD(process * this.activeData.total_bonus, 4) : 0;
       }
     },
-    // 抵押
+    
     async toDeposite() {
       if (!this.DepositeNum) {
         return;

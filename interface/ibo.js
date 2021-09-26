@@ -63,23 +63,22 @@ export const getPoolInfo = (pool) => {
     : new Contract(pool.currency.address, ERC20.abi);
   const promiseList = [
     poolContract.price(),
-    poolContract.totalPurchasedCurrency(), //总申购的量
+    poolContract.totalPurchasedCurrency(), 
     poolContract.purchasedCurrencyOf(account),
     // poolContract.totalSettleable(),
     poolContract.settleable(account),
     poolContract.totalSettledUnderlying(),
-    poolContract.maxUser(),//最多参与人数
-    poolContract.curUserCount(),//当前参与人数
-    poolContract.amtLow(),//最少金额
-    poolContract.amtHigh(),//最大金额
+    poolContract.maxUser(),
+    poolContract.curUserCount(),
+    poolContract.amtLow(),
+    poolContract.amtHigh(),
   ]
   if (pool.airdrop) {
     const airdropContract = new Contract(pool.airdrop.address, pool.airdrop.abi)
-    promiseList.push(airdropContract.allowList(account)) // 可领取的量
-    promiseList.push(airdropContract.withdrawList(account)) // 是否已经领取过
-    promiseList.push(airdropContract.begin()) // airdrop开始时间
+    promiseList.push(airdropContract.allowList(account)) 
+    promiseList.push(airdropContract.withdrawList(account)) 
+    promiseList.push(airdropContract.begin()) 
   }
-  // 追加可能存在的
   poolContract.time && promiseList.push(poolContract.time())
   poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
   currencyToken && promiseList.push(currencyToken.allowance(account, pool.address))
@@ -96,8 +95,8 @@ export const getPoolInfo = (pool) => {
       // totalSettleable,
       settleable,
       totalSettledUnderlying,
-      maxUser,//最多参与人数
-      curUserCount,//当前参与人数
+      maxUser,
+      curUserCount,
       amtLow,
       amtHigh,
     ] = resData
@@ -146,22 +145,18 @@ export const getPoolInfo = (pool) => {
     // ] = totalSettleable
     const [completed_, amount, volume, rate] = settleable
 
-    let status = pool.status || 0; // 即将上线
+    let status = pool.status || 0; 
     const timeClose = time;
     if (timeSettle) {
-      // time 如果没有的话，使用timeSettle填充
       time = timeSettle;
     }
     if (pool.start_at < now && status < 1) {
-      // 募集中
       status = 1;
     }
     if (time < now && status < 2) {
-      // 结算中
       status = 2;
     }
 
-    // // 招募满了
     // if (
     //   totalSettleable.volume == totalSettledUnderlying &&
     //   totalSettleable.volume > 0
@@ -202,31 +197,31 @@ export const getPoolInfo = (pool) => {
           .toString(),
       status: status,
       time: time,
-      timeClose,//结束时间time
-      timeSettle,//claim开始时间
+      timeClose,
+      timeSettle,
       is_join,
       totalPurchasedCurrency,
       totalPurchasedAmount: totalPurchasedAmount,
       totalPurchasedUnderlying,
-      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), // 余额
+      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), 
       purchasedCurrencyOf,
       // totalSettleable: {
       //   completed_: total_completed_,
-      //   amount: total_amount, // 预计获得
+      //   amount: total_amount, 
       //   volume: total_volume,
       //   rate: total_rate,
       // },
       totalSettledUnderlying,
       settleable: {
         completed_,
-        amount, // 未结算数量
-        volume, // 预计中签量
+        amount, 
+        volume, 
         rate,
       },
       pool_info: {
         ...pool.pool_info,
-        maxAccount: maxUser, // 最多参与人数
-        curUserCount, // 当前参与人数
+        maxAccount: maxUser, 
+        curUserCount, 
         min_allocation: fromWei(amtLow, pool.currency.decimal)*1,
         max_allocation: fromWei(amtHigh, pool.currency.decimal)*1,
       }
@@ -234,7 +229,6 @@ export const getPoolInfo = (pool) => {
   })
 }
 
-// 授权
 export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => {}) => {
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(ERC20.abi, contractAddress);
@@ -251,7 +245,6 @@ export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => 
       callback(false);
     });
 };
-// 质押
 export const onBurn_ = (_amount, iboData, callback) => {
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(iboData.abi, iboData.address, {
@@ -267,7 +260,6 @@ export const onBurn_ = (_amount, iboData, callback) => {
       callback(false);
     });
 };
-// 提取
 export const onClaim_ = (contractAddress, abi, callback) => {
   let web3_ = new Web3(window.ethereum);
   let myContract = new web3_.eth.Contract(abi, contractAddress);
@@ -281,7 +273,6 @@ export const onClaim_ = (contractAddress, abi, callback) => {
       callback(false)
     })
 }
-// 第二次claim 空投
 export const onAirdrop_ = (contractAddress,abi, callback) => {
   let web3_ = new Web3(window.ethereum)
   let myContract = new web3_.eth.Contract(abi, contractAddress);

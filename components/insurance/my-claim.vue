@@ -226,7 +226,6 @@ export default {
               UnderlyingDecimals,
               SettleTokenDecimals,
             } = CurrentInsurance;
-            // 结算
             let LongBalance = await this.BalanceOf(
               item.long,
               CollateralDecimals
@@ -305,7 +304,6 @@ export default {
         });
       });
     },
-    // 行权
     toClaim(item) {
       let data = item;
       console.log(data);

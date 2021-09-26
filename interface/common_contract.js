@@ -53,7 +53,6 @@ export const getAddress = (symbol, char_id) => {
     return null;
   }
 };
-// 获取合约
 export const getContract = (name, charID = 56) => {
   const network = selectNetwork(charID);
   let contract = addressList[`${network}_CONTRACT_${name}`];

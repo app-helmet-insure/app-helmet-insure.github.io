@@ -550,11 +550,8 @@ const allowance = async (token_exp, contract_str) => {
     return window.WEB3.utils.fromWei(result, getWei());
 };
 
-// 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
-    // 校验参数
     if (!token_exp || !contract_str) return;
-    // 判断授权额度是否充足
 
     const awc = await allowance(token_exp, contract_str);
 
@@ -562,7 +559,6 @@ const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
         return;
     }
 
-    // 无限授权
     const res = await approve(token_exp, contract_str, callback);
 };
 const approve2 = async (

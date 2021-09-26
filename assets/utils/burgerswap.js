@@ -40,7 +40,6 @@ export const burgerswaplpt = async (token1, token2, unit) => {
 export const burgerswaptoken = async (address) => {
     const WEB3 = await web3();
     const Contracts = await new WEB3.eth.Contract(IPancakePair.abi, address);
-    // 获取getReserves
     return Contracts.methods
         .getReserves()
         .call()

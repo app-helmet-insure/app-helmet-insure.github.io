@@ -497,7 +497,6 @@ export default {
         }
       });
     },
-    // 抵押
     async toDeposite() {
       if (!this.StakeVolume || this.StakeLoading) {
         return;
@@ -574,7 +573,6 @@ export default {
       }
     },
 
-    // 结算Paya
     async toClaim() {
       if (this.ClaimLoading) {
         return;
@@ -621,7 +619,6 @@ export default {
         poolAddress: this.ActiveData.PoolAddress,
       });
     },
-    // 退出
     async toExit() {
       if (this.ExitLoading) {
         return;

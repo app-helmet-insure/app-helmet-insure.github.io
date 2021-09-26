@@ -34,7 +34,6 @@ export const getBalance = async (type, Decimals = 18) => {
       }
     });
 };
-// 是否购买门票
 export const applied3 = async (ContractAdress, RewardAdress) => {
   const charID = window.chainID;
   const account = window.CURRENTADDRESS;
@@ -52,7 +51,6 @@ export const applied3 = async (ContractAdress, RewardAdress) => {
       return res;
     });
 };
-// 门票价格
 export const ticketVol3 = async (ContractAdress, TicketAddress) => {
   const charID = window.chainID;
   if (ContractAdress.indexOf("0x") === -1) {
@@ -70,7 +68,6 @@ export const ticketVol3 = async (ContractAdress, TicketAddress) => {
       return window.WEB3.utils.fromWei(res, getWei(unit));
     });
 };
-// 可领取数量
 export const earned3 = async (ContractAdress, RewardAdress, Decimals = 18) => {
   const charID = window.chainID;
   const account = window.CURRENTADDRESS;
@@ -89,7 +86,6 @@ export const earned3 = async (ContractAdress, RewardAdress, Decimals = 18) => {
       return result;
     });
 };
-// 领取奖励
 export const getReward3 = async (type, RewardAdress) => {
   const charID = window.chainID;
   const account = window.CURRENTADDRESS;
@@ -225,19 +221,15 @@ const allowance = async (token_exp, contract_str) => {
 
   return window.WEB3.utils.fromWei(result, getWei());
 };
-// 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
   if (contract_str.indexOf("0x") === -1) {
     contract_str = getContract(contract_str, charID);
   }
-  // 校验参数
   if (!token_exp || !contract_str) return;
-  // 判断授权额度是否充足
   const awc = await allowance(token_exp, contract_str);
   if (parseInt(awc) >= parseInt(num)) {
     return;
   }
-  // 无限授权
   const res = await approve(token_exp, contract_str, callback);
 };
 

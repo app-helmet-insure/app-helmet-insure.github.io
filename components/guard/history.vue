@@ -175,7 +175,6 @@ export default {
         return a.Sort - b.Sort;
       });
     },
-    // 获取数量
     async AskChainSwapAmounts(ToChainID, Account, Nonce) {
       let BSCweb3 = new Web3(
         new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
@@ -189,7 +188,6 @@ export default {
         .call();
       return ChainswapAmounts;
     },
-    // 接收数量
     async AskReceiveAmounts(FromChainID, Account, Nonce) {
       let MATICweb3 = new Web3(
         new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
@@ -211,7 +209,6 @@ export default {
         Button: "Switch to Matic & Withdraw",
       });
     },
-    // 直接Withdraw
     async SwitchSwapToken() {
       let { FromChainID, ToChainID, BurnSwapContracts, FromAssets, ToAssets } =
         this.BridgeConfig;
@@ -265,7 +262,6 @@ export default {
         }
       });
     },
-    // 下方Withdraw
     async ClickSwapToken(data) {
       let Account = await getAccounts();
       let web3 = new Web3(window.ethereum);

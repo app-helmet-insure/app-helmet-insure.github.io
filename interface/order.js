@@ -22,7 +22,6 @@ const netObj = {
   4: "rinkeby.",
   56: "BSC",
 };
-// 翻倍
 export const onIssueSell = async (data_, callBack) => {
   if (JSON.stringify(data_) === "{}") {
     return false;
@@ -60,7 +59,6 @@ export const onIssueSell = async (data_, callBack) => {
   data.premium = premium;
   try {
     const Contract = await expERC20(data.currency);
-    // 一键判断是否需要授权，给予无限授权
     await oneKeyArrpove(Contract, "ORDER", data.total, callBack);
     console.log(
       data.currency,
@@ -77,14 +75,13 @@ export const onIssueSell = async (data_, callBack) => {
     orderContract.methods
       .sell(
         false,
-        data.currency, // 抵押物 DAI
-        data.category, // 保险品类 WETH
-        data.price, // 触发保险金额 抵押物单位   // 1/200
-        // toWei("0.00651728", 6),
+        data.currency, 
+        data.category, 
+        data.price, 
         data.expire,
-        data.volume, // 200
-        data.settleToken, // 支付货币
-        data.premium // 单价
+        data.volume, 
+        data.settleToken, 
+        data.premium 
       )
       .send({ from: window.CURRENTADDRESS })
       .on("transactionHash", function(hash) {
@@ -133,7 +130,6 @@ export const onIssueSell = async (data_, callBack) => {
     console.log("onIssueSell", error);
   }
 };
-// 腰斩
 export const onIssueSellOnETH = async (data_, callBack) => {
   if (JSON.stringify(data_) === "{}") {
     return false;
@@ -171,20 +167,19 @@ export const onIssueSellOnETH = async (data_, callBack) => {
   data.price = price;
   try {
     const Contract = await expERC20(data.currency);
-    // 一键判断是否需要授权，给予无限授权
     await oneKeyArrpove(Contract, "ORDER", data.total, callBack);
     console.log(data.premium);
     const orderContract = await Order();
     orderContract.methods
       .sellOnETH(
         false,
-        // data.currency, // 抵押物 DAI
-        data.category, // 保险品类 WETH
-        data.price, // 触发保险金额 抵押物单位   // 1/200
+        // data.currency, 
+        data.category, 
+        data.price, 
         data.expire,
         // data.volume, // 200
-        data.settleToken, // 支付货币
-        data.premium // 单价
+        data.settleToken, 
+        data.premium 
       )
       .send({ from: window.CURRENTADDRESS, value: data.volume })
       .on("transactionHash", function(hash) {
@@ -236,12 +231,7 @@ export const onIssueSellOnETH = async (data_, callBack) => {
     console.log("onIssueSellOnETH", error);
   }
 };
-// 翻倍
 export const buyInsuranceBuy = async (_data, callBack) => {
-  // 是的，不过价格是两个资产的比值，它的精度应该是两个token的精度的差
-  // 两个精度的差，可能是负数，因此，再加个18位精度
-  // 比如 WETH/DAI，两者精度都是18，那么价格的精度就是18-18+18=18
-  // USDT/USDT，精度=6-6+18=18  在抵押物和结算物相同时，总是18
   if (JSON.stringify(_data) === "{}") {
     return false;
   }
@@ -272,7 +262,6 @@ export const buyInsuranceBuy = async (_data, callBack) => {
 
   const Contract = await expERC20(data.settleToken);
   try {
-    // 一键判断是否需要授权，给予无限授权
     await oneKeyArrpove(Contract, "ORDER", data.payPrice, callBack);
     const orderContract = await Order();
     orderContract.methods
@@ -521,7 +510,6 @@ export const onExercise = async (data, flag, callback) => {
     } else {
       value = toWei(data.vol, data.token);
     }
-    // 一键判断是否需要授权，给予无限授权
     if (data.approveAddress1) {
       await oneKeyArrpove(Contract, data.approveAddress1, 100000, (res) => {
         if (res === "failed") {
@@ -551,7 +539,6 @@ export const onExercise = async (data, flag, callback) => {
       }
     });
   }
-  // 一键判断是否需要授权，给予无限授权
   order.methods
     .exercise(data.flag ? value : data.bidID)
     .send({ from: window.CURRENTADDRESS })
@@ -627,16 +614,12 @@ const approve = async (token_exp, contract_str, callback = (status) => {}) => {
   return result;
 };
 
-// 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
-  // 校验参数
   if (!token_exp || !contract_str) return;
-  // 判断授权额度是否充足
   const awc = await allowance(token_exp, contract_str);
   if (parseInt(awc) >= parseInt(num)) {
     return;
   }
-  // 无限授权
   const res = await approve(token_exp, contract_str, callback);
 };
 
@@ -688,7 +671,6 @@ export const onWaive = async (data) => {
   const long = await expERC20(data.long);
   const order = await Order();
 
-  // 一键判断是否需要授权，给予无限授权
   // await oneKeyArrpove(Contract, "ORDER", 100000, (res) => {
   //   if (res === "failed") {
   //     bus.$emit("ONWAIVE_END", data.bidID);

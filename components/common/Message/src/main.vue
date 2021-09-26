@@ -124,7 +124,6 @@ export default {
     },
     keydown(e) {
       if (e.keyCode === 27) {
-        // esc关闭消息
         if (!this.closed) {
           this.close();
         }

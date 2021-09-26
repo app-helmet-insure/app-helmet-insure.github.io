@@ -22,10 +22,9 @@ export const autoprefixer = function(style) {
   return style;
 };
 
-// 精度计算E+处理方法
+
 export const fixDEAdd = (num, precision, autoFix = true) => {
   if (`${num}` === "0") {
-    // if (!window.parseFloat(precision) || !autoFix) return 0;
     if (!parseFloat(precision) || !autoFix) return 0;
     return "0.".padEnd(precision + 2, "0");
   }
@@ -37,10 +36,10 @@ export const fixDEAdd = (num, precision, autoFix = true) => {
 
   if (strN.toLowerCase().indexOf("e") > -1) {
     const n = strN.match(/(\d+?)(?:\.(\d*))?e([+-])(\d+)/);
-    const nl = n[1]; // 小数点左边
-    const nr = n[2]; // 小数点右边
-    const type = n[3]; //  + / -
-    const floatN = n[4]; // 科学计数法的位数
+    const nl = n[1]; 
+    const nr = n[2]; 
+    const type = n[3]; 
+    const floatN = n[4]; 
     let params = "";
     let pr = nr ? nr.substr(floatN) : "";
 
@@ -87,12 +86,9 @@ export const fixDEAdd = (num, precision, autoFix = true) => {
   return `${flag ? "-" : ""}${result}`;
 };
 
-// 精度计算
 export const fixD = (num, precision) => {
   precision = precision > -1 ? precision : 0;
-  // num初始化
   if (`${num}` === "0") {
-    // if (!window.parseFloat(precision)) {
     if (!parseFloat(precision)) {
       return 0;
     }
@@ -111,7 +107,6 @@ export const fixD = (num, precision) => {
     return "--";
   }
   let fixNum = newnum;
-  // 科学计数法计算
   if (newnum.toLowerCase().indexOf("e") > -1) {
     if (newnum.toLowerCase().indexOf("+") > -1)
       return fixDEAdd(newnum, precision);
@@ -130,8 +125,6 @@ export const fixD = (num, precision) => {
     }
     fixNum = `0.${d}${b}`;
   }
-  // 精度格式化
-  // precision初始化
   if (`${precision}` !== "0" && !precision) {
     return (flag ? "-" : "") + fixNum;
   }
@@ -169,7 +162,6 @@ export const fixD = (num, precision) => {
   return (flag ? "-" : "") + fixNum;
 };
 
-// 输入框
 export const fixInput = (val, fixs) => {
   let fix = fixs;
   if (!fix === 0) {
@@ -177,15 +169,9 @@ export const fixInput = (val, fixs) => {
   }
 
   let v = `${fixDEAdd(val, fixs, false)}`;
-  // 操作1
-  // 用户行为 直接上来打个.
-  // 解决方案 置换成0.
   if (v.charAt(0) === ".") {
     v = "0.";
   }
-  // 操作2
-  // 用户行为 打多个点.
-  // 解决方案 保留第二个点以前的数值
   const strArr = [...v].reduce((res, c) => {
     if (res[c]) {
       res[c] += 1;
@@ -198,20 +184,14 @@ export const fixInput = (val, fixs) => {
     const arr = v.split(".");
     v = `${arr[0]}.${arr[1]}`;
   }
-  // 操作3
-  // 用户行为 小数点后输入超过该币种精度限制
-  // 解决方案 保留该精度之前的数值
   if (v.indexOf(".") !== -1) {
-    const integer = v.split(".")[0]; // 整数
-    let decimal = v.split(".")[1]; // 小数
+    const integer = v.split(".")[0];
+    let decimal = v.split(".")[1]; 
     if (decimal.length > fix) {
       decimal = decimal.substring(0, fix);
       v = `${integer}.${decimal}`;
     }
   }
-  // 操作4
-  // 用户行为 转成汉语拼音后可输入汉字字母等字符
-  // 解决方案 干掉写入的文字
   const strKey = Object.keys(strArr);
   strKey.forEach((c) => {
     let str = "01234567890.";
@@ -222,16 +202,12 @@ export const fixInput = (val, fixs) => {
       v = v.split(c)[0] + (v.split(c)[1] || "");
     }
   });
-  // 操作5
-  // 用户行为 输入总长度超过14位 包括.
-  // 解决方案 截取前14位
   if (v.length > 20) {
     v = v.substring(0, 20);
   }
   return v;
 };
 
-// 向上取整
 export const mathCeil = (val, n) => {
   let d = fixD(val, n + 1);
   const f = Math.pow(10, n);
@@ -253,7 +229,6 @@ export const addCommom = (num, len) => {
       num = num.split(".")[0];
     }
     return num.replace(/(\d+)(\.\d+)?/, (a, b, c) => {
-      // console.log(b, c)
       return (
         b.replace(/(\d)(?=(?:\d{3})+$)/g, "$1,") +
         (c ? c.slice(0, len + 1) : "")
@@ -308,7 +283,6 @@ function getTimeZone(time) {
   return date;
 }
 
-// 转化为【万】单位(主要用在中文环境下)
 export const formatNumW = (num) => {
   if (Number(num) > 10000) {
     return fixD(Number(num) / 10000, 2) + "万";
@@ -316,7 +290,6 @@ export const formatNumW = (num) => {
   return num;
 };
 
-// 转化为【百万】单位(主要用在英文环境下)
 export const formatNumM = (num) => {
   if (Number(num) > 1000000) {
     return fixD(Number(num) / 1000000, 2) + "M";
@@ -326,41 +299,29 @@ export const formatNumM = (num) => {
 
 export const isPC = () => {
   if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    // 移动端操作
     return false;
   } else {
-    // PC端操作
     return true;
   }
 };
 
-// 精确有效数字
 export const toPrecision = (num, wei = 2) => {
   let n = Number(num).toPrecision(wei);
   return Number(n);
 };
 
-/**
- * 自动四舍五入
- *  规则： 如果是整数，则对第一位小数四舍五入
- *        如果是小数或者整数位小于百位的浮点数（如30.124）， 则保留小数点后两位，对第三位四舍五入
- * */
+
 
 export const autoRounding = (num) => {
   const arr = String(num).split(".");
-  if (!arr[1]) return num; // 整数不处理
+  if (!arr[1]) return num; 
 
   if (arr[0].length > 2) {
-    // 如果整数部分位数大于2则对小数点后一位进行四舍五入
     return Number(num).toFixed(0);
   } else {
     if (arr[0] != 0) {
-      // 整数部分有值， 则保留两位小数
       return Number(num).toFixed(2);
     } else {
-      // 整数部分无值，需要判断0
-      // let w = arr[1].lastIndexOf('0');
-      // return Number(num).toFixed(w+2);
       let w = 0;
       let i = 0;
       while (!Number(arr[1][i])) {

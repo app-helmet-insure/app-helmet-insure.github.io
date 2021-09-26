@@ -159,7 +159,7 @@ export default {
           this.close();
         }
       } else {
-        this.startTimer(); //恢复倒计时
+        this.startTimer(); 
       }
     }
   },

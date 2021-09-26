@@ -126,7 +126,6 @@ export default {
   },
 
   async mounted() {
-    // 是否阅读过【风险提示】
     if (!window.localStorage.getItem("readRisk")) {
       this.RiskVisible = true;
     }
@@ -134,17 +133,17 @@ export default {
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
-    // 获取映射
+    
     await openMetaMaskWallet();
     watchAccountChange();
     watchNetWorkChange();
-    // 显示状态弹框
+    
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       this.statusData = data;
       this.openStatusDialog();
       window.statusDialog = true;
     });
-    // 关闭状态弹框
+    
     this.$bus.$on("CLOSE_STATUS_DIALOG", (data) => {
       this.closeStatusDialog();
       window.statusDialog = false;

@@ -298,7 +298,6 @@ export default {
         Message({
           message: "Successfully copied",
           type: "success",
-          // duration: 0,
         });
         copys.destroy();
       });
@@ -343,7 +342,6 @@ export default {
         this.ApproveStatus = ApproveStatus > 0;
       });
     },
-    // 抵押
     async toDeposite() {
       if (!this.StakeVolume || this.StakeLoading) {
         return;
@@ -436,7 +434,6 @@ export default {
           this.ClaimLoading = false;
         });
     },
-    // 退出
     async toExit() {
       if (this.ExitLoading) {
         return;

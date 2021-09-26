@@ -95,7 +95,7 @@
   </div>
 </template>
 <script>
-import tokenList from "~/assets/utils/tokenlist.json";
+import tokenList from "~/config/tokenlist.json";
 import VueLazyload from "vue-lazyload";
 import {
   SwapHelmet,
@@ -125,7 +125,7 @@ export default {
         chainId: 56,
         decimals: 18,
         logoURI:
-          "https://exchange.pancakeswap.finance/images/coins/0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c.png",
+          "https://tokens.pancakeswap.finance/images/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c.png",
         name: "WBNB Token",
         symbol: "BNB",
       },
@@ -150,8 +150,6 @@ export default {
         this.ApproveFlag(this.activeData);
       }
     });
-
-
   },
   computed: {
     SwapParams() {

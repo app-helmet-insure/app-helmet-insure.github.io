@@ -1,4 +1,3 @@
-// IIO 项目列表
 export const ProjectData = [
   {
     iio_name: "ChainSwap",
@@ -235,7 +234,6 @@ export const ProjectData = [
     expired_activating: "88.54%",
   },
 ];
-// IIO 具体信息列表
 //  Time1: ==> mining open
 //  Time2: ==> active start
 //  Time3: ==> active end

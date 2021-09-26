@@ -426,16 +426,12 @@ export const composeEnable = async (type) => {
       return res;
     });
 };
-// 一键授权
 const oneKeyArrpove = async (token_exp, contract_str, num, callback) => {
-  // 校验参数
   if (!token_exp || !contract_str) return;
-  // 判断授权额度是否充足
   const awc = await allowance(token_exp, contract_str);
   if (parseInt(awc) >= parseInt(num)) {
     return;
   }
-  // 无限授权
   const res = await approve(token_exp, contract_str, callback);
 };
 const allowance = async (token_exp, contract_str) => {

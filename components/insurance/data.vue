@@ -138,12 +138,7 @@ export default {
         console.log(res);
         this.Helmetvolume = res;
       });
-      // this.getGuardVolume().then((res) => {
-      //   // 矿山初始值 400W - 当前矿山的量(3,994,969) + 常数(10W)
-      //   this.GuardVolume = new BigNumber(4000000)
-      //     .minus(new BigNumber(res))
-      //     .plus(100000);
-      // });
+     
       this.getHelmetPrice().then((res) => {
         this.HelmetPrice = fromWei(res.data.toTokenAmount);
       });

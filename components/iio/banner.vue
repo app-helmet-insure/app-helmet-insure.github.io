@@ -108,9 +108,7 @@ export default {
       let Name = this.iioType.toUpperCase();
       let lpt_name = `IIO_HELMETBNB_${Name}`;
       let pool_name = "IIO_HELMETBNB_POOL";
-      // 已抵押数量
       let DepositedVolume = await getLPTOKEN(pool_name);
-      // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
       this.showMsg.DepositeValue = addCommom(DepositeTotal, 2);
       this.showMsg.DepositedVolume = fixD(DepositedVolume, 2);

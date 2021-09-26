@@ -30,17 +30,14 @@
 <script>
 export default {
   props: {
-    // 内容总数
     total: {
       type: Number,
       default: 0,
     },
-    // 每页数量
     limit: {
       type: Number,
       default: 10,
     },
-    // 当前页码
     page: {
       type: Number,
       default: 1,
@@ -48,21 +45,18 @@ export default {
   },
   data() {
     return {
-      pageList: [1, 2, 3, 4], // 页码列表
+      pageList: [1, 2, 3, 4],
     };
   },
   computed: {
-    // 最大页数
     pageMax() {
       return Math.ceil(this.total / this.limit);
     },
   },
   created() {
-    // 我的框架是mpvue，vue用created
     this.initData();
   },
   watch: {
-    // 监听页码变化 -> 页码列表更新
     page(val) {
       if (val <= 3) {
         this.pageList = [];
@@ -71,7 +65,7 @@ export default {
           this.pageList.push(i);
           i++;
         } while (i <= this.pageMax);
-        this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); // 最多显示5页
+        this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); 
       } else if (val === this.pageMax) {
         this.pageList = [val - 3, val - 2, val - 1, val];
       } else if (val === this.pageMax - 1) {
@@ -80,7 +74,6 @@ export default {
         this.pageList = [val - 1, val, val + 1];
       }
     },
-    // 监听页码变化 -> 总数更新
     total(val) {
       this.initData();
     },
@@ -103,15 +96,14 @@ export default {
     pageChange(page) {
       this.$emit("page-change", page);
     },
-    // 生成pageList页码列表
     initData() {
-      this.pageList = []; // 清空页码
+      this.pageList = []; 
       var i = 1;
       do {
         this.pageList.push(i);
         i++;
       } while (i <= this.pageMax);
-      this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); // 最多显示5页
+      this.pageList.length > 4 && (this.pageList = this.pageList.slice(0, 4)); 
     },
   },
 };

@@ -24,7 +24,6 @@ const selectNetwork = (charID) => {
     }
 };
 
-// 获取地址
 export const getAddress = (symbol, char_id) => {
   const charID = char_id || window.chainID;
   const network = selectNetwork(charID);
@@ -36,7 +35,6 @@ export const getAddress = (symbol, char_id) => {
     return null;
   }
 };
-// 获取合约
 export const getContract = (name, charID = 56) => {
   const network = selectNetwork(charID);
   let contract = addressList[`${network}_CONTRACT_${name}`];
@@ -72,7 +70,6 @@ export const getSymbol = (address, char_id) => {
   }
 };
 
-// 为什么多写了个返回值不一样的函数，后面确定逻辑后优化下
 export const newGetSymbol = (adress) => {
   const charID = window.chainID;
   let symbol_list = [
@@ -93,7 +90,6 @@ export const newGetSymbol = (adress) => {
     return symbol[0];
   } else {
     return null;
-    // return console.log(adress + '没有找到对应的Symbol')
   }
 };
 
@@ -142,7 +138,6 @@ export const getWeiWithFix = (fix) => {
 };
 
 export const getStrikePriceFix = (und, col) => {
-  // 币种，抵押物, 结算物
   let colFix = getWei_2(col);
   let undFix = getWei_2(und);
   if (colFix === undFix) {
@@ -152,7 +147,6 @@ export const getStrikePriceFix = (und, col) => {
   }
 };
 
-// 处理行权价格
 export const dealWithStrikePrice = (px, coin) => {
   let coinFix = getWei_2(coin);
   if (coinFix !== 18) {
@@ -162,11 +156,9 @@ export const dealWithStrikePrice = (px, coin) => {
   }
 };
 
-// getWei和getWei_2不知何为， 后面更换注释
 export const getWei_2 = (token) => {
   let reg = /^0x[\S]+/;
   if (reg.test(token)) {
-    // 0x adress
     token = getSymbol(token)[0];
   }
   switch (token) {

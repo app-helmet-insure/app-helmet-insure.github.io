@@ -78,7 +78,6 @@ export default {
         })
         .then(() => {});
     },
-    // 链接钱包
     selectWallet(item) {
       this.$store.dispatch("setWalletType", item);
       if (item === "MetaMask") {

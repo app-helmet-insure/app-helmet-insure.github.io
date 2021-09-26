@@ -400,7 +400,6 @@ export default {
         return;
       }
     },
-    // 复投
     toCompound() {
       console.log(this.HelmetBalance);
       this.$bus.$emit("OPEN_COMPOUND", {

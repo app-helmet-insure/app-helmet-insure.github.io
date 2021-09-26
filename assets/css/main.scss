@@ -65,7 +65,6 @@ select {
   outline: none;
 }
 
-// 去掉数字类型右侧上下箭头
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

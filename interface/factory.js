@@ -140,7 +140,6 @@ export const onExercise = async (data, callBack) => {
         type: 'pending',
         title: 'WARNING',
         layout: 'layout1',
-        // 租用 0.5 个WETH 帽子，执行价格为300 USDT
         conText: `<p>You will swap<span> ${toRounding(
             data._underlying_vol,
             8
@@ -150,7 +149,6 @@ export const onExercise = async (data, callBack) => {
     });
     bus.$emit('ONEXERCISE_PENDING', data.bidID);
 
-    // const WEB3 = await web3();
     const charID = window.chainID;
     let adress = getAddress(data.token, charID);
 
@@ -158,7 +156,6 @@ export const onExercise = async (data, callBack) => {
     const long = await expERC20(data.long);
     const order = await Order();
 
-    // 一键判断是否需要授权，给予无限授权
     await oneKeyArrpove(Contract, 'ORDER', 100000, (res) => {
         if (res === 'failed') {
             bus.$emit('CLOSE_STATUS_DIALOG');

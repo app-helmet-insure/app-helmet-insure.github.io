@@ -82,10 +82,10 @@ export default {
   data() {
     return {
       showMsg: {
-        DepositeVolume: 0, //可抵押
-        DepositedVolume: 0, //已抵押
-        DepositeTotal: 0, //总抵押
-        MyPoolShare: 0, //我的池子份额
+        DepositeVolume: 0, 
+        DepositedVolume: 0,
+        DepositeTotal: 0,
+        MyPoolShare: 0,
       },
       DepositeNum: "",
       claimLoading: false,
@@ -171,13 +171,9 @@ export default {
       let reward_name = `IIO_HELMETBNB_${Name}`;
       let lpt_name = "IIO_HELMETBNB_POOL_LPT";
       let pool_name = "IIO_HELMETBNB_POOL";
-      // 可抵押数量
       let DepositeVolume = await getBalance(lpt_name);
-      // 已抵押数量
       let DepositedVolume = await getLPTOKEN(pool_name);
-      // 总抵押
       let DepositeTotal = await totalSupply(pool_name);
-      // 可领取
       let AvailableVolume = await earned3(
         pool_name,
         reward_name,
@@ -196,7 +192,6 @@ export default {
         this.DepositeNum = fixD(DepositeVolume, 4);
       }
     },
-    // 领取奖励
     async getReward() {
       if (this.claimLoading) {
         return;
@@ -230,7 +225,6 @@ export default {
         this.getRewardFlag = true;
       }
     },
-    // 抵押
     toDeposite() {
       this.$router.push({ name: "mining", params: { earn: "helmet_cake_v2" } });
     },

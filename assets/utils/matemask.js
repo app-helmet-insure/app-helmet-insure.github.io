@@ -55,7 +55,6 @@ export const mateMaskInfo = async (address, name) => {
       }
     }
 
-    // console.log('重新获取到了吗###', window.chainID);
 
     if (!current) {
       // alert(111);
@@ -69,7 +68,6 @@ export const mateMaskInfo = async (address, name) => {
     return obj;
   } catch (error) {
     console.log("util=>matemask=>mateMaskInfo", error);
-    // 打开下载弹框
     // bus.$emit('OPEN_DOWNLOAD');
     return {
       status: -1,

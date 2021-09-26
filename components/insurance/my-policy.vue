@@ -55,12 +55,10 @@
             <i class="selectDown"></i>
           </button> -->
           <button v-if="item.Status == 'Normal'" @click="toActive(item)">
-            {{ $t("Insurance.outSure") }}
-            <i class="selectDown"></i>
+            {{ $t("Table.outSure") }}
           </button>
           <button v-if="item.Status == 'Expired'">
             {{ $t("Insurance.Insurance_text13") }}
-            <i class="selectDown"></i>
           </button>
         </section>
         <!-- ================= -->
@@ -99,13 +97,18 @@
           </p>
         </section>
         <section class="policy_item_action_h5 H5">
-          <button @click="toActive(item)">
+          <!-- <button @click="toActive(item)">
             {{
               item.Status == "Expired"
                 ? $t("Insurance.Insurance_text13")
                 : $t("Table.outSure")
             }}
-            <i class="selectDown"></i>
+          </button> -->
+          <button v-if="item.Status == 'Normal'" @click="toActive(item)">
+            {{ $t("Table.outSure") }}
+          </button>
+          <button v-if="item.Status == 'Expired'">
+            {{ $t("Insurance.Insurance_text13") }}
           </button>
         </section>
       </div>

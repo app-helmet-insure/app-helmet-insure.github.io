@@ -1,10 +1,15 @@
 <template>
-  <div class="mask" v-if="buyDialog">
-    <div class="buy_dialog">
-      <div class="buy_dialog_title">
-        <span>{{ $t("SwapHelmet.BuyHelmet") }}</span>
-        <i @click="handleClickClose"></i>
-      </div>
+  <el-dialog
+    top="35vh"
+    :title="$t('SwapHelmet.BuyHelmet')"
+    footer
+    append-to-body
+    custom-class="buy_dialog"
+    :close-on-click-modal="false"
+    :visible.sync="DialogVisible"
+    @close="DialogClose"
+  >
+    <div class="buy_dialog_wrap">
       <div class="buy_dialog_select">
         <div class="swapInput">
           <input type="number" v-model="swapNumber" />
@@ -52,7 +57,6 @@
                   <img :v-lazy="item.logoURI" :src="item.logoURI" alt="" />
                   <span>{{ item.symbol }}</span>
                 </p>
-                <!-- <span>{{ item.symbol }}</span> -->
               </div>
             </div>
           </div>
@@ -65,23 +69,23 @@
         <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
       </div>
       <p>
-        <span>{{ $t("SwapHelmet.Price") }}</span
-        ><span
-          >1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}</span
-        >
+        <span>{{ $t("SwapHelmet.Price") }}</span>
+        <span>
+          1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}
+        </span>
       </p>
       <button @click="SwapTokens">
         {{ ApprovedStatus ? "Confirm Swap" : "Approved" }}
       </button>
       <p>
         <span>{{ $t("SwapHelmet.MinEarn") }}</span
-        ><span>{{ toRounding(HelmetMinReward, 8) }}HELMET</span>
+        ><span>{{ toRounding(HelmetMinReward, 8) }} HELMET</span>
       </p>
       <p>
         <span>{{ $t("SwapHelmet.Fee") }}</span
-        ><span
-          >{{ BigNumber(toRounding(HelmetFee, 8).toString()).toFixed()
-          }}{{ activeData.symbol }}</span
+        ><span>
+          {{ BigNumber(toRounding(HelmetFee, 8).toString()).toFixed() }}
+          {{ activeData.symbol }}</span
         >
       </p>
       <span>
@@ -92,7 +96,7 @@
         >
       </span>
     </div>
-  </div>
+  </el-dialog>
 </template>
 <script>
 import tokenList from "~/config/tokenlist.json";
@@ -105,16 +109,16 @@ import {
   approve,
   BalanceOf,
 } from "~/interface/swap.js";
-import { fixD, addCommom, autoRounding, toRounding } from "~/assets/js/util.js";
+import { fixD, autoRounding, toRounding } from "~/assets/js/util.js";
 import BigNumber from "bignumber.js";
 import { fromWei } from "~/web3/index.js";
 export default {
+  props: ["DialogVisible", "DialogClose"],
   components: {
     VueLazyload,
   },
   data() {
     return {
-      buyDialog: false,
       TokenList: tokenList.tokens,
       ShowList: tokenList.tokens,
       showTokenList: false,
@@ -141,16 +145,7 @@ export default {
       ApprovedStatus: false,
     };
   },
-  mounted() {
-    this.$bus.$on("OPEN_BUY_DIALOG", (res) => {
-      this.buyDialog = res;
-      if (this.buyDialog && window.chainID === 56) {
-        this.getBalance(this.activeData);
-        this.HelmetPriceHigh(this.activeData);
-        this.ApproveFlag(this.activeData);
-      }
-    });
-  },
+  mounted() {},
   computed: {
     SwapParams() {
       return { SwapNumber: this.swapNumber, SwapData: this.activeData };
@@ -251,13 +246,13 @@ export default {
         if (this.activeData.symbol != "BNB") {
           await SwapTokensforTokens(data, (res) => {
             if (res.status == "swap_success") {
-              this.handleClickClose();
+              this.DialogClose();
             }
           });
         } else {
           await SwapBNBforTokens(data, (res) => {
             if (res.status == "swap_success") {
-              this.handleClickClose();
+              this.DialogClose();
             }
           });
         }
@@ -341,19 +336,12 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss' >
 @import "~/assets/css/themes.scss";
-.mask {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  left: 0;
-  top: 0;
-}
 @media screen and(min-width:750px) {
   .buy_dialog {
-    width: 360px;
+    border-radius: 10px !important;
+    width: 450px !important;
   }
 }
 @media screen and(max-width:750px) {
@@ -361,16 +349,11 @@ export default {
     width: 90%;
   }
 }
-.buy_dialog {
+.buy_dialog_wrap {
   @include themeify {
     background: themed("color-ffffff");
   }
   border-radius: 8px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 25px 20px;
   > .buy_dialog_title {
     display: flex;
     justify-content: space-between;
@@ -437,8 +420,8 @@ export default {
       }
     }
     .all {
-      padding: 0 8px;
-      height: 24px;
+      padding: 0 12px;
+      height: 30px;
       @include themeify {
         background: themed("insure_button");
         border: 1px solid themed("insure_button_border");
@@ -458,11 +441,11 @@ export default {
       cursor: pointer;
     }
     .selected {
-      margin: 0 10px;
+      margin: 0 10px 0 5px;
       display: flex;
       align-items: center;
       padding: 0 4px;
-      height: 24px;
+      height: 30px;
       @include themeify {
         background: themed("insure_button");
         border: 1px solid themed("insure_button_border");

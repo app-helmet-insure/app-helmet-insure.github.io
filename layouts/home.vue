@@ -6,7 +6,9 @@
         <span>HELMET Token Contract Address:</span>
         <span>0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8</span>
         <p>
-          <a @click="openBUY" class="bsc_helmet">Buy HELMET(BSC)</a>
+          <a @click="handleClickBuyHelmet" class="bsc_helmet"
+            >Buy HELMET(BSC)</a
+          >
           <a href="https://www.guard.insure/insurance/" class="matic_helmet"
             >Guard(Polygon)</a
           >
@@ -41,7 +43,10 @@
       @close="closeStatusDialog"
     />
     <Airdrop />
-    <BuyDialog />
+    <BuyHelmetDialog
+      :DialogVisible="BuyHelmetVisible"
+      :DialogClose="BuyHelmetClose"
+    />
     <RiskConfirmationDialog
       :DialogVisible="RiskVisible"
       :DialogClose="RiskClose"
@@ -57,7 +62,6 @@ import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
 import Airdrop from "~/components/common/airdrop.vue";
-import BuyDialog from "~/components/common/buy-dialog.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
 import WallectDownLoad from "~/components/common/wallet-download.vue";
 import Message from "~/components/common/Message";
@@ -69,6 +73,7 @@ import {
   getNetworkChainID,
 } from "../web3/wallet.js";
 import { WEB3 } from "../web3/index.js";
+import BuyHelmetDialog from "../components/dialogs/buy-helmet-dialog.vue";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
 export default {
@@ -79,8 +84,8 @@ export default {
     PFooter,
     StatusDialog,
     Airdrop,
-    BuyDialog,
     WallectDownLoad,
+    BuyHelmetDialog,
     NetWorkConfirmationDialog,
     RiskConfirmationDialog,
   },
@@ -99,6 +104,7 @@ export default {
       canShow: false,
       NetWorkVisible: false,
       RiskVisible: false,
+      BuyHelmetVisible: false,
     };
   },
   computed: {
@@ -133,17 +139,13 @@ export default {
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
-    
-    await openMetaMaskWallet();
-    watchAccountChange();
-    watchNetWorkChange();
-    
+
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       this.statusData = data;
       this.openStatusDialog();
       window.statusDialog = true;
     });
-    
+
     this.$bus.$on("CLOSE_STATUS_DIALOG", (data) => {
       this.closeStatusDialog();
       window.statusDialog = false;
@@ -153,6 +155,9 @@ export default {
     localStorage.setItem("themes", themes);
     this.$store.dispatch("setThemes", themes);
     this.canShow = true;
+    await openMetaMaskWallet();
+    watchAccountChange();
+    watchNetWorkChange();
   },
   methods: {
     NetWorkClose() {
@@ -161,8 +166,11 @@ export default {
     RiskClose() {
       this.RiskVisible = false;
     },
-    openBUY() {
-      this.$bus.$emit("OPEN_BUY_DIALOG", true);
+    BuyHelmetClose() {
+      this.BuyHelmetVisible = false;
+    },
+    handleClickBuyHelmet() {
+      this.BuyHelmetVisible = true;
     },
     openStatusDialog() {
       this.showStatusDialog = true;

@@ -97,7 +97,7 @@
                 <use xlink:href="#icon-mining1"></use>
               </svg>
               {{ $t("Header.Mining") }}
-              <i class="num">7</i>
+              <i class="num">8</i>
             </nuxt-link>
           </div>
           <div class="menu_item">

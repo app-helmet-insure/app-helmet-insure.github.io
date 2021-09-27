@@ -52,11 +52,21 @@
             </section>
             <section class="item_pool_action_web WEB">
               <a
-                href="https://www.guard.insure/mining"
+                :href="item.Link"
+                target="_blank"
                 v-if="item.PoolType === 'link'"
-                ><img src="~/assets/img/guard/Polygon.png" alt="" />
-                <span>Mining on Polygon</span>
-                <i></i>
+                :style="`background-color:${item.BtnColor};`"
+              >
+                <img
+                  :src="require(`~/assets/img/mining/${item.PoolImg}.png`)"
+                  alt=""
+                />
+                <span :style="`color:${item.BtnTextColor};`">{{
+                  item.BtnText
+                }}</span>
+                <i
+                  :style="`background-image:url(${require(`~/assets/img/guard/${item.Right}.png`)})`"
+                ></i>
               </a>
               <template v-else
                 ><button
@@ -125,11 +135,20 @@
             </section>
             <section class="item_pool_action_h5 H5">
               <a
-                href="https://www.guard.insure/mining"
+                :href="item.Link"
                 v-if="item.PoolType === 'link'"
-                ><img src="~/assets/img/guard/Polygon.png" alt="" />
-                <span>Mining on Polygon</span>
-                <i></i>
+                :style="`background-color:${item.BtnColor};`"
+              >
+                <img
+                  :src="require(`~/assets/img/mining/${item.PoolImg}.png`)"
+                  alt=""
+                />
+                <span :style="`color:${item.BtnTextColor};`">{{
+                  item.BtnText
+                }}</span>
+                <i
+                  :style="`background-image:url(${require(`~/assets/img/guard/${item.Right}.png`)})`"
+                ></i>
               </a>
               <template v-else>
                 <button
@@ -554,7 +573,6 @@ export default {
     > a {
       width: 200px;
       height: 40px;
-      background: rgba(#9f66ff, $alpha: 0.2);
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -567,7 +585,6 @@ export default {
       > span {
         font-size: 14px;
         font-weight: 600;
-        color: #9f66ff;
         line-height: 18px;
         margin-left: 4px;
       }
@@ -577,7 +594,6 @@ export default {
         display: block;
         width: 12px;
         height: 12px;
-        background: url("../../assets/img/guard/right_double.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }
@@ -815,7 +831,6 @@ export default {
     > a {
       width: 100%;
       height: 40px;
-      background: rgba(#9f66ff, $alpha: 0.2);
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -828,7 +843,6 @@ export default {
       > span {
         font-size: 14px;
         font-weight: 600;
-        color: #9f66ff;
         line-height: 18px;
         margin-left: 4px;
       }
@@ -838,7 +852,6 @@ export default {
         display: block;
         width: 12px;
         height: 12px;
-        background: url("../../assets/img/guard/right_double.png");
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }

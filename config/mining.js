@@ -271,6 +271,32 @@ export const lptPoolList = [
     YearEarnType: "APR",
     APR: "305.78%",
     PoolType: "link",
+    PoolImg: "polygon_link",
+    BtnText: "Mining on Polygon",
+    BtnColor: "rgba(221, 200, 255, 0.6)",
+    BtnTextColor: "#9F66FF",
+    Right:'right_double',
+    Link:'https://www.guard.insure/mining'
+  },
+  {
+    PoolName: `HELMET-BNB LP`,
+    PoolSwap: "xms",
+    StakeSymbol: "HELMET-BNB LP",
+    StakeUnit: "LPT",
+    RewardVolume: "one",
+    RewardSymbol: "xms",
+    ImgReward: true,
+    StartTime: "Ongoing",
+    FinishTime: "Mining",
+    YearEarnType: "APR",
+    APR: "--",
+    PoolType: "link",
+    PoolImg: "xms_link",
+    BtnText: "To Mars",
+    BtnColor: "rgba(255, 209, 179, 0.6)",
+    BtnTextColor: "#FF6400",
+    Right:'right_double1',
+    Link:'https://app.marsecosystem.com/farms'
   },
 ];
 export const comboPoolList = [

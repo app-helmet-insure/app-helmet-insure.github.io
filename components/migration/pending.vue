@@ -1,48 +1,30 @@
 <template>
-  <div class="migration_title">
-    <h3>Migrate Helmet(BSC) to Guard(Polygon)</h3>
-    <p>{{ $t("Migration.Tips7") }}</p>
-    <div class="showdata">
-      <p>
-        <img src="~/assets/img/migration/burn.svg" alt="" />{{
-          $t("Migration.MyBurning")
-        }}: {{ addCommom(fixD(myBurning, 4)) }}
-        Helmet
-      </p>
-      <p>
-        <img src="~/assets/img/migration/coin.svg" alt="" />{{
-          $t("Migration.MyPendding")
-        }}: {{ addCommom(fixD(myPendding, 4)) }} Guard
-        <button @click="jump">{{ $t("Migration.Claim") }}</button>
-      </p>
-    </div>
-    <div class="showaction">
-      <div class="step">
-        <div class="step_one step_num">1</div>
-        <div class="step_two step_num">2</div>
-      </div>
-      <div class="wrap">
-        <Stake />
-        <Swap />
-      </div>
-    </div>
+  <div class="migration_data">
+    <p>
+      <img src="~/assets/img/migration/burn.svg" alt="" />{{
+        $t("Migration.MyBurning")
+      }}: {{ addCommom(fixD(myBurning, 4)) }}
+      Helmet
+    </p>
+    <p>
+      <img src="~/assets/img/migration/coin.svg" alt="" />{{
+        $t("Migration.MyPendding")
+      }}: {{ addCommom(fixD(myPendding, 4)) }} Guard
+      <button @click="jump">{{ $t("Migration.Claim") }}</button>
+    </p>
   </div>
 </template>
 
 <script>
-import Stake from "./stake.vue";
-import Swap from "./swap.vue";
 import Web3 from "web3";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import { getAccounts } from "~/interface/common_contract.js";
 import { fromWei } from "~/web3/index.js";
-
 import { TotalBurns } from "~/interface/read_contract.js";
 import GuardClaimABI from "~/web3/abis/GuardClaim.json";
 const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";
 const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
 export default {
-  components: { Stake, Swap },
   data() {
     return {
       myClaiming: 0,
@@ -111,34 +93,7 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
-
-.migration_title {
-  > p {
-    background: rgba(255, 184, 1, 0.1);
-    display: flex;
-    margin: 0 auto;
-    align-items: center;
-    padding-left: 10px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    color: #ffb801;
-    line-height: 20px;
-  }
-  > h3 {
-    text-align: center;
-    font-size: 24px;
-    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
-    font-weight: 600;
-    @include themeify {
-      color: themed("migration_color2");
-    }
-    line-height: 32px;
-  }
-}
-
-.showdata {
-  margin: 0 auto;
+.migration_data {
   display: flex;
   height: 70px;
   @include themeify {
@@ -179,104 +134,24 @@ export default {
     }
   }
 }
-.showaction {
-  display: flex;
-  justify-content: space-between;
-  margin: 30px auto 0;
-  .step {
-    width: 4px;
-    position: relative;
-    background: linear-gradient(360deg, #4364e8, #fd7e14);
-    transform: translate(12px);
-    border-radius: 2px;
-    margin-left: 10px;
-    &_num {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      position: absolute;
-      transform: translate(-50%);
-      text-align: center;
-      line-height: 24px;
-      font-size: 14px;
-      font-family: PingFangSC-Semibold, PingFang SC;
-      font-weight: 600;
-      color: #ffffff;
-      margin-left: 50%;
-    }
-  }
-}
 @media screen and(min-width:750px) {
-  h3 {
-    margin: 30px auto;
-  }
-  .migration_title {
-    > p {
-      width: 878px;
-      height: 30px;
-      justify-content: center;
-    }
-  }
-  .showdata {
+  .migration_data {
     align-items: center;
-    width: 868px;
+    width: 878px;
+    margin: 20px auto 0;
     p {
       padding: 0 40px;
       margin-right: 40px;
     }
   }
-  .showaction {
-    width: 868px;
-    .step {
-      height: 715px;
-      &_one {
-        top: 30px;
-        background: #fd7e14;
-      }
-      &_two {
-        background: #4364e8;
-        top: 330px;
-      }
-    }
-  }
 }
 @media screen and(max-width:750px) {
-  h3 {
-    margin: 0 auto;
-    padding: 30px 0;
-  }
-  .migration_title {
-    > p {
-      width: 90%;
-      padding-top: 5px;
-      padding-bottom: 5px;
-    }
-  }
-  .showdata {
+  .migration_data {
     flex-direction: column;
     justify-content: center;
     width: 95%;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .showaction {
-    width: 100%;
-    .step {
-      display: flex;
-      &_one {
-        top: 30px;
-        background: #fd7e14;
-      }
-      &_two {
-        background: #4364e8;
-        top: 545px;
-      }
-    }
-    .wrap {
-      flex: 1;
-      width: 85%;
-      margin-left: 30px;
-    }
+    margin: 20px auto 0;
+    padding-left: 10px;
   }
 }
 </style>

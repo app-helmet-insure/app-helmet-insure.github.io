@@ -3,11 +3,11 @@
     <h3 class="migration_ibo_title">Migrate to GUARD for IBO</h3>
     <div class="migration_ibo_countdown">
       <div>Countdown</div>
-      <p>{{ Time.Hour }}</p>
+      <p>{{ Time.Hour > 0 ? Time.Hour : "00" }}</p>
       <span>:</span>
-      <p>{{ Time.Minute }}</p>
+      <p>{{ Time.Minute > 0 ? Time.Minute : "00" }}</p>
       <span>:</span>
-      <p>{{ Time.Second }}</p>
+      <p>{{ Time.Second > 0 ? Time.Second : "00" }}</p>
     </div>
     <div class="migration_ibo_text">
       <span>Helmet</span>

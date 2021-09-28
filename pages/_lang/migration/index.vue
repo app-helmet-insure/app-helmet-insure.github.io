@@ -4,9 +4,9 @@
       <Title />
       <Pending />
       <IBO />
-      <Action />
+      <!-- <Action /> -->
       <JumpDialog />
-      <TipDialog />
+      <!-- <TipDialog /> -->
     </div>
   </div>
 </template>

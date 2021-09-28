@@ -62,7 +62,7 @@ export default {
     },
   },
   mounted() {
-    this.getBurnsInfo();
+    // this.getBurnsInfo();
   },
   methods: {
     reloadData(Value) {
@@ -80,6 +80,7 @@ export default {
     jump() {
       this.$bus.$emit("GUARD_DIALOG", true);
     },
+
     getBurnsInfo() {
       const Burn1Contacts = new Contract(ContractAddress, Migration); //to Guard
       const Burn2Contacts = new Contract(BurnContractAddress, Migration); //to IBO

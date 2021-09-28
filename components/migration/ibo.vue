@@ -3,11 +3,11 @@
     <h3 class="migration_ibo_title">Migrate to GUARD for IBO</h3>
     <div class="migration_ibo_countdown">
       <div>Countdown</div>
-      <p>11</p>
+      <p>{{ Time.Day }}</p>
       <span>:</span>
-      <p>11</p>
+      <p>{{ Time.Hour }}</p>
       <span>:</span>
-      <p>11</p>
+      <p>{{ Time.Minute }}</p>
     </div>
     <div class="migration_ibo_text">
       <span>Helmet</span>
@@ -15,14 +15,15 @@
     </div>
     <div class="migration_ibo_input">
       <input type="text" v-model="BurnVolume" />
-      <span @click="handleClickMax">最大量</span>
+      <span @click="handleClickMax">{{
+        $t("Insurance.Insurance_text18")
+      }}</span>
     </div>
     <button class="b_button migration_ibo_button" @click="handleClickMigrate">
       {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
     </button>
     <p class="migration_ibo_tips">
-      Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,
-      先到先得.
+      {{ $t("Migration.Tips8") }}
     </p>
     <!-- dialog -->
     <WaitingConfirmationDialog
@@ -45,6 +46,7 @@
 import { fixD } from "~/assets/js/util.js";
 import Migration from "~/web3/abis/Migration.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
 import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,
@@ -74,6 +76,11 @@ export default {
       SuccessVisible: false,
       SuccessHash: "",
       WaitingText: "",
+      Time: {
+        Day: "00",
+        Hour: "00",
+        Minute: "00",
+      },
     };
   },
   computed: {
@@ -100,6 +107,7 @@ export default {
       if (Value) {
         this.$nextTick(() => {
           this.getBurnsInfo();
+          this.getBurnsTime();
         });
       }
     },
@@ -115,7 +123,51 @@ export default {
       this.SuccessVisible = false;
     },
     handleClickMax() {
-      this.BurnVolume = this.HelmetBalance;
+      this.BurnVolume = Math.min(Number(this.HelmetBalance), 2000);
+    },
+    getBurnsTime() {
+      const TimeContracts = new Contract(BurnContractAddress, OrderABI);
+      const BSCMulticallProvider = getOnlyMultiCallProvider();
+      const PromiseList = [TimeContracts.begin(), TimeContracts.span()];
+      BSCMulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [Start, Span] = FixData;
+        let Now = Date.now() / 1000;
+        if (Now > Start * 1) {
+          let Time = Start * 1 + Span * 1 - Now;
+          const Day = Math.floor(Time / (24 * 3600));
+          const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
+          const Minute = Math.floor(
+            (Time - Day * 24 * 3600 - Hour * 3600) / 60
+          );
+          const FixDay = Day > 9 ? Day : "0" + Day;
+          const FixHour = Hour > 9 ? Hour : "0" + Hour;
+          const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+          this.Time = {
+            Day: FixDay,
+            Hour: FixHour,
+            Minute: FixMinute,
+          };
+        } else {
+          let Time = Now * 1 - Start * 1;
+          const Day = Math.floor(Start / (24 * 3600));
+          const Hour = Math.floor((Start - Day * 24 * 3600) / 3600);
+          const Minute = Math.floor(
+            (Start - Day * 24 * 3600 - Hour * 3600) / 60
+          );
+          const FixDay = Day > 9 ? Day : "0" + Day;
+          const FixHour = Hour > 9 ? Hour : "0" + Hour;
+          const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+          this.Time = {
+            Day: FixDay,
+            Hour: FixHour,
+            Minute: FixMinute,
+          };
+        }
+
+        // this.MyBurns1 = fromWei(MyBurns1);
+        // this.MyBurns2 = fromWei(MyBurns2);
+      });
     },
     getBurnsInfo() {
       const HelmetContracts = new Contract(HelmetAddress, ERC20ABI.abi);

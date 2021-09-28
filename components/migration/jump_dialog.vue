@@ -42,6 +42,7 @@ export default {
   left: 0;
   top: 0;
   background: rgba($color: #000000, $alpha: 0.5);
+  z-index: 999;
 }
 @media screen and(min-width: 750px) {
   .migration_dialog_wrap {
@@ -54,6 +55,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     padding: 20px;
+    z-index: 999;
     > div {
       padding: 0 40px;
       margin-top: 40px;

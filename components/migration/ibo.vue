@@ -11,22 +11,181 @@
     </div>
     <div class="migration_ibo_text">
       <span>Helmet</span>
-      <span>0.00010000 </span>
+      <span>{{ fixD(HelmetBalance, 4) }}</span>
     </div>
     <div class="migration_ibo_input">
-      <input type="text" />
-      <span>最大量</span>
+      <input type="text" v-model="BurnVolume" />
+      <span @click="handleClickMax">最大量</span>
     </div>
-    <button class="b_button migration_ibo_button">Migrate</button>
+    <button class="b_button migration_ibo_button" @click="handleClickMigrate">
+      {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+    </button>
     <p class="migration_ibo_tips">
       Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,
       先到先得.
     </p>
+    <!-- dialog -->
+    <WaitingConfirmationDialog
+      :DialogVisible="WaitingVisible"
+      :DialogClose="waitingClose"
+    >
+      <div class="waiting_content">
+        <p>{{ WaitingText }}</p>
+      </div>
+    </WaitingConfirmationDialog>
+    <SuccessConfirmationDialog
+      :DialogVisible="SuccessVisible"
+      :DialogClose="successClose"
+      :SuccessHash="SuccessHash"
+    />
   </div>
 </template>
 
 <script>
-export default {};
+import { fixD } from "~/assets/js/util.js";
+import Migration from "~/web3/abis/Migration.json";
+import ERC20ABI from "~/web3/abis/ERC20ABI.json";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+  toWei,
+  getContract,
+} from "~/web3/index.js";
+import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
+import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
+const BurnContractAddress = "0x4F17B8f8BBebf9F73CF76992aa3F464821a27595";
+const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+const Infinity =
+  "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+export default {
+  components: {
+    SuccessConfirmationDialog,
+    WaitingConfirmationDialog,
+  },
+  data() {
+    return {
+      fixD,
+      HelmetBalance: 0,
+      ApproveStatus: false,
+      BurnVolume: "",
+      WaitingVisible: false,
+      SuccessVisible: false,
+      SuccessHash: "",
+      WaitingText: "",
+    };
+  },
+  computed: {
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
+    RefreshData() {
+      return this.$store.state.refreshNumber;
+    },
+  },
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
+    RefreshData: {
+      handler: "refreshData",
+      immediate: true,
+    },
+  },
+  mounted() {},
+  methods: {
+    reloadData(Value) {
+      if (Value) {
+        this.$nextTick(() => {
+          this.getBurnsInfo();
+        });
+      }
+    },
+    refreshData(Value, NewValue) {
+      if (Value != NewValue) {
+        this.getBurnsInfo();
+      }
+    },
+    waitingClose() {
+      this.WaitingVisible = false;
+    },
+    successClose() {
+      this.SuccessVisible = false;
+    },
+    handleClickMax() {
+      this.BurnVolume = this.HelmetBalance;
+    },
+    getBurnsInfo() {
+      const HelmetContracts = new Contract(HelmetAddress, ERC20ABI.abi);
+      const MulticallProvider = getOnlyMultiCallProvider();
+      const Account = this.CurrentAccount.account;
+      const PromiseList = [
+        HelmetContracts.balanceOf(Account),
+        HelmetContracts.allowance(Account, BurnContractAddress),
+      ];
+      MulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [HelmetBalance, ApproveStatus] = FixData;
+        this.HelmetBalance = fromWei(HelmetBalance);
+        this.ApproveStatus = ApproveStatus > 0;
+      });
+    },
+    handleClickMigrate() {
+      const Account = this.CurrentAccount.account;
+      if (this.ApproveStatus) {
+        const BurnContracts = getContract(Migration, BurnContractAddress);
+        BurnContracts.methods
+          .burn(toWei(this.BurnVolume))
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.StakeLoading = false;
+              this.$store.dispatch("refreshData");
+              this.getBurnsInfo();
+            }
+          })
+          .on("error", (error) => {
+            this.StakeLoading = false;
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+          });
+      } else {
+        const ApproveContracts = getContract(ERC20ABI.abi, HelmetAddress);
+        ApproveContracts.methods
+          .approve(BurnContractAddress, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+            this.WaitingText = `You will approve HELMET to Helmet.insure`;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
+              this.WaitingVisible = false;
+              this.SuccessVisible = true;
+              this.ApproveStatus = true;
+              this.WaitingText = "";
+              this.$store.dispatch("refreshData");
+              this.getBurnsInfo();
+            }
+          })
+          .on("error", (error) => {
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+            this.ApproveStatus = false;
+          });
+      }
+    },
+  },
+};
 </script>
 
 <style lang='scss' scoped>
@@ -53,7 +212,7 @@ export default {};
   display: flex;
   align-items: center;
   margin-top: 7px;
-  >div{
+  > div {
     margin-right: 4px;
   }
   > p {

@@ -3,7 +3,7 @@
     <div class="migrate_container">
       <Title />
       <Pending />
-      <!-- <IBO /> -->
+      <IBO />
       <Action />
       <JumpDialog />
       <TipDialog />

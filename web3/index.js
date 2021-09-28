@@ -1,11 +1,13 @@
 import MiningABI from "./abis/MiningABI.json";
 import Web3 from "web3";
 import { cloneDeep } from "lodash";
-import { JsonRpcProvider } from "@ethersproject/providers";
-import { Provider } from "ethers-multicall-x";
+import { JsonRpcProvider, Http } from "@ethersproject/providers";
+import { Provider, setMulticallAddress } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
 const BSCChainId = 56;
 const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
+const MATICChainId = 137;
+const MATICRpcUrl = "https://matic-mainnet.chainstacklabs.com";
 export const getDecimals = (Decimals) => {
   switch (Decimals) {
     case 0:
@@ -58,9 +60,19 @@ export const toWei = (FixNumber, Decimals) => {
     return Web3.utils.toWei(FixNumber, FixDecimals);
   }
 };
-
+export const getMultiCallProvider = (provider, chainId) => {
+  setMulticallAddress(128, "0xc9a9F768ebD123A00B52e7A0E590df2e9E998707");
+  setMulticallAddress(137, "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507");
+  return new Provider(provider, chainId);
+};
 export const getOnlyMultiCallProvider = () =>
   new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId);
+
+export const getPolygonMultiCallProvider = () =>
+  getMultiCallProvider(
+    new JsonRpcProvider(MATICRpcUrl, MATICChainId),
+    MATICChainId
+  );
 
 export const processResult = (data) => {
   data = cloneDeep(data);

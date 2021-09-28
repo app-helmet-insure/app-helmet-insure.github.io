@@ -3,89 +3,121 @@
     <p>
       <img src="~/assets/img/migration/burn.svg" alt="" />{{
         $t("Migration.MyBurning")
-      }}: {{ addCommom(fixD(myBurning, 4)) }}
+      }}: {{ addCommom(fixD(MyBurning, 4)) }}
       Helmet
     </p>
     <p>
       <img src="~/assets/img/migration/coin.svg" alt="" />{{
         $t("Migration.MyPendding")
-      }}: {{ addCommom(fixD(myPendding, 4)) }} Guard
+      }}: {{ addCommom(fixD(MyPendding, 4)) }} Guard
       <button @click="jump">{{ $t("Migration.Claim") }}</button>
     </p>
   </div>
 </template>
 
 <script>
-import Web3 from "web3";
 import { fixD, addCommom } from "~/assets/js/util.js";
-import { getAccounts } from "~/interface/common_contract.js";
-import { fromWei } from "~/web3/index.js";
-import { TotalBurns } from "~/interface/read_contract.js";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  getPolygonMultiCallProvider,
+  processResult,
+  fromWei,
+  toWei,
+} from "~/web3/index.js";
 import GuardClaimABI from "~/web3/abis/GuardClaim.json";
+import Migration from "~/web3/abis/Migration.json";
 const ClaimAddress = "0xf8f87399A2fF0064194F61e567A54cb1308d7bE8";
 const ContractAddress = "0xeB7731e81b1C2Af4837fAfB1a9b7770b6942411B";
+const BurnContractAddress = "0x4F17B8f8BBebf9F73CF76992aa3F464821a27595";
 export default {
   data() {
     return {
-      myClaiming: 0,
-      myClaimed: 0,
-      myBurns: 0,
-      myPendding: 0,
-      myBurning: 0,
+      MyClaiming: 0,
+      MyClaimed: 0,
+      MyBurns1: 0,
+      MyBurns2: 0,
+      MyPendding: 0,
+      MyBurning: 0,
       fixD,
       addCommom,
     };
   },
+  computed: {
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
+    RefreshData() {
+      return this.$store.state.refreshNumber;
+    },
+  },
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
+    RefreshData: {
+      handler: "refreshData",
+      immediate: true,
+    },
+  },
   mounted() {
-    this.$nextTick(() => {
-      this.getBalance();
-    });
-    this.$bus.$on("REFRESH_MIGRATION_TITLE", () => {
-      this.getBalance();
-    });
+    this.getBurnsInfo();
   },
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        this.$nextTick(() => {
+          this.getBurnsInfo();
+        });
+      }
+    },
+    refreshData(Value, NewValue) {
+      if (Value != NewValue) {
+        this.getBurnsInfo();
+      }
+    },
     jump() {
       this.$bus.$emit("GUARD_DIALOG", true);
     },
-
-    async MyAccount() {
-      let Account = await getAccounts();
-      this.Account = Account;
+    getBurnsInfo() {
+      const Burn1Contacts = new Contract(ContractAddress, Migration); //to Guard
+      const Burn2Contacts = new Contract(BurnContractAddress, Migration); //to IBO
+      const BSCMulticallProvider = getOnlyMultiCallProvider();
+      const Account = this.CurrentAccount.account;
+      const PromiseList = [
+        Burn1Contacts.totalBurns(Account),
+        Burn2Contacts.totalBurns(Account),
+      ];
+      BSCMulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [MyBurns1, MyBurns2] = FixData;
+        this.MyBurns1 = fromWei(MyBurns1);
+        this.MyBurns2 = fromWei(MyBurns2);
+      });
+      const ClaimContracts = new Contract(ClaimAddress, GuardClaimABI);
+      const MATICMulticallProvider = getPolygonMultiCallProvider();
+      const PromiseList1 = [
+        ClaimContracts.claimingList(Account),
+        ClaimContracts.claimedList(Account),
+      ];
+      MATICMulticallProvider.all(PromiseList1).then((res) => {
+        const FixData = processResult(res);
+        const [MyClaiming, MyClaimed] = FixData;
+        this.MyClaiming = fromWei(MyClaiming);
+        this.MyClaimed = fromWei(MyClaimed);
+        this.getBalance();
+      });
     },
-    async getMyPendding() {
-      let Account = await getAccounts();
-      let web3 = new Web3(
-        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
-      );
-      let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
-      let myClaiming = await Contracts.methods.claimingList(Account).call();
-      this.myClaiming = fromWei(myClaiming);
-    },
-    async getMySuccess() {
-      let Account = await getAccounts();
-      let web3 = new Web3(
-        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
-      );
-      let Contracts = new web3.eth.Contract(GuardClaimABI, ClaimAddress);
-      let myClaimed = await Contracts.methods.claimedList(Account).call();
-      this.myClaimed = fromWei(myClaimed);
-    },
-    async getMyBurns() {
-      let Account = await getAccounts();
-      let myBurns = await TotalBurns(ContractAddress, Account);
-      this.myBurns = myBurns;
-    },
-    async getBalance() {
-      await this.getMyPendding();
-      await this.getMySuccess();
-      await this.getMyBurns();
-      this.myBurning =
-        this.myBurns - this.myClaiming < 0 ? 0 : this.myBurns - this.myClaiming;
-      this.myPendding =
-        this.myClaiming - this.myClaimed < 0
+    getBalance() {
+      this.MyBurning =
+        this.MyBurns1 * 1 + this.MyBurns2 * 1 - this.MyClaiming * 1 < 0
           ? 0
-          : this.myClaiming - this.myClaimed;
+          : this.MyBurns1 * 1 + this.MyBurns2 * 1 - this.MyClaiming * 1;
+      this.MyPendding =
+        this.MyClaiming * 1 - this.MyClaimed * 1 < 0
+          ? 0
+          : this.MyClaiming * 1 - this.MyClaimed * 1;
     },
   },
 };

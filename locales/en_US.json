@@ -348,7 +348,9 @@
     "Tips6": "Update at 22:00 SGT daily",
     "Tips7": "New polygon dev plan in!!!  Better&healthier bridge approach rush on its way and your GUARD Credits are still valid!!!",
     "ToStake": "Go Deposit",
-    "Pause": "Temporarily closed"
+    "Pause": "Temporarily closed",
+    "Migrate": "Migrate",
+    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,fcfs."
   },
   "IBO": {
     "IBO_text1": "m",

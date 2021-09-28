@@ -348,7 +348,9 @@
     "Tips6": "兑换额度每日 22:00 更新",
     "Tips7": "我们在polygon有全新的计划, 更健康有效的跨链方式正在配送中，您的额度仍然有效！敬请期待",
     "ToStake": "去抵押",
-    "Pause": "暂停"
+    "Pause": "暂停",
+    "Migrate": "Migrate",
+    "Tips8":"Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得."
   },
   "IBO": {
     "IBO_text1": "分钟",

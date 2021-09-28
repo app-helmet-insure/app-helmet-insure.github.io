@@ -19,8 +19,24 @@
         $t("Insurance.Insurance_text18")
       }}</span>
     </div>
-    <button class="b_button migration_ibo_button" @click="handleClickMigrate">
+    <button
+      class="b_button migration_ibo_button"
+      v-if="MigrationStatus === 'UnOpen'"
+    >
       {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+    </button>
+    <button
+      class="b_button migration_ibo_button"
+      @click="handleClickMigrate"
+      v-if="MigrationStatus === 'Ongoing'"
+    >
+      {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+    </button>
+    <button
+      class="b_button migration_ibo_button"
+      v-if="MigrationStatus === 'Expired'"
+    >
+      {{ $t("NFT.Finished") }}
     </button>
     <p class="migration_ibo_tips">
       {{ $t("Migration.Tips8") }}
@@ -79,6 +95,7 @@ export default {
       Start: 0,
       Span: 0,
       TimeForMat: null,
+      MigrationStatus: "UnOpen",
       Time: {
         Hour: "00",
         Minute: "00",
@@ -104,7 +121,14 @@ export default {
       immediate: true,
     },
   },
-  mounted() {},
+  mounted() {
+    this.TimeForMat = setInterval(() => {
+      this.forMatTime();
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.TimeForMat);
+  },
   methods: {
     reloadData(Value) {
       if (Value) {
@@ -152,50 +176,52 @@ export default {
         const [HelmetBalance, ApproveStatus] = FixData;
         this.HelmetBalance = fromWei(HelmetBalance);
         this.ApproveStatus = ApproveStatus > 0;
-        this.TimeForMat = setInterval(() => {
-          this.forMatTime();
-        });
       });
     },
     forMatTime() {
-      let Now = Date.now() / 1000;
-      if (Now > this.Start * 1) {
-        let Time = this.Start * 1 + this.Span * 1 - Now;
-        const Day = Math.floor(Time / (24 * 3600));
-        const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
-        const Minute = Math.floor((Time - Day * 24 * 3600 - Hour * 3600) / 60);
-        const Second = Math.floor(
-          Time - Day * 24 * 3600 - Hour * 3600 - Minute * 60
-        );
-        const FixHour = Hour > 9 ? Hour : "0" + Hour;
-        const FixMinute = Minute > 9 ? Minute : "0" + Minute;
-        const FixSecond = Second > 9 ? Second : "0" + Second;
-
+      let NowTime = Date.now() / 1000;
+      let StartTime = this.Start * 1;
+      let FinishTime = this.Start * 1 + this.Span * 1;
+      let DownTime =
+        StartTime - NowTime > 0 ? FinishTime - NowTime : FinishTime - NowTime;
+      const Day = Math.floor(DownTime / (24 * 3600));
+      const Hour = Math.floor((DownTime - Day * 24 * 3600) / 3600);
+      const Minute = Math.floor(
+        (DownTime - Day * 24 * 3600 - Hour * 3600) / 60
+      );
+      const Second = Math.floor(
+        DownTime - Day * 24 * 3600 - Hour * 3600 - Minute * 60
+      );
+      const FixHour = Hour > 9 ? Hour : "0" + Hour;
+      const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+      const FixSecond = Second > 9 ? Second : "0" + Second;
+      if (NowTime > StartTime && NowTime < FinishTime) {
         this.Time = {
-          Hour: FixHour * 1 + Day * 24,
+          Hour: FixHour,
           Minute: FixMinute,
           Second: FixSecond,
         };
+        this.MigrationStatus = "Ongoing";
+      } else if (NowTime < StartTime) {
+        this.Time = {
+          Hour: FixHour,
+          Minute: FixMinute,
+          Second: FixSecond,
+        };
+        this.MigrationStatus = "UnOpen";
       } else {
-        let Time = Now * 1 - this.Start * 1;
-        const Day = Math.floor(Time / (24 * 3600));
-        const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
-        const Minute = Math.floor((Time - Day * 24 * 3600 - Hour * 3600) / 60);
-        const Second = Math.floor(
-          Time - Day * 24 * 3600 - Hour * 3600 - Minute * 60
-        );
-        const FixHour = Hour > 9 ? Hour : "0" + Hour;
-        const FixMinute = Minute > 9 ? Minute : "0" + Minute;
-        const FixSecond = Second > 9 ? Second : "0" + Second;
         this.Time = {
-          Hour: FixHour * 1 + Day * 24,
-          Minute: FixMinute,
-          Second: FixSecond,
+          Hour: "00",
+          Minute: "00",
+          Second: "00",
         };
-        clearInterval(this.TimeForMat);
+        this.MigrationStatus = "Expired";
       }
     },
     handleClickMigrate() {
+      if (!this.BurnVolume) {
+        return;
+      }
       const Account = this.CurrentAccount.account;
       if (this.ApproveStatus) {
         const BurnContracts = getContract(Migration, BurnContractAddress);

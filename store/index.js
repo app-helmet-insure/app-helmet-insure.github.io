@@ -37,13 +37,12 @@ export const state = () => ({
     },
   ],
   userInfo: {
-    
     name: "MetaMask",
     isLogin: false,
     account: null,
   },
-  walletType: "", 
-  refreshNumber: 0,
+  walletType: "",
+  refreshNumber: 1,
 });
 
 export const mutations = {
@@ -65,8 +64,8 @@ export const mutations = {
     state.userInfo = data;
   },
   SET_REFRESH_DATA(state) {
-    console.log(state);
-    state.refreshNumber = state.refreshNumber + 1;
+    let newNumber = state.refreshNumber + 1;
+    state.refreshNumber = newNumber;
   },
 };
 export const actions = {

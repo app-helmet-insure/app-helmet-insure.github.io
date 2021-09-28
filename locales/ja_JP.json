@@ -337,7 +337,7 @@
     "ToStake": "Go Deposit",
     "Pause": "Temporarily closed",
     "Migrate": "Migrate",
-    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,fcfs."
+    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,FCFS."
   },
   "IBO": {
     "IBO_text1": "m",

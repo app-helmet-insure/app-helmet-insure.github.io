@@ -143,8 +143,9 @@ export default {
         this.getHelmetBalance();
       }
     },
-    refreshData(Value, NewValue) {
-      if (Value != NewValue) {
+    refreshData(NewValue, Value) {
+      console.log(Value, NewValue);
+      if (Value != NewValue && NewValue > Value) {
         this.getHelmetBalance();
       }
     },
@@ -156,10 +157,6 @@ export default {
     },
     handleClickAirdrop() {
       this.$bus.$emit("AIRDROP_DIALOG", true);
-    },
-    async handleClickNetwork() {
-      this.showWallectSelect = true;
-      this.WallectSelectType = "NETWORK";
     },
     openChangeWallet() {
       this.showChangeWallet = true;

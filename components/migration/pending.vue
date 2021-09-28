@@ -72,8 +72,8 @@ export default {
         });
       }
     },
-    refreshData(Value, NewValue) {
-      if (Value != NewValue) {
+    refreshData(NewValue, Value) {
+      if (Value != NewValue && NewValue > Value) {
         this.getBurnsInfo();
       }
     },

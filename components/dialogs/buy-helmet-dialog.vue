@@ -6,7 +6,7 @@
     append-to-body
     custom-class="buy_dialog"
     :close-on-click-modal="false"
-    :visible.sync="DialogVisible"
+    :visible="DialogVisible"
     @close="DialogClose"
   >
     <div class="buy_dialog_wrap">
@@ -50,7 +50,7 @@
               <div
                 class="select_token_item"
                 v-for="item in ShowList"
-                :key="item.symbol"
+                :key="item.name"
                 @click="handleCheckToken(item)"
               >
                 <p>
@@ -110,8 +110,15 @@ import {
   BalanceOf,
 } from "~/interface/swap.js";
 import { fixD, autoRounding, toRounding } from "~/assets/js/util.js";
+import MiningABI from "~/web3/abis/MiningABI.json";
 import BigNumber from "bignumber.js";
-import { fromWei } from "~/web3/index.js";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+  toWei,
+  getContract,
+} from "~/web3/index.js";
 export default {
   props: ["DialogVisible", "DialogClose"],
   components: {
@@ -130,7 +137,7 @@ export default {
         decimals: 18,
         logoURI:
           "https://tokens.pancakeswap.finance/images/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c.png",
-        name: "WBNB Token",
+        name: "BNB Token",
         symbol: "BNB",
       },
       HelmetPrice: 0,
@@ -145,13 +152,19 @@ export default {
       ApprovedStatus: false,
     };
   },
-  mounted() {},
   computed: {
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
     SwapParams() {
       return { SwapNumber: this.swapNumber, SwapData: this.activeData };
     },
   },
   watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
     searchToken: {
       handler: "searchTokenWatch",
       immediate: true,
@@ -171,20 +184,27 @@ export default {
     },
   },
   methods: {
-    async getBalance(newValue) {
+    reloadData(Value) {
+      if (Value && Value.account) {
+        this.getBalance(this.activeData);
+      }
+    },
+    getBalance(newValue) {
+      console.log(newValue);
+      const Account = this.CurrentAccount.account;
       if (this.activeData.symbol == "BNB") {
-        let timer = setTimeout(() => {
-          if (process.client) {
-            window.WEB3.eth.getBalance(window.CURRENTADDRESS).then((res) => {
-              this.Balance = fixD(fromWei(res), 4);
-            });
-          }
-        }, 1000);
-        this.$once("hook:beforeDestroy", () => {
-          clearTimeout(timer);
+        window.WEB3.eth.getBalance(Account).then((res) => {
+          console.log(res);
+          this.Balance = fixD(fromWei(res), 4);
         });
       } else {
-        this.Balance = fixD(await BalanceOf(newValue), 4);
+        const Contracts = getContract(MiningABI, newValue.address);
+        Contracts.methods
+          .balanceOf(Account)
+          .call()
+          .then((res) => {
+            this.Balance = fixD(fromWei(res, newValue.decimals), 8);
+          });
       }
     },
     SwapParamsWatch(newValue) {

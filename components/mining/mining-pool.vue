@@ -405,6 +405,9 @@ export default {
         StakeABI,
         ProxyPid,
         PoolType,
+        CanWithDrawMethods,
+        CanClaim1Methods,
+        CanClaim2Methods,
       } = this.ActiveData;
       const PoolContracts = new Contract(PoolAddress, PoolABI);
       const StakeContracts = new Contract(StakeAddress, StakeABI);
@@ -412,16 +415,8 @@ export default {
       const Account = this.CurrentAccount.account;
 
       let PromiseList;
-      if (NoProxy) {
-        PromiseList = [
-          StakeContracts.balanceOf(Account),
-          PoolContracts.userInfo(ProxyPid, Account),
-          StakeContracts.totalSupply(),
-          PoolContracts.pendingCake(ProxyPid, Account),
-          PoolContracts.pendingCake(ProxyPid, Account),
-          ApproveContracts.allowance(Account, PoolAddress),
-        ];
-      } else if (PoolType === "candy") {
+      let Params = NoProxy ? [ProxyPid, Account] : [Account];
+      if (PoolType === "candy") {
         PromiseList = [
           StakeContracts.balanceOf(Account),
           PoolContracts.balanceOf(Account),
@@ -433,10 +428,10 @@ export default {
       } else {
         PromiseList = [
           StakeContracts.balanceOf(Account),
-          PoolContracts.balanceOf(Account),
-          PoolContracts.totalSupply(),
-          PoolContracts.earned(Account),
-          PoolContracts.earned2(Account),
+          PoolContracts[CanWithDrawMethods](...Params),
+          NoProxy ? StakeContracts.totalSupply() : PoolContracts.totalSupply(),
+          PoolContracts[CanClaim1Methods](...Params),
+          PoolContracts[CanClaim2Methods](...Params),
           ApproveContracts.allowance(Account, PoolAddress),
         ];
       }
@@ -481,6 +476,7 @@ export default {
             CanClaim2,
             ApproveStatus,
           ] = FixData;
+
           this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
           this.CanWithdraw = fromWei(
             NoProxy ? CanWithdraw[0] : CanWithdraw,
@@ -579,7 +575,7 @@ export default {
       }
       this.ClaimLoading = true;
       const ContractAddress = this.ActiveData.PoolAddress;
-      const RewardMethods = this.ActiveData.RewardMethods;
+      const WithDrawMethods = this.ActiveData.WithDrawMethods;
       const PoolABI = this.ActiveData.PoolABI;
       const NoProxy = this.ActiveData.NoProxy;
       const ProxyPid = this.ActiveData.ProxyPid;
@@ -591,7 +587,7 @@ export default {
       } else {
         Params = [];
       }
-      Contracts.methods[RewardMethods](...Params)
+      Contracts.methods[WithDrawMethods](...Params)
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
@@ -706,6 +702,9 @@ export default {
     }
     .cafeswap {
       background-image: url("../../assets/img/icon/cafeswap@2x.png");
+    }
+    .xms {
+      background-image: url("../../assets/img/icon/xms@2x.png");
     }
   }
   .H5_link {

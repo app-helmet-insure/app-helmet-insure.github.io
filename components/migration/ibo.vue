@@ -3,11 +3,11 @@
     <h3 class="migration_ibo_title">Migrate to GUARD for IBO</h3>
     <div class="migration_ibo_countdown">
       <div>Countdown</div>
-      <p>{{ Time.Day }}</p>
-      <span>:</span>
       <p>{{ Time.Hour }}</p>
       <span>:</span>
       <p>{{ Time.Minute }}</p>
+      <span>:</span>
+      <p>{{ Time.Second }}</p>
     </div>
     <div class="migration_ibo_text">
       <span>Helmet</span>
@@ -76,10 +76,13 @@ export default {
       SuccessVisible: false,
       SuccessHash: "",
       WaitingText: "",
+      Start: 0,
+      Span: 0,
+      TimeForMat: null,
       Time: {
-        Day: "00",
         Hour: "00",
         Minute: "00",
+        Second: "00",
       },
     };
   },
@@ -132,41 +135,8 @@ export default {
       BSCMulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
         const [Start, Span] = FixData;
-        let Now = Date.now() / 1000;
-        if (Now > Start * 1) {
-          let Time = Start * 1 + Span * 1 - Now;
-          const Day = Math.floor(Time / (24 * 3600));
-          const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
-          const Minute = Math.floor(
-            (Time - Day * 24 * 3600 - Hour * 3600) / 60
-          );
-          const FixDay = Day > 9 ? Day : "0" + Day;
-          const FixHour = Hour > 9 ? Hour : "0" + Hour;
-          const FixMinute = Minute > 9 ? Minute : "0" + Minute;
-          this.Time = {
-            Day: FixDay,
-            Hour: FixHour,
-            Minute: FixMinute,
-          };
-        } else {
-          let Time = Now * 1 - Start * 1;
-          const Day = Math.floor(Start / (24 * 3600));
-          const Hour = Math.floor((Start - Day * 24 * 3600) / 3600);
-          const Minute = Math.floor(
-            (Start - Day * 24 * 3600 - Hour * 3600) / 60
-          );
-          const FixDay = Day > 9 ? Day : "0" + Day;
-          const FixHour = Hour > 9 ? Hour : "0" + Hour;
-          const FixMinute = Minute > 9 ? Minute : "0" + Minute;
-          this.Time = {
-            Day: FixDay,
-            Hour: FixHour,
-            Minute: FixMinute,
-          };
-        }
-
-        // this.MyBurns1 = fromWei(MyBurns1);
-        // this.MyBurns2 = fromWei(MyBurns2);
+        this.Start = Start;
+        this.Span = Span;
       });
     },
     getBurnsInfo() {
@@ -182,14 +152,55 @@ export default {
         const [HelmetBalance, ApproveStatus] = FixData;
         this.HelmetBalance = fromWei(HelmetBalance);
         this.ApproveStatus = ApproveStatus > 0;
+        this.TimeForMat = setInterval(() => {
+          this.forMatTime();
+        });
       });
+    },
+    forMatTime() {
+      let Now = Date.now() / 1000;
+      if (Now > this.Start * 1) {
+        let Time = this.Start * 1 + this.Span * 1 - Now;
+        const Day = Math.floor(Time / (24 * 3600));
+        const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
+        const Minute = Math.floor((Time - Day * 24 * 3600 - Hour * 3600) / 60);
+        const Second = Math.floor(
+          Time - Day * 24 * 3600 - Hour * 3600 - Minute * 60
+        );
+        const FixHour = Hour > 9 ? Hour : "0" + Hour;
+        const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+        const FixSecond = Second > 9 ? Second : "0" + Second;
+
+        this.Time = {
+          Hour: FixHour * 1 + Day * 24,
+          Minute: FixMinute,
+          Second: FixSecond,
+        };
+      } else {
+        let Time = Now * 1 - this.Start * 1;
+        const Day = Math.floor(Time / (24 * 3600));
+        const Hour = Math.floor((Time - Day * 24 * 3600) / 3600);
+        const Minute = Math.floor((Time - Day * 24 * 3600 - Hour * 3600) / 60);
+        const Second = Math.floor(
+          Time - Day * 24 * 3600 - Hour * 3600 - Minute * 60
+        );
+        const FixHour = Hour > 9 ? Hour : "0" + Hour;
+        const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+        const FixSecond = Second > 9 ? Second : "0" + Second;
+        this.Time = {
+          Hour: FixHour * 1 + Day * 24,
+          Minute: FixMinute,
+          Second: FixSecond,
+        };
+        clearInterval(this.TimeForMat);
+      }
     },
     handleClickMigrate() {
       const Account = this.CurrentAccount.account;
       if (this.ApproveStatus) {
         const BurnContracts = getContract(Migration, BurnContractAddress);
         BurnContracts.methods
-          .burn(toWei(this.BurnVolume))
+          .burn(toWei(this.BurnVolume + ""))
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
@@ -268,7 +279,8 @@ export default {
     margin-right: 4px;
   }
   > p {
-    width: 18px;
+    min-width: 18px;
+    padding: 0 2px;
     height: 18px;
     background: #f2f0eb;
     border-radius: 3px;

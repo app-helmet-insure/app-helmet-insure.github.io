@@ -1,6 +1,5 @@
 <template>
   <div class="migration_action">
-    <div class="migration_action_mask"></div>
     <div class="step">
       <div class="step_one step_num">1</div>
       <div class="step_two step_num">2</div>
@@ -21,13 +20,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.migration_action_mask {
-  position: absolute;
-  background: rgba($color: #000000, $alpha: 0.8);
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-}
 .migration_action {
   display: flex;
   justify-content: space-between;

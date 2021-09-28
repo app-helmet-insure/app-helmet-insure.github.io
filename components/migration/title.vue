@@ -1,7 +1,7 @@
 <template>
   <div class="migration_title">
     <h3>Migrate Helmet(BSC) to Guard(Polygon)</h3>
-    <!-- <p>{{ $t("Migration.Tips7") }}</p> -->
+    <p>{{ $t("Migration.Tips7") }}</p>
   </div>
 </template>
 

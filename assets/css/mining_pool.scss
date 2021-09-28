@@ -1,4 +1,13 @@
 @import "./themes.scss";
+.tips {
+  margin-top: 14px;
+  padding: 6px 20px;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffb801;
+  background: rgba(255, 184, 1, 0.1);
+}
 .ContractAddress {
   font-size: 14px;
   color: #fd7e14;

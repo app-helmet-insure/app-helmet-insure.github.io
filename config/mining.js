@@ -331,6 +331,7 @@ export const lptPoolList = [
     HaveOnePager: false,
     YearEarnType: "APR",
     Only: true,
+    Tips: true,
     JumpLink1:
       "<a href='https://app.marsecosystem.com/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='xms'></i>Get HELMET-BNB MLP</a>",
   },

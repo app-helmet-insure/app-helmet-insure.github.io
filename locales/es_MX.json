@@ -265,7 +265,8 @@
     "APY": "APY",
     "APR": "APR",
     "EarnTip1": "Daily income withdrawal and manual reinvestment.",
-    "EarnTip2": "The return on compound interest will get higher and higher over time."
+    "EarnTip2": "The return on compound interest will get higher and higher over time.",
+    "MiningTip3": "Claim your XMS rewards on Mars ecosystem. The XMS reward is based on 180 days linear vesting. Vesting once every 3 days."
   },
   "Account": {
     "Account": "Cuenta",

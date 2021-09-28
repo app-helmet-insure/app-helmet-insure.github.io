@@ -276,7 +276,8 @@
     "APY": "复利年化",
     "APR": "单利年化",
     "EarnTip1": "每日将收益提取,进行手动复投;",
-    "EarnTip2": "随着时间的增加复利收益将会越来越高"
+    "EarnTip2": "随着时间的增加复利收益将会越来越高",
+    "MiningTip3": "奖励实际要在 Mars ecosystem 领取, 并且奖励会在 180 天内进行线性释放, 每个释放周期为 3 天. 详情请前往 Mars ecosystem."
   },
   "Account": {
     "Account": "我的账户",

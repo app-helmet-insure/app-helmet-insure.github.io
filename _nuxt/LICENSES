@@ -9,11 +9,6 @@
  */
 
 
-//! moment.js
-
-//! moment.js locale configuration
-
-
 /*!
   * vue-router v3.5.2
   * (c) 2021 Evan You
@@ -31,6 +26,11 @@
  * (c) 2021 Evan You
  * @license MIT
  */
+
+
+//! moment.js
+
+//! moment.js locale configuration
 
 
 /*

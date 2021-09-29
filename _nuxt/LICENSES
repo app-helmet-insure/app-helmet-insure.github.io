@@ -1,4 +1,20 @@
 /*!
+ * 
+ *   typed.js - A JavaScript Typing Animation Library
+ *   Author: Matt Boldt <me@mattboldt.com>
+ *   Version: v2.0.6
+ *   Url: https://github.com/mattboldt/typed.js
+ *   License(s): MIT
+ * 
+ */
+
+
+//! moment.js
+
+//! moment.js locale configuration
+
+
+/*!
   * vue-router v3.5.2
   * (c) 2021 Evan You
   * @license MIT
@@ -14,22 +30,6 @@
  * vuex v3.6.2
  * (c) 2021 Evan You
  * @license MIT
- */
-
-
-//! moment.js
-
-//! moment.js locale configuration
-
-
-/*!
- * 
- *   typed.js - A JavaScript Typing Animation Library
- *   Author: Matt Boldt <me@mattboldt.com>
- *   Version: v2.0.6
- *   Url: https://github.com/mattboldt/typed.js
- *   License(s): MIT
- * 
  */
 
 
@@ -78,7 +78,7 @@ object-assign
  */
 
 /*!
- * vue-i18n v8.26.1 
+ * vue-i18n v8.26.2 
  * (c) 2021 kazuya kawaguchi
  * Released under the MIT License.
  */

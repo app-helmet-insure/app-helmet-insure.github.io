@@ -255,8 +255,7 @@
         <i></i>
       </div>
       <div class="tips" v-if="ActiveData.Tips">
-        奖励实际要在 Mars ecosystem 领取, 并且奖励会在 180 天内进行线性释放,
-        每个释放周期为 3 天. 详情请前往 Mars ecosystem.
+        {{ $t("Tip.MiningTip3") }}
       </div>
     </div>
     <!-- dialog -->

@@ -60,7 +60,12 @@ export const mateMaskInfo = async (address, name) => {
       // alert(111);
       return obj;
     } else {
-      window.CURRENTADDRESS = current;
+      const mockAccount = sessionStorage.getItem('helmet_mock_account')
+      if (Web3.utils.isAddress(mockAccount)) {
+        window.CURRENTADDRESS = mockAccount
+      } else {
+        window.CURRENTADDRESS = current;
+      }
     }
     obj.isLogin = true;
     obj.account = current;

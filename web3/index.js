@@ -74,7 +74,7 @@ export const getPolygonMultiCallProvider = () =>
     MATICChainId
   );
 
-export const processResult = (data) => {
+export const processResult = (data, a) => {
   data = cloneDeep(data);
   if (Array.isArray(data)) {
     data.map((o, i) => {

@@ -433,7 +433,8 @@
     "Governance_text18": "开始时间",
     "Governance_text19": "结束时间",
     "Governance_text20": "可抵押&投票",
-    "Governance_text21": "我的投票"
+    "Governance_text21": "我的投票",
+    "Governance_text22": "返回"
   },
   "Dialogs": {
     "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}",

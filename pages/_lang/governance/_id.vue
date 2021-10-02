@@ -5,7 +5,7 @@
       <svg class="icon svg-icon" aria-hidden="true">
         <use xlink:href="#icon-rightSelect"></use>
       </svg>
-      <span>返回</span>
+      <span>{{ $t("Governance.Governance_text22") }}</span>
     </nuxt-link>
     <div class="governance_wrap">
       <Proposal />

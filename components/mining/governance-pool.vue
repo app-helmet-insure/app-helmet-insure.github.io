@@ -60,8 +60,7 @@
           @click="toDeposite"
           :class="
             (StakeLoading ? 'disable b_button' : 'b_button',
-            ActiveData.Status == 3 ||
-            (ActiveData.Max && Number(MaxStaking) === Number(CanWithdraw))
+            ActiveData.Status === 3 || ActiveData.Status === 1
               ? 'disable_button b_button'
               : 'b_button')
           "
@@ -158,7 +157,9 @@
           @click="toClaim"
           :class="
             (ClaimLoading ? 'disable o_button' : 'o_button',
-            ActiveData.Status === 3 ? 'disable_button o_button' : 'o_button')
+            ActiveData.Status === 3 || ActiveData.Status === 1
+              ? 'disable_button o_button'
+              : 'o_button')
           "
         >
           <i :class="ClaimLoading ? 'loading_pic' : ''"></i

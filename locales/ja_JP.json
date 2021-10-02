@@ -420,7 +420,8 @@
     "Governance_text18": "Start time",
     "Governance_text19": "Deadline",
     "Governance_text20": "Available",
-    "Governance_text21": "My vote"
+    "Governance_text21": "My vote",
+    "Governance_text22": "Return"
   },
   "Dialogs": {
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",

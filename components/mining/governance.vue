@@ -258,18 +258,8 @@ export default {
   },
   mounted() {
     this.FixPoolList = formatMiningPool(DaoPoolList);
-    this.$nextTick(() => {
-      this.initPool();
-    });
   },
   methods: {
-    initPool() {
-      DaoPoolList.forEach(async (item) => {
-        if (item.PoolType === "lpt") {
-          await getLptAPR(item);
-        }
-      });
-    },
     HandleClickAction(PoolData, Action, Flag = false) {
       this.ShowActiveMining = true;
       this.ActiveData = PoolData;

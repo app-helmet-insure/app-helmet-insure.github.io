@@ -66,10 +66,24 @@
 
 <script>
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+  toWei,
+  getContract,
+} from "~/web3/index.js";
 export default {
   data() {
     return {
       Proposal: {},
+      Type1: 0,
+      Type2: 0,
+      Type3: 0,
+      SelfType1: 0,
+      SelfType2: 0,
+      SelfType3: 0,
     };
   },
   mounted() {
@@ -78,6 +92,65 @@ export default {
     this.Proposal = FixGovernanceList.filter(
       (item) => item.Router === Router
     )[0];
+  },
+  computed: {
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
+  },
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
+  },
+  methods: {
+    reloadData(Value) {
+      if (Value) {
+        this.isLogin = Value.isLogin;
+        this.$nextTick(() => {
+          this.getSelfInfo();
+        });
+      }
+    },
+    getSelfInfo() {
+      let Router = this.$route.params.id;
+      let FixGovernanceList = formatGovernance(GovernanceList);
+      const Proposal = FixGovernanceList.filter(
+        (item) => item.Router === Router
+      )[0];
+      const { PoolAddress, PoolABI } = Proposal;
+      const PoolContracts = new Contract(PoolAddress, PoolABI);
+      const a = getContract(PoolABI, PoolAddress);
+      const Zero = "0x0000000000000000000000000000000000000000";
+      a.methods
+        .getVotes(Zero, Proposal.Proposal[0].ID)
+        .call()
+        .then((res) => {
+          console.log(res);
+        });
+      const Account = this.CurrentAccount.account;
+      let PromiseList = [
+        PoolContracts.getVotes(Zero, Proposal.Proposal[0].ID),
+        PoolContracts.getVotes(Zero, Proposal.Proposal[1].ID),
+        PoolContracts.getVotes(Zero, Proposal.Proposal[2].ID),
+        PoolContracts.getVotes(Account, Proposal.Proposal[0].ID),
+        PoolContracts.getVotes(Account, Proposal.Proposal[1].ID),
+        PoolContracts.getVotes(Account, Proposal.Proposal[2].ID),
+      ];
+      const MulticallProvider = getOnlyMultiCallProvider();
+      MulticallProvider.all(PromiseList).then((res) => {
+        let FixData = processResult(res);
+        let [Type1, Type2, Type3, SelfType1, SelfType2, SelfType3] = FixData;
+        console.log(Type1, Type2, Type3, SelfType1, SelfType2, SelfType3);
+        this.Type1 = fromWei(Type1);
+        this.Type2 = fromWei(Type2);
+        this.Type3 = fromWei(Type3);
+        this.SelfType1 = fromWei(SelfType1);
+        this.SelfType2 = fromWei(SelfType2);
+        this.SelfType3 = fromWei(SelfType3);
+      });
+    },
   },
 };
 </script>

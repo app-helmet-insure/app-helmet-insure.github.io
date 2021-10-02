@@ -7,7 +7,7 @@
       <h3>{{ Proposal.Title }}</h3>
     </div>
     <div class="governance_proposal_perhaps perhaps">
-      <p>{{ Proposal.Details }}</p>
+      <p v-for="(item, index) in Proposal.Details" :key="index">{{ item }}</p>
     </div>
     <div class="governance_proposal_action">
       <div class="governance_proposal_action_title">
@@ -368,6 +368,8 @@ export default {
       color: themed("color-17173a");
     }
     opacity: 0.7;
+    margin-top: 10px;
+    text-indent: 2em;
     line-height: 22px;
   }
 }

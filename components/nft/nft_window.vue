@@ -6,8 +6,8 @@
         <div class="nft_share" v-if="action == 'share'">
           <div>
             {{ $t("NFT.Text1", { card_Name: card_Name, num: RewardPoll }) }}
-            <a href="https://app.helmet.insure/#/nft"
-              >https://app.helmet.insure/#/nft</a
+            <a href="https://www.helmet.exchange/#/nft"
+              >https://www.helmet.exchange/#/nft</a
             >
           </div>
           <span
@@ -17,7 +17,7 @@
               copyAdress(
                 $event,
                 $t('NFT.Text1', { card_Name: card_Name }) +
-                  `https://app.helmet.insure/#/nft`
+                  `https://www.helmet.exchange/#/nft`
               )
             "
             >{{ $t("NFT.Copy") }}</span

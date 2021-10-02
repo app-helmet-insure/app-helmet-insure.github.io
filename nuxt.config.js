@@ -12,7 +12,7 @@ module.exports = {
   head: {
     title: "helmet1.0" || process.env.npm_package_name,
     description:
-      "Helmet.insure is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.",
+      "Helmet is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.",
     keywords: "HELMET BSC binance insurance",
     bodyAttrs: {
       class: "light",
@@ -27,7 +27,7 @@ module.exports = {
         hid: "description",
         name: "description",
         content:
-          "Helmet.insure is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.",
+          "Helmet is a peer-to-peer price-shield insurance protocol on BSC, with the aim to redefine option trading with user-friendly insurance policy wrapping.",
       },
       {
         hid: "keywords",

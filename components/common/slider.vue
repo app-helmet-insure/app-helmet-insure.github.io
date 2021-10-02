@@ -9,7 +9,7 @@
   >
     <div class="slider_wrap">
       <a
-        href="https://www.helmet.insure/"
+        href="https://www.helmet.exchange/"
         @mouseenter="whirlLogo(true)"
         @mouseleave="whirlLogo(false)"
         :class="['logo', whirlLogoFlag && 'whirl_logo', storeThemes + '_logo']"

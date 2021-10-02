@@ -254,7 +254,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `You will approve HELMET to Helmet.insure`;
+            this.WaitingText = `You will approve HELMET to Helmet`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {

@@ -5,9 +5,7 @@
         <a href="https://www.certik.org/projects/helmet" target="_blank"></a>
       </div>
       <vue-typed-js
-        :strings="[
-          `<span class='orange' style='color:orange'>HELMET</span><span class='white'  style='color:white'>.INSURE</span>`,
-        ]"
+        :strings="[`<span class='orange' style='color:orange'>HELMET</span>`]"
         :typeSpeed="100"
       >
         <h3 class="typing"></h3>

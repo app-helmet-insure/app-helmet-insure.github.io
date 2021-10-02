@@ -10,7 +10,7 @@
           <div class="input">
             <el-input
               v-model="CallStrikePrice"
-              :maxlength="ActiveData.LastPriceDecimals + 4"
+              :maxlength="ActiveData.LastPriceDecimals"
               ref="CallStrikePrice"
             />
             <span>{{ ActiveData.InsurancePut }}</span>
@@ -21,9 +21,10 @@
             <span>+50%</span>
             <el-slider
               v-model="SliderCallStrikePrice"
-              :min="ActiveData.LastPrice * 1.5"
-              :max="ActiveData.LastPrice * 2.5"
-              :step="ActiveData.LastPrice * 0.01"
+              :min="50"
+              :max="150"
+              :step="1"
+              :format-tooltip="formatCallStrikeTooltip"
             />
             <span>+150%</span>
           </div>
@@ -126,11 +127,11 @@
           <div class="input">
             <el-input
               v-model="PutStrikePrice"
-              :maxlength="ActiveData.LastPriceDecimals + 4"
+              :maxlength="ActiveData.LastPriceDecimals"
               ref="PutStrikePrice"
             />
             <span>
-              {{ ActiveData.InsuranceName }}/{{ ActiveData.InsurancePut }}
+              {{ ActiveData.InsurancePut }}
             </span>
           </div>
         </div>
@@ -139,9 +140,10 @@
             <span>-25%</span>
             <el-slider
               v-model="SliderPutStrikePrice"
-              :min="ActiveData.LastPrice * 0.25"
-              :max="ActiveData.LastPrice * 0.75"
-              :step="ActiveData.LastPrice * 0.01"
+              :min="25"
+              :max="75"
+              :step="1"
+              :format-tooltip="formatPutStrikeTooltip"
             />
             <span>-75%</span>
           </div>
@@ -290,9 +292,9 @@ export default {
       CallApproveStatus: false,
       PutApproveStatus: false,
       CallStrikePrice: "",
-      SliderCallStrikePrice: 0,
+      SliderCallStrikePrice: 100,
       PutStrikePrice: "",
-      SliderPutStrikePrice: 0,
+      SliderPutStrikePrice: 50,
       WaitingVisible: false,
       SuccessVisible: false,
       WaitingText: "",
@@ -366,11 +368,17 @@ export default {
     },
     watchSliderCall(Value) {
       this.CallStrikePrice =
-        fixD(Value, this.ActiveData.LastPriceDecimals + 4) + "";
+        fixD(
+          this.ActiveData.LastPrice * (1 + Value / 100),
+          this.ActiveData.LastPriceDecimals
+        ) + "";
     },
     watchSliderPut(Value) {
       this.PutStrikePrice =
-        fixD(Value, this.ActiveData.LastPriceDecimals + 4) + "";
+        fixD(
+          this.ActiveData.LastPrice * (1 - Value / 100),
+          this.ActiveData.LastPriceDecimals
+        ) + "";
     },
     waitingClose() {
       this.WaitingVisible = false;
@@ -386,6 +394,12 @@ export default {
     handleClickPutStrikePrice() {
       this.PutStrikePrice = "";
       this.$refs.PutStrikePrice.focus();
+    },
+    formatCallStrikeTooltip(value) {
+      return `+${value}%`;
+    },
+    formatPutStrikeTooltip(value) {
+      return `-${value}%`;
     },
     getBalance() {
       let CallInsurance = getCurrentInsurance({
@@ -429,14 +443,6 @@ export default {
             this.PutBalance = fixD(fromWei(res, PutCollateralDecimals), 8);
           });
       }
-      this.SliderCallStrikePrice =
-        this.ActiveData.LastPrice * 1 > 0
-          ? Number(this.ActiveData.LastPrice * 2)
-          : 0;
-      this.SliderPutStrikePrice =
-        this.ActiveData.LastPrice * 1 > 0
-          ? Number(this.ActiveData.LastPrice * 0.5)
-          : 0;
     },
     handleChangeCallDPR(value) {
       this.CallDPR = value;

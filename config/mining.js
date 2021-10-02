@@ -422,7 +422,6 @@ export const comboPoolList = [
     CanClaim1Methods: "earned",
     CanClaim2Methods: "earned2",
     ExitMethods: "exit",
-
     Key: "KALA",
     PoolName: "KALA POOL",
     StakeSymbol: "HELMET",

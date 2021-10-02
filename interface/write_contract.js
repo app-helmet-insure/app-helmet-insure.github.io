@@ -330,7 +330,7 @@ export const Approve = async (
           loading: true,
           buttonText: "Confirm",
           conTit: "Please Confirm the transaction in your wallet",
-          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${TokenSymbol} to Helmet.insure</a>`,
+          conText: `<a href="https://bscscan.com/tx/${hash}" target="_blank">You will approve ${TokenSymbol} to Helmet</a>`,
         });
       })
       .on("receipt", (receipt) => {

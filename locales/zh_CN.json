@@ -406,7 +406,7 @@
     "IBO_text46": "9.17 02:05 UTC+8",
     "IBO_text47": "10.17 02:05 UTC+8",
     "IBO_text48": "锁仓部分（一个月后解锁）",
-    "IBO_text49": "{token} IBO 需要长达一个月的锁仓期限，存在不确定性风险，请注意风险。Helmet.insure 不承担任何投资损失责任。"
+    "IBO_text49": "{token} IBO 需要长达一个月的锁仓期限，存在不确定性风险，请注意风险。Helmet 不承担任何投资损失责任。"
   },
   "Dialogs": {
     "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}",

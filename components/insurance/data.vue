@@ -46,7 +46,7 @@
                   :startVal="Number(0)"
                   :endVal="Number(TotalHelmetsBorrowedVolume)"
                   :duration="2000"
-                  :decimals="2"
+                  :decimals="0"
                 />
               </template>
             </span>

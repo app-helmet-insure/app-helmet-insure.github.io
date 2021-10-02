@@ -11,13 +11,41 @@
             <el-input
               v-model="CallStrikePrice"
               :maxlength="ActiveData.LastPriceDecimals + 4"
+              ref="CallStrikePrice"
             />
-            <span
-              >{{ ActiveData.InsuranceName }}/{{
-                ActiveData.InsurancePut
-              }}</span
-            >
+            <span>{{ ActiveData.InsurancePut }}</span>
           </div>
+        </div>
+        <div class="slider_call">
+          <div class="slider_info">
+            <span>+50%</span>
+            <el-slider
+              v-model="SliderCallStrikePrice"
+              :min="ActiveData.LastPrice * 1.5"
+              :max="ActiveData.LastPrice * 2.5"
+              :step="ActiveData.LastPrice * 0.01"
+            />
+            <span>+150%</span>
+          </div>
+          <svg
+            @click="handleClickCallStrikePrice"
+            t="1633187566732"
+            class="slider_change"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2571"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="30px"
+            height="30px"
+            aria-label="CallStrikePrice"
+          >
+            <defs><style type="text/css"></style></defs>
+            <path
+              d="M684.202667 117.248c15.893333-15.872 42.154667-15.36 58.922666 1.408l90.517334 90.517333c16.661333 16.661333 17.344 42.986667 1.429333 58.922667l-445.653333 445.653333c-7.936 7.914667-23.104 16.746667-34.218667 19.776l-143.701333 39.253334c-21.909333 5.994667-35.114667-7.104-29.568-28.949334l37.248-146.773333c2.773333-10.944 11.562667-26.346667 19.392-34.176l445.653333-445.653333zM268.736 593.066667c-2.901333 2.901333-8.106667 12.074667-9.130667 16.021333l-29.12 114.773333 111.957334-30.570666c4.437333-1.216 13.632-6.549333 16.810666-9.728l445.653334-445.653334-90.517334-90.496-445.653333 445.653334zM682.794667 178.986667l90.517333 90.517333-30.186667 30.186667-90.496-90.517334 30.165334-30.165333z m-362.026667 362.048l90.496 90.517333-30.165333 30.165333-90.517334-90.496 30.165334-30.186666zM170.666667 874.666667c0-11.776 9.429333-21.333333 21.461333-21.333334h661.077333a21.333333 21.333333 0 1 1 0 42.666667H192.128A21.333333 21.333333 0 0 1 170.666667 874.666667z"
+              p-id="2572"
+            ></path>
+          </svg>
         </div>
         <div class="insure_dpr">
           <div class="dpr_desc">
@@ -99,13 +127,42 @@
             <el-input
               v-model="PutStrikePrice"
               :maxlength="ActiveData.LastPriceDecimals + 4"
+              ref="PutStrikePrice"
             />
-            <span
-              >{{ ActiveData.InsuranceName }}/{{
-                ActiveData.InsurancePut
-              }}</span
-            >
+            <span>
+              {{ ActiveData.InsuranceName }}/{{ ActiveData.InsurancePut }}
+            </span>
           </div>
+        </div>
+        <div class="slider_put">
+          <div class="slider_info">
+            <span>-25%</span>
+            <el-slider
+              v-model="SliderPutStrikePrice"
+              :min="ActiveData.LastPrice * 0.25"
+              :max="ActiveData.LastPrice * 0.75"
+              :step="ActiveData.LastPrice * 0.01"
+            />
+            <span>-75%</span>
+          </div>
+          <svg
+            @click="handleClickPutStrikePrice"
+            t="1633187566732"
+            class="slider_change"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2571"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            width="30px"
+            height="30px"
+          >
+            <defs><style type="text/css"></style></defs>
+            <path
+              d="M684.202667 117.248c15.893333-15.872 42.154667-15.36 58.922666 1.408l90.517334 90.517333c16.661333 16.661333 17.344 42.986667 1.429333 58.922667l-445.653333 445.653333c-7.936 7.914667-23.104 16.746667-34.218667 19.776l-143.701333 39.253334c-21.909333 5.994667-35.114667-7.104-29.568-28.949334l37.248-146.773333c2.773333-10.944 11.562667-26.346667 19.392-34.176l445.653333-445.653333zM268.736 593.066667c-2.901333 2.901333-8.106667 12.074667-9.130667 16.021333l-29.12 114.773333 111.957334-30.570666c4.437333-1.216 13.632-6.549333 16.810666-9.728l445.653334-445.653334-90.517334-90.496-445.653333 445.653334zM682.794667 178.986667l90.517333 90.517333-30.186667 30.186667-90.496-90.517334 30.165334-30.165333z m-362.026667 362.048l90.496 90.517333-30.165333 30.165333-90.517334-90.496 30.165334-30.186666zM170.666667 874.666667c0-11.776 9.429333-21.333333 21.461333-21.333334h661.077333a21.333333 21.333333 0 1 1 0 42.666667H192.128A21.333333 21.333333 0 0 1 170.666667 874.666667z"
+              p-id="2572"
+            ></path>
+          </svg>
         </div>
         <div class="insure_dpr">
           <div class="dpr_desc">
@@ -233,7 +290,9 @@ export default {
       CallApproveStatus: false,
       PutApproveStatus: false,
       CallStrikePrice: "",
+      SliderCallStrikePrice: 0,
       PutStrikePrice: "",
+      SliderPutStrikePrice: 0,
       WaitingVisible: false,
       SuccessVisible: false,
       WaitingText: "",
@@ -282,17 +341,36 @@ export default {
         immediate: true,
       },
     },
+    SliderCallStrikePrice: {
+      handler: {
+        handler: "watchSliderCall",
+        immediate: true,
+      },
+    },
+    SliderPutStrikePrice: {
+      handler: {
+        handler: "watchSliderPut",
+        immediate: true,
+      },
+    },
   },
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.getBalance();
         this.getApproveStatus();
         this.$nextTick(() => {
           this.getPrice();
         });
       }
+    },
+    watchSliderCall(Value) {
+      this.CallStrikePrice =
+        fixD(Value, this.ActiveData.LastPriceDecimals + 4) + "";
+    },
+    watchSliderPut(Value) {
+      this.PutStrikePrice =
+        fixD(Value, this.ActiveData.LastPriceDecimals + 4) + "";
     },
     waitingClose() {
       this.WaitingVisible = false;
@@ -301,6 +379,14 @@ export default {
       this.SuccessVisible = false;
     },
 
+    handleClickCallStrikePrice() {
+      this.CallStrikePrice = "";
+      this.$refs.CallStrikePrice.focus();
+    },
+    handleClickPutStrikePrice() {
+      this.PutStrikePrice = "";
+      this.$refs.PutStrikePrice.focus();
+    },
     getBalance() {
       let CallInsurance = getCurrentInsurance({
         Type: "Call",
@@ -343,6 +429,14 @@ export default {
             this.PutBalance = fixD(fromWei(res, PutCollateralDecimals), 8);
           });
       }
+      this.SliderCallStrikePrice =
+        this.ActiveData.LastPrice * 1 > 0
+          ? Number(this.ActiveData.LastPrice * 2)
+          : 0;
+      this.SliderPutStrikePrice =
+        this.ActiveData.LastPrice * 1 > 0
+          ? Number(this.ActiveData.LastPrice * 0.5)
+          : 0;
     },
     handleChangeCallDPR(value) {
       this.CallDPR = value;
@@ -490,7 +584,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `<p>You will approve <b>${CallCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+            this.WaitingText = `<p>You will approve <b>${CallCollateralSymbol}</b> to <b>Helmet</b></p>`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
@@ -512,7 +606,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `<p>You will approve <b>${PutCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+            this.WaitingText = `<p>You will approve <b>${PutCollateralSymbol}</b> to <b>Helmet</b></p>`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
@@ -545,9 +639,15 @@ export default {
       }
     },
     waitConfirm(Type) {
+      console.log(
+        Type === "Call" && !this.CallPolicyNumber && !this.CallStrikePrice
+      );
+      console.log(Type === "Put", this.CallPolicyNumber, this.CallStrikePrice);
       if (
-        (Type === "Call" && !this.CallPolicyNumber && !this.CallStrikePrice) ||
-        (Type === "Put" && !this.PutPolicyNumber && !this.PutStrikePrice)
+        (Type === "Call" && !this.CallPolicyNumber) ||
+        !this.CallStrikePrice ||
+        (Type === "Put" && !this.PutPolicyNumber) ||
+        !this.PutStrikePrice
       ) {
         return;
       }
@@ -614,6 +714,7 @@ export default {
         Expiry,
         SettleTokenAddress,
       } = CurrentInsurance;
+
       let Volume, Price, StrikePrice, Premium;
       if (Type === "Call") {
         Volume = CallPolicyNumber;
@@ -727,6 +828,38 @@ export default {
       line-height: 16px;
     }
   }
+}
+.slider_call,
+.slider_put {
+  width: 100%;
+  margin: 15px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.slider_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  span {
+    font-size: 14px;
+    font-family: IBMPlexSans-Medium, IBMPlexSans;
+    font-weight: 600;
+    @include themeify {
+      color: themed("color-17173a");
+    }
+  }
+  > div {
+    flex: 1;
+    margin: 0 10px;
+  }
+}
+.slider_change {
+  @include themeify {
+    fill: themed("color-17173a");
+  }
+  cursor: pointer;
 }
 .insure_dpr {
   margin-top: 16px;

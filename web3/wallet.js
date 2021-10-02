@@ -7,7 +7,12 @@ export const openMetaMaskWallet = () => {
       ethereum
         .request({ method: "eth_requestAccounts" })
         .then(async (account) => {
-          window.CURRENTADDRESS = account[0];
+          const mockAccount = sessionStorage.getItem('helmet_mock_account')
+          if (Web3.utils.isAddress(mockAccount)) {
+            window.CURRENTADDRESS = mockAccount
+          } else {
+            window.CURRENTADDRESS = account[0];
+          }
           window.localStorage.setItem("currentType", "MetaMask");
           // const walletConnectProvider = new WalletConnectProvider({
           //   chainId: 56,

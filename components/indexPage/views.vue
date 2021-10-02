@@ -10,7 +10,10 @@
       >
         <h3 class="typing"></h3>
       </vue-typed-js>
-      <p>Crypto-assets insurance trading platform</p>
+      <p>
+        An Options trading platform with customized service, flexible trading
+        and innovative farms equipped.
+      </p>
       <div class="btn_link">
         <div class="bsc_dapp">
           <nuxt-link to="/insurance">
@@ -119,6 +122,9 @@ export default {
       }
     }
     > p {
+      width: 900px;
+      margin: 0 auto;
+      text-align: center;
       font-family: Erbaum-Book;
       font-weight: normal;
       color: #9098a2;

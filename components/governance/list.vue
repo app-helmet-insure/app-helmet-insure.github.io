@@ -1,0 +1,214 @@
+<template>
+  <div class="governance_list">
+    <div class="governance_list_wrap">
+      <div
+        class="governance_list_item"
+        v-for="Item in FixGovernanceList"
+        :key="Item.Title"
+      >
+        <div class="governance_list_item_time_web WEB time">
+          <span>Countdown:</span>
+          <p v-html="Item.ShowTime"></p>
+        </div>
+        <div class="governance_list_item_title_web WEB title">
+          <div :class="['status_img', Item.StatusImg]">
+            {{ Item.StatusText }}
+          </div>
+
+          <h3>{{ Item.Title }}</h3>
+        </div>
+        <div class="governance_list_item_perhaps_web WEB perhaps">
+          <p>{{ Item.Perhaps }}</p>
+          <button class="b_button" @click="handleClickToDetails(Item)">
+            参与投票
+          </button>
+        </div>
+        <div class="governance_list_item_top_h5 H5">
+          <div :class="['status_img', Item.StatusImg]">
+            {{ Item.StatusText }}
+          </div>
+          <div class="governance_list_item_time_h5 H5 time">
+            <span>Countdown:</span>
+            <p v-html="Item.ShowTime"></p>
+          </div>
+        </div>
+        <div class="governance_list_item_title_h5 H5 title">
+          <h3>{{ Item.Title }}</h3>
+        </div>
+        <div class="governance_list_item_perhaps_h5 H5 perhaps">
+          <p>{{ Item.Perhaps }}</p>
+          <button class="b_button" @click="handleClickToDetails(Item)">
+            参与投票
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { GovernanceList, formatGovernance } from "~/config/governance.js";
+export default {
+  data() {
+    return {
+      FixGovernanceList: [],
+    };
+  },
+  mounted() {
+    console.log(1);
+    this.FixGovernanceList = formatGovernance(GovernanceList);
+    console.log(this.FixGovernanceList);
+  },
+  methods: {
+    handleClickToDetails(Data) {
+      this.$router.push({
+        path: `governance/${Data.Router}`,
+      });
+    },
+  },
+};
+</script>
+
+<style lang='scss' scoped>
+.governance_list {
+  margin-top: 28px;
+}
+.governance_list_item {
+  margin-top: 10px;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+  border-radius: 5px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.status_img {
+  width: 75px;
+  height: 32px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 15px;
+}
+.unopen {
+  background-image: url("~/assets/img/governance/unopen.png");
+  font-size: 14px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 20px;
+}
+.ongoing {
+  background-image: url("~/assets/img/governance/ongoing.png");
+  font-size: 14px;
+  font-family: IBMPlexSans-Bold, IBMPlexSans;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 20px;
+}
+.finish {
+  background-image: url("~/assets/img/governance/finish.png");
+  font-size: 14px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: rgba(23, 23, 58, 0.4);
+  line-height: 20px;
+}
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 161px;
+  min-height: 38px;
+  background: #f8f9fa;
+  border-radius: 0px 5px 0px 0px;
+  padding: 0 10px;
+  span {
+    font-size: 14px;
+    font-family: IBMPlexSans-Bold, IBMPlexSans;
+    font-weight: bold;
+    color: #17173a;
+    line-height: 18px;
+  }
+  p {
+    font-size: 14px;
+    font-family: IBMPlexSans-Bold, IBMPlexSans;
+    font-weight: bold;
+    color: #17173a;
+    line-height: 18px;
+  }
+}
+.title {
+  > h3 {
+    font-size: 16px;
+    font-family: IBMPlexSans-Bold, IBMPlexSans;
+    font-weight: bold;
+    color: #17173a;
+    line-height: 16px;
+  }
+}
+.perhaps {
+  > p {
+    font-size: 14px;
+    font-family: IBMPlexSans;
+    color: rgba(23, 23, 58, 0.7);
+    line-height: 22px;
+  }
+  > button {
+    width: 96px;
+    height: 40px;
+    border-radius: 5px;
+  }
+}
+@media screen and(min-width:750px) {
+  .H5 {
+    display: none;
+  }
+  .governance_list_item {
+    height: 161px;
+  }
+  .governance_list_item_time_web {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .governance_list_item_title_web {
+    display: flex;
+    align-items: center;
+    > h3 {
+      margin-left: 15px;
+    }
+  }
+  .governance_list_item_perhaps_web {
+    display: flex;
+    align-items: center;
+    > p {
+      min-width: 700px;
+      flex: 1;
+    }
+  }
+}
+@media screen and(max-width:750px) {
+  .WEB {
+    display: none;
+  }
+  .governance_list_item {
+  }
+  .governance_list_item_top_h5 {
+    display: flex;
+    justify-content: space-between;
+  }
+  .governance_list_item_title_h5 {
+    margin-top: 25px;
+  }
+  .governance_list_item_perhaps_h5 {
+    margin-top: 20px;
+    > button {
+      margin-top: 24px;
+    }
+  }
+}
+</style>

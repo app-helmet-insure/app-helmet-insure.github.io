@@ -434,11 +434,13 @@ export default {
           PoolContracts[CanWithDrawMethods](...Params),
           NoProxy ? StakeContracts.totalSupply() : PoolContracts.totalSupply(),
           PoolContracts[CanClaim1Methods](...Params),
-          PoolContracts[CanClaim2Methods](...Params),
           ApproveContracts.allowance(Account, PoolAddress),
         ];
+        if (CanClaim2Methods) {
+          PromiseList.push(PoolContracts[CanClaim2Methods](...Params));
+        }
       }
-
+      console.log(PromiseList);
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
@@ -476,8 +478,8 @@ export default {
             CanWithdraw,
             TotalDeposite,
             CanClaim1,
-            CanClaim2,
             ApproveStatus,
+            CanClaim2,
           ] = FixData;
 
           this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
@@ -487,7 +489,7 @@ export default {
           );
           this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
           this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
-          this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
+          this.CanClaim2 = CanClaim2 ? fromWei(CanClaim2, RewardDecimals) : 0;
           this.MyPoolShare = fixD(
             (this.CanWithdraw / this.TotalDeposite) * 100,
             2

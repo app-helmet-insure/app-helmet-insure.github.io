@@ -27,6 +27,11 @@
             Polygon
           </a>
         </div>
+        <div class="eth_dapp">
+          <a href="https://www.guard.insure/insurance/">
+            <img src="../../assets/img/home/eth.png" alt="" />Helmet On Layer2 Coming Soon
+          </a>
+        </div>
       </div>
     </div>
     <div class="helmet_view_r">
@@ -190,6 +195,29 @@ export default {
           box-shadow: 0px 10px 16px 0px rgba(255, 255, 255, 0.3);
         }
       }
+      .eth_dapp {
+        box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 1),
+          rgba(195, 195, 195, 0),
+          rgba(238, 238, 238, 1)
+        );
+        a {
+          background: linear-gradient(
+            130deg,
+            #9a9a9b 0%,
+            #7c7c7c 45%,
+            #c9a970 100%
+          );
+          opacity: 0.3;
+          color: #121212;
+        }
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0px 10px 16px 0px rgba(255, 255, 255, 0.3);
+        }
+      }
     }
   }
   &_r {
@@ -237,6 +265,9 @@ export default {
       .matic_dapp {
         margin: 0 10px;
       }
+      .eth_dapp {
+        margin: 0 10px;
+      }
     }
     &_r {
       width: 760px;
@@ -274,6 +305,9 @@ export default {
         margin-top: 20px;
       }
       .matic_dapp {
+        margin-top: 20px;
+      }
+      .eth_dapp {
         margin-top: 20px;
       }
     }

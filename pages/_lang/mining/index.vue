@@ -2,6 +2,7 @@
   <div class="main_container">
     <MiningTitle></MiningTitle>
     <div class="mining_container">
+      <Governance />
       <LptMining />
       <TokenMinig />
       <Onepager></Onepager>
@@ -12,6 +13,7 @@
 
 <script>
 import MiningTitle from "~/components/mining/mining-title.vue";
+import Governance from "~/components/mining/governance";
 import LptMining from "~/components/mining/lpt-mining";
 import TokenMinig from "~/components/mining/token-mining.vue";
 import Onepager from "~/components/common/onepager.vue";
@@ -19,6 +21,7 @@ import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "home",
   components: {
+    Governance,
     MiningTitle,
     LptMining,
     TokenMinig,

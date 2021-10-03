@@ -316,7 +316,7 @@ import Wraper from "~/components/common/wraper.vue";
 import Pool from "./mining-pool.vue";
 import PHeader from "~/components/common/header.vue";
 import {
-  comboPoolList,
+  TokenPoolList,
   formatMiningPool,
   getComboAPR,
   getAPRAndAPY,
@@ -342,7 +342,7 @@ export default {
     };
   },
   mounted() {
-    this.FixPoolList = formatMiningPool(comboPoolList);
+    this.FixPoolList = formatMiningPool(TokenPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
@@ -372,7 +372,7 @@ export default {
   },
   methods: {
     initPool() {
-      comboPoolList.forEach(async (item) => {
+      TokenPoolList.forEach(async (item) => {
         if (item.PoolType === "combo") {
           await getComboAPR(item);
         }
@@ -383,7 +383,7 @@ export default {
           await getCandyAPR(item);
         }
       });
-      console.log(comboPoolList);
+      console.log(TokenPoolList);
     },
     hadnleShowOnePager(e, ONE_PAGER) {
       if (e.target.tagName === "I" && ONE_PAGER) {

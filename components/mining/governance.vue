@@ -1,20 +1,17 @@
 <template>
-  <div class="lpt_mining">
-    <div class="lpt_mining_border">
-      <p class="lpt_mining_title">LPT Mining</p>
-      <div class="lpt_mining_wrap">
+  <div class="governance_mining">
+    <div class="governance_mining_border">
+      <p class="governance_mining_title">Helmet Governance</p>
+      <div class="governance_mining_wrap">
         <div
           class="lpt_mining_item_wrap"
           v-for="item in FixPoolList"
           :key="item.RewardSymbol"
         >
-          <div :class="`lpt_mining_item lp_${storeThemes}`">
+          <div :class="`goverance_mining_item governance_${storeThemes}`">
             <section class="item_pool_name_web WEB">
               <span>
-                <img
-                  :src="require(`~/assets/img/icon/${item.PoolSwap}@2x.png`)"
-                  alt=""
-                />{{ item.PoolName }}
+                {{ item.PoolName }}
               </span>
             </section>
             <section class="item_pool_earn_web WEB">
@@ -98,10 +95,7 @@
             </section>
             <section class="item_pool_name_h5 H5">
               <span>
-                <img
-                  :src="require(`~/assets/img/icon/${item.PoolSwap}@2x.png`)"
-                  alt=""
-                />{{ item.PoolName }}
+                {{ item.PoolName }}
               </span>
               <p>
                 {{ $t("Table.EarnList") }}
@@ -233,8 +227,8 @@
 </template>
 
 <script>
-import { LptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
-import Pool from "./mining-pool.vue";
+import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
+import Pool from "./governance-pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
 import moment from "moment";
@@ -263,14 +257,14 @@ export default {
     },
   },
   mounted() {
-    this.FixPoolList = formatMiningPool(LptPoolList);
+    this.FixPoolList = formatMiningPool(DaoPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
   },
   methods: {
     initPool() {
-      LptPoolList.forEach(async (item) => {
+      DaoPoolList.forEach(async (item) => {
         if (item.PoolType === "lpt") {
           await getLptAPR(item);
         }
@@ -314,7 +308,7 @@ export default {
 
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
-.lpt_mining {
+.governance_mining {
   width: 100%;
   background: #ffffff;
   padding: 2px;
@@ -348,10 +342,10 @@ export default {
   position: relative;
   .close {
     position: absolute;
-    right: 0;
+    right: 10px;
     width: 24px;
     height: 24px;
-    top: 10px;
+    top: 50px;
     fill: #ccc;
     cursor: pointer;
   }
@@ -388,6 +382,7 @@ export default {
     }
   }
 }
+
 @media screen and(min-width:750px) {
   .H5 {
     display: none !important;
@@ -396,7 +391,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
-  .lpt_mining_item {
+  .goverance_mining_item {
     margin-top: 10px;
     width: 100%;
     height: 70px;
@@ -407,11 +402,11 @@ export default {
     background-size: 100% auto;
     padding: 0 30px;
   }
-  .lp_dark {
-    background-image: url("../../assets/img/mining/lpmining_bg_dark.png");
+  .governance_dark {
+    background-image: url("../../assets/img/mining/governance_bg_dark.png");
   }
-  .lp_light {
-    background-image: url("../../assets/img/mining/lpmining_bg_light.png");
+  .governance_light {
+    background-image: url("../../assets/img/mining/governance_bg_light.png");
   }
   .item_pool_name_web {
     display: flex;
@@ -665,13 +660,13 @@ export default {
   .WEB {
     display: none !important;
   }
-  .lpt_mining {
+  .governance_mining {
     margin-top: 20px;
   }
-  .lpt_mining_border {
+  .governance_mining_border {
     padding: 10px;
   }
-  .lpt_mining_item {
+  .goverance_mining_item {
     width: 100%;
     padding: 24px 10px;
     display: flex;
@@ -679,10 +674,10 @@ export default {
     margin-bottom: 10px;
     border-radius: 5px;
   }
-  .lp_dark {
+  .governance_dark {
     background-image: url("../../assets/img/mining/lpmining_bg_dark_h5.png");
   }
-  .lp_light {
+  .governance_light {
     background-image: url("../../assets/img/mining/lpmining_bg_light_h5.png");
   }
   .item_pool_name_h5 {
@@ -824,10 +819,7 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-top: 12px;
-    .activeButton {
-      border: 2px solid #fd7e14 !important;
-      color: #fd7e14 !important;
-    }
+
     > a {
       width: 100%;
       height: 40px;

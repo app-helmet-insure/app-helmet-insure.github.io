@@ -398,13 +398,13 @@
     "IBO_text49": "Notice the uncertaintity of {token} IBO since the 1 month token lock-up. Helmet will not be held responsible for any investment losses."
   },
   "Governance": {
-    "Tips1": "Helmet Government，’stake’ is voting：after choosing the specific iterm, stake your HELMET to vote. You could get your HELMET back after the proposal stettled.",
+    "Tips1": "Helmet Government,'stake' is voting：after choosing the specific iterm, stake your HELMET to vote. You could get your HELMET back after the proposal stettled.",
     "Tips2": "You could get your HELMET back after the proposal stettled. You will get HELMET rewards showing in Mining tab <a href='/mining'>Helmet Governance</a>  in the staking period.",
     "Tips3": "Governance is Helmet DAO",
     "Tips4": "You could get HELMET rewards during voting period.",
     "Governance_text1": "Pick the item",
     "Governance_text2": "Check details of the proposal>",
-    "Governance_text3": "Agree",
+    "Governance_text3": "For",
     "Governance_text4": "Against",
     "Governance_text5": "Abstain",
     "Governance_text6": "Stake&Vote",

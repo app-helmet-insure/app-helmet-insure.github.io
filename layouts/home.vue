@@ -196,7 +196,6 @@ export default {
       });
     },
     watchChainID(value) {
-      console.log(value);
       if (value == 56) {
         this.NetWorkVisible = false;
       } else {

@@ -50,7 +50,6 @@ export default {
       this.$bus.$emit("CLOSE_COMPOUND");
     },
     async confirm() {
-      console.log(1);
       await Compound(this.poolAddress, (res) => {
         if (res == "success" || res == "error") {
           this.$bus.$emit("CLOSE_COMPOUND");

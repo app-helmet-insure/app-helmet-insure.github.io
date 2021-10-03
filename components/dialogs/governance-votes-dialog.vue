@@ -33,7 +33,11 @@
           MiningData.Status === 3 ? 'disable_button o_button' : 'o_button'
         "
       >
-        {{ $t("Governance.Governance_text6") }}
+        {{
+          ApproveStatus
+            ? $t("Governance.Governance_text6")
+            : $t("Table.Approve")
+        }}
       </button>
     </div>
     <div class="governance_dialog_tips" v-html="$t('Governance.Tips2')"></div>
@@ -42,30 +46,20 @@
 
 <script>
 import countTo from "vue-count-to";
-import ERC20ABI from "~/web3/abis/ERC20ABI.json";
-import { Contract } from "ethers-multicall-x";
-import {
-  getOnlyMultiCallProvider,
-  processResult,
-  fromWei,
-  toWei,
-  getContract,
-} from "~/web3/index.js";
+
 export default {
   props: [
     "DialogVisible",
     "DialogClose",
-    "ProposalData",
+    "CanDeposite",
     "MiningData",
-    "PropoaslID",
     "toDeposite",
+    "ApproveStatus",
   ],
   components: { countTo },
   data() {
     return {
       isLogin: false,
-      ApproveStatus: false,
-      CanDeposite: 0,
       StakeVolume: "",
     };
   },
@@ -80,50 +74,17 @@ export default {
       immediate: true,
     },
   },
-  mounted() {},
+  mounted() {
+  },
   methods: {
     reloadData(Value) {
       if (Value) {
         this.isLogin = Value.isLogin;
-        this.$nextTick(() => {
-          this.getBalance();
-        });
+        this.$nextTick(() => {});
       }
     },
-    getBalance() {
-      let {
-        StakeAddress,
-        PoolAddress,
-        StakeDecimals,
-        RewardDecimals,
-        NoProxy,
-        PoolABI,
-        StakeABI,
-        ProxyPid,
-        PoolType,
-        CanWithDrawMethods,
-        CanClaim1Methods,
-        CanClaim2Methods,
-        RewardPerMethods,
-        HaveReward2,
-      } = this.MiningData;
-      const StakeContracts = new Contract(StakeAddress, StakeABI);
-      const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
-      const Account = this.CurrentAccount.account;
-      let PromiseList = [
-        StakeContracts.balanceOf(Account),
-        ApproveContracts.allowance(Account, PoolAddress),
-      ];
-      const MulticallProvider = getOnlyMultiCallProvider();
-      MulticallProvider.all(PromiseList).then((res) => {
-        const FixData = processResult(res);
-        const [CanDeposite, ApproveStatus] = FixData;
-        this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
-        this.ApproveStatus = ApproveStatus > 0;
-      });
-    },
     handleClickVotes() {
-      this.toDeposite(this.StakeVolume, this.ApproveStatus);
+      this.toDeposite(this.StakeVolume);
     },
   },
 };

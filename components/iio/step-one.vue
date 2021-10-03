@@ -70,7 +70,6 @@ export default {
   mounted() {
     let name = this.$route.params.id;
     this.About = Information[name];
-    console.log(this.About);
     let timer1 = setTimeout(() => {
       this.getPassPortPrice();
       clearTimeout();

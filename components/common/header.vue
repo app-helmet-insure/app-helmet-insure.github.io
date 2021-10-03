@@ -144,7 +144,6 @@ export default {
       }
     },
     refreshData(NewValue, Value) {
-      console.log(Value, NewValue);
       if (Value != NewValue && NewValue > Value) {
         this.getHelmetBalance();
       }

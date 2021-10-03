@@ -316,7 +316,6 @@ export default {
       this.$route.path !== "/insurance";
     },
     storeThemes(newValue) {
-      console.log(newValue);
     },
   },
   methods: {

@@ -141,7 +141,6 @@ export default {
         this.TotalHelmetsBorrowedVolume = res;
       });
       this.getHelmetVolume().then((res) => {
-        console.log(res);
         this.Helmetvolume = res;
       });
 

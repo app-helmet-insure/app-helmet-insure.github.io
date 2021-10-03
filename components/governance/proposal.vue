@@ -7,7 +7,7 @@
       <h3>{{ Proposal.Title }}</h3>
     </div>
     <div class="governance_proposal_perhaps perhaps">
-      <p>{{ Proposal.Perhaps }}</p>
+      <p>{{ Proposal.Details }}</p>
     </div>
     <div class="governance_proposal_action">
       <div class="governance_proposal_action_title">
@@ -61,10 +61,10 @@
     <GovernanceVotesDialog
       :DialogVisible="VotesVisible"
       :DialogClose="votesClose"
-      :ProposalData="Proposal"
+      :CanDeposite="CanDeposite"
       :MiningData="Mining"
-      :PropoaslID="PropoaslID"
       :toDeposite="toDeposite"
+      :ApproveStatus="ApproveStatus"
     /><WaitingConfirmationDialog
       :DialogVisible="WaitingVisible"
       :DialogClose="waitingClose"
@@ -87,12 +87,17 @@ import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
-import { toWei, getContract } from "~/web3/index.js";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import { getGovernance } from "~/interface/event.js";
-import { fromWei } from "../../web3";
 import { fixD } from "~/assets/js/util.js";
-import { Switch } from "element-ui";
+import { Contract } from "ethers-multicall-x";
+import {
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+  toWei,
+  getContract,
+} from "~/web3/index.js";
 export default {
   components: {
     GovernanceVotesDialog,
@@ -105,10 +110,11 @@ export default {
       Proposal: {},
       Mining: {},
       PropoaslID: 1,
+      CanDeposite: 0,
       VotesVisible: false,
-      ApproveStatus: false,
       WaitingVisible: false,
       SuccessVisible: false,
+      ApproveStatus: false,
       SuccessHash: "",
       WaitingText: "",
       GovernanceTxList: [],
@@ -156,6 +162,7 @@ export default {
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
           this.getGovernanceList();
+          this.getBalance();
         });
       }
     },
@@ -171,13 +178,44 @@ export default {
     handleClickVotes() {
       this.VotesVisible = true;
     },
+    getBalance() {
+      let {
+        StakeAddress,
+        PoolAddress,
+        StakeDecimals,
+        RewardDecimals,
+        NoProxy,
+        PoolABI,
+        StakeABI,
+        ProxyPid,
+        PoolType,
+        CanWithDrawMethods,
+        CanClaim1Methods,
+        CanClaim2Methods,
+        RewardPerMethods,
+        HaveReward2,
+      } = this.Mining;
+      const StakeContracts = new Contract(StakeAddress, StakeABI);
+      const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
+      const Account = this.CurrentAccount.account;
+      let PromiseList = [
+        StakeContracts.balanceOf(Account),
+        ApproveContracts.allowance(Account, PoolAddress),
+      ];
+      const MulticallProvider = getOnlyMultiCallProvider();
+      MulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [CanDeposite, ApproveStatus] = FixData;
+        this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
+        this.ApproveStatus = ApproveStatus > 0;
+      });
+    },
     getGovernanceList() {
       getGovernance().then((res) => {
         const FixList = [];
         const List = res.data.data.votes;
         List.forEach((item) => {
           let ShowID = this.getProposalStatus(item.proposalID);
-          console.log(ShowID);
 
           FixList.push({
             ShowAddress:
@@ -193,7 +231,6 @@ export default {
             ShowProposalID: ShowID,
           });
         });
-        console.log(FixList);
         this.GovernanceTxList = FixList;
       });
     },
@@ -201,7 +238,6 @@ export default {
       let Current = this.Proposal.Proposal.filter(
         (itemKey) => itemKey.ID == ID
       )[0];
-      console.log(Current,ID);
       switch (Current.Text) {
         case 1:
           return this.$t("Governance.Governance_text3");
@@ -213,9 +249,7 @@ export default {
           return "error";
       }
     },
-    toDeposite(StakeVolume, ApproveStatus) {
-      console.log(StakeVolume, ApproveStatus);
-      this.ApproveStatus = ApproveStatus;
+    toDeposite(StakeVolume) {
       if (!StakeVolume) {
         return;
       }
@@ -268,6 +302,7 @@ export default {
             if (!this.SuccessVisible) {
               this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
+              this.VotesVisible = false;
               this.SuccessVisible = true;
               this.$store.dispatch("refreshData");
             }
@@ -405,6 +440,7 @@ export default {
   }
   &_button {
     border-radius: 5px;
+    margin-top: 16px;
   }
 }
 .governance_proposal_history {

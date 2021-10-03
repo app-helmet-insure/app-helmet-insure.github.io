@@ -114,12 +114,10 @@ export const HelmetBalance = () => {
 export const TokenBalance = (TokenAddress, Decimals, Owner) => {
   const Contracts = getContract(MiningABI, TokenAddress);
   const Account = window.CURRENTADDRESS;
-  console.log(TokenAddress, Decimals, Owner, Account);
   return Contracts.methods
     .balanceOf(Owner || Account)
     .call()
     .then((res) => {
-      console.log(res);
       let Balance = fromWei(res, Decimals || 18);
       return Balance;
     });

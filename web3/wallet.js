@@ -38,7 +38,6 @@ export const openMetaMaskWallet = () => {
 };
 export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {
-    console.log(account, "################Account");
     if (account && account.length) {
       window.$nuxt.$store.dispatch("setUserInfo", {
         isLogin: true,
@@ -62,7 +61,6 @@ export const watchNetWorkChange = () => {
     if (chainID * 1 === 137) {
       window.location.href = "https://www.guard.insure/insurance/";
     }
-    console.log(chainID);
     window.$nuxt.$store.dispatch("setChainID", chainID * 1);
   });
 };

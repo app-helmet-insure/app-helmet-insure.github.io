@@ -43,7 +43,7 @@ export default {};
     width: 100%;
     min-width: 1026px;
     height: 140px;
-    margin: 30px auto 20px;
+    margin: 30px auto 10px;
     &_wrap {
       margin: 0 auto;
       background-image: url("../../assets/img/flashmining/flashmining_titlebg.png");

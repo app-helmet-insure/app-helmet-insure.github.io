@@ -1,6 +1,12 @@
 <template>
   <div class="governance_container">
     <Title />
+    <nuxt-link class="governance_comeback" tag="div" to="/governance">
+      <svg class="icon svg-icon" aria-hidden="true">
+        <use xlink:href="#icon-rightSelect"></use>
+      </svg>
+      <span>返回</span>
+    </nuxt-link>
     <div class="governance_wrap">
       <Proposal />
       <Details />
@@ -22,9 +28,41 @@ export default {
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
 
+.governance_comeback {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  .icon {
+    transform: rotate(180deg);
+    width: 40px;
+    height: 40px;
+    @include themeify {
+      fill: themed("color-17173a");
+    }
+  }
+  span {
+    font-size: 20px;
+    line-height: 24px;
+    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+    font-weight: 600;
+    @include themeify {
+      color: themed("color-17173a");
+    }
+  }
+  &:hover {
+    .icon {
+      fill: #fd7e14 !important;
+    }
+    span {
+      color: #fd7e14 !important;
+    }
+  }
+}
 @media screen and (min-width: 750px) {
   .governance_container {
     width: 80%;
+    min-width: 1026px;
     margin: 0 auto;
   }
   .governance_wrap {

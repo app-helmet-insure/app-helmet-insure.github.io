@@ -622,10 +622,6 @@ export default {
       }
     },
     waitConfirm(Type) {
-      console.log(
-        Type === "Call" && !this.CallPolicyNumber && !this.CallStrikePrice
-      );
-      console.log(Type === "Put", this.CallPolicyNumber, this.CallStrikePrice);
       if (
         (Type === "Call" && !this.CallPolicyNumber) ||
         !this.CallStrikePrice ||

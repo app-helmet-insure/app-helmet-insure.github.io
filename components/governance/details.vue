@@ -7,19 +7,19 @@
       <div class="governance_details_infomation_wrap">
         <div class="between">
           <span>{{ $t("Governance.Governance_text16") }}</span>
-          <span>inkymaze</span>
+          <span>HelmetRed</span>
         </div>
         <div class="between">
           <span>{{ $t("Governance.Governance_text17") }}</span>
-          <span>inkymaze</span>
+          <span>Radio</span>
         </div>
         <div class="between">
           <span>{{ $t("Governance.Governance_text18") }}</span>
-          <span>inkymaze</span>
+          <span>{{ Proposal.StartTime }}</span>
         </div>
         <div class="between">
           <span>{{ $t("Governance.Governance_text19") }}</span>
-          <span>inkymaze</span>
+          <span>{{ Proposal.FinishTime }}</span>
         </div>
       </div>
     </div>

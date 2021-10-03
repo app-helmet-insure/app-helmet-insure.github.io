@@ -361,7 +361,6 @@ export default {
               (a, b) => Number(b.BidID) - Number(a.BidID)
             );
             this.PolicyList = returnList;
-            console.log(returnList);
             this.isLoading = false;
           });
         }

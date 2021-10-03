@@ -11,7 +11,9 @@
         <div class="governance_type">
           <div class="governance_type_title">
             <span>{{ $t("Governance.Governance_text1") }}</span>
-            <a href="#">{{ $t("Governance.Governance_text2") }}</a>
+            <nuxt-link :to="`/governance/${ActiveData.Router}`">{{
+              $t("Governance.Governance_text2")
+            }}</nuxt-link>
           </div>
           <div class="governance_type_wrap">
             <div
@@ -295,7 +297,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
           this.getPoolInfo();

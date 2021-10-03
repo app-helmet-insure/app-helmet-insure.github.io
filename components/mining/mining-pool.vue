@@ -335,7 +335,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
           this.getPoolInfo();
@@ -440,7 +439,6 @@ export default {
           PromiseList.push(PoolContracts[CanClaim2Methods](...Params));
         }
       }
-      console.log(PromiseList);
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);

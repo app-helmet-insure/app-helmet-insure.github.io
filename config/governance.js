@@ -1,10 +1,11 @@
 export const GovernanceList = [
   {
-    Title: "标题一",
+    Title: "Aave Risk DAO",
     Router: "link1",
-    Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
+    Perhaps:
+      "A proposal to fund the Aave Risk DAO, an organization of contributors dedicated to risk analysis for the Aave protocol.",
     Details:
-      "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
+      "The Aave protocol is evolving rapidly with new features, integrations, assets, and markets. Aave users and token holders rely on the protocol to operate securely and safeguard the funds deposited in Aave markets and the safety module. Committed professional analysis will help governance and the community mitigate risk and take advantage of new opportunities with greater confidence.The Risk DAO will initially focus on the following areas:Reviewing proposed new assets for technical and market risks Facilitating community discussions through biweekly risk calls Building dashboards and tooling to help increase understanding of Aave protocol risk factors Evaluating markets for cross chain deployments or new asset types Commenting on community led initiatives that affect protocol risk Refer to the Aave governance forum post for additional details on Risk DAO scope and priorities. The Risk DAO will seek to work collaboratively with Gauntlet Network, which recently received approval for dynamic risk parameter management of the primary Aave v2 money market on Ethereum mainnet. Gauntlet’s engagement will allow the Risk DAO to focus on other important priorities for Aave risk management. We will remain open to opportunities for collaboration with Gauntlet and other Aave contributors including the Aave Grants DAO.",
     StartTime: "2021/10/03 16:30 UTC+8",
     FinishTime: "2021/10/04 16:30 UTC+8",
     Proposal: [
@@ -14,21 +15,23 @@ export const GovernanceList = [
     ],
   },
   {
-    Title: "标题二",
+    Title: "Aave Risk DAO1",
     Router: "link3",
-    Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
+    Perhaps:
+      "A proposal to fund the Aave Risk DAO, an organization of contributors dedicated to risk analysis for the Aave protocol.",
     Details:
-      "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
+      "The Aave protocol is evolving rapidly with new features, integrations, assets, and markets. Aave users and token holders rely on the protocol to operate securely and safeguard the funds deposited in Aave markets and the safety module. Committed professional analysis will help governance and the community mitigate risk and take advantage of new opportunities with greater confidence.The Risk DAO will initially focus on the following areas:Reviewing proposed new assets for technical and market risks Facilitating community discussions through biweekly risk calls Building dashboards and tooling to help increase understanding of Aave protocol risk factors Evaluating markets for cross chain deployments or new asset types Commenting on community led initiatives that affect protocol risk Refer to the Aave governance forum post for additional details on Risk DAO scope and priorities. The Risk DAO will seek to work collaboratively with Gauntlet Network, which recently received approval for dynamic risk parameter management of the primary Aave v2 money market on Ethereum mainnet. Gauntlet’s engagement will allow the Risk DAO to focus on other important priorities for Aave risk management. We will remain open to opportunities for collaboration with Gauntlet and other Aave contributors including the Aave Grants DAO.",
     StartTime: "2021/10/04 20:00 UTC+8",
     FinishTime: "2021/10/05 20:30 UTC+8",
     ProposalID: [1, 2, 3],
   },
   {
-    Title: "标题三",
+    Title: "Aave Risk DAO2",
     Router: "link2",
-    Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
+    Perhaps:
+      "A proposal to fund the Aave Risk DAO, an organization of contributors dedicated to risk analysis for the Aave protocol.",
     Details:
-      "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
+      "The Aave protocol is evolving rapidly with new features, integrations, assets, and markets. Aave users and token holders rely on the protocol to operate securely and safeguard the funds deposited in Aave markets and the safety module. Committed professional analysis will help governance and the community mitigate risk and take advantage of new opportunities with greater confidence.The Risk DAO will initially focus on the following areas:Reviewing proposed new assets for technical and market risks Facilitating community discussions through biweekly risk calls Building dashboards and tooling to help increase understanding of Aave protocol risk factors Evaluating markets for cross chain deployments or new asset types Commenting on community led initiatives that affect protocol risk Refer to the Aave governance forum post for additional details on Risk DAO scope and priorities. The Risk DAO will seek to work collaboratively with Gauntlet Network, which recently received approval for dynamic risk parameter management of the primary Aave v2 money market on Ethereum mainnet. Gauntlet’s engagement will allow the Risk DAO to focus on other important priorities for Aave risk management. We will remain open to opportunities for collaboration with Gauntlet and other Aave contributors including the Aave Grants DAO.",
     StartTime: "2021/10/03 16:30 UTC+8",
     FinishTime: "2021/10/04 1:30 UTC+8",
     ProposalID: [1, 2, 3],

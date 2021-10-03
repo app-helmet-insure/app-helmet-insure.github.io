@@ -315,6 +315,7 @@ export default {
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
 .lpt_mining {
+  margin-top: 10px;
   width: 100%;
   background: #ffffff;
   padding: 2px;

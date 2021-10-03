@@ -1446,7 +1446,6 @@ export const getLptAPR = async (PoolData) => {
   const Amount2 = toWei("1", Reward2Decimals);
   const web3 = new Web3(window.ethereum);
   const BlockNumber = await new web3.eth.getBlockNumber();
-  console.log(BlockNumber, "BlockNumber");
   const Data1 = await getTokenPrice({
     fromTokenAddress: Reward1Address,
     toTokenAddress: USDTAddress,
@@ -1492,7 +1491,6 @@ export const getLptAPR = async (PoolData) => {
         OutPutReward1,
         Reward1Time,
       ] = FixData;
-      console.log(StakeValue);
       const FixStakeValue =
         PoolSwap === "acsi"
           ? fromWei(StakeValue[1][0]) * 2

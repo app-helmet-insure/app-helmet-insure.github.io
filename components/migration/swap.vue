@@ -123,12 +123,10 @@ export default {
     },
     async getMyQuota() {
       let MyQuota = await BalanceOf(QuotaAddress);
-      console.log(MyQuota, "w kMyQuota");
       this.MyQuota = MyQuota;
     },
     async getAllQuota() {
       let AllQuota = await RestQuota(ContractAddress);
-      console.log(AllQuota, "AllQuota");
       this.AllQuota = AllQuota;
     },
     async getHelmetApproveStatus() {
@@ -178,7 +176,6 @@ export default {
       if (fixD(this.MyQuota, 8) == this.BurnVolume) {
         Volume = this.MyQuota;
       }
-      console.log(Volume);
       BurnHelmet(ContractAddress, Volume, 18, (res) => {
         if (res === "success" || res === "error") {
           this.getMyQuota();

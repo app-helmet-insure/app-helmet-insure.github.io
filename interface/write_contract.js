@@ -35,7 +35,6 @@ export const Stake = async (
     let powNumber = new BigNumber(10).pow(Decimals).toString();
     DepositeVolume = new BigNumber(DepositeVolume).times(powNumber).toString();
   }
-  console.log(DepositeVolume);
   try {
     Contracts.methods
       .stake(DepositeVolume)
@@ -83,7 +82,6 @@ export const StakeAndComound = async (
     let powNumber = new BigNumber(10).pow(Decimals).toString();
     DepositeVolume = new BigNumber(DepositeVolume).times(powNumber).toString();
   }
-  console.log(DepositeVolume);
   try {
     Contracts.methods
       .stakeAndCompound(DepositeVolume)
@@ -156,7 +154,6 @@ export const GetReward = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const GetReward3 = async (ContractAddress, RewardAddress, callback) => {
-  console.log(ContractAddress, RewardAddress);
   let Contracts = await Web3Contract(IIOABI.abi, ContractAddress);
   let Account = await getAccounts();
   try {
@@ -268,7 +265,6 @@ export const Exit = async (ContractAddress, callback) => {
   } catch (error) {}
 };
 export const Compound = async (ContractAddress, callback) => {
-  console.log(ContractAddress);
   let Contracts = await Web3Contract(CompoundABI.abi, ContractAddress);
   let Account = await getAccounts();
   try {
@@ -456,7 +452,6 @@ export const BurnHelmet = async (
   let Account = await getAccounts();
   let DecimalsUnit = getDecimals(Decimals);
   Volume = toWei(Volume, DecimalsUnit);
-  console.log(Volume);
   Contracts.methods
     .burn(Volume)
     .send({ from: Account })
@@ -573,7 +568,6 @@ export const Withdraw = async (
 ) => {
   let Contracts = await Web3Contract(CakePoolABI, ContractAddress);
   let Account = await getAccounts();
-  console.log(ContractAddress, Pid, DepositeVolume);
   let DecimalsUnit = getDecimals(18);
   const Amount = toWei(DepositeVolume, DecimalsUnit);
   try {

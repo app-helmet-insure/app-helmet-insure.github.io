@@ -383,7 +383,6 @@ export default {
           await getCandyAPR(item);
         }
       });
-      console.log(TokenPoolList);
     },
     hadnleShowOnePager(e, ONE_PAGER) {
       if (e.target.tagName === "I" && ONE_PAGER) {
@@ -398,7 +397,6 @@ export default {
       }
     },
     toCompound() {
-      console.log(this.HelmetBalance);
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
         number: this.HelmetBalance,

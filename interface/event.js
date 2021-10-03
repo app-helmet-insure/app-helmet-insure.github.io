@@ -35,7 +35,6 @@ export const getInsuranceStatus = () => {
     },
   }).then((res) => {
     let Status = res.data.data.indexingStatusForCurrentVersion.health;
-    console.log(res);
     return Status;
   });
 };
@@ -126,7 +125,6 @@ export const getInsuranceList = async function() {
 export const getLongType = async function() {
   let rightTime = parseInt(moment.now());
   let leftTime = parseInt(moment.now()) - 518400000;
-  console.log(rightTime, leftTime);
   return Axios({
     method: "post",
     url:
@@ -182,7 +180,6 @@ export const getGovernance = () => {
       `,
     },
   }).then((res) => {
-    console.log(res);
     return res;
   });
 };
@@ -196,7 +193,6 @@ export const getSignDataSyn = (data, callback) => {
       try {
         if (SignResultData.length === 3 && SignNumberFlag) {
           SignNumberFlag = false;
-          console.log(SignResultData);
           callback(SignResultData);
         } else {
           if (SignResultData.length < 3) {

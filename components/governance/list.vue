@@ -56,7 +56,6 @@ export default {
   },
   mounted() {
     this.FixGovernanceList = formatGovernance(GovernanceList);
-    console.log(this.FixGovernanceList);
   },
   methods: {
     handleClickToDetails(Data) {
@@ -205,9 +204,13 @@ export default {
   .governance_list_item_perhaps_web {
     display: flex;
     align-items: center;
+    margin-top: 20px;
     > p {
-      min-width: 700px;
       flex: 1;
+    }
+    > button {
+      margin-left: 200px;
+      margin-top: 0;
     }
   }
 }

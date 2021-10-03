@@ -21,7 +21,7 @@ export default {
 @media screen and (min-width: 750px) {
   .governance_container {
     width: 80%;
-    margin: 0 auto;
+    margin: 0 auto;min-width: 1026px;
   }
 }
 </style>

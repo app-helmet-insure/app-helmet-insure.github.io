@@ -39,7 +39,7 @@ module.exports = {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src: "//at.alicdn.com/t/font_2755515_9dyey7i0dnq.js",
+        src: "//at.alicdn.com/t/font_2755515_a2mvnfdv61q.js",
       },
       // {
       //   src: "/js/iconfont.js"

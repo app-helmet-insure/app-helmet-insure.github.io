@@ -55,7 +55,6 @@ export default {
     };
   },
   mounted() {
-    console.log(1);
     this.FixGovernanceList = formatGovernance(GovernanceList);
     console.log(this.FixGovernanceList);
   },
@@ -70,13 +69,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~assets/css/themes.scss";
 .governance_list {
   margin-top: 28px;
 }
 .governance_list_item {
   margin-top: 10px;
   width: 100%;
-  background: #ffffff;
+  @include themeify {
+    background: themed("color-ffffff");
+  }
   box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
   border-radius: 5px;
   padding: 20px;
@@ -98,7 +100,9 @@ export default {
   font-size: 14px;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
-  color: #ffffff;
+  @include themeify {
+    color: themed("color-ffffff");
+  }
   line-height: 20px;
 }
 .ongoing {
@@ -106,7 +110,9 @@ export default {
   font-size: 14px;
   font-family: IBMPlexSans-Bold, IBMPlexSans;
   font-weight: bold;
-  color: #ffffff;
+  @include themeify {
+    color: themed("color-ffffff");
+  }
   line-height: 20px;
 }
 .finish {
@@ -123,21 +129,27 @@ export default {
   justify-content: center;
   min-width: 161px;
   min-height: 38px;
-  background: #f8f9fa;
+  @include themeify {
+    background: themed("color-f8f9fa");
+  }
   border-radius: 0px 5px 0px 0px;
   padding: 0 10px;
   span {
     font-size: 14px;
     font-family: IBMPlexSans-Bold, IBMPlexSans;
     font-weight: bold;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     line-height: 18px;
   }
   p {
     font-size: 14px;
     font-family: IBMPlexSans-Bold, IBMPlexSans;
     font-weight: bold;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     line-height: 18px;
   }
 }
@@ -146,7 +158,9 @@ export default {
     font-size: 16px;
     font-family: IBMPlexSans-Bold, IBMPlexSans;
     font-weight: bold;
-    color: #17173a;
+    @include themeify {
+      color: themed("color-17173a");
+    }
     line-height: 16px;
   }
 }
@@ -154,7 +168,10 @@ export default {
   > p {
     font-size: 14px;
     font-family: IBMPlexSans;
-    color: rgba(23, 23, 58, 0.7);
+    @include themeify {
+      color: themed("color-17173a");
+    }
+    opacity: 0.7;
     line-height: 22px;
   }
   > button {
@@ -166,6 +183,9 @@ export default {
 @media screen and(min-width:750px) {
   .H5 {
     display: none;
+  }
+  .governance_list {
+    min-width: 1026px;
   }
   .governance_list_item {
     height: 161px;

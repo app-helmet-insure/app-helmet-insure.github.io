@@ -27,6 +27,7 @@ export const GovernanceList = [
     FinishTime: "2021/10/04 1:30 UTC+8",
   },
 ];
+
 export const formatGovernance = (PoolData) => {
   for (let Key = 0; Key < PoolData.length; Key++) {
     const ItemPool = PoolData[Key];

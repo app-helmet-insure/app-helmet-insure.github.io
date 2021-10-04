@@ -30,24 +30,17 @@
         </div>
         <div class="title between">
           <span>可抵押&投票</span>
-          <el-tooltip effect="dark" placement="top-start">
-            <div slot="content" style="width: 200px">
-              <p>可抵押&投票=余额部分+奖励部分</p>
-              <p>余额部分:{{ fixD(CanDeposite, 4) }}</p>
-              <p>奖励部分:{{ fixD(CanClaim1, 4) }}</p>
-            </div>
-            <p class="tool_tips">
-              <countTo
-                v-if="isLogin"
-                :startVal="Number(0)"
-                :endVal="Number(CanDeposite) + Number(CanClaim1)"
-                :duration="2000"
-                :decimals="4"
-              />
-              <span v-else>--</span>
-              {{ ActiveData.StakeUnit }}
-            </p>
-          </el-tooltip>
+          <p>
+            <countTo
+              v-if="isLogin"
+              :startVal="Number(0)"
+              :endVal="Number(CanDeposite)"
+              :duration="2000"
+              :decimals="4"
+            />
+            <span v-else>--</span>
+            &nbsp;{{ ActiveData.StakeUnit }}
+          </p>
         </div>
         <div class="content">
           <div class="input">
@@ -113,12 +106,12 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(CanWithdraw)"
+              :endVal="Number(ActiveData.Status === 3 ? CanWithdraw : 0)"
               :duration="2000"
               :decimals="4"
             />
             <span v-else>--</span>
-            {{ ActiveData.StakeUnit }}
+            &nbsp;{{ ActiveData.StakeUnit }}
           </p>
         </div>
         <div class="between">
@@ -127,12 +120,12 @@
             <countTo
               v-if="isLogin"
               :startVal="Number(0)"
-              :endVal="Number(RewardPerToken)"
+              :endVal="Number(ActiveData.Status === 3 ? 0 : CanWithdraw)"
               :duration="2000"
               :decimals="4"
             />
             <span v-else>--</span>
-            {{ ActiveData.StakeUnit }}
+            &nbsp;{{ ActiveData.StakeUnit }}
           </p>
         </div>
         <div class="content">
@@ -154,6 +147,16 @@
           >{{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
+        <button
+          @click="toClaim"
+          :class="
+            (ClaimLoading ? 'disable o_button' : 'o_button',
+            ActiveData.Status === 3 ? 'disable_button o_button' : 'o_button')
+          "
+        >
+          <i :class="ClaimLoading ? 'loading_pic' : ''"></i
+          >{{ $t("Table.ClaimAllRewards") }}
+        </button>
         <div v-if="ActiveData.HaveReward1" class="between">
           <span
             ><i>{{ ActiveData.Reward1Symbol }}</i>
@@ -168,7 +171,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ ActiveData.Reward1Symbol }}
+            &nbsp;{{ ActiveData.Reward1Symbol }}
           </p>
         </div>
         <div v-if="ActiveData.HaveReward2" class="between">
@@ -185,7 +188,7 @@
               :decimals="8"
             />
             <span v-else>--</span>
-            {{ ActiveData.Reward2Symbol }}
+            &nbsp;{{ ActiveData.Reward2Symbol }}
           </p>
         </div>
       </div>

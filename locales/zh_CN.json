@@ -152,7 +152,7 @@
     "MIningCutdown": "挖矿周期",
     "ReceiveAward": "领取奖励",
     "ContractAddress": "合约地址：",
-    "safe": "保险",
+    "Safe": "期权(一种价格保险)",
     "CallableMortgage": "可赎回抵押：",
     "RedemptionReward": "赎回领取奖励",
     "NumberSubscriptions": "请输入认购张数",

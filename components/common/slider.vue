@@ -33,7 +33,7 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-insurance"></use>
                 </svg>
-                {{ $t("Table.safe") }}
+                {{ $t("Table.Safe") }}
                 <svg
                   :class="
                     routeObj.name === 'insurance'
@@ -363,7 +363,7 @@ export default {
   }
   .slider {
     position: relative;
-    width: 260px;
+    width: 300px;
     height: calc(100vh - 50px);
     @include themeify {
       background-color: themed("color-ffffff");

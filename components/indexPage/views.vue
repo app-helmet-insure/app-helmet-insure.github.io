@@ -122,7 +122,6 @@ export default {
       }
     }
     > p {
-      width: 900px;
       margin: 0 auto;
       text-align: center;
       font-family: Erbaum-Book;
@@ -224,6 +223,7 @@ export default {
         }
       }
       > p {
+        width: 900px;
         margin-top: 10px;
         font-size: 36px;
         line-height: 40px;

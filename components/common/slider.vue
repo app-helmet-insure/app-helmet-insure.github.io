@@ -827,7 +827,7 @@ export default {
     top: 0;
     background: rgba(0, 0, 0, 0.5);
     .slider_wrap {
-      width: 230px;
+      width: 260px;
       height: 100%;
       padding: 50px 20px 0;
       display: flex;

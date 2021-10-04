@@ -3,10 +3,10 @@
     <div class="migrate_container">
       <Title />
       <Pending />
-      <IBO />
-      <!-- <Action /> -->
+      <!-- <IBO /> -->
+      <Action />
       <JumpDialog />
-      <!-- <TipDialog /> -->
+      <TipDialog />
     </div>
   </div>
 </template>

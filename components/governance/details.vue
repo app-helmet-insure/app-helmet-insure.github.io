@@ -1,28 +1,32 @@
 <template>
   <div class="governance_details">
     <div class="governance_details_infomation">
-      <div class="governance_details_infomation_title">信息</div>
+      <div class="governance_details_infomation_title">
+        {{ $t("Governance.Governance_text19") }}
+      </div>
       <div class="governance_details_infomation_wrap">
         <div class="between">
-          <span>发起者</span>
+          <span>{{ $t("Governance.Governance_text16") }}</span>
           <span>inkymaze</span>
         </div>
         <div class="between">
-          <span>发起者</span>
+          <span>{{ $t("Governance.Governance_text17") }}</span>
           <span>inkymaze</span>
         </div>
         <div class="between">
-          <span>发起者</span>
+          <span>{{ $t("Governance.Governance_text18") }}</span>
           <span>inkymaze</span>
         </div>
         <div class="between">
-          <span>发起者</span>
+          <span>{{ $t("Governance.Governance_text19") }}</span>
           <span>inkymaze</span>
         </div>
       </div>
     </div>
     <div class="governance_details_votes">
-      <div class="governance_details_votes_title">信息</div>
+      <div class="governance_details_votes_title">
+        {{ $t("Governance.Governance_text13") }}
+      </div>
       <div class="governance_details_votes_wrap">
         <div class="governance_details_votes_slider">
           <p class="between">
@@ -47,7 +51,9 @@
       </div>
     </div>
     <div class="governance_details_self">
-      <div class="governance_details_self_title">我的投票</div>
+      <div class="governance_details_self_title">
+        {{ $t("Governance.Governance_text21") }}
+      </div>
       <div class="governance_details_self_wrap">
         <div class="governance_details_self_votes between">
           <span>YAE</span>

@@ -2,17 +2,15 @@
   <div class="governance_title">
     <div class="governance_title_wrap">
       <div class="governance_title_text">
-        <h3>Governance 是Helmet DAO治理</h3>
-        <p>你可以在投票参与DAO治理的同时享有HELMET奖励</p>
+        <h3>{{ $t("Governance.Tips3") }}</h3>
+        <p>{{ $t("Governance.Tips4") }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
- 
-};
+export default {};
 </script>
 
 <style lang='scss' scoped>

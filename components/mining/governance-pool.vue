@@ -1,7 +1,7 @@
 <template>
   <div class="governance_pool_wrap">
     <div class="tips">
-      Helmet治理，抵押即投票：选择持方后，抵押相应的HELMET进行抵押投票，抵押的HELMET投票结束后才可取回
+      {{ $t("Governance.Tips1") }}
     </div>
     <div class="governance_pool">
       <div
@@ -10,7 +10,8 @@
       >
         <div class="governance_type">
           <div class="governance_type_title">
-            <span>选择持方</span><a href="#">查看提案详情></a>
+            <span>{{ $t("Governance.Governance_text1") }}</span>
+            <a href="#">{{ $t("Governance.Governance_text2") }}</a>
           </div>
           <div class="governance_type_wrap">
             <div
@@ -29,7 +30,7 @@
           </div>
         </div>
         <div class="title between">
-          <span>可抵押&投票</span>
+          <span> {{ $t("Governance.Governance_text20") }}</span>
           <p>
             <countTo
               v-if="isLogin"
@@ -64,7 +65,11 @@
           "
         >
           <i :class="StakeLoading ? 'loading_pic' : ''"></i
-          >{{ !ApproveStatus ? $t("Table.Approve") : "抵押&投票" }}
+          >{{
+            !ApproveStatus
+              ? $t("Table.Approve")
+              : $t("Governance.Governance_text6")
+          }}
         </button>
         <div class="between">
           <span>{{ $t("Table.MyDeposits") }}</span>
@@ -115,7 +120,7 @@
           </p>
         </div>
         <div class="between">
-          <span>待释放</span>
+          <span>{{ $t("Governance.Governance_text7") }}</span>
           <p class="bold">
             <countTo
               v-if="isLogin"
@@ -257,25 +262,27 @@ export default {
       WaitingText: "",
       MaxStaking: 0,
       PropoaslID: 1,
-      GovernanceList: [
-        {
-          PropoaslType: "同意",
-          PropoaslID: 1,
-        },
-        {
-          PropoaslType: "不同意",
-          PropoaslID: 2,
-        },
-        {
-          PropoaslType: "弃权",
-          PropoaslID: 3,
-        },
-      ],
     };
   },
   computed: {
     CurrentAccount() {
       return this.$store.state.userInfo;
+    },
+    GovernanceList() {
+      return [
+        {
+          PropoaslType: this.$t("Governance.Governance_text3"),
+          PropoaslID: 1,
+        },
+        {
+          PropoaslType: this.$t("Governance.Governance_text4"),
+          PropoaslID: 2,
+        },
+        {
+          PropoaslType: this.$t("Governance.Governance_text5"),
+          PropoaslID: 3,
+        },
+      ];
     },
   },
   watch: {

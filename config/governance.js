@@ -1,30 +1,37 @@
 export const GovernanceList = [
   {
     Title: "标题一",
-    Router:"link1",
+    Router: "link1",
     Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
     Details:
       "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
     StartTime: "2021/10/03 16:30 UTC+8",
     FinishTime: "2021/10/04 16:30 UTC+8",
+    Proposal: [
+      { Text: 1, ID: 1 },
+      { Text: 2, ID: 2 },
+      { Text: 3, ID: 3 },
+    ],
   },
   {
     Title: "标题二",
-    Router:"link3",
+    Router: "link3",
     Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
     Details:
       "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
     StartTime: "2021/10/04 20:00 UTC+8",
     FinishTime: "2021/10/05 20:30 UTC+8",
+    ProposalID: [1, 2, 3],
   },
   {
     Title: "标题三",
-    Router:"link2",
+    Router: "link2",
     Perhaps: "标题一标题一标题一标题一标题一标题一标题一",
     Details:
       "标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一标题一",
     StartTime: "2021/10/03 16:30 UTC+8",
     FinishTime: "2021/10/04 1:30 UTC+8",
+    ProposalID: [1, 2, 3],
   },
 ];
 
@@ -40,7 +47,7 @@ export const formatGovernance = (PoolData) => {
     if (!PoolStarted) {
       ItemPool.Status = 1;
       ItemPool.StatusImg = "unopen";
-      ItemPool.StatusText = '未开始'
+      ItemPool.StatusText = `${window.$nuxt.$t("Governance.Governance_text9")}`;
       if (StartTime !== "Ongoing" && FinishTime !== "Mining") {
         ItemPool.ShowTime = getShowTime(FixStartTime);
       } else {
@@ -50,7 +57,9 @@ export const formatGovernance = (PoolData) => {
     if (PoolStarted && !PoolFinished) {
       ItemPool.Status = 2;
       ItemPool.StatusImg = "ongoing";
-      ItemPool.StatusText = '进行中'
+      ItemPool.StatusText = `${window.$nuxt.$t(
+        "Governance.Governance_text10"
+      )}`;
       if (StartTime !== "Ongoing" && FinishTime !== "Mining") {
         ItemPool.ShowTime = getShowTime(FixFinishTime);
       }
@@ -58,7 +67,7 @@ export const formatGovernance = (PoolData) => {
     if (PoolFinished) {
       ItemPool.Status = 3;
       ItemPool.StatusImg = "finish";
-      ItemPool.StatusText = '已结束'
+      ItemPool.StatusText = `${window.$nuxt.$t("Governance.Governance_text8")}`;
       ItemPool.ShowTime = "Finished";
     }
   }

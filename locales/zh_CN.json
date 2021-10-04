@@ -350,7 +350,7 @@
     "ToStake": "去抵押",
     "Pause": "暂停",
     "Migrate": "Migrate",
-    "Tips8":"Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得."
+    "Tips8": "Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得."
   },
   "IBO": {
     "IBO_text1": "分钟",
@@ -407,6 +407,33 @@
     "IBO_text47": "10.17 02:05 UTC+8",
     "IBO_text48": "锁仓部分（一个月后解锁）",
     "IBO_text49": "{token} IBO 需要长达一个月的锁仓期限，存在不确定性风险，请注意风险。Helmet 不承担任何投资损失责任。"
+  },
+  "Governance": {
+    "Tips1": "Helmet治理，抵押即投票：选择持方后，抵押相应的HELMET进行抵押投票，抵押的HELMET投票结束后才可取回",
+    "Tips2": "抵押的 HELMET 需投票结束后才可以领取, 抵押期间你会获得 HELMET 作为奖励, 奖励的数量可以前往 Mining 页面的 <a href='/mining'>Helmet Governance</a> 查看",
+    "Tips3": "Governance 是Helmet DAO治理",
+    "Tips4": "你可以在投票参与DAO治理的同时享有HELMET奖励",
+    "Governance_text1": "选择持方",
+    "Governance_text2": "查看提案详情>",
+    "Governance_text3": "同意",
+    "Governance_text4": "不同意",
+    "Governance_text5": "弃权",
+    "Governance_text6": "抵押&投票",
+    "Governance_text7": "待释放",
+    "Governance_text8": "已结束",
+    "Governance_text9": "未开始",
+    "Governance_text10": "进行中",
+    "Governance_text11": "参与投票",
+    "Governance_text12": "查看更多",
+    "Governance_text13": "信息",
+    "Governance_text14": "投票",
+    "Governance_text15": "投票(抵押helmet即投票)",
+    "Governance_text16": "发起者",
+    "Governance_text17": "投票制度",
+    "Governance_text18": "开始时间",
+    "Governance_text19": "结束时间",
+    "Governance_text20": "可抵押&投票",
+    "Governance_text21": "我的投票"
   },
   "Dialogs": {
     "WaitText1": "你将要发布 {symbol}({type}) 保险，抵押资产为 {volume} {collateral} ，出险价格为 {strikeprice} {underlying}，预计保费收益 {price} HELMET ，到期时间 {expiry}",

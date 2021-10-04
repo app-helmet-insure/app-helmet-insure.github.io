@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     top="35vh"
-    title="投票(抵押helmet即投票)"
+    :title="$t('Governance.Governance_text15')"
     footer
     append-to-body
     custom-class="governance_dialog"
@@ -10,7 +10,7 @@
     @close="DialogClose"
   >
     <div class="governance_dialog_title between">
-      <span>可抵押&投票</span>
+      <span>{{ $t("Governance.Governance_text20") }}</span>
       <p>
         <countTo
           v-if="isLogin"
@@ -33,14 +33,10 @@
           MiningData.Status === 3 ? 'disable_button o_button' : 'o_button'
         "
       >
-        抵押&投票
+        {{ $t("Governance.Governance_text6") }}
       </button>
     </div>
-    <div class="governance_dialog_tips">
-      抵押的 HELMET 需投票结束后才可以领取, 抵押期间你会获得 HELMET 作为奖励,
-      奖励的数量可以前往 Mining 页面的
-      <a href="/mining">Helmet Governance</a> 查看
-    </div>
+    <div class="governance_dialog_tips" v-html="$t('Governance.Tips2')"></div>
   </el-dialog>
 </template> 
 

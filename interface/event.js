@@ -165,6 +165,27 @@ export const getLongType = async function() {
     return res.data.data.options.length;
   });
 };
+export const getGovernance = () => {
+  return Axios({
+    method: "post",
+    url:
+      "https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-governance",
+    data: {
+      query: `{
+        votes(first: 1000,where:{proposalID_in:[1,2,3]}) {
+          id
+          address
+          proposalID
+          amount
+        }
+      }
+      `,
+    },
+  }).then((res) => {
+    console.log(res);
+    return res;
+  });
+};
 export const getSignDataSyn = (data, callback) => {
   let SignNumberFlag = true;
   let SignResultData = [];

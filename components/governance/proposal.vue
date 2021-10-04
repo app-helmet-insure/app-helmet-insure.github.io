@@ -10,7 +10,9 @@
       <p>{{ Proposal.Perhaps }}</p>
     </div>
     <div class="governance_proposal_action">
-      <div class="governance_proposal_action_title">投票</div>
+      <div class="governance_proposal_action_title">
+        {{ $t("Governance.Governance_text14") }}
+      </div>
       <div class="governance_proposal_action_wrap">
         <div class="governance_proposal_action_item_wrap">
           <div
@@ -31,25 +33,29 @@
           class="governance_proposal_action_button b_button"
           @click="handleClickVotes"
         >
-          投票
+          {{ $t("Governance.Governance_text14") }}
         </button>
       </div>
     </div>
     <div class="governance_proposal_history">
-      <div class="governance_proposal_history_title">投票</div>
+      <div class="governance_proposal_history_title">
+        {{ $t("Governance.Governance_text14") }}
+      </div>
       <div class="governance_proposal_history_wrap">
         <div class="governance_proposal_history_item_wrap">
           <div
             class="governance_proposal_history_item"
-            v-for="Item in GovernanceList"
-            :key="Item.PropoaslID"
+            v-for="(Item, Index) in GovernanceTxList"
+            :key="Index"
           >
-            <span>{{ Item.PropoaslType }}</span>
-            <span>{{ Item.PropoaslType }}</span>
-            <span>{{ Item.PropoaslType }}</span>
+            <span>{{ Item.ShowAddress }}</span>
+            <span>{{ Item.ShowProposalID }}</span>
+            <span>{{ Item.ShowAmount }}</span>
           </div>
         </div>
-        <div class="governance_proposal_history_button">查看更多</div>
+        <div class="governance_proposal_history_button">
+          {{ $t("Governance.Governance_text12") }}
+        </div>
       </div>
     </div>
     <GovernanceVotesDialog
@@ -83,6 +89,10 @@ import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
 import { toWei, getContract } from "~/web3/index.js";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
+import { getGovernance } from "~/interface/event.js";
+import { fromWei } from "../../web3";
+import { fixD } from "~/assets/js/util.js";
+import { Switch } from "element-ui";
 export default {
   components: {
     GovernanceVotesDialog,
@@ -91,6 +101,7 @@ export default {
   },
   data() {
     return {
+      fixD,
       Proposal: {},
       Mining: {},
       PropoaslID: 1,
@@ -100,25 +111,28 @@ export default {
       SuccessVisible: false,
       SuccessHash: "",
       WaitingText: "",
-      GovernanceList: [
-        {
-          PropoaslType: "同意",
-          PropoaslID: 1,
-        },
-        {
-          PropoaslType: "不同意",
-          PropoaslID: 2,
-        },
-        {
-          PropoaslType: "弃权",
-          PropoaslID: 3,
-        },
-      ],
+      GovernanceTxList: [],
     };
   },
   computed: {
     CurrentAccount() {
       return this.$store.state.userInfo;
+    },
+    GovernanceList() {
+      return [
+        {
+          PropoaslType: this.$t("Governance.Governance_text3"),
+          PropoaslID: 1,
+        },
+        {
+          PropoaslType: this.$t("Governance.Governance_text4"),
+          PropoaslID: 2,
+        },
+        {
+          PropoaslType: this.$t("Governance.Governance_text5"),
+          PropoaslID: 3,
+        },
+      ];
     },
   },
   watch: {
@@ -135,13 +149,14 @@ export default {
       (item) => item.Router === Router
     )[0];
     this.Mining = FixDaoPoolList.filter((item) => item.Router === Router)[0];
-    console.log(Router, this.Proposal, this.Mining);
   },
   methods: {
     reloadData(Value) {
       if (Value) {
         this.isLogin = Value.isLogin;
-        this.$nextTick(() => {});
+        this.$nextTick(() => {
+          this.getGovernanceList();
+        });
       }
     },
     votesClose() {
@@ -155,6 +170,48 @@ export default {
     },
     handleClickVotes() {
       this.VotesVisible = true;
+    },
+    getGovernanceList() {
+      getGovernance().then((res) => {
+        const FixList = [];
+        const List = res.data.data.votes;
+        List.forEach((item) => {
+          let ShowID = this.getProposalStatus(item.proposalID);
+          console.log(ShowID);
+
+          FixList.push({
+            ShowAddress:
+              item.address.substr(0, 1) +
+              item.address.substr(1, 1).toLowerCase() +
+              item.address.substr(2, 3) +
+              "..." +
+              item.address.substr(-4),
+            Address: item.address,
+            Amount: fromWei(item.amount),
+            ShowAmount: fixD(fromWei(item.amount), 4),
+            ProposalID: item.proposalID,
+            ShowProposalID: ShowID,
+          });
+        });
+        console.log(FixList);
+        this.GovernanceTxList = FixList;
+      });
+    },
+    getProposalStatus(ID) {
+      let Current = this.Proposal.Proposal.filter(
+        (itemKey) => itemKey.ID == ID
+      )[0];
+      console.log(Current,ID);
+      switch (Current.Text) {
+        case 1:
+          return this.$t("Governance.Governance_text3");
+        case 2:
+          return this.$t("Governance.Governance_text4");
+        case 3:
+          return this.$t("Governance.Governance_text5");
+        default:
+          return "error";
+      }
     },
     toDeposite(StakeVolume, ApproveStatus) {
       console.log(StakeVolume, ApproveStatus);
@@ -231,8 +288,8 @@ export default {
   flex: 2;
 }
 .status_img {
-  width: 75px;
-  height: 32px;
+  width: 90px;
+  height: 36px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;

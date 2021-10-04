@@ -20,7 +20,7 @@
         <div class="governance_list_item_perhaps_web WEB perhaps">
           <p>{{ Item.Perhaps }}</p>
           <button class="b_button" @click="handleClickToDetails(Item)">
-            参与投票
+            {{ $t("Governance.Governance_text11") }}
           </button>
         </div>
         <div class="governance_list_item_top_h5 H5">
@@ -38,7 +38,7 @@
         <div class="governance_list_item_perhaps_h5 H5 perhaps">
           <p>{{ Item.Perhaps }}</p>
           <button class="b_button" @click="handleClickToDetails(Item)">
-            参与投票
+            {{ $t("Governance.Governance_text11") }}
           </button>
         </div>
       </div>
@@ -86,8 +86,8 @@ export default {
   overflow: hidden;
 }
 .status_img {
-  width: 75px;
-  height: 32px;
+  width: 90px;
+  height: 36px;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -175,7 +175,7 @@ export default {
     line-height: 22px;
   }
   > button {
-    width: 96px;
+    width: 140px;
     height: 40px;
     border-radius: 5px;
   }

@@ -30,7 +30,7 @@ export const GovernanceList = [
     Proposal: [
       { Text: 1, ID: 1 },
       { Text: 2, ID: 2 },
-      { Text: 3, ID: 3 },
+      // { Text: 3, ID: 3 },
     ],
   },
 ];

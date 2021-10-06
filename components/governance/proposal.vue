@@ -134,10 +134,6 @@ export default {
           PropoaslType: this.$t("Governance.Governance_text4"),
           PropoaslID: 2,
         },
-        {
-          PropoaslType: this.$t("Governance.Governance_text5"),
-          PropoaslID: 3,
-        },
       ];
     },
   },

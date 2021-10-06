@@ -281,10 +281,10 @@ export default {
           PropoaslType: this.$t("Governance.Governance_text4"),
           PropoaslID: 2,
         },
-        {
-          PropoaslType: this.$t("Governance.Governance_text5"),
-          PropoaslID: 3,
-        },
+        // {
+        //   PropoaslType: this.$t("Governance.Governance_text5"),
+        //   PropoaslID: 3,
+        // },
       ];
     },
   },
@@ -660,7 +660,7 @@ export default {
     margin-top: 10px;
   }
   &_item {
-    min-width: 90px;
+    min-width: 120px;
     height: 32px;
     border-radius: 5px;
     font-size: 14px;

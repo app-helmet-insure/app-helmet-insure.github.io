@@ -30,24 +30,30 @@
       <div class="governance_details_votes_wrap">
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span>YAE {{ 111 }} HELMET</span> <span>10%</span>
+            <span
+              >{{ $t("Governance.Governance_text3") }} {{ 111 }} HELMET</span
+            >
+            <span>10%</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:10%`"></div>
           </div>
         </div>
         <div class="governance_details_votes_slider">
-          <p class="between"><span>NO 0 HELMET</span> <span>0%</span></p>
+          <p class="between">
+            <span>{{ $t("Governance.Governance_text4") }} {{ 0 }} HELMET</span>
+            <span>0%</span>
+          </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:0%`"></div>
           </div>
         </div>
-        <div class="governance_details_votes_slider">
+        <!-- <div class="governance_details_votes_slider">
           <p class="between"><span>ABSTAIN 0 HELMET</span> <span>0%</span></p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:0%`"></div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="governance_details_self">
@@ -56,7 +62,11 @@
       </div>
       <div class="governance_details_self_wrap">
         <div class="governance_details_self_votes between">
-          <span>YAE</span>
+          <span>{{ $t("Governance.Governance_text3") }}</span>
+          <span>1000.11</span>
+        </div>
+        <div class="governance_details_self_votes between">
+          <span>{{ $t("Governance.Governance_text4") }}</span>
           <span>1000.11</span>
         </div>
       </div>
@@ -133,22 +143,18 @@ export default {
       let PromiseList = [
         PoolContracts.getVotes(Zero, Proposal.Proposal[0].ID),
         PoolContracts.getVotes(Zero, Proposal.Proposal[1].ID),
-        PoolContracts.getVotes(Zero, Proposal.Proposal[2].ID),
         PoolContracts.getVotes(Account, Proposal.Proposal[0].ID),
         PoolContracts.getVotes(Account, Proposal.Proposal[1].ID),
-        PoolContracts.getVotes(Account, Proposal.Proposal[2].ID),
       ];
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         let FixData = processResult(res);
-        let [Type1, Type2, Type3, SelfType1, SelfType2, SelfType3] = FixData;
-        console.log(Type1, Type2, Type3, SelfType1, SelfType2, SelfType3);
+        let [Type1, Type2, SelfType1, SelfType2] = FixData;
+        console.log(Type1, Type2, SelfType1, SelfType2);
         this.Type1 = fromWei(Type1);
         this.Type2 = fromWei(Type2);
-        this.Type3 = fromWei(Type3);
         this.SelfType1 = fromWei(SelfType1);
         this.SelfType2 = fromWei(SelfType2);
-        this.SelfType3 = fromWei(SelfType3);
       });
     },
   },

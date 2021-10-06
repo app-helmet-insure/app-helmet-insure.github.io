@@ -404,8 +404,8 @@
     "Tips4": "You could get HELMET rewards during voting period.",
     "Governance_text1": "Pick the item",
     "Governance_text2": "Check details of the proposal>",
-    "Governance_text3": "Proposal 1",
-    "Governance_text4": "Proposal 2",
+    "Governance_text3": "Proposal1",
+    "Governance_text4": "Proposal2",
     "Governance_text5": "Abstain",
     "Governance_text6": "Stake&Vote",
     "Governance_text7": "Suspend",
@@ -431,5 +431,27 @@
     "WaitText1": "You will supply {symbol}({type}) Policy with Pledged asset: {volume} {collateral} ; Activated Price: {strikeprice} {underlying} ; Expected premium gaining: {price}  HELMET ; Expire date: {expiry}.",
     "InsuranceTip1": "You will lose your token if you supply the policy since {name} has hit the activate price.",
     "MaxStaking": "Max {number} HELMET"
+  },
+  "Proposal": {
+    "Governance1": {
+      "text1": "About the plan of the 50% lock-up HELMET.",
+      "text2": "Helmet is positioning itself as a long-term infrastructure platform that benefits projects and blockchain ecosystems. In the first 3 quarters of 2021, Helmet has positively invoked the Vault to support policy mining, community rewards, as well as investment acquirement, making the Options protocol a profitable mining and entertainment system.",
+      "text3": "Here is the recap of our progress:",
+      "text4": "As the roadmap showing, Helmet will focus on proposal about the remaining lock-up HELMET to pave the path of 2022. Derivates on-chain have improved by leaps and bounds, correspondingly, the trading of derivatives has been more user-friendly. At this time, We would like to let our helmeters in the promount decision settlemet during Q4, with Helmet token used. including token incentives, payments or additional development funds.",
+      "text5": "We will continue to work around the clock so that we can keep rapidly scaling on BSC & Polygon. Then, and with efforts already well underway, we will be repeating the same formula for our success on new blockchains!",
+      "text6": "In this situation, we initial 2 proposals, not the final deal by all means, to be final settled through governance functionality with all helmeters in.",
+      "text7": "Proposal1: 50,000,000 locked HELMET will be burnt forever, cutting down the total supply to 50,000,000.",
+      "text8": "Deflation of HELMET will technically promote the circulationg value.",
+      "text9": "The Circulating Supply of HELMET has reached 39,809,145(From CoinMarketCap), and 1,122,336 of them have been burnt. In the upcoming Q4 and 2022, there will be more scenarios of HELMET burning, including the ongoing IBO, GUARD ecosystem incentives, and the upcoming NFT Game and Options Exchange ( details in Medium story).",
+      "text10": "It means that HELMET will carry out more TOKEN burning measures, continuously benefit holders without fazing business incentives, and actively fulfill the demands of holders who would like to make contributions to the community.",
+      "text11": "If a majority of HELMET holders are in favor of this proposal, we will build the helmet committee and launch the governance tab where the details are determined by our supporters. The specific governance functionality will be online by December 31, 2021.",
+      "text12": "Proposal2: 50,000,000 locked HELMET will be used for the Options exchange: Layer2 DEX and NFT Game incentive.",
+      "text13": "Helmet has deployed V1.5 on BSC and Polygon, allowing users to trade options on crypro assets via price insurance on-chain. We believe the potential of Layer-2, including absolute security and performance improvements from ZK-rollup.",
+      "text14": "Therefore, HELMET will take the instructure frame of Zks for our own Layer2 dev. Over the past 2 months, the Core Team has successfully made the latest version of the Event Sourcing Engine frame, which is expected to generate at least 300,000 TPS within 70ms, maintaining state of the art security and anti-attack capabilities. All the users' assets, positions and attributes will be stored in the Memory Database, and record the declaration and matching in the form of events. (details in Medium story)",
+      "text15": "Helmet's Layer-2 is going to be tested gradually with the EVM adaptation, which we expect to be completed by mid-December 2021.",
+      "text16": "With the heat of DYDX in futures, we believe that the incentive is also an essential way to approch to Defi users.",
+      "text17": "Thus, if the locked 50,000,000 HELMET could be used as the Layer2 and NFT Game incentive, the fresh new protocol is more likely to aquire the initial motivation.",
+      "text18": "If there are most votes in favor of this proposal, we will build a community committee and launch a governance functionality where the details of the destruction will be determined by helmeters. The specific governance tab will live by December 31, 2021."
+    }
   }
 }

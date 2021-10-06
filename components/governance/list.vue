@@ -187,7 +187,6 @@ export default {
     min-width: 1026px;
   }
   .governance_list_item {
-    height: 161px;
   }
   .governance_list_item_time_web {
     position: absolute;

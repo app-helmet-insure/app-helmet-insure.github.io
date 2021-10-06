@@ -598,6 +598,8 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }
+    }  .stakeMining {
+      margin-left: 0;
     }
     button {
       padding: 0px 10px;

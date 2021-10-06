@@ -2,7 +2,7 @@
   <div class="governance_details">
     <div class="governance_details_infomation">
       <div class="governance_details_infomation_title">
-        {{ $t("Governance.Governance_text19") }}
+        {{ $t("Governance.Governance_text13") }}
       </div>
       <div class="governance_details_infomation_wrap">
         <div class="between">
@@ -25,35 +25,45 @@
     </div>
     <div class="governance_details_votes">
       <div class="governance_details_votes_title">
-        {{ $t("Governance.Governance_text13") }}
+        {{ $t("Governance.Governance_text24") }}
       </div>
       <div class="governance_details_votes_wrap">
         <div class="governance_details_votes_slider">
           <p class="between">
             <span
-              >{{ $t("Governance.Governance_text3") }} {{ 111 }} HELMET</span
+              >{{ $t("Governance.Governance_text3") }}
+              {{ fixD(Type1, 4) }} HELMET</span
             >
-            <span>10%</span>
+            <span>{{ Type1Number }}</span>
           </p>
           <div class="slider_wrap">
-            <div class="slider_bar" :style="`width:10%`"></div>
+            <div class="slider_bar" :style="`width:${Type1Number}`"></div>
           </div>
         </div>
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span>{{ $t("Governance.Governance_text4") }} {{ 0 }} HELMET</span>
-            <span>0%</span>
+            <span
+              >{{ $t("Governance.Governance_text4") }}
+              {{ fixD(Type2, 4) }} HELMET</span
+            >
+            <span>{{ Type2Number }}</span>
           </p>
           <div class="slider_wrap">
-            <div class="slider_bar" :style="`width:0%`"></div>
+            <div class="slider_bar" :style="`width:${Type2Number}`"></div>
           </div>
         </div>
-        <!-- <div class="governance_details_votes_slider">
-          <p class="between"><span>ABSTAIN 0 HELMET</span> <span>0%</span></p>
+        <div class="governance_details_votes_slider">
+          <p class="between">
+            <span
+              >{{ $t("Governance.Governance_text5") }}
+              {{ fixD(Type3, 4) }} HELMET</span
+            >
+            <span>{{ Type3Number }}</span>
+          </p>
           <div class="slider_wrap">
-            <div class="slider_bar" :style="`width:0%`"></div>
+            <div class="slider_bar" :style="`width:${Type3Number}`"></div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="governance_details_self">
@@ -63,11 +73,15 @@
       <div class="governance_details_self_wrap">
         <div class="governance_details_self_votes between">
           <span>{{ $t("Governance.Governance_text3") }}</span>
-          <span>1000.11</span>
+          <span>{{ fixD(SelfType1, 4) }}</span>
         </div>
         <div class="governance_details_self_votes between">
           <span>{{ $t("Governance.Governance_text4") }}</span>
-          <span>1000.11</span>
+          <span>{{ fixD(SelfType2, 4) }}</span>
+        </div>
+        <div class="governance_details_self_votes between">
+          <span>{{ $t("Governance.Governance_text3") }}</span>
+          <span>{{ fixD(SelfType3, 4) }}</span>
         </div>
       </div>
     </div>
@@ -77,6 +91,7 @@
 <script>
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { Contract } from "ethers-multicall-x";
+import { fixD } from "~/assets/js/util.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -87,13 +102,12 @@ import {
 export default {
   data() {
     return {
+      fixD,
       Proposal: {},
       Type1: 0,
       Type2: 0,
-      Type3: 0,
       SelfType1: 0,
       SelfType2: 0,
-      SelfType3: 0,
     };
   },
   mounted() {
@@ -131,30 +145,41 @@ export default {
       )[0];
       const { PoolAddress, PoolABI } = Proposal;
       const PoolContracts = new Contract(PoolAddress, PoolABI);
-      const a = getContract(PoolABI, PoolAddress);
       const Zero = "0x0000000000000000000000000000000000000000";
-      a.methods
-        .getVotes(Zero, Proposal.Proposal[0].ID)
-        .call()
-        .then((res) => {
-          console.log(res);
-        });
       const Account = this.CurrentAccount.account;
       let PromiseList = [
         PoolContracts.getVotes(Zero, Proposal.Proposal[0].ID),
         PoolContracts.getVotes(Zero, Proposal.Proposal[1].ID),
+        PoolContracts.getVotes(Zero, Proposal.Proposal[2].ID),
         PoolContracts.getVotes(Account, Proposal.Proposal[0].ID),
         PoolContracts.getVotes(Account, Proposal.Proposal[1].ID),
+        PoolContracts.getVotes(Account, Proposal.Proposal[2].ID),
       ];
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         let FixData = processResult(res);
-        let [Type1, Type2, SelfType1, SelfType2] = FixData;
-        console.log(Type1, Type2, SelfType1, SelfType2);
+        let [Type1, Type2, Type3, SelfType1, SelfType2, SelfType3] = FixData;
         this.Type1 = fromWei(Type1);
         this.Type2 = fromWei(Type2);
+        this.Type3 = fromWei(Type3);
         this.SelfType1 = fromWei(SelfType1);
         this.SelfType2 = fromWei(SelfType2);
+        this.SelfType3 = fromWei(SelfType3);
+        const AllType =
+          fromWei(Type1) * 1 + fromWei(Type2) * 1 + fromWei(Type3) * 1;
+        this.AllType = AllType;
+        this.Type1Number =
+          fromWei(Type1) > 0
+            ? fixD((fromWei(Type1) / AllType) * 100) + "%"
+            : "0%";
+        this.Type2Number =
+          fromWei(Type2) > 0
+            ? fixD((fromWei(Type2) / AllType) * 100) + "%"
+            : "0%";
+        this.Type3Number =
+          fromWei(Type3) > 0
+            ? fixD((fromWei(Type3) / AllType) * 100) + "%"
+            : "0%";
       });
     },
   },

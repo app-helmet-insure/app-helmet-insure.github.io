@@ -694,6 +694,9 @@ export default {
       display: flex;
       justify-content: flex-end;
       min-width: 200px;
+      .stakeMining {
+        margin-left: 0;
+      }
       button {
         padding: 0px 10px;
         height: 36px;

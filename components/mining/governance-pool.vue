@@ -281,10 +281,10 @@ export default {
           PropoaslType: this.$t("Governance.Governance_text4"),
           PropoaslID: 2,
         },
-        // {
-        //   PropoaslType: this.$t("Governance.Governance_text5"),
-        //   PropoaslID: 3,
-        // },
+        {
+          PropoaslType: this.$t("Governance.Governance_text5"),
+          PropoaslID: 3,
+        },
       ];
     },
   },
@@ -590,6 +590,7 @@ export default {
   font-weight: 600;
   color: #fd7e14;
   line-height: 16px;
+  margin-top: 10px;
 }
 .tool_tips {
   cursor: pointer;
@@ -660,7 +661,7 @@ export default {
     margin-top: 10px;
   }
   &_item {
-    min-width: 120px;
+    min-width: 90px;
     height: 32px;
     border-radius: 5px;
     font-size: 14px;
@@ -784,6 +785,7 @@ export default {
 @media screen and (min-width: 750px) {
   .tips {
     height: 40px;
+    padding: 0 20px;
   }
   .ContractAddress {
     p {
@@ -826,6 +828,7 @@ export default {
 @media screen and (max-width: 750px) {
   .tips {
     margin: 0 10px;
+    padding: 0 10px;
   }
   .ContractAddress {
     p {

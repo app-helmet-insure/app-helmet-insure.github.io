@@ -4,10 +4,12 @@
       <div :class="['status_img', Proposal.StatusImg]">
         {{ Proposal.StatusText }}
       </div>
-      <h3>{{ Proposal.Title }}</h3>
+      <h3>{{ $t(Proposal.Title) }}</h3>
     </div>
     <div class="governance_proposal_perhaps perhaps">
-      <p v-for="(item, index) in Proposal.Details" :key="index">{{ item }}</p>
+      <p v-for="(item, index) in Proposal.Details" :key="index">
+        {{ $t(item) }}
+      </p>
     </div>
     <div class="governance_proposal_action">
       <div class="governance_proposal_action_title">
@@ -45,7 +47,10 @@
         <div class="governance_proposal_history_item_wrap">
           <div
             class="governance_proposal_history_item"
-            v-for="(Item, Index) in GovernanceTxList"
+            v-for="(Item, Index) in GovernanceTxList.slice(
+              MinNumber,
+              MaxNumber
+            )"
             :key="Index"
           >
             <span>{{ Item.ShowAddress }}</span>
@@ -53,7 +58,7 @@
             <span>{{ Item.ShowAmount }}</span>
           </div>
         </div>
-        <div class="governance_proposal_history_button">
+        <div class="governance_proposal_history_button" @click="changePage">
           {{ $t("Governance.Governance_text12") }}
         </div>
       </div>
@@ -117,6 +122,10 @@ export default {
       ApproveStatus: false,
       SuccessHash: "",
       WaitingText: "",
+      CurrentPage: 1,
+      PageSize: 5,
+      MinNumber: 0,
+      MaxNumber: 5,
       GovernanceTxList: [],
     };
   },
@@ -133,6 +142,10 @@ export default {
         {
           PropoaslType: this.$t("Governance.Governance_text4"),
           PropoaslID: 2,
+        },
+        {
+          PropoaslType: this.$t("Governance.Governance_text5"),
+          PropoaslID: 3,
         },
       ];
     },
@@ -161,6 +174,17 @@ export default {
           this.getBalance();
         });
       }
+    },
+    changePage() {
+      this.CurrentPage = this.CurrentPage + 1;
+      if (this.CurrentPage <= 1) {
+        this.MinNumber = 0;
+        this.MaxNumber = this.PageSize;
+      } else {
+        this.MinNumber = 0;
+        this.MaxNumber = (this.CurrentPage - 1) * this.PageSize + this.PageSize;
+      }
+      console.log(this.MinNumber, this.MaxNumber);
     },
     votesClose() {
       this.VotesVisible = false;
@@ -212,7 +236,19 @@ export default {
         const List = res.data.data.votes;
         List.forEach((item) => {
           let ShowID = this.getProposalStatus(item.proposalID);
-
+          FixList.push({
+            ShowAddress:
+              item.address.substr(0, 1) +
+              item.address.substr(1, 1).toLowerCase() +
+              item.address.substr(2, 3) +
+              "..." +
+              item.address.substr(-4),
+            Address: item.address,
+            Amount: fromWei(item.amount),
+            ShowAmount: fixD(fromWei(item.amount), 4),
+            ProposalID: item.proposalID,
+            ShowProposalID: ShowID,
+          });
           FixList.push({
             ShowAddress:
               item.address.substr(0, 1) +
@@ -405,6 +441,7 @@ export default {
   &_wrap {
     padding: 24px 20px;
   }
+
   &_item {
     display: flex;
     align-items: center;
@@ -458,6 +495,28 @@ export default {
     padding-left: 20px;
   }
   &_wrap {
+  }
+  &_item_wrap {
+    max-height: 480px;
+    overflow-y: auto;
+    &::-webkit-scrollbar-track {
+      @include themeify {
+        background: themed("color-ffffff");
+      }
+    }
+    &::-webkit-scrollbar {
+      width: 6px !important;
+      height: 40px !important;
+      position: fixed;
+      bottom: 0;
+    }
+    &::-webkit-scrollbar-thumb {
+      height: 40px;
+      @include themeify {
+        background: themed("migration_color7");
+      }
+      // background: rgba(23, 23, 58, 0.4) !important;
+    }
   }
   &_item {
     height: 48px;

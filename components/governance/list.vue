@@ -15,10 +15,10 @@
             {{ Item.StatusText }}
           </div>
 
-          <h3>{{ Item.Title }}</h3>
+          <h3>{{ $t(Item.Title) }}</h3>
         </div>
         <div class="governance_list_item_perhaps_web WEB perhaps">
-          <p>{{ Item.Perhaps }}</p>
+          <p>{{ $t(Item.Perhaps) }}</p>
           <button class="b_button" @click="handleClickToDetails(Item)">
             {{ $t("Governance.Governance_text11") }}
           </button>
@@ -33,10 +33,10 @@
           </div>
         </div>
         <div class="governance_list_item_title_h5 H5 title">
-          <h3>{{ Item.Title }}</h3>
+          <h3>{{ $t(Item.Title) }}</h3>
         </div>
         <div class="governance_list_item_perhaps_h5 H5 perhaps">
-          <p>{{ Item.Perhaps }}</p>
+          <p>{{ $t(Item.Perhaps) }}</p>
           <button class="b_button" @click="handleClickToDetails(Item)">
             {{ $t("Governance.Governance_text11") }}
           </button>
@@ -207,6 +207,8 @@ export default {
     margin-top: 20px;
     > p {
       flex: 1;
+      padding-left: 20px;
+      text-indent: 2em;
     }
     > button {
       margin-left: 200px;
@@ -229,6 +231,7 @@ export default {
   }
   .governance_list_item_perhaps_h5 {
     margin-top: 20px;
+    text-indent: 2em;
     > button {
       margin-top: 24px;
     }

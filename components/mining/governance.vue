@@ -76,7 +76,7 @@
                       : 'stakeMining'
                   "
                 >
-                  {{ $t("Table.Stakeing") }}
+                  {{ $t("Governance.Governance_text23") }}
                   <i class="selectDown"></i>
                 </button>
                 <button
@@ -156,7 +156,7 @@
                   "
                   style="margin-right: 10px"
                 >
-                  {{ $t("Table.Stakeing") }}
+                  {{ $t("Governance.Governance_text23") }}
                 </button>
                 <button
                   @click="HandleClickAction(item, 'Claim', true)"
@@ -582,6 +582,9 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }
+    }
+    .stakeMining {
+      margin-left: 0;
     }
     button {
       padding: 0px 10px;

@@ -44,7 +44,7 @@
               </p>
             </section>
             <section class="item_pool_year_web WEB">
-              <span>{{ item.APR || "--" }}</span>
+              <span>{{ item.APY || "--" }}</span>
               <span>{{ item.YearEarnType }}</span>
             </section>
             <section class="item_pool_action_web WEB">
@@ -228,6 +228,7 @@
 
 <script>
 import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
+import { getPoolAPY } from "~/config/governance.js";
 import Pool from "./governance-pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
@@ -258,8 +259,17 @@ export default {
   },
   mounted() {
     this.FixPoolList = formatMiningPool(DaoPoolList);
+    this.$nextTick(() => {
+      this.initPool();
+    });
   },
   methods: {
+    initPool() {
+      console.log(DaoPoolList);
+      DaoPoolList.forEach(async (item) => {
+        await getPoolAPY(item);
+      });
+    },
     HandleClickAction(PoolData, Action, Flag = false) {
       this.ShowActiveMining = true;
       this.ActiveData = PoolData;

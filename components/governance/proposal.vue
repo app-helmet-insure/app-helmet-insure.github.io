@@ -249,19 +249,6 @@ export default {
             ProposalID: item.proposalID,
             ShowProposalID: ShowID,
           });
-          FixList.push({
-            ShowAddress:
-              item.address.substr(0, 1) +
-              item.address.substr(1, 1).toLowerCase() +
-              item.address.substr(2, 3) +
-              "..." +
-              item.address.substr(-4),
-            Address: item.address,
-            Amount: fromWei(item.amount),
-            ShowAmount: fixD(fromWei(item.amount), 4),
-            ProposalID: item.proposalID,
-            ShowProposalID: ShowID,
-          });
         });
         this.GovernanceTxList = FixList;
       });

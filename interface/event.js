@@ -170,7 +170,7 @@ export const getGovernance = () => {
       "https://api.thegraph.com/subgraphs/name/app-helmet-insure/helmet-governance",
     data: {
       query: `{
-        votes(first: 1000,where:{proposalID_in:[1,2]}) {
+        votes(first: 1000,where:{proposalID_in:[1,2,3]}) {
           id
           address
           proposalID

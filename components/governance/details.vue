@@ -30,8 +30,8 @@
       <div class="governance_details_votes_wrap">
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span
-              >{{ $t("Governance.Governance_text3") }}
+            <span>
+              <span>{{ $t("Governance.Governance_text3") }}</span>
               {{ fixD(Type1, 4) }} HELMET</span
             >
             <span>{{ Type1Number }}</span>
@@ -42,8 +42,8 @@
         </div>
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span
-              >{{ $t("Governance.Governance_text4") }}
+            <span>
+              <span>{{ $t("Governance.Governance_text4") }}</span>
               {{ fixD(Type2, 4) }} HELMET</span
             >
             <span>{{ Type2Number }}</span>
@@ -54,8 +54,8 @@
         </div>
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span
-              >{{ $t("Governance.Governance_text5") }}
+            <span>
+              <span>{{ $t("Governance.Governance_text5") }}</span>
               {{ fixD(Type3, 4) }} HELMET</span
             >
             <span>{{ Type3Number }}</span>
@@ -92,6 +92,7 @@
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { Contract } from "ethers-multicall-x";
 import { fixD } from "~/assets/js/util.js";
+import { getGovernance } from "~/interface/event.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -110,6 +111,9 @@ export default {
       SelfType1: 0,
       SelfType2: 0,
       SelfType3: 0,
+      Type1Number: 0,
+      Type2Number: 0,
+      Type3Number: 0,
     };
   },
   mounted() {
@@ -135,9 +139,77 @@ export default {
       if (Value) {
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
-          this.getSelfInfo();
+          // this.getSelfInfo();
+          this.getInfoData();
         });
       }
+    },
+    getInfoData() {
+      let Router = this.$route.params.id;
+      let FixGovernanceList = formatGovernance(GovernanceList);
+      const Proposal = FixGovernanceList.filter(
+        (item) => item.Router === Router
+      )[0];
+      const Account = this.CurrentAccount.account || window.CURRENTADDRESS;
+      getGovernance().then((res) => {
+        const List = res.data.data.votes;
+        const Type1List = List.filter(
+          (item) => item.proposalID == Proposal.Proposal[0].ID
+        );
+        const Type2List = List.filter(
+          (item) => item.proposalID == Proposal.Proposal[1].ID
+        );
+        const Type3List = List.filter(
+          (item) => item.proposalID == Proposal.Proposal[2].ID
+        );
+        const SelfType1List = List.filter(
+          (item) =>
+            item.proposalID == Proposal.Proposal[0].ID &&
+            item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const SelfType2List = List.filter(
+          (item) =>
+            item.proposalID == Proposal.Proposal[1].ID &&
+            item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const SelfType3List = List.filter(
+          (item) =>
+            item.proposalID == Proposal.Proposal[2].ID &&
+            item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const Type1 = Type1List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const Type2 = Type2List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const Type3 = Type3List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const SelfType1 = SelfType1List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const SelfType2 = SelfType2List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const SelfType3 = SelfType3List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const AllType = Type1 + Type2 + Type3;
+        this.Type1 = Type1;
+        this.Type2 = Type2;
+        this.Type3 = Type3;
+        this.SelfType1 = SelfType1;
+        this.SelfType2 = SelfType2;
+        this.SelfType3 = SelfType3;
+        this.AllType = AllType;
+        this.Type1Number =
+          Type1 > 0 ? fixD((Type1 / AllType) * 100) + "%" : "0%";
+        this.Type2Number =
+          Type2 > 0 ? fixD((Type2 / AllType) * 100) + "%" : "0%";
+        this.Type3Number =
+          Type3 > 0 ? fixD((Type3 / AllType) * 100) + "%" : "0%";
+      });
     },
     getSelfInfo() {
       let Router = this.$route.params.id;
@@ -272,7 +344,7 @@ export default {
       margin-top: 0;
     }
     .between {
-      span {
+      > span {
         &:nth-of-type(1) {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
@@ -282,6 +354,10 @@ export default {
           opacity: 0.5;
           font-weight: 600;
           line-height: 20px;
+          > span {
+            min-width: 75px;
+            display: inline-block;
+          }
         }
         &:nth-of-type(2) {
           font-size: 14px;

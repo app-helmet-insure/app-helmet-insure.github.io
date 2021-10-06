@@ -1,4 +1,14 @@
 import GovernanceABI from "~/web3/abis/Governance.json";
+import MiningABI from "~/web3/abis/MiningABI.json";
+import ApproveABI from "~/web3/abis/IPancakePair.json";
+import { Contract } from "ethers-multicall-x";
+import { fixD } from "~/assets/js/util.js";
+import {
+  toWei,
+  getOnlyMultiCallProvider,
+  processResult,
+  fromWei,
+} from "~/web3/index.js";
 export const GovernanceList = [
   {
     PoolAddress: "0x4E18F9Ed49ad3d3fDdadE4d1464ED71133AA1EAC",
@@ -96,4 +106,30 @@ const getShowTime = (time) => {
     )}</b><i>/</i>${FixMinute}<b>${window.$nuxt.$t("Content.MinM")}</b>`;
   }
   return template;
+};
+export const getPoolAPY = (PoolData) => {
+  const { PoolAddress } = PoolData;
+  const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
+  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const HelmetContracts = new Contract(HelmetAddress, MiningABI);
+  const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
+  const PoolContracts = new Contract(PoolAddress, GovernanceABI);
+  let PromiseList = [
+    ApproveContracts.allowance(HelmetFarm, PoolAddress),
+    PoolContracts.rewardsDuration(),
+    PoolContracts.totalSupply(),
+  ];
+  const MulticallProvider = getOnlyMultiCallProvider();
+  return MulticallProvider.all(PromiseList).then((res) => {
+    const FixData = processResult(res);
+    let [TotalRewards, PoolProcess, TotalStakeVolume] = FixData;
+    TotalRewards = fromWei(TotalRewards);
+    TotalStakeVolume = fromWei(TotalStakeVolume);
+    PoolProcess = PoolProcess / 86400;
+    const DailyReward = TotalRewards / PoolProcess;
+    const RewardValues = 1 + DailyReward / TotalStakeVolume;
+    const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
+    const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
+    return (PoolData.APR = APR), (PoolData.APY = APY);
+  });
 };

@@ -38,7 +38,7 @@ export const DaoPoolList = [
     ExitMethods: "exit",
 
     Key: "HELEMT",
-    Router:'link1',
+    Router: "link1",
     StartTime: "2021/10/03 16:30 UTC+8",
     FinishTime: "2021/10/04 16:30 UTC+8",
     PropoaslID: 1,
@@ -58,7 +58,7 @@ export const DaoPoolList = [
     Compound: true,
     ImgReward: true,
     NoProxy: false,
-    YearEarnType: "APR",
+    YearEarnType: "APY",
     APR: "--",
     APY: "--",
   },

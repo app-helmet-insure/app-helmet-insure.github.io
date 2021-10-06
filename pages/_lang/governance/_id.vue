@@ -64,28 +64,34 @@ export default {
     width: 80%;
     min-width: 1026px;
     margin: 0 auto;
+    background: transparent;
   }
   .governance_wrap {
     display: flex;
-    min-width: 1026px;
+    width: 1026px;
+    margin: 0 auto;
     @include themeify {
-      background: themed("color-ffffff");
+      // background: themed("color-ffffff");
+      background: #fff3de;
     }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
-    padding: 35px 20px;
+    padding: 0 20px;
   }
 }
 @media screen and (max-width: 750px) {
   .governance_wrap {
+    width: 95%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     @include themeify {
-      background: themed("color-ffffff");
+      // background: themed("color-ffffff");
+      background: #fff3de;
     }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
-    padding: 35px 20px;
+    padding: 0 10px;
   }
 }
 </style>

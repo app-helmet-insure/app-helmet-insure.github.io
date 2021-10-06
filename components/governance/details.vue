@@ -264,6 +264,7 @@ export default {
 @import "~assets/css/themes.scss";
 .governance_details {
   flex: 1;
+  padding: 50px 0 50px;
 }
 .between {
   display: flex;
@@ -274,12 +275,12 @@ export default {
   min-width: 326px;
   border-radius: 10px;
   @include themeify {
-    border: 1px solid themed("insure_button_border");
+    border: 1px solid #f7c396;
   }
   &_title {
     @include themeify {
-      color: themed("color-17173a");
-      border-bottom: 1px solid themed("insure_button_border");
+      color: #17173a;
+      border-bottom: 1px solid #f7c396;
     }
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -294,22 +295,22 @@ export default {
       &:nth-of-type(1) {
         margin-top: 0;
       }
-      span {
+      > span {
         &:nth-of-type(1) {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
           @include themeify {
-            color: themed("color-17173a");
+            color: #17173a;
           }
-          opacity: 0.7;
           line-height: 20px;
+          opacity: 0.7;
         }
         &:nth-of-type(2) {
           font-size: 14px;
           font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           @include themeify {
-            color: themed("color-17173a");
+            color: #17173a;
           }
           line-height: 20px;
         }
@@ -322,12 +323,12 @@ export default {
   min-width: 326px;
   border-radius: 10px;
   @include themeify {
-    border: 1px solid themed("insure_button_border");
+    border: 1px solid #f7c396;
   }
   &_title {
     @include themeify {
-      color: themed("color-17173a");
-      border-bottom: 1px solid themed("insure_button_border");
+      color: #17173a;
+      border-bottom: 1px solid #f7c396;
     }
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -349,14 +350,14 @@ export default {
           font-size: 14px;
           font-family: PingFangSC-Regular, PingFang SC;
           @include themeify {
-            color: themed("color-17173a");
+            color: #17173a;
           }
           opacity: 0.5;
           font-weight: 600;
           line-height: 20px;
           > span {
-            min-width: 75px;
             display: inline-block;
+            margin-right: 4px;
           }
         }
         &:nth-of-type(2) {
@@ -364,7 +365,7 @@ export default {
           font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 700;
           @include themeify {
-            color: themed("color-17173a");
+            color: #17173a;
           }
           line-height: 20px;
         }
@@ -375,7 +376,7 @@ export default {
       width: 100%;
       height: 6px;
       @include themeify {
-        background: themed("color-e8e8eb");
+        background: #fde4ce;
       }
       border-radius: 100px;
       overflow: hidden;
@@ -390,12 +391,12 @@ export default {
   margin-top: 20px;
   border-radius: 10px;
   @include themeify {
-    border: 1px solid themed("insure_button_border");
+    border: 1px solid #f7c396;
   }
   &_title {
     @include themeify {
-      color: themed("color-17173a");
-      border-bottom: 1px solid themed("insure_button_border");
+      color: #17173a;
+      border-bottom: 1px solid #f7c396;
     }
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -407,6 +408,10 @@ export default {
     padding: 20px;
   }
   &_votes {
+    margin-top: 20px;
+    &:nth-of-type(1) {
+      margin-top: 0;
+    }
     span {
       &:nth-of-type(1) {
         padding: 0 10px;
@@ -415,12 +420,12 @@ export default {
         align-items: center;
         justify-content: center;
         height: 32px;
-        background: #f8f9fa;
+        background: transparent;
         border-radius: 5px;
         @include themeify {
-          background: themed("color-f8f9fa");
-          border: 1px solid themed("insure_button_border");
-          color: themed("color-17173a");
+          // background: themed("color-f8f9fa");
+          border: 1px solid #f7c396;
+          color: #17173a;
         }
         font-size: 14px;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -431,7 +436,7 @@ export default {
         font-family: IBMPlexSans-Bold, IBMPlexSans;
         font-weight: bold;
         @include themeify {
-          color: themed("color-17173a");
+          color: #17173a;
         }
         line-height: 14px;
       }

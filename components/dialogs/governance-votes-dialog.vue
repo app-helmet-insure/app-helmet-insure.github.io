@@ -74,8 +74,7 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     reloadData(Value) {
       if (Value) {
@@ -103,29 +102,30 @@ export default {
     width: 90%;
   }
 }
-.between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  > span {
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    line-height: 14px;
-    opacity: 0.7;
-    @include themeify {
-      color: themed("color-17173a");
-    }
-  }
-  > p {
+.governance_dialog {
+  .between {
     display: flex;
-    font-size: 14px;
-    font-family: IBMPlexSans;
-    font-weight: bold;
-    @include themeify {
-      color: themed("color-17173a");
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    > span {
+      font-size: 14px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      line-height: 14px;
+      @include themeify {
+        color: themed("color-17173a");
+      }
     }
-    line-height: 14px;
+    > p {
+      display: flex;
+      font-size: 14px;
+      font-family: IBMPlexSans;
+      font-weight: bold;
+      @include themeify {
+        color: themed("color-17173a");
+      }
+      line-height: 14px;
+    }
   }
 }
 .governance_dialog_input {

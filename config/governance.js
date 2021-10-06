@@ -130,6 +130,7 @@ export const getPoolAPY = (PoolData) => {
     const RewardValues = 1 + DailyReward / TotalStakeVolume;
     const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
     const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
+    console.log(RewardValues, Math.pow(RewardValues, 365));
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };

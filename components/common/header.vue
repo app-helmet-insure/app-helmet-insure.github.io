@@ -328,7 +328,7 @@ export default {
     min-width: 1026px;
     // height: 80px;
     @include themeify {
-      background: themed("color-f8f9fa");
+      background: transparent;
     }
     .logo {
       display: none;
@@ -354,7 +354,7 @@ export default {
     justify-content: space-between;
     padding: 12px 10px 50px;
     @include themeify {
-      background: themed("color-ffffff");
+      background: transparent;
     }
     .logo {
       display: flex;

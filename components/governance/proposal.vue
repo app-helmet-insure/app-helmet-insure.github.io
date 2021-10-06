@@ -1,9 +1,9 @@
 <template>
   <div class="governance_proposal">
+    <div :class="['status_img', Proposal.StatusImg]">
+      {{ Proposal.StatusText }}
+    </div>
     <div class="governance_proposal_title">
-      <div :class="['status_img', Proposal.StatusImg]">
-        {{ Proposal.StatusText }}
-      </div>
       <h3>{{ $t(Proposal.Title) }}</h3>
     </div>
     <div class="governance_proposal_perhaps perhaps">
@@ -32,7 +32,7 @@
           </div>
         </div>
         <button
-          class="governance_proposal_action_button b_button"
+          class="governance_proposal_action_button"
           @click="handleClickVotes"
         >
           {{ $t("Governance.Governance_text14") }}
@@ -340,6 +340,7 @@ export default {
 @import "~assets/css/themes.scss";
 .governance_proposal {
   flex: 2;
+  position: relative;
 }
 .status_img {
   width: 90px;
@@ -349,7 +350,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .unopen {
   background-image: url("~/assets/img/governance/unopen.png");
@@ -357,7 +360,7 @@ export default {
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   @include themeify {
-    color: themed("color-ffffff");
+    color: #fff;
   }
   line-height: 20px;
 }
@@ -367,7 +370,7 @@ export default {
   font-family: IBMPlexSans-Bold, IBMPlexSans;
   font-weight: bold;
   @include themeify {
-    color: themed("color-ffffff");
+    color: #fff;
   }
   line-height: 20px;
 }
@@ -384,7 +387,7 @@ export default {
     font-size: 14px;
     font-family: IBMPlexSans;
     @include themeify {
-      color: themed("color-17173a");
+      color: #17173a;
     }
     opacity: 0.7;
     margin-top: 10px;
@@ -400,9 +403,9 @@ export default {
     font-family: IBMPlexSans-Bold, IBMPlexSans;
     font-weight: bold;
     @include themeify {
-      color: themed("color-17173a");
+      color: #17173a;
     }
-    margin-left: 15px;
+    margin-top: 45px;
   }
 }
 .governance_proposal_perhaps {
@@ -412,12 +415,12 @@ export default {
   margin-top: 20px;
   border-radius: 10px;
   @include themeify {
-    border: 1px solid themed("insure_button_border");
+    border: 1px solid #f7c396;
   }
   &_title {
     @include themeify {
-      color: themed("color-17173a");
-      border-bottom: 1px solid themed("insure_button_border");
+      color: #17173a;
+      border-bottom: 1px solid #f7c396;
     }
     font-size: 16px;
     font-family: PingFangSC-Medium, PingFang SC;
@@ -437,10 +440,12 @@ export default {
     width: 100%;
     height: 40px;
     @include themeify {
-      color: themed("color-17173a");
-      background: themed("color-f8f9fa");
-      border: 1px solid themed("insure_button_border");
+      color: #ffffff;
+      border: 1px solid #f7c396;
     }
+    background-image: url("../../assets/img/governance/type_button.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     border-radius: 5px;
     font-size: 14px;
     font-family: IBMPlexSans-Bold, IBMPlexSans;
@@ -449,32 +454,42 @@ export default {
     cursor: pointer;
     &:hover {
       @include themeify {
-        background: themed("color-f8f9fa");
+        // background: themed("color-f8f9fa");
       }
       border: 2px solid #fd7e14 !important;
     }
   }
   &_item_active {
     @include themeify {
-      background: themed("color-f8f9fa");
+      // background: themed("color-f8f9fa");
     }
     border: 2px solid #fd7e14 !important;
   }
   &_button {
+    width: 100%;
+    height: 40px;
     border-radius: 5px;
     margin-top: 16px;
+    background-image: url("../../assets/img/governance/submit_button.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 18px;
   }
 }
 .governance_proposal_history {
   border-radius: 10px;
   @include themeify {
-    border: 1px solid themed("insure_button_border");
+    border: 1px solid #f7c396;
   }
   margin-top: 20px;
   &_title {
     @include themeify {
-      color: themed("color-17173a");
-      border-bottom: 1px solid themed("insure_button_border");
+      color: #17173a;
+      border-bottom: 1px solid #f7c396;
     }
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 600;
@@ -508,20 +523,27 @@ export default {
   &_item {
     height: 48px;
     @include themeify {
-      border-bottom: 1px solid themed("insure_button_border");
+      border-bottom: 1px solid #f7c396;
     }
     padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     span {
+      flex: 1;
       font-size: 14px;
       font-family: PingFangSC-Semibold, PingFang SC;
       font-weight: 600;
       @include themeify {
-        color: themed("color-17173a");
+        color: #17173a;
       }
       line-height: 20px;
+      &:nth-of-type(3) {
+        text-align: right;
+      }
+      &:nth-of-type(1) {
+        flex: 2;
+      }
     }
   }
   &_button {
@@ -533,14 +555,25 @@ export default {
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     @include themeify {
-      color: themed("color-17173a");
+      color: #17173a;
     }
     line-height: 20px;
     cursor: pointer;
   }
 }
 @media screen and(min-width:750px) {
+  .governance_proposal {
+    padding-bottom: 50px;
+  }
 }
 @media screen and(max-width:750px) {
+  .governance_proposal {
+    &_title {
+      h3 {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
 }
 </style>

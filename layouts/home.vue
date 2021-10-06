@@ -24,7 +24,12 @@
     <!-- <PHeader></PHeader> -->
     <div class="content">
       <PSlider />
-      <div class="content_wrap">
+      <div
+        :class="[
+          'content_wrap',
+          routeObj.name.includes('governance') ? 'governance' : '',
+        ]"
+      >
         <PHeader :account="true" />
         <template>
           <transition name="fade">
@@ -207,6 +212,9 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "~/assets/css/themes.scss";
+.governance {
+  background: #f0debf !important;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

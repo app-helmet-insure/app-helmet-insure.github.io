@@ -16,12 +16,12 @@ export default {};
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
 .governance_title {
-  background: #b948ea;
+  background: #4b2910;
   border-radius: 5px;
   &_wrap {
     width: 100%;
     height: 100%;
-    background-image: url("../../assets/img/flashmining/flashmining_titlebg.png");
+    background-image: url("../../assets/img/governance/governance_titlebg.png");
     background-repeat: no-repeat;
     background-position: center center;
   }
@@ -46,7 +46,7 @@ export default {};
     margin: 30px auto 10px;
     &_wrap {
       margin: 0 auto;
-      background-image: url("../../assets/img/flashmining/flashmining_titlebg.png");
+      background-image: url("../../assets/img/governance/governance_titlebg.png");
       background-size: 1026px 100%;
     }
     &_text {
@@ -68,7 +68,7 @@ export default {};
     height: 120px;
     margin: 0 auto;
     &_wrap {
-      background-image: url("../../assets/img/flashmining/flashmining_titlebg_h5.png");
+      background-image: url("../../assets/img/governance/governance_titlebg.png");
       background-size: 100% 100%;
     }
     &_text {

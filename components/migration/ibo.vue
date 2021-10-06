@@ -182,8 +182,9 @@ export default {
       let NowTime = Date.now() / 1000;
       let StartTime = this.Start * 1;
       let FinishTime = this.Start * 1 + this.Span * 1;
+      console.log(NowTime, StartTime, FinishTime, StartTime - NowTime > 0);
       let DownTime =
-        StartTime - NowTime > 0 ? FinishTime - NowTime : FinishTime - NowTime;
+        StartTime - NowTime > 0 ? StartTime - NowTime : FinishTime - NowTime;
       const Day = Math.floor(DownTime / (24 * 3600));
       const Hour = Math.floor((DownTime - Day * 24 * 3600) / 3600);
       const Minute = Math.floor(

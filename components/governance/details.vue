@@ -80,7 +80,7 @@
           <span>{{ fixD(SelfType2, 4) }}</span>
         </div>
         <div class="governance_details_self_votes between">
-          <span>{{ $t("Governance.Governance_text3") }}</span>
+          <span>{{ $t("Governance.Governance_text5") }}</span>
           <span>{{ fixD(SelfType3, 4) }}</span>
         </div>
       </div>
@@ -106,8 +106,10 @@ export default {
       Proposal: {},
       Type1: 0,
       Type2: 0,
+      Type3: 0,
       SelfType1: 0,
       SelfType2: 0,
+      SelfType3: 0,
     };
   },
   mounted() {

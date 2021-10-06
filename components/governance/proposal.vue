@@ -114,7 +114,7 @@ export default {
       fixD,
       Proposal: {},
       Mining: {},
-      PropoaslID: 1,
+      PropoaslID: 2,
       CanDeposite: 0,
       VotesVisible: false,
       WaitingVisible: false,

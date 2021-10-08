@@ -1,4 +1,4 @@
 <script>
-import id from "~/pages/_lang/governance/_id.vue";
+import id from "~/pages/_lang/governance/detail.vue";
 export default id;
 </script>

@@ -139,8 +139,8 @@ export default {
       if (Value) {
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
-          // this.getSelfInfo();
-          this.getInfoData();
+          this.getSelfInfo();
+          // this.getInfoData();
         });
       }
     },
@@ -204,11 +204,11 @@ export default {
         this.SelfType3 = SelfType3;
         this.AllType = AllType;
         this.Type1Number =
-          Type1 > 0 ? fixD((Type1 / AllType) * 100) + "%" : "0%";
+          Type1 > 0 ? fixD((Type1 / AllType) * 100, 2) + "%" : "0%";
         this.Type2Number =
-          Type2 > 0 ? fixD((Type2 / AllType) * 100) + "%" : "0%";
+          Type2 > 0 ? fixD((Type2 / AllType) * 100, 2) + "%" : "0%";
         this.Type3Number =
-          Type3 > 0 ? fixD((Type3 / AllType) * 100) + "%" : "0%";
+          Type3 > 0 ? fixD((Type3 / AllType) * 100, 2) + "%" : "0%";
       });
     },
     getSelfInfo() {
@@ -244,15 +244,15 @@ export default {
         this.AllType = AllType;
         this.Type1Number =
           fromWei(Type1) > 0
-            ? fixD((fromWei(Type1) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type1) / AllType) * 100, 2) + "%"
             : "0%";
         this.Type2Number =
           fromWei(Type2) > 0
-            ? fixD((fromWei(Type2) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type2) / AllType) * 100, 2) + "%"
             : "0%";
         this.Type3Number =
           fromWei(Type3) > 0
-            ? fixD((fromWei(Type3) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type3) / AllType) * 100, 2) + "%"
             : "0%";
       });
     },

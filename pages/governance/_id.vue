@@ -1,13 +1,4 @@
-<template>
-  <h1>test-id={{$route.params.id}}</h1>
-</template>
-
 <script>
-export default {
-  name: "_id"
-}
+import id from "~/pages/_lang/governance/index.vue";
+export default id;
 </script>
-
-<style scoped>
-
-</style>

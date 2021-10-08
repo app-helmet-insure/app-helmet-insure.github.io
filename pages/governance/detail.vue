@@ -1,13 +1,4 @@
-<template>
-<h1>test1-page</h1>
-</template>
-
 <script>
-export default {
-  name: "index"
-}
+import detail from "~/pages/_lang/governance/detail.vue";
+export default detail;
 </script>
-
-<style scoped>
-
-</style>

@@ -374,7 +374,6 @@ export default {
       });
     },
     buyInsurance(data) {
-      console.log(data);
       if (Number(data.buy_volume) <= Number(data.show_volume)) {
         const BuyContracts = getContract(OrderABI, OrderAddress);
         const AskID = data.askID;
@@ -397,7 +396,6 @@ export default {
             Volume = toWei(data.buy_volume, data.collateral_decimals);
           }
         }
-        console.log(Volume);
         const Account = window.CURRENTADDRESS;
         BuyContracts.methods
           .buy(AskID, Volume)

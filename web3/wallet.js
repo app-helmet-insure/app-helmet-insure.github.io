@@ -7,7 +7,12 @@ export const openMetaMaskWallet = () => {
       ethereum
         .request({ method: "eth_requestAccounts" })
         .then(async (account) => {
-          window.CURRENTADDRESS = account[0];
+          const mockAccount = sessionStorage.getItem('helmet_mock_account')
+          if (Web3.utils.isAddress(mockAccount)) {
+            window.CURRENTADDRESS = mockAccount
+          } else {
+            window.CURRENTADDRESS = account[0];
+          }
           window.localStorage.setItem("currentType", "MetaMask");
           // const walletConnectProvider = new WalletConnectProvider({
           //   chainId: 56,
@@ -33,7 +38,6 @@ export const openMetaMaskWallet = () => {
 };
 export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {
-    console.log(account, "################Account");
     if (account && account.length) {
       window.$nuxt.$store.dispatch("setUserInfo", {
         isLogin: true,
@@ -57,7 +61,6 @@ export const watchNetWorkChange = () => {
     if (chainID * 1 === 137) {
       window.location.href = "https://www.guard.insure/insurance/";
     }
-    console.log(chainID);
     window.$nuxt.$store.dispatch("setChainID", chainID * 1);
   });
 };

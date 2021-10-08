@@ -169,7 +169,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.isLoading = true;
         this.getPolicysList();
@@ -297,7 +296,6 @@ export default {
                 fixD(newItem.und, 8) > 0 ||
                 precision.plus(newItem.col, newItem.claimBalance) > 0
             );
-            // console.log(1);
             this.isLoading = false;
             return this.PolicyList;
           }
@@ -306,7 +304,6 @@ export default {
     },
     toClaim(item) {
       let data = item;
-      console.log(data);
       let Contracts = getContract(FactoryABI, FactoryAddress);
       const Account = this.CurrentAccount.account;
       if (data.claimBalance != 0) {

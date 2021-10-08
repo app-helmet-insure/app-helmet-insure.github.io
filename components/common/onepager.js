@@ -19,14 +19,14 @@ export default {
     "MATH cover miss out policy. (It performs more like a call option of MATH)",
     "In this policy, the ratio of MATH & BNB is 1MATH = 0.014BNB",
     "It is the reasonable activate price, meaning that you could swap 0.014BNB+1$hMATH to 1MATH before the expire date.",
-    "For example, if $MATH hit 0.015BNB, you could activate the policy and swap 0.014BNB + 1$hMATH to 1 $MATH on www.helmet.insure, and get 0.001BNB as profit.",
+    "For example, if $MATH hit 0.015BNB, you could activate the policy and swap 0.014BNB + 1$hMATH to 1 $MATH on www.helmet.exchange, and get 0.001BNB as profit.",
     "Do not trade heavily on $hMATH unless you are clear about the trading risk",
     "As policy holding certification, there is an expiration date for the $hMATH, but as token, it is alive forever.",
   ],
   hAUTO: [
     "AUTO cover miss out policy. (It performs more like a call option of AUTO)",
     "The reasonable activate price is 1AUTO=42BNB, meaning that you could swap 42BNB+1$hAUTO to 1AUTO before the expire date.",
-    "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.insure, and get 8BNB as profit.",
+    "For example, if $AUTO hit 50BNB, you could activate the policy and swap 42BNB + 1$hAUTO to 1 $AUTO on www.helmet.exchange, and get 8BNB as profit.",
     "$hAUTO Flash Mining",
     "Start: Feb. 23rd 20:00 SGT",
     "End: Mar.9th 24:00",
@@ -34,7 +34,7 @@ export default {
   ],
   BNB500: [
     "$BNB500 is BNB cover miss out policy.",
-    "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.insure and 1000 for Flash Mining)",
+    "Limited edition: 1500 ( 500 for Airdrop to LP Miners on helmet.exchange and 1000 for Flash Mining)",
     "In this policy, we set a ratio: ",
     "BNB : BUSD = 1:500 ",
     "it means that you could swap 500 BUSD+1$BNB500 to 1BNB. It is the reasonable active price, for example, if BNB hit $600, you could active the policy and swap 500 BUSD + 1 $BNB500 to 1 BNB with 100BUSD profit.",
@@ -47,7 +47,7 @@ export default {
   hCTK: [
     "$CTK cover miss out policy.",
     "In this policy, we set a ratio of Helmet& CTK. HELMET : CTK = 2.5:1 (Anchored $1)",
-    "it means that you could swap 2.5Helmet+1$hCTK to 1CTK. It is the reasonable active price, for example, if $CTK hit $1.2, you could active the policy and swap 2.5 $helmet + 1$hCTK to 1 $CTK on www.helmet.insure)",
+    "it means that you could swap 2.5Helmet+1$hCTK to 1CTK. It is the reasonable active price, for example, if $CTK hit $1.2, you could active the policy and swap 2.5 $helmet + 1$hCTK to 1 $CTK on www.helmet.exchange)",
     "You could activate you policy after all airdrop landing. Since we have more than 9500 addresses to airdrop, it gonna take some time for them to land into your wallet.",
     "Do not trade heavily on LONG & HCCT & hCTK unless you get clear cognition of the trading risk",
     "As policy holding certification, there is an expiration date for the activation, but as token, LONG & HCCT & hCTK is alive forever.",
@@ -72,7 +72,7 @@ export default {
     "$hFOR is totally from Airdrop, please do not trade heavily on $hFOR",
   ],
   hBURGER: [
-    "A total of $450,000 $hBurger was given away to LPT Miners on helmet.insure (including Helmet-BNB, Helmet-LONG, Helmet-HCCT LPT Pool, PancakeSwap Helmet-BNB Farm) ",
+    "A total of $450,000 $hBurger was given away to LPT Miners on helmet.exchange (including Helmet-BNB, Helmet-LONG, Helmet-HCCT LPT Pool, PancakeSwap Helmet-BNB Farm) ",
     "Groundbreaking design of Policy Mining for Real Token!!! $60,000 COMBO Mining Bonus of $Helmet & $Burger !",
     "It is $Burger cover miss out policy. The reasonable activate price: 1 $Burger=0.07 BNB. For example, if $Burger hit 0.08 BNB, you could swap 0.07BNB+1$hBurger to 1 $Burger, and get 0.01BNB profit.",
     "Expire date: March, 9th, 2021",
@@ -226,12 +226,12 @@ export default {
     "Expire date: August 30th 24:00 SGT Helmet team took 2900 Helmet as premium for supporting $hMCRN policy creating.",
     "Do not trade heavily on $hMCRN, b/c if $MCRN fail to hit 7 BUSD, $hMCRN would just be used as short-term mining shovel and a souvenir token.",
   ],
-  hWIZARD:[
-     'It is $WIZARD cover miss out policy (CALL Option of $WIZARD).',
-     'The reasonable activate price: 1 $WIZARD=7 BUSD.' ,
-     'For example, if $WIZARD hit 10 BUSD before expiration date, you could swap 7 BUSD+1 $hWIZARD to 1 $WIZARD, and get net 3BUSD profit.',
-     'Total supply: 5000',
-     'Expire date: August 30th 24:00 SGT Helmet team took 5000 Helmet as premium for supporting $hWIZARD policy creating.',
-     'Do not trade heavily on $hWIZARD, b/c if $WIZARD fail to hit 7 BUSD, $hWIZARD would just be used as short-term mining shovel and a souvenir token.'
-  ]
+  hWIZARD: [
+    "It is $WIZARD cover miss out policy (CALL Option of $WIZARD).",
+    "The reasonable activate price: 1 $WIZARD=7 BUSD.",
+    "For example, if $WIZARD hit 10 BUSD before expiration date, you could swap 7 BUSD+1 $hWIZARD to 1 $WIZARD, and get net 3BUSD profit.",
+    "Total supply: 5000",
+    "Expire date: August 30th 24:00 SGT Helmet team took 5000 Helmet as premium for supporting $hWIZARD policy creating.",
+    "Do not trade heavily on $hWIZARD, b/c if $WIZARD fail to hit 7 BUSD, $hWIZARD would just be used as short-term mining shovel and a souvenir token.",
+  ],
 };

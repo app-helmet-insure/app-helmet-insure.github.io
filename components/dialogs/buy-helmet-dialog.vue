@@ -190,11 +190,9 @@ export default {
       }
     },
     getBalance(newValue) {
-      console.log(newValue);
       const Account = this.CurrentAccount.account;
       if (this.activeData.symbol == "BNB") {
         window.WEB3.eth.getBalance(Account).then((res) => {
-          console.log(res);
           this.Balance = fixD(fromWei(res), 4);
         });
       } else {

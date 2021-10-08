@@ -1,10 +1,7 @@
 <template>
   <div class="mining_list">
-    <div v-for="item in FixPoolList" :key="item.key">
-      <div
-        :class="['finshed_line', 'finshed_pc']"
-        v-if="item.key == 'HELMETMCRN'"
-      >
+    <div v-for="item in FixPoolList" :key="item.Key">
+      <div class="finshed_line" v-if="item.Key == 'HELMETMCRN'">
         <p></p>
         <i :class="storeThemes + '_star'"></i>
         <span>Finished</span>
@@ -319,7 +316,7 @@ import Wraper from "~/components/common/wraper.vue";
 import Pool from "./mining-pool.vue";
 import PHeader from "~/components/common/header.vue";
 import {
-  comboPoolList,
+  TokenPoolList,
   formatMiningPool,
   getComboAPR,
   getAPRAndAPY,
@@ -345,7 +342,7 @@ export default {
     };
   },
   mounted() {
-    this.FixPoolList = formatMiningPool(comboPoolList);
+    this.FixPoolList = formatMiningPool(TokenPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
@@ -375,7 +372,7 @@ export default {
   },
   methods: {
     initPool() {
-      comboPoolList.forEach(async (item) => {
+      TokenPoolList.forEach(async (item) => {
         if (item.PoolType === "combo") {
           await getComboAPR(item);
         }
@@ -386,7 +383,6 @@ export default {
           await getCandyAPR(item);
         }
       });
-      console.log(comboPoolList);
     },
     hadnleShowOnePager(e, ONE_PAGER) {
       if (e.target.tagName === "I" && ONE_PAGER) {
@@ -401,7 +397,6 @@ export default {
       }
     },
     toCompound() {
-      console.log(this.HelmetBalance);
       this.$bus.$emit("OPEN_COMPOUND", {
         title: "Compound HELMET Earned",
         number: this.HelmetBalance,
@@ -699,6 +694,9 @@ export default {
       display: flex;
       justify-content: flex-end;
       min-width: 200px;
+      .stakeMining {
+        margin-left: 0;
+      }
       button {
         padding: 0px 10px;
         height: 36px;

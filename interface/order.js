@@ -60,17 +60,6 @@ export const onIssueSell = async (data_, callBack) => {
   try {
     const Contract = await expERC20(data.currency);
     await oneKeyArrpove(Contract, "ORDER", data.total, callBack);
-    console.log(
-      data.currency,
-      data.category,
-      data.price,
-
-      data.expire,
-      data.volume,
-      data.settleToken,
-      data.premium
-    );
-
     const orderContract = await Order();
     orderContract.methods
       .sell(
@@ -168,7 +157,6 @@ export const onIssueSellOnETH = async (data_, callBack) => {
   try {
     const Contract = await expERC20(data.currency);
     await oneKeyArrpove(Contract, "ORDER", data.total, callBack);
-    console.log(data.premium);
     const orderContract = await Order();
     orderContract.methods
       .sellOnETH(
@@ -490,7 +478,6 @@ export const onExercise = async (data, flag, callback) => {
   if (JSON.stringify(data) === "{}") {
     return false;
   }
-  console.log(data);
   bus.$emit("ONEXERCISE_PENDING", data.bidID);
   const charID = window.chainID;
   let adress = getAddress(data.token, charID);

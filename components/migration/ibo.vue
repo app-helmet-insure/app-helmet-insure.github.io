@@ -138,8 +138,8 @@ export default {
         });
       }
     },
-    refreshData(Value, NewValue) {
-      if (Value != NewValue) {
+    refreshData(NewValue, Value) {
+      if (Value != NewValue && NewValue > Value) {
         this.getBurnsInfo();
       }
     },
@@ -217,6 +217,7 @@ export default {
         };
         this.MigrationStatus = "Expired";
       }
+      clearInterval(this.TimeForMat);
     },
     handleClickMigrate() {
       if (!this.BurnVolume) {
@@ -253,7 +254,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `You will approve HELMET to Helmet.insure`;
+            this.WaitingText = `You will approve HELMET to Helmet`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {

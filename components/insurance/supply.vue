@@ -10,14 +10,31 @@
           <div class="input">
             <el-input
               v-model="CallStrikePrice"
-              :maxlength="ActiveData.LastPriceDecimals + 4"
+              :maxlength="ActiveData.LastPriceDecimals"
+              ref="CallStrikePrice"
             />
-            <span
-              >{{ ActiveData.InsuranceName }}/{{
-                ActiveData.InsurancePut
-              }}</span
-            >
+            <span>{{ ActiveData.InsurancePut }}</span>
           </div>
+        </div>
+        <div class="slider_call">
+          <div class="slider_info">
+            <span>+50%</span>
+            <el-slider
+              v-model="SliderCallStrikePrice"
+              :min="50"
+              :max="150"
+              :step="1"
+              :format-tooltip="formatCallStrikeTooltip"
+            />
+            <span>+150%</span>
+          </div>
+          <svg
+            class="icon slider_change"
+            aria-hidden="true"
+            @click="handleClickCallStrikePrice"
+          >
+            <use xlink:href="#icon-change"></use>
+          </svg>
         </div>
         <div class="insure_dpr">
           <div class="dpr_desc">
@@ -98,14 +115,33 @@
           <div class="input">
             <el-input
               v-model="PutStrikePrice"
-              :maxlength="ActiveData.LastPriceDecimals + 4"
+              :maxlength="ActiveData.LastPriceDecimals"
+              ref="PutStrikePrice"
             />
-            <span
-              >{{ ActiveData.InsuranceName }}/{{
-                ActiveData.InsurancePut
-              }}</span
-            >
+            <span>
+              {{ ActiveData.InsurancePut }}
+            </span>
           </div>
+        </div>
+        <div class="slider_put">
+          <div class="slider_info">
+            <span>-25%</span>
+            <el-slider
+              v-model="SliderPutStrikePrice"
+              :min="25"
+              :max="75"
+              :step="1"
+              :format-tooltip="formatPutStrikeTooltip"
+            />
+            <span>-75%</span>
+          </div>
+          <svg
+            class="slider_change"
+            aria-hidden="true"
+            @click="handleClickPutStrikePrice"
+          >
+            <use xlink:href="#icon-change"></use>
+          </svg>
         </div>
         <div class="insure_dpr">
           <div class="dpr_desc">
@@ -233,7 +269,9 @@ export default {
       CallApproveStatus: false,
       PutApproveStatus: false,
       CallStrikePrice: "",
+      SliderCallStrikePrice: 100,
       PutStrikePrice: "",
+      SliderPutStrikePrice: 50,
       WaitingVisible: false,
       SuccessVisible: false,
       WaitingText: "",
@@ -282,17 +320,42 @@ export default {
         immediate: true,
       },
     },
+    SliderCallStrikePrice: {
+      handler: {
+        handler: "watchSliderCall",
+        immediate: true,
+      },
+    },
+    SliderPutStrikePrice: {
+      handler: {
+        handler: "watchSliderPut",
+        immediate: true,
+      },
+    },
   },
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.getBalance();
         this.getApproveStatus();
         this.$nextTick(() => {
           this.getPrice();
         });
       }
+    },
+    watchSliderCall(Value) {
+      this.CallStrikePrice =
+        fixD(
+          this.ActiveData.LastPrice * (1 + Value / 100),
+          this.ActiveData.LastPriceDecimals
+        ) + "";
+    },
+    watchSliderPut(Value) {
+      this.PutStrikePrice =
+        fixD(
+          this.ActiveData.LastPrice * (1 - Value / 100),
+          this.ActiveData.LastPriceDecimals
+        ) + "";
     },
     waitingClose() {
       this.WaitingVisible = false;
@@ -301,6 +364,20 @@ export default {
       this.SuccessVisible = false;
     },
 
+    handleClickCallStrikePrice() {
+      this.CallStrikePrice = "";
+      this.$refs.CallStrikePrice.focus();
+    },
+    handleClickPutStrikePrice() {
+      this.PutStrikePrice = "";
+      this.$refs.PutStrikePrice.focus();
+    },
+    formatCallStrikeTooltip(value) {
+      return `+${value}%`;
+    },
+    formatPutStrikeTooltip(value) {
+      return `-${value}%`;
+    },
     getBalance() {
       let CallInsurance = getCurrentInsurance({
         Type: "Call",
@@ -490,7 +567,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `<p>You will approve <b>${CallCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+            this.WaitingText = `<p>You will approve <b>${CallCollateralSymbol}</b> to <b>Helmet</b></p>`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
@@ -512,7 +589,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `<p>You will approve <b>${PutCollateralSymbol}</b> to <b>Helmet.insure</b></p>`;
+            this.WaitingText = `<p>You will approve <b>${PutCollateralSymbol}</b> to <b>Helmet</b></p>`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {
@@ -546,8 +623,10 @@ export default {
     },
     waitConfirm(Type) {
       if (
-        (Type === "Call" && !this.CallPolicyNumber && !this.CallStrikePrice) ||
-        (Type === "Put" && !this.PutPolicyNumber && !this.PutStrikePrice)
+        (Type === "Call" && !this.CallPolicyNumber) ||
+        !this.CallStrikePrice ||
+        (Type === "Put" && !this.PutPolicyNumber) ||
+        !this.PutStrikePrice
       ) {
         return;
       }
@@ -614,6 +693,7 @@ export default {
         Expiry,
         SettleTokenAddress,
       } = CurrentInsurance;
+
       let Volume, Price, StrikePrice, Premium;
       if (Type === "Call") {
         Volume = CallPolicyNumber;
@@ -727,6 +807,40 @@ export default {
       line-height: 16px;
     }
   }
+}
+.slider_call,
+.slider_put {
+  width: 100%;
+  margin: 15px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.slider_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  span {
+    font-size: 14px;
+    font-family: IBMPlexSans-Medium, IBMPlexSans;
+    font-weight: 600;
+    @include themeify {
+      color: themed("color-17173a");
+    }
+  }
+  > div {
+    flex: 1;
+    margin: 0 10px;
+  }
+}
+.slider_change {
+  width: 30px;
+  height: 30px;
+  @include themeify {
+    fill: themed("color-17173a");
+  }
+  cursor: pointer;
 }
 .insure_dpr {
   margin-top: 16px;

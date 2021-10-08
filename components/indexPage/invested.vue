@@ -2,7 +2,7 @@
   <div class="helmet_invested">
     <div class="invested"></div>
     <p class="introduction">
-      Helmet.insure is invested by Binance in March 2021 to provide a more
+      Helmet is invested by Binance in March 2021 to provide a more
       competitive option and insurance protocol for on-chain and cross-chain
       trading.
     </p>

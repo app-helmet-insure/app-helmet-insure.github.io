@@ -17,6 +17,7 @@ import IBOCard from "~/components/ibo/ibo_card.vue";
 import { iboPools } from '../../../config/ibo'
 export default {
   layout: "home",
+  name: "ibo",
   components: {
     IBOMingTitle,
     IBOCard,

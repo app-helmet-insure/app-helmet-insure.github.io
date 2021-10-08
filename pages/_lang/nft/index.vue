@@ -14,6 +14,7 @@ import NFTDIALGO from "~/components/nft/nft_dialog";
 import NFTWINDOW from "~/components/nft/nft_window";
 export default {
   layout: "home",
+  name: "nft",
   components: {
     NFTTITLE,
     NFTCARDBOOK,

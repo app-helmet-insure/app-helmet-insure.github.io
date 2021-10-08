@@ -8,6 +8,7 @@
 import MySupply from "~/components/insurance/my-supply.vue";
 export default {
   layout: "home",
+  name: "mySupply",
   components: {
     MySupply,
   },

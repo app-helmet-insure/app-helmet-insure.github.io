@@ -62,7 +62,7 @@ export default {
   methods: {
     handleClickToDetails(Data) {
       this.$router.push({
-        path: `governance/${Data.Router}`,
+        path: `governance/detail/?id=${Data.Router}`,
       });
     },
   },

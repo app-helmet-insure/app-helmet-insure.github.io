@@ -16,8 +16,8 @@
 
 <script>
 import Title from "~/components/governance/title.vue";
-import Proposal from "~/components/governance/proposal.vue";
-import Details from "~/components/governance/details.vue";
+import Proposal from "~/components/governance/proposalTest.vue";
+import Details from "~/components/governance/detailsTest.vue";
 export default {
   layout: "home",
   name: "governance-id",

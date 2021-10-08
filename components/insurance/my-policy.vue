@@ -361,7 +361,6 @@ export default {
               (a, b) => Number(b.BidID) - Number(a.BidID)
             );
             this.PolicyList = returnList;
-            console.log(returnList);
             this.isLoading = false;
           });
         }
@@ -407,7 +406,7 @@ export default {
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
-          this.WaitingText = `You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet.insure</b>`;
+          this.WaitingText = `You will approve <b>${data.UnderlyingSymbol}</b> to <b>Helmet</b>`;
         })
         .on("receipt", (receipt) => {
           if (!this.SuccessVisible) {
@@ -432,7 +431,7 @@ export default {
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
-          this.WaitingText = `You will approve <b>LONG</b> to <b>Helmet.insure</b>`;
+          this.WaitingText = `You will approve <b>LONG</b> to <b>Helmet</b>`;
         })
         .on("receipt", (receipt) => {
           if (!this.SuccessVisible) {

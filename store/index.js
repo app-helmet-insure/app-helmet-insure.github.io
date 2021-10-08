@@ -1,3 +1,5 @@
+import Web3 from "web3";
+
 export const state = () => ({
   locale: "en_US",
   chainID: null,
@@ -61,6 +63,12 @@ export const mutations = {
     state.walletType = data;
   },
   SET_USER_INFO(state, data) {
+    const mockAccount = sessionStorage.getItem('helmet_mock_account')
+    if (Web3.utils.isAddress(mockAccount)) {
+      Object.assign(data, {
+        account: mockAccount
+      })
+    }
     state.userInfo = data;
   },
   SET_REFRESH_DATA(state) {

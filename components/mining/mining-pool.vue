@@ -255,8 +255,7 @@
         <i></i>
       </div>
       <div class="tips" v-if="ActiveData.Tips">
-        奖励实际要在 Mars ecosystem 领取, 并且奖励会在 180 天内进行线性释放,
-        每个释放周期为 3 天. 详情请前往 Mars ecosystem.
+        {{ $t("Tip.MiningTip3") }}
       </div>
     </div>
     <!-- dialog -->
@@ -336,7 +335,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
           this.getPoolInfo();
@@ -435,11 +433,12 @@ export default {
           PoolContracts[CanWithDrawMethods](...Params),
           NoProxy ? StakeContracts.totalSupply() : PoolContracts.totalSupply(),
           PoolContracts[CanClaim1Methods](...Params),
-          PoolContracts[CanClaim2Methods](...Params),
           ApproveContracts.allowance(Account, PoolAddress),
         ];
+        if (CanClaim2Methods) {
+          PromiseList.push(PoolContracts[CanClaim2Methods](...Params));
+        }
       }
-
       const MulticallProvider = getOnlyMultiCallProvider();
       MulticallProvider.all(PromiseList).then((res) => {
         const FixData = processResult(res);
@@ -477,8 +476,8 @@ export default {
             CanWithdraw,
             TotalDeposite,
             CanClaim1,
-            CanClaim2,
             ApproveStatus,
+            CanClaim2,
           ] = FixData;
 
           this.CanDeposite = fromWei(CanDeposite, StakeDecimals);
@@ -488,7 +487,7 @@ export default {
           );
           this.TotalDeposite = fromWei(TotalDeposite, StakeDecimals);
           this.CanClaim1 = fromWei(CanClaim1, RewardDecimals);
-          this.CanClaim2 = fromWei(CanClaim2, RewardDecimals);
+          this.CanClaim2 = CanClaim2 ? fromWei(CanClaim2, RewardDecimals) : 0;
           this.MyPoolShare = fixD(
             (this.CanWithdraw / this.TotalDeposite) * 100,
             2
@@ -522,7 +521,7 @@ export default {
           .send({ from: Account })
           .on("transactionHash", (hash) => {
             this.WaitingVisible = true;
-            this.WaitingText = `You will approve ${TokenSymbol} to Helmet.insure`;
+            this.WaitingText = `You will approve ${TokenSymbol} to Helmet`;
           })
           .on("receipt", (receipt) => {
             if (!this.SuccessVisible) {

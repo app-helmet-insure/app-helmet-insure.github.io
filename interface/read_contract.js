@@ -305,7 +305,6 @@ export const TotalBurns = async (ContractAddress, Address) => {
   let Contracts = await Web3Contract(MigrationABI, ContractAddress);
   let Account = await getAccounts();
   Address ? Address : Account;
-  console.log(ContractAddress, Address);
   return Contracts.methods
     .totalBurns(Address)
     .call()

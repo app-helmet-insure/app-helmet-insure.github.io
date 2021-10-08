@@ -191,7 +191,6 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        console.log(Value);
         this.isLogin = Value.isLogin;
         this.isLoading = true;
         this.getPolicysList();
@@ -351,7 +350,6 @@ export default {
           let FixList = FixListPush.sort(
             (a, b) => Number(b.AskID) - Number(a.AskID)
           );
-          console.log(FixList);
           FixList = FixList.sort((a, b) => a.Sort - b.Sort);
           this.PolicyList = FixList;
           this.isLoading = false;

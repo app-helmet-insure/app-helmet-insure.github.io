@@ -5,14 +5,15 @@
         <a href="https://www.certik.org/projects/helmet" target="_blank"></a>
       </div>
       <vue-typed-js
-        :strings="[
-          `<span class='orange' style='color:orange'>HELMET</span><span class='white'  style='color:white'>.INSURE</span>`,
-        ]"
+        :strings="[`<span class='orange' style='color:orange'>HELMET</span>`]"
         :typeSpeed="100"
       >
         <h3 class="typing"></h3>
       </vue-typed-js>
-      <p>Crypto-assets insurance trading platform</p>
+      <p>
+        An Options trading platform with customized service, flexible trading
+        and innovative farms equipped.
+      </p>
       <div class="btn_link">
         <div class="bsc_dapp">
           <nuxt-link to="/insurance">
@@ -24,6 +25,11 @@
           <a href="https://www.guard.insure/insurance/">
             <img src="../../assets/img/home/matic.png" alt="" />Launch Guard On
             Polygon
+          </a>
+        </div>
+        <div class="eth_dapp">
+          <a href="https://www.guard.insure/insurance/">
+            <img src="../../assets/img/home/eth.png" alt="" />Helmet On Layer2 Coming Soon
           </a>
         </div>
       </div>
@@ -121,6 +127,8 @@ export default {
       }
     }
     > p {
+      margin: 0 auto;
+      text-align: center;
       font-family: Erbaum-Book;
       font-weight: normal;
       color: #9098a2;
@@ -186,6 +194,29 @@ export default {
           box-shadow: 0px 10px 16px 0px rgba(255, 255, 255, 0.3);
         }
       }
+      .eth_dapp {
+        box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 1),
+          rgba(195, 195, 195, 0),
+          rgba(238, 238, 238, 1)
+        );
+        a {
+          background: linear-gradient(
+            130deg,
+            #9a9a9b 0%,
+            #7c7c7c 45%,
+            #c9a970 100%
+          );
+          opacity: 0.3;
+          color: #121212;
+        }
+        &:hover {
+          transform: translateY(-3px);
+          box-shadow: 0px 10px 16px 0px rgba(255, 255, 255, 0.3);
+        }
+      }
     }
   }
   &_r {
@@ -220,6 +251,7 @@ export default {
         }
       }
       > p {
+        width: 900px;
         margin-top: 10px;
         font-size: 36px;
         line-height: 40px;
@@ -231,6 +263,9 @@ export default {
         margin: 0 10px;
       }
       .matic_dapp {
+        margin: 0 10px;
+      }
+      .eth_dapp {
         margin: 0 10px;
       }
     }
@@ -270,6 +305,9 @@ export default {
         margin-top: 20px;
       }
       .matic_dapp {
+        margin-top: 20px;
+      }
+      .eth_dapp {
         margin-top: 20px;
       }
     }

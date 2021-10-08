@@ -19,7 +19,7 @@ export const HelmetCitysInfo = [
       "Where are the risks, insurance can come in handy, even in the DeFi markets.",
       "DeFi markets, which is — by all means — not without risk. That is why you need to protect yourself against market fluctuations and unforeseen circumstances. Thus, it remains a puzzle that requires solutions in the DeFi markets to hedge a part of your DeFi exposure with decentralized insurance.",
       "And that’s where Helmet comes into play.",
-      "In brief, helmet.insure flexiblly realizes reasonable price discovery, effective risk hedging as well as apt asset allocation.",
+      "In brief, helmet flexiblly realizes reasonable price discovery, effective risk hedging as well as apt asset allocation.",
     ],
     flagshow: false,
   },
@@ -110,8 +110,8 @@ export const HelmetMoreCardInfo = [
     cardname: "Helmet Betting Rounds: Binance call",
     index: 1,
     cardinfo: [
-      "HELMET holders and Helmet.insure users of the world!",
-      "Today, we are super happy to share: Helmet.insure has received strategic investment from Binance!!!!!",
+      "HELMET holders and Helmet users of the world!",
+      "Today, we are super happy to share: Helmet has received strategic investment from Binance!!!!!",
       "We will work closely with BSC community and Binance to provide a more competitive option & insurance protocol for cross-chain and on-chain trading.",
     ],
     link: "https://twitter.com/Helmet_insure/status/1369551295376363520",
@@ -120,7 +120,7 @@ export const HelmetMoreCardInfo = [
     cardname: "Helmet New Steps",
     index: 2,
     cardinfo: [
-      "We are all on the grind for the shining future for consecutive months and luckily, we have 8 new industrious partners in our team. and by the way, new version of helmet.insure official website is going to live next week.",
+      "We are all on the grind for the shining future for consecutive months and luckily, we have 8 new industrious partners in our team. and by the way, new version of helmet official website is going to live next week.",
       "1.Colorful LPT Mining Pools",
       "2.IBO (Initial Token Offering with 50% raising HELMET burnt)",
       "3.Diversify Insurance Categories",

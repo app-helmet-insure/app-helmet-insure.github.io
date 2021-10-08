@@ -233,7 +233,7 @@
 </template>
 
 <script>
-import { lptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
+import { LptPoolList, formatMiningPool, getLptAPR } from "~/config/mining.js";
 import Pool from "./mining-pool.vue";
 import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
@@ -263,14 +263,14 @@ export default {
     },
   },
   mounted() {
-    this.FixPoolList = formatMiningPool(lptPoolList);
+    this.FixPoolList = formatMiningPool(LptPoolList);
     this.$nextTick(() => {
       this.initPool();
     });
   },
   methods: {
     initPool() {
-      lptPoolList.forEach(async (item) => {
+      LptPoolList.forEach(async (item) => {
         if (item.PoolType === "lpt") {
           await getLptAPR(item);
         }
@@ -315,6 +315,7 @@ export default {
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
 .lpt_mining {
+  margin-top: 10px;
   width: 100%;
   background: #ffffff;
   padding: 2px;
@@ -597,6 +598,8 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }
+    }  .stakeMining {
+      margin-left: 0;
     }
     button {
       padding: 0px 10px;
@@ -648,7 +651,7 @@ export default {
         }
       }
     }
-    .activeButtonWEB {
+    .activeButton {
       border: 2px solid #fd7e14 !important;
       padding: 0px 9px !important;
       color: #fd7e14 !important;

@@ -219,7 +219,6 @@ export default {
   mounted() {
     this.formatInsuranceData();
     this.InsuanceData = InsuranceTypeList;
-    console.log(this.InsuanceData);
   },
   methods: {
     formatInsuranceData() {

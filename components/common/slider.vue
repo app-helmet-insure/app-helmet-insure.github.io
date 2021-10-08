@@ -9,7 +9,7 @@
   >
     <div class="slider_wrap">
       <a
-        href="https://www.helmet.insure/"
+        href="https://www.helmet.exchange/"
         @mouseenter="whirlLogo(true)"
         @mouseleave="whirlLogo(false)"
         :class="['logo', whirlLogoFlag && 'whirl_logo', storeThemes + '_logo']"
@@ -33,7 +33,7 @@
                 <svg class="icon svg-icon" aria-hidden="true">
                   <use xlink:href="#icon-insurance"></use>
                 </svg>
-                {{ $t("Table.safe") }}
+                {{ $t("Table.Safe") }}
                 <svg
                   :class="
                     routeObj.name === 'insurance'
@@ -129,13 +129,6 @@
               to="/iio"
               :class="routeObj.name.includes('iio') ? 'active' : ''"
             >
-              <!-- <svg class="hot" aria-hidden="true">
-                <use
-                  :href="`#icon-${
-                    routeObj.name.includes('iio') ? 'hot1' : 'hot'
-                  }`"
-                ></use>
-              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-iio"></use>
               </svg>
@@ -155,36 +148,29 @@
                   }`"
                 ></use>
               </svg>
-              <svg
-                t="1628841152515"
-                class="icon"
-                viewBox="0 0 1024 1024"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="3325"
-                width="24"
-                height="24"
-              >
-                <path
-                  d="M810.666667 810.666667V418.133333l-298.666667-234.666666-298.666667 234.666666V810.666667h597.333334z m85.333333 42.666666c0 25.6-17.066667 42.666667-42.666667 42.666667H170.666667c-25.6 0-42.666667-17.066667-42.666667-42.666667V396.8c0-12.8 4.266667-25.6 17.066667-34.133333l341.333333-268.8c17.066667-12.8 38.4-12.8 51.2 0l341.333333 268.8c12.8 8.533333 17.066667 21.333333 17.066667 34.133333V853.333333zM298.666667 512h85.333333c0 72.533333 55.466667 128 128 128s128-55.466667 128-128h85.333333c0 119.466667-93.866667 213.333333-213.333333 213.333333s-213.333333-93.866667-213.333333-213.333333z"
-                  p-id="3326"
-                ></path>
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-ibo"></use>
               </svg>
               {{ $t("Header.IBO") }}
             </nuxt-link>
           </div>
           <div class="menu_item">
             <nuxt-link
+              to="/governance"
+              :class="routeObj.name.includes('governance') ? 'active' : ''"
+            >
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-vote"></use>
+              </svg>
+              governance
+            </nuxt-link>
+          </div>
+
+          <div class="menu_item">
+            <nuxt-link
               to="/nft"
               :class="routeObj.name === 'nft' ? 'active' : ''"
             >
-              <!-- <svg class="hot" aria-hidden="true">
-              <use
-                :href="`#icon-${
-                  routeObj.name.includes('nft') ? 'new1' : 'new'
-                }`"
-              ></use>
-            </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-nft"></use>
               </svg>
@@ -330,7 +316,6 @@ export default {
       this.$route.path !== "/insurance";
     },
     storeThemes(newValue) {
-      console.log(newValue);
     },
   },
   methods: {
@@ -363,7 +348,7 @@ export default {
   }
   .slider {
     position: relative;
-    width: 260px;
+    width: 300px;
     height: calc(100vh - 50px);
     @include themeify {
       background-color: themed("color-ffffff");
@@ -827,7 +812,7 @@ export default {
     top: 0;
     background: rgba(0, 0, 0, 0.5);
     .slider_wrap {
-      width: 230px;
+      width: 260px;
       height: 100%;
       padding: 50px 20px 0;
       display: flex;

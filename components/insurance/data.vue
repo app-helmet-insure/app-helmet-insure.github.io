@@ -46,7 +46,7 @@
                   :startVal="Number(0)"
                   :endVal="Number(TotalHelmetsBorrowedVolume)"
                   :duration="2000"
-                  :decimals="2"
+                  :decimals="0"
                 />
               </template>
             </span>
@@ -141,7 +141,6 @@ export default {
         this.TotalHelmetsBorrowedVolume = res;
       });
       this.getHelmetVolume().then((res) => {
-        console.log(res);
         this.Helmetvolume = res;
       });
 

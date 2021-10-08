@@ -140,7 +140,6 @@ export default {
         RewardAddress,
         this.About.Decimals
       );
-      console.log(AvailableVolume);
       let SwapBalance = await getBalance(
         "0xe9e7cea3dedca5984780bafc599bd69add087d56"
       );

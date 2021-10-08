@@ -50,17 +50,14 @@ export const Order = async () => {
 };
 export const Deposite = async (adress) => {
   const WEB3 = await web3();
-  // const charID = await getID();
   return await new WEB3.eth.Contract(MiningABI, adress);
 };
 export const expERC20 = async (address) => {
   const WEB3 = await web3();
-  // console.log('window.WEB3###', window.WEB3);
   return await new WEB3.eth.Contract(ERC20ABI.abi, address);
 };
 export const TokenExpERC20 = async (address) => {
   const WEB3 = await web3();
-  // console.log('window.WEB3###', window.WEB3);
   return await new WEB3.eth.Contract(token_abi, address);
 };
 export const TokenOrder = async (address) => {

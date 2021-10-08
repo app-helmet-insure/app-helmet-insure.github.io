@@ -176,7 +176,6 @@ export const getPoolInfo = (pool) => {
         .toFixed(0, 1),
       pool.currency.decimal
     )
-      // console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
     let is_join = false;
     if (purchasedCurrencyOf > 0) {

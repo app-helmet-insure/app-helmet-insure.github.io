@@ -45,7 +45,6 @@ export const recruit = async (address, num) => {
     let volume = toWei(Number(num), 'BNB');
     try {
         const contract = await Payaso();
-        console.log(contract);
         return contract.methods
             .recruit()
             .send({ from: window.CURRENTADDRESS, value: volume })

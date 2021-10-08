@@ -7,6 +7,7 @@ import SushiPoolABI from "~/web3/abis/SushiPoolABI.json";
 import SushiSwapABI from "~/web3/abis/SushiSwap.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import CandyABI from "~/web3/abis/CandyABI.json";
+import GovernanceABI from "~/web3/abis/Governance.json";
 import DepositeABI from "~/web3/abis/deposite_abi.json";
 import ApproveABI from "~/web3/abis/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
@@ -24,7 +25,45 @@ import {
   processResult,
   fromWei,
 } from "~/web3/index.js";
-export const lptPoolList = [
+export const DaoPoolList = [
+  {
+    StakeABI: GovernanceABI,
+    PoolABI: GovernanceABI,
+    StakeMethods: "stakeAndVote",
+    WithDrawMethods: "getReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    // CanClaim2Methods: "earned2",
+    RewardPerMethods: "rewardPerToken",
+    ExitMethods: "exit",
+
+    Key: "HELEMT",
+    Router: "link1",
+    StartTime: "2021/10/03 16:30 UTC+8",
+    FinishTime: "2021/10/04 16:30 UTC+8",
+    PropoaslID: 1,
+    PoolName: "Helmet Mining & Vote",
+    PoolAddress: "0x4E18F9Ed49ad3d3fDdadE4d1464ED71133AA1EAC",
+    PoolType: "compound",
+    StakeUnit: "HELMET",
+    StakeDecimals: 18,
+    StakeSymbol: "HELMET",
+    StakeAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    RewardSymbol: "helmet",
+    RewardVolume: "one",
+    HaveReward1: true,
+    Reward1Decimals: 18,
+    Reward1Symbol: "HELMET",
+    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    Compound: true,
+    ImgReward: true,
+    NoProxy: false,
+    YearEarnType: "APY",
+    APR: "--",
+    APY: "--",
+  },
+];
+export const LptPoolList = [
   {
     StakeABI: MiningABI,
     PoolABI: MiningABI,
@@ -376,7 +415,7 @@ export const lptPoolList = [
   //   Link: "https://app.marsecosystem.com/farms",
   // },
 ];
-export const comboPoolList = [
+export const TokenPoolList = [
   {
     StakeABI: MiningABI,
     PoolABI: MiningABI,
@@ -451,16 +490,21 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETMCRN",
     PoolName: "HELMET-<i>hMCRN</i> LPT",
-    PoolABI: MiningABI,
-    StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hMCRN LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_mcrn",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/08/02 00:00 UTC+8",
     FinishTime: "2021/08/16 00:00 UTC+8",
@@ -478,7 +522,6 @@ export const comboPoolList = [
     Reward1Volume: 28270,
     Reward2Volume: 2740,
     PoolProcess: 14,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hMCRN",
       AddTokenAddress: "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf",
@@ -498,16 +541,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETWIZARD",
     PoolName: "HELMET-<i>hWIZARD</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hWIZARD LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_wizard",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/08/02 00:00 UTC+8",
     FinishTime: "2021/08/16 00:00 UTC+8",
@@ -525,7 +575,6 @@ export const comboPoolList = [
     Reward1Volume: 60280,
     Reward2Volume: 6670,
     PoolProcess: 14,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hWIZARD",
       AddTokenAddress: "0x792b733af7b9b83331f90dbbd297e519258b09bc",
@@ -546,16 +595,23 @@ export const comboPoolList = [
   },
 
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETARGON",
     PoolName: "HELMET-<i>hARGON</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hARGON LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_argon",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/07/10 00:00 UTC+8",
     FinishTime: "2021/07/25 00:00 UTC+8",
@@ -573,7 +629,6 @@ export const comboPoolList = [
     Reward1Volume: 35000,
     Reward2Volume: 350000,
     PoolProcess: 15,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hARGON",
       AddTokenAddress: "0x4ce2d9804da7583c02f80fec087aea1d137214eb",
@@ -593,16 +648,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETBMXX",
     PoolName: "HELMET-<i>hBMXX</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hBMXX LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_bmxx",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/07/01 00:00 UTC+8",
     FinishTime: "2021/07/14 00:00 UTC+8",
@@ -620,7 +682,6 @@ export const comboPoolList = [
     Reward1Volume: 37500,
     Reward2Volume: 3272.46,
     PoolProcess: 13,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hBMXX",
       AddTokenAddress: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
@@ -640,16 +701,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETBABY",
     PoolName: "HELMET-<i>hBABY</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hBABY LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_baby",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/06/26 00:00 UTC+8",
     FinishTime: "2021/07/09 00:00 UTC+8",
@@ -667,7 +735,6 @@ export const comboPoolList = [
     Reward1Volume: 37500,
     Reward2Volume: 158931,
     PoolProcess: 13,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hBABY",
       AddTokenAddress: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
@@ -687,16 +754,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETMTRG",
     PoolName: "HELMET-<i>hMTRG</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hMTRG LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_mtrg",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/06/25 00:00 UTC+8",
     FinishTime: "2021/07/04 00:00 UTC+8",
@@ -714,7 +788,6 @@ export const comboPoolList = [
     Reward1Volume: 25000,
     Reward2Volume: 2767,
     PoolProcess: 9,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hMTRG",
       AddTokenAddress: "0xa561926e81DEcb74B3d11e14680B3F6D1c5012bD",
@@ -735,16 +808,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "HELMETWINGS",
     PoolName: "HELMET-<i>hWINGS</i> LPT",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-hWINGS LPT",
     StakeUnit: "LPT",
     RewardVolume: "two",
     RewardSymbol: "helmet_wings",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/06/12 00:00 UTC+8",
     FinishTime: "2021/06/26 00:00 UTC+8",
@@ -762,7 +842,6 @@ export const comboPoolList = [
     Reward1Volume: 30000,
     Reward2Volume: 4500,
     PoolProcess: 14,
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "hWINGS",
       AddTokenAddress: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
@@ -783,16 +862,23 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    StakeMethods: "stake",
+    WithDrawMethods: "getDoubleReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+
     Key: "BHELMETDODO",
     PoolName: "HELMET-BNB DLP",
     PoolABI: MiningABI,
     StakeABI: MiningABI,
-    StakeMethods: "stake",
     StakeSymbol: "HELMET-BNB DLP",
     StakeUnit: "DLP",
     RewardVolume: "two",
     RewardSymbol: "bhelmet_dodo",
-    WithDrawMethods: "getDoubleReward",
     ImgReward: true,
     StartTime: "2021/05/10 12:00 UTC+8",
     FinishTime: "2021/05/24 00:00 UTC+8",
@@ -803,7 +889,6 @@ export const comboPoolList = [
     HaveReward2: true,
     Reward1Symbol: "BHELMET",
     Reward2Symbol: "DODO",
-    ExitMethods: "exit",
     LeftShowToken: {
       AddTokenSymbol: "BHELMET",
       AddTokenAddress: "0x15DA1D8e207AB1e1Bc7FD1cca52a55a598518672",
@@ -829,6 +914,9 @@ export const comboPoolList = [
   },
 
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
     Key: "BHELMETxBURGER",
     PoolName: "HELMET-<i>hxBURGER</i> BLP",
     PoolABI: MiningABI,
@@ -876,6 +964,8 @@ export const comboPoolList = [
   },
 
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
     Key: "FEIQFEI",
     PoolName: "FEI(BSC) POOL",
     PoolABI: MiningABI,
@@ -917,6 +1007,8 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
     Key: "KUN",
     PoolName: "<i>QFEI</i>-QSD DLP",
     PoolABI: MiningABI,
@@ -959,6 +1051,8 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
     Key: "QHELMET",
     PoolName: "HELMET-KUN DLP",
     PoolABI: MiningABI,
@@ -1000,6 +1094,9 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
     Key: "HELMETCAKE",
     PoolName: `HELMET-BNB LPT`,
     PoolABI: MiningABI,
@@ -1046,6 +1143,9 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
     Key: "HELMETDODO",
     PoolName: "HELMET-<i>hDODO</i> DLP",
     PoolABI: MiningABI,
@@ -1092,6 +1192,9 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
     Key: "HELMETFOR",
     PoolName: "HELMET-<i>hFOR</i> LPT",
     PoolABI: MiningABI,
@@ -1138,6 +1241,9 @@ export const comboPoolList = [
     APR: "--",
   },
   {
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
     Key: "HELMETBURGER",
     PoolName: "HELMET-<i>hBURGER</i> LPT",
     PoolABI: MiningABI,
@@ -1340,7 +1446,6 @@ export const getLptAPR = async (PoolData) => {
   const Amount2 = toWei("1", Reward2Decimals);
   const web3 = new Web3(window.ethereum);
   const BlockNumber = await new web3.eth.getBlockNumber();
-  console.log(BlockNumber, "BlockNumber");
   const Data1 = await getTokenPrice({
     fromTokenAddress: Reward1Address,
     toTokenAddress: USDTAddress,
@@ -1386,7 +1491,6 @@ export const getLptAPR = async (PoolData) => {
         OutPutReward1,
         Reward1Time,
       ] = FixData;
-      console.log(StakeValue);
       const FixStakeValue =
         PoolSwap === "acsi"
           ? fromWei(StakeValue[1][0]) * 2

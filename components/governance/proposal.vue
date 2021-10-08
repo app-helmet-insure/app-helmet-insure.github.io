@@ -157,7 +157,7 @@ export default {
     },
   },
   mounted() {
-    let Router = this.$route.query.id;
+    let Router = this.$route.params.id;
     let FixGovernanceList = formatGovernance(GovernanceList);
     let FixDaoPoolList = formatMiningPool(DaoPoolList);
     this.Proposal = FixGovernanceList.filter(

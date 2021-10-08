@@ -2,7 +2,8 @@ module.exports = {
   mode: "universal",
   router: {
     middleware: "i18n",
-    mode: "history",
+    // mode: "history",
+    // base: "/",
   },
   telemetry: false,
   /*

@@ -11,7 +11,7 @@
         <div class="governance_type">
           <div class="governance_type_title">
             <span>{{ $t("Governance.Governance_text1") }}</span>
-            <nuxt-link :to="`/governance/${ActiveData.Router}`">{{
+            <nuxt-link :to="`/governance/detail/?id=${ActiveData.Router}`">{{
               $t("Governance.Governance_text2")
             }}</nuxt-link>
           </div>

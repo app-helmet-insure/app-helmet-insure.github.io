@@ -15,6 +15,7 @@ import InsuranceList from "~/components/insurance/list.vue";
 import Banner from "~/components/insurance/banner.vue";
 export default {
   layout: "home",
+  name: "insurance",
   components: { InsuranceData, InsuranceList, HelmetBurn, Banner },
 };
 </script>

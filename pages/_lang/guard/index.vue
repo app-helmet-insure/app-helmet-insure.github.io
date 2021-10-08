@@ -12,6 +12,7 @@ import History from "~/components/guard/history.vue";
 import Dialog from "~/components/guard/dialog.vue";
 export default {
   layout: "home",
+  name: "guard",
   components: { Migrate, History, Dialog },
 };
 </script>

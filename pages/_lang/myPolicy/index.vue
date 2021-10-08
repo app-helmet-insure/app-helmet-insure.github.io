@@ -8,6 +8,7 @@
 import MyPolicy from "~/components/insurance/my-policy.vue";
 export default {
   layout: "home",
+  name: "myPolicy",
   components: {
     MyPolicy,
   },

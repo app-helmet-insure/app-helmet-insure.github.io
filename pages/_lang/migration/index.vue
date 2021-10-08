@@ -20,6 +20,7 @@ import JumpDialog from "~/components/migration/jump_dialog";
 import TipDialog from "~/components/migration/tip_dialog";
 export default {
   layout: "home",
+  name: "migration",
   components: { Title, IBO, Pending, Action, JumpDialog, TipDialog },
 };
 </script>

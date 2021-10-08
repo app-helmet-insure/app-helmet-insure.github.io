@@ -14,6 +14,7 @@ import BurnList from "~/components/burnbox/burn-list.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",
+  name:'burnbox',
   components: {
     BurnTitle,
     BurnList,

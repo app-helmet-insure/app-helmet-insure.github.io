@@ -1,4 +1,26 @@
+<template>
+  <div class="main_container">
+    <MyPolicy></MyPolicy>
+  </div>
+</template>
+
 <script>
-import myPolicy from "~/pages/_lang/myPolicy/index.vue";
-export default myPolicy;
+import MyPolicy from "~/components/insurance/my-policy.vue";
+export default {
+  layout: "home",
+  name: "myPolicy",
+  components: {
+    MyPolicy,
+  },
+};
 </script>
+
+<style lang='scss' scoped>
+@media screen and (min-width: 750px) {
+  .main_container {
+    width: 80%;
+    min-width: 1026px;
+    margin: 20px auto 0;
+  }
+}
+</style>

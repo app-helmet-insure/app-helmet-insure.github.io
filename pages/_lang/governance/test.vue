@@ -1,26 +1,104 @@
 <template>
-  <div class="governance_container">
-    <h1>test</h1>
+  <div className="governance_container">
+    <Title/>
+    <nuxt-link className="governance_comeback" tag="div" to="/governance">
+      <svg className="icon svg-icon" aria-hidden="true">
+        <use xlink:href="#icon-rightSelect"></use>
+      </svg>
+      <span>{{ $t("Governance.Governance_text22") }}</span>
+    </nuxt-link>
+    <div className="governance_wrap">
+      <Proposal/>
+      <Details/>
+    </div>
   </div>
 </template>
 
 <script>
 import Title from "~/components/governance/title.vue";
-import List from "~/components/governance/list.vue";
+import Proposal from "~/components/governance/proposalTest.vue";
+import Details from "~/components/governance/detailsTest.vue";
+
 export default {
   layout: "home",
-  name: "governance",
-  components: { Title, List },
+  name: "governance-id",
+  components: {Title, Proposal, Details},
 };
 </script>
 
 <style lang='scss' scoped>
 @import "~/assets/css/themes.scss";
 
+.governance_comeback {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .icon {
+    transform: rotate(180deg);
+    width: 40px;
+    height: 40px;
+    @include themeify {
+      fill: themed("color-17173a");
+    }
+  }
+
+  span {
+    font-size: 20px;
+    line-height: 24px;
+    font-family: IBMPlexSans-SemiBold, IBMPlexSans;
+    font-weight: 600;
+    @include themeify {
+      color: themed("color-17173a");
+    }
+  }
+
+  &:hover {
+    .icon {
+      fill: #fd7e14 !important;
+    }
+
+    span {
+      color: #fd7e14 !important;
+    }
+  }
+}
+
 @media screen and (min-width: 750px) {
   .governance_container {
     width: 80%;
-    margin: 0 auto;min-width: 1026px;
+    min-width: 1026px;
+    margin: 0 auto;
+    background: transparent;
+  }
+  .governance_wrap {
+    display: flex;
+    width: 1026px;
+    margin: 0 auto;
+    @include themeify {
+      // background: themed("color-ffffff");
+      background: #fff3de;
+    }
+    box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+    border-radius: 5px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .governance_wrap {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    @include themeify {
+      // background: themed("color-ffffff");
+      background: #fff3de;
+    }
+    box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+    border-radius: 5px;
+    padding: 0 10px;
   }
 }
 </style>

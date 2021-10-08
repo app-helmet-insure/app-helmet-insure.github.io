@@ -14,6 +14,7 @@ import FlashTitle from "~/components/flashmining/flash-title.vue";
 import Onepager from "~/components/common/onepager.vue";
 export default {
   layout: "home",
+  name:'flashmining',
   components: { FlashList, FlashTitle, Onepager },
   data() {
     return {

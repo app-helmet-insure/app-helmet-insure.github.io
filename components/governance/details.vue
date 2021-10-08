@@ -117,7 +117,7 @@ export default {
     };
   },
   mounted() {
-    let Router = this.$route.query.id;
+    let Router = this.$route.params.id;
     let FixGovernanceList = formatGovernance(GovernanceList);
     this.Proposal = FixGovernanceList.filter(
       (item) => item.Router === Router
@@ -139,21 +139,18 @@ export default {
       if (Value) {
         this.isLogin = Value.isLogin;
         this.$nextTick(() => {
-          // this.getSelfInfo();
-          this.getInfoData();
+          this.getSelfInfo();
+          // this.getInfoData();
         });
       }
     },
     getInfoData() {
-      let Router = this.$route.query.id;
+      let Router = this.$route.params.id;
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router
       )[0];
       const Account = this.CurrentAccount.account || window.CURRENTADDRESS;
-      if (!Account){
-        return
-      }
       getGovernance().then((res) => {
         const List = res.data.data.votes;
         const Type1List = List.filter(
@@ -207,15 +204,15 @@ export default {
         this.SelfType3 = SelfType3;
         this.AllType = AllType;
         this.Type1Number =
-          Type1 > 0 ? fixD((Type1 / AllType) * 100) + "%" : "0%";
+          Type1 > 0 ? fixD((Type1 / AllType) * 100, 2) + "%" : "0%";
         this.Type2Number =
-          Type2 > 0 ? fixD((Type2 / AllType) * 100) + "%" : "0%";
+          Type2 > 0 ? fixD((Type2 / AllType) * 100, 2) + "%" : "0%";
         this.Type3Number =
-          Type3 > 0 ? fixD((Type3 / AllType) * 100) + "%" : "0%";
+          Type3 > 0 ? fixD((Type3 / AllType) * 100, 2) + "%" : "0%";
       });
     },
     getSelfInfo() {
-      let Router = this.$route.query.id;
+      let Router = this.$route.params.id;
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router
@@ -247,15 +244,15 @@ export default {
         this.AllType = AllType;
         this.Type1Number =
           fromWei(Type1) > 0
-            ? fixD((fromWei(Type1) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type1) / AllType) * 100, 2) + "%"
             : "0%";
         this.Type2Number =
           fromWei(Type2) > 0
-            ? fixD((fromWei(Type2) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type2) / AllType) * 100, 2) + "%"
             : "0%";
         this.Type3Number =
           fromWei(Type3) > 0
-            ? fixD((fromWei(Type3) / AllType) * 100) + "%"
+            ? fixD((fromWei(Type3) / AllType) * 100, 2) + "%"
             : "0%";
       });
     },

@@ -20,6 +20,7 @@ import Onepager from "~/components/common/onepager.vue";
 import Compound from "~/components/mining/compound.vue";
 export default {
   layout: "home",
+  name: "mining",
   components: {
     Governance,
     MiningTitle,

@@ -29,6 +29,7 @@ import Media from "~/components/indexPage/media.vue";
 
 export default {
   layout: "page",
+  name: "index",
   components: {
     Views,
     City,

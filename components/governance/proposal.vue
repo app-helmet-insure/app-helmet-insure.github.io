@@ -218,6 +218,9 @@ export default {
       const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = this.CurrentAccount.account;
+      if (!Account){
+        return
+      }
       let PromiseList = [
         StakeContracts.balanceOf(Account),
         ApproveContracts.allowance(Account, PoolAddress),

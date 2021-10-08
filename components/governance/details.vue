@@ -151,6 +151,9 @@ export default {
         (item) => item.Router === Router
       )[0];
       const Account = this.CurrentAccount.account || window.CURRENTADDRESS;
+      if (!Account){
+        return
+      }
       getGovernance().then((res) => {
         const List = res.data.data.votes;
         const Type1List = List.filter(

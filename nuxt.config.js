@@ -3,7 +3,7 @@ module.exports = {
   router: {
     middleware: "i18n",
     mode: "history",
-    base: "/docs",
+    base: "/",
   },
   telemetry: false,
   /*

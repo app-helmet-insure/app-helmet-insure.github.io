@@ -18,6 +18,7 @@ import MONILOGO from "../assets/img/insurancetype/MONI.png";
 import XMSLOGO from "../assets/img/insurancetype/XMS.png";
 import GALALOGO from "../assets/img/insurancetype/GALA.png";
 import SPSLOGO from "../assets/img/insurancetype/SPS.png";
+import RACALOGO from "../assets/img/insurancetype/RACA.png";
 const NowTime = new Date() / 1000;
 export const InsuranceTypeList = [
   {
@@ -263,6 +264,18 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+  },
+  {
+    InsuranceName: "RACA",
+    InsurancePut: "BNB",
+    InsuranceLogo: RACALOGO,
+    ShowExpiry: "2021-10-30 00:00",
+    ShowExpiryDay: Math.ceil((1635523200 - NowTime) / 86400),
+    Expiry: 1635523200,
+    LastPrice: "--",
+    LastUsdtPrice: "--",
+    LastPriceDecimals: 6,
+    LastUsdtPriceDecimals: 6,
   },
 ];
 export const getCurrentInsurance = ({
@@ -1271,6 +1284,56 @@ export const getCurrentInsurance = ({
       UnderlyingDecimals: 18,
       Type: "Put",
       CallToken: "SPS",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "RACA",
+      InsuranceLogo: RACALOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: "2021-10-30 00:00",
+      ShowExpiryDay: Math.ceil((1635523200 - NowTime) / 86400),
+      Expiry: 1635523200,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "RACA",
+      CollateralAddress: "0x12bb890508c125661e03b09ec06e404bc9289040",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "BNB",
+      UnderlyingAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      UnderlyingDecimals: 18,
+      Type: "Call",
+      CallToken: "RACA",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "RACA",
+      InsuranceLogo: RACALOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: "2021-10-30 00:00",
+      ShowExpiryDay: Math.ceil((1635523200 - NowTime) / 86400),
+      Expiry: 1635523200,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "BNB",
+      CollateralAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "RACA",
+      UnderlyingAddress: "0x12bb890508c125661e03b09ec06e404bc9289040",
+      UnderlyingDecimals: 18,
+      Type: "Put",
+      CallToken: "RACA",
       PutToken: "BNB",
     },
   ];

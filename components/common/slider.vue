@@ -162,7 +162,7 @@
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-vote"></use>
               </svg>
-              governance
+              Governance
             </nuxt-link>
           </div>
 

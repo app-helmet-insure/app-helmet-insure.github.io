@@ -39,8 +39,8 @@ export const DaoPoolList = [
 
     Key: "HELEMT",
     Router: "link1",
-    StartTime: "2021/10/03 16:30 UTC+8",
-    FinishTime: "2021/10/04 16:30 UTC+8",
+    StartTime: "2021/10/16 24:00 UTC+8",
+    FinishTime: "2021/12/31 24:00 UTC+8",
     PropoaslID: 1,
     PoolName: "Helmet Mining & Vote",
     PoolAddress: "0x4E18F9Ed49ad3d3fDdadE4d1464ED71133AA1EAC",

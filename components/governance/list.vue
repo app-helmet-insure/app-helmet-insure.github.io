@@ -19,7 +19,10 @@
           </div>
           <div class="governance_list_item_perhaps_web WEB perhaps">
             <p>{{ $t(Item.Perhaps) }}</p>
-            <button @click="handleClickToDetails(Item)">
+            <!-- <button @click="handleClickToDetails(Item)">
+              {{ $t("Governance.Governance_text11") }}
+            </button> -->
+            <button>
               {{ $t("Governance.Governance_text11") }}
             </button>
           </div>
@@ -37,7 +40,10 @@
           </div>
           <div class="governance_list_item_perhaps_h5 H5 perhaps">
             <p>{{ $t(Item.Perhaps) }}</p>
-            <button @click="handleClickToDetails(Item)">
+            <!-- <button @click="handleClickToDetails(Item)">
+              {{ $t("Governance.Governance_text11") }}
+            </button> -->
+            <button>
               {{ $t("Governance.Governance_text11") }}
             </button>
           </div>
@@ -65,6 +71,7 @@ export default {
         name: "governance-details",
         params: { details: Data.Router },
       });
+      window.localStorage.setItem("Governance", Data.Router);
     },
   },
 };
@@ -183,7 +190,8 @@ export default {
     line-height: 22px;
   }
   > button {
-    width: 97px;
+    min-width: 97px;
+    padding: 0 15px;
     height: 40px;
     border-radius: 5px;
     background-image: url("../../assets/img/governance/vote_bg.png");

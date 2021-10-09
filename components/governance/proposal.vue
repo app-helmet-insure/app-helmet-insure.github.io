@@ -157,8 +157,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$route);
-    let Router = this.$route.params.details;
+    let Router =
+      this.$route.params.details || window.localStorage.Governance || "link1";
     let FixGovernanceList = formatGovernance(GovernanceList);
     let FixDaoPoolList = formatMiningPool(DaoPoolList);
     this.Proposal = FixGovernanceList.filter(

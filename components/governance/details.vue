@@ -7,7 +7,7 @@
       <div class="governance_details_infomation_wrap">
         <div class="between">
           <span>{{ $t("Governance.Governance_text16") }}</span>
-          <span>HelmetRed</span>
+          <span>helmet.exchange</span>
         </div>
         <div class="between">
           <span>{{ $t("Governance.Governance_text17") }}</span>
@@ -117,7 +117,8 @@ export default {
     };
   },
   mounted() {
-    let Router = this.$route.params.details;
+    let Router =
+      this.$route.params.details || window.localStorage.Governance || "link1";
     let FixGovernanceList = formatGovernance(GovernanceList);
     this.Proposal = FixGovernanceList.filter(
       (item) => item.Router === Router
@@ -145,7 +146,8 @@ export default {
       }
     },
     getInfoData() {
-      let Router = this.$route.params.details;
+      let Router =
+        this.$route.params.details || window.localStorage.Governance || "link1";
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router
@@ -212,7 +214,8 @@ export default {
       });
     },
     getSelfInfo() {
-      let Router = this.$route.params.details;
+      let Router =
+        this.$route.params.details || window.localStorage.Governance || "link1";
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router

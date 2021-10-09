@@ -44,54 +44,44 @@
               </p>
             </section>
             <section class="item_pool_year_web WEB">
-              <span>{{ item.APY || "--" }}</span>
+              <span>{{ "--" || item.APY }}</span>
               <span>{{ item.YearEarnType }}</span>
             </section>
             <section class="item_pool_action_web WEB">
-              <a
-                :href="item.Link"
-                target="_blank"
-                v-if="item.PoolType === 'link'"
-                :style="`background-color:${item.BtnColor};`"
+              <!-- <button
+                @click="HandleClickAction(item, 'Stake')"
+                :class="
+                  ActiveMining == item.RewardSymbol &&
+                  ShowActiveMining &&
+                  ActiveType == 'Stake'
+                    ? 'activeButton stakeMining'
+                    : 'stakeMining'
+                "
               >
-                <img
-                  :src="require(`~/assets/img/mining/${item.PoolImg}.png`)"
-                  alt=""
-                />
-                <span :style="`color:${item.BtnTextColor};`">{{
-                  item.BtnText
-                }}</span>
-                <i
-                  :style="`background-image:url(${require(`~/assets/img/guard/${item.Right}.png`)})`"
-                ></i>
-              </a>
-              <template v-else
-                ><button
-                  @click="HandleClickAction(item, 'Stake')"
-                  :class="
-                    ActiveMining == item.RewardSymbol &&
-                    ShowActiveMining &&
-                    ActiveType == 'Stake'
-                      ? 'activeButton stakeMining'
-                      : 'stakeMining'
-                  "
-                >
-                  {{ $t("Governance.Governance_text23") }}
-                  <i class="selectDown"></i>
-                </button>
-                <button
-                  @click="HandleClickAction(item, 'Claim')"
-                  :class="
-                    ActiveMining == item.RewardSymbol &&
-                    ShowActiveMining &&
-                    ActiveType == 'Claim'
-                      ? 'activeButton claimMining'
-                      : 'claimMining'
-                  "
-                >
-                  {{ $t("Table.Claim") }}
-                  <i class="selectDown"></i></button
-              ></template>
+                {{ $t("Governance.Governance_text23") }}
+                <i class="selectDown"></i>
+              </button>
+              <button
+                @click="HandleClickAction(item, 'Claim')"
+                :class="
+                  ActiveMining == item.RewardSymbol &&
+                  ShowActiveMining &&
+                  ActiveType == 'Claim'
+                    ? 'activeButton claimMining'
+                    : 'claimMining'
+                "
+              >
+                {{ $t("Table.Claim") }}
+                <i class="selectDown"></i>
+              </button> -->
+              <button class="stakeMining">
+                {{ $t("Governance.Governance_text23") }}
+                <i class="selectDown"></i>
+              </button>
+              <button class="claimMining">
+                {{ $t("Table.Claim") }}
+                <i class="selectDown"></i>
+              </button>
             </section>
             <section class="item_pool_name_h5 H5">
               <span>
@@ -116,7 +106,7 @@
             </section>
             <section class="item_pool_year_h5 H5">
               <p>
-                <span>{{ item.APR || "--" }}</span>
+                <span>{{ "--" || item.APY }}</span>
                 <span>{{ item.YearEarnType }}</span>
               </p>
               <div>
@@ -128,50 +118,40 @@
               </div>
             </section>
             <section class="item_pool_action_h5 H5">
-              <a
-                :href="item.Link"
-                v-if="item.PoolType === 'link'"
-                :style="`background-color:${item.BtnColor};`"
+              <!-- <button
+                @click="HandleClickAction(item, 'Stake', true)"
+                :class="
+                  ActiveMining == item.RewardSymbol &&
+                  ShowActiveMining &&
+                  ActiveType == 'Stake'
+                    ? 'activeButton stakeMining'
+                    : 'stakeMining'
+                "
+                style="margin-right: 10px"
               >
-                <img
-                  :src="require(`~/assets/img/mining/${item.PoolImg}.png`)"
-                  alt=""
-                />
-                <span :style="`color:${item.BtnTextColor};`">{{
-                  item.BtnText
-                }}</span>
-                <i
-                  :style="`background-image:url(${require(`~/assets/img/guard/${item.Right}.png`)})`"
-                ></i>
-              </a>
-              <template v-else>
-                <button
-                  @click="HandleClickAction(item, 'Stake', true)"
-                  :class="
-                    ActiveMining == item.RewardSymbol &&
-                    ShowActiveMining &&
-                    ActiveType == 'Stake'
-                      ? 'activeButton stakeMining'
-                      : 'stakeMining'
-                  "
-                  style="margin-right: 10px"
-                >
-                  {{ $t("Governance.Governance_text23") }}
-                </button>
-                <button
-                  @click="HandleClickAction(item, 'Claim', true)"
-                  :class="
-                    ActiveMining == item.RewardSymbol &&
-                    ShowActiveMining &&
-                    ActiveType == 'Claim'
-                      ? 'activeButton claimMining'
-                      : 'claimMining'
-                  "
-                  style="margin-left: 10px"
-                >
-                  {{ $t("Table.Claim") }}
-                </button>
-              </template>
+                {{ $t("Governance.Governance_text23") }}
+              </button>
+              <button
+                @click="HandleClickAction(item, 'Claim', true)"
+                :class="
+                  ActiveMining == item.RewardSymbol &&
+                  ShowActiveMining &&
+                  ActiveType == 'Claim'
+                    ? 'activeButton claimMining'
+                    : 'claimMining'
+                "
+                style="margin-left: 10px"
+              >
+                {{ $t("Table.Claim") }}
+              </button> -->
+              <button class="stakeMining" style="margin-right: 10px">
+                {{ $t("Governance.Governance_text23") }}
+                <i class="selectDown"></i>
+              </button>
+              <button class="claimMining" style="margin-left: 10px">
+                {{ $t("Table.Claim") }}
+                <i class="selectDown"></i>
+              </button>
             </section>
           </div>
           <div

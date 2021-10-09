@@ -7,9 +7,11 @@
       </svg>
       <span>{{ $t("Governance.Governance_text22") }}</span>
     </nuxt-link>
-    <div class="governance_wrap">
-      <Proposal />
-      <Details />
+    <div class="governance_infomation_wrap">
+      <div class="governance_infomation">
+        <Proposal />
+        <Details />
+      </div>
     </div>
   </div>
 </template>
@@ -33,6 +35,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
+  width: 130px;
   .icon {
     transform: rotate(180deg);
     width: 40px;
@@ -66,8 +69,7 @@ export default {
     margin: 0 auto;
     background: transparent;
   }
-  .governance_wrap {
-    display: flex;
+  .governance_infomation_wrap {
     min-width: 1026px;
     margin: 0 auto;
     @include themeify {
@@ -76,20 +78,27 @@ export default {
     }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
     border-radius: 5px;
+  }
+  .governance_infomation {
+    display: flex;
+    width: 1026px;
+    margin: 0 auto;
     padding: 0 20px;
   }
 }
 @media screen and (max-width: 750px) {
-  .governance_wrap {
+  .governance_infomation_wrap {
     width: 95%;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
     @include themeify {
-      // background: themed("color-ffffff");
       background: #fff3de;
     }
     box-shadow: 0px 4px 8px 0px rgba(155, 155, 155, 0.02);
+  }
+  .governance_infomation {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     border-radius: 5px;
     padding: 0 10px;
   }

@@ -350,7 +350,8 @@
     "ToStake": "去抵押",
     "Pause": "暂停",
     "Migrate": "Migrate",
-    "Tips8": "Tips: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得."
+    "Tips8":"Tips1: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得.",
+    "Tips9":"Tips2: 你可以在 14:00 之后切换 Polygon 网络领取 GUARD."
   },
   "IBO": {
     "IBO_text1": "分钟",

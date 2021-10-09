@@ -41,6 +41,9 @@
     <p class="migration_ibo_tips">
       {{ $t("Migration.Tips8") }}
     </p>
+    <p class="migration_ibo_tips">
+      {{ $t("Migration.Tips9") }}
+    </p>
     <!-- dialog -->
     <WaitingConfirmationDialog
       :DialogVisible="WaitingVisible"
@@ -182,8 +185,9 @@ export default {
       let NowTime = Date.now() / 1000;
       let StartTime = this.Start * 1;
       let FinishTime = this.Start * 1 + this.Span * 1;
+      console.log(NowTime, StartTime, FinishTime, StartTime - NowTime > 0);
       let DownTime =
-        StartTime - NowTime > 0 ? FinishTime - NowTime : FinishTime - NowTime;
+        StartTime - NowTime > 0 ? StartTime - NowTime : FinishTime - NowTime;
       const Day = Math.floor(DownTime / (24 * 3600));
       const Hour = Math.floor((DownTime - Day * 24 * 3600) / 3600);
       const Minute = Math.floor(
@@ -280,7 +284,6 @@ export default {
 
 <style lang='scss' scoped>
 .migration_ibo {
-  height: 307px;
   background: #f9f4ef;
   border-radius: 5px;
   display: flex;
@@ -401,10 +404,10 @@ export default {
     width: 878px;
     background-image: url("../../assets/img/migration/migration_ibo_bg.png");
     background-repeat: no-repeat;
-    background-size: 100% 301px;
+    background-size: auto 100%;
     background-position: center center;
-    padding-top: 30px;
-    margin: 30px auto 0;
+    padding: 30px;
+    margin: 0 auto;
   }
   .migration_ibo_text {
     width: 320px;
@@ -424,10 +427,10 @@ export default {
     width: 95%;
     background-image: url("../../assets/img/migration/migration_ibo_bg.png");
     background-repeat: no-repeat;
-    background-size: auto 301px;
+    background-size: auto 100%;
     background-position: center center;
-    margin: 30px auto 0;
-    padding: 30px 10px 0;
+    margin: 0 auto;
+    padding: 30px 10px;
   }
   .migration_ibo_text {
     width: 100%;

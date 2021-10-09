@@ -339,7 +339,8 @@
     "ToStake": "Go Deposit",
     "Pause": "Temporarily closed",
     "Migrate": "Migrate",
-    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,FCFS."
+    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,FCFS.",
+    "Tips9": "Tips2: You will get GUARD in the same wallet address (reset the network to polygon) after 14:00"
   },
   "IBO": {
     "IBO_text1": "m",

@@ -28,8 +28,9 @@
           </a>
         </div>
         <div class="eth_dapp">
-          <a href="https://www.guard.insure/insurance/">
-            <img src="../../assets/img/home/eth.png" alt="" />Helmet On Layer2 Coming Soon
+          <a>
+            <img src="../../assets/img/home/eth.png" alt="" />Helmet On Layer2
+            Coming Soon
           </a>
         </div>
       </div>

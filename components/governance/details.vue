@@ -117,7 +117,7 @@ export default {
     };
   },
   mounted() {
-    let Router = this.$route.params.id;
+    let Router = this.$route.params.details;
     let FixGovernanceList = formatGovernance(GovernanceList);
     this.Proposal = FixGovernanceList.filter(
       (item) => item.Router === Router
@@ -145,7 +145,7 @@ export default {
       }
     },
     getInfoData() {
-      let Router = this.$route.params.id;
+      let Router = this.$route.params.details;
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router
@@ -212,7 +212,7 @@ export default {
       });
     },
     getSelfInfo() {
-      let Router = this.$route.params.id;
+      let Router = this.$route.params.details;
       let FixGovernanceList = formatGovernance(GovernanceList);
       const Proposal = FixGovernanceList.filter(
         (item) => item.Router === Router

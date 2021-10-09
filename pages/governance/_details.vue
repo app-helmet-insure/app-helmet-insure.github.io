@@ -20,7 +20,7 @@ import Proposal from "~/components/governance/proposal.vue";
 import Details from "~/components/governance/details.vue";
 export default {
   layout: "home",
-  name: "governance-id",
+  name: "governance-details",
   components: { Title, Proposal, Details },
 };
 </script>
@@ -68,7 +68,7 @@ export default {
   }
   .governance_wrap {
     display: flex;
-    width: 1026px;
+    min-width: 1026px;
     margin: 0 auto;
     @include themeify {
       // background: themed("color-ffffff");

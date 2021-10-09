@@ -62,7 +62,8 @@ export default {
   methods: {
     handleClickToDetails(Data) {
       this.$router.push({
-        path: `governance/${Data.Router}`,
+        name: "governance-details",
+        params: { details: Data.Router },
       });
     },
   },

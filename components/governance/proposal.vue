@@ -157,7 +157,8 @@ export default {
     },
   },
   mounted() {
-    let Router = this.$route.params.id;
+    console.log(this.$route);
+    let Router = this.$route.params.details;
     let FixGovernanceList = formatGovernance(GovernanceList);
     let FixDaoPoolList = formatMiningPool(DaoPoolList);
     this.Proposal = FixGovernanceList.filter(
@@ -218,8 +219,8 @@ export default {
       const StakeContracts = new Contract(StakeAddress, StakeABI);
       const ApproveContracts = new Contract(StakeAddress, ERC20ABI.abi);
       const Account = this.CurrentAccount.account;
-      if (!Account){
-        return
+      if (!Account) {
+        return;
       }
       let PromiseList = [
         StakeContracts.balanceOf(Account),

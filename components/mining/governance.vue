@@ -74,11 +74,11 @@
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
               </button> -->
-              <button class="stakeMining">
+              <button class="stakeMining disableButton">
                 {{ $t("Governance.Governance_text23") }}
                 <i class="selectDown"></i>
               </button>
-              <button class="claimMining">
+              <button class="claimMining disableButton">
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
               </button>
@@ -144,11 +144,11 @@
               >
                 {{ $t("Table.Claim") }}
               </button> -->
-              <button class="stakeMining" style="margin-right: 10px">
+              <button class="stakeMining disableButton" style="margin-right: 10px">
                 {{ $t("Governance.Governance_text23") }}
                 <i class="selectDown"></i>
               </button>
-              <button class="claimMining" style="margin-left: 10px">
+              <button class="claimMining disableButton" style="margin-left: 10px">
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
               </button>
@@ -637,6 +637,9 @@ export default {
         transform: rotate(180deg);
       }
     }
+    .disableButton {
+      pointer-events: none;
+    }
   }
 }
 @media screen and(max-width:750px) {
@@ -849,6 +852,9 @@ export default {
       align-items: center;
       justify-content: center;
       box-sizing: border-box;
+    }
+    .disableButton {
+      pointer-events: none;
     }
   }
 }

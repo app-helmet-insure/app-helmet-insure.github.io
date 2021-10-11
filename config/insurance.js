@@ -268,8 +268,8 @@ export const InsuranceTypeList = [
     Expiry: 1635523200,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
-    LastUsdtPriceDecimals: 4,
+    LastPriceDecimals: 6,
+    LastUsdtPriceDecimals: 6,
     Group: "NFT",
   },
   {

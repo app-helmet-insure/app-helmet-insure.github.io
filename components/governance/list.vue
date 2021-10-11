@@ -239,9 +239,12 @@ export default {
   .governance_list_item_duck {
     width: 100%;
     height: 200px;
-    background-image: url("../../assets/img/governance/duck_bg.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+    background: url("../../assets/img/governance/duck_body.png"),
+      url("../../assets/img/governance/ground_bg.png");
+
+    background-repeat: no-repeat, repeat;
+    background-size: 200px 200px, 100% 200px;
+    background-position: right 0, center;
   }
 }
 @media screen and(max-width:750px) {

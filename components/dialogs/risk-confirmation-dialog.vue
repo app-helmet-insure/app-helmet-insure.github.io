@@ -116,4 +116,13 @@ export default {
     }
   }
 }
+@media screen and(max-width:750px) {
+  .risk_dialog {
+    border-radius: 10px;
+    width: 95% !important;
+    .el-dialog__close::before {
+      font-size: 24px;
+    }
+  }
+}
 </style>

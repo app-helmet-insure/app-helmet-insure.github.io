@@ -99,7 +99,7 @@ export default {
 }
 @media screen and(max-width:750px) {
   .governance_dialog {
-    width: 90%;
+    width: 95% !important;
   }
 }
 .governance_dialog {

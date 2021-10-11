@@ -364,7 +364,7 @@ export default {
 }
 @media screen and(max-width:750px) {
   .buy_dialog {
-    width: 90%;
+    width: 95% !important;
   }
 }
 .buy_dialog_wrap {

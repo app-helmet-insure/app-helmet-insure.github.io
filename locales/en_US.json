@@ -295,7 +295,7 @@
     "ConnectWallet": "Connect to your {item} Wallet"
   },
   "Insurance": { "All": "All",
-    "Main": "Main",
+    "Main": "MainNet",
     "Insurance_text1": "Trading View",
     "Insurance_text2": "Categories",
     "Insurance_text3": "Last Price",

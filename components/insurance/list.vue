@@ -230,7 +230,7 @@ export default {
       return [
         { Show: this.$t("Insurance.All"), Type: "ALL" },
         { Show: this.$t("Insurance.Main"), Type: "MAIN" },
-        { Show: "Defi", Type: "DEFI" },
+        { Show: "DeFi", Type: "DEFI" },
         { Show: "NFT", Type: "NFT" },
       ];
     },

@@ -284,7 +284,7 @@
         "ConnectWallet": "Connectez-vous à votre {item} portefeuille"
     },
     "Insurance": { "All": "All",
-        "Main": "Main",
+        "Main": "MainNet",
         "Insurance_text1": "Vue de trading",
         "Insurance_text2": "Categories",
         "Insurance_text3": "Dernier prix",

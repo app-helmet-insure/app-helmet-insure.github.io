@@ -284,7 +284,7 @@
         "ConnectWallet": "به کیف پول {item} خود متصل شوید"
     },
     "Insurance": { "All": "All",
-        "Main": "Main",
+        "Main": "MainNet",
         "Insurance_text1": "نمای معملات",
         "Insurance_text2": "دسته بندی ها",
         "Insurance_text3": "آخرین قیمت",

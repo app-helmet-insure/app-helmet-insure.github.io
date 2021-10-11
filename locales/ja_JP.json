@@ -282,7 +282,7 @@
     "ConnectWallet": "{item} ウォレットに接続する"
   },
   "Insurance": { "All": "All",
-    "Main": "Main",
+    "Main": "MainNet",
     "Insurance_text1": "トレーディングビュー",
     "Insurance_text2": "カテゴリ",
     "Insurance_text3": "last price",

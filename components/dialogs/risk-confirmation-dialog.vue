@@ -97,6 +97,7 @@ export default {
         align-items: center;
         cursor: pointer;
         .checkbox {
+          display: flex;
           img {
             width: 24px;
             height: 24px;
@@ -122,6 +123,31 @@ export default {
     width: 95% !important;
     .el-dialog__close::before {
       font-size: 24px;
+    }
+    .risk_dialog_footer {
+      padding: 0 10px;
+      .agreement_box {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        .checkbox {
+          display: flex;
+          img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+          }
+        }
+        label {
+          font-size: 14px;
+          @include themeify {
+            color: themed("color-17173a");
+          }
+        }
+      }
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
     }
   }
 }

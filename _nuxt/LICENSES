@@ -124,6 +124,11 @@ object-assign
  */
 
 
+//! moment.js
+
+//! moment.js locale configuration
+
+
 /*!
  * 
  *   typed.js - A JavaScript Typing Animation Library
@@ -133,8 +138,3 @@ object-assign
  *   License(s): MIT
  * 
  */
-
-
-//! moment.js
-
-//! moment.js locale configuration

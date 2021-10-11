@@ -88,16 +88,35 @@
             <nuxt-link
               to="/mining"
               :class="routeObj.name === 'mining' ? 'active' : ''"
-              ><svg class="hot" aria-hidden="true">
+            >
+              <!-- <svg class="hot" aria-hidden="true">
                 <use
                   :href="`#icon-${routeObj.name == 'mining' ? 'new1' : 'new'}`"
                 ></use>
-              </svg>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-mining1"></use>
               </svg>
               {{ $t("Header.Mining") }}
               <i class="num">8</i>
+            </nuxt-link>
+          </div>
+          <div class="menu_item">
+            <nuxt-link
+              to="/governance"
+              :class="routeObj.name.includes('governance') ? 'active' : ''"
+            >
+              <svg class="hot" aria-hidden="true">
+                <use
+                  :href="`#icon-${
+                    routeObj.name.includes('governance') ? 'new1' : 'new'
+                  }`"
+                ></use>
+              </svg>
+              <svg class="icon svg-icon" aria-hidden="true">
+                <use xlink:href="#icon-vote"></use>
+              </svg>
+              Governance
             </nuxt-link>
           </div>
           <div class="menu_item">
@@ -141,28 +160,17 @@
               to="/ibo"
               :class="routeObj.name === 'ibo' ? 'active' : ''"
             >
-              <svg class="hot" aria-hidden="true">
+              <!-- <svg class="hot" aria-hidden="true">
                 <use
                   :href="`#icon-${
                     routeObj.name.includes('ibo') ? 'new1' : 'new'
                   }`"
                 ></use>
-              </svg>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-ibo"></use>
               </svg>
               {{ $t("Header.IBO") }}
-            </nuxt-link>
-          </div>
-          <div class="menu_item">
-            <nuxt-link
-              to="/governance"
-              :class="routeObj.name.includes('governance') ? 'active' : ''"
-            >
-              <svg class="icon svg-icon" aria-hidden="true">
-                <use xlink:href="#icon-vote"></use>
-              </svg>
-              Governance
             </nuxt-link>
           </div>
 
@@ -315,8 +323,7 @@ export default {
     $route() {
       this.$route.path !== "/insurance";
     },
-    storeThemes(newValue) {
-    },
+    storeThemes(newValue) {},
   },
   methods: {
     changeThemes(value) {

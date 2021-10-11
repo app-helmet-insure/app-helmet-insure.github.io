@@ -281,7 +281,8 @@
     "Back": "戻る",
     "ConnectWallet": "{item} ウォレットに接続する"
   },
-  "Insurance": {
+  "Insurance": { "All": "All",
+    "Main": "Main",
     "Insurance_text1": "トレーディングビュー",
     "Insurance_text2": "カテゴリ",
     "Insurance_text3": "last price",

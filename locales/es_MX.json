@@ -283,7 +283,8 @@
     "Back": "Atrás",
     "ConnectWallet": "Conecta tu {item} Wallet"
   },
-  "Insurance": {
+  "Insurance": { "All": "All",
+    "Main": "Main",
     "Insurance_text1": "Trading",
     "Insurance_text2": "Categorias",
     "Insurance_text3": "Último Precio",

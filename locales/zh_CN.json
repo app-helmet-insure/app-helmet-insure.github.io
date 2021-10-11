@@ -295,6 +295,8 @@
     "ConnectWallet": "Connect to your {item} Wallet"
   },
   "Insurance": {
+    "All": "全部",
+    "Main": "主流币",
     "Insurance_text1": "保险交易",
     "Insurance_text2": "保险品种",
     "Insurance_text3": "最新价",
@@ -350,8 +352,8 @@
     "ToStake": "去抵押",
     "Pause": "暂停",
     "Migrate": "Migrate",
-    "Tips8":"Tips1: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得.",
-    "Tips9":"Tips2: 你可以在 14:00 之后切换 Polygon 网络领取 GUARD."
+    "Tips8": "Tips1: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得.",
+    "Tips9": "Tips2: 你可以在 14:00 之后切换 Polygon 网络领取 GUARD."
   },
   "IBO": {
     "IBO_text1": "分钟",
@@ -463,7 +465,7 @@
       "text15": "随着 DYDX 在期货上的火爆,我们认为在Layer-2激励用户也是产品必不可少的手段,它可以不断扩大我们的用户规模,以吸引更多的交易者参与.",
       "text16": "所以 Core Team 希望将未发行的5000万全部用于 Layer-2产品以及 NFT Game的激励,以增加 Helmet 整体的用户量和流动性,并为新产品架构提供动力",
       "text17": "如果这项提案得到大部分持币者的支持,Helmet 将会组建社区见证委员会,并上线其治理页面,由希望积极参与治理的持币者来确定销毁的具体细节.具体的治理页面和社区治理系统将在2021年12月31日前上线.",
-      "text18":""
+      "text18": ""
     }
   }
 }

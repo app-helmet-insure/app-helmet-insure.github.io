@@ -32,6 +32,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "ETH",
@@ -44,6 +45,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "MAIN",
   },
   {
     InsuranceName: "BTCB",
@@ -56,6 +58,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "MAIN",
   },
   {
     InsuranceName: "APPLY",
@@ -72,6 +75,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "CTK",
@@ -84,6 +88,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "BURGER",
@@ -96,6 +101,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "WBNB",
@@ -108,6 +114,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "MAIN",
   },
   {
     InsuranceName: "MATH",
@@ -120,6 +127,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "SHIB",
@@ -132,6 +140,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 10,
     LastUsdtPriceDecimals: 10,
+    Group: "DEFI",
   },
   {
     InsuranceName: "FOR",
@@ -144,6 +153,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "BABY",
@@ -156,6 +166,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "MCRN",
@@ -168,6 +179,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "FARA",
@@ -180,6 +192,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "NFT",
   },
   {
     InsuranceName: "ALPACA",
@@ -192,6 +205,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "BANANA",
@@ -204,6 +218,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "KALA",
@@ -216,6 +231,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "XMS",
@@ -228,6 +244,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "DEFI",
   },
   {
     InsuranceName: "MONI",
@@ -240,6 +257,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "NFT",
   },
   {
     InsuranceName: "GALA",
@@ -252,6 +270,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "NFT",
   },
   {
     InsuranceName: "SPS",
@@ -264,6 +283,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 4,
     LastUsdtPriceDecimals: 4,
+    Group: "NFT",
   },
   {
     InsuranceName: "RACA",
@@ -276,6 +296,7 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 6,
     LastUsdtPriceDecimals: 6,
+    Group: "NFT",
   },
 ];
 export const getCurrentInsurance = ({

@@ -3,6 +3,15 @@
     <div class="insurance_title">
       <h3>{{ $t("Insurance.Insurance_text1") }}</h3>
     </div>
+    <div class="insurance_list_filter">
+      <span
+        v-for="item in FilterType"
+        :key="item.Type"
+        @click="handleClickFilter(item)"
+        :class="CurrentFilterType === item.Type ? 'ActiveFilter' : ''"
+        >{{ item.Show }}</span
+      >
+    </div>
     <div class="insurance_type">
       <div class="insurance_text_web WEB">
         <span>{{ $t("Insurance.Insurance_text2") }}</span>
@@ -206,7 +215,6 @@ export default {
   data() {
     return {
       ActiveType: "",
-
       toRounding,
       fixD,
       InsuanceData: [],
@@ -214,13 +222,34 @@ export default {
       ActiveType: "Call",
       ActiveInsurance: "",
       TradeType: "Buy",
+      CurrentFilterType: "ALL",
     };
+  },
+  computed: {
+    FilterType() {
+      return [
+        { Show: this.$t("Insurance.All"), Type: "ALL" },
+        { Show: this.$t("Insurance.Main"), Type: "MAIN" },
+        { Show: "Defi", Type: "DEFI" },
+        { Show: "NFT", Type: "NFT" },
+      ];
+    },
   },
   mounted() {
     this.formatInsuranceData();
     this.InsuanceData = InsuranceTypeList;
   },
   methods: {
+    handleClickFilter(data) {
+      this.CurrentFilterType = data.Type;
+      if (data.Type === "ALL") {
+        this.InsuanceData = InsuranceTypeList;
+      } else {
+        this.InsuanceData = InsuranceTypeList.filter(
+          (item) => item.Group === data.Type
+        );
+      }
+    },
     formatInsuranceData() {
       InsuranceTypeList.map(async (Item) => {
         if (!Item.Ads) {
@@ -306,7 +335,47 @@ export default {
     margin-right: 20px;
   }
 }
+.insurance_list_filter {
+  display: flex;
+  margin: 24px 0;
+  span {
+    min-width: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    height: 32px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #17173a;
+    line-height: 24px;
+    cursor: pointer;
+    @include themeify {
+      background: themed("insure_button");
+      border: 1px solid themed("insure_button_border");
+      color: themed("insure_button_text");
+    }
+    &:hover {
+      border: 2px solid #fd7e14 !important;
+      padding: 0px 9px !important;
+      color: #fd7e14 !important;
+    }
+  }
+  .ActiveFilter {
+    border: 2px solid #fd7e14 !important;
+    padding: 0px 9px !important;
+    color: #fd7e14 !important;
+  }
+}
+
 @media screen and (min-width: 750px) {
+  .insurance_list_filter {
+    span {
+      margin-right: 16px;
+    }
+  }
   .insurance_list {
     width: 100%;
     margin: 0 auto 100px;
@@ -596,6 +665,11 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
+  .insurance_list_filter {
+    span {
+      margin-right: 10px;
+    }
+  }
   .WEB {
     display: none !important;
   }

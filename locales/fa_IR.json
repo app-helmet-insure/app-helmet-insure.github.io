@@ -283,7 +283,8 @@
         "Back": "بازگشت",
         "ConnectWallet": "به کیف پول {item} خود متصل شوید"
     },
-    "Insurance": {
+    "Insurance": { "All": "All",
+        "Main": "Main",
         "Insurance_text1": "نمای معملات",
         "Insurance_text2": "دسته بندی ها",
         "Insurance_text3": "آخرین قیمت",

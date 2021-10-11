@@ -283,7 +283,8 @@
         "Back": "Retour",
         "ConnectWallet": "Connectez-vous à votre {item} portefeuille"
     },
-    "Insurance": {
+    "Insurance": { "All": "All",
+        "Main": "Main",
         "Insurance_text1": "Vue de trading",
         "Insurance_text2": "Categories",
         "Insurance_text3": "Dernier prix",

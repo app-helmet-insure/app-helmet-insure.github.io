@@ -128,7 +128,6 @@
           :class="
             !(
               iboData.status === 1 &&
-              $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
             ) ||

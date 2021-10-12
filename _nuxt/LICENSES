@@ -62,7 +62,7 @@ object-assign
  */
 
 /*!
- * vue-i18n v8.26.5 
+ * vue-i18n v8.26.1 
  * (c) 2021 kazuya kawaguchi
  * Released under the MIT License.
  */
@@ -124,11 +124,6 @@ object-assign
  */
 
 
-//! moment.js
-
-//! moment.js locale configuration
-
-
 /*!
  * 
  *   typed.js - A JavaScript Typing Animation Library
@@ -138,3 +133,8 @@ object-assign
  *   License(s): MIT
  * 
  */
+
+
+//! moment.js
+
+//! moment.js locale configuration

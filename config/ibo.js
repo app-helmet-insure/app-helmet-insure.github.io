@@ -100,7 +100,7 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text46',
-    light: true,
+    light: false,
     airdrop: {
       begin: '1634407500',
       address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',

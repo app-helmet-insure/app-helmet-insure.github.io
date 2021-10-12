@@ -9,11 +9,62 @@ const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
 
 export const iboPools = [
   {
+    name: 'BOB',
+    address: '0xAA90d31E11a886B8b57a5188F9bd3dfA3e907416',
+    abi: starterLimitAbi,
+    start_at: '1634047200',
+    is_coming: false,
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'baby.png',
+    underlying: {
+      address: '0xE798e8f65E4252A55FFc552C17C576Ba9B05C15b',
+      decimal: 18,
+      symbol: 'BOB',
+      name: 'BOB',
+    },
+    amount: '64516129',
+    pool_info: {
+      min_allocation: 10,
+      max_allocation: 500,
+      maxAccount: 100,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET = 5200 BOB',
+    time: '1634144400',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '259259259259259259175000',
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
+    networkId: 56,
+    claimTimeTipI18n: 'IBO.IBO_text50',
+    light: true,
+    airdrop: {
+      begin: '1636822800',
+      address: '0x3D584BC1B18446730E7D27380D2BB008eF7478B8',
+      abi: AirAllowListAbi,
+      amount: '64516129',
+      withdrawList: true,
+      allowList: 0
+    }
+  },
+
+  {
     name: 'MONI',
     address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
     abi: starterLimitAbi,
     start_at: '1631790000',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -42,24 +93,23 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text46',
     light: true,
-    airdrop: { 
+    airdrop: {
       begin: '1634407500',
       address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
       abi: AirAllowListAbi,
-      amount: '175000', 
+      amount: '175000',
       withdrawList: true,
       allowList: 0
     }
   },
-
   {
     name: 'PRB',
     address: '0xE057daBC7630326819390e5D97B69633921cda65',
@@ -78,7 +128,7 @@ export const iboPools = [
       symbol: 'PRB',
       name: 'PRB',
     },
-    amount: '1600000', 
+    amount: '1600000',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -94,21 +144,21 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
+    duration: '',
+    winningRate: '-',
+    committed: '',
     total: '',
-    poolType: 0, 
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text43',
-    light: true
+    light: false
   },
   {
     name: 'PRED',
     address: '0x014e21ee729Bfb9b9D60f424Efcc4A72B9Ef9290',
     abi: starterLimitAbi,
     start_at: '1631538000',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -121,7 +171,7 @@ export const iboPools = [
       symbol: 'PRED',
       name: 'PRED',
     },
-    amount: '2000', 
+    amount: '2000',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -137,21 +187,21 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text42',
-    light: true
+    light: false
   },
   {
     name: 'RHINO',
     address: '0xdba27394D07F6C336B45419828Deea02bb166Bd9',
     abi: starterLimitAbi,
     start_at: '1630494000',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -164,7 +214,7 @@ export const iboPools = [
       symbol: 'RHINO',
       name: 'RHINO',
     },
-    amount: '50000000', 
+    amount: '50000000',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -180,11 +230,11 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text40',
     light: false
@@ -194,7 +244,7 @@ export const iboPools = [
     address: '0x374fBC93F4b835572CD4927ffF7D2d7C4a0245f3',
     abi: starterLimitAbi,
     start_at: '1630321200',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -207,7 +257,7 @@ export const iboPools = [
       symbol: 'DSN',
       name: 'DSN',
     },
-    amount: '16558500', 
+    amount: '16558500',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -223,11 +273,11 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text38'
   },
@@ -236,7 +286,7 @@ export const iboPools = [
     address: '0xa1D653b0fd3E56F7c389a6132472A9c2F37157A3',
     abi: starterLimitAbi,
     start_at: '1629460800',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
@@ -249,7 +299,7 @@ export const iboPools = [
       symbol: 'AXN',
       name: 'AXN',
     },
-    amount: '30000000000', 
+    amount: '30000000000',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -265,11 +315,11 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text37'
   },
@@ -279,7 +329,7 @@ export const iboPools = [
     abi: starterLimitAbi,
     start_at: '1629115200',
     is_top: true,
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
@@ -292,7 +342,7 @@ export const iboPools = [
       symbol: 'UFOMO',
       name: 'UFOMO',
     },
-    amount: '1100000000', 
+    amount: '1100000000',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -307,9 +357,9 @@ export const iboPools = [
     totalPurchasedAmount: '39999999999999600000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
+    winningRate: '-',
+    committed: '',
+    total: '',
     networkId: 56
   },
   {
@@ -317,7 +367,7 @@ export const iboPools = [
     address: '0x7A19bC605116d8843e4757Bb97ac31DD6d49E844',
     abi: starterLimitAbi,
     start_at: '1629122400',
-    is_coming: false, 
+    is_coming: false,
     currency: {
       address: '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8',
       decimal: 18,
@@ -330,7 +380,7 @@ export const iboPools = [
       symbol: 'GAME1',
       name: 'GAME1',
     },
-    amount: '111111', 
+    amount: '111111',
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
@@ -346,11 +396,11 @@ export const iboPools = [
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 
-    duration: '', 
-    winningRate: '-', 
-    committed: '', 
-    total: '', 
-    poolType: 0, 
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
     networkId: 56
   },
 ]

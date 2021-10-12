@@ -4,10 +4,13 @@ import { cloneDeep } from "lodash";
 import { JsonRpcProvider, Http } from "@ethersproject/providers";
 import { Provider, setMulticallAddress } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
-const BSCChainId = 56;
-const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
+export const BSCChainId = 56;
+export const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
 const MATICChainId = 137;
 const MATICRpcUrl = "https://matic-mainnet.chainstacklabs.com";
+
+export const CHAIN_ID_LOCALHOST = 31337
+
 export const getDecimals = (Decimals) => {
   switch (Decimals) {
     case 0:
@@ -63,6 +66,7 @@ export const toWei = (FixNumber, Decimals) => {
 export const getMultiCallProvider = (provider, chainId) => {
   setMulticallAddress(128, "0xc9a9F768ebD123A00B52e7A0E590df2e9E998707");
   setMulticallAddress(137, "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507");
+  setMulticallAddress(CHAIN_ID_LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
   return new Provider(provider, chainId);
 };
 export const getOnlyMultiCallProvider = () =>

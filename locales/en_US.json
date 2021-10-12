@@ -408,7 +408,8 @@
     "IBO_text46": "Sep 17 UTC+8 02:05",
     "IBO_text47": "October 17 UTC +8 02:05",
     "IBO_text48": "1 Month Token Lock-up",
-    "IBO_text49": "Notice the uncertaintity of {token} IBO since the 1 month token lock-up. Helmet will not be held responsible for any investment losses."
+    "IBO_text49": "Notice the uncertaintity of {token} IBO since the 1 month token lock-up. Helmet will not be held responsible for any investment losses.",
+    "IBO_text50": "Oct 14th UTC+8 01:00"
   },
   "Governance": {
     "Tips1": "Helmet Government,'stake' is voting：after choosing the specific iterm, stake your HELMET to vote. You could get your HELMET back after the proposal stettled.",

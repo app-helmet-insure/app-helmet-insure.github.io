@@ -2,12 +2,30 @@ import { JsonRpcProvider } from "@ethersproject/providers";
 import { cloneDeep } from "lodash";
 import Web3 from "web3";
 import ERC20 from "~/web3/abis/ERC20ABI.json";
-import { Contract, Provider } from "ethers-multicall-x";
+import {Contract, Provider, setMulticallAddress} from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
-const BSCChainId = 56
-const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
 BigNumber.config({ EXPONENTIAL_AT: 100 })
-export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
+const CHAIN_ID_LOCALHOST = 31337
+const BSCChainId = 56;
+const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
+let testNetwork = null
+if (process.browser) {
+  if (window.sessionStorage.getItem('helmet_test_chain')){
+    testNetwork = CHAIN_ID_LOCALHOST
+    console.log('helmet_test_chain', true)
+  }
+}
+const multiCallChainId = testNetwork || BSCChainId
+const multiCallRPCUrl = testNetwork ? 'http://localhost:8545' : BSCRpcUrl
+console.log(multiCallChainId, multiCallRPCUrl)
+
+const getMultiCallProvider = (provider, chainId) => {
+  setMulticallAddress(CHAIN_ID_LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
+  return new Provider(provider, chainId);
+};
+
+export const getOnlyMultiCallProvider = () => getMultiCallProvider(new JsonRpcProvider(multiCallRPCUrl, multiCallChainId), multiCallChainId)
+
 export function processResult(data) {
   data = cloneDeep(data);
   if (Array.isArray(data)) {
@@ -63,7 +81,7 @@ export const getPoolInfo = (pool) => {
     : new Contract(pool.currency.address, ERC20.abi);
   const promiseList = [
     poolContract.price(),
-    poolContract.totalPurchasedCurrency(), 
+    poolContract.totalPurchasedCurrency(),
     poolContract.purchasedCurrencyOf(account),
     // poolContract.totalSettleable(),
     poolContract.settleable(account),
@@ -75,9 +93,9 @@ export const getPoolInfo = (pool) => {
   ]
   if (pool.airdrop) {
     const airdropContract = new Contract(pool.airdrop.address, pool.airdrop.abi)
-    promiseList.push(airdropContract.allowList(account)) 
-    promiseList.push(airdropContract.withdrawList(account)) 
-    promiseList.push(airdropContract.begin()) 
+    promiseList.push(airdropContract.allowList(account))
+    promiseList.push(airdropContract.withdrawList(account))
+    promiseList.push(airdropContract.begin())
   }
   poolContract.time && promiseList.push(poolContract.time())
   poolContract.timeSettle && promiseList.push(poolContract.timeSettle())
@@ -88,6 +106,7 @@ export const getPoolInfo = (pool) => {
     .all(promiseList).then(res => {
     const now = parseInt(Date.now() / 1000)
     const resData = processResult(res)
+      console.log('resData', resData)
     let [
       price,
       totalPurchasedCurrency,
@@ -130,7 +149,7 @@ export const getPoolInfo = (pool) => {
         currency_allowance = resData[11]
         balanceOf = resData[12]
       }
-      if (pool.name === 'MONI') {
+      if (pool.airdrop) {
         price = new BigNumber(price).div(2).toString()
       }
       // time = 1629118800
@@ -145,7 +164,7 @@ export const getPoolInfo = (pool) => {
     // ] = totalSettleable
     const [completed_, amount, volume, rate] = settleable
 
-    let status = pool.status || 0; 
+    let status = pool.status || 0;
     const timeClose = time;
     if (timeSettle) {
       time = timeSettle;
@@ -169,6 +188,7 @@ export const getPoolInfo = (pool) => {
     )
       .multipliedBy(new BigNumber(price))
       .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
+      console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
     const totalPurchasedUnderlying = numToWei(
       new BigNumber(totalPurchasedCurrency)
@@ -202,30 +222,30 @@ export const getPoolInfo = (pool) => {
       totalPurchasedCurrency,
       totalPurchasedAmount: totalPurchasedAmount,
       totalPurchasedUnderlying,
-      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6), 
+      balanceOf: formatAmount(balanceOf, pool.currency.decimals, 6),
       purchasedCurrencyOf,
       // totalSettleable: {
       //   completed_: total_completed_,
-      //   amount: total_amount, 
+      //   amount: total_amount,
       //   volume: total_volume,
       //   rate: total_rate,
       // },
       totalSettledUnderlying,
       settleable: {
         completed_,
-        amount, 
-        volume, 
+        amount,
+        volume,
         rate,
       },
       pool_info: {
         ...pool.pool_info,
-        maxAccount: maxUser, 
-        curUserCount, 
+        maxAccount: maxUser,
+        curUserCount,
         min_allocation: fromWei(amtLow, pool.currency.decimal)*1,
         max_allocation: fromWei(amtHigh, pool.currency.decimal)*1,
       }
     })
-  })
+  }).catch(() => pool)
 }
 
 export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => {}) => {

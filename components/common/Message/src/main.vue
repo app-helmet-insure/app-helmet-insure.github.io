@@ -156,6 +156,7 @@ export default {
     transition: opacity 0.3s, transform 0.4s, top 0.4s;
     font-size: 14px;
     font-family: IBMPlexSans;
+    z-index: 9999!important;
     @include themeify {
       color: themed("color-ffffff");
     }

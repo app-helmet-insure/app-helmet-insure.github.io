@@ -1,6 +1,6 @@
 <template>
   <div class="ibo_item_warp" v-if="iboData">
-    <div class="ibo_item" :class="{ active: iboData.light }">
+    <div class="ibo_item" :class="{ active: iboData.timeClose > now}">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />
@@ -128,7 +128,6 @@
           :class="
             !(
               iboData.status === 1 &&
-              $store.state.userInfo.status === 1 &&
               parseInt(iboData.pool_info.curUserCount) <
                 parseInt(iboData.pool_info.maxAccount)
             ) ||
@@ -260,223 +259,7 @@
         </template>
       </div>
     </div>
-    <Dialog
-      title="Tip"
-      :visible="showTip"
-      :before-close="() => (showTip = false)"
-      width="200"
-    >
-      <div v-if="iboData.name === 'GAME1'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_august") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap.finance</p>
-        <p>
-          SC: 0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0x0e52d24c87a5ca4f37e3ee5e16ef5913fb0cceeb')
-            "
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="T.me/game1networkchat" target="_blank"
-            >T.me/game1networkchat</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://game1network.com" target="_blank"
-            >https://game1network.com</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'UFOMO'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_august2") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap.finance</p>
-        <p>
-          SC: 0xc9354034968f79f181b76a2f8a015fcdbaed2692
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0xc9354034968f79f181b76a2f8a015fcdbaed2692')
-            "
-          ></i>
-        </p>
-        <p>
-          TG(EN):
-          <a href="https://t.me/UFOMO_EN" target="_blank"
-            >https://t.me/UFOMO_EN</a
-          >
-        </p>
-        <p>
-          TG(CN):
-          <a href="https://t.me/UFOMO_cn" target="_blank"
-            >https://t.me/UFOMO_cn</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://crazyufo.vip/#/fomoGame" target="_blank"
-            >https://crazyufo.vip/#/fomoGame</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'AXN'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text37") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text37") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
-        <p>
-          SC: 0x3a05e86c25366031d92e013cac77ff6c261cb09b
-          <i
-            class="copy"
-            id="copy_default"
-            @click="
-              copyAdress($event, '0x3a05e86c25366031d92e013cac77ff6c261cb09b')
-            "
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/Axieninjaofficial" target="_blank"
-            >https://t.me/Axieninjaofficial</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://www.axieninja.app/" target="_blank"
-            >https://www.axieninja.app/</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'DSN'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text38") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text39") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
-        <p>
-          SC: {{ iboData.underlying.address }}
-          <i
-            class="copy"
-            id="copy_default"
-            @click="copyAdress($event, iboData.underlying.address)"
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/DimensionCommChinese" target="_blank"
-            >https://t.me/DimensionCommChinese</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://dimension.best" target="_blank"
-            >https://dimension.best</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'RHINO'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text40") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text40") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Babyswap, Pancakeswap</p>
-        <p>
-          SC: {{ iboData.underlying.address }}
-          <i
-            class="copy"
-            id="copy_default"
-            @click="copyAdress($event, iboData.underlying.address)"
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/rhinobsc" target="_blank"
-            >https://t.me/rhinobsc</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://rhinobsc.com" target="_blank"
-            >https://rhinobsc.com</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'PRED'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text42") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text42") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
-        <p>
-          SC: {{ iboData.underlying.address }}
-          <i
-            class="copy"
-            id="copy_default"
-            @click="copyAdress($event, iboData.underlying.address)"
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/Predictcoin" target="_blank"
-            >https://t.me/Predictcoin</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://predictcoin.finance" target="_blank"
-            >https://predictcoin.finance</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'PRB'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text43") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text43") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Apeswap or Babyswap</p>
-        <p>
-          SC: {{ iboData.underlying.address }}
-          <i
-            class="copy"
-            id="copy_default"
-            @click="copyAdress($event, iboData.underlying.address)"
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/premiumblock" target="_blank"
-            >https://t.me/premiumblock</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://www.premiumblock.org" target="_blank"
-            >https://www.premiumblock.org</a
-          >
-        </p>
-      </div>
-      <div v-else-if="iboData.name === 'MONI'" class="tip_box">
-        <p>{{ $t("IBO.IBO_text45") }}: {{ $t("IBO.IBO_text46") }}</p>
-        <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text46") }}</p>
-        <p>{{ $t("IBO.IBO_text29") }}: Pancakeswap</p>
-        <p>
-          SC: {{ iboData.underlying.address }}
-          <i
-            class="copy"
-            id="copy_default"
-            @click="copyAdress($event, iboData.underlying.address)"
-          ></i>
-        </p>
-        <p>
-          TG:
-          <a href="https://t.me/monstainfinite" target="_blank"
-            >https://t.me/monstainfinite</a
-          >
-        </p>
-        <p>
-          {{ $t("IBO.IBO_text30") }}:
-          <a href="https://monstainfinite.com" target="_blank"
-            >https://monstainfinite.com</a
-          >
-        </p>
-      </div>
-    </Dialog>
+    <TipDialog :visible="showTip" :iboData="iboData" :onClose="() => (showTip = false)"/>
   </div>
 </template>
 
@@ -494,9 +277,10 @@ import BigNumber from "bignumber.js";
 import { Dialog, Input, MessageBox } from "element-ui";
 import ClipboardJS from "clipboard";
 import Message from "~/components/common/Message";
+import TipDialog from "~/components/ibo/ibo_tip_dialog";
 
 export default {
-  components: { Dialog, Input },
+  components: { Dialog, Input, TipDialog },
   props: {
     pool: {
       type: Object,
@@ -528,7 +312,7 @@ export default {
       return new BigNumber(this.iboData.amount).toFormat();
     },
     purchasedCurrencyOf: function () {
-     
+
       return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
     },
     rate: function () {
@@ -570,7 +354,7 @@ export default {
       return 0;
     },
     available: function () {
-     
+
       return this.getAvailable();
     },
   },
@@ -615,7 +399,7 @@ export default {
       return Math.min(remainingLimit, balanceOf);
     },
     getCountdownData() {
-     
+
       const thisTime = parseInt(new Date().getTime() / 1000);
       this.now = thisTime;
       let t = 0;

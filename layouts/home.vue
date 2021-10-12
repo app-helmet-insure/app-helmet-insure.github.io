@@ -77,7 +77,7 @@ import {
   watchNetWorkChange,
   getNetworkChainID,
 } from "../web3/wallet.js";
-import { WEB3 } from "../web3/index.js";
+import {CHAIN_ID_LOCALHOST, WEB3} from "../web3/index.js";
 import BuyHelmetDialog from "../components/dialogs/buy-helmet-dialog.vue";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
@@ -201,7 +201,7 @@ export default {
       });
     },
     watchChainID(value) {
-      if (value == 56) {
+      if (value == 56 || value === CHAIN_ID_LOCALHOST) {
         this.NetWorkVisible = false;
       } else {
         this.NetWorkVisible = true;

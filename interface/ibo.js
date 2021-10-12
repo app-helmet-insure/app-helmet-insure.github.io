@@ -1,13 +1,31 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { cloneDeep } from "lodash";
-import Web3 from "web3";
+import Web3, {BSCChainId, BSCRpcUrl} from "web3";
 import ERC20 from "~/web3/abis/ERC20ABI.json";
-import { Contract, Provider } from "ethers-multicall-x";
+import {Contract, Provider, setMulticallAddress} from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
-const BSCChainId = 56
-const BSCRpcUrl = 'https://bsc-dataseed.binance.org/'
+const CHAIN_ID_LOCALHOST = 31337
+
 BigNumber.config({ EXPONENTIAL_AT: 100 })
-export const getOnlyMultiCallProvider = () => new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId)
+let testNetwork = null
+if (process.browser) {
+  if (window.sessionStorage.getItem('helmet_test_chain')){
+    testNetwork = CHAIN_ID_LOCALHOST
+    console.log('helmet_test_chain', true)
+  }
+}
+const multiCallChainId = testNetwork || BSCChainId
+const multiCallRPCUrl = testNetwork ? 'http://localhost:8545' : BSCRpcUrl
+
+
+
+const getMultiCallProvider = (provider, chainId) => {
+  setMulticallAddress(CHAIN_ID_LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
+  return new Provider(provider, chainId);
+};
+
+export const getOnlyMultiCallProvider = () => getMultiCallProvider(new JsonRpcProvider(multiCallRPCUrl, multiCallChainId), multiCallChainId)
+
 export function processResult(data) {
   data = cloneDeep(data);
   if (Array.isArray(data)) {
@@ -88,6 +106,7 @@ export const getPoolInfo = (pool) => {
     .all(promiseList).then(res => {
     const now = parseInt(Date.now() / 1000)
     const resData = processResult(res)
+      console.log('resData', resData)
     let [
       price,
       totalPurchasedCurrency,
@@ -226,7 +245,7 @@ export const getPoolInfo = (pool) => {
         max_allocation: fromWei(amtHigh, pool.currency.decimal)*1,
       }
     })
-  })
+  }).catch(() => pool)
 }
 
 export const onApprove_ =  (contractAddress,poolAddress, callback = (status) => {}) => {

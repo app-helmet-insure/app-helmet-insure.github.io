@@ -2,10 +2,18 @@
 import starterLimitAbi from '~/web3/abis/IBO_StarterLimit.json'
 import AirAllowListAbi from '~/web3/abis/AirAllowList.json'
 import IBOTest from '~/web3/abis/ibo_test.json'
+import {CHAIN_ID_LOCALHOST} from "../web3";
 
 const StarterLimitAddress = '0x685f36fD01b749788BFa4d2526a77261EF604f3f'
 
+
 const HELMET_ADDRESS = '0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8'
+let testNetwork = null
+if (process.browser) {
+  if (sessionStorage.getItem('helmet_test_chain')){
+    testNetwork = CHAIN_ID_LOCALHOST
+  }
+}
 
 export const iboPools = [
   {
@@ -46,7 +54,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text50',
     airdrop: {
       begin: '1636822800',
@@ -97,7 +105,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text46',
     airdrop: {
       begin: '1634407500',
@@ -147,7 +155,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text43',
   },
   {
@@ -189,7 +197,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text42',
   },
   {
@@ -231,7 +239,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text40',
   },
   {
@@ -273,7 +281,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text38'
   },
   {
@@ -315,7 +323,7 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56,
+    networkId: testNetwork || 56,
     claimTimeTipI18n: 'IBO.IBO_text37'
   },
   {
@@ -355,7 +363,7 @@ export const iboPools = [
     winningRate: '-',
     committed: '',
     total: '',
-    networkId: 56
+    networkId: testNetwork || 56
   },
   {
     name: 'GAME1',
@@ -396,6 +404,6 @@ export const iboPools = [
     committed: '',
     total: '',
     poolType: 0,
-    networkId: 56
+    networkId: testNetwork || 56
   },
 ]

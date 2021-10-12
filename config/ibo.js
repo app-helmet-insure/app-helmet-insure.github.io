@@ -26,7 +26,7 @@ export const iboPools = [
       symbol: 'BOB',
       name: 'BOB',
     },
-    amount: '64516129',
+    amount: '129032258',
     pool_info: {
       min_allocation: 10,
       max_allocation: 500,
@@ -34,10 +34,10 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET = 5200 BOB',
+    ratio: '1 HELMET = 5,200 BOB',
     time: '1634144400',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '259259259259259259175000',
+    totalPurchasedAmount: '24813895769230794044665',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

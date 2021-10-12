@@ -1,12 +1,13 @@
 import { JsonRpcProvider } from "@ethersproject/providers";
 import { cloneDeep } from "lodash";
-import Web3, {BSCChainId, BSCRpcUrl} from "web3";
+import Web3 from "web3";
 import ERC20 from "~/web3/abis/ERC20ABI.json";
 import {Contract, Provider, setMulticallAddress} from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
-const CHAIN_ID_LOCALHOST = 31337
-
 BigNumber.config({ EXPONENTIAL_AT: 100 })
+const CHAIN_ID_LOCALHOST = 31337
+const BSCChainId = 56;
+const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
 let testNetwork = null
 if (process.browser) {
   if (window.sessionStorage.getItem('helmet_test_chain')){
@@ -16,8 +17,7 @@ if (process.browser) {
 }
 const multiCallChainId = testNetwork || BSCChainId
 const multiCallRPCUrl = testNetwork ? 'http://localhost:8545' : BSCRpcUrl
-
-
+console.log(multiCallChainId, multiCallRPCUrl)
 
 const getMultiCallProvider = (provider, chainId) => {
   setMulticallAddress(CHAIN_ID_LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')

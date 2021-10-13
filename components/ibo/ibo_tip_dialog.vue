@@ -231,6 +231,36 @@
         >
       </p>
     </div>
+    <div v-else-if="iboData.name === 'ROB'" class="tip_box">
+      <p>{{ $t("IBO.IBO_text36") }}: {{ $t("IBO.IBO_text51") }}</p>
+      <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text51") }}</p>
+      <p>{{ $t("IBO.IBO_text29") }}: <a href="https://pancakeswap.finance/" target="_blank">pancakeswap</a></p>
+      <p>
+        SC: {{ iboData.underlying.address }}
+        <i
+            class="copy"
+            @click="copyAdress($event, iboData.underlying.address)"
+        ></i>
+      </p>
+      <p>
+        TG:
+        <a href="https://t.me/RobMusk" target="_blank"
+        >https://t.me/RobMusk</a
+        >
+      </p>
+      <p>
+        TG(CN):
+        <a href="https://t.me/ROBMUSK_CN" target="_blank"
+        >https://t.me/ROBMUSK_CN</a
+        >
+      </p>
+      <p>
+        {{ $t("IBO.IBO_text30") }}:
+        <a href="https://www.robmusk.com" target="_blank"
+        >https://www.robmusk.com</a
+        >
+      </p>
+    </div>
   </Dialog>
 </template>
 

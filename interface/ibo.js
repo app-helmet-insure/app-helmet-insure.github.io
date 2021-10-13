@@ -106,7 +106,6 @@ export const getPoolInfo = (pool) => {
     .all(promiseList).then(res => {
     const now = parseInt(Date.now() / 1000)
     const resData = processResult(res)
-      console.log('resData', resData)
     let [
       price,
       totalPurchasedCurrency,
@@ -188,7 +187,7 @@ export const getPoolInfo = (pool) => {
     )
       .multipliedBy(new BigNumber(price))
       .div(new BigNumber(fromWei('1', pool.underlying.decimal)))
-      console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
+      // console.log('totalPurchasedAmount',pool.name, totalPurchasedAmount.toString())
 
     const totalPurchasedUnderlying = numToWei(
       new BigNumber(totalPurchasedCurrency)

@@ -17,6 +17,47 @@ if (process.browser) {
 
 export const iboPools = [
   {
+    name: 'ROB',
+    address: '',
+    abi: starterLimitAbi,
+    start_at: '1634220000',
+    is_coming: true,
+    currency: {
+      address: HELMET_ADDRESS,
+      decimal: 18,
+      symbol: 'HELMET',
+    },
+    icon: 'rob.png',
+    underlying: {
+      address: '0xA53d857f0C3731b72C7e7013526442A09fcC7833',
+      decimal: 18,
+      symbol: 'ROB',
+      name: 'ROB',
+    },
+    amount: '1250000000',
+    pool_info: {
+      min_allocation: 200,
+      max_allocation: 500,
+      maxAccount: 300,
+    },
+    progress: 0,
+    status: 0,
+    ratio: '1 HELMET=15,600 ROB',
+    time: '1634306400',
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: '53333333333333332800000',
+    totalPurchasedUnderlying: '0',
+    totalPurchasedCurrency: '0',
+
+    duration: '',
+    winningRate: '-',
+    committed: '',
+    total: '',
+    poolType: 0,
+    networkId: testNetwork || 56,
+    claimTimeTipI18n: 'IBO.IBO_text51',
+  },
+  {
     name: 'BOB',
     address: '0xAA90d31E11a886B8b57a5188F9bd3dfA3e907416',
     abi: starterLimitAbi,
@@ -65,7 +106,6 @@ export const iboPools = [
       allowList: 0
     }
   },
-
   {
     name: 'MONI',
     address: '0x603366462A39CdbFCE7a7B274f5DA77cb51eA9b0',
@@ -88,7 +128,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 400,
       max_allocation: 1000,
-      min_swap_level: '400 Helmet',
       maxAccount: 600,
     },
     progress: 0,
@@ -99,7 +138,6 @@ export const iboPools = [
     totalPurchasedAmount: '259259259259259259175000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -138,7 +176,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -149,7 +186,6 @@ export const iboPools = [
     totalPurchasedAmount: '53333333333333332800000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -180,7 +216,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 300,
     },
     progress: 0,
@@ -191,7 +226,6 @@ export const iboPools = [
     totalPurchasedAmount: '1388888888888888888900000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -222,7 +256,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -233,7 +266,6 @@ export const iboPools = [
     totalPurchasedAmount: '27777777777777800000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -264,7 +296,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -275,7 +306,6 @@ export const iboPools = [
     totalPurchasedAmount: '39900000000000008778000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -306,7 +336,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -317,7 +346,6 @@ export const iboPools = [
     totalPurchasedAmount: '27777750000000000000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',
@@ -349,7 +377,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -387,7 +414,6 @@ export const iboPools = [
     pool_info: {
       min_allocation: 200,
       max_allocation: 500,
-      min_swap_level: '200 Helmet',
       maxAccount: 200,
     },
     progress: 0,
@@ -398,7 +424,6 @@ export const iboPools = [
     totalPurchasedAmount: '27777750000000000000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
-
     duration: '',
     winningRate: '-',
     committed: '',

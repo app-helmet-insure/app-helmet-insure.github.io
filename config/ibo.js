@@ -48,7 +48,6 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text50',
-    light: true,
     airdrop: {
       begin: '1636822800',
       address: '0x3D584BC1B18446730E7D27380D2BB008eF7478B8',
@@ -100,7 +99,6 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text46',
-    light: false,
     airdrop: {
       begin: '1634407500',
       address: '0xDCBc091bC91b5b4DFB226C410Dc703dfF6a75eda',
@@ -151,7 +149,6 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text43',
-    light: false
   },
   {
     name: 'PRED',
@@ -194,7 +191,6 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text42',
-    light: false
   },
   {
     name: 'RHINO',
@@ -237,7 +233,6 @@ export const iboPools = [
     poolType: 0,
     networkId: 56,
     claimTimeTipI18n: 'IBO.IBO_text40',
-    light: false
   },
   {
     name: 'DSN',

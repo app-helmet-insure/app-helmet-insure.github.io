@@ -182,6 +182,7 @@ export const getPoolInfo = (pool) => {
     //   status = 3
     // }
 
+      console.log('price',pool.name, price)
     const totalPurchasedAmount = new BigNumber(
       fromWei(pool.amount, pool.decimal)
     )
@@ -206,7 +207,7 @@ export const getPoolInfo = (pool) => {
     // const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
 
       const num = new BigNumber(1).div(
-        new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal))
+        new BigNumber(price).div(new BigNumber(10).pow(18 + 18 - pool.underlying.decimal))
       ).toFixed(6) * 1
 
     return Object.assign({}, pool, {

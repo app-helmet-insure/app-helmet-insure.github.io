@@ -14,6 +14,14 @@
     "ConnectWrong": "Salah Jaringan",
     "ConnectWallet": "Sambungkan Dompet"
   },
+  "SwapHelmet": {
+    "BuyHelmet": "Buy Helmet",
+    "ExEarn": "Estimated",
+    "Price": "Price",
+    "MinEarn": "Minimum received",
+    "Fee": "Fee",
+    "Server": "Powered By 0x "
+  },
   "Banner": {
     "HelmetBurn": "Helmet Burning Amount",
     "ClosedPolicy": "Kategori Polis",

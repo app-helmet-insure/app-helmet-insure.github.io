@@ -313,7 +313,7 @@ export default {
     },
     purchasedCurrencyOf: function () {
 
-      return fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
+      return fromWei(this.iboData.purchasedCurrencyOf, this.iboData.currency.decimal).toFixed(6, 1) * 1;
     },
     rate: function () {
       if (!this.iboData.settleable || this.iboData.status === 0) {
@@ -347,7 +347,7 @@ export default {
         if (this.iboData.settleable.amount == "0") {
           return 0;
         }
-        return new BigNumber(fromWei(this.iboData.settleable.amount)).toFormat(
+        return new BigNumber(fromWei(this.iboData.settleable.amount, this.iboData.currency.decimal)).toFormat(
           6
         );
       }
@@ -392,7 +392,7 @@ export default {
     },
     getAvailable() {
       const purchasedCurrencyOf =
-        fromWei(this.iboData.purchasedCurrencyOf).toFixed(6, 1) * 1;
+        fromWei(this.iboData.purchasedCurrencyOf, this.iboData.currency.decimal).toFixed(6, 1) * 1;
       const balanceOf = this.iboData.balanceOf || 0;
       const remainingLimit =
         this.iboData.pool_info.max_allocation - purchasedCurrencyOf;
@@ -448,6 +448,9 @@ export default {
       this.initLoading = true;
       getPoolInfo(this.pool).then((newPool) => {
         this.iboData = newPool;
+        if (newPool.name === 'ROB') {
+          console.log(newPool.name, newPool)
+        }
         const purchasedCurrencyOf =
           fromWei(newPool.purchasedCurrencyOf).toFixed(6, 1) * 1;
         if (purchasedCurrencyOf > 0) {

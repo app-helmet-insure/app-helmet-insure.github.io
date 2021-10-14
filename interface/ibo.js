@@ -182,7 +182,6 @@ export const getPoolInfo = (pool) => {
     //   status = 3
     // }
 
-      console.log('price',pool.name, price)
     const totalPurchasedAmount = new BigNumber(
       fromWei(pool.amount, pool.decimal)
     )

@@ -51,7 +51,7 @@
         </p>
         <p class="ibo_item_value">
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text10") }}</span>
-          <span class="value">{{ (iboData.progress * 100).toFixed(0) }}%</span>
+          <span class="value">{{ (iboData.progress * 100).toFixed(2)*1 }}%</span>
         </p>
         <a class="ibo_item_progress">
           <i

@@ -18,10 +18,10 @@ if (process.browser) {
 export const iboPools = [
   {
     name: 'ROB',
-    address: '',
+    address: '0x0fF47b1544378bd88dDaab6b002c09cF13F5ED6A',
     abi: starterLimitAbi,
     start_at: '1634220000',
-    is_coming: true,
+    is_coming: false,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,
@@ -45,7 +45,7 @@ export const iboPools = [
     ratio: '1 HELMET=15,600 ROB',
     time: '1634306400',
     purchasedCurrencyOf: 0,
-    totalPurchasedAmount: '53333333333333332800000',
+    totalPurchasedAmount: '80128205128205000000000',
     totalPurchasedUnderlying: '0',
     totalPurchasedCurrency: '0',
 

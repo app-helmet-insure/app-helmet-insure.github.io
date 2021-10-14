@@ -1,6 +1,6 @@
 <template>
   <div class="ibo_item_warp" v-if="iboData">
-    <div class="ibo_item" :class="{ active: iboData.timeClose > now}">
+    <div class="ibo_item" :class="{ active: iboData.time > now && iboData.name !== 'AXN'}">
       <div class="ibo_item_title">
         <p class="ibo_item_title_left">
           <img :src="require(`~/assets/img/ibo/${iboData.icon}`)" />

@@ -30,7 +30,7 @@ export const iboPools = [
     icon: 'rob.png',
     underlying: {
       address: '0xA53d857f0C3731b72C7e7013526442A09fcC7833',
-      decimal: 18,
+      decimal: 9,
       symbol: 'ROB',
       name: 'ROB',
     },
@@ -42,7 +42,7 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: '1 HELMET=15,600 ROB',
+    ratio: '1 HELMET = 15,600 ROB',
     time: '1634306400',
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: '80128205128205000000000',

@@ -203,15 +203,20 @@ export const getPoolInfo = (pool) => {
     Object.assign(pool.currency, {
       allowance: currency_allowance,
     })
-    const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
+    // const num = new BigNumber(10).pow(pool.currency.decimal).multipliedBy(new BigNumber(10).pow(18)).div(new BigNumber(price).multipliedBy(new BigNumber(10).pow(pool.underlying.decimal))).toFixed(6) * 1
+
+      const num = new BigNumber(1).div(
+        new BigNumber(price).div(new BigNumber(10).pow(pool.currency.decimal))
+      ).toFixed(6) * 1
+
     return Object.assign({}, pool, {
       ratio: `1 ${pool.currency.symbol} = ${new BigNumber(num).toFormat()} ${
         pool.underlying.symbol
       }`,
       progress:
-        new BigNumber(totalPurchasedCurrency)
-          .dividedBy(totalPurchasedAmount)
-          .toFixed(2, 1)
+        new BigNumber(fromWei(totalPurchasedCurrency, pool.currency.decimal))
+          .div(new BigNumber(pool.amount).div(new BigNumber(num)))
+          .toFixed(6)
           .toString(),
       status: status,
       time: time,

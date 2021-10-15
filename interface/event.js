@@ -236,9 +236,9 @@ export const buyHelmetOptions = ({ sellToken, sellAmount }) => {
         sellToken,
         buyToken: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
         sellAmount,
-        slippagePercentage: 0.0003,
-        buyTokenPercentageFee: 0.0001,
-        feeRecipient: "0x5E9fb0429e48970AF889A514fB0Fbe67f0624545",
+        slippagePercentage: 0.03,
+        buyTokenPercentageFee: 0.01,
+        feeRecipient: "0x9e20165b14a4c7e14e0f753b6192e85a199420c6",
       },
     }).then((res) => {
       return res;

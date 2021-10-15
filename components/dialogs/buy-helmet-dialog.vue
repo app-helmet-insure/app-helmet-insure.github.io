@@ -186,29 +186,60 @@ export default {
       }
     },
     getBalance(newValue) {
-      this.changeInputSwapNumber();
-      const Account = this.CurrentAccount.account;
-      if (this.activeData.symbol == "BNB") {
-        window.WEB3.eth.getBalance(Account).then((res) => {
-          this.Balance = fixD(fromWei(res), 4);
-        });
-        this.ApproveStatus = true;
+      let sellAmount;
+      if (this.swapNumber) {
+        sellAmount = this.swapNumber;
       } else {
-        const BalanceContracts = new Contract(newValue.address, MiningABI);
-        const ApproveContracts = new Contract(newValue.address, ERC20ABI.abi);
-        const PromiseList = [
-          BalanceContracts.balanceOf(Account),
-          ApproveContracts.allowance(Account, this.RequestData.allowanceTarget),
-        ];
-        const MulticallProvider = getOnlyMultiCallProvider();
-        MulticallProvider.all(PromiseList).then((res) => {
-          const FixData = processResult(res);
-          const [Balance, ApproveStatus] = FixData;
-          console.log(Balance, ApproveStatus);
-          this.Balance = fixD(fromWei(Balance), 4);
-          this.ApproveStatus = ApproveStatus * 1 > 0;
-        });
+        if (
+          this.activeData.symbol == "BNB" ||
+          this.activeData.symbol == "WBNB"
+        ) {
+          sellAmount = "0.01";
+        } else if (this.activeData.symbol == "BTCB") {
+          sellAmount = "0.0001";
+        } else if (this.activeData.symbol == "ETH") {
+          sellAmount = "0.001";
+        } else {
+          sellAmount = "1";
+        }
       }
+      buyHelmetOptions({
+        sellToken: this.activeData.address,
+        sellAmount: toWei(sellAmount, this.activeData.decimals),
+      }).then((res) => {
+        let RequestData = res.data;
+        this.RequestData = RequestData;
+        const Account = this.CurrentAccount.account;
+        if (this.swapNumber) {
+          this.HelmetReward = toRounding(fromWei(RequestData.buyAmount), 4);
+          this.HelmetMinReward = toRounding(
+            (1 - 0.0003) * fromWei(RequestData.buyAmount),
+            4
+          );
+        }
+        this.HelmetPrice = toRounding(1 / RequestData.price, 8);
+        if (this.activeData.symbol == "BNB") {
+          window.WEB3.eth.getBalance(Account).then((res) => {
+            this.Balance = fixD(fromWei(res), 4);
+          });
+          this.ApproveStatus = true;
+        } else {
+          const BalanceContracts = new Contract(newValue.address, MiningABI);
+          const ApproveContracts = new Contract(newValue.address, ERC20ABI.abi);
+          const PromiseList = [
+            BalanceContracts.balanceOf(Account),
+            ApproveContracts.allowance(Account, RequestData.allowanceTarget),
+          ];
+          const MulticallProvider = getOnlyMultiCallProvider();
+          MulticallProvider.all(PromiseList).then((res) => {
+            const FixData = processResult(res);
+            const [Balance, ApproveStatus] = FixData;
+            console.log(Balance, ApproveStatus);
+            this.Balance = fixD(fromWei(Balance), 4);
+            this.ApproveStatus = ApproveStatus * 1 > 0;
+          });
+        }
+      });
     },
     changeInputSwapNumber() {
       this.HelmetReward = "--";
@@ -216,23 +247,7 @@ export default {
       this.HelmetPrice = "--";
       clearTimeout(this.Timer);
       this.Timer = setTimeout(() => {
-        let sellAmount;
-        if (this.swapNumber) {
-          sellAmount = this.swapNumber;
-        } else {
-          if (
-            this.activeData.symbol == "BNB" ||
-            this.activeData.symbol == "WBNB"
-          ) {
-            sellAmount = "0.01";
-          } else if (this.activeData.symbol == "BTCB") {
-            sellAmount = "0.0001";
-          } else if (this.activeData.symbol == "ETH") {
-            sellAmount = "0.001";
-          } else {
-            sellAmount = "1";
-          }
-        }
+        let sellAmount = this.swapNumber;
         buyHelmetOptions({
           sellToken: this.activeData.address,
           sellAmount: toWei(sellAmount, this.activeData.decimals),

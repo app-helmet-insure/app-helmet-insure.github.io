@@ -12,7 +12,11 @@
     <div class="buy_dialog_wrap">
       <div class="buy_dialog_select">
         <div class="swapInput">
-          <input type="number" v-model="swapNumber" />
+          <input
+            type="number"
+            v-model="swapNumber"
+            @input="changeInputSwapNumber"
+          />
           <div class="right">
             <span
               class="all"
@@ -66,31 +70,30 @@
       <div class="swap_earn">
         <img src="~/assets/img/mining/serialnext_web.png" alt="" />
         <span>{{ $t("SwapHelmet.ExEarn") }}</span>
-        <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
+        <p>{{ HelmetReward }}HELMET</p>
       </div>
       <p>
         <span>{{ $t("SwapHelmet.Price") }}</span>
-        <span>
-          1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}
-        </span>
+        <span> 1HELMET={{ HelmetPrice }}{{ activeData.symbol }} </span>
       </p>
-      <button @click="SwapTokens">
-        {{ ApprovedStatus ? "Confirm Swap" : "Approved" }}
+      <button @click="handleClickSwapTokens" class="o_button">
+        <i :class="SwapLoading ? 'loading_pic' : ''"></i>
+        {{ ApproveStatus ? "Confirm Swap" : "Approved" }}
       </button>
       <p>
         <span>{{ $t("SwapHelmet.MinEarn") }}</span
-        ><span>{{ toRounding(HelmetMinReward, 8) }} HELMET</span>
+        ><span>{{ HelmetMinReward }} HELMET</span>
       </p>
-      <p>
+      <!-- <p>
         <span>{{ $t("SwapHelmet.Fee") }}</span
         ><span>
           {{ BigNumber(toRounding(HelmetFee, 8).toString()).toFixed() }}
           {{ activeData.symbol }}</span
         >
-      </p>
+      </p> -->
       <span>
         <a
-          href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+          href="https://matcha.xyz/markets/56/0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8/0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
           target="_blank"
           >{{ $t("SwapHelmet.Server") }}</a
         >
@@ -101,17 +104,13 @@
 <script>
 import tokenList from "~/config/tokenlist.json";
 import VueLazyload from "vue-lazyload";
-import {
-  SwapHelmet,
-  SwapBNBforTokens,
-  SwapTokensforTokens,
-  allowance,
-  approve,
-  BalanceOf,
-} from "~/interface/swap.js";
+import { buyHelmetOptions } from "~/interface/event.js";
 import { fixD, autoRounding, toRounding } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
+import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import BigNumber from "bignumber.js";
+import Web3 from "web3";
+import { Contract } from "ethers-multicall-x";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -132,7 +131,7 @@ export default {
       searchToken: "",
       swapNumber: "",
       activeData: {
-        address: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+        address: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         chainId: 56,
         decimals: 18,
         logoURI:
@@ -149,7 +148,10 @@ export default {
       toRounding,
       BigNumber,
       SwapRouter: false,
-      ApprovedStatus: false,
+      ApproveStatus: false,
+      RequestData: {},
+      Timer: null,
+      SwapLoading: false,
     };
   },
   computed: {
@@ -169,18 +171,9 @@ export default {
       handler: "searchTokenWatch",
       immediate: true,
     },
-    SwapParams: {
-      handler: "SwapParamsWatch",
-      immediate: true,
-    },
     activeData: {
       handler: "activeDataWatch",
       immediate: true,
-    },
-    swapNumber(newValue) {
-      if (!newValue) {
-        this.HelmetPriceHigh(this.activeData);
-      }
     },
   },
   methods: {
@@ -189,130 +182,143 @@ export default {
         this.getBalance(this.activeData);
       }
     },
-    getBalance(newValue) {
-      const Account = this.CurrentAccount.account;
-      if (this.activeData.symbol == "BNB") {
-        window.WEB3.eth.getBalance(Account).then((res) => {
-          this.Balance = fixD(fromWei(res), 4);
-        });
-      } else {
-        const Contracts = getContract(MiningABI, newValue.address);
-        Contracts.methods
-          .balanceOf(Account)
-          .call()
-          .then((res) => {
-            this.Balance = fixD(fromWei(res, newValue.decimals), 8);
-          });
-      }
-    },
-    SwapParamsWatch(newValue) {
-      this.SwapHelmetFunction();
-    },
     activeDataWatch(newValue) {
       if (newValue && window.chainID === 56) {
-        this.HelmetPriceHigh(newValue);
-        this.ApproveFlag(newValue);
         this.getBalance(newValue);
       }
     },
-    async ApproveFlag(newValue) {
-      let Approve = await allowance(newValue.address);
-      if (newValue.symbol != "BNB" && newValue.symbol != "WBNB") {
-        this.ApprovedStatus = Approve;
+    getBalance(newValue) {
+      let sellAmount;
+      if (this.swapNumber) {
+        sellAmount = this.swapNumber;
       } else {
-        this.ApprovedStatus = true;
-      }
-    },
-    async HelmetPriceHigh(newValue) {
-      let swapNumber;
-      if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
-        swapNumber = 0.01;
-      } else if (newValue.symbol == "BTCB") {
-        swapNumber = 0.0001;
-      } else if (newValue.symbol == "ETH") {
-        swapNumber = 0.001;
-      } else {
-        swapNumber = 1;
-      }
-      await SwapHelmet(
-        swapNumber,
-        newValue,
-        {
-          address: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          chainId: 56,
-          decimals: 18,
-          name: "Helmet.insure",
-          symbol: "Helmet",
-        },
-        (res) => {
-          this.HelmetPrice = swapNumber / res.amount;
-        }
-      );
-    },
-    async SwapTokens() {
-      let data = {
-        activeData: this.activeData,
-        SwapNumber: this.swapNumber,
-        MinReward: this.HelmetMinReward,
-        SwapRouter: this.SwapRouter,
-      };
-
-      if (this.ApprovedStatus) {
-        if (this.swapNumber <= 0) {
-          return;
-        }
-        if (this.activeData.symbol != "BNB") {
-          await SwapTokensforTokens(data, (res) => {
-            if (res.status == "swap_success") {
-              this.DialogClose();
-            }
-          });
+        if (
+          this.activeData.symbol == "BNB" ||
+          this.activeData.symbol == "WBNB"
+        ) {
+          sellAmount = "0.01";
+        } else if (this.activeData.symbol == "BTCB") {
+          sellAmount = "0.0001";
+        } else if (this.activeData.symbol == "ETH") {
+          sellAmount = "0.001";
         } else {
-          await SwapBNBforTokens(data, (res) => {
-            if (res.status == "swap_success") {
-              this.DialogClose();
-            }
+          sellAmount = "1";
+        }
+      }
+      buyHelmetOptions({
+        sellToken: this.activeData.address,
+        sellAmount: toWei(sellAmount, this.activeData.decimals),
+      }).then((res) => {
+        let RequestData = res.data;
+        this.RequestData = RequestData;
+        const Account = this.CurrentAccount.account;
+        if (this.swapNumber) {
+          this.HelmetReward = toRounding(fromWei(RequestData.buyAmount), 4);
+          this.HelmetMinReward = toRounding(
+            (1 - 0.0003) * fromWei(RequestData.buyAmount),
+            4
+          );
+        }
+        this.HelmetPrice = toRounding(1 / RequestData.price, 8);
+        if (this.activeData.symbol == "BNB") {
+          window.WEB3.eth.getBalance(Account).then((res) => {
+            this.Balance = fixD(fromWei(res), 4);
+          });
+          this.ApproveStatus = true;
+        } else {
+          const BalanceContracts = new Contract(newValue.address, MiningABI);
+          const ApproveContracts = new Contract(newValue.address, ERC20ABI.abi);
+          const PromiseList = [
+            BalanceContracts.balanceOf(Account),
+            ApproveContracts.allowance(Account, RequestData.allowanceTarget),
+          ];
+          const MulticallProvider = getOnlyMultiCallProvider();
+          MulticallProvider.all(PromiseList).then((res) => {
+            const FixData = processResult(res);
+            const [Balance, ApproveStatus] = FixData;
+            console.log(Balance, ApproveStatus);
+            this.Balance = fixD(fromWei(Balance), 4);
+            this.ApproveStatus = ApproveStatus * 1 > 0;
           });
         }
-      } else {
-        await approve(this.activeData, (res) => {
-          if (res == "approve_success") {
-            this.ApprovedStatus = true;
-          }
-        });
-      }
+      });
     },
-    async SwapHelmetFunction() {
-      if (this.swapNumber > 0) {
-        await SwapHelmet(
-          this.swapNumber,
-          this.activeData,
-          {
-            address: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-            chainId: 56,
-            decimals: 18,
-            name: "Helmet.insure",
-            symbol: "Helmet",
-          },
-          (res) => {
-            this.HelmetReward = res.amount;
-            this.HelmetPrice = this.swapNumber / res.amount;
-            this.HelmetMinReward = BigNumber(
-              (res.amount * 0.995).toString()
-            ).toFixed(8);
-            this.SwapRouter = res.router;
-            this.HelmetFee = res.router
-              ? BigNumber(
-                  this.swapNumber * (0.0025 + (1 - 0.0025) * 0.0025).toString()
-                ).toFixed()
-              : BigNumber(this.swapNumber).times(0.0025).toFixed();
+    changeInputSwapNumber() {
+      this.HelmetReward = "--";
+      this.HelmetMinReward = "--";
+      this.HelmetPrice = "--";
+      clearTimeout(this.Timer);
+      this.Timer = setTimeout(() => {
+        let sellAmount = this.swapNumber;
+        buyHelmetOptions({
+          sellToken: this.activeData.address,
+          sellAmount: toWei(sellAmount, this.activeData.decimals),
+        }).then((res) => {
+          let RequestData = res.data;
+          this.RequestData = RequestData;
+          if (this.swapNumber) {
+            this.HelmetReward = toRounding(fromWei(RequestData.buyAmount), 4);
+            this.HelmetMinReward = toRounding(
+              (1 - 0.0003) * fromWei(RequestData.buyAmount),
+              4
+            );
           }
-        );
-      } else {
-        this.HelmetPrice = 0;
+          this.HelmetPrice = toRounding(1 / RequestData.price, 8);
+        });
+      }, 500);
+      if (!this.swapNumber) {
         this.HelmetReward = 0;
         this.HelmetMinReward = 0;
-        this.HelmetFee = 0;
+      }
+    },
+
+    handleClickSwapTokens() {
+      const Account = this.CurrentAccount.account;
+      const web3 = new Web3(window.ethereum);
+      const Infinity =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      if (this.ApproveStatus) {
+        web3.eth
+          .sendTransaction({
+            from: Account,
+            gasPrice: this.RequestData.gasPrice,
+            gas: 1000000,
+            to: this.RequestData.to,
+            value: this.RequestData.value,
+            data: this.RequestData.data,
+          })
+          .on("transactionHash", (hash) => {
+            this.SwapLoading = true;
+          })
+          .on("receipt", (receipt) => {
+            this.ApproveStatus = true;
+            this.SwapLoading = false;
+            this.$store.dispatch("refreshData");
+          })
+          .on("error", (error) => {
+            this.ApproveStatus = false;
+            this.SwapLoading = false;
+          });
+      } else {
+        const ApproveContracts = getContract(
+          ERC20ABI.abi,
+          this.activeData.address
+        );
+        ApproveContracts.methods
+          .approve(this.RequestData.allowanceTarget, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.SwapLoading = true;
+          })
+          .on("receipt", (receipt) => {
+            this.ApproveStatus = true;
+            this.SwapLoading = false;
+            this.$store.dispatch("refreshData");
+          })
+          .on("error", (error) => {
+            this.ApproveStatus = false;
+            this.SwapLoading = false;
+          });
       }
     },
     searchTokenWatch(newValue) {
@@ -322,9 +328,6 @@ export default {
       } else {
         this.ShowList = this.TokenList;
       }
-    },
-    handleClickClose() {
-      this.$bus.$emit("OPEN_BUY_DIALOG", false);
     },
     handleTokenList() {
       this.showTokenList = !this.showTokenList;
@@ -355,6 +358,15 @@ export default {
 </script>
 
 <style lang='scss' >
+.loading_pic {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
 @import "~/assets/css/themes.scss";
 @media screen and(min-width:750px) {
   .buy_dialog {

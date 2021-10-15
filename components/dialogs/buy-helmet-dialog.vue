@@ -12,7 +12,11 @@
     <div class="buy_dialog_wrap">
       <div class="buy_dialog_select">
         <div class="swapInput">
-          <input type="number" v-model="swapNumber" />
+          <input
+            type="number"
+            v-model="swapNumber"
+            @input="changeInputSwapNumber"
+          />
           <div class="right">
             <span
               class="all"
@@ -66,20 +70,18 @@
       <div class="swap_earn">
         <img src="~/assets/img/mining/serialnext_web.png" alt="" />
         <span>{{ $t("SwapHelmet.ExEarn") }}</span>
-        <p>{{ toRounding(HelmetReward, 8) }}HELMET</p>
+        <p>{{ HelmetReward }}HELMET</p>
       </div>
       <p>
         <span>{{ $t("SwapHelmet.Price") }}</span>
-        <span>
-          1HELMET={{ toRounding(HelmetPrice, 8) }}{{ activeData.symbol }}
-        </span>
+        <span> 1HELMET={{ HelmetPrice }}{{ activeData.symbol }} </span>
       </p>
       <button @click="handleClickSwapTokens" class="o_button">
         {{ ApproveStatus ? "Confirm Swap" : "Approved" }}
       </button>
       <p>
         <span>{{ $t("SwapHelmet.MinEarn") }}</span
-        ><span>{{ toRounding(HelmetMinReward, 8) }} HELMET</span>
+        ><span>{{ HelmetMinReward }} HELMET</span>
       </p>
       <!-- <p>
         <span>{{ $t("SwapHelmet.Fee") }}</span
@@ -147,6 +149,7 @@ export default {
       SwapRouter: false,
       ApproveStatus: false,
       RequestData: {},
+      Timer: null,
     };
   },
   computed: {
@@ -166,10 +169,6 @@ export default {
       handler: "searchTokenWatch",
       immediate: true,
     },
-    SwapParams: {
-      handler: "SwapParamsWatch",
-      immediate: true,
-    },
     activeData: {
       handler: "activeDataWatch",
       immediate: true,
@@ -184,40 +183,10 @@ export default {
     activeDataWatch(newValue) {
       if (newValue && window.chainID === 56) {
         this.getBalance(newValue);
-        this.HelmetReward = 0;
-        this.HelmetPrice = 0;
       }
-    },
-    SwapParamsWatch(newValue) {
-      const { SwapNumber, SwapData } = newValue;
-      let sellAmount;
-      if (!SwapNumber) {
-        if (newValue.symbol == "BNB" || newValue.symbol == "WBNB") {
-          sellAmount = "0.01";
-        } else if (newValue.symbol == "BTCB") {
-          sellAmount = "0.0001";
-        } else if (newValue.symbol == "ETH") {
-          sellAmount = "0.001";
-        } else {
-          sellAmount = "1";
-        }
-      } else {
-        sellAmount = SwapNumber;
-      }
-      buyHelmetOptions({
-        sellToken: SwapData.address,
-        sellAmount: toWei(sellAmount, SwapData.decimals),
-      }).then((res) => {
-        let RequestData = res.data;
-        if (SwapNumber) {
-          this.HelmetReward = fromWei(RequestData.buyAmount);
-          this.HelmetMinReward = (1 - 0.0003) * RequestData.price;
-        }
-        this.RequestData = RequestData;
-        this.HelmetPrice = 1 / RequestData.price;
-      });
     },
     getBalance(newValue) {
+      this.changeInputSwapNumber();
       const Account = this.CurrentAccount.account;
       if (this.activeData.symbol == "BNB") {
         window.WEB3.eth.getBalance(Account).then((res) => {
@@ -241,6 +210,51 @@ export default {
         });
       }
     },
+    changeInputSwapNumber() {
+      this.HelmetReward = "--";
+      this.HelmetMinReward = "--";
+      this.HelmetPrice = "--";
+      clearTimeout(this.Timer);
+      this.Timer = setTimeout(() => {
+        let sellAmount;
+        if (this.swapNumber) {
+          sellAmount = this.swapNumber;
+        } else {
+          if (
+            this.activeData.symbol == "BNB" ||
+            this.activeData.symbol == "WBNB"
+          ) {
+            sellAmount = "0.01";
+          } else if (this.activeData.symbol == "BTCB") {
+            sellAmount = "0.0001";
+          } else if (this.activeData.symbol == "ETH") {
+            sellAmount = "0.001";
+          } else {
+            sellAmount = "1";
+          }
+        }
+        buyHelmetOptions({
+          sellToken: this.activeData.address,
+          sellAmount: toWei(sellAmount, this.activeData.decimals),
+        }).then((res) => {
+          let RequestData = res.data;
+          this.RequestData = RequestData;
+          if (this.swapNumber) {
+            this.HelmetReward = toRounding(fromWei(RequestData.buyAmount), 4);
+            this.HelmetMinReward = toRounding(
+              (1 - 0.0003) * fromWei(RequestData.buyAmount),
+              4
+            );
+          }
+          this.HelmetPrice = toRounding(1 / RequestData.price, 8);
+        });
+      }, 500);
+      if (!this.swapNumber) {
+        this.HelmetReward = 0;
+        this.HelmetMinReward = 0;
+      }
+    },
+
     handleClickSwapTokens() {
       const Account = this.CurrentAccount.account;
       const web3 = new Web3(window.ethereum);

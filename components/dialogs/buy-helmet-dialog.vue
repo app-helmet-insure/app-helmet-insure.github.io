@@ -102,14 +102,6 @@
 import tokenList from "~/config/tokenlist.json";
 import VueLazyload from "vue-lazyload";
 import { buyHelmetOptions } from "~/interface/event.js";
-import {
-  SwapHelmet,
-  SwapBNBforTokens,
-  handleClickforTokens,
-  allowance,
-  approve,
-  BalanceOf,
-} from "~/interface/swap.js";
 import { fixD, autoRounding, toRounding } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
@@ -252,18 +244,38 @@ export default {
     handleClickSwapTokens() {
       const Account = this.CurrentAccount.account;
       const web3 = new Web3(window.ethereum);
-      web3.eth
-        .sendTransaction({
-          from: Account,
-          gasPrice: this.RequestData.gasPrice,
-          gas: 1000000,
-          to: this.RequestData.to,
-          value: this.RequestData.value,
-          data: this.RequestData.data,
-        })
-        .then((res) => {
-          console.log(res);
-        });
+      const Infinity =
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
+      if (this.ApproveStatus) {
+        web3.eth
+          .sendTransaction({
+            from: Account,
+            gasPrice: this.RequestData.gasPrice,
+            gas: 1000000,
+            to: this.RequestData.to,
+            value: this.RequestData.value,
+            data: this.RequestData.data,
+          })
+          .then((res) => {
+            console.log(res);
+          });
+      } else {
+        const ApproveContracts = getContract(
+          ERC20ABI.abi,
+          this.activeData.address
+        );
+        ApproveContracts.methods
+          .approve(this.RequestData.allowanceTarget, Infinity)
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {})
+          .on("receipt", (receipt) => {
+            this.ApproveStatus = true;
+            this.$store.dispatch("refreshData");
+          })
+          .on("error", (error) => {
+            this.ApproveStatus = false;
+          });
+      }
     },
     searchTokenWatch(newValue) {
       if (newValue) {

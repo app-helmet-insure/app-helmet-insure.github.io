@@ -77,6 +77,7 @@
         <span> 1HELMET={{ HelmetPrice }}{{ activeData.symbol }} </span>
       </p>
       <button @click="handleClickSwapTokens" class="o_button">
+        <i :class="SwapLoading ? 'loading_pic' : ''"></i>
         {{ ApproveStatus ? "Confirm Swap" : "Approved" }}
       </button>
       <p>
@@ -150,6 +151,7 @@ export default {
       ApproveStatus: false,
       RequestData: {},
       Timer: null,
+      SwapLoading: false,
     };
   },
   computed: {
@@ -285,8 +287,17 @@ export default {
             value: this.RequestData.value,
             data: this.RequestData.data,
           })
-          .then((res) => {
-            console.log(res);
+          .on("transactionHash", (hash) => {
+            this.SwapLoading = true;
+          })
+          .on("receipt", (receipt) => {
+            this.ApproveStatus = true;
+            this.SwapLoading = false;
+            this.$store.dispatch("refreshData");
+          })
+          .on("error", (error) => {
+            this.ApproveStatus = false;
+            this.SwapLoading = false;
           });
       } else {
         const ApproveContracts = getContract(
@@ -296,13 +307,17 @@ export default {
         ApproveContracts.methods
           .approve(this.RequestData.allowanceTarget, Infinity)
           .send({ from: Account })
-          .on("transactionHash", (hash) => {})
+          .on("transactionHash", (hash) => {
+            this.SwapLoading = true;
+          })
           .on("receipt", (receipt) => {
             this.ApproveStatus = true;
+            this.SwapLoading = false;
             this.$store.dispatch("refreshData");
           })
           .on("error", (error) => {
             this.ApproveStatus = false;
+            this.SwapLoading = false;
           });
       }
     },
@@ -343,6 +358,15 @@ export default {
 </script>
 
 <style lang='scss' >
+.loading_pic {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../assets/img/helmet/loading.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: loading 2s 0s linear infinite;
+}
 @import "~/assets/css/themes.scss";
 @media screen and(min-width:750px) {
   .buy_dialog {

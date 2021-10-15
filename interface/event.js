@@ -226,7 +226,6 @@ export const getTokenPrice = (data) => {
   });
 };
 export const buyHelmetOptions = ({ sellToken, sellAmount }) => {
-  console.log({ sellToken, sellAmount });
   // 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
   try {
     return Axios({

@@ -1548,6 +1548,9 @@ export const getAPRAndAPY = async (PoolData) => {
   });
 };
 export const getCandyAPR = async (PoolData) => {
+  if (!PoolData.Status != 2) {
+    return (PoolData.APR = "--");
+  }
   const HELMETAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const USDTAddress = "0x55d398326f99059ff775485246999027b3197955";
   const {

@@ -222,7 +222,7 @@ export default {
   }
   &_r {
     position: relative;
-    margin-top: 40px;
+    margin-top: 50px;
     .video_index {
       width: 100%;
       height: 100%;
@@ -253,12 +253,12 @@ export default {
       }
       > p {
         width: 900px;
-        margin-top: 10px;
+        margin-top: 30px;
         font-size: 36px;
         line-height: 40px;
       }
       .btn_link {
-        margin-top: 40px;
+        margin-top: 50px;
       }
       .bsc_dapp {
         margin: 0 10px;
@@ -290,6 +290,7 @@ export default {
       }
       .typed-element {
         height: 60px;
+        justify-content: center;
         .typing {
           font-size: 36px;
         }

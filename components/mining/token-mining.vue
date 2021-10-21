@@ -174,7 +174,13 @@
               <span>
                 <img
                   v-if="item.ImgReward"
-                  :src="require(`~/assets/img/mining/${item.RewardSymbol}.png`)"
+                  :src="
+                    require(`~/assets/img/mining/${
+                      item.Status === 3
+                        ? item.RewardSymbol + '_expired'
+                        : item.RewardSymbol
+                    }.png`)
+                  "
                   :class="item.RewardVolume"
                   alt=""
                 />

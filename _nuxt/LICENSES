@@ -1,14 +1,3 @@
-/*!
- * 
- *   typed.js - A JavaScript Typing Animation Library
- *   Author: Matt Boldt <me@mattboldt.com>
- *   Version: v2.0.6
- *   Url: https://github.com/mattboldt/typed.js
- *   License(s): MIT
- * 
- */
-
-
 /*
 object-assign
 (c) Sindre Sorhus
@@ -116,6 +105,17 @@ object-assign
 //! moment.js
 
 //! moment.js locale configuration
+
+
+/*!
+ * 
+ *   typed.js - A JavaScript Typing Animation Library
+ *   Author: Matt Boldt <me@mattboldt.com>
+ *   Version: v2.0.6
+ *   Url: https://github.com/mattboldt/typed.js
+ *   License(s): MIT
+ * 
+ */
 
 
 /*!

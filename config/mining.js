@@ -403,6 +403,7 @@ export const TokenPoolList = [
     APY: "--",
   },
   {
+    Key:"LPTBABY",
     StakeABI: MiningABI,
     PoolABI: MiningABI,
     ProxyABI: CakePoolABI,

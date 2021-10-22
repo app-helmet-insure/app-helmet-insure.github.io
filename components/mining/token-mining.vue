@@ -1,7 +1,7 @@
 <template>
   <div class="mining_list">
     <div v-for="item in FixPoolList" :key="item.Key">
-      <div class="finshed_line" v-if="item.Key == 'KALA'">
+      <div class="finshed_line" v-if="item.Key == 'LPTBABY'">
         <p></p>
         <i :class="storeThemes + '_star'"></i>
         <span>Finished</span>

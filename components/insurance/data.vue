@@ -65,7 +65,7 @@
                 <a @click="handleClickBuy">Buy</a></span
               >
             </label>
-            <span>
+            <!-- <span>
               From:&nbsp;
               <i></i>
               &nbsp;
@@ -75,7 +75,7 @@
               >
                 pancakeswap.finance
               </a>
-            </span>
+            </span> -->
           </p>
         </div>
       </li>

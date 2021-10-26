@@ -14,6 +14,14 @@
     "ConnectWrong": "잘못된 네트워크",
     "ConnectWallet": "연결된 지갑"
   },
+  "SwapHelmet": {
+    "BuyHelmet": "Buy Helmet",
+    "ExEarn": "Estimated",
+    "Price": "Price",
+    "MinEarn": "Minimum received",
+    "Fee": "Fee",
+    "Server": "Powered By 0x "
+  },
   "Banner": {
     "HelmetBurn": "Helmet Burning Amount",
     "ClosedPolicy": "정책 카테고리",

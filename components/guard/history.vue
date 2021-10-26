@@ -215,7 +215,8 @@ export default {
       if (this.ChainID != ToChainID) {
       }
       let Account = await getAccounts();
-      let web3 = new Web3(window.ethereum);
+      let web3 = new Web3(window.ethereum||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/"));
       let MaxNonce = await this.getMaxNonce();
       let ChainswapAmounts = await this.AskChainSwapAmounts(
         ToChainID,
@@ -264,7 +265,8 @@ export default {
     },
     async ClickSwapToken(data) {
       let Account = await getAccounts();
-      let web3 = new Web3(window.ethereum);
+      let web3 = new Web3(window.ethereum||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/"));
       let Contracts = new web3.eth.Contract(
         ChainSwapABI,
         this.BSCTOMATIC.ContractAddress

@@ -1,15 +1,16 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
+import bus from "~/assets/js/bus";
 import Web3 from "web3";
-import {mateMaskInfo} from "../assets/utils/matemask";
+import { mateMaskInfo } from "../assets/utils/matemask";
 export const openMetaMaskWallet = () => {
-  return new Promise((resolve,reject) => {
-    try {
-      ethereum
+  return new Promise((resolve, reject) => {
+    if (window.ethereum) {
+      window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then(async (account) => {
-          const mockAccount = sessionStorage.getItem('helmet_mock_account')
+          const mockAccount = sessionStorage.getItem("helmet_mock_account");
           if (Web3.utils.isAddress(mockAccount)) {
-            window.CURRENTADDRESS = mockAccount
+            window.CURRENTADDRESS = mockAccount;
           } else {
             window.CURRENTADDRESS = account[0];
           }
@@ -28,13 +29,12 @@ export const openMetaMaskWallet = () => {
             account: account[0],
           });
           window.$nuxt.$store.dispatch("setWalletType", "MetaMask");
-          resolve()
+          resolve();
         });
-    } catch (error) {
-      reject(error)
+    } else {
+      console.log("Don't have Wallet");
     }
-  })
-
+  });
 };
 export const watchAccountChange = () => {
   ethereum.on("accountsChanged", async (account) => {
@@ -52,7 +52,10 @@ export const watchAccountChange = () => {
   });
 };
 export const getNetworkChainID = () => {
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
   return new web3.eth.net.getId();
 };
 export const watchNetWorkChange = () => {

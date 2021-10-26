@@ -13,7 +13,14 @@
         "Medium": "Medium",
         "ConnectWrong": "شبکه اشتباه است",
         "ConnectWallet": "اتصال به کیف پول"
-    },
+    },"SwapHelmet": {
+        "BuyHelmet": "Buy Helmet",
+        "ExEarn": "Estimated",
+        "Price": "Price",
+        "MinEarn": "Minimum received",
+        "Fee": "Fee",
+        "Server": "Powered By 0x "
+      },
     "Banner": {
         "HelmetBurn": "Helmet Burning Amount",
         "ClosedPolicy": "دسته بندی بیمه نامه",

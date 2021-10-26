@@ -343,7 +343,7 @@ export const LptPoolList = [
     Right: "right_double",
     Link: "https://www.guard.insure/mining",
   },
- 
+
   // {
   //   PoolName: `HELMET-BNB LP`,
   //   PoolSwap: "xms",
@@ -403,7 +403,7 @@ export const TokenPoolList = [
     APY: "--",
   },
   {
-    Key:"LPTBABY",
+    Key: "LPTBABY",
     StakeABI: MiningABI,
     PoolABI: MiningABI,
     ProxyABI: CakePoolABI,
@@ -1445,7 +1445,10 @@ export const getLptAPR = async (PoolData) => {
   const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
   const Amount1 = toWei("1", Reward1Decimals);
   const Amount2 = toWei("1", Reward2Decimals);
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
   const BlockNumber = await new web3.eth.getBlockNumber();
   const Data1 = await getTokenPrice({
     fromTokenAddress: Reward1Address,
@@ -1534,16 +1537,28 @@ export const getLptAPR = async (PoolData) => {
   }
 };
 export const getAPRAndAPY = async (PoolData) => {
-  let { PoolAddress, StakeDecimals, DailyReward } = PoolData;
+  let { PoolAddress, StakeDecimals, Reward1Decimals } = PoolData;
+  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const PoolContracts = new Contract(PoolAddress, MiningABI);
-  const PromiseList = [PoolContracts.totalSupply()];
+  const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
+  const PromiseList = [
+    PoolContracts.totalSupply(),
+    ApproveContracts.allowance(HelmetFarm, PoolAddress),
+    PoolContracts.rewards("0x0000000000000000000000000000000000000000"),
+    PoolContracts.rewardsDuration(),
+  ];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {
     const FixData = processResult(res);
-    let [TotalStakeVolume] = FixData;
+    let [TotalStakeVolume, TotalReward, OutPutReward, RewardTime] = FixData;
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
-    const RewardValues = 1 + DailyReward / FixTotalStakeVolume;
-    const APR = fixD((DailyReward / FixTotalStakeVolume) * 365 * 100, 2) + "%";
+    const FixTotalReward = fromWei(TotalReward, Reward1Decimals);
+    const FixOutPutReward = fromWei(OutPutReward, Reward1Decimals);
+    const FixReward1Time = RewardTime / 86400;
+    const RewardDaily = (FixTotalReward - FixOutPutReward) / FixReward1Time;
+    const RewardValues = 1 + RewardDaily / FixTotalStakeVolume;
+    const APR = fixD((RewardDaily / FixTotalStakeVolume) * 365 * 100, 2) + "%";
     const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });

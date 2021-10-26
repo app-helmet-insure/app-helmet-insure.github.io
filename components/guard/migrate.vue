@@ -161,7 +161,8 @@ export default {
       this.ConfirmLoading = true;
       let { ToChainID, BurnSwapContracts, FromAssets, ToAssets } =
         this.BridgeConfig;
-      let web3 = new Web3(window.ethereum);
+      let web3 = new Web3(window.ethereum||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/"));
       let Contracts = new web3.eth.Contract(
         BurnSwapContracts.ABI,
         BurnSwapContracts.Address

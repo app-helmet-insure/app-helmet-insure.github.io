@@ -274,7 +274,8 @@ export default {
 
     handleClickSwapTokens() {
       const Account = this.CurrentAccount.account;
-      const web3 = new Web3(window.ethereum);
+      const web3 = new Web3(window.ethereum||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/"));
       const Infinity =
         "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
       if (this.ApproveStatus) {

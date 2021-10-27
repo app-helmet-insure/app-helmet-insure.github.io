@@ -190,6 +190,7 @@ export default {
     line-height: 22px;
   }
   > button {
+    filter: grayscale(1);
     min-width: 97px;
     padding: 0 15px;
     height: 40px;

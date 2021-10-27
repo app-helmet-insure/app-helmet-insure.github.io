@@ -123,8 +123,6 @@ export const getInsuranceList = async function() {
   }
 };
 export const getLongType = async function() {
-  let rightTime = parseInt(moment.now());
-  let leftTime = parseInt(moment.now()) - 518400000;
   return Axios({
     method: "post",
     url:
@@ -226,4 +224,25 @@ export const getTokenPrice = (data) => {
   }).then((res) => {
     return res;
   });
+};
+export const buyHelmetOptions = ({ sellToken, sellAmount }) => {
+  // 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE
+  try {
+    return Axios({
+      method: "get",
+      url: "https://bsc.api.0x.org/swap/v1/quote",
+      params: {
+        sellToken,
+        buyToken: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+        sellAmount,
+        slippagePercentage: 0.03,
+        buyTokenPercentageFee: 0.01,
+        feeRecipient: "0x9e20165b14a4c7e14e0f753b6192e85a199420c6",
+      },
+    }).then((res) => {
+      return res;
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

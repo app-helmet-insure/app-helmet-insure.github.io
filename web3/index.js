@@ -9,7 +9,7 @@ export const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
 const MATICChainId = 137;
 const MATICRpcUrl = "https://matic-mainnet.chainstacklabs.com";
 
-export const CHAIN_ID_LOCALHOST = 31337
+export const CHAIN_ID_LOCALHOST = 31337;
 
 export const getDecimals = (Decimals) => {
   switch (Decimals) {
@@ -66,7 +66,10 @@ export const toWei = (FixNumber, Decimals) => {
 export const getMultiCallProvider = (provider, chainId) => {
   setMulticallAddress(128, "0xc9a9F768ebD123A00B52e7A0E590df2e9E998707");
   setMulticallAddress(137, "0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507");
-  setMulticallAddress(CHAIN_ID_LOCALHOST, '0x41263cba59eb80dc200f3e2544eda4ed6a90e76c')
+  setMulticallAddress(
+    CHAIN_ID_LOCALHOST,
+    "0x41263cba59eb80dc200f3e2544eda4ed6a90e76c"
+  );
   return new Provider(provider, chainId);
 };
 export const getOnlyMultiCallProvider = () =>
@@ -98,9 +101,16 @@ export const processResult = (data, a) => {
     return data;
   }
 };
-export const WEB3 = () => new Web3(window.ethereum);
+export const WEB3 = () =>
+  new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
 export const getContract = (abi, address) => {
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
   return new web3.eth.Contract(abi, address);
 };
 export const HelmetBalance = () => {

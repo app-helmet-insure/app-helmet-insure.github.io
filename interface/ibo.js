@@ -75,9 +75,13 @@ export const numToWei = (value, decimals = 18) => {
       .toFixed(decimals)
   ).toString();
 };
+
 const multicallProvider = getOnlyMultiCallProvider();
+
 export const getPoolInfo = (pool) => {
+  debugger
   const poolContract = new Contract(pool.address, pool.abi);
+  debugger
   const account = window.CURRENTADDRESS;
   if (!account) {
     return Promise.all([]).then(() => pool);

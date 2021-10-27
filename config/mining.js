@@ -39,7 +39,7 @@ export const DaoPoolList = [
 
     Key: "HELEMT",
     Router: "link1",
-    StartTime: "2021/10/16 24:00 UTC+8",
+    StartTime: "2021/10/28 24:00 UTC+8",
     FinishTime: "2021/12/31 24:00 UTC+8",
     PropoaslID: 1,
     PoolName: "Helmet Mining & Vote",
@@ -166,58 +166,7 @@ export const LptPoolList = [
     JumpLink1:
       "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
   },
-  {
-    StakeABI: MiningABI,
-    PoolABI: MiningABI,
-    ProxyABI: CakePoolABI,
-    StakeMethods: "stake",
-    CanWithDrawMethods: "balanceOf",
-    WithDrawMethods: "getReward",
-    CanClaim1Methods: "earned",
-    CanClaim2Methods: "earned2",
-    ExitMethods: "exit",
-    PerBlockMethods: "cakePerBlock",
 
-    PoolName: `HELMET-USDT LPT`,
-    PoolSwap: "babyswap",
-    PoolType: "lpt",
-    PoolAddress: "0x50a9C123536e69290a5dAb32ce514D0b9afcaDCc",
-    ProxyPid: "33",
-    ProxySwap: "PANCAKE",
-    ProxyAddress: "0xdfaa0e08e357db0153927c7eabb492d1f60ac730",
-    StakeUnit: "LPT",
-    StakeDecimals: 18,
-    StakeSymbol: "HELMET-USDT LPT",
-    StakeAddress: "0xdB4d03b1659fe7FAD33F840de481773A629d256b",
-    StartTime: "Ongoing",
-    FinishTime: "Mining",
-    LptToken1Decimals: 18,
-    LptToken1Symbol: "HELMET",
-    LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-    LptToken2Decimals: 18,
-    LptToken2Symbol: "USDT",
-    LptToken2Address: "0x55d398326f99059ff775485246999027b3197955",
-    RewardVolume: "one",
-    RewardSymbol: "baby",
-    HaveReward1: false,
-    Reward1Decimals: 18,
-    Reward1Symbol: "HELMET",
-    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-    HaveReward2: true,
-    Reward2Decimals: 18,
-    Reward2Symbol: "BABY",
-    Reward2Address: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
-
-    ImgReward: true,
-    IsCombo: false,
-    IsIIO: false,
-    NoProxy: false,
-    HaveOnePager: false,
-    YearEarnType: "APR",
-    APR: "--",
-    JumpLink1:
-      "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
-  },
   {
     StakeABI: MiningABI,
     PoolABI: MiningABI,
@@ -394,6 +343,7 @@ export const LptPoolList = [
     Right: "right_double",
     Link: "https://www.guard.insure/mining",
   },
+
   // {
   //   PoolName: `HELMET-BNB LP`,
   //   PoolSwap: "xms",
@@ -451,6 +401,57 @@ export const TokenPoolList = [
     DailyReward: 22471,
     APR: "--",
     APY: "--",
+  },
+  {
+    Key: "LPTBABY",
+    StakeABI: MiningABI,
+    PoolABI: MiningABI,
+    ProxyABI: CakePoolABI,
+    StakeMethods: "stake",
+    CanWithDrawMethods: "balanceOf",
+    WithDrawMethods: "getReward",
+    CanClaim1Methods: "earned",
+    CanClaim2Methods: "earned2",
+    ExitMethods: "exit",
+    PerBlockMethods: "cakePerBlock",
+    PoolName: `HELMET-USDT LPT`,
+    PoolSwap: "babyswap",
+    PoolType: "lpt",
+    PoolAddress: "0x50a9C123536e69290a5dAb32ce514D0b9afcaDCc",
+    ProxyPid: "33",
+    ProxySwap: "PANCAKE",
+    ProxyAddress: "0xdfaa0e08e357db0153927c7eabb492d1f60ac730",
+    StakeUnit: "LPT",
+    StakeDecimals: 18,
+    StakeSymbol: "HELMET-USDT LPT",
+    StakeAddress: "0xdB4d03b1659fe7FAD33F840de481773A629d256b",
+    StartTime: "Ongoing",
+    FinishTime: "2021/10/21 01:00 UTC+8",
+    LptToken1Decimals: 18,
+    LptToken1Symbol: "HELMET",
+    LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    LptToken2Decimals: 18,
+    LptToken2Symbol: "USDT",
+    LptToken2Address: "0x55d398326f99059ff775485246999027b3197955",
+    RewardVolume: "one",
+    RewardSymbol: "baby",
+    HaveReward1: false,
+    Reward1Decimals: 18,
+    Reward1Symbol: "HELMET",
+    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    HaveReward2: true,
+    Reward2Decimals: 18,
+    Reward2Symbol: "BABY",
+    Reward2Address: "0x53E562b9B7E5E94b81f10e96Ee70Ad06df3D2657",
+    ImgReward: true,
+    IsCombo: false,
+    IsIIO: false,
+    NoProxy: false,
+    HaveOnePager: false,
+    YearEarnType: "APR",
+    APR: "--",
+    JumpLink1:
+      "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
   },
   {
     StakeABI: CandyABI,
@@ -1444,7 +1445,10 @@ export const getLptAPR = async (PoolData) => {
   const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
   const Amount1 = toWei("1", Reward1Decimals);
   const Amount2 = toWei("1", Reward2Decimals);
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
   const BlockNumber = await new web3.eth.getBlockNumber();
   const Data1 = await getTokenPrice({
     fromTokenAddress: Reward1Address,
@@ -1533,21 +1537,38 @@ export const getLptAPR = async (PoolData) => {
   }
 };
 export const getAPRAndAPY = async (PoolData) => {
-  let { PoolAddress, StakeDecimals, DailyReward } = PoolData;
+  let { PoolAddress, StakeDecimals, Reward1Decimals } = PoolData;
+  const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+  const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const PoolContracts = new Contract(PoolAddress, MiningABI);
-  const PromiseList = [PoolContracts.totalSupply()];
+  const ApproveContracts = new Contract(HelmetAddress, ApproveABI.abi);
+  const PromiseList = [
+    PoolContracts.totalSupply(),
+    ApproveContracts.allowance(HelmetFarm, PoolAddress),
+    PoolContracts.rewards("0x0000000000000000000000000000000000000000"),
+    PoolContracts.periodFinish(),
+  ];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {
     const FixData = processResult(res);
-    let [TotalStakeVolume] = FixData;
+    let [TotalStakeVolume, TotalReward, OutPutReward, RewardTime] = FixData;
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
-    const RewardValues = 1 + DailyReward / FixTotalStakeVolume;
-    const APR = fixD((DailyReward / FixTotalStakeVolume) * 365 * 100, 2) + "%";
+    const FixTotalReward = fromWei(TotalReward, Reward1Decimals);
+    const FixOutPutReward = fromWei(OutPutReward, Reward1Decimals);
+    const FixRewardTime = (RewardTime - Date.now() / 1000) / 86400;
+    console.log(FixTotalReward, FixOutPutReward, FixRewardTime);
+    const RewardDaily = (FixTotalReward - FixOutPutReward) / FixRewardTime;
+    const RewardValues = 1 + RewardDaily / FixTotalStakeVolume;
+    console.log(RewardDaily);
+    const APR = fixD((RewardDaily / FixTotalStakeVolume) * 365 * 100, 2) + "%";
     const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };
 export const getCandyAPR = async (PoolData) => {
+  if (!PoolData.Status != 2) {
+    return (PoolData.APR = "--");
+  }
   const HELMETAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const USDTAddress = "0x55d398326f99059ff775485246999027b3197955";
   const {

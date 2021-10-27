@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    top="35vh"
     title="NOTICE"
     footer
     append-to-body
     custom-class="risk_dialog"
+    :close-on-click-modal="false"
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >

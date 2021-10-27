@@ -18,10 +18,7 @@
     </div>
     <div class="account">
       <div class="airdrop_web airdrop" @click="handleClickAirdrop">
-        <img
-          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
-          alt=""
-        />
+        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
       </div>
       <span class="migration" @click="jump">
         <img src="~/assets/img/guard/Polygon.png" alt="" />
@@ -66,11 +63,12 @@
         @close="closeChangeWallet"
         @back="openCurrentAccount"
       ></ChangeAccount>
+      <AirdropDialog
+        :DialogVisible="AirdropVisible"
+        :DialogClose="airdropClose"
+      />
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
-        <img
-          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
-          alt=""
-        />
+        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
       </div>
     </div>
   </div>
@@ -79,6 +77,7 @@
 import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
+import AirdropDialog from "~/components/dialogs/airdrop-dialog.vue";
 import Langauage from "~/components/common/langauage.vue";
 import { HelmetBalance } from "../../web3/index.js";
 export default {
@@ -89,6 +88,7 @@ export default {
     CurrentAccount,
     ChangeAccount,
     Langauage,
+    AirdropDialog,
   },
   data() {
     return {
@@ -99,6 +99,7 @@ export default {
       showChangeWallet: false,
       WallectSelectType: "ALL",
       HelmetBalance: 0,
+      AirdropVisible: false,
     };
   },
   computed: {
@@ -143,6 +144,9 @@ export default {
         this.getHelmetBalance();
       }
     },
+    airdropClose() {
+      this.AirdropVisible = false;
+    },
     refreshData(NewValue, Value) {
       if (Value != NewValue && NewValue > Value) {
         this.getHelmetBalance();
@@ -155,7 +159,7 @@ export default {
       this.HelmetBalance = await HelmetBalance();
     },
     handleClickAirdrop() {
-      this.$bus.$emit("AIRDROP_DIALOG", true);
+      this.AirdropVisible = true;
     },
     openChangeWallet() {
       this.showChangeWallet = true;
@@ -326,7 +330,6 @@ export default {
     width: 80%;
     margin: 20px auto;
     min-width: 1026px;
-    // height: 80px;
     @include themeify {
       background: transparent;
     }
@@ -341,8 +344,9 @@ export default {
         margin-right: 20px;
         cursor: pointer;
         > img {
-          width: 24px;
-          height: 24px;
+          width: 30px;
+          height: 30px;
+          animation: airdrop 1s linear infinite;
         }
       }
       justify-content: flex-end;
@@ -386,13 +390,31 @@ export default {
         margin-left: 20px;
         cursor: pointer;
         > img {
-          width: 24px;
-          height: 24px;
+          width: 30px;
+          height: 30px;
+          animation: airdrop 1s linear infinite;
         }
       }
       margin-top: 15px;
       justify-content: flex-start;
     }
+  }
+}
+@keyframes airdrop {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(5px, -10px) rotate(45deg);
+  }
+  50% {
+    transform: translate(0);
+  }
+  75% {
+    transform: translate(-5px, -10px) rotate(-45deg);
+  }
+  100% {
+    transform: translate(0);
   }
 }
 </style>

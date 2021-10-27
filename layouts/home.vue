@@ -39,8 +39,6 @@
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
-    <!-- 下载钱包指引界面 -->
-    <WallectDownLoad />
     <!-- 钱包交互状态提示弹框 -->
     <StatusDialog
       v-if="showStatusDialog"
@@ -68,7 +66,6 @@ import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
 import Airdrop from "~/components/common/airdrop.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
-import WallectDownLoad from "~/components/common/wallet-download.vue";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import {
@@ -89,7 +86,6 @@ export default {
     PFooter,
     StatusDialog,
     Airdrop,
-    WallectDownLoad,
     BuyHelmetDialog,
     NetWorkConfirmationDialog,
     RiskConfirmationDialog,

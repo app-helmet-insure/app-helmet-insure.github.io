@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    top="35vh"
     :title="$t('Governance.Governance_text15')"
     footer
     append-to-body

@@ -33,7 +33,7 @@
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
     "ethers-multicall": "^0.2.0",
-    "ethers-multicall-x": "^0.2.5",
+    "ethers-multicall-x": "^0.2.6",
     "koa": "^2.6.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.0",

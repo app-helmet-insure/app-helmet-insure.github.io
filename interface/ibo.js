@@ -76,6 +76,8 @@ export const numToWei = (value, decimals = 18) => {
   ).toString();
 };
 
+const multicallProvider = getOnlyMultiCallProvider();
+
 export const getPoolInfo = (pool) => {
   const poolContract = new Contract(pool.address, pool.abi);
   const account = window.CURRENTADDRESS;
@@ -112,7 +114,7 @@ export const getPoolInfo = (pool) => {
   currencyToken &&
     promiseList.push(currencyToken.allowance(account, pool.address));
   currencyToken && promiseList.push(currencyToken.balanceOf(account));
-  const multicallProvider = getOnlyMultiCallProvider();
+
   return multicallProvider
     .all(promiseList)
     .then((res) => {

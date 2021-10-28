@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    top="35vh"
     :title="$t('SwapHelmet.BuyHelmet')"
     footer
     append-to-body

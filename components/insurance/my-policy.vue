@@ -479,7 +479,8 @@ export default {
     actionWithDraw(data) {
       console.log(data);
       let Account = this.CurrentAccount.account;
-      let Contracts = getContract(OrderABI, OrderAddress);
+      const ContractAddress = data.Transfer ? data.Long : OrderAddress;
+      let Contracts = getContract(OrderABI, ContractAddress);
       const Params = data.Transfer ? data.Volume : data.BidID;
       Contracts.methods
         .exercise(Params)

@@ -360,7 +360,7 @@ export default {
             returnList = returnList.filter((filter) => filter.remain !== "0");
             this.$nextTick(async () => {
               const BNB1000policy = await this.BNB1000policy();
-              returnList.push(BNB1000policy);
+              returnList.unshift(BNB1000policy);
             });
             returnList = returnList.sort(
               (a, b) => Number(b.BidID) - Number(a.BidID)

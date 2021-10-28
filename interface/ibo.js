@@ -114,7 +114,6 @@ export const getPoolInfo = (pool) => {
   currencyToken &&
     promiseList.push(currencyToken.allowance(account, pool.address));
   currencyToken && promiseList.push(currencyToken.balanceOf(account));
-
   return multicallProvider
     .all(promiseList)
     .then((res) => {

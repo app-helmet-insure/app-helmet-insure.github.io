@@ -119,10 +119,25 @@ export default {
     getAirdropInfo() {
       const CurrentList = AirdropList.Current;
       const HistoryList = AirdropList.History;
-      console.log(HistoryList, CurrentList);
       const Account = this.CurrentAccount.account;
       HistoryList.forEach((item) => {
-        console.log(item);
+        const PoolContracts = new Contract(item.PoolAddress, item.TokenABI);
+        const TokenContracts = new Contract(item.TokenAddress, item.TokenABI);
+        const PromiseList = [
+          PoolContracts[item.RewardMethods](Account),
+          TokenContracts[item.BalanceMethods](Account),
+        ];
+        const MulticallProvider = getOnlyMultiCallProvider();
+        MulticallProvider.all(PromiseList).then((res) => {
+          const FixData = processResult(res);
+          const [Rewards, Balance] = FixData;
+          return (
+            (item.Rewards = fromWei(Rewards, item.Decimals)),
+            (item.Balance = fromWei(Balance, item.Decimals))
+          );
+        });
+      });
+      CurrentList.forEach((item) => {
         const PoolContracts = new Contract(item.PoolAddress, item.TokenABI);
         const TokenContracts = new Contract(item.TokenAddress, item.TokenABI);
         const PromiseList = [

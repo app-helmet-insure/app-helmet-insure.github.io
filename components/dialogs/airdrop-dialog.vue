@@ -8,6 +8,12 @@
     @close="DialogClose"
   >
     <div class="airdrop_dialog_body">
+      <img class="left_candy_1" src="~/assets/img/airdrop/left_candy_1.png" />
+      <img class="left_candy_2" src="~/assets/img/airdrop/left_candy_2.png" />
+      <img class="left_candy_3" src="~/assets/img/airdrop/left_candy_3.png" />
+      <img class="right_candy_1" src="~/assets/img/airdrop/right_candy_1.png" />
+      <img class="right_candy_2" src="~/assets/img/airdrop/right_candy_2.png" />
+      <img class="right_candy_3" src="~/assets/img/airdrop/right_candy_3.png" />
       <div class="airdrop_token_current">
         <h3 class="airdrop_token_name">{{ CurrentList[0].Symbol }}</h3>
         <p class="airdrop_token_volume">
@@ -241,12 +247,53 @@ export default {
       color: #fff !important;
     }
     .airdrop_dialog_body {
+      position: relative;
       height: 500px;
       background-image: url("../../assets/img/airdrop/airdrop_bg.png");
       background-repeat: no-repeat;
       background-size: 442px 418px;
       padding-right: 42px;
       text-align: center;
+    }
+    .left_candy_1 {
+      width: 48px;
+      position: absolute;
+      left: 40px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .left_candy_2 {
+      width: 65px;
+      position: absolute;
+      left: -15px;
+      top: 60px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .left_candy_3 {
+      width: 40px;
+      position: absolute;
+      left: -20px;
+      top: 140px;
+      animation: scale_candy 1s linear infinite;
+    }
+    .right_candy_1 {
+      width: 40px;
+      position: absolute;
+      right: 40px;
+      animation: scale_candy 1s linear infinite;
+    }
+    .right_candy_2 {
+      width: 76px;
+      position: absolute;
+      right: -15px;
+      top: 60px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .right_candy_3 {
+      width: 56px;
+      position: absolute;
+      right: -20px;
+      top: 140px;
+      animation: scale_candy 1s linear infinite;
     }
     .airdrop_token_name {
       padding-top: 260px;
@@ -349,6 +396,47 @@ export default {
       padding-right: 42px;
       text-align: center;
     }
+    .left_candy_1 {
+      width: 32px;
+      position: absolute;
+      left: 30px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .left_candy_2 {
+      width: 40px;
+      position: absolute;
+      left: 15px;
+      top: 95px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .left_candy_3 {
+      width: 28px;
+      position: absolute;
+      left: 10px;
+      top: 145px;
+      animation: scale_candy 1s linear infinite;
+    }
+    .right_candy_1 {
+      width: 28px;
+      position: absolute;
+      right: 65px;
+      top: 65px;
+      animation: scale_candy 1s linear infinite;
+    }
+    .right_candy_2 {
+      width: 50px;
+      position: absolute;
+      right: 15px;
+      top: 92px;
+      animation: rotate_candy 1s linear infinite;
+    }
+    .right_candy_3 {
+      width: 35px;
+      position: absolute;
+      right: 15px;
+      top: 155px;
+      animation: scale_candy 1s linear infinite;
+    }
     .airdrop_token_name {
       padding-top: 175px;
       font-size: 12px;
@@ -427,6 +515,40 @@ export default {
         }
       }
     }
+  }
+}
+@keyframes scale_candy {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: scale(1.25);
+  }
+  50% {
+    transform: translate(0);
+  }
+  75% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+@keyframes rotate_candy {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(5px, -5px) rotate(30deg);
+  }
+  50% {
+    transform: translate(0);
+  }
+  75% {
+    transform: translate(-5px, -5px) rotate(-30deg);
+  }
+  100% {
+    transform: translate(0);
   }
 }
 </style>

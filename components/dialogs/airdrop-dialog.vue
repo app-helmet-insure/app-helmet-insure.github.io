@@ -148,6 +148,9 @@ export default {
         MulticallProvider.all(PromiseList).then((res) => {
           const FixData = processResult(res);
           const [Rewards, Balance] = FixData;
+          if (Number(fromWei(Rewards, item.Decimals)) > 0) {
+            this.$bus.$emit("OpenAirdropDialogs");
+          }
           return (
             (item.Rewards = fromWei(Rewards, item.Decimals)),
             (item.Balance = fromWei(Balance, item.Decimals))

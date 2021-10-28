@@ -7,7 +7,7 @@ export const AirdropList = {
       BalanceMethods: "balanceOf",
       ClaimMethods: "getReward",
       Symbol: "BNB1000",
-      Decimals: 18,
+      Decimals: 13,
       TokenAddress: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
       PoolAddress: "0xE4574280b431580794713F50f68C6ccb9134AD8a",
       Rewards: 0,

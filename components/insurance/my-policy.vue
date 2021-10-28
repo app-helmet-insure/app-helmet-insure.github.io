@@ -273,6 +273,7 @@ export default {
               };
               ResultItem.Status =
                 item.expiry * 1 > nowDate ? "Normal" : "Expired";
+              ResultItem.Sort = ResultItem.Status == "Normal" ? 1 : 2;
               item.asks.filter((itemAsk) => {
                 const ResultItemAsk = {
                   Binds: itemAsk.binds,
@@ -357,12 +358,13 @@ export default {
               return list;
             });
             returnList = returnList.filter((filter) => filter.remain !== "0");
+            this.$nextTick(async () => {
+              const BNB1000policy = await this.BNB1000policy();
+              returnList.push(BNB1000policy);
+            });
             returnList = returnList.sort(
               (a, b) => Number(b.BidID) - Number(a.BidID)
             );
-            this.$nextTick(async () => {
-              await this.BNB1000policy();
-            });
             this.PolicyList = returnList;
             this.isLoading = false;
           });
@@ -535,8 +537,8 @@ export default {
           ShowPrice: "Airdrop",
           Premium: "Airdrop",
           Transfer: true,
+          Sort: 1640966400 > nowDate ? 1 : 2,
         };
-        this.PolicyList.push(resultItem);
         return resultItem;
       }
     },

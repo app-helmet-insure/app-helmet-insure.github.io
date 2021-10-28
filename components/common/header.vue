@@ -130,6 +130,11 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.$bus.$on("OpenAirdropDialogs", () => {
+      this.AirdropVisible = true;
+    });
+  },
   methods: {
     reloadData(Value) {
       if (Value && Value.account) {

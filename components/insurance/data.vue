@@ -103,7 +103,7 @@ export default {
   name: "insurance_data",
   components: {
     countTo,
-    BuyHelmetDialog
+    BuyHelmetDialog,
   },
   data() {
     return {
@@ -168,6 +168,7 @@ export default {
         fromTokenAddress: helmetConrtact,
         toTokenAddress: busdConrtact,
         amount: "1000000000000000000",
+        protocols: "PANCAKESWAP_V2",
       });
     },
     async getHelmetVolume() {

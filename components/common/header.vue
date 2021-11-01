@@ -63,10 +63,7 @@
         @close="closeChangeWallet"
         @back="openCurrentAccount"
       ></ChangeAccount>
-      <AirdropDialog
-        :DialogVisible="AirdropVisible"
-        :DialogClose="airdropClose"
-      />
+
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
         <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
       </div>
@@ -77,7 +74,6 @@
 import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
-import AirdropDialog from "~/components/dialogs/airdrop-dialog.vue";
 import Langauage from "~/components/common/langauage.vue";
 import { HelmetBalance } from "../../web3/index.js";
 export default {
@@ -88,7 +84,6 @@ export default {
     CurrentAccount,
     ChangeAccount,
     Langauage,
-    AirdropDialog,
   },
   data() {
     return {
@@ -130,11 +125,7 @@ export default {
       immediate: true,
     },
   },
-  mounted() {
-    this.$bus.$on("OpenAirdropDialogs", () => {
-      this.AirdropVisible = true;
-    });
-  },
+  mounted() {},
   methods: {
     reloadData(Value) {
       if (Value && Value.account) {
@@ -149,9 +140,6 @@ export default {
         this.getHelmetBalance();
       }
     },
-    airdropClose() {
-      this.AirdropVisible = false;
-    },
     refreshData(NewValue, Value) {
       if (Value != NewValue && NewValue > Value) {
         this.getHelmetBalance();
@@ -164,7 +152,9 @@ export default {
       this.HelmetBalance = await HelmetBalance();
     },
     handleClickAirdrop() {
-      this.AirdropVisible = true;
+      this.$bus.$emit("OpenAirdropDialogs", () => {
+        this.AirdropVisible = true;
+      });
     },
     openChangeWallet() {
       this.showChangeWallet = true;

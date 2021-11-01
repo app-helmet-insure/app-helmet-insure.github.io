@@ -148,11 +148,16 @@
           </div>
         </div>
         <button
+          v-if="ActiveData.Status === 3"
           @click="toExit"
           :class="ExitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="ExitLoading ? 'loading_pic' : ''"></i
           >{{ $t("Table.ConfirmWithdraw") }} &
+          {{ $t("Table.ClaimRewards") }}
+        </button>
+        <button v-else :class="'disable_button b_button '">
+          {{ $t("Table.ConfirmWithdraw") }} &
           {{ $t("Table.ClaimRewards") }}
         </button>
         <button
@@ -316,7 +321,7 @@ export default {
       this.PropoaslID = PropoaslID;
     },
     handleClickMax() {
-        this.StakeVolume = this.CanDeposite;
+      this.StakeVolume = this.CanDeposite;
       if (this.ActiveData.Max) {
         this.StakeVolume = Math.min(
           this.CanDeposite,

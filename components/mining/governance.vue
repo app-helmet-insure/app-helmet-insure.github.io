@@ -44,7 +44,7 @@
               </p>
             </section>
             <section class="item_pool_year_web WEB">
-              <span>{{ item.APR }}</span>
+              <span>{{ item.APY }}</span>
               <span>{{ item.YearEarnType }}</span>
             </section>
             <section class="item_pool_action_web WEB">
@@ -106,7 +106,7 @@
             </section>
             <section class="item_pool_year_h5 H5">
               <p>
-                <span>{{ item.APR }}</span>
+                <span>{{ item.APY }}</span>
                 <span>{{ item.YearEarnType }}</span>
               </p>
               <div>

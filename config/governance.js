@@ -2,6 +2,7 @@ import GovernanceABI from "~/web3/abis/Governance.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import ApproveABI from "~/web3/abis/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
+import BigNumber from "bignumber.js";
 import { fixD } from "~/assets/js/util.js";
 import {
   toWei,
@@ -127,10 +128,12 @@ export const getPoolAPY = (PoolData) => {
     TotalStakeVolume = fromWei(TotalStakeVolume);
     PoolProcess = PoolProcess / 86400;
     const DailyReward = TotalRewards / PoolProcess;
+    console.log(DailyReward);
     const RewardValues = 1 + DailyReward / TotalStakeVolume;
     const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
-    const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
-    console.log(RewardValues, Math.pow(RewardValues, 365));
+    const APY =
+      new BigNumber(Math.pow(RewardValues, 365) * 100).toFixed(2) + "%";
+    console.log(APY, "#########################");
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };

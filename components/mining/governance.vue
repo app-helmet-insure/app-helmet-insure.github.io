@@ -44,11 +44,11 @@
               </p>
             </section>
             <section class="item_pool_year_web WEB">
-              <span>{{ "--" || item.APY }}</span>
+              <span>{{ item.APR }}</span>
               <span>{{ item.YearEarnType }}</span>
             </section>
             <section class="item_pool_action_web WEB">
-              <!-- <button
+              <button
                 @click="HandleClickAction(item, 'Stake')"
                 :class="
                   ActiveMining == item.RewardSymbol &&
@@ -73,15 +73,15 @@
               >
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
-              </button> -->
-              <button class="stakeMining disableButton">
+              </button>
+              <!-- <button class="stakeMining disableButton">
                 {{ $t("Governance.Governance_text23") }}
                 <i class="selectDown"></i>
               </button>
               <button class="claimMining disableButton">
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
-              </button>
+              </button> -->
             </section>
             <section class="item_pool_name_h5 H5">
               <span>
@@ -106,7 +106,7 @@
             </section>
             <section class="item_pool_year_h5 H5">
               <p>
-                <span>{{ "--" || item.APY }}</span>
+                <span>{{ item.APR }}</span>
                 <span>{{ item.YearEarnType }}</span>
               </p>
               <div>
@@ -118,7 +118,7 @@
               </div>
             </section>
             <section class="item_pool_action_h5 H5">
-              <!-- <button
+              <button
                 @click="HandleClickAction(item, 'Stake', true)"
                 :class="
                   ActiveMining == item.RewardSymbol &&
@@ -143,15 +143,15 @@
                 style="margin-left: 10px"
               >
                 {{ $t("Table.Claim") }}
-              </button> -->
-              <button class="stakeMining disableButton" style="margin-right: 10px">
+              </button>
+              <!-- <button class="stakeMining disableButton" style="margin-right: 10px">
                 {{ $t("Governance.Governance_text23") }}
                 <i class="selectDown"></i>
               </button>
               <button class="claimMining disableButton" style="margin-left: 10px">
                 {{ $t("Table.Claim") }}
                 <i class="selectDown"></i>
-              </button>
+              </button> -->
             </section>
           </div>
           <div

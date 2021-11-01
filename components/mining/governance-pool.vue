@@ -316,6 +316,7 @@ export default {
       this.PropoaslID = PropoaslID;
     },
     handleClickMax() {
+        this.StakeVolume = this.CanDeposite;
       if (this.ActiveData.Max) {
         this.StakeVolume = Math.min(
           this.CanDeposite,

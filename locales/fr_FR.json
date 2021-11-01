@@ -73,7 +73,8 @@
         "ChartPrice": "Prix ??actuel",
         "SelectCoin": "Sélectionnez un token"
     },
-    "Table": {
+     "Table": {
+    "Withdraws":"Withdraw",
         "ID": "ID",
         "Rent": "Premium(HELMET)",
         "Premium": "Prime",

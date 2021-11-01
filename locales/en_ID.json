@@ -74,7 +74,8 @@
     "ChartPrice": "Harga Sekarang",
     "SelectCoin": "Pilih sebuah token"
   },
-  "Table": {
+   "Table": {
+    "Withdraws":"Withdraw",
     "ID": "ID",
     "Rent": "Premium(HELMET)",
     "Premium": "Premium",

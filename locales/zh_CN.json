@@ -76,6 +76,7 @@
     "SelectCoin": "选择保险"
   },
   "Table": {
+    "Withdraws": "赎回质押",
     "ID": "ID",
     "Rent": "保费(HELMET)",
     "Premium": "保费",

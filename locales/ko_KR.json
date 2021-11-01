@@ -74,7 +74,8 @@
     "ChartPrice": "현재 가격",
     "SelectCoin": "토큰 선택"
   },
-  "Table": {
+   "Table": {
+    "Withdraws":"Withdraw",
     "ID": "ID",
     "Rent": "Premium(HELMET)",
     "Premium": "프리미엄",

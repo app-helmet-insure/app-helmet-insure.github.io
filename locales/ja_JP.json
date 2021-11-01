@@ -73,7 +73,8 @@
     "ChartPrice": "現在価格",
     "SelectCoin": "トークンを選ぶ"
   },
-  "Table": {
+   "Table": {
+    "Withdraws":"Withdraw",
     "ID": "ID",
     "Rent": "Premium(HELMET)",
     "Premium": "プレミアム",

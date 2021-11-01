@@ -73,7 +73,8 @@
         "ChartPrice": "قیمت لحظه ای",
         "SelectCoin": "انتخاب توکن"
     },
-    "Table": {
+     "Table": {
+    "Withdraws":"Withdraw",
         "ID": "ID",
         "Rent": "Premium(HELMET)",
         "Premium": "Premium",

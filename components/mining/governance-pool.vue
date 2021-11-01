@@ -153,12 +153,10 @@
           :class="ExitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="ExitLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          >{{ $t("Table.Withdraws") }}
         </button>
         <button v-else :class="'disable_button b_button '">
-          {{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          {{ $t("Table.Withdraws") }}
         </button>
         <button
           @click="toClaim"

@@ -35,7 +35,7 @@ export const GovernanceList = [
       "Proposal.Governance1.text17",
       "Proposal.Governance1.text18",
     ],
-    StartTime: "2021/11/01 00:00 UTC+8",
+    StartTime: "2021/11/02 00:00 UTC+8",
     FinishTime: "2021/11/22 00:00 UTC+8",
     Proposal: [
       { Text: 1, ID: 1 },

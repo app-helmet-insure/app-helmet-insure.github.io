@@ -11,11 +11,11 @@
         <div class="governance_type">
           <div class="governance_type_title">
             <span>{{ $t("Governance.Governance_text1") }}</span>
-            <!-- <nuxt-link
+            <nuxt-link
               :to="{ path: `/governance/details`, params: ActiveData.Router }"
               >{{ $t("Governance.Governance_text2") }}</nuxt-link
-            > -->
-            <a>{{ $t("Governance.Governance_text2") }}</a>
+            >
+            <!-- <a>{{ $t("Governance.Governance_text2") }}</a> -->
           </div>
           <div class="governance_type_wrap">
             <div

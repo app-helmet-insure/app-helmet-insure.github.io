@@ -39,7 +39,7 @@ export const DaoPoolList = [
 
     Key: "HELEMT",
     Router: "link1",
-    StartTime: "2021/11/01 00:00 UTC+8",
+    StartTime: "2021/11/02 00:00 UTC+8",
     FinishTime: "2021/11/22 00:00 UTC+8",
     PropoaslID: 1,
     PoolName: "Helmet Mining & Vote",
@@ -1517,6 +1517,7 @@ export const getLptAPR = async (PoolData) => {
         : 0;
       const Reward2Daily =
         (FixAllocPoint / FixTotalAllocPoint) * (FixPerBlock * 28800);
+      console.log(Reward1Daily, Reward2Daily, PoolData);
       const FixReward1Daily = Reward1Daily > 0 ? Reward1Daily : 0;
       const FixReward2Daily = Reward2Daily > 0 ? Reward2Daily : 0;
 

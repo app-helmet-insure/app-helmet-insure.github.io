@@ -21,7 +21,7 @@ export const iboPools = [
     address: '0x0fF47b1544378bd88dDaab6b002c09cF13F5ED6A',
     abi: starterLimitAbi,
     start_at: '1634220000',
-    is_coming: false,
+    is_coming: true,
     currency: {
       address: HELMET_ADDRESS,
       decimal: 18,

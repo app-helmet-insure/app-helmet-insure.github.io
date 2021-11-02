@@ -19,12 +19,12 @@
           </div>
           <div class="governance_list_item_perhaps_web WEB perhaps">
             <p>{{ $t(Item.Perhaps) }}</p>
-            <!-- <button @click="handleClickToDetails(Item)">
-              {{ $t("Governance.Governance_text11") }}
-            </button> -->
-            <button>
+            <button @click="handleClickToDetails(Item)">
               {{ $t("Governance.Governance_text11") }}
             </button>
+            <!-- <button>
+              {{ $t("Governance.Governance_text11") }}
+            </button> -->
           </div>
           <div class="governance_list_item_top_h5 H5">
             <div :class="['status_img', Item.StatusImg]">
@@ -40,12 +40,12 @@
           </div>
           <div class="governance_list_item_perhaps_h5 H5 perhaps">
             <p>{{ $t(Item.Perhaps) }}</p>
-            <!-- <button @click="handleClickToDetails(Item)">
-              {{ $t("Governance.Governance_text11") }}
-            </button> -->
-            <button>
+            <button @click="handleClickToDetails(Item)">
               {{ $t("Governance.Governance_text11") }}
             </button>
+            <!-- <button>
+              {{ $t("Governance.Governance_text11") }}
+            </button> -->
           </div>
         </div>
         <div class="governance_list_item_duck"></div>

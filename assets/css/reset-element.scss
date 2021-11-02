@@ -1,5 +1,8 @@
 // @import url("//unpkg.com/element-ui@2.15.5/lib/theme-chalk/index.css");
 @import "./themes.scss";
+body {
+  padding-right: 0 !important;
+}
 .el-pagination {
   .btn-prev {
     background-color: transparent !important;

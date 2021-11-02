@@ -11,11 +11,11 @@
         <div class="governance_type">
           <div class="governance_type_title">
             <span>{{ $t("Governance.Governance_text1") }}</span>
-            <!-- <nuxt-link
+            <nuxt-link
               :to="{ path: `/governance/details`, params: ActiveData.Router }"
               >{{ $t("Governance.Governance_text2") }}</nuxt-link
-            > -->
-            <a>{{ $t("Governance.Governance_text2") }}</a>
+            >
+            <!-- <a>{{ $t("Governance.Governance_text2") }}</a> -->
           </div>
           <div class="governance_type_wrap">
             <div
@@ -148,12 +148,15 @@
           </div>
         </div>
         <button
+          v-if="ActiveData.Status === 3"
           @click="toExit"
           :class="ExitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="ExitLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          >{{ $t("Table.Withdraws") }}
+        </button>
+        <button v-else :class="'disable_button b_button '">
+          {{ $t("Table.Withdraws") }}
         </button>
         <button
           @click="toClaim"
@@ -316,6 +319,7 @@ export default {
       this.PropoaslID = PropoaslID;
     },
     handleClickMax() {
+      this.StakeVolume = this.CanDeposite;
       if (this.ActiveData.Max) {
         this.StakeVolume = Math.min(
           this.CanDeposite,

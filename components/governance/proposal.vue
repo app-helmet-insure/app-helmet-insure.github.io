@@ -8,7 +8,7 @@
     </div>
     <div class="governance_proposal_perhaps perhaps">
       <p v-for="(item, index) in Proposal.Details" :key="index">
-        {{ $t(item) }}
+        <span v-html="$t(item)"></span>
       </p>
     </div>
     <div class="governance_proposal_action">

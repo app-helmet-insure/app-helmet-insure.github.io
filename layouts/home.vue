@@ -39,15 +39,16 @@
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
-    <!-- 下载钱包指引界面 -->
-    <WallectDownLoad />
     <!-- 钱包交互状态提示弹框 -->
     <StatusDialog
       v-if="showStatusDialog"
       :data="statusData"
       @close="closeStatusDialog"
     />
-    <Airdrop />
+    <AirdropDialog
+      :DialogVisible="AirdropVisible"
+      :DialogClose="airdropClose"
+    />
     <BuyHelmetDialog
       :DialogVisible="BuyHelmetVisible"
       :DialogClose="BuyHelmetClose"
@@ -66,9 +67,8 @@
 import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
-import Airdrop from "~/components/common/airdrop.vue";
+import AirdropDialog from "~/components/dialogs/airdrop-dialog.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
-import WallectDownLoad from "~/components/common/wallet-download.vue";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import {
@@ -77,7 +77,7 @@ import {
   watchNetWorkChange,
   getNetworkChainID,
 } from "../web3/wallet.js";
-import {CHAIN_ID_LOCALHOST, WEB3} from "../web3/index.js";
+import { CHAIN_ID_LOCALHOST, WEB3 } from "../web3/index.js";
 import BuyHelmetDialog from "../components/dialogs/buy-helmet-dialog.vue";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
@@ -88,11 +88,10 @@ export default {
     PSlider,
     PFooter,
     StatusDialog,
-    Airdrop,
-    WallectDownLoad,
     BuyHelmetDialog,
     NetWorkConfirmationDialog,
     RiskConfirmationDialog,
+    AirdropDialog,
   },
   data() {
     return {
@@ -110,6 +109,7 @@ export default {
       NetWorkVisible: false,
       RiskVisible: false,
       BuyHelmetVisible: false,
+      AirdropVisible: false,
     };
   },
   computed: {
@@ -144,7 +144,9 @@ export default {
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
-
+    this.$bus.$on("OpenAirdropDialogs", () => {
+      this.AirdropVisible = true;
+    });
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       this.statusData = data;
       this.openStatusDialog();
@@ -167,6 +169,9 @@ export default {
   methods: {
     NetWorkClose() {
       this.NetWorkVisible = false;
+    },
+    airdropClose() {
+      this.AirdropVisible = false;
     },
     RiskClose() {
       this.RiskVisible = false;

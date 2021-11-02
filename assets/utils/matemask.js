@@ -73,7 +73,6 @@ export const mateMaskInfo = async (address, name) => {
     return obj;
   } catch (error) {
     console.log("util=>matemask=>mateMaskInfo", error);
-    // bus.$emit('OPEN_DOWNLOAD');
     return {
       status: -1,
       error,

@@ -305,6 +305,7 @@ export default {
       initLoading: false,
       initTimer: null,
       airdropLoading: false,
+      d_: false
     };
   },
   computed: {
@@ -432,8 +433,9 @@ export default {
       if (t > 0) {
         h = Math.floor(t / 3600);
         m = Math.floor((t % 3600) / 60);
-      } else if (this.iboData.status !== 2) {
+      } else if (this.iboData.status !== 2 && !this.d_) {
         this.init();
+        this.d_ = true
       }
       this.countdown = {
         h,

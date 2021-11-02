@@ -133,7 +133,7 @@ export const getPoolAPY = (PoolData) => {
     const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
     const APY =
       new BigNumber(Math.pow(RewardValues, 365) * 100).toFixed(2) + "%";
-    console.log(APY, "#########################");
+    console.log(APY, APR, "#########################");
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };

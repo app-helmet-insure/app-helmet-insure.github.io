@@ -1512,12 +1512,12 @@ export const getLptAPR = async (PoolData) => {
         : 0;
       const FixReward1Time = HaveReward1 ? Reward1Time / 86400 : 0;
       // ------------------------------------------ //
+      console.log(FixTotalReward1, FixOutPutReward1, FixReward1Time, PoolData);
       const Reward1Daily = HaveReward1
         ? (FixTotalReward1 - FixOutPutReward1) / FixReward1Time
         : 0;
       const Reward2Daily =
         (FixAllocPoint / FixTotalAllocPoint) * (FixPerBlock * 28800);
-      console.log(Reward1Daily, Reward2Daily, PoolData);
       const FixReward1Daily = Reward1Daily > 0 ? Reward1Daily : 0;
       const FixReward2Daily = Reward2Daily > 0 ? Reward2Daily : 0;
 

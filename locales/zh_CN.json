@@ -353,8 +353,8 @@
     "ToStake": "去抵押",
     "Pause": "暂停",
     "Migrate": "Migrate",
-    "Tips8": "Tips1: 此次跨链燃烧每个地址限量 2,000 Helmet, 跨链总额 100,000 Helmet,先到先得.",
-    "Tips9": "Tips2: 你可以在 14:00 之后切换 Polygon 网络领取 GUARD."
+    "Tips8": "Tips1: 兑换 Guard(Polygon) 需要燃烧等量的 Helmet(BSC)",
+    "Tips9": "Tips2: 兑换 Guard(Polygon) 是不可逆的操作"
   },
   "IBO": {
     "IBO_text1": "分钟",

@@ -269,7 +269,7 @@ export default {
       SuccessHash: "",
       WaitingText: "",
       MaxStaking: 0,
-      PropoaslID: 2,
+      PropoaslID: 1,
     };
   },
   computed: {

@@ -354,7 +354,8 @@
     "Pause": "暂停",
     "Migrate": "Migrate",
     "Tips8": "Tips1: 兑换 Guard(Polygon) 需要燃烧等量的 Helmet(BSC)",
-    "Tips9": "Tips2: 兑换 Guard(Polygon) 是不可逆的操作"
+    "Tips9": "Tips2: 兑换 Guard(Polygon) 是不可逆的操作",
+    "Tips10": "Tips3: 跨链操作需要稍长的时间, 请耐心等待"
   },
   "IBO": {
     "IBO_text1": "分钟",

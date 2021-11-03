@@ -1,52 +1,49 @@
 <template>
-  <div class="migrate">
-    <div class="migrate_wrap">
-      <div class="migrate_text">
-        <span>Helmet</span>
-        <span>{{ fixD(HelmetBalance, 4) }}</span>
-      </div>
-      <div class="migrate_input">
-        <input type="text" v-model="BurnVolume" />
-        <span @click="handleClickMax">{{
-          $t("Insurance.Insurance_text18")
-        }}</span>
-      </div>
-      <button class="b_button migrate_button" @click="handleClickMigrate">
-        {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
-      </button>
-      <div class="migrate_tips_wrap">
-        <p class="migrate_tips_span"><span>Tips</span></p>
-        <p class="migrate_tips">
-          {{ $t("Migration.Tips8") }}
-        </p>
-        <p class="migrate_tips">
-          {{ $t("Migration.Tips9") }}
-        </p>
-        <p class="migrate_tips">
-          {{ $t("Migration.Tips10") }}
-        </p>
-      </div>
-      <div class="migrate_info_wrap">
-        <p class="migrate_info_item">
-          <span>Max. Swap Amount</span> <span>26,000,000 Helmet</span>
-        </p>
-        <p class="migrate_info_item">
-          <span>Min. Swap Amount</span> <span>260.00 Helmet</span>
-        </p>
-        <p class="migrate_info_item">
-          <span>Swap Fee</span> <span>0.1000%</span>
-        </p>
-        <p class="migrate_info_item">
-          <span>Max. Fee</span> <span>5,140.00 Helmet</span>
-        </p>
-        <p class="migrate_info_item">
-          <span>Min. Fee</span> <span>26.00 Helmet</span>
-        </p>
-        <span class="migrate_info_text"
-          >Depositing 5,200,000 Guard could take up to 12 hours</span
-        >
-      </div>
+  <div class="migration_ibo">
+    <h3 class="migration_ibo_title">Migrate to GUARD for IBO</h3>
+    <div class="migration_ibo_countdown">
+      <div>Countdown</div>
+      <p>{{ Time.Hour > 0 ? Time.Hour : "00" }}</p>
+      <span>:</span>
+      <p>{{ Time.Minute > 0 ? Time.Minute : "00" }}</p>
+      <span>:</span>
+      <p>{{ Time.Second > 0 ? Time.Second : "00" }}</p>
     </div>
+    <div class="migration_ibo_text">
+      <span>Helmet</span>
+      <span>{{ fixD(HelmetBalance, 4) }}</span>
+    </div>
+    <div class="migration_ibo_input">
+      <input type="text" v-model="BurnVolume" />
+      <span @click="handleClickMax">{{
+        $t("Insurance.Insurance_text18")
+      }}</span>
+    </div>
+    <button
+      class="b_button migration_ibo_button"
+      v-if="MigrationStatus === 'UnOpen'"
+    >
+      {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+    </button>
+    <button
+      class="b_button migration_ibo_button"
+      @click="handleClickMigrate"
+      v-if="MigrationStatus === 'Ongoing'"
+    >
+      {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+    </button>
+    <button
+      class="b_button migration_ibo_button"
+      v-if="MigrationStatus === 'Expired'"
+    >
+      {{ $t("NFT.Finished") }}
+    </button>
+    <p class="migration_ibo_tips">
+      {{ $t("Migration.Tips8") }}
+    </p>
+    <p class="migration_ibo_tips">
+      {{ $t("Migration.Tips9") }}
+    </p>
     <!-- dialog -->
     <WaitingConfirmationDialog
       :DialogVisible="WaitingVisible"
@@ -66,10 +63,10 @@
 
 <script>
 import { fixD } from "~/assets/js/util.js";
+import Migration from "~/web3/abis/Migration.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
-import BurnSwapABI from "~/web3/abis/BurnSwap.json";
+import OrderABI from "~/web3/abis/OrderABI.json";
 import { Contract } from "ethers-multicall-x";
-import { migrateRegister } from "~/interface/request.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -79,7 +76,7 @@ import {
 } from "~/web3/index.js";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
-const BurnContractAddress = "0x035B5c1f21E0b5B8cb2adEBB5d2DB7B0e8ad8BF8";
+const BurnContractAddress = "0x4F17B8f8BBebf9F73CF76992aa3F464821a27595";
 const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
 const Infinity =
   "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
@@ -127,11 +124,20 @@ export default {
       immediate: true,
     },
   },
+  mounted() {
+    this.TimeForMat = setInterval(() => {
+      this.forMatTime();
+    }, 1000);
+  },
+  destroyed() {
+    clearInterval(this.TimeForMat);
+  },
   methods: {
     reloadData(Value) {
       if (Value) {
         this.$nextTick(() => {
           this.getBurnsInfo();
+          this.getBurnsTime();
         });
       }
     },
@@ -147,7 +153,18 @@ export default {
       this.SuccessVisible = false;
     },
     handleClickMax() {
-      this.BurnVolume = this.HelmetBalance;
+      this.BurnVolume = Math.min(Number(this.HelmetBalance), 2000);
+    },
+    getBurnsTime() {
+      const TimeContracts = new Contract(BurnContractAddress, OrderABI);
+      const BSCMulticallProvider = getOnlyMultiCallProvider();
+      const PromiseList = [TimeContracts.begin(), TimeContracts.span()];
+      BSCMulticallProvider.all(PromiseList).then((res) => {
+        const FixData = processResult(res);
+        const [Start, Span] = FixData;
+        this.Start = Start;
+        this.Span = Span;
+      });
     },
     getBurnsInfo() {
       const HelmetContracts = new Contract(HelmetAddress, ERC20ABI.abi);
@@ -164,36 +181,76 @@ export default {
         this.ApproveStatus = ApproveStatus > 0;
       });
     },
+    forMatTime() {
+      let NowTime = Date.now() / 1000;
+      let StartTime = this.Start * 1;
+      let FinishTime = this.Start * 1 + this.Span * 1;
+      console.log(NowTime, StartTime, FinishTime, StartTime - NowTime > 0);
+      let DownTime =
+        StartTime - NowTime > 0 ? StartTime - NowTime : FinishTime - NowTime;
+      const Day = Math.floor(DownTime / (24 * 3600));
+      const Hour = Math.floor((DownTime - Day * 24 * 3600) / 3600);
+      const Minute = Math.floor(
+        (DownTime - Day * 24 * 3600 - Hour * 3600) / 60
+      );
+      const Second = Math.floor(
+        DownTime - Day * 24 * 3600 - Hour * 3600 - Minute * 60
+      );
+      const FixHour = Hour > 9 ? Hour : "0" + Hour;
+      const FixMinute = Minute > 9 ? Minute : "0" + Minute;
+      const FixSecond = Second > 9 ? Second : "0" + Second;
+      if (NowTime > StartTime && NowTime < FinishTime) {
+        this.Time = {
+          Hour: FixHour,
+          Minute: FixMinute,
+          Second: FixSecond,
+        };
+        this.MigrationStatus = "Ongoing";
+      } else if (NowTime < StartTime) {
+        this.Time = {
+          Hour: FixHour,
+          Minute: FixMinute,
+          Second: FixSecond,
+        };
+        this.MigrationStatus = "UnOpen";
+      } else {
+        this.Time = {
+          Hour: "00",
+          Minute: "00",
+          Second: "00",
+        };
+        this.MigrationStatus = "Expired";
+      }
+      clearInterval(this.TimeForMat);
+    },
     handleClickMigrate() {
       if (!this.BurnVolume) {
         return;
       }
       const Account = this.CurrentAccount.account;
       if (this.ApproveStatus) {
-        migrateRegister().then((res) => {
-          const BurnContracts = getContract(BurnSwapABI, BurnContractAddress);
-          BurnContracts.methods
-            .burnSwap(toWei(this.BurnVolume + ""), Account)
-            .send({ from: Account })
-            .on("transactionHash", (hash) => {
-              this.WaitingVisible = true;
-            })
-            .on("receipt", (receipt) => {
-              if (!this.SuccessVisible) {
-                this.SuccessHash = receipt.transactionHash;
-                this.WaitingVisible = false;
-                this.SuccessVisible = true;
-                this.StakeLoading = false;
-                this.$store.dispatch("refreshData");
-                this.getBurnsInfo();
-              }
-            })
-            .on("error", (error) => {
-              this.StakeLoading = false;
+        const BurnContracts = getContract(Migration, BurnContractAddress);
+        BurnContracts.methods
+          .burn(toWei(this.BurnVolume + ""))
+          .send({ from: Account })
+          .on("transactionHash", (hash) => {
+            this.WaitingVisible = true;
+          })
+          .on("receipt", (receipt) => {
+            if (!this.SuccessVisible) {
+              this.SuccessHash = receipt.transactionHash;
               this.WaitingVisible = false;
-              this.SuccessVisible = false;
-            });
-        });
+              this.SuccessVisible = true;
+              this.StakeLoading = false;
+              this.$store.dispatch("refreshData");
+              this.getBurnsInfo();
+            }
+          })
+          .on("error", (error) => {
+            this.StakeLoading = false;
+            this.WaitingVisible = false;
+            this.SuccessVisible = false;
+          });
       } else {
         const ApproveContracts = getContract(ERC20ABI.abi, HelmetAddress);
         ApproveContracts.methods
@@ -226,21 +283,21 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.migrate {
+.migration_ibo {
   background: #f9f4ef;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.migrate_title {
+.migration_ibo_title {
   font-size: 16px;
   font-family: IBMPlexSans-Bold, IBMPlexSans;
   font-weight: bold;
   color: #17173a;
   line-height: 20px;
 }
-.migrate_countdown {
+.migration_ibo_countdown {
   font-size: 14px;
   font-family: IBMPlexSans;
   color: rgba(23, 23, 58, 0.7);
@@ -257,23 +314,24 @@ export default {
     height: 18px;
     background: #f2f0eb;
     border-radius: 3px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: IBMPlexSans;
     color: #17173a;
+    line-height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   > span {
     margin: 0 2px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(23, 23, 58, 0.3);
     line-height: 12px;
   }
 }
-.migrate_text {
+.migration_ibo_text {
   display: flex;
   justify-content: space-between;
   margin-top: 24px;
@@ -293,7 +351,7 @@ export default {
     }
   }
 }
-.migrate_input {
+.migration_ibo_input {
   margin-top: 5px;
   height: 40px;
   border-radius: 5px;
@@ -330,104 +388,60 @@ export default {
     }
   }
 }
-.migrate_button {
+.migration_ibo_button {
   border-radius: 5px;
 }
-.migrate_tips_wrap {
+.migration_ibo_tips {
   margin-top: 10px;
-}
-.migrate_tips_span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 33px;
-  height: 17px;
-  background: #17173a;
-  border-radius: 2px;
-  transform: skew(-20deg);
-  > span {
-    display: block;
-    transform: skew(20deg);
-    font-size: 12px;
-    font-family: IBMPlexSans;
-    color: #ffffff;
-  }
-}
-.migrate_tips {
-  margin-top: 5px;
+  height: 40px;
   font-size: 12px;
   font-family: IBMPlexSans;
   color: rgba(23, 23, 58, 0.6);
-}
-.migrate_info_wrap {
-  margin-top: 10px;
-}
-.migrate_info_item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 41px;
-  border-bottom: 1px solid #d9d2cb;
-
-  > span {
-    &:nth-of-type(1) {
-      font-size: 14px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 500;
-      color: rgba(23, 23, 58, 0.7);
-      line-height: 16px;
-    }
-    &:nth-of-type(2) {
-      font-size: 14px;
-      font-family: IBMPlexSans-Medium, IBMPlexSans;
-      font-weight: 600;
-      color: #17173a;
-      line-height: 16px;
-    }
-  }
-}
-.migrate_info_text {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
-  font-family: IBMPlexSans-Medium, IBMPlexSans;
-  font-weight: 600;
-  color: #17173a;
+  line-height: 20px;
 }
 @media screen and (min-width: 750px) {
-  .migrate {
+  .migration_ibo {
     width: 878px;
-    background-image: url("../../assets/img/migration/migrate_bg.png");
+    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;
     padding: 30px;
     margin: 0 auto;
   }
-  .migrate_wrap {
-    width: 400px;
+  .migration_ibo_text {
+    width: 320px;
+  }
+  .migration_ibo_input {
+    width: 320px;
+  }
+  .migration_ibo_button {
+    width: 320px;
+  }
+  .migration_ibo_tips {
+    width: 320px;
   }
 }
 @media screen and (max-width: 750px) {
-  .migrate {
+  .migration_ibo {
     width: 95%;
-    background-image: url("../../assets/img/migration/migrate_bg.png");
+    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;
     margin: 0 auto;
     padding: 30px 10px;
   }
-  .migrate_text {
+  .migration_ibo_text {
     width: 100%;
   }
-  .migrate_input {
+  .migration_ibo_input {
     width: 100%;
   }
-  .migrate_button {
+  .migration_ibo_button {
     width: 100%;
   }
-  .migrate_tips {
+  .migration_ibo_tips {
     width: 100%;
   }
 }

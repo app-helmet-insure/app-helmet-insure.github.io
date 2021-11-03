@@ -74,8 +74,8 @@
     "ChartPrice": "Harga Sekarang",
     "SelectCoin": "Pilih sebuah token"
   },
-   "Table": {
-    "Withdraws":"Withdraw",
+  "Table": {
+    "Withdraws": "Withdraw",
     "ID": "ID",
     "Rent": "Premium(HELMET)",
     "Premium": "Premium",
@@ -350,8 +350,9 @@
     "ToStake": "Go Deposit",
     "Pause": "Temporarily closed",
     "Migrate": "Migrate",
-    "Tips8": "Tips: 2,000 Helmet limit per address, hardcap 100,000 Helmet,FCFS.",
-    "Tips9": "Tips2: You will get GUARD in the same wallet address (reset the network to polygon) after 14:00"
+    "Tips8": "Tips1: request.jsBurn HELMET(BSC) to get the same amount of GUARD(Polygon)",
+    "Tips9": "Tips2: Single-way migration of HELMET → GUARD",
+    "Tips10": "Tips3: Cross chain process takes several minutes......"
   },
   "IBO": {
     "IBO_text1": "m",

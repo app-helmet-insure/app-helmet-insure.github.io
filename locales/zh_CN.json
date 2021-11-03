@@ -353,9 +353,10 @@
     "ToStake": "去抵押",
     "Pause": "暂停",
     "Migrate": "Migrate",
-    "Tips8": "Tips1: 兑换 Guard(Polygon) 需要燃烧等量的 Helmet(BSC)",
-    "Tips9": "Tips2: 兑换 Guard(Polygon) 是不可逆的操作",
-    "Tips10": "Tips3: 跨链操作需要稍长的时间, 请耐心等待"
+    "Tips8": "1. 兑换 Guard(Polygon) 需要燃烧等量的 Helmet(BSC)",
+    "Tips9": "2. 兑换 Guard(Polygon) 是不可逆的操作",
+    "Tips10": "3. 跨链操作需要稍长的时间, 请耐心等待",
+    "Tips11": "4. 跨链成功后 GUARD 会直接转到同一钱包地址, 不需要另外领取"
   },
   "IBO": {
     "IBO_text1": "分钟",

@@ -25,16 +25,19 @@
         <p class="migrate_tips">
           {{ $t("Migration.Tips10") }}
         </p>
+        <p class="migrate_tips">
+          {{ $t("Migration.Tips11") }}
+        </p>
       </div>
       <div class="migrate_info_wrap">
         <p class="migrate_info_item">
-          <span>Max. Swap Amount</span> <span>26,000,000 Helmet</span>
+          <span>Max. Migrate Amount</span> <span>26,000,000 Helmet</span>
         </p>
         <p class="migrate_info_item">
-          <span>Min. Swap Amount</span> <span>260.00 Helmet</span>
+          <span>Min. Migrate Amount</span> <span>260.00 Helmet</span>
         </p>
         <p class="migrate_info_item">
-          <span>Swap Fee</span> <span>0.1000%</span>
+          <span>Migrate Fee</span> <span>0.1000%</span>
         </p>
         <p class="migrate_info_item">
           <span>Max. Fee</span> <span>5,140.00 Helmet</span>
@@ -43,7 +46,7 @@
           <span>Min. Fee</span> <span>26.00 Helmet</span>
         </p>
         <span class="migrate_info_text"
-          >Depositing 5,200,000 Guard could take up to 12 hours</span
+          >Migrate 5,200,000 Helmet could take up to 12 hours</span
         >
       </div>
     </div>

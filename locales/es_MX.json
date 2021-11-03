@@ -13,7 +13,8 @@
     "Medium": "Medium",
     "ConnectWrong": "Red Equivocada",
     "ConnectWallet": "CONECTAR WALLET"
-  },"SwapHelmet": {
+  },
+  "SwapHelmet": {
     "BuyHelmet": "Buy Helmet",
     "ExEarn": "Estimated",
     "Price": "Price",
@@ -73,8 +74,8 @@
     "ChartPrice": "Precio Actual",
     "SelectCoin": "Selecciona un Token"
   },
-   "Table": {
-    "Withdraws":"Withdraw",
+  "Table": {
+    "Withdraws": "Withdraw",
     "ID": "ID",
     "Rent": "Premium(HELMET)",
     "Premium": "Prima",
@@ -291,7 +292,8 @@
     "Back": "Atrás",
     "ConnectWallet": "Conecta tu {item} Wallet"
   },
-  "Insurance": { "All": "All",
+  "Insurance": {
+    "All": "All",
     "Main": "MainNet",
     "Insurance_text1": "Trading",
     "Insurance_text2": "Categorias",
@@ -348,9 +350,10 @@
     "ToStake": "Go Deposit",
     "Pause": "Temporarily closed",
     "Migrate": "Migrate",
-    "Tips8": "Tips1: request.jsBurn HELMET(BSC) to get the same amount of GUARD(Polygon)",
-    "Tips9": "Tips2: Single-way migration of HELMET → GUARD",
-    "Tips10": "Tips3: Cross chain process takes several minutes......"
+    "Tips8": "1. Burn HELMET(BSC) to get the same amount of GUARD(Polygon)",
+    "Tips9": "2. Single-way migration of HELMET → GUARD",
+    "Tips10": "3. Cross chain process takes several minutes......",
+    "Tips11": "4. Your GUARD will land in your wallet automatically without claiming"
   },
   "IBO": {
     "IBO_text1": "m",

@@ -30,11 +30,8 @@
       <div class="governance_details_votes_wrap">
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text3") }}</span>
-              {{ fixD(Type1, 4) }} HELMET</span
-            >
-            <span>{{ Type1Number }}</span>
+            <span>{{ $t("Governance.Governance_text3") }}</span>
+            <span>{{ fixD(Type1, 0) }}({{ Type1Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type1Number}`"></div>
@@ -42,11 +39,8 @@
         </div>
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text4") }}</span>
-              {{ fixD(Type2, 4) }} HELMET</span
-            >
-            <span>{{ Type2Number }}</span>
+            <span>{{ $t("Governance.Governance_text4") }}</span>
+            <span>{{ fixD(Type2, 0) }}({{ Type2Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type2Number}`"></div>
@@ -54,11 +48,8 @@
         </div>
         <div class="governance_details_votes_slider">
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text5") }}</span>
-              {{ fixD(Type3, 4) }} HELMET</span
-            >
-            <span>{{ Type3Number }}</span>
+            <span>{{ $t("Governance.Governance_text5") }} </span>
+            <span>{{ fixD(Type3, 0) }}({{ Type3Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type3Number}`"></div>

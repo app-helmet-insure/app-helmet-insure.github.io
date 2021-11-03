@@ -93,7 +93,7 @@ import {
   getLongType,
   getLongTokenValue,
   getTokenPrice,
-} from "~/interface/event.js";
+} from "~/interface/request.js";
 import countTo from "vue-count-to";
 import { fromWei } from "../../web3/index.js";
 import { TokenBalance } from "~/web3/index.js";

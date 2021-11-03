@@ -1,44 +1,48 @@
 <template>
   <div class="migrate">
-    <div class="migrate_text">
-      <span>Helmet</span>
-      <span>{{ fixD(HelmetBalance, 4) }}</span>
-    </div>
-    <div class="migrate_input">
-      <input type="text" v-model="BurnVolume" />
-      <span @click="handleClickMax">{{
-        $t("Insurance.Insurance_text18")
-      }}</span>
-    </div>
-    <button class="b_button migrate_button" @click="handleClickMigrate">
-      {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
-    </button>
-    <div class="migrate_tips_wrap">
-      <p class="migrate_tips_span"><span>Tips</span></p>
-      <p class="migrate_tips">
-        {{ $t("Migration.Tips8") }}
-      </p>
-      <p class="migrate_tips">
-        {{ $t("Migration.Tips9") }}
-      </p>
-    </div>
-    <div class="migrate_info_wrap">
-      <p class="migrate_info_item">
-        <span>Max. Swap Amount</span> <span>26,000,000 Helmet</span>
-      </p>
-      <p class="migrate_info_item">
-        <span>Min. Swap Amount</span> <span>260.00 Helmet</span>
-      </p>
-      <p class="migrate_info_item">
-        <span>Swap Fee</span> <span>0.1000%</span>
-      </p>
-      <p class="migrate_info_item">
-        <span>Max. Fee</span> <span>5,140.00 Helmet</span>
-      </p>
-      <p class="migrate_info_item">
-        <span>Min. Fee</span> <span>26.00 Helmet</span>
-      </p>
-      <span>Depositing 5,200,000 Guard could take up to 12 hours</span>
+    <div class="migrate_wrap">
+      <div class="migrate_text">
+        <span>Helmet</span>
+        <span>{{ fixD(HelmetBalance, 4) }}</span>
+      </div>
+      <div class="migrate_input">
+        <input type="text" v-model="BurnVolume" />
+        <span @click="handleClickMax">{{
+          $t("Insurance.Insurance_text18")
+        }}</span>
+      </div>
+      <button class="b_button migrate_button" @click="handleClickMigrate">
+        {{ ApproveStatus ? $t("Migration.Migrate") : $t("Migration.Approve") }}
+      </button>
+      <div class="migrate_tips_wrap">
+        <p class="migrate_tips_span"><span>Tips</span></p>
+        <p class="migrate_tips">
+          {{ $t("Migration.Tips8") }}
+        </p>
+        <p class="migrate_tips">
+          {{ $t("Migration.Tips9") }}
+        </p>
+      </div>
+      <div class="migrate_info_wrap">
+        <p class="migrate_info_item">
+          <span>Max. Swap Amount</span> <span>26,000,000 Helmet</span>
+        </p>
+        <p class="migrate_info_item">
+          <span>Min. Swap Amount</span> <span>260.00 Helmet</span>
+        </p>
+        <p class="migrate_info_item">
+          <span>Swap Fee</span> <span>0.1000%</span>
+        </p>
+        <p class="migrate_info_item">
+          <span>Max. Fee</span> <span>5,140.00 Helmet</span>
+        </p>
+        <p class="migrate_info_item">
+          <span>Min. Fee</span> <span>26.00 Helmet</span>
+        </p>
+        <span class="migrate_info_text"
+          >Depositing 5,200,000 Guard could take up to 12 hours</span
+        >
+      </div>
     </div>
     <!-- dialog -->
     <WaitingConfirmationDialog
@@ -62,6 +66,7 @@ import { fixD } from "~/assets/js/util.js";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import BurnSwapABI from "~/web3/abis/BurnSwap.json";
 import { Contract } from "ethers-multicall-x";
+import { migrateRegister } from "~/interface/request.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -139,7 +144,7 @@ export default {
       this.SuccessVisible = false;
     },
     handleClickMax() {
-      this.BurnVolume = Math.min(Number(this.HelmetBalance), 2000);
+      this.BurnVolume = this.HelmetBalance;
     },
     getBurnsInfo() {
       const HelmetContracts = new Contract(HelmetAddress, ERC20ABI.abi);
@@ -162,28 +167,30 @@ export default {
       }
       const Account = this.CurrentAccount.account;
       if (this.ApproveStatus) {
-        const BurnContracts = getContract(BurnSwapABI, BurnContractAddress);
-        BurnContracts.methods
-          .burnSwap(toWei(this.BurnVolume + ""), Account)
-          .send({ from: Account })
-          .on("transactionHash", (hash) => {
-            this.WaitingVisible = true;
-          })
-          .on("receipt", (receipt) => {
-            if (!this.SuccessVisible) {
-              this.SuccessHash = receipt.transactionHash;
-              this.WaitingVisible = false;
-              this.SuccessVisible = true;
+        migrateRegister().then((res) => {
+          const BurnContracts = getContract(BurnSwapABI, BurnContractAddress);
+          BurnContracts.methods
+            .burnSwap(toWei(this.BurnVolume + ""), Account)
+            .send({ from: Account })
+            .on("transactionHash", (hash) => {
+              this.WaitingVisible = true;
+            })
+            .on("receipt", (receipt) => {
+              if (!this.SuccessVisible) {
+                this.SuccessHash = receipt.transactionHash;
+                this.WaitingVisible = false;
+                this.SuccessVisible = true;
+                this.StakeLoading = false;
+                this.$store.dispatch("refreshData");
+                this.getBurnsInfo();
+              }
+            })
+            .on("error", (error) => {
               this.StakeLoading = false;
-              this.$store.dispatch("refreshData");
-              this.getBurnsInfo();
-            }
-          })
-          .on("error", (error) => {
-            this.StakeLoading = false;
-            this.WaitingVisible = false;
-            this.SuccessVisible = false;
-          });
+              this.WaitingVisible = false;
+              this.SuccessVisible = false;
+            });
+        });
       } else {
         const ApproveContracts = getContract(ERC20ABI.abi, HelmetAddress);
         ApproveContracts.methods
@@ -247,17 +254,16 @@ export default {
     height: 18px;
     background: #f2f0eb;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 14px;
     font-family: IBMPlexSans;
     color: #17173a;
-    line-height: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   > span {
     margin: 0 2px;
-    font-size: 12px;
+    font-size: 14px;
     font-family: PingFangSC-Semibold, PingFang SC;
     font-weight: 600;
     color: rgba(23, 23, 58, 0.3);
@@ -325,7 +331,7 @@ export default {
   border-radius: 5px;
 }
 .migrate_tips_wrap {
-  width: 320px;
+  margin-top: 10px;
 }
 .migrate_tips_span {
   display: flex;
@@ -336,7 +342,6 @@ export default {
   background: #17173a;
   border-radius: 2px;
   transform: skew(-20deg);
-  margin-top: 7px;
   > span {
     display: block;
     transform: skew(20deg);
@@ -352,32 +357,39 @@ export default {
   color: rgba(23, 23, 58, 0.6);
 }
 .migrate_info_wrap {
-  width: 320px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .migrate_info_item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 33px;
+  height: 41px;
   border-bottom: 1px solid #d9d2cb;
 
   > span {
     &:nth-of-type(1) {
-      font-size: 12px;
+      font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
       color: rgba(23, 23, 58, 0.7);
       line-height: 16px;
     }
     &:nth-of-type(2) {
-      font-size: 12px;
+      font-size: 14px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 600;
       color: #17173a;
       line-height: 16px;
     }
   }
+}
+.migrate_info_text {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-family: IBMPlexSans-Medium, IBMPlexSans;
+  font-weight: 600;
+  color: #17173a;
 }
 @media screen and (min-width: 750px) {
   .migrate {
@@ -389,17 +401,8 @@ export default {
     padding: 30px;
     margin: 0 auto;
   }
-  .migrate_text {
-    width: 320px;
-  }
-  .migrate_input {
-    width: 320px;
-  }
-  .migrate_button {
-    width: 320px;
-  }
-  .migrate_tips {
-    width: 320px;
+  .migrate_wrap {
+    width: 400px;
   }
 }
 @media screen and (max-width: 750px) {

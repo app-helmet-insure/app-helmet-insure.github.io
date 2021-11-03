@@ -120,7 +120,7 @@
 <script>
 import precision from "~/assets/js/precision.js";
 import { fixD } from "~/assets/js/util.js";
-import { getInsuranceList } from "~/interface/event.js";
+import { getInsuranceList } from "~/interface/request.js";
 import FactoryABI from "~/web3/abis/FactoryABI.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../../web3/index.js";

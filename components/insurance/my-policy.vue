@@ -145,7 +145,7 @@
 import { fixD } from "~/assets/js/util.js";
 import { onExercise } from "~/interface/order.js";
 import { getBalance } from "~/interface/deposite";
-import { getInsuranceList } from "~/interface/event.js";
+import { getInsuranceList } from "~/interface/request.js";
 import moment from "moment";
 import NoData from "./no-data.vue";
 import Loading from "./loading.vue";

@@ -1,4 +1,4 @@
-import { getTokenPrice } from "~/interface/event.js";
+import { getTokenPrice } from "~/interface/request.js";
 import { fixD } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { Contract } from "ethers-multicall-x";

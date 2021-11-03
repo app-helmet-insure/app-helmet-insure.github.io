@@ -93,7 +93,7 @@ import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
-import { getGovernance } from "~/interface/event.js";
+import { getGovernance } from "~/interface/request.js";
 import { fixD } from "~/assets/js/util.js";
 import { Contract } from "ethers-multicall-x";
 import {

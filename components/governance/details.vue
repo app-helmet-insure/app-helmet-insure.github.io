@@ -92,7 +92,7 @@
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { Contract } from "ethers-multicall-x";
 import { fixD } from "~/assets/js/util.js";
-import { getGovernance } from "~/interface/event.js";
+import { getGovernance } from "~/interface/request.js";
 import {
   getOnlyMultiCallProvider,
   processResult,

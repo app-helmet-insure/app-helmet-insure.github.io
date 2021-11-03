@@ -243,6 +243,19 @@ export const buyHelmetOptions = ({ sellToken, sellAmount }) => {
       return res;
     });
   } catch (error) {
-    console.log(error);
+    console.log("buyHelmetOptions", "Error", error);
+  }
+};
+export const migrateRegister = () => {
+  try {
+    return Axios({
+      method: "get",
+      url:
+        "https://bridgeapi.anyswap.exchange/v2/register/0x035B5c1f21E0b5B8cb2adEBB5d2DB7B0e8ad8BF8/56/Guardv5",
+    }).then((res) => {
+      return res;
+    });
+  } catch (error) {
+    console.log("migrateRegister", "Error", error);
   }
 };

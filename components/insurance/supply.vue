@@ -239,7 +239,7 @@ import { fixD } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../../web3/index.js";
 import { fromWei, toWei } from "~/web3/index.js";
-import { getTokenPrice } from "~/interface/event.js";
+import { getTokenPrice } from "~/interface/request.js";
 import OrderABI from "~/web3/abis/OrderABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";

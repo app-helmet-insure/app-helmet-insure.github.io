@@ -204,7 +204,7 @@ import {
   getCurrentInsurance,
   InsuranceTypeList,
 } from "../../config/insurance.js";
-import { getTokenPrice } from "../../interface/event.js";
+import { getTokenPrice } from "../../interface/request.js";
 import { fromWei, toWei } from "../../web3/index.js";
 export default {
   components: {

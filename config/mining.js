@@ -1,4 +1,4 @@
-import { getTokenPrice } from "~/interface/event.js";
+import { getTokenPrice } from "~/interface/request.js";
 import { fixD } from "~/assets/js/util.js";
 import CakePoolABI from "~/web3/abis/CakePoolABI.json";
 import XmsPoolABI from "~/web3/abis/XmsPoolABI.json";

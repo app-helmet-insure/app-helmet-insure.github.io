@@ -143,7 +143,7 @@
 
 <script>
 import { fixD } from "~/assets/js/util.js";
-import { getInsuranceList } from "~/interface/event.js";
+import { getInsuranceList } from "~/interface/request.js";
 import { getContract } from "../../web3/index.js";
 import moment from "moment";
 import NoData from "./no-data.vue";

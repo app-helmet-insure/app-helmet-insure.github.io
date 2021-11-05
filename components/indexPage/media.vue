@@ -12,7 +12,7 @@
       </a>
       <a
         class="helmet_media_item"
-        href="https://twitter.com/Helmet_insure"
+        href="https://t.me/helmet_insure"
         target="_blank"
       >
         <svg width="20px" height="20px" class="icon" aria-hidden="true">

@@ -329,15 +329,6 @@ export default {
         this.StakeVolume = this.CanDeposite;
       }
     },
-    async addTokenFn(options) {
-      let data = {
-        tokenAddress: options.AddTokenAddress,
-        tokenSymbol: options.AddTokenSymbol,
-        tokenDecimals: options.ADDTOKEN_DECIMALS,
-        tokenImage: "",
-      };
-      await addToken(data);
-    },
     hadnleShowOnePager(e, onePager) {
       if (e.target.tagName === "I" && onePager) {
         let Earn = onePager;

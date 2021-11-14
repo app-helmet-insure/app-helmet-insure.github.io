@@ -179,7 +179,7 @@ export default {
           const [Rewards, Balance] = FixData;
           alert(Rewards);
           if (Number(fromWei(Rewards, item.Decimals)) > 0) {
-            this.$bus.$emit("OpenAirdropDialogs", { airdrop: true });
+            this.$bus.$emit("OpenAirdropDialogs");
           }
           return (
             (item.Rewards = fromWei(Rewards, item.Decimals)),

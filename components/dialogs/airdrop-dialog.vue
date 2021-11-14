@@ -126,7 +126,9 @@ export default {
     reloadData(Value) {
       if (Value) {
         this.$nextTick(() => {
-          this.getAirdropInfo();
+          setTimeout(() => {
+            this.getAirdropInfo();
+          }, 1000);
         });
       }
     },
@@ -177,7 +179,6 @@ export default {
         MulticallProvider.all(PromiseList).then((res) => {
           const FixData = processResult(res);
           const [Rewards, Balance] = FixData;
-          alert(Rewards);
           if (Number(fromWei(Rewards, item.Decimals)) > 0) {
             this.$bus.$emit("OpenAirdropDialogs");
           }

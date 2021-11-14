@@ -94,7 +94,6 @@ export default {
       showChangeWallet: false,
       WallectSelectType: "ALL",
       HelmetBalance: 0,
-      AirdropVisible: false,
     };
   },
   computed: {
@@ -152,9 +151,7 @@ export default {
       this.HelmetBalance = await HelmetBalance();
     },
     handleClickAirdrop() {
-      this.$bus.$emit("OpenAirdropDialogs", () => {
-        this.AirdropVisible = true;
-      });
+      this.$bus.$emit("OpenAirdropDialogs");
     },
     openChangeWallet() {
       this.showChangeWallet = true;

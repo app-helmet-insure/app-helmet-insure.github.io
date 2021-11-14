@@ -127,9 +127,9 @@ export default {
   methods: {
     reloadData(Value) {
       if (Value) {
-        this.$nextTick(() => {
+        setTimeout(() => {
           this.getAirdropInfo();
-        });
+        }, 1000);
       }
     },
     waitingClose() {
@@ -180,7 +180,7 @@ export default {
           const FixData = processResult(res);
           const [Rewards, Balance] = FixData;
           if (Number(fromWei(Rewards, item.Decimals)) > 0) {
-            this.$bus.$emit("OpenAirdropDialogs", { airdrop: true });
+            this.$bus.$emit("OpenAirdropDialogs");
           }
           return (
             (item.Rewards = fromWei(Rewards, item.Decimals)),

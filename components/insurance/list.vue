@@ -231,7 +231,7 @@ export default {
         { Show: this.$t("Insurance.All"), Type: "ALL" },
         { Show: this.$t("Insurance.Main"), Type: "MAIN" },
         { Show: "DeFi", Type: "DEFI" },
-        { Show: "NFT", Type: "NFT" },
+        { Show: "NFT/GameFi", Type: "NFT" },
       ];
     },
   },

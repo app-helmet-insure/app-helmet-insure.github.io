@@ -402,7 +402,7 @@ export default {
 @media screen and (min-width: 750px) {
   .migration_ibo {
     width: 878px;
-    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
+    background-image: url("../../assets/img/migration/migrate_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;
@@ -425,7 +425,7 @@ export default {
 @media screen and (max-width: 750px) {
   .migration_ibo {
     width: 95%;
-    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
+    background-image: url("../../assets/img/migration/migrate_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;

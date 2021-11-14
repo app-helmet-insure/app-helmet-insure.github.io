@@ -26,6 +26,27 @@
           {{ $t("Migration.Claim") }}
         </button>
       </div>
+      <div class="airdrop_token_contracts">
+        <p class="airdrop_token_contracts_title">
+          {{ CurrentList[0].Symbol }} Contract Address
+        </p>
+        <p class="airdrop_token_contracts_address">
+          {{ CurrentList[0].TokenAddress }}
+        </p>
+        <p
+          class="airdrop_token_contracts_add"
+          @click="
+            addTokenFn(
+              CurrentList[0].TokenAddress,
+              CurrentList[0].Symbol,
+              CurrentList[0].Decimals
+            )
+          "
+        >
+          Add {{ CurrentList[0].Symbol }} to Metamask
+          <img src="~/assets/img/airdrop/metamask.png" alt="" />
+        </p>
+      </div>
       <div class="airdrop_token_history">
         <div
           class="airdrop_token_history_token"
@@ -65,6 +86,7 @@
 import { fixD } from "~/assets/js/util.js";
 import { AirdropList } from "~/config/airdrop.js";
 import { Contract } from "ethers-multicall-x";
+import { addToken } from "~/web3/wallet.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -115,6 +137,15 @@ export default {
     },
     successClose() {
       this.SuccessVisible = false;
+    },
+    async addTokenFn(Address, Symbol, Decimals) {
+      let data = {
+        tokenAddress: Address,
+        tokenSymbol: Symbol,
+        tokenDecimals: Decimals,
+        tokenImage: "",
+      };
+      await addToken(data);
     },
     getAirdropInfo() {
       const CurrentList = AirdropList.Current;
@@ -266,10 +297,9 @@ export default {
     }
     .airdrop_dialog_body {
       position: relative;
-      height: 500px;
       background-image: url("../../assets/img/airdrop/airdrop_bg.png");
       background-repeat: no-repeat;
-      background-size: 442px 418px;
+      background-size: 442px 475px;
       padding-right: 42px;
       text-align: center;
     }
@@ -351,8 +381,41 @@ export default {
         box-shadow: 0px 1px 0px 0px #df8c37;
       }
     }
+    .airdrop_token_contracts {
+      &_title {
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 10px;
+      }
+      &_address {
+        margin-top: 4px;
+        font-size: 12px;
+        font-family: IBMPlexSans;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      &_add {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-top: 6px;
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        text-decoration: underline;
+        img {
+          margin-left: 4px;
+        }
+        &:hover {
+          color: #fd7e14;
+        }
+      }
+    }
     .airdrop_token_history {
-      margin-top: 74px;
+      margin-top: 40px;
       &_token {
         display: flex;
         justify-content: space-between;
@@ -410,8 +473,8 @@ export default {
     .airdrop_dialog_body {
       background-image: url("../../assets/img/airdrop/airdrop_bg.png");
       background-repeat: no-repeat;
-      background-size: 292px 276px;
-      padding-right: 42px;
+      background-size: 310px 325px;
+      padding-right: 30px;
       text-align: center;
     }
     .left_candy_1 {
@@ -490,8 +553,42 @@ export default {
         box-shadow: 0px 1px 0px 0px #df8c37;
       }
     }
+    .airdrop_token_contracts {
+      &_title {
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.7);
+        margin-top: 4px;
+      }
+      &_address {
+        margin-top: 4px;
+        font-size: 12px;
+        font-family: IBMPlexSans;
+        color: rgba(255, 255, 255, 0.7);
+        white-space: nowrap;
+      }
+      &_add {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        margin-top: 6px;
+        font-size: 12px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #ffffff;
+        text-decoration: underline;
+        img {
+          margin-left: 4px;
+        }
+        &:hover {
+          color: #fd7e14;
+        }
+      }
+    }
     .airdrop_token_history {
-      margin-top: 44px;
+      margin-top: 20px;
       &_token {
         display: flex;
         justify-content: space-between;

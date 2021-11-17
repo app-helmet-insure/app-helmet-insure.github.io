@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide hwarpool"><div></div></div>
       <div class="swiper-slide vote"><div></div></div>
       <div class="swiper-slide bnb1000"><div></div></div>
       <div class="swiper-slide lpt"><div></div></div>
@@ -136,6 +137,12 @@ export default {
         background-position: center;
       }
     }
+    .hwarpool {
+      background: #ffb5c0;
+      > div {
+        background-image: url("../../assets/img/banner/war_pool_web.png");
+      }
+    }
     .vote {
       background: #f9cf00;
       > div {
@@ -170,7 +177,7 @@ export default {
     .guard {
       background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/gaurd_web.png");
+        background-image: url("../../assets/img/banner/guard_web.png");
       }
     }
     .dis {
@@ -209,6 +216,12 @@ export default {
         background-position: center;
       }
     }
+    .hwarpool {
+      background: #ffb5c0;
+      > div {
+        background-image: url("../../assets/img/banner/war_pool_h5.png");
+      }
+    }
     .vote {
       background: #f9cf00;
       > div {
@@ -242,7 +255,7 @@ export default {
     .guard {
       background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/gaurd_h5.png");
+        background-image: url("../../assets/img/banner/guard_h5.png");
       }
     }
     .dis {

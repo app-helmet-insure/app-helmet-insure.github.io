@@ -447,6 +447,7 @@ export const formatMiningPool = (PoolData) => {
     if (!PoolStarted) {
       ItemPool.Status = 1;
       ItemPool.ShowTime = getShowTime(FixStartTime);
+      ItemPool.APR = "Infinity%";
     }
     if (PoolStarted & !PoolFinished) {
       ItemPool.Status = 2;
@@ -457,6 +458,7 @@ export const formatMiningPool = (PoolData) => {
       ItemPool.ShowTime = "Finished";
     }
   }
+  console.log(PoolData);
   return PoolData;
 };
 const getShowTime = (time) => {
@@ -539,7 +541,6 @@ export const getPoolAPR = async (PoolData) => {
       const Denominator =
         ((FixLptHelmetValue * 2) / FixTotalLptVolume) * FixTotalStakeVolume;
       const APR = fixD((Numerator / Denominator) * 100, 2);
-      console.log(APR);
       return (PoolData.APR = APR + "%");
     });
   } else {

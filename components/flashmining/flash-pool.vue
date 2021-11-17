@@ -107,7 +107,7 @@
     <i></i>
     <div
       class="withdraw"
-      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'CLAIM')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Claim')"
     >
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -130,7 +130,7 @@
             type="text"
             v-model="CanWithdraw"
             disabled
-            :class="ActiveType == 'CLAIM' ? 'activeInput' : ''"
+            :class="ActiveType == 'Claim' ? 'activeInput' : ''"
           />
         </div>
       </div>

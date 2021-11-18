@@ -76,7 +76,7 @@
         </p>
       </div>
       <a
-        :href="`https://exchange.pancakeswap.finance/#/add/${ActiveData.OneLpAddress}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
+        :href="`https://pancakeswap.finance/add/${ActiveData.OneLpAddress}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
         target="_blank"
         >From <i class="pancake"></i>Get {{ ActiveData.OneLpSymbol }}-HELMET
         LPT</a
@@ -287,7 +287,7 @@ export default {
       let data = {
         tokenAddress: options.AddTokenAddress,
         tokenSymbol: options.AddTokenSymbol,
-        tokenDecimals: options.add_token_decimals,
+        tokenDecimals: options.AddTokenDecimals,
         tokenImage: "",
       };
       await addToken(data);

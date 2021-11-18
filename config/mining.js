@@ -164,7 +164,7 @@ export const LptPoolList = [
     YearEarnType: "APR",
     APR: "--",
     JumpLink1:
-      "<a href='https://exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
+      "<a href='https://pancakeswap.finance/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
   },
 
   {
@@ -1237,7 +1237,7 @@ export const TokenPoolList = [
     Reward1Decimals: 18,
     Reward2Decimals: 18,
     JumpLink1:
-      "<a href='https://exchange.pancakeswap.finance/#/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-hFOR LPT</a>",
+      "<a href='https://pancakeswap.finance/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-hFOR LPT</a>",
     PoolType: "combo",
     APR: "--",
   },

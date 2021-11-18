@@ -8,6 +8,7 @@ import {
   processResult,
   fromWei,
 } from "~/web3/index.js";
+import { pancakeswapv2 } from "~/assets/utils/pancakeswapv2.js";
 export const PoolList = [
   {
     Key: "BNB1000WAR",
@@ -490,19 +491,35 @@ export const getPoolAPR = async (PoolData) => {
   const StakeAddress = PoolData.StakeAddress;
   const PoolAddress = PoolData.PoolAddress;
   const RewardDecimals = PoolData.RewardDecimals;
+  const RewardSymbol = PoolData.RewardSymbol;
   const PoolProcess = PoolData.PoolProcess;
   const StakeDecimals = PoolData.StakeDecimals;
   const TotalRewards = PoolData.TotalRewards;
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const HelmetDecimals = 18;
   const Amount = toWei("1", RewardDecimals);
-  const Data = await getTokenPrice({
-    fromTokenAddress: RewardAddress,
-    toTokenAddress: HelmetAddress,
-    amount: Amount,
-  });
-  if (Data) {
-    const RewardHelmetPrice = fromWei(Data.data.toTokenAmount);
+  let RewardPrice;
+  try {
+    const Data = await getTokenPrice({
+      fromTokenAddress: RewardAddress,
+      toTokenAddress: HelmetAddress,
+      amount: Amount,
+    });
+    RewardPrice = fromWei(Data.data.toTokenAmount);
+  } catch (error) {
+    let Price = await pancakeswapv2(
+      RewardAddress,
+      RewardSymbol,
+      RewardDecimals,
+      HelmetAddress,
+      "HELMET",
+      HelmetDecimals
+    );
+    RewardPrice = Price;
+  }
+  const RewardHelmetPrice = RewardPrice;
+
+  if (RewardHelmetPrice) {
     const PoolContracts = new Contract(PoolAddress, MiningABI);
     const StakeContracts = new Contract(StakeAddress, MiningABI);
     const HelmetContracts = new Contract(HelmetAddress, MiningABI);
@@ -522,7 +539,8 @@ export const getPoolAPR = async (PoolData) => {
       const Denominator =
         ((FixLptHelmetValue * 2) / FixTotalLptVolume) * FixTotalStakeVolume;
       const APR = fixD((Numerator / Denominator) * 100, 2);
-      return (PoolData.APR = APR + "%" || "--");
+      console.log(APR);
+      return (PoolData.APR = APR + "%");
     });
   } else {
     return "--";

@@ -10,6 +10,36 @@ import {
 } from "~/web3/index.js";
 export const PoolList = [
   {
+    Key: "BNB1000WAR",
+    PoolName: "<i>hWAR</i> Pool",
+    PoolDesc: "By BNB1000-Helmet LPT",
+    StakeSymbol: "BNB1000-Helmet LPT",
+    RewardSymbol: "hWAR",
+    OneLpSymbol: "BNB1000",
+    StartTime: "2021/11/18 00:00 UTC+8",
+    FinishTime: "2021/11/28 00:00 UTC+8",
+    PoolAddress: "0xc72F05e42f930Ea4Fb04153037d259cf5fA8d4C8",
+    StakeAddress: "0x6ab0dc257191fb57ced1ffc2aca5e112b0112274",
+    RewardAddress: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+    OneLpAddress: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+    StakeDecimals: 18,
+    RewardDecimals: 18,
+    SwapType: "PANCAKEV2",
+    TotalRewards: 60000,
+    PoolProcess: 10,
+    LeftShowToken: {
+      AddTokenSymbol: "BNB1000",
+      AddTokenAddress: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+      AddTokenDecimals: 13,
+    },
+    RightShowToken: {
+      AddTokenSymbol: "hWAR",
+      AddTokenAddress: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+      AddTokenDecimals: 18,
+    },
+    APR: "--",
+  },
+  {
     Key: "SHIBARGON",
     PoolName: "<i>hARGON</i> Pool",
     PoolDesc: "By SHIBh-Helmet LPT",
@@ -420,7 +450,6 @@ export const formatMiningPool = (PoolData) => {
     if (PoolStarted & !PoolFinished) {
       ItemPool.Status = 2;
       ItemPool.ShowTime = getShowTime(FixFinishTime);
-      ItemPool.APR = getPoolAPR(ItemPool);
     }
     if (PoolFinished) {
       ItemPool.Status = 3;
@@ -453,7 +482,10 @@ const getShowTime = (time) => {
   }
   return template;
 };
-const getPoolAPR = async (PoolData) => {
+export const getPoolAPR = async (PoolData) => {
+  if (PoolData.Status !== 2) {
+    return;
+  }
   const RewardAddress = PoolData.RewardAddress;
   const StakeAddress = PoolData.StakeAddress;
   const PoolAddress = PoolData.PoolAddress;

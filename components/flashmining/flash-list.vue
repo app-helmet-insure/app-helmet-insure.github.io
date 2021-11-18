@@ -208,7 +208,7 @@ import Wraper from "~/components/common/wraper.vue";
 import PHeader from "~/components/common/header.vue";
 import { fixD, addCommom } from "~/assets/js/util.js";
 import POOL from "./flash-pool.vue";
-import { PoolList, formatMiningPool } from "../../config/flash.js";
+import { PoolList, formatMiningPool, getPoolAPR } from "../../config/flash.js";
 export default {
   components: {
     POOL,
@@ -230,6 +230,9 @@ export default {
   },
   mounted() {
     this.FixPoolList = formatMiningPool(PoolList);
+    this.$nextTick(() => {
+      this.initPool();
+    });
   },
   computed: {
     storeThemes() {
@@ -237,6 +240,11 @@ export default {
     },
   },
   methods: {
+    initPool() {
+      PoolList.forEach(async (item) => {
+        await getPoolAPR(item);
+      });
+    },
     hadnleShowOnePager(e, earn) {
       if (e.target.tagName === "I") {
         this.$bus.$emit("OPEN_ONEPAGER", {

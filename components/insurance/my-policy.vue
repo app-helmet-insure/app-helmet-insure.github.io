@@ -360,7 +360,8 @@ export default {
             returnList = returnList.filter((filter) => filter.remain !== "0");
             this.$nextTick(async () => {
               const BNB1000policy = await this.BNB1000policy();
-              returnList.unshift(BNB1000policy);
+              const HWARpolicy = await this.HWARpolicy();
+              returnList.unshift(HWARpolicy, BNB1000policy);
             });
             returnList = returnList.sort(
               (a, b) => Number(b.BidID) - Number(a.BidID)
@@ -505,7 +506,6 @@ export default {
         });
     },
     async BNB1000policy() {
-      let Account = this.CurrentAccount.account;
       let Volume = await TokenBalance(
         "0x7aae192b83589784851a7df13c225fda2e3d87c5",
         13
@@ -514,7 +514,7 @@ export default {
       if (Volume != 0) {
         let resultItem;
         resultItem = {
-          BidID: 24,
+          BidID: "Airdrop",
           Type: "Call",
           Expiry: "1640966400",
           ShowExpiry: moment(new Date(1640966400 * 1000)).format(
@@ -539,6 +539,43 @@ export default {
           Premium: "Airdrop",
           Transfer: true,
           Sort: 1640966400 > nowDate ? 1 : 2,
+        };
+        return resultItem;
+      }
+    },
+    async HWARpolicy() {
+      let Volume = await TokenBalance(
+        "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f"
+      );
+      let nowDate = parseInt(moment.now() / 1000);
+      if (Volume != 0) {
+        let resultItem;
+        resultItem = {
+          BidID: "Airdrop",
+          Type: "Call",
+          Expiry: "1640966400",
+          ShowExpiry: moment(new Date(1638288000 * 1000)).format(
+            "YYYY/MM/DD HH:mm:ss"
+          ),
+          Long: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+          Short: "",
+          StrikePrice: "1000000000000000000",
+          ShowStrikePrice: "1",
+          CollateralAddress: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+          CollateralSymbol: "WAR",
+          CollateralDecimals: 18,
+          UnderlyingAddress: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          UnderlyingSymbol: "BUSD",
+          UnderlyingDecimals: 18,
+          CallToken: "WAR",
+          PutToken: "BUSD",
+          Status: 1638288000 > nowDate ? "Normal" : "Expired",
+          Volume: toWei(Volume),
+          ShowVolume: Volume,
+          ShowPrice: "Airdrop",
+          Premium: "Airdrop",
+          Transfer: true,
+          Sort: 1638288000 > nowDate ? 1 : 2,
         };
         return resultItem;
       }

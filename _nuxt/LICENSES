@@ -17,9 +17,6 @@
  */
 
 
-/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
-
-
 /*
 object-assign
 (c) Sindre Sorhus
@@ -127,6 +124,9 @@ object-assign
 //! moment.js
 
 //! moment.js locale configuration
+
+
+/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
 
 
 /*!

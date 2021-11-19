@@ -204,7 +204,7 @@ import {
   getCurrentInsurance,
   InsuranceTypeList,
 } from "../../config/insurance.js";
-import { getTokenPrice } from "../../interface/request.js";
+import { getTokenPrice, getWarPrice } from "../../interface/request.js";
 import { fromWei, toWei } from "../../web3/index.js";
 export default {
   components: {
@@ -234,12 +234,27 @@ export default {
         { Show: "NFT/GameFi", Type: "NFT" },
       ];
     },
+    CurrentAccount() {
+      return this.$store.state.userInfo;
+    },
   },
-  mounted() {
-    this.formatInsuranceData();
-    this.InsuanceData = InsuranceTypeList;
+  watch: {
+    CurrentAccount: {
+      handler: "reloadData",
+      immediate: true,
+    },
   },
+  mounted() {},
   methods: {
+    reloadData(Value) {
+      if (Value) {
+        this.isLogin = Value.isLogin;
+        this.$nextTick(() => {
+          this.formatInsuranceData();
+          this.InsuanceData = InsuranceTypeList;
+        });
+      }
+    },
     handleClickFilter(data) {
       this.CurrentFilterType = data.Type;
       if (data.Type === "ALL") {
@@ -250,15 +265,23 @@ export default {
         );
       }
     },
-    formatInsuranceData() {
+    async formatInsuranceData() {
+      let Amount = toWei("1");
+      const BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+      const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
+      let BnbUsdtPrice, TokenUsdtPrice;
+      let Data = await getTokenPrice({
+        fromTokenAddress: BNB,
+        toTokenAddress: BUSD,
+        amount: Amount,
+      });
+      BnbUsdtPrice = fromWei(Data.data.toTokenAmount);
       InsuranceTypeList.map(async (Item) => {
         if (!Item.Ads) {
           let CurrentInsurance = getCurrentInsurance({
             Type: "Call",
             Insurance: Item.InsuranceName,
           });
-          const BUSD = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
-          const BNB = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
           const {
             CollateralAddress,
             CollateralDecimals,
@@ -266,20 +289,18 @@ export default {
             UnderlyingDecimals,
             InsuranceName,
           } = CurrentInsurance;
-          let Amount = toWei("1");
           let Amount1 = toWei("1", CollateralDecimals);
-          let Data = await getTokenPrice({
-            fromTokenAddress: BNB,
-            toTokenAddress: BUSD,
-            amount: Amount,
-          });
-          let Data1 = await getTokenPrice({
-            fromTokenAddress: CollateralAddress,
-            toTokenAddress: BUSD,
-            amount: Amount1,
-          });
-          let BnbUsdtPrice = fromWei(Data.data.toTokenAmount);
-          let TokenUsdtPrice = fromWei(Data1.data.toTokenAmount);
+          if (!Item.NoLiquidity) {
+            let Data1 = await getTokenPrice({
+              fromTokenAddress: CollateralAddress,
+              toTokenAddress: BUSD,
+              amount: Amount1,
+            });
+            TokenUsdtPrice = fromWei(Data1.data.toTokenAmount);
+          } else {
+            let Data1 = await getWarPrice();
+            TokenUsdtPrice = Data1;
+          }
           const LastPrice =
             InsuranceName === "WBNB"
               ? BnbUsdtPrice

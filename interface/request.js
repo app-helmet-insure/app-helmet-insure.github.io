@@ -259,3 +259,16 @@ export const migrateRegister = () => {
     console.log("migrateRegister", "Error", error);
   }
 };
+export const getWarPrice = () => {
+  try {
+    return Axios({
+      method: "get",
+      url: "https://api.westarter.org/v1/project/token",
+      params: {
+        address: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+      },
+    }).then((res) => {
+      return res.data.data.price;
+    });
+  } catch (error) {}
+};

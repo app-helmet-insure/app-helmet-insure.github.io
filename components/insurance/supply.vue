@@ -239,7 +239,7 @@ import { fixD } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { getContract } from "../../web3/index.js";
 import { fromWei, toWei } from "~/web3/index.js";
-import { getTokenPrice } from "~/interface/request.js";
+import { getTokenPrice, getWarPrice } from "~/interface/request.js";
 import OrderABI from "~/web3/abis/OrderABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
@@ -477,27 +477,40 @@ export default {
       const PutCollateralDecimals = PutInsurance.CollateralDecimals;
       const PutCollateralSymbol = PutInsurance.CollateralSymbol;
       const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
+      const BusdAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56";
       let PutAmount = toWei("1", PutCollateralDecimals);
-      let CallData;
-      if (CallCollateralSymbol === "HELMET") {
-        CallData = "1";
-      } else {
-        CallData = await getTokenPrice({
+      let CallData, PutData, CallUsdtPrice, PutUsdtPrice;
+      let HelmetUsdtPrice = await getTokenPrice({
+        fromTokenAddress: HelmetAddress,
+        toTokenAddress: BusdAddress,
+        amount: CallAmount,
+      });
+      HelmetUsdtPrice = fromWei(HelmetUsdtPrice.data.toTokenAmount);
+      if (!this.ActiveData.NoLiquidity) {
+        let TokenUsdtPrice = await getTokenPrice({
           fromTokenAddress: CallCollateralAddress,
-          toTokenAddress: HelmetAddress,
+          toTokenAddress: BusdAddress,
           amount: CallAmount,
         });
+        CallUsdtPrice = fromWei(TokenUsdtPrice.data.toTokenAmount);
+      } else {
+        CallUsdtPrice = await getWarPrice();
       }
-      let PutData = await getTokenPrice({
-        fromTokenAddress: PutCollateralAddress,
-        toTokenAddress: HelmetAddress,
-        amount: PutAmount,
-      });
+      if (!this.ActiveData.NoLiquidity) {
+        let TokenUsdtPrice = await getTokenPrice({
+          fromTokenAddress: PutCollateralAddress,
+          toTokenAddress: BusdAddress,
+          amount: PutAmount,
+        });
+        PutUsdtPrice = fromWei(TokenUsdtPrice.data.toTokenAmount);
+      } else {
+        PutUsdtPrice = await getWarPrice();
+      }
+      CallData = CallUsdtPrice / HelmetUsdtPrice;
+      PutData = PutUsdtPrice / HelmetUsdtPrice;
       this.CallTokenToHelmetPrice =
-        CallCollateralSymbol === "HELMET"
-          ? "1"
-          : fromWei(CallData.data.toTokenAmount);
-      this.PutTokenToHelmetPrice = fromWei(PutData.data.toTokenAmount);
+        CallCollateralSymbol === "HELMET" ? "1" : CallData;
+      this.PutTokenToHelmetPrice = PutData;
     },
     getApproveStatus() {
       let CallInsurance = getCurrentInsurance({

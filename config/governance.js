@@ -109,6 +109,9 @@ const getShowTime = (time) => {
   return template;
 };
 export const getPoolAPY = (PoolData) => {
+  if (!PoolData.Status != 2) {
+    return (PoolData.APR = "--");
+  }
   const { PoolAddress } = PoolData;
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";

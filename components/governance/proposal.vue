@@ -254,7 +254,7 @@ export default {
             ShowProposalID: ShowID,
           });
         });
-        this.GovernanceTxList = FixList;
+        this.GovernanceTxList = FixList
       });
     },
     getProposalStatus(ID) {

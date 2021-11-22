@@ -113,6 +113,14 @@ export const getContract = (abi, address) => {
   );
   return new web3.eth.Contract(abi, address);
 };
+export const getBlockNumber = () => {
+  const web3 = new Web3(
+    window.ethereum ||
+      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+  );
+  let blockNumber = new web3.eth.getBlockNumber();
+  return blockNumber;
+};
 export const HelmetBalance = () => {
   const Helmet = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const Contracts = getContract(MiningABI, Helmet);

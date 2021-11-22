@@ -11,7 +11,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanDeposite)"
-            :duration="2000"
+            :duration="1000"
             :decimals="8"
           />
           <span v-else>--</span>
@@ -49,7 +49,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -63,7 +63,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -116,7 +116,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanWithdraw)"
-            :duration="2000"
+            :duration="1000"
             :decimals="8"
           />
           <span v-else>--</span>
@@ -154,7 +154,7 @@
                 v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(CanClaim)"
-                :duration="2000"
+                :duration="1000"
                 :decimals="8"
               />
               <span v-else>--</span>
@@ -260,10 +260,17 @@ export default {
     CurrentAccount() {
       return this.$store.state.userInfo;
     },
+    BlockNumber() {
+      return this.$store.state.blockNumber;
+    },
   },
   watch: {
     CurrentAccount: {
       handler: "reloadData",
+      immediate: true,
+    },
+    BlockNumber: {
+      handler: "watchBlockNumber",
       immediate: true,
     },
   },
@@ -275,6 +282,11 @@ export default {
         this.$nextTick(() => {
           this.getPoolInfo();
         });
+      }
+    },
+    watchBlockNumber(Value) {
+      if (Value) {
+        this.getPoolInfo();
       }
     },
     waitingClose() {

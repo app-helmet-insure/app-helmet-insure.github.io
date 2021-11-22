@@ -45,6 +45,7 @@ export const state = () => ({
   },
   walletType: "",
   refreshNumber: 1,
+  blockNumber: 0,
 });
 
 export const mutations = {
@@ -63,17 +64,20 @@ export const mutations = {
     state.walletType = data;
   },
   SET_USER_INFO(state, data) {
-    const mockAccount = sessionStorage.getItem('helmet_mock_account')
+    const mockAccount = sessionStorage.getItem("helmet_mock_account");
     if (Web3.utils.isAddress(mockAccount)) {
       Object.assign(data, {
-        account: mockAccount
-      })
+        account: mockAccount,
+      });
     }
     state.userInfo = data;
   },
   SET_REFRESH_DATA(state) {
     let newNumber = state.refreshNumber + 1;
     state.refreshNumber = newNumber;
+  },
+  SET_BOLCK_NUMBER(state, data) {
+    state.blockNumber = data;
   },
 };
 export const actions = {
@@ -96,5 +100,8 @@ export const actions = {
   },
   refreshData({ commit }) {
     commit("SET_REFRESH_DATA");
+  },
+  setBlockNumber({ commit }, data) {
+    commit("SET_BOLCK_NUMBER", data);
   },
 };

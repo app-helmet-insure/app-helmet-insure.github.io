@@ -1512,7 +1512,6 @@ export const getLptAPR = async (PoolData) => {
         : 0;
       const FixReward1Time = HaveReward1 ? Reward1Time / 86400 : 0;
       // ------------------------------------------ //
-      console.log(FixTotalReward1, FixOutPutReward1, FixReward1Time, PoolData);
       const Reward1Daily = HaveReward1
         ? (FixTotalReward1 - FixOutPutReward1) / FixReward1Time
         : 0;
@@ -1557,10 +1556,8 @@ export const getAPRAndAPY = async (PoolData) => {
     const FixTotalReward = fromWei(TotalReward, Reward1Decimals);
     const FixOutPutReward = fromWei(OutPutReward, Reward1Decimals);
     const FixRewardTime = (RewardTime - Date.now() / 1000) / 86400;
-    console.log(FixTotalReward, FixOutPutReward, FixRewardTime);
     const RewardDaily = (FixTotalReward - FixOutPutReward) / FixRewardTime;
     const RewardValues = 1 + RewardDaily / FixTotalStakeVolume;
-    console.log(RewardDaily);
     const APR = fixD((RewardDaily / FixTotalStakeVolume) * 365 * 100, 2) + "%";
     const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
     return (PoolData.APR = APR), (PoolData.APY = APY);

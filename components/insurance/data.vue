@@ -45,7 +45,7 @@
                 $<countTo
                   :startVal="Number(0)"
                   :endVal="Number(TotalHelmetsBorrowedVolume)"
-                  :duration="2000"
+                  :duration="1000"
                   :decimals="0"
                 />
               </template>

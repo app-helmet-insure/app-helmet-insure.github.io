@@ -131,12 +131,10 @@ export const getPoolAPY = (PoolData) => {
     TotalStakeVolume = fromWei(TotalStakeVolume);
     PoolProcess = PoolProcess / 86400;
     const DailyReward = TotalRewards / PoolProcess;
-    console.log(DailyReward);
     const RewardValues = 1 + DailyReward / TotalStakeVolume;
     const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
     const APY =
       new BigNumber(Math.pow(RewardValues, 365) * 100).toFixed(2) + "%";
-    console.log(APY, APR, "#########################");
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };

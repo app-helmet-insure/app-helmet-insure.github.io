@@ -478,7 +478,6 @@ export default {
       }
     },
     actionWithDraw(data) {
-      console.log(data);
       let Account = this.CurrentAccount.account;
       const ContractAddress = data.Transfer ? data.Long : OrderAddress;
       let Contracts = getContract(OrderABI, ContractAddress);

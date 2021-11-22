@@ -458,7 +458,6 @@ export const formatMiningPool = (PoolData) => {
       ItemPool.ShowTime = "Finished";
     }
   }
-  console.log(PoolData);
   return PoolData;
 };
 const getShowTime = (time) => {

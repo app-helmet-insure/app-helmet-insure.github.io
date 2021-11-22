@@ -11,7 +11,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanDeposite)"
-            :duration="2000"
+            :duration="1000"
             :decimals="4"
           />
           <span v-else>--</span>
@@ -70,7 +70,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -84,7 +84,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -149,7 +149,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanWithdraw)"
-            :duration="2000"
+            :duration="1000"
             :decimals="4"
           />
           <span v-else>--</span>
@@ -186,7 +186,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim1)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -203,7 +203,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim2)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -289,6 +289,7 @@ import {
   fromWei,
   toWei,
   getContract,
+  getBlockNumber,
 } from "~/web3/index.js";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
@@ -324,14 +325,20 @@ export default {
     CurrentAccount() {
       return this.$store.state.userInfo;
     },
+    BlockNumber() {
+      return this.$store.state.blockNumber;
+    },
   },
   watch: {
     CurrentAccount: {
       handler: "reloadData",
       immediate: true,
     },
+    BlockNumber: {
+      handler: "watchBlockNumber",
+      immediate: true,
+    },
   },
-
   methods: {
     reloadData(Value) {
       if (Value) {
@@ -339,6 +346,11 @@ export default {
         this.$nextTick(() => {
           this.getPoolInfo();
         });
+      }
+    },
+    watchBlockNumber(Value) {
+      if (Value) {
+        this.getPoolInfo();
       }
     },
     waitingClose() {

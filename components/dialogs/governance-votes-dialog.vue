@@ -15,7 +15,7 @@
           v-if="isLogin"
           :startVal="Number(0)"
           :endVal="Number(CanDeposite)"
-          :duration="2000"
+          :duration="1000"
           :decimals="4"
         />
         <span v-else>--</span>

@@ -77,7 +77,7 @@ import {
   watchNetWorkChange,
   getNetworkChainID,
 } from "../web3/wallet.js";
-import { CHAIN_ID_LOCALHOST, WEB3 } from "../web3/index.js";
+import { CHAIN_ID_LOCALHOST, getBlockNumber, WEB3 } from "../web3/index.js";
 import BuyHelmetDialog from "../components/dialogs/buy-helmet-dialog.vue";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
@@ -144,6 +144,10 @@ export default {
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
+    this.BolckNumberTimer = setInterval(async () => {
+      let BolckNumber = await getBlockNumber();
+      this.$store.dispatch("setBlockNumber", BolckNumber);
+    }, 8000);
     this.$bus.$on("OpenAirdropDialogs", () => {
       this.AirdropVisible = true;
     });
@@ -165,6 +169,9 @@ export default {
     await openMetaMaskWallet();
     watchAccountChange();
     watchNetWorkChange();
+  },
+  destroyed() {
+    clearInterval(this.BolckNumberTimer);
   },
   methods: {
     NetWorkClose() {

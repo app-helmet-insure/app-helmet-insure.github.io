@@ -40,7 +40,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -81,7 +81,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -95,7 +95,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -115,7 +115,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(ActiveData.Status === 3 ? CanWithdraw : 0)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -129,7 +129,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(ActiveData.Status === 3 ? 0 : CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -180,7 +180,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim1)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -197,7 +197,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim2)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -276,6 +276,9 @@ export default {
     CurrentAccount() {
       return this.$store.state.userInfo;
     },
+    BlockNumber() {
+      return this.$store.state.blockNumber;
+    },
     GovernanceList() {
       return [
         {
@@ -298,9 +301,18 @@ export default {
       handler: "reloadData",
       immediate: true,
     },
+    BlockNumber: {
+      handler: "watchBlockNumber",
+      immediate: true,
+    },
   },
 
   methods: {
+    watchBlockNumber(Value) {
+      if (Value) {
+        this.getPoolInfo();
+      }
+    },
     reloadData(Value) {
       if (Value) {
         this.isLogin = Value.isLogin;

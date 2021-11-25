@@ -1,6 +1,7 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
+      <div class="swiper-slide thanks"><div></div></div>
       <div class="swiper-slide hwarpool"><div></div></div>
       <div class="swiper-slide vote"><div></div></div>
       <div class="swiper-slide bnb1000"><div></div></div>
@@ -137,6 +138,12 @@ export default {
         background-position: center;
       }
     }
+    .thanks {
+      background: #ffc084;
+      > div {
+        background-image: url("../../assets/img/banner/thanks_web.png");
+      }
+    }
     .hwarpool {
       background: #ffb5c0;
       > div {
@@ -214,6 +221,12 @@ export default {
         background-repeat: no-repeat;
         background-size: 100% 100%;
         background-position: center;
+      }
+    }
+    .thanks {
+      background: #ffc084;
+      > div {
+        background-image: url("../../assets/img/banner/thanks_h5.png");
       }
     }
     .hwarpool {

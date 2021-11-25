@@ -82,7 +82,14 @@ module.exports = {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios", "@nuxtjs/proxy"],
+  modules: [
+    "@nuxtjs/axios",
+    "@nuxtjs/proxy",
+    ["@nuxtjs/google-analytics", { ua: "G-K2S14J9BGX" }],
+  ],
+  googleAnalytics: {
+    id: 'G-K2S14J9BGX',
+  },
   axios: {
     proxy: true,
   },

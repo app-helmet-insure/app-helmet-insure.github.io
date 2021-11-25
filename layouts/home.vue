@@ -63,6 +63,8 @@
     />
   </div>
 </template>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K2S14J9BGX"></script>
 <script>
 import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
@@ -140,6 +142,15 @@ export default {
     if (!window.localStorage.getItem("readRisk")) {
       this.RiskVisible = true;
     }
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      console.log(1)
+      dataLayer.push(arguments);
+      console.log(window)
+    }
+    gtag("js", new Date());
+    gtag("config", "G-K2S14J9BGX");
+
     this.copy();
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();

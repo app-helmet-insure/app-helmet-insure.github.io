@@ -140,6 +140,13 @@ export default {
     if (!window.localStorage.getItem("readRisk")) {
       this.RiskVisible = true;
     }
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-K2S14J9BGX");
     this.copy();
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();

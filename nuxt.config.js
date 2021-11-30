@@ -40,6 +40,7 @@ module.exports = {
     script: [
       {
         src: "//at.alicdn.com/t/font_2755515_a2mvnfdv61q.js",
+        src: "https://www.googletagmanager.com/gtag/js?id=G-K2S14J9BGX",
       },
       // {
       //   src: "/js/iconfont.js"
@@ -85,11 +86,11 @@ module.exports = {
   modules: [
     "@nuxtjs/axios",
     "@nuxtjs/proxy",
-    ["@nuxtjs/google-analytics", { ua: "G-K2S14J9BGX" }],
+    // ["@nuxtjs/google-analytics", { ua: "G-K2S14J9BGX" }],
   ],
-  googleAnalytics: {
-    id: 'G-K2S14J9BGX',
-  },
+  // googleAnalytics: {
+  //   id: "G-K2S14J9BGX",
+  // },
   axios: {
     proxy: true,
   },

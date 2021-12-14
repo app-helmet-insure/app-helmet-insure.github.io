@@ -2,7 +2,7 @@
   <div class="main_container">
     <MiningTitle></MiningTitle>
     <div class="mining_container">
-      <Governance />
+      <!-- <Governance /> -->
       <LptMining />
       <TokenMinig />
       <Onepager></Onepager>

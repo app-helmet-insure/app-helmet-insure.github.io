@@ -271,58 +271,7 @@ export const LptPoolList = [
     JumpLink1:
       "<a href='https://dex.cafeswap.finance/#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='cafeswap'></i>Get HELMET-BNB CAFE LP</a>",
   },
-  {
-    StakeABI: MiningABI,
-    PoolABI: XmsPoolABI,
-    ProxyABI: XmsPoolABI,
-    StakeMethods: "deposit",
-    WithDrawMethods: "withdraw",
-    CanWithDrawMethods: "userInfo",
-    CanClaim1Methods: "pendingXMS",
-    CanClaim2Methods: "pendingXMS",
-    PerBlockMethods: "xmsPerBlock",
 
-    ExitMethods: "withdraw",
-    PoolName: `HELMET-BNB MLP`,
-    PoolSwap: "xms",
-    PoolType: "lpt",
-    PoolAddress: "0xc7B8285a9E099e8c21CA5516D23348D8dBADdE4a",
-    ProxyPid: "2",
-    ProxySwap: "XMS",
-    ProxyAddress: "0xc7B8285a9E099e8c21CA5516D23348D8dBADdE4a",
-    StakeUnit: "MLP",
-    StakeDecimals: 18,
-    StakeSymbol: "HELMET-BNB MLP",
-    StakeAddress: "0x2dd0c55bd1ad840cd73da3abd420b3199312e7d4",
-    StartTime: "Ongoing",
-    FinishTime: "Mining",
-    LptToken1Decimals: 18,
-    LptToken1Symbol: "HELMET",
-    LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-    LptToken2Decimals: 18,
-    LptToken2Symbol: "XMS",
-    LptToken2Address: "0x7859b01bbf675d67da8cd128a50d155cd881b576",
-    RewardVolume: "one",
-    RewardSymbol: "xms",
-    HaveReward1: false,
-    Reward1Decimals: 18,
-    Reward1Symbol: "HELMET",
-    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-    HaveReward2: true,
-    Reward2Decimals: 18,
-    Reward2Symbol: "XMS",
-    Reward2Address: "0x7859b01bbf675d67da8cd128a50d155cd881b576",
-    ImgReward: true,
-    IsCombo: false,
-    IsIIO: false,
-    NoProxy: true,
-    HaveOnePager: false,
-    YearEarnType: "APR",
-    Only: true,
-    Tips1: true,
-    JumpLink1:
-      "<a href='https://app.marsecosystem.com/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='xms'></i>Get HELMET-BNB MLP</a>",
-  },
   {
     PoolName: `GUARD-USDC LPT`,
     PoolSwap: "quick",
@@ -334,7 +283,7 @@ export const LptPoolList = [
     StartTime: "Ongoing",
     FinishTime: "Mining",
     YearEarnType: "APR",
-    APR: "305.78%",
+    APR: "152.92%",
     PoolType: "link",
     PoolImg: "polygon_link",
     BtnText: "Mining on Polygon",
@@ -375,7 +324,8 @@ export const TokenPoolList = [
     CanClaim1Methods: "earned",
     CanClaim2Methods: "earned2",
     ExitMethods: "exit",
-
+    StartTime: "Ongoing",
+    FinishTime: "Mining",
     Key: "HELMET",
     PoolName: "HELMET POOL",
     StakeSymbol: "HELMET",
@@ -383,8 +333,6 @@ export const TokenPoolList = [
     RewardVolume: "one",
     RewardSymbol: "helmet",
     ImgReward: true,
-    StartTime: "Ongoing",
-    FinishTime: "Mining",
     IsCombo: false,
     Flash: false,
     YearEarnType: "APR",
@@ -401,6 +349,94 @@ export const TokenPoolList = [
     DailyReward: 22471,
     APR: "--",
     APY: "--",
+  },
+  {
+    Key: "GOVERNANCE",
+    StakeABI: GovernanceABI,
+    PoolABI: GovernanceABI,
+    StakeMethods: "stakeAndVote",
+    WithDrawMethods: "getReward",
+    CanWithDrawMethods: "balanceOf",
+    CanClaim1Methods: "earned",
+    // CanClaim2Methods: "earned2",
+    RewardPerMethods: "rewardPerToken",
+    ExitMethods: "exit",
+    Router: "link1",
+    StartTime: "2021/11/02 00:00 UTC+8",
+    FinishTime: "2021/11/22 00:00 UTC+8",
+    PropoaslID: 1,
+    PoolName: "Helmet Mining & Vote",
+    PoolAddress: "0x4E18F9Ed49ad3d3fDdadE4d1464ED71133AA1EAC",
+    PoolType: "compound",
+    StakeUnit: "HELMET",
+    StakeDecimals: 18,
+    StakeSymbol: "HELMET",
+    StakeAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    RewardSymbol: "helmet",
+    RewardVolume: "one",
+    HaveReward1: true,
+    Reward1Decimals: 18,
+    Reward1Symbol: "HELMET",
+    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    Compound: true,
+    ImgReward: true,
+    NoProxy: false,
+    YearEarnType: "APY",
+    APR: "--",
+    APY: "--",
+  },
+  {
+    Key: "LPTXMS",
+    StakeABI: MiningABI,
+    PoolABI: XmsPoolABI,
+    ProxyABI: XmsPoolABI,
+    StakeMethods: "deposit",
+    WithDrawMethods: "withdraw",
+    CanWithDrawMethods: "userInfo",
+    CanClaim1Methods: "pendingXMS",
+    CanClaim2Methods: "pendingXMS",
+    PerBlockMethods: "xmsPerBlock",
+    ExitMethods: "withdraw",
+    PoolName: `HELMET-BNB MLP`,
+    PoolSwap: "xms",
+    PoolType: "lpt",
+    PoolAddress: "0xc7B8285a9E099e8c21CA5516D23348D8dBADdE4a",
+    ProxyPid: "2",
+    ProxySwap: "XMS",
+    ProxyAddress: "0xc7B8285a9E099e8c21CA5516D23348D8dBADdE4a",
+    StakeUnit: "MLP",
+    StakeDecimals: 18,
+    StakeSymbol: "HELMET-BNB MLP",
+    StakeAddress: "0x2dd0c55bd1ad840cd73da3abd420b3199312e7d4",
+    StartTime: "Ongoing",
+    FinishTime: "2021/10/21 01:00 UTC+8",
+    LptToken1Decimals: 18,
+    LptToken1Symbol: "HELMET",
+    LptToken1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    LptToken2Decimals: 18,
+    LptToken2Symbol: "XMS",
+    LptToken2Address: "0x7859b01bbf675d67da8cd128a50d155cd881b576",
+    RewardVolume: "one",
+    RewardSymbol: "xms",
+    HaveReward1: false,
+    Reward1Decimals: 18,
+    Reward1Symbol: "HELMET",
+    Reward1Address: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+    HaveReward2: true,
+    Reward2Decimals: 18,
+    Reward2Symbol: "XMS",
+    Reward2Address: "0x7859b01bbf675d67da8cd128a50d155cd881b576",
+    ImgReward: true,
+    IsCombo: false,
+    IsIIO: false,
+    NoProxy: true,
+    HaveOnePager: false,
+    YearEarnType: "APR",
+    Only: true,
+    Tips1: true,
+    APR: "--",
+    JumpLink1:
+      "<a href='https://app.marsecosystem.com/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='xms'></i>Get HELMET-BNB MLP</a>",
   },
   {
     Key: "LPTBABY",
@@ -1346,6 +1382,7 @@ const getShowTime = (time) => {
   return template;
 };
 export const getComboAPR = async (PoolData) => {
+
   if (PoolData.Status !== 2) {
     return;
   }
@@ -1447,7 +1484,7 @@ export const getLptAPR = async (PoolData) => {
   const Amount2 = toWei("1", Reward2Decimals);
   const web3 = new Web3(
     window.ethereum ||
-      new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+    new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
   );
   const BlockNumber = await new web3.eth.getBlockNumber();
   const Data1 = await getTokenPrice({
@@ -1537,6 +1574,9 @@ export const getLptAPR = async (PoolData) => {
   }
 };
 export const getAPRAndAPY = async (PoolData) => {
+  if (PoolData.Status === 3) {
+    return;
+  }
   let { PoolAddress, StakeDecimals, Reward1Decimals } = PoolData;
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
@@ -1601,7 +1641,7 @@ export const getCandyAPR = async (PoolData) => {
       fixD(
         ((DailyReward * 365 * Reward1UsdtPrice) /
           (FixTotalStakeVolume * HelmetUsdtPrice)) *
-          100,
+        100,
         2
       ) + "%";
     return (PoolData.APR = APR);

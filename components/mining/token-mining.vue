@@ -1,7 +1,7 @@
 <template>
   <div class="mining_list">
     <div v-for="item in FixPoolList" :key="item.Key">
-      <div class="finshed_line" v-if="item.Key == 'LPTBABY'">
+      <div class="finshed_line" v-if="item.Key == 'GOVERNANCE'">
         <p></p>
         <i :class="storeThemes + '_star'"></i>
         <span>Finished</span>
@@ -78,15 +78,10 @@
               <span>
                 <img
                   v-if="item.ImgReward"
-                  :src="
-                    require(`~/assets/img/mining/${
-                      item.Status === 3
-                        ? item.RewardSymbol + '_expired'
-                        : item.RewardSymbol
-                    }.png`)
-                  "
+                  :src="require(`~/assets/img/mining/${item.RewardSymbol}.png`)"
                   :class="item.RewardVolume"
                   alt=""
+                  :style="item.Status === 3 ? 'filter: grayscale(1);' : ''"
                 />
                 <template v-else style="color: #17173a">{{
                   item.RewardSymbol
@@ -174,15 +169,10 @@
               <span>
                 <img
                   v-if="item.ImgReward"
-                  :src="
-                    require(`~/assets/img/mining/${
-                      item.Status === 3
-                        ? item.RewardSymbol + '_expired'
-                        : item.RewardSymbol
-                    }.png`)
-                  "
+                  :src="require(`~/assets/img/mining/${item.RewardSymbol}.png`)"
                   :class="item.RewardVolume"
                   alt=""
+                  :style="item.Status === 3 ? 'filter: grayscale(1);' : ''"
                 />
                 <template v-else style="color: #17173a">{{
                   item.RewardSymbol

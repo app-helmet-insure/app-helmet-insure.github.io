@@ -40,8 +40,10 @@ module.exports = {
     script: [
       {
         src: "//at.alicdn.com/t/font_2755515_a2mvnfdv61q.js",
-        src: "https://www.googletagmanager.com/gtag/js?id=G-K2S14J9BGX",
       },
+      {
+        src: "https://www.googletagmanager.com/gtag/js?id=G-K2S14J9BGX",
+      }
       // {
       //   src: "/js/iconfont.js"
       // },
@@ -109,7 +111,7 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) { },
     transpile: [/^element-ui/],
   },
   generate: {

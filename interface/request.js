@@ -219,7 +219,7 @@ export const getTokenPrice = (data) => {
   }
   return Axios({
     method: "get",
-    url: "https://api.1inch.exchange/v3.0/56/quote",
+    url: "https://api.1inch.io/v4.0/56/quote",
     params: { ...data },
   }).then((res) => {
     return res;

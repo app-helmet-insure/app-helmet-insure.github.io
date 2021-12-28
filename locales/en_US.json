@@ -12,7 +12,8 @@
     "GuideBook": "Paper&Guide",
     "Medium": "Medium",
     "ConnectWrong": "Wrong Network",
-    "ConnectWallet": "CONNECT WALLET"
+    "ConnectWallet": "CONNECT WALLET",
+    "Dashboard" : "Dashboard"
   },
   "SwapHelmet": {
     "BuyHelmet": "Buy Helmet",

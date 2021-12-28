@@ -17,6 +17,19 @@
       <div class="top_slider">
         <div class="menu">
           <div class="menu_group">
+
+            <div class="menu_item">
+              <nuxt-link
+                  to="/dashboard"
+                  :class="routeObj.name === 'dashboard' ? 'active' : ''"
+              >
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-ibo"></use>
+                </svg>
+                {{ $t("Header.Dashboard") }}
+              </nuxt-link>
+            </div>
+
             <div class="menu_item">
               <a
                 @click="sliderClick"

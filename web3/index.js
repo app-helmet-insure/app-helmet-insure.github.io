@@ -4,6 +4,7 @@ import { cloneDeep } from "lodash";
 import { JsonRpcProvider, Http } from "@ethersproject/providers";
 import { Provider, setMulticallAddress } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
+import {ChainId, RPC_URLS} from "./address";
 export const BSCChainId = 56;
 export const BSCRpcUrl = "https://bsc-dataseed.binance.org/";
 const MATICChainId = 137;
@@ -74,6 +75,10 @@ export const getMultiCallProvider = (provider, chainId) => {
 };
 export const getOnlyMultiCallProvider = () =>
   new Provider(new JsonRpcProvider(BSCRpcUrl, BSCChainId), BSCChainId);
+
+let _PROVIDER = {}
+export const getOnlyMultiCallProviderPlus = (chainId) => _PROVIDER[chainId] || (_PROVIDER[chainId] = getMultiCallProvider(new JsonRpcProvider(RPC_URLS(chainId), chainId), chainId))
+
 
 export const getPolygonMultiCallProvider = () =>
   getMultiCallProvider(

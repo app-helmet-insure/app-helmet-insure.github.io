@@ -12,7 +12,8 @@
     "GuideBook": "使用指南",
     "Medium": "博客",
     "ConnectWrong": "网络错误",
-    "ConnectWallet": "连接钱包"
+    "ConnectWallet": "连接钱包",
+    "Dashboard" : "仪表盘"
   },
   "SwapHelmet": {
     "BuyHelmet": "购买HELMET",

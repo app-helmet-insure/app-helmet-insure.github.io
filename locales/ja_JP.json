@@ -12,7 +12,8 @@
     "GuideBook": "説明書",
     "Medium": "Medium",
     "ConnectWrong": "接続エラー",
-    "ConnectWallet": "ウォレット接続"
+    "ConnectWallet": "ウォレット接続",
+    "Dashboard" : "ダッシュボード"
   },"SwapHelmet": {
     "BuyHelmet": "Buy Helmet",
     "ExEarn": "Estimated",

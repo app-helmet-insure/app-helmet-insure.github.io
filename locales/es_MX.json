@@ -12,7 +12,8 @@
     "GuideBook": "Paper&Guide",
     "Medium": "Medium",
     "ConnectWrong": "Red Equivocada",
-    "ConnectWallet": "CONECTAR WALLET"
+    "ConnectWallet": "CONECTAR WALLET",
+    "Dashboard" : "Tablero de mandos"
   },
   "SwapHelmet": {
     "BuyHelmet": "Buy Helmet",

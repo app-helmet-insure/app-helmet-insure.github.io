@@ -12,7 +12,8 @@
     "GuideBook": "사용지침서",
     "Medium": "블로그",
     "ConnectWrong": "잘못된 네트워크",
-    "ConnectWallet": "연결된 지갑"
+    "ConnectWallet": "연결된 지갑",
+    "Dashboard" : "대시보드"
   },
   "SwapHelmet": {
     "BuyHelmet": "Buy Helmet",

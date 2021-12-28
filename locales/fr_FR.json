@@ -12,7 +12,8 @@
         "GuideBook": "Papier&Guide",
         "Medium": "Medium",
         "ConnectWrong": "Mauvais réseau",
-        "ConnectWallet": "CONNECTER LE PORTEFEUILLE"
+        "ConnectWallet": "CONNECTER LE PORTEFEUILLE",
+        "Dashboard" : "Tableau de bord"
     },
     "SwapHelmet": {
         "BuyHelmet": "Buy Helmet",

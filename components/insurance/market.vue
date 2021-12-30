@@ -164,7 +164,7 @@
 <script>
 import { fixD } from "~/assets/js/util.js";
 import Chart from "./chart";
-import { getInsuranceList } from "~/interface/event.js";
+import { getInsuranceList } from "~/interface/request.js";
 import OrderABI from "~/web3/abis/OrderABI.json";
 import { getContract, toWei, fromWei } from "../../web3/index.js";
 import BigNumber from "bignumber.js";

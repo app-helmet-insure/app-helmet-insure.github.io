@@ -1,6 +1,5 @@
 <template>
   <el-dialog
-    top="35vh"
     :title="$t('SwapHelmet.BuyHelmet')"
     footer
     append-to-body
@@ -104,7 +103,7 @@
 <script>
 import tokenList from "~/config/tokenlist.json";
 import VueLazyload from "vue-lazyload";
-import { buyHelmetOptions } from "~/interface/event.js";
+import { buyHelmetOptions } from "~/interface/request.js";
 import { fixD, autoRounding, toRounding } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";

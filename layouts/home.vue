@@ -28,6 +28,7 @@
         :class="[
           'content_wrap',
           routeObj.name.includes('governance') ? 'governance' : '',
+          routeObj.name.includes('dashboard') ? 'dashboard' : '',
         ]"
       >
         <PHeader :account="true" />
@@ -39,15 +40,16 @@
       </div>
     </div>
     <!-- <PFooter :padding="200"></PFooter> -->
-    <!-- 下载钱包指引界面 -->
-    <WallectDownLoad />
     <!-- 钱包交互状态提示弹框 -->
     <StatusDialog
       v-if="showStatusDialog"
       :data="statusData"
       @close="closeStatusDialog"
     />
-    <Airdrop />
+    <AirdropDialog
+      :DialogVisible="AirdropVisible"
+      :DialogClose="airdropClose"
+    />
     <BuyHelmetDialog
       :DialogVisible="BuyHelmetVisible"
       :DialogClose="BuyHelmetClose"
@@ -66,9 +68,8 @@
 import PHeader from "~/components/common/header.vue";
 import PFooter from "~/components/common/footer.vue";
 import PSlider from "~/components/common/slider.vue";
-import Airdrop from "~/components/common/airdrop.vue";
+import AirdropDialog from "~/components/dialogs/airdrop-dialog.vue";
 import StatusDialog from "~/components/common/status-dialog.vue";
-import WallectDownLoad from "~/components/common/wallet-download.vue";
 import Message from "~/components/common/Message";
 import ClipboardJS from "clipboard";
 import {
@@ -77,7 +78,7 @@ import {
   watchNetWorkChange,
   getNetworkChainID,
 } from "../web3/wallet.js";
-import {CHAIN_ID_LOCALHOST, WEB3} from "../web3/index.js";
+import { CHAIN_ID_LOCALHOST, getBlockNumber, WEB3 } from "../web3/index.js";
 import BuyHelmetDialog from "../components/dialogs/buy-helmet-dialog.vue";
 import NetWorkConfirmationDialog from "../components/dialogs/network-confirmation-dialog.vue";
 import RiskConfirmationDialog from "../components/dialogs/risk-confirmation-dialog.vue";
@@ -88,11 +89,10 @@ export default {
     PSlider,
     PFooter,
     StatusDialog,
-    Airdrop,
-    WallectDownLoad,
     BuyHelmetDialog,
     NetWorkConfirmationDialog,
     RiskConfirmationDialog,
+    AirdropDialog,
   },
   data() {
     return {
@@ -110,6 +110,7 @@ export default {
       NetWorkVisible: false,
       RiskVisible: false,
       BuyHelmetVisible: false,
+      AirdropVisible: false,
     };
   },
   computed: {
@@ -140,11 +141,24 @@ export default {
     if (!window.localStorage.getItem("readRisk")) {
       this.RiskVisible = true;
     }
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-K2S14J9BGX");
     this.copy();
     window.WEB3 = WEB3();
     let NetWork = await getNetworkChainID();
     this.$store.dispatch("setChainID", NetWork);
-
+    this.BolckNumberTimer = setInterval(async () => {
+      let BolckNumber = await getBlockNumber();
+      this.$store.dispatch("setBlockNumber", BolckNumber);
+    }, 8000);
+    this.$bus.$on("OpenAirdropDialogs", () => {
+      this.AirdropVisible = true;
+    });
     this.$bus.$on("OPEN_STATUS_DIALOG", (data) => {
       this.statusData = data;
       this.openStatusDialog();
@@ -164,9 +178,15 @@ export default {
     watchAccountChange();
     watchNetWorkChange();
   },
+  destroyed() {
+    clearInterval(this.BolckNumberTimer);
+  },
   methods: {
     NetWorkClose() {
       this.NetWorkVisible = false;
+    },
+    airdropClose() {
+      this.AirdropVisible = false;
     },
     RiskClose() {
       this.RiskVisible = false;
@@ -214,6 +234,12 @@ export default {
 @import "~/assets/css/themes.scss";
 .governance {
   background: #f0debf !important;
+}
+.dashboard{
+  box-shadow: 0px 3px 6px 0px rgba(155,155,155,0.02) !important;
+  @include themeify {
+    background: themed("linner-dashboard") !important;
+  }
 }
 .fade-enter-active,
 .fade-leave-active {

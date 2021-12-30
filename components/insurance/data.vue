@@ -45,7 +45,7 @@
                 $<countTo
                   :startVal="Number(0)"
                   :endVal="Number(TotalHelmetsBorrowedVolume)"
-                  :duration="2000"
+                  :duration="1000"
                   :decimals="0"
                 />
               </template>
@@ -70,7 +70,7 @@
               <i></i>
               &nbsp;
               <a
-                href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
+                href="https://pancakeswap.finance/swap?outputCurrency=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8"
                 target="_blank"
               >
                 pancakeswap.finance
@@ -93,7 +93,7 @@ import {
   getLongType,
   getLongTokenValue,
   getTokenPrice,
-} from "~/interface/event.js";
+} from "~/interface/request.js";
 import countTo from "vue-count-to";
 import { fromWei } from "../../web3/index.js";
 import { TokenBalance } from "~/web3/index.js";
@@ -103,7 +103,7 @@ export default {
   name: "insurance_data",
   components: {
     countTo,
-    BuyHelmetDialog
+    BuyHelmetDialog,
   },
   data() {
     return {
@@ -168,6 +168,7 @@ export default {
         fromTokenAddress: helmetConrtact,
         toTokenAddress: busdConrtact,
         amount: "1000000000000000000",
+        protocols: "PANCAKESWAP_V2",
       });
     },
     async getHelmetVolume() {

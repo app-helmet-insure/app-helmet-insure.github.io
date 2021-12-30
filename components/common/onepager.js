@@ -234,4 +234,16 @@ export default {
     "Expire date: August 30th 24:00 SGT Helmet team took 5000 Helmet as premium for supporting $hWIZARD policy creating.",
     "Do not trade heavily on $hWIZARD, b/c if $WIZARD fail to hit 7 BUSD, $hWIZARD would just be used as short-term mining shovel and a souvenir token.",
   ],
+  hWAR: [
+    "It is $WAR Cover Miss Out policy (CALL Option of $WAR). The reasonable activate price: $WAR= 1BUSD.",
+    "For example, if $WAR hit 2 BUSD before expiration date, you could swap 1BUSD+1 $hWAR to 1 $WAR, and get net 1 BUSD profit.",
+    "Total supply: 100,000",
+    "Expire date: 30/11 24:00 SGT",
+    "hWAR distribution:",
+    "60% - Flash Mining",
+    "30% - Airdrop",
+    "10% - Liquidity",
+    "Helmet team took 100,000 Helmet as premium for supporting $hWAR policy creating.",
+    "Do not trade heavily on hWAR, b/c if $WAR fail to hit 1BUSD, $hWAR would just be used as short-term mining shovel and a souvenir token.",
+  ],
 };

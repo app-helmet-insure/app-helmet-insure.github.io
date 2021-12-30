@@ -70,7 +70,7 @@ import {
 } from "~/interface/common_contract.js";
 import Web3 from "web3";
 import ChainSwapABI from "~/web3/abis/ChainSwap.json";
-import { getSignDataSyn } from "~/interface/event.js";
+import { getSignDataSyn } from "~/interface/request.js";
 import ChainSwapConfig from "./config";
 export default {
   data() {

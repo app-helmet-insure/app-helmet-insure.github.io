@@ -1,4 +1,4 @@
-import { getTokenPrice } from "~/interface/event.js";
+import { getTokenPrice } from "~/interface/request.js";
 import { fixD } from "~/assets/js/util.js";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import { Contract } from "ethers-multicall-x";
@@ -8,7 +8,38 @@ import {
   processResult,
   fromWei,
 } from "~/web3/index.js";
+import { pancakeswapv2 } from "~/assets/utils/pancakeswapv2.js";
 export const PoolList = [
+  {
+    Key: "BNB1000WAR",
+    PoolName: "<i>hWAR</i> Pool",
+    PoolDesc: "By BNB1000-Helmet LPT",
+    StakeSymbol: "BNB1000-Helmet LPT",
+    RewardSymbol: "hWAR",
+    OneLpSymbol: "BNB1000",
+    StartTime: "2021/11/18 00:00 UTC+8",
+    FinishTime: "2021/11/28 00:00 UTC+8",
+    PoolAddress: "0xc72F05e42f930Ea4Fb04153037d259cf5fA8d4C8",
+    StakeAddress: "0x6ab0dc257191fb57ced1ffc2aca5e112b0112274",
+    RewardAddress: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+    OneLpAddress: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+    StakeDecimals: 18,
+    RewardDecimals: 18,
+    SwapType: "PANCAKEV2",
+    TotalRewards: 60000,
+    PoolProcess: 10,
+    LeftShowToken: {
+      AddTokenSymbol: "BNB1000",
+      AddTokenAddress: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+      AddTokenDecimals: 13,
+    },
+    RightShowToken: {
+      AddTokenSymbol: "hWAR",
+      AddTokenAddress: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+      AddTokenDecimals: 18,
+    },
+    APR: "--",
+  },
   {
     Key: "SHIBARGON",
     PoolName: "<i>hARGON</i> Pool",
@@ -416,11 +447,11 @@ export const formatMiningPool = (PoolData) => {
     if (!PoolStarted) {
       ItemPool.Status = 1;
       ItemPool.ShowTime = getShowTime(FixStartTime);
+      ItemPool.APR = "Infinity%";
     }
     if (PoolStarted & !PoolFinished) {
       ItemPool.Status = 2;
       ItemPool.ShowTime = getShowTime(FixFinishTime);
-      ItemPool.APR = getPoolAPR(ItemPool);
     }
     if (PoolFinished) {
       ItemPool.Status = 3;
@@ -453,24 +484,43 @@ const getShowTime = (time) => {
   }
   return template;
 };
-const getPoolAPR = async (PoolData) => {
+export const getPoolAPR = async (PoolData) => {
+  if (PoolData.Status !== 2) {
+    return;
+  }
   const RewardAddress = PoolData.RewardAddress;
   const StakeAddress = PoolData.StakeAddress;
   const PoolAddress = PoolData.PoolAddress;
   const RewardDecimals = PoolData.RewardDecimals;
+  const RewardSymbol = PoolData.RewardSymbol;
   const PoolProcess = PoolData.PoolProcess;
   const StakeDecimals = PoolData.StakeDecimals;
   const TotalRewards = PoolData.TotalRewards;
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
   const HelmetDecimals = 18;
   const Amount = toWei("1", RewardDecimals);
-  const Data = await getTokenPrice({
-    fromTokenAddress: RewardAddress,
-    toTokenAddress: HelmetAddress,
-    amount: Amount,
-  });
-  if (Data) {
-    const RewardHelmetPrice = fromWei(Data.data.toTokenAmount);
+  let RewardPrice;
+  try {
+    const Data = await getTokenPrice({
+      fromTokenAddress: RewardAddress,
+      toTokenAddress: HelmetAddress,
+      amount: Amount,
+    });
+    RewardPrice = fromWei(Data.data.toTokenAmount);
+  } catch (error) {
+    let Price = await pancakeswapv2(
+      RewardAddress,
+      RewardSymbol,
+      RewardDecimals,
+      HelmetAddress,
+      "HELMET",
+      HelmetDecimals
+    );
+    RewardPrice = Price;
+  }
+  const RewardHelmetPrice = RewardPrice;
+
+  if (RewardHelmetPrice) {
     const PoolContracts = new Contract(PoolAddress, MiningABI);
     const StakeContracts = new Contract(StakeAddress, MiningABI);
     const HelmetContracts = new Contract(HelmetAddress, MiningABI);
@@ -490,7 +540,7 @@ const getPoolAPR = async (PoolData) => {
       const Denominator =
         ((FixLptHelmetValue * 2) / FixTotalLptVolume) * FixTotalStakeVolume;
       const APR = fixD((Numerator / Denominator) * 100, 2);
-      return (PoolData.APR = APR + "%" || "--");
+      return (PoolData.APR = APR + "%");
     });
   } else {
     return "--";

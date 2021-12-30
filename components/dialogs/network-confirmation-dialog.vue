@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    top="35vh"
     title="You Must Change Networks"
     footer
     append-to-body
     custom-class="network_dialog"
+    :close-on-click-modal="false"
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >

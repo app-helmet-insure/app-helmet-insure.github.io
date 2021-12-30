@@ -1,9 +1,9 @@
 <template>
   <el-dialog
-    top="35vh"
     center
     append-to-body
     custom-class="waiting_dialog"
+    :close-on-click-modal="false"
     :visible.sync="DialogVisible"
     @close="DialogClose"
   >

@@ -1,6 +1,15 @@
 <template>
   <div class="nft_title">
     <div class="nft_name">Pixel Puzzle</div>
+    <p style="text-align: center; font-size: 16px">
+      <a
+        href="https://twitter.com/Meta_Dusks"
+        style="color: #fcf4bd"
+        target="_blank"
+        >Partner with MetaDusk</a
+      >
+    </p>
+
     <div class="nft_title_wrap">
       <div class="left">
         <div class="nft_earn">

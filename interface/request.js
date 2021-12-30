@@ -219,7 +219,7 @@ export const getTokenPrice = (data) => {
   }
   return Axios({
     method: "get",
-    url: "https://api.1inch.exchange/v3.0/56/quote",
+    url: "https://api.1inch.io/v4.0/56/quote",
     params: { ...data },
   }).then((res) => {
     return res;
@@ -243,6 +243,32 @@ export const buyHelmetOptions = ({ sellToken, sellAmount }) => {
       return res;
     });
   } catch (error) {
-    console.log(error);
+    console.log("buyHelmetOptions", "Error", error);
   }
+};
+export const migrateRegister = () => {
+  try {
+    return Axios({
+      method: "get",
+      url:
+        "https://bridgeapi.anyswap.exchange/v2/register/0x035B5c1f21E0b5B8cb2adEBB5d2DB7B0e8ad8BF8/56/Guardv5",
+    }).then((res) => {
+      return res;
+    });
+  } catch (error) {
+    console.log("migrateRegister", "Error", error);
+  }
+};
+export const getWarPrice = () => {
+  try {
+    return Axios({
+      method: "get",
+      url: "https://api.westarter.org/v1/project/token",
+      params: {
+        address: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+      },
+    }).then((res) => {
+      return res.data.data.price;
+    });
+  } catch (error) {}
 };

@@ -11,7 +11,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanDeposite)"
-            :duration="2000"
+            :duration="1000"
             :decimals="8"
           />
           <span v-else>--</span>
@@ -49,7 +49,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -63,7 +63,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -76,7 +76,7 @@
         </p>
       </div>
       <a
-        :href="`https://exchange.pancakeswap.finance/#/add/${ActiveData.OneLpAddress}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
+        :href="`https://pancakeswap.finance/add/${ActiveData.OneLpAddress}/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8`"
         target="_blank"
         >From <i class="pancake"></i>Get {{ ActiveData.OneLpSymbol }}-HELMET
         LPT</a
@@ -107,7 +107,7 @@
     <i></i>
     <div
       class="withdraw"
-      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'CLAIM')"
+      v-if="!ActiveFlag || (ActiveFlag && ActiveType == 'Claim')"
     >
       <div class="title">
         <span>{{ $t("Table.CallableMortgage") }}</span>
@@ -116,7 +116,7 @@
             v-if="isLogin"
             :startVal="Number(0)"
             :endVal="Number(CanWithdraw)"
-            :duration="2000"
+            :duration="1000"
             :decimals="8"
           />
           <span v-else>--</span>
@@ -130,7 +130,7 @@
             type="text"
             v-model="CanWithdraw"
             disabled
-            :class="ActiveType == 'CLAIM' ? 'activeInput' : ''"
+            :class="ActiveType == 'Claim' ? 'activeInput' : ''"
           />
         </div>
       </div>
@@ -154,7 +154,7 @@
                 v-if="isLogin"
                 :startVal="Number(0)"
                 :endVal="Number(CanClaim)"
-                :duration="2000"
+                :duration="1000"
                 :decimals="8"
               />
               <span v-else>--</span>
@@ -260,10 +260,17 @@ export default {
     CurrentAccount() {
       return this.$store.state.userInfo;
     },
+    BlockNumber() {
+      return this.$store.state.blockNumber;
+    },
   },
   watch: {
     CurrentAccount: {
       handler: "reloadData",
+      immediate: true,
+    },
+    BlockNumber: {
+      handler: "watchBlockNumber",
       immediate: true,
     },
   },
@@ -277,6 +284,11 @@ export default {
         });
       }
     },
+    watchBlockNumber(Value) {
+      if (Value) {
+        this.getPoolInfo();
+      }
+    },
     waitingClose() {
       this.WaitingVisible = false;
     },
@@ -287,7 +299,7 @@ export default {
       let data = {
         tokenAddress: options.AddTokenAddress,
         tokenSymbol: options.AddTokenSymbol,
-        tokenDecimals: options.add_token_decimals,
+        tokenDecimals: options.AddTokenDecimals,
         tokenImage: "",
       };
       await addToken(data);

@@ -18,10 +18,7 @@
     </div>
     <div class="account">
       <div class="airdrop_web airdrop" @click="handleClickAirdrop">
-        <img
-          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
-          alt=""
-        />
+        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
       </div>
       <span class="migration" @click="jump">
         <img src="~/assets/img/guard/Polygon.png" alt="" />
@@ -51,6 +48,9 @@
           </div>
         </template>
       </div>
+      <img class="avatar" src="../../assets/img/dashboard/justine-dusk-avatar.png" alt="" v-if="duskNftAvatar === 'justineDusk'">
+      <img class="avatar" src="../../assets/img/dashboard/dusk-avatar.png" alt="" v-else-if="duskNftAvatar === 'dusk'">
+      <img class="avatar" :src="'https://avatars.dicebear.com/api/identicon/' + storeAccount + '.svg'" alt="" v-else>
       <WallectSelect
         v-if="showWallectSelect"
         @close="closeWallectSelect"
@@ -66,11 +66,9 @@
         @close="closeChangeWallet"
         @back="openCurrentAccount"
       ></ChangeAccount>
+
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
-        <img
-          :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)"
-          alt=""
-        />
+        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
       </div>
     </div>
   </div>
@@ -80,7 +78,9 @@ import WallectSelect from "./wallet-select";
 import CurrentAccount from "~/components/account/current-account.vue";
 import ChangeAccount from "~/components/account/change-account.vue";
 import Langauage from "~/components/common/langauage.vue";
-import { HelmetBalance } from "../../web3/index.js";
+import {getOnlyMultiCallProviderPlus, HelmetBalance, processResult} from "../../web3/index.js";
+import {ChainId, NFTHelper} from "../../web3/address";
+import {Contract} from "ethers-multicall-x";
 export default {
   name: "p-header",
   props: ["account"],
@@ -99,11 +99,15 @@ export default {
       showChangeWallet: false,
       WallectSelectType: "ALL",
       HelmetBalance: 0,
+      duskNftAvatar: null
     };
   },
   computed: {
     CurrentAccount() {
       return this.$store.state.userInfo;
+    },
+    storeAccount() {
+      return this.$store.state.userInfo.account;
     },
     RefreshData() {
       return this.$store.state.refreshNumber;
@@ -117,6 +121,9 @@ export default {
     },
   },
   watch: {
+    storeAccount:function () {
+      this.getNFT721()
+    },
     CurrentAccount: {
       handler: "reloadData",
       immediate: true,
@@ -129,7 +136,33 @@ export default {
       immediate: true,
     },
   },
+  created() {
+    this.getNFT721()
+  },
+  mounted() {},
   methods: {
+    getNFT721() {
+      if (!this.storeAccount){
+        return
+      }
+      const DuskNFT = "0xeDfbf15775a2E42E03d059Fb98DA6e92284de7be"
+      const JustineDusk = "0x17DFb8867184aFa9116Db927B87C27CC27A92F89"
+      const nfts = [DuskNFT, JustineDusk]
+      const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
+      const contract = new Contract(NFTHelper.address, NFTHelper.abi)
+      const calls = nfts.reduce((calls_, nftAddress) => {
+        calls_.push(contract.getAll(nftAddress, this.storeAccount))
+        return calls_
+      }, [])
+      multicall.all(calls).then(async res => {
+        const [[duskIds], [justineIds]] = processResult(res)
+        if (justineIds.length > 0){
+          this.duskNftAvatar = 'justineDusk'
+        } else if (duskIds.length > 0) {
+          this.duskNftAvatar = 'dusk'
+        }
+      })
+    },
     reloadData(Value) {
       if (Value && Value.account) {
         let account = Value.account;
@@ -155,7 +188,7 @@ export default {
       this.HelmetBalance = await HelmetBalance();
     },
     handleClickAirdrop() {
-      this.$bus.$emit("AIRDROP_DIALOG", true);
+      this.$bus.$emit("OpenAirdropDialogs");
     },
     openChangeWallet() {
       this.showChangeWallet = true;
@@ -186,6 +219,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~/assets/css/themes.scss";
+.avatar{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
 .header-container {
   > .account {
     height: 100%;
@@ -326,7 +365,6 @@ export default {
     width: 80%;
     margin: 20px auto;
     min-width: 1026px;
-    // height: 80px;
     @include themeify {
       background: transparent;
     }
@@ -341,8 +379,9 @@ export default {
         margin-right: 20px;
         cursor: pointer;
         > img {
-          width: 24px;
-          height: 24px;
+          width: 30px;
+          height: 30px;
+          animation: airdrop 1s linear infinite;
         }
       }
       justify-content: flex-end;
@@ -386,13 +425,31 @@ export default {
         margin-left: 20px;
         cursor: pointer;
         > img {
-          width: 24px;
-          height: 24px;
+          width: 30px;
+          height: 30px;
+          animation: airdrop 1s linear infinite;
         }
       }
       margin-top: 15px;
       justify-content: flex-start;
     }
+  }
+}
+@keyframes airdrop {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(5px, -10px) rotate(45deg);
+  }
+  50% {
+    transform: translate(0);
+  }
+  75% {
+    transform: translate(-5px, -10px) rotate(-45deg);
+  }
+  100% {
+    transform: translate(0);
   }
 }
 </style>

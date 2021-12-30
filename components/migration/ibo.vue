@@ -185,7 +185,6 @@ export default {
       let NowTime = Date.now() / 1000;
       let StartTime = this.Start * 1;
       let FinishTime = this.Start * 1 + this.Span * 1;
-      console.log(NowTime, StartTime, FinishTime, StartTime - NowTime > 0);
       let DownTime =
         StartTime - NowTime > 0 ? StartTime - NowTime : FinishTime - NowTime;
       const Day = Math.floor(DownTime / (24 * 3600));
@@ -402,7 +401,7 @@ export default {
 @media screen and (min-width: 750px) {
   .migration_ibo {
     width: 878px;
-    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
+    background-image: url("../../assets/img/migration/migrate_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;
@@ -425,7 +424,7 @@ export default {
 @media screen and (max-width: 750px) {
   .migration_ibo {
     width: 95%;
-    background-image: url("../../assets/img/migration/migration_ibo_bg.png");
+    background-image: url("../../assets/img/migration/migrate_bg.png");
     background-repeat: no-repeat;
     background-size: auto 100%;
     background-position: center center;

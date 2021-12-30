@@ -8,7 +8,7 @@
     </div>
     <div class="governance_proposal_perhaps perhaps">
       <p v-for="(item, index) in Proposal.Details" :key="index">
-        {{ $t(item) }}
+        <span v-html="$t(item)"></span>
       </p>
     </div>
     <div class="governance_proposal_action">
@@ -93,7 +93,7 @@ import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { DaoPoolList, formatMiningPool } from "~/config/mining.js";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
-import { getGovernance } from "~/interface/event.js";
+import { getGovernance } from "~/interface/request.js";
 import { fixD } from "~/assets/js/util.js";
 import { Contract } from "ethers-multicall-x";
 import {
@@ -114,7 +114,7 @@ export default {
       fixD,
       Proposal: {},
       Mining: {},
-      PropoaslID: 2,
+      PropoaslID: 1,
       CanDeposite: 0,
       VotesVisible: false,
       WaitingVisible: false,
@@ -254,7 +254,7 @@ export default {
             ShowProposalID: ShowID,
           });
         });
-        this.GovernanceTxList = FixList;
+        this.GovernanceTxList = FixList
       });
     },
     getProposalStatus(ID) {

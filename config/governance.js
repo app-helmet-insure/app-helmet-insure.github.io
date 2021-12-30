@@ -2,6 +2,7 @@ import GovernanceABI from "~/web3/abis/Governance.json";
 import MiningABI from "~/web3/abis/MiningABI.json";
 import ApproveABI from "~/web3/abis/IPancakePair.json";
 import { Contract } from "ethers-multicall-x";
+import BigNumber from "bignumber.js";
 import { fixD } from "~/assets/js/util.js";
 import {
   toWei,
@@ -35,8 +36,8 @@ export const GovernanceList = [
       "Proposal.Governance1.text17",
       "Proposal.Governance1.text18",
     ],
-    StartTime: "2021/10/29 24:00 UTC+8",
-    FinishTime: "2021/12/31 24:00 UTC+8",
+    StartTime: "2021/11/02 00:00 UTC+8",
+    FinishTime: "2021/11/22 00:00 UTC+8",
     Proposal: [
       { Text: 1, ID: 1 },
       { Text: 2, ID: 2 },
@@ -108,6 +109,9 @@ const getShowTime = (time) => {
   return template;
 };
 export const getPoolAPY = (PoolData) => {
+  if (!PoolData.Status != 2) {
+    return (PoolData.APR = "--");
+  }
   const { PoolAddress } = PoolData;
   const HelmetFarm = "0x1e2798eC9fAe03522a9Fa539C7B4Be5c4eF04699";
   const HelmetAddress = "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8";
@@ -129,8 +133,8 @@ export const getPoolAPY = (PoolData) => {
     const DailyReward = TotalRewards / PoolProcess;
     const RewardValues = 1 + DailyReward / TotalStakeVolume;
     const APR = fixD((DailyReward / TotalStakeVolume) * 365 * 100, 2) + "%";
-    const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";
-    console.log(RewardValues, Math.pow(RewardValues, 365));
+    const APY =
+      new BigNumber(Math.pow(RewardValues, 365) * 100).toFixed(2) + "%";
     return (PoolData.APR = APR), (PoolData.APY = APY);
   });
 };

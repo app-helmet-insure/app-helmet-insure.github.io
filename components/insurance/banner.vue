@@ -1,11 +1,12 @@
 <template>
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide kala"><div></div></div>
+      <div class="swiper-slide thanks"><div></div></div>
+      <div class="swiper-slide hwarpool"><div></div></div>
+      <div class="swiper-slide vote"><div></div></div>
+      <div class="swiper-slide bnb1000"><div></div></div>
       <div class="swiper-slide lpt"><div></div></div>
       <div class="swiper-slide newinsure"><div></div></div>
-      <div class="swiper-slide insure"><div></div></div>
-      <div class="swiper-slide guard"><div></div></div>
       <a
         class="swiper-slide dis"
         href="https://docs.google.com/forms/d/e/1FAIpQLScaSRY3gDKd74g9DLdmqZjNoqN9Gl3rhFOhm4Co23kTT7tNuw/viewform?usp=send_form"
@@ -137,10 +138,28 @@ export default {
         background-position: center;
       }
     }
-    .kala {
-      background: #288d59;
+    .thanks {
+      background: #ffc084;
       > div {
-        background-image: url("../../assets/img/banner/kala_web.png");
+        background-image: url("../../assets/img/banner/thanks_web.png");
+      }
+    }
+    .hwarpool {
+      background: #ffb5c0;
+      > div {
+        background-image: url("../../assets/img/banner/war_pool_web.png");
+      }
+    }
+    .vote {
+      background: #f9cf00;
+      > div {
+        background-image: url("../../assets/img/banner/vote_web.png");
+      }
+    }
+    .bnb1000 {
+      background: #262724;
+      > div {
+        background-image: url("../../assets/img/banner/bnb1000_web.png");
       }
     }
     .lpt {
@@ -161,16 +180,11 @@ export default {
         background-image: url("../../assets/img/banner/insure_web.png");
       }
     }
-    .ibo {
-      background: #96f6d1;
-      > div {
-        background-image: url("../../assets/img/banner/ibo_web.png");
-      }
-    }
+
     .guard {
       background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/gaurd_web.png");
+        background-image: url("../../assets/img/banner/guard_web.png");
       }
     }
     .dis {
@@ -209,10 +223,28 @@ export default {
         background-position: center;
       }
     }
-    .kala {
-      background: #288d59;
+    .thanks {
+      background: #ffc084;
       > div {
-        background-image: url("../../assets/img/banner/kala_h5.png");
+        background-image: url("../../assets/img/banner/thanks_h5.png");
+      }
+    }
+    .hwarpool {
+      background: #ffb5c0;
+      > div {
+        background-image: url("../../assets/img/banner/war_pool_h5.png");
+      }
+    }
+    .vote {
+      background: #f9cf00;
+      > div {
+        background-image: url("../../assets/img/banner/vote_h5.png");
+      }
+    }
+    .bnb1000 {
+      background: #262724;
+      > div {
+        background-image: url("../../assets/img/banner/bnb1000_h5.png");
       }
     }
     .lpt {
@@ -233,16 +265,10 @@ export default {
         background-image: url("../../assets/img/banner/insure_h5.png");
       }
     }
-    .ibo {
-      background: #96f6d1;
-      > div {
-        background-image: url("../../assets/img/banner/ibo_h5.png");
-      }
-    }
     .guard {
       background: #22222a;
       > div {
-        background-image: url("../../assets/img/banner/gaurd_h5.png");
+        background-image: url("../../assets/img/banner/guard_h5.png");
       }
     }
     .dis {

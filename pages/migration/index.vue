@@ -3,7 +3,8 @@
     <div class="migrate_container">
       <Title />
       <Pending />
-      <IBO />
+      <IBO></IBO>
+      <!-- <Migrate /> -->
       <!-- <Action /> -->
       <JumpDialog />
       <!-- <TipDialog /> -->
@@ -14,6 +15,7 @@
 <script>
 import Title from "~/components/migration/title";
 import IBO from "~/components/migration/ibo";
+import Migrate from "~/components/migration/migrate";
 import Pending from "~/components/migration/pending";
 import Action from "~/components/migration/action";
 import JumpDialog from "~/components/migration/jump_dialog";
@@ -21,7 +23,7 @@ import TipDialog from "~/components/migration/tip_dialog";
 export default {
   layout: "home",
   name: "migration",
-  components: { Title, IBO, Pending, Action, JumpDialog, TipDialog },
+  components: { Title, IBO, Migrate, Pending, Action, JumpDialog, TipDialog },
 };
 </script>
 

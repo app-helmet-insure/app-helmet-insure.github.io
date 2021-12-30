@@ -12,12 +12,10 @@ let testNetwork = null;
 if (process.browser) {
   if (window.sessionStorage.getItem("helmet_test_chain")) {
     testNetwork = CHAIN_ID_LOCALHOST;
-    console.log("helmet_test_chain", true);
   }
 }
 const multiCallChainId = testNetwork || BSCChainId;
 const multiCallRPCUrl = testNetwork ? "http://localhost:8545" : BSCRpcUrl;
-console.log(multiCallChainId, multiCallRPCUrl);
 
 const getMultiCallProvider = (provider, chainId) => {
   setMulticallAddress(
@@ -114,7 +112,6 @@ export const getPoolInfo = (pool) => {
   currencyToken &&
     promiseList.push(currencyToken.allowance(account, pool.address));
   currencyToken && promiseList.push(currencyToken.balanceOf(account));
-
   return multicallProvider
     .all(promiseList)
     .then((res) => {

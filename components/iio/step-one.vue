@@ -8,7 +8,7 @@
         <span>
           <i>{{ $t("Content.UsableBalance") }}:</i> {{ Balance }} HELMET</span
         >
-        <a href="https://exchange.pancakeswap.finance/#/swap" target="_blank"
+        <a href="https://pancakeswap.finance/swap" target="_blank"
           >{{ $t("IIO.Get") }} HELMET</a
         >
       </p>

@@ -11,11 +11,11 @@
         <div class="governance_type">
           <div class="governance_type_title">
             <span>{{ $t("Governance.Governance_text1") }}</span>
-            <!-- <nuxt-link
+            <nuxt-link
               :to="{ path: `/governance/details`, params: ActiveData.Router }"
               >{{ $t("Governance.Governance_text2") }}</nuxt-link
-            > -->
-            <a>{{ $t("Governance.Governance_text2") }}</a>
+            >
+            <!-- <a>{{ $t("Governance.Governance_text2") }}</a> -->
           </div>
           <div class="governance_type_wrap">
             <div
@@ -40,7 +40,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -81,7 +81,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -95,7 +95,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(TotalDeposite)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -115,7 +115,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(ActiveData.Status === 3 ? CanWithdraw : 0)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -129,7 +129,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(ActiveData.Status === 3 ? 0 : CanWithdraw)"
-              :duration="2000"
+              :duration="1000"
               :decimals="4"
             />
             <span v-else>--</span>
@@ -148,12 +148,15 @@
           </div>
         </div>
         <button
+          v-if="ActiveData.Status === 3"
           @click="toExit"
           :class="ExitLoading ? 'disable b_button' : 'b_button'"
         >
           <i :class="ExitLoading ? 'loading_pic' : ''"></i
-          >{{ $t("Table.ConfirmWithdraw") }} &
-          {{ $t("Table.ClaimRewards") }}
+          >{{ $t("Table.Withdraws") }}
+        </button>
+        <button v-else :class="'disable_button b_button '">
+          {{ $t("Table.Withdraws") }}
         </button>
         <button
           @click="toClaim"
@@ -177,7 +180,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim1)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -194,7 +197,7 @@
               v-if="isLogin"
               :startVal="Number(0)"
               :endVal="Number(CanClaim2)"
-              :duration="2000"
+              :duration="1000"
               :decimals="8"
             />
             <span v-else>--</span>
@@ -266,12 +269,15 @@ export default {
       SuccessHash: "",
       WaitingText: "",
       MaxStaking: 0,
-      PropoaslID: 2,
+      PropoaslID: 1,
     };
   },
   computed: {
     CurrentAccount() {
       return this.$store.state.userInfo;
+    },
+    BlockNumber() {
+      return this.$store.state.blockNumber;
     },
     GovernanceList() {
       return [
@@ -295,9 +301,18 @@ export default {
       handler: "reloadData",
       immediate: true,
     },
+    BlockNumber: {
+      handler: "watchBlockNumber",
+      immediate: true,
+    },
   },
 
   methods: {
+    watchBlockNumber(Value) {
+      if (Value) {
+        this.getPoolInfo();
+      }
+    },
     reloadData(Value) {
       if (Value) {
         this.isLogin = Value.isLogin;
@@ -316,6 +331,7 @@ export default {
       this.PropoaslID = PropoaslID;
     },
     handleClickMax() {
+      this.StakeVolume = this.CanDeposite;
       if (this.ActiveData.Max) {
         this.StakeVolume = Math.min(
           this.CanDeposite,
@@ -324,15 +340,6 @@ export default {
       } else {
         this.StakeVolume = this.CanDeposite;
       }
-    },
-    async addTokenFn(options) {
-      let data = {
-        tokenAddress: options.AddTokenAddress,
-        tokenSymbol: options.AddTokenSymbol,
-        tokenDecimals: options.ADDTOKEN_DECIMALS,
-        tokenImage: "",
-      };
-      await addToken(data);
     },
     hadnleShowOnePager(e, onePager) {
       if (e.target.tagName === "I" && onePager) {

@@ -14,7 +14,7 @@ import { fixD, toRounding } from "~/assets/js/util.js";
 import bus from "~/assets/js/bus";
 import Notification from "~/components/common/Notification";
 import Message from "~/components/common/Message";
-import { getExerciseList } from "~/interface/event.js";
+import { getExerciseList } from "~/interface/request.js";
 import BigNumber from "bignumber.js";
 const netObj = {
   1: "",

@@ -28,37 +28,55 @@
         {{ $t("Governance.Governance_text24") }}
       </div>
       <div class="governance_details_votes_wrap">
-        <div class="governance_details_votes_slider">
+        <div
+          class="governance_details_votes_slider"
+          :class="
+            Proposal.Status === 3 &&
+            Type1Number > Type2Number &&
+            Type1Number > Type3Number
+              ? 'win_governance'
+              : ''
+          "
+        >
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text3") }}</span>
-              {{ fixD(Type1, 4) }} HELMET</span
-            >
-            <span>{{ Type1Number }}</span>
+            <span>{{ $t("Governance.Governance_text3") }}</span>
+            <span>{{ fixD(Type1, 0) }}({{ Type1Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type1Number}`"></div>
           </div>
         </div>
-        <div class="governance_details_votes_slider">
+        <div
+          class="governance_details_votes_slider"
+          :class="
+            Proposal.Status === 3 &&
+            Type2Number > Type1Number &&
+            Type2Number > Type3Number
+              ? 'win_governance'
+              : ''
+          "
+        >
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text4") }}</span>
-              {{ fixD(Type2, 4) }} HELMET</span
-            >
-            <span>{{ Type2Number }}</span>
+            <span>{{ $t("Governance.Governance_text4") }}</span>
+            <span>{{ fixD(Type2, 0) }}({{ Type2Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type2Number}`"></div>
           </div>
         </div>
-        <div class="governance_details_votes_slider">
+        <div
+          class="governance_details_votes_slider"
+          :class="
+            Proposal.Status === 3 &&
+            Type3Number > Type1Number &&
+            Type3Number > Type2Number
+              ? 'win_governance'
+              : ''
+          "
+        >
           <p class="between">
-            <span>
-              <span>{{ $t("Governance.Governance_text5") }}</span>
-              {{ fixD(Type3, 4) }} HELMET</span
-            >
-            <span>{{ Type3Number }}</span>
+            <span>{{ $t("Governance.Governance_text5") }} </span>
+            <span>{{ fixD(Type3, 0) }}({{ Type3Number }})</span>
           </p>
           <div class="slider_wrap">
             <div class="slider_bar" :style="`width:${Type3Number}`"></div>
@@ -92,7 +110,7 @@
 import { GovernanceList, formatGovernance } from "~/config/governance.js";
 import { Contract } from "ethers-multicall-x";
 import { fixD } from "~/assets/js/util.js";
-import { getGovernance } from "~/interface/event.js";
+import { getGovernance } from "~/interface/request.js";
 import {
   getOnlyMultiCallProvider,
   processResult,
@@ -389,6 +407,19 @@ export default {
       }
     }
   }
+}
+.win_governance {
+  position: relative;
+}
+.win_governance::before {
+  display: block;
+  content: " ";
+  background: url("../../assets/img/governance/win.png") no-repeat;
+  background-size: 100% 100%;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  transform: translateX(calc(-100% - 3px));
 }
 .governance_details_self {
   margin-top: 20px;

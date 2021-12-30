@@ -205,9 +205,9 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    @include themeify {
-      background: themed("color-ffffff");
-    }
+    background-image: url("../../assets/img/airdrop/airdrop_bg.png");
+    background-repeat: no-repeat;
+    background-size: 442px 418px;
     border-radius: 8px;
     padding: 30px 20px;
     > p {

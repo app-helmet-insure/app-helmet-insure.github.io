@@ -10,7 +10,7 @@
                 FromNetwork
               }}</span>
             </div>
-            <span>HELMET</span>
+            <span>HELMET</span>0 
           </div>
           <div class="input_box">
             <input type="text" v-model="SwapNumber" placeholder="0.00" />

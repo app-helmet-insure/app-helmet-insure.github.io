@@ -145,7 +145,7 @@
 import { fixD } from "~/assets/js/util.js";
 import { onExercise } from "~/interface/order.js";
 import { getBalance } from "~/interface/deposite";
-import { getInsuranceList } from "~/interface/event.js";
+import { getInsuranceList } from "~/interface/request.js";
 import moment from "moment";
 import NoData from "./no-data.vue";
 import Loading from "./loading.vue";
@@ -154,7 +154,7 @@ import { getCurrentInsurance } from "~/config/insurance.js";
 import BigNumber from "bignumber.js";
 import OrderABI from "~/web3/abis/OrderABI.json";
 import ERC20ABI from "~/web3/abis/ERC20ABI.json";
-import { getContract } from "../../web3/index.js";
+import { getContract, TokenBalance, toWei } from "../../web3/index.js";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 const OrderAddress = "0x4C899b7C39dED9A06A5db387f0b0722a18B8d70D";
@@ -273,6 +273,7 @@ export default {
               };
               ResultItem.Status =
                 item.expiry * 1 > nowDate ? "Normal" : "Expired";
+              ResultItem.Sort = ResultItem.Status == "Normal" ? 1 : 2;
               item.asks.filter((itemAsk) => {
                 const ResultItemAsk = {
                   Binds: itemAsk.binds,
@@ -357,6 +358,11 @@ export default {
               return list;
             });
             returnList = returnList.filter((filter) => filter.remain !== "0");
+            this.$nextTick(async () => {
+              const BNB1000policy = await this.BNB1000policy();
+              const HWARpolicy = await this.HWARpolicy();
+              returnList.unshift(HWARpolicy, BNB1000policy);
+            });
             returnList = returnList.sort(
               (a, b) => Number(b.BidID) - Number(a.BidID)
             );
@@ -473,9 +479,11 @@ export default {
     },
     actionWithDraw(data) {
       let Account = this.CurrentAccount.account;
-      let Contracts = getContract(OrderABI, OrderAddress);
+      const ContractAddress = data.Transfer ? data.Long : OrderAddress;
+      let Contracts = getContract(OrderABI, ContractAddress);
+      const Params = data.Transfer ? data.Volume : data.BidID;
       Contracts.methods
-        .exercise(data.BidID)
+        .exercise(Params)
         .send({ from: Account })
         .on("transactionHash", (hash) => {
           this.WaitingVisible = true;
@@ -496,970 +504,78 @@ export default {
           this.WaitingText = "";
         });
     },
-    async HBURGERPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa"
+    async BNB1000policy() {
+      let Volume = await TokenBalance(
+        "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+        13
       );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa");
+      let nowDate = parseInt(moment.now() / 1000);
+      if (Volume != 0) {
         let resultItem;
         resultItem = {
-          askID: "air",
-          id: 4,
-          bidID: 4,
-          buyer: myAddress,
-          show_price: 1,
-          premium: volume * 1,
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1615226400000)).format(
+          BidID: "Airdrop",
+          Type: "Call",
+          Expiry: "1640966400",
+          ShowExpiry: moment(new Date(1640966400 * 1000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
-          _collateral: "0xae9269f27437f0fcbc232d39ec814844a51d6b8f",
-          show_strikePrice: 0.07,
-          _strikePrice: 0.07,
-          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-          _expiry: 1615226400000,
-          transfer: true,
-          longAdress: "0x9ebbb98f2bC5d5D8E49579995C5efaC487303BEa",
-          type: "Call",
-          symbol: "hBURGER",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.07,
-          outPriceUnit: "BNB",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xae9269f27437f0fcbc232d39ec814844a51d6b8f"),
+          Long: "0x7aae192b83589784851a7df13c225fda2e3d87c5",
+          Short: "",
+          StrikePrice: "1000000000000000000000",
+          ShowStrikePrice: "1000",
+          CollateralAddress: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          CollateralSymbol: "BNB",
+          CollateralDecimals: 18,
+          UnderlyingAddress: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          UnderlyingSymbol: "BUSD",
+          UnderlyingDecimals: 18,
+          CallToken: "BNB",
+          PutToken: "BUSD",
+          Status: 1640966400 > nowDate ? "Normal" : "Expired",
+          Volume: toWei(Volume, 13),
+          ShowVolume: Volume,
+          ShowPrice: "Airdrop",
+          Premium: "Airdrop",
+          Transfer: true,
+          Sort: 1640966400 > nowDate ? 1 : 2,
         };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
         return resultItem;
       }
     },
-    async LISHIPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417"
+    async HWARpolicy() {
+      let Volume = await TokenBalance(
+        "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f"
       );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417");
+      let nowDate = parseInt(moment.now() / 1000);
+      if (Volume != 0) {
         let resultItem;
         resultItem = {
-          askID: "air",
-          id: 5,
-          bidID: 5,
-          buyer: myAddress,
-          show_price: "redbag.png",
-          premium: "redbag.png",
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1613577600000)).format(
+          BidID: "Airdrop",
+          Type: "Call",
+          Expiry: "1640966400",
+          ShowExpiry: moment(new Date(1638288000 * 1000)).format(
             "YYYY/MM/DD HH:mm:ss"
           ),
-          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          show_strikePrice: 0.1,
-          _strikePrice: 0.1,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1613577600000,
-          transfer: true,
-          longAdress: "0x9eC5F3216c381715d7Bd06E00879a95d9Dd8e417",
-          type: "Call",
-          symbol: "LiShi",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.1,
-          outPriceUnit: "BUSD",
-          showType: "img",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8"),
+          Long: "0x4c5a3711d2032067f4b3d3c7d7316a738a47bf1f",
+          Short: "",
+          StrikePrice: "1000000000000000000",
+          ShowStrikePrice: "1",
+          CollateralAddress: "0x910651F81a605a6Ef35d05527d24A72fecef8bF0",
+          CollateralSymbol: "WAR",
+          CollateralDecimals: 18,
+          UnderlyingAddress: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          UnderlyingSymbol: "BUSD",
+          UnderlyingDecimals: 18,
+          CallToken: "WAR",
+          PutToken: "BUSD",
+          Status: 1638288000 > nowDate ? "Normal" : "Expired",
+          Volume: toWei(Volume),
+          ShowVolume: Volume,
+          ShowPrice: "Airdrop",
+          Premium: "Airdrop",
+          Transfer: true,
+          Sort: 1638288000 > nowDate ? 1 : 2,
         };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async hMATHPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0xdD9b5801e8A38ef7A728A42492699521C6A7379b"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xdD9b5801e8A38ef7A728A42492699521C6A7379b");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 7,
-          bidID: 7,
-          buyer: myAddress,
-          show_price: 1,
-          premium: volume * 1,
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1616428800000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xf218184af829cf2b0019f8e6f0b2423498a36983",
-          show_strikePrice: 0.014,
-          _strikePrice: 0.014,
-          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-          _expiry: 1616428800000,
-          transfer: true,
-          longAdress: "0xdD9b5801e8A38ef7A728A42492699521C6A7379b",
-          type: "Call",
-          symbol: "hMATH",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.014,
-          outPriceUnit: "BNB",
-          // showType: "img",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xf218184af829cf2b0019f8e6f0b2423498a36983"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HCCTIIPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x9065fcbb5f73B908aC4B05BdB81601Eec2065522");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 9,
-          bidID: 9,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--",
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1617897600000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          show_strikePrice: 0.1,
-          _strikePrice: 0.1,
-          _underlying: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
-          _expiry: 1617897600000,
-          transfer: true,
-          longAdress: "0x9065fcbb5f73B908aC4B05BdB81601Eec2065522",
-          type: "Call",
-          symbol: "HCCTII",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.1,
-          outPriceUnit: "CAKE",
-          // showType: "img",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async hDODOPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 10,
-          bidID: 10,
-          buyer: myAddress,
-          show_price: 1,
-          premium: volume * 1,
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1618416000000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
-          show_strikePrice: 10,
-          _strikePrice: 10,
-          _underlying: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          _expiry: 1618416000000,
-          transfer: true,
-          longAdress: "0xfeD2e6A6105E48A781D0808E69460bd5bA32D3D3",
-          type: "Call",
-          symbol: "hDODO",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 10,
-          outPriceUnit: "HELMET",
-          // showType: "img",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async hTPTPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
-        "hTPT"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 11,
-          bidID: 11,
-          buyer: myAddress,
-          show_price: 0.01,
-          premium: volume * 0.01,
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1620057600000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xeca41281c24451168a37211f0bc2b8645af45092",
-          show_strikePrice: 0.06,
-          _strikePrice: 0.06,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1620057600000,
-          transfer: true,
-          longAdress: "0x412B6d4C3ca1F0a9322053490E49Bafb0D57dD7c",
-          type: "Call",
-          symbol: "hTPT",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.06,
-          outPriceUnit: "BUSD",
-          // showType: "img",
-          unit: 4,
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xeca41281c24451168a37211f0bc2b8645af45092"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async QFEIPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 12,
-          bidID: 12,
-          buyer: myAddress,
-          show_price: 0.1,
-          premium: volume * 0.1,
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1620576000000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
-          show_strikePrice: 1,
-          _strikePrice: 1,
-          _underlying: "0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31",
-          _expiry: 1620576000000,
-          transfer: true,
-          longAdress: "0x7f6ff473adba47ee5ee5d5c7e6b9d41d61c32c6a",
-          type: "Call",
-          symbol: "QFEI",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 1,
-          outPriceUnit: "QSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x219cf9729bb21bbe8dd2101c8b6ec21c03dd0f31"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async qHELMETPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 14,
-          bidID: 14,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--",
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1624118400000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
-          show_strikePrice: 1.5,
-          _strikePrice: 1.5,
-          _underlying: "0x07aaa29e63ffeb2ebf59b33ee61437e1a91a3bb2",
-          _expiry: 1624118400000,
-          transfer: true,
-          longAdress: "0xBf5fC08754ba85075d2d0dB370D6CA9aB4db0F99",
-          type: "Call",
-          symbol: "QHELMET",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 1.5,
-          outPriceUnit: "QSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async xhBURGERPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0xCa7597633927A98B800738eD5CD2933a74a80e8c"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xCa7597633927A98B800738eD5CD2933a74a80e8c");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 15,
-          bidID: 15,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--",
-          volume: volume,
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1621612800000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd",
-          show_strikePrice: 0.1,
-          _strikePrice: 0.1,
-          _underlying: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-          _expiry: 1621612800000,
-          transfer: true,
-          longAdress: "0xCa7597633927A98B800738eD5CD2933a74a80e8c",
-          type: "Call",
-          symbol: "hxBURGER",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.1,
-          outPriceUnit: "BNB",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xafe24e29da7e9b3e8a25c9478376b6ad6ad788dd"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async SHIBHRPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
-        "SHIBh"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x224b33139a377a62d4BaD3D58cEDb7807AE228eB");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 16,
-          bidID: 16,
-          buyer: myAddress,
-          show_price: "Airdrop",
-          premium: "Airdrop",
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1626105600000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          show_strikePrice: 0.000001,
-          _strikePrice: 0.000001,
-          _underlying: "0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561",
-          _expiry: 1626105600000,
-          transfer: true,
-          longAdress: "0x224b33139a377a62d4BaD3D58cEDb7807AE228eB",
-          type: "Put",
-          symbol: "SHIBh",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.000001,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          unit: 12,
-          TypeCoin: getTokenName("0xaf90e457f4359adcc8b37e8df8a27a1ff4c3f561"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HWINGSRPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x34508EA9ec327ff3b98A2F10eEDc2950875bf026");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 17,
-          bidID: 17,
-          buyer: myAddress,
-          show_price: 1,
-          premium: 1 * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1625932800000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x0487b824c8261462f88940f97053e65bdb498446",
-          show_strikePrice: 9,
-          _strikePrice: 9,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1625932800000,
-          transfer: true,
-          longAdress: "0x34508EA9ec327ff3b98A2F10eEDc2950875bf026",
-          type: "Call",
-          symbol: "hWINGS",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 9,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x0487b824c8261462f88940f97053e65bdb498446"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HMTRGPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0xa561926e81decb74b3d11e14680b3f6d1c5012bd"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0xa561926e81decb74b3d11e14680b3f6d1c5012bd");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 18,
-          bidID: 18,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--",
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1626969600000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f",
-          show_strikePrice: 4.7,
-          _strikePrice: 4.7,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1626969600000,
-          transfer: true,
-          longAdress: "0xa561926e81decb74b3d11e14680b3f6d1c5012bd",
-          type: "Call",
-          symbol: "hMTRG",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 4.7,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xbd2949f67dcdc549c6ebe98696449fa79d988a9f"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HBABYPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 19,
-          bidID: 19,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--" * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1627228800000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657",
-          show_strikePrice: 0.4,
-          _strikePrice: 0.4,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1627228800000,
-          transfer: true,
-          longAdress: "0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624",
-          type: "Call",
-          symbol: "hBABY",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.4,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HBMXXPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 20,
-          bidID: 20,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--" * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1627574400000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x4131b87f74415190425ccd873048c708f8005823",
-          show_strikePrice: 20,
-          _strikePrice: 20,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1627574400000,
-          transfer: true,
-          longAdress: "0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44",
-          type: "Call",
-          symbol: "hBMXX",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 20,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x4131b87f74415190425ccd873048c708f8005823"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HARGONPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x4ce2d9804da7583c02f80fec087aea1d137214eb"
-      );
-
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x4ce2d9804da7583c02f80fec087aea1d137214eb");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 21,
-          bidID: 21,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--" * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1628352000000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x851f7a700c5d67db59612b871338a85526752c25",
-          show_strikePrice: 0.15,
-          _strikePrice: 0.15,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1628352000000,
-          transfer: true,
-          longAdress: "0x4ce2d9804da7583c02f80fec087aea1d137214eb",
-          type: "Call",
-          symbol: "hARGON",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 0.15,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x851f7a700c5d67db59612b871338a85526752c25"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HMCRNPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 22,
-          bidID: 22,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--" * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1630166400000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0xacb2d47827c9813ae26de80965845d80935afd0b",
-          show_strikePrice: 7,
-          _strikePrice: 7,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1630166400000,
-          transfer: true,
-          longAdress: "0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf",
-          type: "Call",
-          symbol: "hMCRN",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 7,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0xacb2d47827c9813ae26de80965845d80935afd0b"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
-        return resultItem;
-      }
-    },
-    async HWIZARDPolicy() {
-      let myAddress =
-        this.$store.state.userInfo &&
-        this.$store.state.userInfo.account &&
-        this.$store.state.userInfo.account.toLowerCase();
-      let volume = await getBalance(
-        "0x792b733af7b9b83331f90dbbd297e519258b09bc"
-      );
-      let currentTime = new Date().getTime();
-      if (fixD(volume, 8) != 0) {
-        let Token = getTokenName("0x792b733af7b9b83331f90dbbd297e519258b09bc");
-        let resultItem;
-        resultItem = {
-          askID: "air",
-          id: 23,
-          bidID: 23,
-          buyer: myAddress,
-          show_price: "--",
-          premium: "--" * volume,
-          volume: volume.toString(),
-          settleToken: "0x948d2a81086a075b3130bac19e4c6dee1D2e3fe8",
-          dueDate: moment(new Date(1630166400000)).format(
-            "YYYY/MM/DD HH:mm:ss"
-          ),
-          _collateral: "0x5066c68cae3b9bdacd6a1a37c90f2d1723559d18",
-          show_strikePrice: 7,
-          _strikePrice: 7,
-          _underlying: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-          _expiry: 1630166400000,
-          transfer: true,
-          longAdress: "0x792b733af7b9b83331f90dbbd297e519258b09bc",
-          type: "Call",
-          symbol: "hWIZARD",
-          approveAddress1: "FACTORY",
-          approveAddress2: "",
-          outPrice: 7,
-          outPriceUnit: "BUSD",
-          showVolume: volume,
-          buyVolume: volume,
-          TypeCoin: getTokenName("0x5066c68cae3b9bdacd6a1a37c90f2d1723559d18"),
-        };
-        if (resultItem._expiry < currentTime) {
-          resultItem["status"] = "Expired";
-          resultItem["sort"] = 2;
-          resultItem["dueDate"] = "Expired";
-        } else {
-          resultItem["status"] = "Unactivated";
-          resultItem["sort"] = 0;
-        }
-        if (resultItem._expiry + 5184000000 < currentTime) {
-          resultItem["status"] = "Hidden";
-          resultItem["sort"] = 3;
-        }
         return resultItem;
       }
     },

@@ -5,6 +5,31 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "time",
+        "type": "uint256"
+      }
+    ],
+    "name": "Burn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "previousGovernor",
         "type": "address"
       },
@@ -19,59 +44,39 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "sender",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "in_",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "out",
-        "type": "uint256"
-      }
-    ],
-    "name": "Swap",
-    "type": "event"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
-        "name": "governor",
+        "name": "_governor",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "from_",
+        "name": "_rewardsDistribution",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_burnToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_rewardToken",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "factor_",
+        "name": "_begin",
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "to_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "mine_",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_span",
+        "type": "uint256"
       }
     ],
-    "name": "__BurnSwap_init",
+    "name": "__BurnHelmetSwapGuard_init",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -80,26 +85,31 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "from_",
+        "name": "_rewardsDistribution",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_burnToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_rewardToken",
         "type": "address"
       },
       {
         "internalType": "uint256",
-        "name": "factor_",
+        "name": "_begin",
         "type": "uint256"
       },
       {
-        "internalType": "address",
-        "name": "to_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "mine_",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_span",
+        "type": "uint256"
       }
     ],
-    "name": "__BurnSwap_init_unchained",
+    "name": "__BurnHelmetSwapGuard_init_unchained",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -119,7 +129,7 @@
   },
   {
     "inputs": [],
-    "name": "factor",
+    "name": "begin",
     "outputs": [
       {
         "internalType": "uint256",
@@ -131,11 +141,29 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "from",
-    "outputs": [
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
       {
         "internalType": "address",
+        "name": "toAddress",
+        "type": "address"
+      }
+    ],
+    "name": "burnSwap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "burnToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -225,10 +253,17 @@
   },
   {
     "inputs": [],
-    "name": "mine",
+    "name": "renounceGovernorship",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rewardToken",
     "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract IMappingAny",
         "name": "",
         "type": "address"
       }
@@ -238,9 +273,15 @@
   },
   {
     "inputs": [],
-    "name": "renounceGovernorship",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "rewardsDistribution",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -308,49 +349,45 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "span",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "vol",
+        "name": "",
         "type": "uint256"
       }
     ],
-    "name": "swap",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "vol",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "toChainId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "sendTo",
-        "type": "address"
-      }
-    ],
-    "name": "swapAndSend",
-    "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "to",
+    "name": "totalBurn",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "name": "totalBurns",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

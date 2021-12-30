@@ -17,6 +17,19 @@
       <div class="top_slider">
         <div class="menu">
           <div class="menu_group">
+
+            <div class="menu_item">
+              <nuxt-link
+                  to="/dashboard"
+                  :class="routeObj.name === 'dashboard' ? 'active' : ''"
+              >
+                <svg class="icon svg-icon" aria-hidden="true">
+                  <use xlink:href="#icon-ibo"></use>
+                </svg>
+                {{ $t("Header.Dashboard") }}
+              </nuxt-link>
+            </div>
+
             <div class="menu_item">
               <a
                 @click="sliderClick"
@@ -98,7 +111,7 @@
                 <use xlink:href="#icon-mining1"></use>
               </svg>
               {{ $t("Header.Mining") }}
-              <i class="num">8</i>
+              <i class="num">5</i>
             </nuxt-link>
           </div>
           <div class="menu_item">
@@ -106,13 +119,13 @@
               to="/governance"
               :class="routeObj.name.includes('governance') ? 'active' : ''"
             >
-              <svg class="hot" aria-hidden="true">
+              <!-- <svg class="hot" aria-hidden="true">
                 <use
                   :href="`#icon-${
                     routeObj.name.includes('governance') ? 'new1' : 'new'
                   }`"
                 ></use>
-              </svg>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-vote"></use>
               </svg>
@@ -123,7 +136,14 @@
             <nuxt-link
               to="/flashmining"
               :class="routeObj.name === 'flashmining' ? 'active' : ''"
-            >
+              >
+              <!-- <svg class="hot" aria-hidden="true">
+                <use
+                  :href="`#icon-${
+                    routeObj.name.includes('flashmining') ? 'hot1' : 'hot'
+                  }`"
+                ></use>
+              </svg> -->
               <svg class="icon svg-icon" aria-hidden="true">
                 <use xlink:href="#icon-flashmining"></use>
               </svg>

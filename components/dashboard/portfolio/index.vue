@@ -2,74 +2,151 @@
 <div class="portfolio-view">
   <div class="list-view">
     <h1>LPT</h1>
-    <table v-if="LPTList.length > 0">
-      <tr>
-        <th>LP Token</th>
-        <th>Balance(pool)</th>
-        <th>Price</th>
-        <th>Value</th>
-      </tr>
-      <tr v-for="(item, index) in LPTList" :key="index">
-        <td>
-          <img
-              v-if="item.ImgReward"
-              :src="
+    <template v-if="LPTList.length > 0">
+      <table class="table-pc">
+        <tr>
+          <th>LP Token</th>
+          <th>Balance(pool)</th>
+          <th>Price</th>
+          <th>Value</th>
+        </tr>
+        <tr v-for="(item, index) in LPTList" :key="index">
+          <td>
+            <img
+                v-if="item.ImgReward"
+                :src="
                       require(`~/assets/img/mining/${
                         item.Status === 3
                           ? item.RewardSymbol + '_expired'
                           : item.RewardSymbol
                       }.png`)
                     "
-              alt=""
-              class="td-img"
-          />
-          {{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}
-        </td>
-        <td>{{item.userBalanceOf}} <span>({{item.userStakeNum}})</span></td>
-        <td>${{item.lptPrice}}</td>
-        <td>${{item.userLPTValue}}</td>
-      </tr>
-    </table>
+                alt=""
+                class="td-img"
+            />
+            {{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}
+          </td>
+          <td>{{item.userBalanceOf}} <span>({{item.userStakeNum}})</span></td>
+          <td>${{item.lptPrice}}</td>
+          <td>${{item.userLPTValue}}</td>
+        </tr>
+      </table>
+      <div class="table-h5" v-for="(item, index) in LPTList" :key="index">
+        <div>
+          <p class="table-h5-title">LP Token</p>
+          <p class="table-h5-value">
+            <img
+                v-if="item.ImgReward"
+                :src="
+                      require(`~/assets/img/mining/${
+                        item.Status === 3
+                          ? item.RewardSymbol + '_expired'
+                          : item.RewardSymbol
+                      }.png`)
+                    "
+                alt=""
+                class="td-img"
+            />
+            {{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}
+          </p>
+        </div>
+        <div>
+          <p class="table-h5-title">Balance(pool)</p>
+          <div class="table-h5-value">
+            {{item.userBalanceOf}}
+            <p>({{item.userStakeNum}})</p>
+          </div>
+        </div>
+        <div>
+          <p class="table-h5-title">Price</p>
+          <p class="table-h5-value">${{item.lptPrice}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">Value</p>
+          <p class="table-h5-value">${{item.userLPTValue}}</p>
+        </div>
+      </div>
+    </template>
     <div class="loading" v-else-if="lptLoading">loading...</div>
     <div class="no-data" v-else>No Data</div>
   </div>
 
   <div class="list-view">
     <h1>Short Token</h1>
-    <table v-if="shortList.length > 0">
-      <tr>
-        <th>Short Token</th>
-        <th>Balance</th>
-        <th>strikePrice</th>
-        <th>Expiry</th>
-      </tr>
-      <tr v-for="(item, index) in shortList" :key="index">
-        <td>{{item.name}}</td>
-        <td>{{item.sortBalanceOf}}</td>
-        <td>${{item.strikePrice}}</td>
-        <td>{{item.expiry}}</td>
-      </tr>
-    </table>
+    <template v-if="shortList.length > 0">
+      <table class="table-pc">
+        <tr>
+          <th>Short Token</th>
+          <th>Balance</th>
+          <th>strikePrice</th>
+          <th>Expiry</th>
+        </tr>
+        <tr v-for="(item, index) in shortList" :key="index">
+          <td>{{item.name}}</td>
+          <td>{{item.sortBalanceOf}}</td>
+          <td>${{item.strikePrice}}</td>
+          <td>{{item.expiry}}</td>
+        </tr>
+      </table>
+      <div class="table-h5" v-for="(item, index) in shortList" :key="index">
+        <div>
+          <p class="table-h5-title">Short Token</p>
+          <p class="table-h5-value">{{item.name}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">Balance</p>
+          <p class="table-h5-value">{{item.sortBalanceOf}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">strikePrice</p>
+          <p class="table-h5-value">${{item.strikePrice}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">Expiry</p>
+          <p class="table-h5-value">{{item.expiry}}</p>
+        </div>
+      </div>
+    </template>
     <div class="loading" v-else-if="longSortLoading">loading...</div>
     <div class="no-data" v-else>No Data</div>
   </div>
 
   <div class="list-view">
     <h1>Long Token</h1>
-    <table v-if="longList.length > 0">
-      <tr>
-        <th>Short Token</th>
-        <th>Balance</th>
-        <th>strikePrice</th>
-        <th>Expiry</th>
-      </tr>
-      <tr v-for="(item, index) in longList" :key="index">
-        <td>{{item.name}}</td>
-        <td>{{item.longBalanceOf}}</td>
-        <td>${{item.strikePrice}}</td>
-        <td>{{item.expiry}}</td>
-      </tr>
-    </table>
+    <template v-if="longList.length > 0">
+      <table class="table-pc">
+        <tr>
+          <th>Long Token</th>
+          <th>Balance</th>
+          <th>strikePrice</th>
+          <th>Expiry</th>
+        </tr>
+        <tr v-for="(item, index) in longList" :key="index">
+          <td>{{item.name}}</td>
+          <td>{{item.longBalanceOf}}</td>
+          <td>${{item.strikePrice}}</td>
+          <td>{{item.expiry}}</td>
+        </tr>
+      </table>
+      <div class="table-h5" v-for="(item, index) in longList" :key="index">
+        <div>
+          <p class="table-h5-title">Long Token</p>
+          <p class="table-h5-value">{{item.name}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">Balance</p>
+          <p class="table-h5-value">{{item.longBalanceOf}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">strikePrice</p>
+          <p class="table-h5-value">${{item.strikePrice}}</p>
+        </div>
+        <div>
+          <p class="table-h5-title">Expiry</p>
+          <p class="table-h5-value">{{item.expiry}}</p>
+        </div>
+      </div>
+    </template>
     <div class="loading" v-else-if="longSortLoading">loading...</div>
     <div class="no-data" v-else>No Data</div>
   </div>
@@ -106,7 +183,7 @@ export default {
     }
   },
   watch: {
-    '$store.state.userInfo.account': function (){
+    account: function (){
       this.getData()
     }
   },
@@ -270,21 +347,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~/assets/css/themes.scss";
 .portfolio-view{
   .list-view{
     width: 100%;
     min-height: 193px;
-    background: rgba(255, 255, 255, 0.4);
+    @include themeify {
+      background: themed("dashboard_color1");
+      border: 2px solid themed("dashboard_color2");
+    }
     box-shadow: 0px 4px 9px 0px rgba(255,255,255,0.02);
     border-radius: 22px;
-    border: 2px solid #FFFFFF;
-    padding: 26px 33px;
+    padding: 20px 15px;
     margin-bottom: 11px;
     &>h1{
       font-size: 22px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: #17173A;
+      @include themeify {
+        color: themed("dashboard_color3");
+      }
+
       line-height: 22px;
     }
     table{
@@ -295,7 +378,9 @@ export default {
         font-size: 15px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: rgba(23, 23, 58, 0.7);
+        @include themeify {
+          color: themed("dashboard_color3");
+        }
         line-height: 18px;
         padding: 10px 0;
         width: 25%;
@@ -305,7 +390,9 @@ export default {
         font-size: 18px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: #17173A;
+        @include themeify {
+          color: themed("dashboard_color4");
+        }
         line-height: 18px;
         width: 25%;
         .td-img{
@@ -322,6 +409,54 @@ export default {
     align-items: center;
     justify-content: center;
     color: #cccccc;
+  }
+  .table-h5{
+    display: none;
+  }
+}
+@media (max-width: 750px) {
+  .list-view {
+    padding: 10px;
+    &>h1{
+      margin-bottom: 10px;
+    }
+    .table-h5 {
+      display: grid;
+      padding: 0 0 20px 0;
+      grid-template-columns: 1fr 100px;
+      border-bottom: 1px solid #F2F0EB;
+      &>div{
+        &:nth-child(odd){
+          padding-right: 10px;
+        }
+        .td-img{
+          height: 20px;
+        }
+        .table-h5-title{
+          font-size: 14px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 500;
+          @include themeify {
+            color: themed("dashboard_color3");
+          }
+          line-height: 16px;
+          margin-top: 15px;
+        }
+        .table-h5-value{
+          font-size: 16px;
+          font-family: IBMPlexSans-Medium, IBMPlexSans;
+          font-weight: 500;
+          @include themeify {
+            color: themed("dashboard_color4");
+          }
+          line-height: 18px;
+          margin-top: 10px;
+        }
+      }
+    }
+    .table-pc {
+      display: none;
+    }
   }
 }
 </style>

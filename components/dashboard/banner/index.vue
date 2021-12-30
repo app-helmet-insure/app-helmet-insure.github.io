@@ -7,7 +7,7 @@
         <img :src="'https://avatars.dicebear.com/api/identicon/' + account + '.svg'" alt="" v-else>
       </div>
       <div class="info">
-        <span class="account" @click="copyAdress($event, account)">{{accountText}} <img src="../../../assets/img/dashboard/copy.png" class="copy" alt=""></span>
+        <span class="account" @click="copyAdress($event, account)" v-if="account">{{accountText}} <img src="../../../assets/img/dashboard/copy.png" class="copy" alt=""></span>
         <p>{{$t("Dashboard.text1")}} helmet: {{createdAt}}</p>
         <p class="iio">IIO <img :src="require(`~/assets/img/iio/${item.img}.png`)" :alt="item.name" v-for="(item, index) in useIIOList" :key="index"></p>
         <p class="iio">IBO <img :src="require(`~/assets/img/ibo/${item.icon}`)" :alt="item.name" v-for="(item, index) in useIBOList" :key="index"></p>
@@ -226,6 +226,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/themes.scss";
 .dashboard-banner{
   display: flex;
   .banner-l{
@@ -235,6 +236,7 @@ export default {
       &>img{
         width: 80px;
         height: 80px;
+        border-radius: 50%;
       }
     }
     .info{
@@ -259,7 +261,9 @@ export default {
       p{
         font-size: 14px;
         font-family: IBMPlexSans;
-        color: #17173A;
+        @include themeify {
+          color: themed("color-17173a");
+        }
         line-height: 16px;
         margin: 10px 0;
       }
@@ -280,6 +284,7 @@ export default {
     .balance-item{
       width: 264px;
       height: 132px;
+      min-width: 264px;
       border-radius: 22px;
       background-size: auto 100%;
       background-position: right bottom;
@@ -344,15 +349,14 @@ export default {
     display: flex;
     flex-direction: column;
     .banner-r{
-      flex-direction: column;
       display: flex;
+      overflow-x: auto;
       align-items: center;
-      justify-content: center;
       .balance-item{
-        width: 90vw;
+        //width: 90vw;
       }
       .balance-helmet{
-        margin: 20px 0 10px 0;
+        margin: 0 20px 0 0;
       }
     }
   }

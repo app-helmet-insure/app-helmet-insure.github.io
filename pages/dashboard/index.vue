@@ -45,6 +45,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import "~/assets/css/themes.scss";
 .dashboard-page{
   padding: 0 29px;
   .tabs{
@@ -53,7 +54,10 @@ export default {
     &>div{
       width: 110px;
       height: 40px;
-      color: #17173A;
+      @include themeify {
+        color: themed("color-17173a");
+      }
+
       border-radius: 20px;
       padding: 11px 20px;
       font-size: 18px;
@@ -65,9 +69,14 @@ export default {
       &.active{
         background: #FD7E14;
         box-shadow: 0px 4px 9px 0px rgba(253,126,20,0.5);
-        color: #FFFFFF;
+        color: #FFFFFF!important;
       }
     }
+  }
+}
+@media (max-width: 750px) {
+  .dashboard-page {
+    padding: 0 10px;
   }
 }
 </style>

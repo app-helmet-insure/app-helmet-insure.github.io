@@ -236,8 +236,10 @@ export default {
   background: #f0debf !important;
 }
 .dashboard{
-  background: linear-gradient(180deg, #FFF3E8 0%, #FFFFFF 100%) !important;
   box-shadow: 0px 3px 6px 0px rgba(155,155,155,0.02) !important;
+  @include themeify {
+    background: themed("linner-dashboard") !important;
+  }
 }
 .fade-enter-active,
 .fade-leave-active {

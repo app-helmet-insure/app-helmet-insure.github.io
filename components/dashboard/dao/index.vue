@@ -1,22 +1,52 @@
 <template>
   <div class="dao-view">
     <div class="list-view">
-      <table v-if="proposal">
-        <tr>
-          <th>Proposal</th>
-          <th>Vote</th>
-          <th>Result</th>
-        </tr>
-        <tr>
-          <td>{{proposal.name}}</td>
-          <td>
-            <div v-if="proposal.SelfType1 > 0">{{ $t("Governance.Governance_text3") }}: {{ fixD(proposal.SelfType1, 4) }}</div>
-            <div v-if="proposal.SelfType2 > 0">{{ $t("Governance.Governance_text4") }}: {{ fixD(proposal.SelfType2, 4) }}</div>
-            <div v-if="proposal.SelfType3 > 0">{{ $t("Governance.Governance_text5") }}{{ fixD(proposal.SelfType3, 4) }}</div>
-          </td>
-          <td>{{proposal.result}}</td>
-        </tr>
-      </table>
+      <template v-if="proposal" >
+        <table class="table-pc">
+          <tr>
+            <th>Proposal</th>
+            <th>Vote</th>
+            <th>Result</th>
+          </tr>
+          <tr>
+            <td>{{proposal.name}}</td>
+            <td>
+              <div v-if="proposal.SelfType1 > 0">{{ $t("Governance.Governance_text3") }}: {{ fixD(proposal.SelfType1, 4) }}</div>
+              <div v-if="proposal.SelfType2 > 0">{{ $t("Governance.Governance_text4") }}: {{ fixD(proposal.SelfType2, 4) }}</div>
+              <div v-if="proposal.SelfType3 > 0">{{ $t("Governance.Governance_text5") }}{{ fixD(proposal.SelfType3, 4) }}</div>
+            </td>
+            <td>{{proposal.result}}</td>
+          </tr>
+        </table>
+        <table class="table-h5">
+          <tr>
+            <th>Proposal</th>
+          </tr>
+          <tr>
+            <td>{{proposal.name}}</td>
+          </tr>
+        </table>
+        <table class="table-h5">
+          <tr>
+            <th>Vote</th>
+          </tr>
+          <tr>
+            <td>
+              <div v-if="proposal.SelfType1 > 0">{{ $t("Governance.Governance_text3") }}: {{ fixD(proposal.SelfType1, 4) }}</div>
+              <div v-if="proposal.SelfType2 > 0">{{ $t("Governance.Governance_text4") }}: {{ fixD(proposal.SelfType2, 4) }}</div>
+              <div v-if="proposal.SelfType3 > 0">{{ $t("Governance.Governance_text5") }}{{ fixD(proposal.SelfType3, 4) }}</div>
+            </td>
+          </tr>
+        </table>
+        <table class="table-h5">
+          <tr>
+            <th>Result</th>
+          </tr>
+          <tr>
+            <td>{{proposal.result}}</td>
+          </tr>
+        </table>
+      </template>
       <div class="loading" v-else-if="proposalLoading">loading...</div>
       <div class="no-data" v-else>No Data</div>
     </div>
@@ -45,7 +75,7 @@ export default {
     }
   },
   watch: {
-    '$store.state.userInfo.account': function (){
+    account: function (){
       this.getData()
     }
   },
@@ -73,15 +103,6 @@ export default {
       const Account = this.account
       getGovernance().then((res) => {
         const List = res.data.data.votes;
-        const Type1List = List.filter(
-            (item) => item.proposalID == Proposal.Proposal[0].ID
-        );
-        const Type2List = List.filter(
-            (item) => item.proposalID == Proposal.Proposal[1].ID
-        );
-        const Type3List = List.filter(
-            (item) => item.proposalID == Proposal.Proposal[2].ID
-        );
         const SelfType1List = List.filter(
             (item) =>
                 item.proposalID == Proposal.Proposal[0].ID &&
@@ -122,15 +143,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "~/assets/css/themes.scss";
 .list-view {
   width: 100%;
-  background: rgba(255, 255, 255, 0.4);
+
+  @include themeify {
+    background: themed("dashboard_color1");
+    border: 2px solid themed("dashboard_color2");
+  }
   box-shadow: 0px 4px 9px 0px rgba(255, 255, 255, 0.02);
   border-radius: 22px;
-  border: 2px solid #FFFFFF;
   padding: 16px 37px;
   margin-bottom: 11px;
-
+.table-h5{
+  display: none;
+}
   table{
     width: 100%;
     text-align: left;
@@ -138,7 +165,9 @@ export default {
       font-size: 15px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: rgba(23, 23, 58, 0.7);
+      @include themeify {
+        color: themed("dashboard_color3");
+      }
       line-height: 18px;
       padding: 5px 0;
       &:nth-child(1){
@@ -156,7 +185,9 @@ export default {
       font-size: 18px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: #17173A;
+      @include themeify {
+        color: themed("dashboard_color4");
+      }
       line-height: 18px;
       &:nth-child(1){
         width: 50%;
@@ -171,7 +202,9 @@ export default {
         font-size: 18px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
-        color: #17173A;
+        @include themeify {
+          color: themed("dashboard_color4");
+        }
         line-height: 18px;
         margin-bottom: 5px;
       }
@@ -183,6 +216,17 @@ export default {
     align-items: center;
     justify-content: center;
     color: #cccccc;
+  }
+}
+@media (max-width: 750px) {
+  .list-view {
+    padding: 10px;
+    .table-h5 {
+      display: block;
+    }
+    .table-pc {
+      display: none;
+    }
   }
 }
 </style>

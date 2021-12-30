@@ -79,7 +79,7 @@ export default {
     }
   },
   watch: {
-    '$store.state.userInfo.account': function () {
+    account: function () {
       this.getData()
     }
   },
@@ -255,14 +255,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "~/assets/css/themes.scss";
 .nfts-view {
   .list-view {
     width: 100%;
     min-height: 193px;
-    background: rgba(255, 255, 255, 0.4);
+    @include themeify {
+      background: themed("dashboard_color1");
+      border: 2px solid themed("dashboard_color2");
+    }
     box-shadow: 0px 4px 9px 0px rgba(255, 255, 255, 0.02);
     border-radius: 22px;
-    border: 2px solid #FFFFFF;
     padding: 26px 33px;
     margin-bottom: 11px;
 
@@ -270,7 +273,9 @@ export default {
       font-size: 22px;
       font-family: IBMPlexSans-Medium, IBMPlexSans;
       font-weight: 500;
-      color: #17173A;
+      @include themeify {
+        color: themed("dashboard_color3");
+      }
       line-height: 22px;
     }
 
@@ -346,13 +351,12 @@ export default {
       }
     }
     .nft-1155{
-      width: 180px;
-      height: 220px;
+      width: 154px;
       margin: 0 10px 10px 0;
       background: #040004;
       border-radius: 5px;
       img{
-        width: 180px;
+        width: 100%;
         border-radius: 5px;
       }
       div{
@@ -375,18 +379,20 @@ export default {
       padding: 10px;
       border-radius: 15px;
       margin: 0 10px 10px 0;
+      background: #FFFAF6;
+      height: 180px;
       p{
         text-align: center;
       }
       img{
-        width: 160px;
-        height: 160px;
+        width: 100%;
+        transform: translateY(-10px);
       }
       .card-title{
         transform: translateY(10px);
       }
       .card-id{
-        transform: translateY(-10px);
+        transform: translateY(-20px);
       }
     }
 
@@ -401,6 +407,23 @@ export default {
     align-items: center;
     justify-content: center;
     color: #cccccc;
+  }
+}
+@media (max-width: 750px) {
+  .nfts-view {
+    .list-view {
+      padding: 10px;
+      .nft-list{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-row-gap: 10px;
+        grid-column-gap: 10px;
+      }
+      .nft721, .nft-1155{
+        width: 100% !important;
+        height: auto!important;
+      }
+    }
   }
 }
 </style>

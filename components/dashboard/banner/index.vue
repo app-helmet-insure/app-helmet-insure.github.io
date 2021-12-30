@@ -1,6 +1,32 @@
 <template>
-  <div>
-    DashboardBanner
+  <div class="dashboard-banner">
+    <div class="banner-l">
+      <div class="avatar">
+        <img src="../../../assets/img/dashboard/justine-dusk-avatar.png" alt="" v-if="duskNftAvatar === 'justineDusk'">
+        <img src="../../../assets/img/dashboard/dusk-avatar.png" alt="" v-else-if="duskNftAvatar === 'dusk'">
+        <img :src="'https://avatars.dicebear.com/api/identicon/' + account + '.svg'" alt="" v-else>
+      </div>
+      <div class="info">
+        <span class="account" @click="copyAdress($event, account)">{{accountText}} <img src="../../../assets/img/dashboard/copy.png" class="copy" alt=""></span>
+        <p>{{$t("Dashboard.text1")}} helmet: {{createdAt}}</p>
+        <p class="iio">IIO <img :src="require(`~/assets/img/iio/${item.img}.png`)" :alt="item.name" v-for="(item, index) in useIIOList" :key="index"></p>
+        <p class="iio">IBO <img :src="require(`~/assets/img/ibo/${item.icon}`)" :alt="item.name" v-for="(item, index) in useIBOList" :key="index"></p>
+      </div>
+    </div>
+    <div class="banner-r">
+      <div class="balance-item balance-helmet">
+        <div class="chain">BSC <img src="../../../assets/img/dashboard/binance-icon.png" alt=""></div>
+        <h1>Helmet</h1>
+        <h2>{{balance.helmet.balance}}</h2>
+        <p>${{balance.helmet.USD}}</p>
+      </div>
+      <div class="balance-item balance-guard">
+        <div class="chain">Polygon <img src="../../../assets/img/dashboard/polygon-icon.png" alt=""></div>
+        <h1>Guard</h1>
+        <h2>{{balance.guard.balance}}</h2>
+        <p>${{balance.guard.USD}}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,23 +42,26 @@ import ADDRESS from '~/web3/abis/config.js'
 import {ProjectData} from "../../../config/iio";
 import axios from "axios";
 import moment from "moment";
+import ClipboardJS from "clipboard";
+import Message from "../../common/Message";
 export default {
   name: "DashboardBanner",
+  props: ['duskNftAvatar'],
   data(){
     return {
       balance: {
         helmet: {
-          balance: '',
+          balance: '-',
           price: '',
-          USD: ''
+          USD: '-'
         },
         guard: {
-          balance: '',
+          balance: '-',
           price: '',
-          USD: ''
+          USD: '-'
         }
       },
-      useIBO: false,
+      useIBOList: [],
       useIIOList: [],
       createdAt: ''
     }
@@ -40,6 +69,13 @@ export default {
   computed: {
     account(){
       return this.$store.state.userInfo.account
+    },
+    accountText(){
+      if (this.account){
+        return this.account.substr(0, 6) +
+        "..." +
+            this.account.substr(-4)
+      }
     }
   },
   watch: {
@@ -48,6 +84,22 @@ export default {
     }
   },
   methods: {
+    copyAdress(e, text) {
+      let copys = new ClipboardJS(".copy", { text: () => text });
+      copys.on("success", function (e) {
+        Message({
+          message: "Successfully copied",
+          type: "success",
+          // duration: 0,
+        });
+        copys.destroy();
+      });
+      copys.on("error", function (e) {
+        console.error("Action:", e.action);
+        console.error("Trigger:", e.trigger);
+        copys.destroy();
+      });
+    },
     getData(){
       if (!this.account){
         return
@@ -77,16 +129,15 @@ export default {
       ]).then(res => {
         const data = processResult(res)
         const obj = {
-          balance: fromWei(data[0]),
+          balance: Number(fromWei(data[0])).toFixed(4)*1,
           price: fromWei(data[1][0], priceDecimals),
         }
-        obj.USD = new BigNumber(obj.balance).multipliedBy(obj.price).toFixed(6) * 1
+        obj.USD = new BigNumber(obj.balance).multipliedBy(obj.price).toFixed(2) * 1
         if (chainId === ChainId.BSC) {
           this.balance.helmet = obj
         } else if (chainId === ChainId.MATIC) {
           this.balance.guard = obj
         }
-        console.log(obj)
       })
 
     },
@@ -112,10 +163,10 @@ export default {
         } else {
           this.createdAt = '-'
         }
-        console.log(this.createdAt)
       })
     },
     getUseIBO(){
+      // require(`~/assets/img/ibo/${iboData.icon}`)
       const calls = []
       for (let i = 0; i < iboPools.length; i++) {
         if (iboPools[i].networkId === ChainId.BSC) {
@@ -126,8 +177,16 @@ export default {
       const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
       multicall.all(calls).then(res => {
         const data = processResult(res)
-        this.useIBO = data.some(item => item > 0)
-        console.log(this.useIBO)
+        const filterList = []
+        for (let i = 0; i < data.length; i++) {
+          if (data[i] > 0){
+            filterList.push({
+              name: iboPools[i].name,
+              icon: iboPools[i].icon
+            })
+          }
+        }
+        this.useIBOList = filterList
       })
     },
     getUseIIO(){
@@ -150,11 +209,13 @@ export default {
       multicall.all(calls).then(res => {
         const data = processResult(res)
         const strToBool = {'true': true, 'false': false}
+        const filterList = []
         for (let i = 0; i < useIIOList.length; i++) {
-          useIIOList[i].use = strToBool[data[i]]
+          if (strToBool[data[i]]){
+            filterList.push(useIIOList[i])
+          }
         }
-        this.useIIOList = useIIOList
-        console.log(useIIOList)
+        this.useIIOList = filterList
       })
     }
   },
@@ -164,6 +225,136 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang='scss' scoped>
+.dashboard-banner{
+  display: flex;
+  .banner-l{
+    flex: 1;
+    display: flex;
+    .avatar{
+      &>img{
+        width: 80px;
+        height: 80px;
+      }
+    }
+    .info{
+      flex: 1;
+      padding: 0 10px;
+      .account{
+        background: #FD7E14;
+        border-radius: 12px;
+        height: 24px;
+        line-height: 17px;
+        font-size: 15px;
+        font-family: IBMPlexSans;
+        color: #FFFFFF;
+        padding: 2px 9px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        .copy{
+          width: 12px;
+          height: 12px;
+        }
+      }
+      p{
+        font-size: 14px;
+        font-family: IBMPlexSans;
+        color: #17173A;
+        line-height: 16px;
+        margin: 10px 0;
+      }
+      .iio{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        &>img{
+          width: 20px;
+          height: 20px;
+          margin-left: 3px;
+        }
+      }
+    }
+  }
+  .banner-r{
+    display: flex;
+    .balance-item{
+      width: 264px;
+      height: 132px;
+      border-radius: 22px;
+      background-size: auto 100%;
+      background-position: right bottom;
+      background-repeat: no-repeat;
+      position: relative;
+      padding: 19px 22px;
+      .chain{
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 15px;
+        font-family: IBMPlexSans;
+        line-height: 20px;
+        display: flex;
+        align-items: center;
+        img{
+          width: 30px;
+          height: 30px;
+        }
+      }
+      h1{
+        font-size: 15px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #17173A;
+        line-height: 20px;
+      }
+      h2{
+        font-size: 22px;
+        font-family: IBMPlexSans-Bold, IBMPlexSans;
+        font-weight: bold;
+        color: #17173A;
+        line-height: 27px;
+        margin-top: 20px;
+      }
+    }
+    .balance-helmet{
+      background-image: url("../../../assets/img/dashboard/binance-bg.png");
+      background-color: #FBC386;
+      margin-right: 22px;
+      .chain{
+        color: #A96427;
+      }
+    }
+    .balance-guard{
+      background-image: url("../../../assets/img/dashboard/polygon-bg.png");
+      background-color: #B2B2FC;
+      .chain{
+        color: #52529D;
+      }
+    }
+  }
+}
+@media (max-width: 750px) {
+  .dashboard-banner{
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (max-width: 500px) {
+  .dashboard-banner{
+    display: flex;
+    flex-direction: column;
+    .banner-r{
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .balance-item{
+        width: 90vw;
+      }
+      .balance-helmet{
+        margin: 20px 0 10px 0;
+      }
+    }
+  }
+}
 </style>

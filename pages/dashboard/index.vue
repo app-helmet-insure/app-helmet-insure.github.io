@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       tabs: ['Portfolio', 'NFTs', 'DAO'],
-      active: 'NFTs',
+      active: 'Portfolio',
       duskNftAvatar: ""
     }
   },

@@ -1,0 +1,188 @@
+<template>
+  <div class="dao-view">
+    <div class="list-view">
+      <table v-if="proposal">
+        <tr>
+          <th>Proposal</th>
+          <th>Vote</th>
+          <th>Result</th>
+        </tr>
+        <tr>
+          <td>{{proposal.name}}</td>
+          <td>
+            <div v-if="proposal.SelfType1 > 0">{{ $t("Governance.Governance_text3") }}: {{ fixD(proposal.SelfType1, 4) }}</div>
+            <div v-if="proposal.SelfType2 > 0">{{ $t("Governance.Governance_text4") }}: {{ fixD(proposal.SelfType2, 4) }}</div>
+            <div v-if="proposal.SelfType3 > 0">{{ $t("Governance.Governance_text5") }}{{ fixD(proposal.SelfType3, 4) }}</div>
+          </td>
+          <td>{{proposal.result}}</td>
+        </tr>
+      </table>
+      <div class="loading" v-else-if="proposalLoading">loading...</div>
+      <div class="no-data" v-else>No Data</div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+import { getGovernance } from "~/interface/request.js";
+import {fromWei} from "../../../web3";
+
+import { fixD } from "~/assets/js/util.js";
+import {formatGovernance, GovernanceList} from "../../../config/governance";
+export default {
+  name: "Dao",
+  data(){
+    return {
+      fixD,
+      proposal: null,
+      proposalLoading: false
+    }
+  },
+  computed: {
+    account(){
+      return this.$store.state.userInfo.account
+    }
+  },
+  watch: {
+    '$store.state.userInfo.account': function (){
+      this.getData()
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    getData() {
+      if (!this.account){
+      return
+    }
+      this.getProposalData()
+    },
+    getProposalData(){
+      this.proposalLoading = true
+      const proposal = {
+        name: 'About the plan of the 50% lock-up HELMET',
+        result: 'Proposal2'
+      }
+      let Router ="link1";
+      let FixGovernanceList = formatGovernance(GovernanceList);
+      const Proposal = FixGovernanceList.filter(
+          (item) => item.Router === Router
+      )[0];
+      const Account = this.account
+      getGovernance().then((res) => {
+        const List = res.data.data.votes;
+        const Type1List = List.filter(
+            (item) => item.proposalID == Proposal.Proposal[0].ID
+        );
+        const Type2List = List.filter(
+            (item) => item.proposalID == Proposal.Proposal[1].ID
+        );
+        const Type3List = List.filter(
+            (item) => item.proposalID == Proposal.Proposal[2].ID
+        );
+        const SelfType1List = List.filter(
+            (item) =>
+                item.proposalID == Proposal.Proposal[0].ID &&
+                item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const SelfType2List = List.filter(
+            (item) =>
+                item.proposalID == Proposal.Proposal[1].ID &&
+                item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const SelfType3List = List.filter(
+            (item) =>
+                item.proposalID == Proposal.Proposal[2].ID &&
+                item.address.toUpperCase() == Account.toUpperCase()
+        );
+        const SelfType1 = SelfType1List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const SelfType2 = SelfType2List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        const SelfType3 = SelfType3List.reduce(function (prev, next) {
+          return fromWei(next.amount) * 1 + prev;
+        }, 0);
+        this.proposalLoading = false
+        if (SelfType1 <= 0 && SelfType2 <= 0 && SelfType1<= 0) {
+          return
+        }
+        proposal.SelfType1 = SelfType1
+        proposal.SelfType2 = SelfType2
+        proposal.SelfType3 = SelfType3
+        this.proposal = proposal
+      });
+
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.list-view {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0px 4px 9px 0px rgba(255, 255, 255, 0.02);
+  border-radius: 22px;
+  border: 2px solid #FFFFFF;
+  padding: 16px 37px;
+  margin-bottom: 11px;
+
+  table{
+    width: 100%;
+    text-align: left;
+    th{
+      font-size: 15px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 500;
+      color: rgba(23, 23, 58, 0.7);
+      line-height: 18px;
+      padding: 5px 0;
+      &:nth-child(1){
+        width: 50%;
+      }
+      &:nth-child(2){
+        width: calc(50% - 100px);
+      }
+      &:nth-child(3){
+        width: 100px;
+      }
+    }
+    td{
+      padding: 5px 0;
+      font-size: 18px;
+      font-family: IBMPlexSans-Medium, IBMPlexSans;
+      font-weight: 500;
+      color: #17173A;
+      line-height: 18px;
+      &:nth-child(1){
+        width: 50%;
+      }
+      &:nth-child(2){
+        width: calc(50% - 100px);
+      }
+      &:nth-child(3){
+        width: 100px;
+      }
+      div{
+        font-size: 18px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 500;
+        color: #17173A;
+        line-height: 18px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  .no-data,.loading{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cccccc;
+  }
+}
+</style>

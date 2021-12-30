@@ -16,7 +16,7 @@
       </p>
       <div class="btn_link">
         <div class="bsc_dapp">
-          <nuxt-link to="/insurance">
+          <nuxt-link to="/dashboard">
             <img src="../../assets/img/home/bsc.png" alt="" /> Launch Helmet On
             BSC
           </nuxt-link>

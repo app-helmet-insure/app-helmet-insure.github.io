@@ -9,7 +9,7 @@
       <div class="info">
         <span class="account" @click="copyAdress($event, account)" v-if="account">
           {{accountText}} <img src="../../../assets/img/dashboard/copy.png" class="copy" alt=""></span>
-        <p>{{$t("Dashboard.text1")}} helmet: {{createdAt}}</p>
+        <p>{{$t("Dashboard.text1")}}: {{createdAt}}</p>
         <p class="iio">IIO <img :src="require(`~/assets/img/iio/${item.img}.png`)" :alt="item.name" v-for="(item, index) in useIIOList" :key="index"></p>
         <p class="iio">IBO <img :src="require(`~/assets/img/ibo/${item.icon}`)" :alt="item.name" v-for="(item, index) in useIBOList" :key="index"></p>
       </div>

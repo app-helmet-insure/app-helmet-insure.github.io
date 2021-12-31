@@ -290,31 +290,32 @@ export default {
         }`,
         },
       }).then(res => {
-        const options = res.data.data.options
+        const options = res.data.data.options || []
         //wbnb busd
         const putTokens = ['0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c', '0xe9e7cea3dedca5984780bafc599bd69add087d56']
         const calls = []
         for (let i = 0; i < options.length; i++) {
           const index1 = putTokens.findIndex(o => o === options[i].collateral)
           const index2 = putTokens.findIndex(o => o === options[i].underlying)
-          if (index1 > index2) {
-            options[i].cover = 'put'
-            options[i].coverColor = '#DC3545'
-          } else {
-            options[i].cover = 'call'
-            options[i].coverColor = '#28A745'
-          }
+
           const sortContract = new clientContract(ERC20ABI.abi, options[i].short, ChainId.BSC)
           const longContract = new clientContract(ERC20ABI.abi, options[i].long, ChainId.BSC)
           const collateralContract = new clientContract(ERC20ABI.abi, options[i].collateral, ChainId.BSC)
           calls.push(
               sortContract.balanceOf(this.account),
-              // sortContract.name(),
               longContract.balanceOf(this.account),
-              // longContract.name(),
               collateralContract.symbol(),
-              collateralContract.decimals()
           )
+          if (index1 > index2) {
+            options[i].cover = 'put'
+            options[i].coverColor = '#DC3545'
+            const underlyingContract = new clientContract(ERC20ABI.abi, options[i].underlying, ChainId.BSC)
+            calls.push(underlyingContract.decimals())
+          } else {
+            options[i].cover = 'call'
+            options[i].coverColor = '#28A745'
+            calls.push(collateralContract.decimals())
+          }
         }
         multicallClient(calls).then(data => {
           const shortList = []
@@ -322,10 +323,13 @@ export default {
           for (let i = 0; i < options.length; i++) {
             const ii = i * 4
             if (data[ii] > 0 || data[ii + 1] > 0) {
-              console.log(options[i].strikePrice)
               options[i].strikePrice = formatAmount(options[i].strikePrice, 18)
               options[i].name = data[ii + 2]
-              options[i].expiry = moment(options[i].expiry*1000).format("YYYY-MM-DD")
+              if (options[i].expiry > 4070880000) {
+                options[i].expiry = 'Infinite'
+              } else {
+                options[i].expiry = moment(options[i].expiry*1000).format("YYYY-MM-DD")
+              }
               if (data[ii] > 0){
                 options[i].sortBalanceOf = formatAmount(data[ii], data[ii+3] || 18)
                 shortList.push(options[i])
@@ -390,12 +394,13 @@ export default {
         width: 25%;
       }
       td{
-        padding: 10px 0;
+        padding: 20px 0;
         font-size: 18px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;
         font-weight: 500;
         @include themeify {
           color: themed("dashboard_color4");
+          border-bottom: 1px solid themed("dashboard_color5");
         }
         line-height: 18px;
         width: 25%;

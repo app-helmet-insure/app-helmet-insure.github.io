@@ -170,7 +170,6 @@ import moment from "moment";
 const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
   if (item.StakeSymbol && item.StakeSymbol.indexOf('LP') !== -1) {
     const LptTokenSymbol = item.StakeSymbol.split(' ')[0].split('-')
-    console.log(LptTokenSymbol)
     list.push({
       ...item,
       LptToken1Symbol: LptTokenSymbol[0],
@@ -209,7 +208,7 @@ export default {
         return
       }
       this.getLPTData()
-      // this.getSortData()
+      this.getSortData()
     },
     async getLPTData(){
       this.lptLoading = true

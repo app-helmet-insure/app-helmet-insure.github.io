@@ -481,6 +481,9 @@ export default {
           &.xms {
             background-image: url("../../../assets/img/icon/xms@2x.png");
           }
+          &.acsi {
+            background-image: url("../../../assets/img/icon/acsi@2x.png");
+          }
           &.burger {
             background-image: url("../../../assets/img/icon/burgerswap@2x.png");
           }

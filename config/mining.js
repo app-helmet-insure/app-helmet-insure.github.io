@@ -224,6 +224,7 @@ export const LptPoolList = [
     YearEarnType: "APR",
     JumpLink1:
       "<a href='https://app.acsi.finance/#/pool/0x86ddc49f66fa166e72e650a72752b43ce23ecbe500020000000000000000000b' target='_blank'>From <i class='acsi'></i>Get HELMET-BNB LPT</a>",
+    swapName: 'acsi'
   },
   {
     StakeABI: MiningABI,

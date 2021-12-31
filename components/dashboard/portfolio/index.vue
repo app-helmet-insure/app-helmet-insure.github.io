@@ -194,6 +194,8 @@ const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
 
 const LptPoolList = duplicateRemoval(LptPoolList1.concat(filterLptPoolList2), 'StakeAddress')
 
+console.log(LptPoolList)
+
 export default {
   name: "Portfolio",
   data(){
@@ -223,7 +225,7 @@ export default {
       this.getLPTData()
       this.getSortData()
     },
-    async getLPTData(){
+    getLPTData(){
       this.lptLoading = true
       const LPTList = []
       const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
@@ -251,16 +253,16 @@ export default {
         })
       }
       const filterList =[]
-      await multicall.all(calls).then(res => {
+      multicall.all(calls).then(res => {
         const data = processResult(res)
         const price = new BigNumber(fromWei(data[0], 18)).div(new BigNumber(fromWei(data[1], 18))).toFixed(6)
-
         for (let i = 0; i < LPTList.length; i++) {
           const ii = i*2 + 2
           const userBalanceOf = Number(fromWei(LPTList[i].NoProxy ? data[ii][0] : data[ii], 18)).toFixed(4) * 1
-          if (userBalanceOf > 0) {
+          const userStakeNum = Number(fromWei(Array.isArray(data[ii + 1]) ? data[ii + 1][0] : data[ii + 1], 18)).toFixed(4) * 1
+          if (userBalanceOf > 0 || userStakeNum > 0) {
             LPTList[i].userBalanceOf = userBalanceOf
-            LPTList[i].userStakeNum = Number(fromWei(Array.isArray(data[ii + 1]) ? data[ii + 1][0] : data[ii + 1], 18)).toFixed(4) * 1
+            LPTList[i].userStakeNum = userStakeNum
             LPTList[i].userLPTValue = formatAmount(((LPTList[i].userStakeNum + userBalanceOf) * price).toString(), 0, 2)
             LPTList[i].lptPrice = price
             filterList.push(LPTList[i])

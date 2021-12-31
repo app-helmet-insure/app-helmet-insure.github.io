@@ -179,7 +179,6 @@ export default {
   },
   computed: {
     account(){
-      return '0x1f752c963bd4fc50fc47de8ea4de8d71441da65f'
       return this.$store.state.userInfo.account
     }
   },

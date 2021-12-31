@@ -3,7 +3,7 @@
   <div class="list-view">
     <h1>LPT</h1>
     <template v-if="LPTList.length > 0">
-      <table class="table-pc">
+      <table :class="'table-pc' + ` table-${LPTList.length}`">
         <tr>
           <th>LP Token</th>
           <th>Balance(pool)</th>
@@ -74,7 +74,7 @@
   <div class="list-view">
     <h1>Short Token</h1>
     <template v-if="shortList.length > 0">
-      <table class="table-pc">
+      <table :class="'table-pc' + ` table-${LPTList.length}`">
         <tr>
           <th>Short Token</th>
           <th>Balance</th>
@@ -114,7 +114,7 @@
   <div class="list-view">
     <h1>Long Token</h1>
     <template v-if="longList.length > 0">
-      <table class="table-pc">
+      <table :class="'table-pc' + ` table-${LPTList.length}`">
         <tr>
           <th>Long Token</th>
           <th>Balance</th>
@@ -167,6 +167,19 @@ import axios from "axios";
 import {clientContract, multicallClient} from "../../../web3/multicall";
 import moment from "moment";
 
+function duplicateRemoval(arr,key) {
+  const obj = {}
+  const newArr = []
+  for (let i = 0; i < arr.length; i++) {
+    const itemKey = key ? arr[i][key] : arr[i]
+    if (!obj['s' + itemKey]){
+      newArr.push(arr[i])
+      obj['s' + itemKey] = true
+    }
+  }
+  return newArr
+}
+
 const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
   if (item.StakeSymbol && item.StakeSymbol.indexOf('LP') !== -1) {
     const LptTokenSymbol = item.StakeSymbol.split(' ')[0].split('-')
@@ -179,7 +192,7 @@ const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
   return list
 }, [])
 
-const LptPoolList = LptPoolList1.concat(filterLptPoolList2)
+const LptPoolList = duplicateRemoval(LptPoolList1.concat(filterLptPoolList2), 'StakeAddress')
 
 export default {
   name: "Portfolio",
@@ -241,8 +254,9 @@ export default {
       await multicall.all(calls).then(res => {
         const data = processResult(res)
         const price = new BigNumber(fromWei(data[0], 18)).div(new BigNumber(fromWei(data[1], 18))).toFixed(6)
-        for (let i = 1; i < LPTList.length; i++) {
-          const ii = i*2
+
+        for (let i = 0; i < LPTList.length; i++) {
+          const ii = i*2 + 2
           const userBalanceOf = Number(fromWei(LPTList[i].NoProxy ? data[ii][0] : data[ii], 18)).toFixed(4) * 1
           if (userBalanceOf > 0) {
             LPTList[i].userBalanceOf = userBalanceOf
@@ -393,10 +407,16 @@ export default {
 
       line-height: 22px;
     }
+    .table-1{
+      td{
+        border-bottom: 0!important;
+      }
+    }
     table{
       width: 100%;
       text-align: left;
       margin-top: 18px;
+      border-spacing: 0;
       th{
         font-size: 15px;
         font-family: IBMPlexSans-Medium, IBMPlexSans;

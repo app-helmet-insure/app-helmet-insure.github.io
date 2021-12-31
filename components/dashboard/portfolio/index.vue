@@ -74,7 +74,7 @@
   <div class="list-view">
     <h1>Short Token</h1>
     <template v-if="shortList.length > 0">
-      <table :class="'table-pc' + ` table-${LPTList.length}`">
+      <table :class="'table-pc' + ` table-${shortList.length}`">
         <tr>
           <th>Short Token</th>
           <th>Balance</th>
@@ -114,7 +114,7 @@
   <div class="list-view">
     <h1>Long Token</h1>
     <template v-if="longList.length > 0">
-      <table :class="'table-pc' + ` table-${LPTList.length}`">
+      <table :class="'table-pc' + ` table-${longList.length}`">
         <tr>
           <th>Long Token</th>
           <th>Balance</th>
@@ -407,11 +407,11 @@ export default {
 
       line-height: 22px;
     }
-    .table-1{
-      td{
-        border-bottom: 0!important;
-      }
-    }
+    //.table-1{
+    //  td{
+    //    border-bottom: 0!important;
+    //  }
+    //}
     table{
       width: 100%;
       text-align: left;

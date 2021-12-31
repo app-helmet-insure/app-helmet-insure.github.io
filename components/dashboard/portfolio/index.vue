@@ -47,7 +47,7 @@
                 alt=""
                 class="td-img"
             />
-            {{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}
+            <span>{{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}</span>
           </p>
         </div>
         <div>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import {LptPoolList} from "../../../config/mining";
+import {LptPoolList as LptPoolList1, TokenPoolList as LptPoolList2} from "../../../config/mining";
 import {fromWei, getOnlyMultiCallProviderPlus, processResult} from "../../../web3";
 import {CALC_ADDRESS, CalcAbi, ChainId} from "../../../web3/address";
 import {Contract} from "ethers-multicall-x";
@@ -166,6 +166,22 @@ import {formatAmount} from "../../../interface/ibo";
 import axios from "axios";
 import {clientContract, multicallClient} from "../../../web3/multicall";
 import moment from "moment";
+
+const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
+  if (item.StakeSymbol && item.StakeSymbol.indexOf('LP') !== -1) {
+    const LptTokenSymbol = item.StakeSymbol.split(' ')[0].split('-')
+    console.log(LptTokenSymbol)
+    list.push({
+      ...item,
+      LptToken1Symbol: LptTokenSymbol[0],
+      LptToken2Symbol: LptTokenSymbol[1]
+    })
+  }
+  return list
+}, [])
+
+const LptPoolList = LptPoolList1.concat(filterLptPoolList2)
+
 export default {
   name: "Portfolio",
   data(){
@@ -193,7 +209,7 @@ export default {
         return
       }
       this.getLPTData()
-      this.getSortData()
+      // this.getSortData()
     },
     async getLPTData(){
       this.lptLoading = true
@@ -267,7 +283,7 @@ export default {
           }
           this.LPTList = filterList
           this.lptLoading = false
-          // console.log('LPTList', filterList, price)
+          console.log('LPTList', filterList, price)
         }
       })
     },
@@ -326,7 +342,7 @@ export default {
               options[i].strikePrice = formatAmount(options[i].strikePrice, 18)
               options[i].name = data[ii + 2]
               if (options[i].expiry > 4070880000) {
-                options[i].expiry = 'Infinite'
+                options[i].expiry = 'Infinity'
               } else {
                 options[i].expiry = moment(options[i].expiry*1000).format("YYYY-MM-DD")
               }
@@ -440,6 +456,7 @@ export default {
         }
         .td-img{
           height: 20px;
+          margin-right: 5px;
         }
         .table-h5-title{
           font-size: 14px;
@@ -460,6 +477,8 @@ export default {
           }
           line-height: 18px;
           margin-top: 10px;
+          display: flex;
+          align-items: center;
         }
       }
     }

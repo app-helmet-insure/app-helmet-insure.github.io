@@ -18,7 +18,7 @@
     </div>
     <div class="account">
       <div class="airdrop_web airdrop" @click="handleClickAirdrop">
-        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
+        <img :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)" alt="" />
       </div>
       <span class="migration" @click="jump">
         <img src="~/assets/img/guard/Polygon.png" alt="" />
@@ -68,7 +68,7 @@
       ></ChangeAccount>
 
       <div class="airdrop_h5 airdrop" @click="handleClickAirdrop">
-        <img :src="require(`~/assets/img/icon/airdrop.png`)" alt="" />
+        <img :src="require(`~/assets/img/icon/airdrop_${storeThemes}.png`)" alt="" />
       </div>
     </div>
   </div>
@@ -381,7 +381,7 @@ export default {
         > img {
           width: 30px;
           height: 30px;
-          animation: airdrop 1s linear infinite;
+          //animation: airdrop 1s linear infinite;
         }
       }
       justify-content: flex-end;
@@ -427,7 +427,7 @@ export default {
         > img {
           width: 30px;
           height: 30px;
-          animation: airdrop 1s linear infinite;
+          //animation: airdrop 1s linear infinite;
         }
       }
       margin-top: 15px;

@@ -1,8 +1,7 @@
 <template>
   <div class="nfts-view">
     <div class="list-view">
-      <h1>MetaDusk</h1>
-      <div v-if="metaDusk721.length > 0 || metaDusk1155.length > 0" class="nft-list">
+      <div v-if="metaDusk721.length > 0 || metaDusk1155.length > 0 || dora721Ids.length > 0 || dora1155.length > 0" class="nft-list">
         <div v-for="(item, index) in metaDusk721" :key="'_' + index" class="nft721">
           <img :src="getIPFSFile(item.content.photo)" alt="">
           <div class="desc">
@@ -15,18 +14,11 @@
         <div class="nft-1155" v-for="(item, index) in metaDusk1155" :key="index">
           <img :src="getIPFSFile(item.photo)" alt="">
           <div>
-            <p>name: {{item.name}}</p>
-            <p>count: <strong>{{item.count}}</strong></p>
+            <p>Name: {{item.name}}</p>
+            <p>ID: {{item.id}}</p>
+            <p>Count: {{item.count}}</p>
           </div>
         </div>
-      </div>
-      <div class="loading" v-else-if="metaDuskLoading">loading...</div>
-      <div class="no-data" v-else>No NFT</div>
-    </div>
-
-    <div class="list-view">
-      <h1>PixelPuzzle</h1>
-      <div v-if="dora721Ids.length > 0 || dora1155.length > 0" class="nft-list">
         <div v-for="doraId in dora721Ids" :key="doraId" class="nft721 nft-dora">
           <img :src="require('~/assets/img/dashboard/dora.png')" alt="">
           <div class="desc">
@@ -36,7 +28,7 @@
           </div>
         </div>
         <template v-for="(item, index) in dora1155">
-          <div class="nft-1155 nft1155-dora" v-for="id in item.ids" :key="id">
+          <div class="nft-1155 nft1155-dora" v-for="id in item.ids" :key="index +'_' + id">
             <p class="card-title">{{item.card_name}}</p>
             <img :src="require(`~/assets/img/nft/have_${item.card_img}.png`)" alt="">
             <p class="card-id"><strong>ID: {{id}}</strong></p>
@@ -162,6 +154,7 @@ export default {
               for (let i = 0; i < kitIds.length; i++) {
                 if (data[i * 2] > 0) {
                   res[i].data.count = data[i * 2]
+                  res[i].data.id = kitIds[i]
                   nfts.push(res[i].data)
                 }
               }
@@ -380,7 +373,7 @@ export default {
       border-radius: 15px;
       margin: 0 10px 10px 0;
       background: #FFFAF6;
-      height: 180px;
+      height: 191px;
       p{
         text-align: center;
       }

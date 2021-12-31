@@ -82,7 +82,7 @@
           <th>Expiry</th>
         </tr>
         <tr v-for="(item, index) in shortList" :key="index">
-          <td>{{item.name}}</td>
+          <td :style="{color: item.coverColor}">{{item.name}} {{item.cover}}</td>
           <td>{{item.sortBalanceOf}}</td>
           <td>${{item.strikePrice}}</td>
           <td>{{item.expiry}}</td>
@@ -91,7 +91,7 @@
       <div class="table-h5" v-for="(item, index) in shortList" :key="index">
         <div>
           <p class="table-h5-title">Short Token</p>
-          <p class="table-h5-value">{{item.name}}</p>
+          <p class="table-h5-value" :style="{color: item.coverColor}">{{item.name}} {{item.cover}}</p>
         </div>
         <div>
           <p class="table-h5-title">Balance</p>
@@ -122,7 +122,7 @@
           <th>Expiry</th>
         </tr>
         <tr v-for="(item, index) in longList" :key="index">
-          <td>{{item.name}}</td>
+          <td :style="{color: item.coverColor}">{{item.name}} {{item.cover}}</td>
           <td>{{item.longBalanceOf}}</td>
           <td>${{item.strikePrice}}</td>
           <td>{{item.expiry}}</td>
@@ -131,7 +131,7 @@
       <div class="table-h5" v-for="(item, index) in longList" :key="index">
         <div>
           <p class="table-h5-title">Long Token</p>
-          <p class="table-h5-value">{{item.name}}</p>
+          <p class="table-h5-value" :style="{color: item.coverColor}">{{item.name}} {{item.cover}}</p>
         </div>
         <div>
           <p class="table-h5-title">Balance</p>
@@ -179,6 +179,7 @@ export default {
   },
   computed: {
     account(){
+      return '0x1f752c963bd4fc50fc47de8ea4de8d71441da65f'
       return this.$store.state.userInfo.account
     }
   },
@@ -299,8 +300,10 @@ export default {
           const index2 = putTokens.findIndex(o => o === options[i].underlying)
           if (index1 > index2) {
             options[i].cover = 'put'
+            options[i].coverColor = '#DC3545'
           } else {
             options[i].cover = 'call'
+            options[i].coverColor = '#28A745'
           }
           const sortContract = new clientContract(ERC20ABI.abi, options[i].short, ChainId.BSC)
           const longContract = new clientContract(ERC20ABI.abi, options[i].long, ChainId.BSC)
@@ -310,24 +313,26 @@ export default {
               // sortContract.name(),
               longContract.balanceOf(this.account),
               // longContract.name(),
-              collateralContract.name()
+              collateralContract.symbol(),
+              collateralContract.decimals()
           )
         }
         multicallClient(calls).then(data => {
           const shortList = []
           const longList = []
           for (let i = 0; i < options.length; i++) {
-            const ii = i * 3
+            const ii = i * 4
             if (data[ii] > 0 || data[ii + 1] > 0) {
+              console.log(options[i].strikePrice)
               options[i].strikePrice = formatAmount(options[i].strikePrice, 18)
               options[i].name = data[ii + 2]
               options[i].expiry = moment(options[i].expiry*1000).format("YYYY-MM-DD")
               if (data[ii] > 0){
-                options[i].sortBalanceOf = formatAmount(data[ii], 18)
+                options[i].sortBalanceOf = formatAmount(data[ii], data[ii+3] || 18)
                 shortList.push(options[i])
               }
               if (data[ii + 1] > 0) {
-                options[i].longBalanceOf = formatAmount(data[ii+1], 18)
+                options[i].longBalanceOf = formatAmount(data[ii+1], data[ii+3] || 18)
                 longList.push(options[i])
               }
             }

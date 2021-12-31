@@ -12,41 +12,23 @@
         </tr>
         <tr v-for="(item, index) in LPTList" :key="index">
           <td>
-            <img
-                v-if="item.ImgReward"
-                :src="
-                      require(`~/assets/img/mining/${
-                        item.Status === 3
-                          ? item.RewardSymbol + '_expired'
-                          : item.RewardSymbol
-                      }.png`)
-                    "
-                alt=""
-                class="td-img"
-            />
+            <span v-if="item.swapName" :class="item.swapName"></span>
             {{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}
           </td>
           <td>{{item.userBalanceOf}} <span>({{item.userStakeNum}})</span></td>
-          <td>${{item.lptPrice}}</td>
-          <td>${{item.userLPTValue}}</td>
+          <td>${{item.lptPrice <= 0 ? '-' : item.lptPrice}}</td>
+          <td>${{item.lptPrice <= 0 ? '-' : item.userLPTValue}}</td>
         </tr>
       </table>
       <div class="table-h5" v-for="(item, index) in LPTList" :key="index">
         <div>
           <p class="table-h5-title">LP Token</p>
           <p class="table-h5-value">
-            <img
-                v-if="item.ImgReward"
-                :src="
-                      require(`~/assets/img/mining/${
-                        item.Status === 3
-                          ? item.RewardSymbol + '_expired'
-                          : item.RewardSymbol
-                      }.png`)
-                    "
-                alt=""
-                class="td-img"
-            />
+<!--            <img-->
+<!--                :src="require(`~/assets/img/icon/${item.PoolSwap}@2x.png`)"-->
+<!--                alt=""-->
+<!--            />-->
+            <span v-if="item.swapIcon" v-html="item.swapIcon"></span>
             <span>{{item.LptToken1Symbol}}/{{item.LptToken2Symbol}}</span>
           </p>
         </div>
@@ -59,11 +41,11 @@
         </div>
         <div>
           <p class="table-h5-title">Price</p>
-          <p class="table-h5-value">${{item.lptPrice}}</p>
+          <p class="table-h5-value">${{item.lptPrice <= 0 ? '-' : item.lptPrice}}</p>
         </div>
         <div>
           <p class="table-h5-title">Value</p>
-          <p class="table-h5-value">${{item.userLPTValue}}</p>
+          <p class="table-h5-value">${{item.lptPrice <= 0 ? '-' : item.userLPTValue}}</p>
         </div>
       </div>
     </template>
@@ -166,7 +148,7 @@ import {formatAmount} from "../../../interface/ibo";
 import axios from "axios";
 import {clientContract, multicallClient} from "../../../web3/multicall";
 import moment from "moment";
-
+import SwiperHelperAbi from '../../../web3/abis/SwiperHelperAbi.json'
 function duplicateRemoval(arr,key) {
   const obj = {}
   const newArr = []
@@ -194,7 +176,6 @@ const filterLptPoolList2 = LptPoolList2.reduce((list, item) => {
 
 const LptPoolList = duplicateRemoval(LptPoolList1.concat(filterLptPoolList2), 'StakeAddress')
 
-console.log(LptPoolList)
 
 export default {
   name: "Portfolio",
@@ -228,36 +209,64 @@ export default {
     getLPTData(){
       this.lptLoading = true
       const LPTList = []
-      const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
-      const calcContract = new Contract(CALC_ADDRESS(ChainId.BSC), CalcAbi)
+      // const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
+      // const calcContract = new clientContract(CalcAbi, CALC_ADDRESS(ChainId.BSC), ChainId.BSC)
+      const swiperHelper = "0xc69324bd7E1a6A38eE91905Bf75Df3637e51044A"
+      const swiperHelperContract = new clientContract(SwiperHelperAbi, swiperHelper, ChainId.BSC)
 
-      const poolContract = new Contract('0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B', MiningABI)
+      // const poolContract = new Contract('0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B', MiningABI)
       // getPrice
       const calls = [
-        calcContract.getLPTStakeValue('0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B', ['0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8']),
-        poolContract.totalSupply()
+        // calcContract.getLPTStakeValue('0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B', ['0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8']),
+        // poolContract.totalSupply()
       ]
+      const needPrice = ["pancake", "cafeswap", "mdx"]
+
+      const priceCalls = []
       for (let i = 0; i < LptPoolList.length; i++) {
         if (!LptPoolList[i].StakeAddress){
           continue
         }
         let Params = LptPoolList[i].NoProxy ? [LptPoolList[i].ProxyPid, this.account] : [this.account]
-        const stakeContract = new Contract(LptPoolList[i].StakeAddress, IPancakePair.abi)
-        const poolContract = new Contract(LptPoolList[i].PoolAddress, LptPoolList[i].PoolABI)
+        const stakeContract = new clientContract(IPancakePair.abi, LptPoolList[i].StakeAddress, ChainId.BSC)
+        const poolContract = new clientContract(LptPoolList[i].PoolABI, LptPoolList[i].PoolAddress, ChainId.BSC)
         calls.push(
             stakeContract.balanceOf(this.account),
             poolContract[LptPoolList[i].CanWithDrawMethods](...Params),
+
+                // swiperHelperContract.getLPTValue(
+                //     "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+                //    '0x86ddc49f66fa166e72e650a72752b43ce23ecbe5',
+                //     '1000000000000000000',
+                //     ['0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8', '0xe9e7cea3dedca5984780bafc599bd69add087d56']
+                // )
         )
         LPTList.push({
           ...LptPoolList[i]
         })
+        if (needPrice.indexOf(LptPoolList[i].swapName) !== -1) {
+          priceCalls.push(
+              swiperHelperContract.getLPTValue(
+                  LptPoolList[i].swiperRouterAddress,
+                  LptPoolList[i].StakeAddress,
+                  '1000000000000000000',
+                  [LptPoolList[i].LptTokenOwner, '0xe9e7cea3dedca5984780bafc599bd69add087d56']
+              )
+          )
+        }
       }
       const filterList =[]
-      multicall.all(calls).then(res => {
-        const data = processResult(res)
-        const price = new BigNumber(fromWei(data[0], 18)).div(new BigNumber(fromWei(data[1], 18))).toFixed(6)
+      multicallClient([...priceCalls, ...calls]).then(data => {
+        // const data = processResult(res)
+        // return
+        let priceI = 0
         for (let i = 0; i < LPTList.length; i++) {
-          const ii = i*2 + 2
+          const ii = i*2 + priceCalls.length
+          let price = '0' //fromWei(data[ii+2], 18).toString()
+          if (needPrice.indexOf(LPTList[i].swapName) !== -1) {
+            price = Number(fromWei(data[priceI], 18).toString()).toFixed(4)
+            priceI += 1
+          }
           const userBalanceOf = Number(fromWei(LPTList[i].NoProxy ? data[ii][0] : data[ii], 18)).toFixed(4) * 1
           const userStakeNum = Number(fromWei(Array.isArray(data[ii + 1]) ? data[ii + 1][0] : data[ii + 1], 18)).toFixed(4) * 1
           if (userBalanceOf > 0 || userStakeNum > 0) {
@@ -445,6 +454,42 @@ export default {
           height: 22px;
           margin-right: 9px;
           vertical-align: middle;
+        }
+        &>span{
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            margin: 0 2px;
+          vertical-align: middle;
+          &.pancake {
+            background-image: url("../../../assets/img/icon/pancake@2x.png");
+          }
+          &.dodo {
+            background-image: url("../../../assets/img/icon/dodo@2x.png");
+          }
+          &.chainswap {
+            background-image: url("../../../assets/img/icon/chainswap@2x.png");
+          }
+          &.qian {
+            background-image: url("../../../assets/img/icon/qian@2x.png");
+          }
+          &.mdx {
+            background-image: url("../../../assets/img/icon/mdx@2x.png");
+          }
+          &.xms {
+            background-image: url("../../../assets/img/icon/xms@2x.png");
+          }
+          &.burger {
+            background-image: url("../../../assets/img/icon/burgerswap@2x.png");
+          }
+          &.babyswap {
+            background-image: url("../../../assets/img/icon/babyswap@2x.png");
+          }
+          .cafeswap {
+            background-image: url("../../../assets/img/icon/cafeswap@2x.png");
+          }
         }
       }
     }

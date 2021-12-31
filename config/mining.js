@@ -114,6 +114,9 @@ export const LptPoolList = [
     APR: "--",
     JumpLink1:
       "<a href='https://bsc.mdex.com/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='mdx'></i>Get HELMET-BNB MLP</a>",
+    swapName: "mdx",
+    swiperRouterAddress: '0x0384E9ad329396C3A6A401243Ca71633B2bC4333',
+    LptTokenOwner: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
   },
   {
     StakeABI: MiningABI,
@@ -165,6 +168,9 @@ export const LptPoolList = [
     APR: "--",
     JumpLink1:
       "<a href='https://pancakeswap.finance/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-BNB LPT(V2)</a>",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
   },
 
   {
@@ -270,6 +276,9 @@ export const LptPoolList = [
     Only: true,
     JumpLink1:
       "<a href='https://dex.cafeswap.finance/#/add/ETH/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='cafeswap'></i>Get HELMET-BNB CAFE LP</a>",
+    swapName: "cafeswap",
+    swiperRouterAddress: '0x933daea3a5995fb94b14a7696a5f3ffd7b1e385a',
+    LptTokenOwner: "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
   },
 
   {
@@ -437,6 +446,8 @@ export const TokenPoolList = [
     APR: "--",
     JumpLink1:
       "<a href='https://app.marsecosystem.com/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='xms'></i>Get HELMET-BNB MLP</a>",
+    swapName: "xms",
+    swiperRouterAddress: '0xb68825c810e67d4e444ad5b9deb55ba56a66e72d'
   },
   {
     Key: "LPTBABY",
@@ -488,6 +499,8 @@ export const TokenPoolList = [
     APR: "--",
     JumpLink1:
       "<a href='https://exchange.babyswap.finance/#/add/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8/0x55d398326f99059fF775485246999027B3197955' target='_blank'>From <i class='babyswap'></i>Get HELMET-USDT LPT</a>",
+    swapName: "babyswap",
+    swiperRouterAddress: '0x325e343f1de602396e256b67efd1f61c3a6b38bd'
   },
   {
     StakeABI: CandyABI,
@@ -576,6 +589,10 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x4c60bd0a7aa839e35882c7a9b9b240ea7e0657bf/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hMCRN LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+
   },
   {
     StakeABI: MiningABI,
@@ -629,6 +646,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x792b733af7b9b83331f90dbbd297e519258b09bc/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWIZARD LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
 
   {
@@ -683,6 +703,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x4ce2d9804da7583c02f80fec087aea1d137214eb/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hARGON LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     StakeABI: MiningABI,
@@ -736,6 +759,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x6dab495c467c8fb326dc5e792cd7faeb9ecafe44/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hBMXX LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     StakeABI: MiningABI,
@@ -789,6 +815,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x06a954537cdcf6fa57eadf2e3e56e4325b7e9624/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hBABY LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     StakeABI: MiningABI,
@@ -843,6 +872,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0xa561926e81DEcb74B3d11e14680B3F6D1c5012bD/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hMTRG LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     StakeABI: MiningABI,
@@ -897,6 +929,9 @@ export const TokenPoolList = [
       "<a href='https://exchange.pancakeswap.finance/?_gl=1*d1kv5p*_ga*MTU5MDI5ODU1LjE2MTE5MzU1ODc.*_ga_334KNG3DMQ*MTYxMjg1NDcwNy4xOC4xLjE2MTI4NTQ4MzUuMA..#/add/0x34508EA9ec327ff3b98A2F10eEDc2950875bf026/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank'>From <i class='pancake'></i>Get HELMET-hWINGS LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     StakeABI: MiningABI,
@@ -947,6 +982,8 @@ export const TokenPoolList = [
     JumpLink1:
       "<a href='https://app.dodoex.io/liquidity?poolAddress=0x80B5abD78878B709F58b46e94CF6A194A9A65234' target='_blank'>From <i class='dodo'></i>Get HELMET-BNB DLP</a>",
     PoolType: "combo",
+    swapName: "dodo",
+    swiperRouterAddress: '0x8F8Dd7DB1bDA5eD3da8C9daf3bfa471c12d58486',
     APR: "--",
   },
 
@@ -998,6 +1035,8 @@ export const TokenPoolList = [
       "<a href='https://burgerswap.org/trade/pool?from=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8&to=0xCa7597633927A98B800738eD5CD2933a74a80e8c' target='_blank' >From <i class='burger'></i>Get HELMET-hxBURGER BLP</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "burger",
+    lpPrice: false
   },
 
   {
@@ -1042,6 +1081,7 @@ export const TokenPoolList = [
       "<a href='https://www.chainswap.exchange/' target='_blank'>Swap FEI(ETH) to BSC By <i class='chainswap'></i> ChainSwap</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "chainswap",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1086,6 +1126,7 @@ export const TokenPoolList = [
       " <a href='https://bsc.qian.finance/chemix/' target='_blank'> Or From <i class='qian'></i> Mint QSD</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "dodo",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1129,6 +1170,7 @@ export const TokenPoolList = [
       "<a href='https://app.dodoex.io/liquidity?poolAddress=0xd7eed218538b3fa3e20d24f43100790f0d03538a' target='_blank' >From <i class='dodo'></i>Get HELMET-KUN DLP</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "dodo",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1178,6 +1220,9 @@ export const TokenPoolList = [
       "<a href='https://v1exchange.pancakeswap.finance/#/add/BNB/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-BNB LPT(V1 Old)</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1227,6 +1272,7 @@ export const TokenPoolList = [
       "<a href='https://app.dodoex.io/liquidity?poolAddress=0x7f6ea24c10e32c8a5fd1c9b2c1239340671460cc' target='_blank' >From <i class='dodo'></i>Get HELMET-hDODO DLP</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "dodo",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1276,6 +1322,9 @@ export const TokenPoolList = [
       "<a href='https://pancakeswap.finance/add/0xb779F208f8d662558dF8E2b6bFE3b6305CC13389/0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8' target='_blank' >From <i class='pancake'></i>Get HELMET-hFOR LPT</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "pancake",
+    swiperRouterAddress: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+    LptTokenOwner: "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
   },
   {
     CanWithDrawMethods: "balanceOf",
@@ -1325,6 +1374,7 @@ export const TokenPoolList = [
       "<a href='https://burgerswap.org/trade/pool?from=0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8&to=0xCa7597633927A98B800738eD5CD2933a74a80e8c' target='_blank' >From <i class='burger'></i>Get HELMET-hxBURGER BLP</a>",
     PoolType: "combo",
     APR: "--",
+    swapName: "burger",
   },
 ];
 export const formatMiningPool = (PoolData) => {

@@ -266,7 +266,7 @@ export const InsuranceTypeList = [
     Expiry: Expiry,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
+    LastPriceDecimals: 8,
     LastUsdtPriceDecimals: 4,
     Group: "NFT",
   },

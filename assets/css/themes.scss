@@ -63,6 +63,7 @@ linner-dashboard: linear-gradient(180deg, #FFF3E8 0%, #FFFFFF 100%),
           dashboard_color2: #FFFFFF,
           dashboard_color3: #17173A,
           dashboard_color4: rgba(23, 23, 58, 0.7),
+          dashboard_color5: #EDDBC9
   ),
   dark: (
     color-dc3545: #dc3545,
@@ -122,6 +123,7 @@ linner-dashboard: linear-gradient(180deg, #FFF3E8 0%, #FFFFFF 100%),
           dashboard_color2: #2C2C2C,
 dashboard_color3: rgba(255, 255, 255, 0.7),
           dashboard_color4: #FFFFFF,
+          dashboard_color5: #3B3732
   ),
 );
 @mixin themeify {

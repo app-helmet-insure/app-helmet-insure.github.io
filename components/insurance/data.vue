@@ -178,7 +178,7 @@ export default {
     },
     async getGuardVolume() {
       const HttpWeb3 = new Web3(
-        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+        new Web3.providers.HttpProvider("https://polygon-rpc.com")
       );
       let Contracts = new HttpWeb3.eth.Contract(
         ERC20ABI.abi,

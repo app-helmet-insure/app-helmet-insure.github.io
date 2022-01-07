@@ -19,7 +19,7 @@ let ChainSwapConfig = function(FromChain, ToChain) {
             ChainSwapContracts: {
                 Address: '0x81d82a35253B982E755c4D7d6AADB6463305B188',
                 ABI: ChainSwapABI,
-                RPC: 'https://rpc-mainnet.maticvigil.com',
+                RPC: 'https://polygon-rpc.com',
             },
             FromAssets: {
                 Name: 'HELMET',

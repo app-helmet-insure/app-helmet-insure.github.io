@@ -190,7 +190,7 @@ export default {
     },
     async AskReceiveAmounts(FromChainID, Account, Nonce) {
       let MATICweb3 = new Web3(
-        new Web3.providers.HttpProvider("https://rpc-mainnet.maticvigil.com")
+        new Web3.providers.HttpProvider("https://polygon-rpc.com")
       );
       let MATICContracts = new MATICweb3.eth.Contract(
         ChainSwapABI,

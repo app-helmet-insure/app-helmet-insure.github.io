@@ -289,7 +289,6 @@ import {
   fromWei,
   toWei,
   getContract,
-  getBlockNumber,
 } from "~/web3/index.js";
 import SuccessConfirmationDialog from "~/components/dialogs/success-confirmation-dialog.vue";
 import WaitingConfirmationDialog from "~/components/dialogs/waiting-confirmation-dialog.vue";

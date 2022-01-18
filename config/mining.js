@@ -326,6 +326,7 @@ export const LptPoolList = [
 ];
 export const TokenPoolList = [
   {
+    Key: "HELMET",
     StakeABI: MiningABI,
     PoolABI: MiningABI,
     StakeMethods: "stakeAndCompound",
@@ -336,7 +337,6 @@ export const TokenPoolList = [
     ExitMethods: "exit",
     StartTime: "Ongoing",
     FinishTime: "Mining",
-    Key: "HELMET",
     PoolName: "HELMET POOL",
     StakeSymbol: "HELMET",
     StakeUnit: "HELMET",
@@ -382,7 +382,7 @@ export const TokenPoolList = [
     StakeDecimals: 18,
     StakeSymbol: "HELMET",
     StakeAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
-    RewardSymbol: "helmet",
+    RewardSymbol: "helmet1",
     RewardVolume: "one",
     HaveReward1: true,
     Reward1Decimals: 18,

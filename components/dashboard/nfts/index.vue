@@ -91,7 +91,7 @@ export default {
       const nfts = []
       for (let i = 0; i < duskIds.length; i++) {
         const item = {
-          tokenURI: duskUrls[i],
+          tokenURI: duskUrls[i].split('/').pop(),
           tokenId: duskIds[i],
           contract: DuskNFT
         }
@@ -107,8 +107,9 @@ export default {
       this.doraLoading = true
       const DuskNFT = "0xeDfbf15775a2E42E03d059Fb98DA6e92284de7be"
       const JustineDusk = "0x17DFb8867184aFa9116Db927B87C27CC27A92F89"
+      const SantaPunkDusk = '0xF73396d2BD425413e4957bB0FB6C0fd945F31739'
       const WARBadge = "0xcc7dbBe86356f570aD0ba5937D764e64E9931593"//heco
-      const nfts = [DuskNFT, JustineDusk, DORA]
+      const nfts = [DuskNFT, JustineDusk, SantaPunkDusk, DORA]
       const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
       const contract = new Contract(NFTHelper.address, NFTHelper.abi)
       const calls = nfts.reduce((calls_, nftAddress) => {
@@ -116,11 +117,13 @@ export default {
         return calls_
       }, [])
       multicall.all(calls).then(async res => {
-        const [[duskIds, duskUrls], [justineIds, justineUrls], [dora721Ids]] = processResult(res)
+        const [[duskIds, duskUrls], [justineIds, justineUrls],[santaPunkIds, SantaPunkUrls], [dora721Ids]] = processResult(res)
         this.dora721Ids = dora721Ids
         this.doraLoading = false
         if (justineIds.length > 0){
           this.setDuskNftAvatar('justineDusk')
+        } else if (santaPunkIds.length > 0) {
+          this.setDuskNftAvatar('santaPunkDusk')
         } else if (duskIds.length > 0) {
           this.setDuskNftAvatar('dusk')
         }
@@ -146,7 +149,14 @@ export default {
         const data = processResult(res)
         const exhibitsPromise = []
         for (let i = 0; i < kitIds.length; i++) {
-          exhibitsPromise.push(getIPFSJson(data[i * 2 + 1] + `/${kitIds[i]}.json`))
+          let url = data[i*2+1]
+          if (url.indexOf('https') === 0){
+            const url_ = url.split('/')
+            url = url_[url_.length - 2]
+          }
+
+
+          exhibitsPromise.push(getIPFSJson(url + `/${kitIds[i]}.json`))
         }
         const nfts = []
         Promise.all(exhibitsPromise)

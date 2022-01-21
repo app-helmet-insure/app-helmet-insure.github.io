@@ -439,6 +439,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 0.1s;
+        &:hover{
+          transform: scale(1.1);
+        }
       }
     }
 

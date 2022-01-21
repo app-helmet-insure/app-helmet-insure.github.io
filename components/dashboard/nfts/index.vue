@@ -42,7 +42,13 @@
         </template>
       </div>
       <div class="loading" v-else-if="metaDuskLoading">loading...</div>
-      <div class="no-data" v-else>No NFT</div>
+      <div v-else>
+        <div class="nft721 buy-nft">
+          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
+          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
+        </div>
+        <div class="no-data">No NFT</div>
+      </div>
     </div>
   </div>
 </template>

@@ -19,6 +19,12 @@
             <p>Count: {{item.count}}</p>
           </div>
         </div>
+
+        <div class="nft721 buy-nft">
+          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
+          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
+        </div>
+
         <div v-for="doraId in dora721Ids" :key="doraId" class="nft721 nft-dora">
           <img :src="require('~/assets/img/dashboard/dora.png')" alt="">
           <div class="desc">
@@ -399,6 +405,37 @@ export default {
       }
     }
 
+    .buy-nft{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #380035;
+      background-image: url("../../../assets/img/dashboard/empty-nft.png");
+      background-size: 100% 100%;
+      border-radius: 10px;
+      img{
+        width: 60px;
+        height: 60px;
+        margin-bottom: 27px;
+      }
+      a{
+        width: 100px;
+        height: 30px;
+        background: #DE6FE1;
+        border-radius: 7px;
+        text-decoration: none;
+        font-size: 14px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
     .nft-list {
       padding: 20px 0;
     }
@@ -425,6 +462,13 @@ export default {
       .nft721, .nft-1155{
         width: 100% !important;
         height: auto!important;
+      }
+      .buy-nft{
+        min-height: 260px;
+        img{
+          width: 80px;
+          height: 80px;
+        }
       }
     }
   }

@@ -8,20 +8,6 @@
  */
 
 
-/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
-
-
-/*!
- * 
- *   typed.js - A JavaScript Typing Animation Library
- *   Author: Matt Boldt <me@mattboldt.com>
- *   Version: v2.0.6
- *   Url: https://github.com/mattboldt/typed.js
- *   License(s): MIT
- * 
- */
-
-
 /*
 object-assign
 (c) Sindre Sorhus
@@ -49,7 +35,7 @@ object-assign
  */
 
 /*!
- * clipboard.js v2.0.8
+ * clipboard.js v2.0.9
  * https://clipboardjs.com/
  *
  * Licensed MIT © Zeno Rocha
@@ -77,6 +63,8 @@ object-assign
  * (c) 2018-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
  */
+
+/*! crc32.js (C) 2014-present SheetJS -- http://sheetjs.com */
 
 /*! https://mths.be/punycode v1.4.1 by @mathias */
 
@@ -120,6 +108,20 @@ object-assign
 //! moment.js
 
 //! moment.js locale configuration
+
+
+/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
+
+
+/*!
+ * 
+ *   typed.js - A JavaScript Typing Animation Library
+ *   Author: Matt Boldt <me@mattboldt.com>
+ *   Version: v2.0.6
+ *   Url: https://github.com/mattboldt/typed.js
+ *   License(s): MIT
+ * 
+ */
 
 
 /*!

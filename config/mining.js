@@ -1638,16 +1638,17 @@ export const getAPRAndAPY = async (PoolData) => {
     ApproveContracts.allowance(HelmetFarm, PoolAddress),
     PoolContracts.rewards("0x0000000000000000000000000000000000000000"),
     PoolContracts.periodFinish(),
+    PoolContracts.rewardsDuration()
   ];
   const MulticallProvider = getOnlyMultiCallProvider();
   return MulticallProvider.all(PromiseList).then((res) => {
     const FixData = processResult(res);
-    let [TotalStakeVolume, TotalReward, OutPutReward, RewardTime] = FixData;
+    let [TotalStakeVolume, TotalReward, OutPutReward, RewardTime, rewardsDuration] = FixData;
     const FixTotalStakeVolume = fromWei(TotalStakeVolume, StakeDecimals);
     const FixTotalReward = fromWei(TotalReward, Reward1Decimals);
     const FixOutPutReward = fromWei(OutPutReward, Reward1Decimals);
     const FixRewardTime = (RewardTime - Date.now() / 1000) / 86400;
-    const RewardDaily = (FixTotalReward - FixOutPutReward) / FixRewardTime;
+    const RewardDaily=(FixTotalReward - FixOutPutReward) * (1/(rewardsDuration/86400))//RewardDaily = (FixTotalReward - FixOutPutReward) / FixRewardTime;
     const RewardValues = 1 + RewardDaily / FixTotalStakeVolume;
     const APR = fixD((RewardDaily / FixTotalStakeVolume) * 365 * 100, 2) + "%";
     const APY = fixD(Math.pow(RewardValues, 365) * 100, 2) + "%";

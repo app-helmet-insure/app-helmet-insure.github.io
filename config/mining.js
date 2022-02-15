@@ -336,7 +336,7 @@ export const TokenPoolList = [
     CanClaim2Methods: "earned2",
     ExitMethods: "exit",
     StartTime: "Ongoing",
-    FinishTime: "Mining",
+    FinishTime: "2022/2/15 14:20 UTC+8",
     PoolName: "HELMET POOL",
     StakeSymbol: "HELMET",
     StakeUnit: "HELMET",

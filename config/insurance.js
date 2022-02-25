@@ -28,9 +28,9 @@ import BAYLOGO from "../assets/img/insurancetype/BAY.png";
 import WOOLOGO from "../assets/img/insurancetype/WOO.png";
 import WARLOGO from "../assets/img/insurancetype/WAR.png";
 const NowTime = new Date() / 1000;
-const ShowExpiry = "2022-02-25 24:00";
-const ShowExpiryDay = Math.ceil((1645804800 - NowTime) / 86400);
-const Expiry = 1645804800;
+const ShowExpiry = "2022-03-25 24:00";
+const ShowExpiryDay = Math.ceil((1648224000 - NowTime) / 86400);
+const Expiry = 1648224000;
 export const InsuranceTypeList = [
   {
     InsuranceName: "HELMET",

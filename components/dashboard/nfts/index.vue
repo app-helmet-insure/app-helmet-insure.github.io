@@ -20,11 +20,6 @@
           </div>
         </div>
 
-        <div class="nft721 buy-nft">
-          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
-          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
-        </div>
-
         <div v-for="doraId in dora721Ids" :key="doraId" class="nft721 nft-dora">
           <img :src="require('~/assets/img/dashboard/dora.png')" alt="">
           <div class="desc">
@@ -40,6 +35,10 @@
             <p class="card-id"><strong>ID: {{id}}</strong></p>
           </div>
         </template>
+        <div class="nft721 buy-nft">
+          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
+          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
+        </div>
       </div>
       <div class="loading" v-else-if="metaDuskLoading">loading...</div>
       <div v-else>

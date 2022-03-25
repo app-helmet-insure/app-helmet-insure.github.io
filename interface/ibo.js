@@ -155,8 +155,6 @@ const getStarterV3PoolInfo = (pool) => {
       })
       const rate_ = rate < 10 ? new BigNumber(new_rate).multipliedBy(new BigNumber(10).pow(18)).toString() : rate
 
-      console.log('xxx',totalPurchasedCurrency.toString(), totalPurchasedAmount.toString(), price.toString())
-
       const progress = new BigNumber(totalPurchasedCurrency)
         .dividedBy(totalPurchasedAmount)
         .toFixed(10, 1)
@@ -189,11 +187,11 @@ const getStarterV3PoolInfo = (pool) => {
           volume,
           rate: rate_,
           // rate: rate < 10 ? Web3.utils.toWei(`${new_rate}`, 'ether') : rate,
-          unlockVolume: pool.lock ? formatAmount(unlockVolume, pool.underlying.decimal) : formatAmount(volume, pool.underlying.decimal),
+          unlockVolume: formatAmount(unlockVolume, pool.underlying.decimal),
           unlockRate
         }
       })
-      console.log('poolInfo', poolInfo )
+      console.log('poolInfo', JSON.parse(JSON.stringify(poolInfo)))
       return poolInfo
     }).catch(() => {
       return pool

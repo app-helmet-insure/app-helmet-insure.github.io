@@ -207,6 +207,10 @@
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{ volume }}</span>
         </p>
+        <p class="ibo_item_value" v-if="iboData.poolType === 3">
+          <span class="ibo_item_value_title">{{ $t("IBO.IBO_unlockVolume") }}</span>
+          <span class="value">{{ iboData.settleable.unlockVolume }}</span>
+        </p>
         <a
           :class="
             this.activeClaim()
@@ -527,8 +531,10 @@ export default {
     },
     activeClaim() {
       return (
-        this.iboData.status === 2 &&
-        this.iboData.settleable.volume > 0
+        this.iboData.status === 2 &&(
+            (this.iboData.settleable.volume > 0 && this.iboData.poolType === 0) ||
+            (this.iboData.settleable.unlockVolume > 0 && this.iboData.poolType === 3)
+        )
       );
     },
     onClaim() {

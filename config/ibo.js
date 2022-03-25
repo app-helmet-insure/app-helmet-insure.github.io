@@ -83,7 +83,7 @@ export const iboPools = [
     },
     progress: 0,
     status: 0,
-    ratio: "1GRVS = 0.4USDT",
+    ratio: "1GRVS = 0.4BUSD",
     time: "1648261004",
     purchasedCurrencyOf: 0,
     totalPurchasedAmount: "30000",//currency

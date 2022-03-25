@@ -63,7 +63,7 @@ export const iboPools = [
     start_at: "1648389600",
     is_coming: false,
     currency: {
-      address: '0x55d398326f99059ff775485246999027b3197955',
+      address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
       decimal: 18,
       symbol: "BUSD",
     },

@@ -261,6 +261,39 @@
         >
       </p>
     </div>
+    <div v-else-if="iboData.name === 'GRVS'" class="tip_box">
+      <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text51") }}</p>
+      <p>{{ $t("IBO.IBO_text36") }}: </p>
+      <p v-for="(item, index) in iboData.claimTimeTipI18nList" :key="index" style="padding-left: 10px">
+            {{ $t("IBO.IBO_text52") }}{{index+1}}: {{ $t(item.timeTxt) }} {{item.rate}}
+      </p>
+      <p>{{ $t("IBO.IBO_text29") }}: <a href="https://gswap.exchange/swap?network=56" target="_blank">Gswap</a></p>
+      <p>
+        SC: {{ iboData.underlying.address }}
+        <i
+            class="copy"
+            @click="copyAdress($event, iboData.underlying.address)"
+        ></i>
+      </p>
+      <p>
+        TG:
+        <a href="https://t.me/Gravis_Finance_en" target="_blank">https://t.me/Gravis_Finance_en</a>
+      </p>
+      <p>
+        Twitter:
+        <a href="https://twitter.com/gammarosigma" target="_blank">https://twitter.com/gammarosigma</a>
+      </p>
+      <p>
+        Medium:
+        <a href="https://gravis-finance.medium.com/" target="_blank">https://gravis-finance.medium.com</a>
+      </p>
+      <p>
+        {{ $t("IBO.IBO_text30") }}:
+        <a href="https://gravis.finance/" target="_blank"
+        >https://gravis.finance</a
+        >
+      </p>
+    </div>
   </Dialog>
 </template>
 

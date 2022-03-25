@@ -77,7 +77,7 @@ export const iboPools = [
     amount: "75000",// currency / price
     pool_info: {
       min_allocation: 1,
-      max_allocation: 30000,
+      max_allocation: 100000,
       maxAccount: Infinity,
       curUserCount: 0
     },

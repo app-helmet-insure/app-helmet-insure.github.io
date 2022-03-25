@@ -262,7 +262,7 @@
       </p>
     </div>
     <div v-else-if="iboData.name === 'GRVS'" class="tip_box">
-      <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text51") }}</p>
+      <p>{{ $t("IBO.IBO_text28") }}: {{ $t("IBO.IBO_text62") }}</p>
       <p>{{ $t("IBO.IBO_text36") }}: </p>
       <p v-for="(item, index) in iboData.claimTimeTipI18nList" :key="index" style="padding-left: 10px">
             {{ $t("IBO.IBO_text52") }}{{index+1}}: {{ $t(item.timeTxt) }} {{item.rate}}

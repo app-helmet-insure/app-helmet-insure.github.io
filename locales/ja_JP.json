@@ -420,7 +420,9 @@
     "IBO_text60": "Nov 15, 1:00PM UTC",
     "IBO_text61": "Dec 15, 1:00PM UTC",
     "IBO_join": "Join",
-    "IBO_unlockVolume": "unlockVolume"
+    "IBO_unlockVolume": "Unlock volume",
+    "IBO_received": "Received",
+    "IBO_text62": "March 28, 1:00PM UTC"
   },
   "Governance": {
     "Tips1": "Helmet Government,'stake' is voting：after choosing the specific iterm, stake your HELMET to vote. You could get your HELMET back after the proposal stettled.",

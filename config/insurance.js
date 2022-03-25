@@ -27,10 +27,11 @@ import MCBLOGO from "../assets/img/insurancetype/MCB.png";
 import BAYLOGO from "../assets/img/insurancetype/BAY.png";
 import WOOLOGO from "../assets/img/insurancetype/WOO.png";
 import WARLOGO from "../assets/img/insurancetype/WAR.png";
+import DERILOGO from "../assets/img/insurancetype/DERI.png";
 const NowTime = new Date() / 1000;
-const ShowExpiry = "2022-01-28 24:00";
-const ShowExpiryDay = Math.ceil((1643385600 - NowTime) / 86400);
-const Expiry = 1643385600;
+const ShowExpiry = "2022-03-25 24:00";
+const ShowExpiryDay = Math.ceil((1648224000 - NowTime) / 86400);
+const Expiry = 1648224000;
 export const InsuranceTypeList = [
   {
     InsuranceName: "HELMET",
@@ -266,7 +267,7 @@ export const InsuranceTypeList = [
     Expiry: Expiry,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
+    LastPriceDecimals: 8,
     LastUsdtPriceDecimals: 4,
     Group: "NFT",
   },
@@ -413,6 +414,19 @@ export const InsuranceTypeList = [
     LastUsdtPriceDecimals: 6,
     Group: "DEFI",
     NoLiquidity: true,
+  },
+  {
+    InsuranceName: "DERI",
+    InsurancePut: "BNB",
+    InsuranceLogo: DERILOGO,
+    ShowExpiry: ShowExpiry,
+    ShowExpiryDay: ShowExpiryDay,
+    Expiry: Expiry,
+    LastPrice: "--",
+    LastUsdtPrice: "--",
+    LastPriceDecimals: 6,
+    LastUsdtPriceDecimals: 6,
+    Group: "DEFI",
   },
 ];
 export const getCurrentInsurance = ({
@@ -1873,6 +1887,56 @@ export const getCurrentInsurance = ({
       CallToken: "WAR",
       PutToken: "BNB",
     },
+    {
+      InsuranceName: "DERI",
+      InsuranceLogo: DERILOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "DERI",
+      CollateralAddress: "0xe60eaf5a997dfae83739e035b005a33afdcc6df5",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "BNB",
+      UnderlyingAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      UnderlyingDecimals: 18,
+      Type: "Call",
+      CallToken: "DERI",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "DERI",
+      InsuranceLogo: DERILOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "BNB",
+      CollateralAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "DERI",
+      UnderlyingAddress: "0xe60eaf5a997dfae83739e035b005a33afdcc6df5",
+      UnderlyingDecimals: 18,
+      Type: "Put",
+      CallToken: "DERI",
+      PutToken: "BNB",
+    },
   ];
   return config.filter(
     (item) =>
@@ -1880,6 +1944,6 @@ export const getCurrentInsurance = ({
       (item.CollateralAddress.toLocaleUpperCase() ===
         CollateralAddress.toLocaleUpperCase() &&
         item.UnderlyingAddress.toLocaleUpperCase() ===
-          UnderlyingAddress.toLocaleUpperCase())
+        UnderlyingAddress.toLocaleUpperCase())
   )[0];
 };

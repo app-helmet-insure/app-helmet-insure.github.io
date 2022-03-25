@@ -106,6 +106,11 @@ export default {
     .el-dialog__close::before {
       font-size: 24px;
     }
+    .waiting_dialog_body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   }
 }
 </style>

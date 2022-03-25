@@ -79,4 +79,11 @@ export default {
     padding: 0 10px;
   }
 }
+@media (min-width: 750px) {
+  .dashboard-page{
+    width: 80%;
+    margin: 0 auto;
+    min-width: 1026px;
+  }
+}
 </style>

@@ -146,7 +146,7 @@ import MiningABI from "~/web3/abis/MiningABI.json";
 import BigNumber from "bignumber.js";
 import {formatAmount} from "../../../interface/ibo";
 import axios from "axios";
-import {clientContract, multicallClient} from "../../../web3/multicall";
+import {ClientContract, multicallClient} from "../../../web3/multicall";
 import moment from "moment";
 import SwiperHelperAbi from '../../../web3/abis/SwiperHelperAbi.json'
 function duplicateRemoval(arr,key) {
@@ -210,9 +210,9 @@ export default {
       this.lptLoading = true
       const LPTList = []
       // const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
-      // const calcContract = new clientContract(CalcAbi, CALC_ADDRESS(ChainId.BSC), ChainId.BSC)
+      // const calcContract = new ClientContract(CalcAbi, CALC_ADDRESS(ChainId.BSC), ChainId.BSC)
       const swiperHelper = "0xc69324bd7E1a6A38eE91905Bf75Df3637e51044A"
-      const swiperHelperContract = new clientContract(SwiperHelperAbi, swiperHelper, ChainId.BSC)
+      const swiperHelperContract = new ClientContract(SwiperHelperAbi, swiperHelper, ChainId.BSC)
 
       // const poolContract = new Contract('0xD86577ea62FE1FD2cA0Be583c1A0ecf25F4FbF2B', MiningABI)
       // getPrice
@@ -228,8 +228,8 @@ export default {
           continue
         }
         let Params = LptPoolList[i].NoProxy ? [LptPoolList[i].ProxyPid, this.account] : [this.account]
-        const stakeContract = new clientContract(IPancakePair.abi, LptPoolList[i].StakeAddress, ChainId.BSC)
-        const poolContract = new clientContract(LptPoolList[i].PoolABI, LptPoolList[i].PoolAddress, ChainId.BSC)
+        const stakeContract = new ClientContract(IPancakePair.abi, LptPoolList[i].StakeAddress, ChainId.BSC)
+        const poolContract = new ClientContract(LptPoolList[i].PoolABI, LptPoolList[i].PoolAddress, ChainId.BSC)
         calls.push(
             stakeContract.balanceOf(this.account),
             poolContract[LptPoolList[i].CanWithDrawMethods](...Params),
@@ -338,9 +338,9 @@ export default {
           const index1 = putTokens.findIndex(o => o === options[i].collateral)
           const index2 = putTokens.findIndex(o => o === options[i].underlying)
 
-          const sortContract = new clientContract(ERC20ABI.abi, options[i].short, ChainId.BSC)
-          const longContract = new clientContract(ERC20ABI.abi, options[i].long, ChainId.BSC)
-          const collateralContract = new clientContract(ERC20ABI.abi, options[i].collateral, ChainId.BSC)
+          const sortContract = new ClientContract(ERC20ABI.abi, options[i].short, ChainId.BSC)
+          const longContract = new ClientContract(ERC20ABI.abi, options[i].long, ChainId.BSC)
+          const collateralContract = new ClientContract(ERC20ABI.abi, options[i].collateral, ChainId.BSC)
           calls.push(
               sortContract.balanceOf(this.account),
               longContract.balanceOf(this.account),
@@ -349,7 +349,7 @@ export default {
           if (index1 > index2) {
             options[i].cover = 'put'
             options[i].coverColor = '#DC3545'
-            const underlyingContract = new clientContract(ERC20ABI.abi, options[i].underlying, ChainId.BSC)
+            const underlyingContract = new ClientContract(ERC20ABI.abi, options[i].underlying, ChainId.BSC)
             calls.push(underlyingContract.decimals())
           } else {
             options[i].cover = 'call'
@@ -480,6 +480,9 @@ export default {
           }
           &.xms {
             background-image: url("../../../assets/img/icon/xms@2x.png");
+          }
+          &.acsi {
+            background-image: url("../../../assets/img/icon/acsi@2x.png");
           }
           &.burger {
             background-image: url("../../../assets/img/icon/burgerswap@2x.png");

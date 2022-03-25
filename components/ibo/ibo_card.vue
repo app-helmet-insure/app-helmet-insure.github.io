@@ -128,8 +128,8 @@
           :class="
             !(
               iboData.status === 1 &&
-              parseInt(iboData.pool_info.curUserCount) <
-                parseInt(iboData.pool_info.maxAccount)
+              iboData.pool_info.curUserCount <
+                iboData.pool_info.maxAccount
             ) ||
             iboData.purchasedCurrencyOf > 0 ||
             now > parseInt(iboData.timeClose)
@@ -149,7 +149,7 @@
               parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
                 ? "IBO.IBO_text34"
-                : "Table.Burn"
+                : iboData.poolType === 3 ? "IBO.IBO_join" : "Table.Burn"
             )
           }}
         </a>
@@ -229,6 +229,13 @@
             >{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span
           >
         </p>
+        <template v-if="iboData.claimTimeTipI18nList">
+          <p class="ibo_item_value" v-for="(item, index) in iboData.claimTimeTipI18nList" :key="index">
+            <span class="ibo_item_value_title"
+            >{{ $t("IBO.IBO_text52") }}{{index+1}}: {{ $t(item.timeTxt) }} {{item.rate}}</span
+            >
+          </p>
+        </template>
         <template v-if="iboData.airdrop">
           <p class="ibo_item_value">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text48") }}</span>

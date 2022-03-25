@@ -19,6 +19,7 @@
             <p>Count: {{item.count}}</p>
           </div>
         </div>
+
         <div v-for="doraId in dora721Ids" :key="doraId" class="nft721 nft-dora">
           <img :src="require('~/assets/img/dashboard/dora.png')" alt="">
           <div class="desc">
@@ -34,9 +35,19 @@
             <p class="card-id"><strong>ID: {{id}}</strong></p>
           </div>
         </template>
+        <div class="nft721 buy-nft">
+          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
+          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
+        </div>
       </div>
       <div class="loading" v-else-if="metaDuskLoading">loading...</div>
-      <div class="no-data" v-else>No NFT</div>
+      <div v-else>
+        <div class="nft721 buy-nft">
+          <img :src="require('~/assets/img/dashboard/buy-nft-icon.png')" alt="">
+          <a href="https://metadusk.io/auction" target="_blank">Buy NFT</a>
+        </div>
+        <div class="no-data">No NFT</div>
+      </div>
     </div>
   </div>
 </template>
@@ -91,7 +102,7 @@ export default {
       const nfts = []
       for (let i = 0; i < duskIds.length; i++) {
         const item = {
-          tokenURI: duskUrls[i],
+          tokenURI: duskUrls[i].split('/').pop(),
           tokenId: duskIds[i],
           contract: DuskNFT
         }
@@ -107,8 +118,9 @@ export default {
       this.doraLoading = true
       const DuskNFT = "0xeDfbf15775a2E42E03d059Fb98DA6e92284de7be"
       const JustineDusk = "0x17DFb8867184aFa9116Db927B87C27CC27A92F89"
+      const SantaPunkDusk = '0xF73396d2BD425413e4957bB0FB6C0fd945F31739'
       const WARBadge = "0xcc7dbBe86356f570aD0ba5937D764e64E9931593"//heco
-      const nfts = [DuskNFT, JustineDusk, DORA]
+      const nfts = [DuskNFT, JustineDusk, SantaPunkDusk, DORA]
       const multicall = getOnlyMultiCallProviderPlus(ChainId.BSC)
       const contract = new Contract(NFTHelper.address, NFTHelper.abi)
       const calls = nfts.reduce((calls_, nftAddress) => {
@@ -116,11 +128,13 @@ export default {
         return calls_
       }, [])
       multicall.all(calls).then(async res => {
-        const [[duskIds, duskUrls], [justineIds, justineUrls], [dora721Ids]] = processResult(res)
+        const [[duskIds, duskUrls], [justineIds, justineUrls],[santaPunkIds, SantaPunkUrls], [dora721Ids]] = processResult(res)
         this.dora721Ids = dora721Ids
         this.doraLoading = false
         if (justineIds.length > 0){
           this.setDuskNftAvatar('justineDusk')
+        } else if (santaPunkIds.length > 0) {
+          this.setDuskNftAvatar('santaPunkDusk')
         } else if (duskIds.length > 0) {
           this.setDuskNftAvatar('dusk')
         }
@@ -146,7 +160,14 @@ export default {
         const data = processResult(res)
         const exhibitsPromise = []
         for (let i = 0; i < kitIds.length; i++) {
-          exhibitsPromise.push(getIPFSJson(data[i * 2 + 1] + `/${kitIds[i]}.json`))
+          let url = data[i*2+1]
+          if (url.indexOf('https') === 0){
+            const url_ = url.split('/')
+            url = url_[url_.length - 2]
+          }
+
+
+          exhibitsPromise.push(getIPFSJson(url + `/${kitIds[i]}.json`))
         }
         const nfts = []
         Promise.all(exhibitsPromise)
@@ -389,6 +410,41 @@ export default {
       }
     }
 
+    .buy-nft{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #380035;
+      background-image: url("../../../assets/img/dashboard/empty-nft.png");
+      background-size: 100% 100%;
+      border-radius: 10px;
+      img{
+        width: 60px;
+        height: 60px;
+        margin-bottom: 27px;
+      }
+      a{
+        width: 100px;
+        height: 30px;
+        background: #DE6FE1;
+        border-radius: 7px;
+        text-decoration: none;
+        font-size: 14px;
+        font-family: IBMPlexSans-Medium, IBMPlexSans;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.1s;
+        &:hover{
+          transform: scale(1.1);
+        }
+      }
+    }
+
     .nft-list {
       padding: 20px 0;
     }
@@ -415,6 +471,13 @@ export default {
       .nft721, .nft-1155{
         width: 100% !important;
         height: auto!important;
+      }
+      .buy-nft{
+        min-height: 260px;
+        img{
+          width: 80px;
+          height: 80px;
+        }
       }
     }
   }

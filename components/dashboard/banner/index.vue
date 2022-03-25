@@ -4,6 +4,7 @@
       <div class="avatar">
         <img src="../../../assets/img/dashboard/justine-dusk-avatar.png" alt="" v-if="duskNftAvatar === 'justineDusk'">
         <img src="../../../assets/img/dashboard/dusk-avatar.png" alt="" v-else-if="duskNftAvatar === 'dusk'">
+        <img src="../../../assets/img/dashboard/santa-punk-dusk-avatar.png" alt="" v-else-if="duskNftAvatar === 'santaPunkDusk'">
         <img :src="'https://avatars.dicebear.com/api/identicon/' + account + '.svg'" alt="" v-else>
       </div>
       <div class="info">

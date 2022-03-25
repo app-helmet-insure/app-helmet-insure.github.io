@@ -73,14 +73,16 @@
             @click="onMax"
             >{{ $t("Table.Max") }}</span
           >
-          <el-slider
-            v-model="amount"
-            :min="iboData.pool_info.min_allocation"
-            :max="iboData.pool_info.max_allocation"
-            show-input
-            :disabled="this.iboData.purchasedCurrencyOf > 0"
-          >
-          </el-slider>
+          <template>
+            <el-slider
+                v-model="amount"
+                :min="iboData.pool_info.min_allocation"
+                :max="iboData.pool_info.max_allocation"
+                show-input
+                :disabled="this.iboData.purchasedCurrencyOf > 0"
+            >
+            </el-slider>
+          </template>
           <p class="ibo_item_value slider_content">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
             <span class="value"
@@ -207,10 +209,16 @@
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{ volume }}</span>
         </p>
-        <p class="ibo_item_value" v-if="iboData.poolType === 3">
-          <span class="ibo_item_value_title">{{ $t("IBO.IBO_unlockVolume") }}</span>
-          <span class="value">{{ iboData.settleable.unlockVolume }}</span>
-        </p>
+        <template v-if="iboData.poolType === 3">
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_received") }}</span>
+            <span class="value">{{ iboData.settledUnderlyingOf }}</span>
+          </p>
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_unlockVolume") }}</span>
+            <span class="value">{{ iboData.settleable.unlockVolume }}</span>
+          </p>
+        </template>
         <a
           :class="
             this.activeClaim()

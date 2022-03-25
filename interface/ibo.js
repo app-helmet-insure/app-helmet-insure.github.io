@@ -77,7 +77,7 @@ export const numToWei = (value, decimals = 18) => {
 
 const multicallProvider = getOnlyMultiCallProvider();
 
-const getStarterV3PoolInfo = (pool) => {
+const getStarterLockPoolInfo = (pool) => {
   const account = window.CURRENTADDRESS;
   const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
   const currency_contract = new ClientContract(ERC20.abi, pool.currency.address, pool.networkId)
@@ -137,6 +137,7 @@ const getStarterV3PoolInfo = (pool) => {
         .div(new BigNumber(Web3.utils.toWei('1', 'ether'))).toString()
 
       balanceOf = fromWei(balanceOf, pool.currency.decimal).toFixed(4, 1)
+      settledUnderlyingOf = fromWei(settledUnderlyingOf, pool.underlying.decimal).toFixed(4, 1)
       const totalPurchasedAmount = new BigNumber(pool.amount).multipliedBy(new BigNumber(price))
       const new_rate = Math.min(totalPurchasedAmount.div(new BigNumber(balanceOf)).toNumber(), 1).toString()
 
@@ -181,6 +182,7 @@ const getStarterV3PoolInfo = (pool) => {
           rate: total_rate,
         },
         totalSettledUnderlying,
+        settledUnderlyingOf,//chaim ed
         settleable: {
           completed_,
           amount,
@@ -202,7 +204,7 @@ const getStarterV3PoolInfo = (pool) => {
 
 export const getPoolInfo = (pool) => {
   if (pool.poolType === 3){
-    return getStarterV3PoolInfo(pool)
+    return getStarterLockPoolInfo(pool)
   }
   const poolContract = new Contract(pool.address, pool.abi);
   const account = window.CURRENTADDRESS;

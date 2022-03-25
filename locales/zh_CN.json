@@ -427,7 +427,9 @@
     "IBO_text60": "11.15 21:00 UTC+8",
     "IBO_text61": "12.15 21:00 UTC+8",
     "IBO_join": "加入",
-    "IBO_unlockVolume": "已解锁"
+    "IBO_unlockVolume": "已解锁",
+    "IBO_received": "已领取",
+    "IBO_text62": "3.28 21:00 UTC+8"
   },
   "Governance": {
     "Tips1": "Helmet治理，抵押即投票：选择持方后，抵押相应的HELMET进行抵押投票，抵押的HELMET投票结束后才可取回",

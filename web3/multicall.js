@@ -1,4 +1,4 @@
-import {ChainId, config, multicallClient, Contract as clientContract} from "@chainstarter/multicall-client.js/build/index.js";
+import {ChainId, config, multicallClient, Contract as ClientContract} from "@chainstarter/multicall-client.js";
 
 config({
   defaultChainId: ChainId.BSC,
@@ -8,5 +8,5 @@ config({
 export {
   ChainId,
   multicallClient,
-  clientContract
+  ClientContract
 }

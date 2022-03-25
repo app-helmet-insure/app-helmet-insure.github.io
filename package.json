@@ -18,7 +18,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@chainstarter/multicall-client.js": "^1.0.5",
+    "@chainstarter/multicall-client.js": "^1.0.7",
     "@ethersproject/contracts": "^5.0.2",
     "@ethersproject/providers": "^5.0.2",
     "@ethersproject/solidity": "^5.0.2",

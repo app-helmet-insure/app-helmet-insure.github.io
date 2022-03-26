@@ -29,9 +29,9 @@ import WOOLOGO from "../assets/img/insurancetype/WOO.png";
 import WARLOGO from "../assets/img/insurancetype/WAR.png";
 import DERILOGO from "../assets/img/insurancetype/DERI.png";
 const NowTime = new Date() / 1000;
-const ShowExpiry = "2022-03-25 24:00";
-const ShowExpiryDay = Math.ceil((1648224000 - NowTime) / 86400);
-const Expiry = 1648224000;
+const ShowExpiry = "2022-04-29 24:00";
+const ShowExpiryDay = Math.ceil((1651248000 - NowTime) / 86400);
+const Expiry = 1651248000;
 export const InsuranceTypeList = [
   {
     InsuranceName: "HELMET",
@@ -42,7 +42,7 @@ export const InsuranceTypeList = [
     Expiry: Expiry,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
+    LastPriceDecimals: 8,
     LastUsdtPriceDecimals: 4,
     Group: "DEFI",
   },
@@ -241,7 +241,7 @@ export const InsuranceTypeList = [
     Expiry: Expiry,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
+    LastPriceDecimals: 8,
     LastUsdtPriceDecimals: 4,
     Group: "DEFI",
   },
@@ -254,7 +254,7 @@ export const InsuranceTypeList = [
     Expiry: Expiry,
     LastPrice: "--",
     LastUsdtPrice: "--",
-    LastPriceDecimals: 4,
+    LastPriceDecimals: 8,
     LastUsdtPriceDecimals: 4,
     Group: "DEFI",
   },

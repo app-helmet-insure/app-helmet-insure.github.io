@@ -1,5 +1,6 @@
 import starterLimitAbi from "~/web3/abis/IBO_StarterLimit.json";
 import AirAllowListAbi from "~/web3/abis/AirAllowList.json";
+import StarterLock from "~/web3/abis/StarterLock.json";
 import IBOTest from "~/web3/abis/ibo_test.json";
 import { CHAIN_ID_LOCALHOST } from "../web3";
 
@@ -46,7 +47,6 @@ export const iboPools = [
   //   totalPurchasedAmount: '80128205128205000000000',
   //   totalPurchasedUnderlying: '0',
   //   totalPurchasedCurrency: '0',
-
   //   duration: '',
   //   winningRate: '-',
   //   committed: '',
@@ -55,6 +55,87 @@ export const iboPools = [
   //   networkId: testNetwork || 56,
   //   claimTimeTipI18n: 'IBO.IBO_text51',
   // },
+
+  {
+    name: "GRVS",
+    address: "0x73F10C12b98512D1a466Abd700aF4807211A7e4C",
+    abi: StarterLock,
+    start_at: "1648389600",
+    is_coming: false,
+    currency: {
+      address: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
+      decimal: 18,
+      symbol: "BUSD",
+    },
+    icon: "GRVS.jpg",
+    underlying: {
+      address: '0x190CEC0657a02E9eAB1C1DF5d59f9139131cf539',
+      decimal: 18,
+      symbol: "GRVS",
+      name: "GRVS",
+    },
+    amount: "75000",// currency / price
+    pool_info: {
+      min_allocation: 1,
+      max_allocation: 100000,
+      maxAccount: Infinity,
+      curUserCount: 0
+    },
+    progress: 0,
+    status: 0,
+    ratio: "1GRVS = 0.4BUSD",
+    time: "1649167200",
+    purchasedCurrencyOf: 0,
+    totalPurchasedAmount: "30000",//currency
+    totalPurchasedUnderlying: "0",
+    totalPurchasedCurrency: "0",
+
+    duration: "",
+    winningRate: "-",
+    committed: "",
+    total: "",
+    poolType: 3,
+    networkId: testNetwork || 56,
+    claimTimeTipI18nList: [
+      {
+        timeTxt: 'IBO.IBO_text53',
+        rate: '10%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text54',
+        rate: '0%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text55',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text56',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text57',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text58',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text59',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text60',
+        rate: '12.857%'
+      },
+      {
+        timeTxt: 'IBO.IBO_text61',
+        rate: '12.857%'
+      }
+    ],
+  },
+
   {
     name: "BOB",
     address: "0xAA90d31E11a886B8b57a5188F9bd3dfA3e907416",

@@ -73,14 +73,16 @@
             @click="onMax"
             >{{ $t("Table.Max") }}</span
           >
-          <el-slider
-            v-model="amount"
-            :min="iboData.pool_info.min_allocation"
-            :max="iboData.pool_info.max_allocation"
-            show-input
-            :disabled="this.iboData.purchasedCurrencyOf > 0"
-          >
-          </el-slider>
+          <template>
+            <el-slider
+                v-model="amount"
+                :min="iboData.pool_info.min_allocation"
+                :max="iboData.pool_info.max_allocation"
+                show-input
+                :disabled="this.iboData.purchasedCurrencyOf > 0"
+            >
+            </el-slider>
+          </template>
           <p class="ibo_item_value slider_content">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text11") }}</span>
             <span class="value"
@@ -128,8 +130,8 @@
           :class="
             !(
               iboData.status === 1 &&
-              parseInt(iboData.pool_info.curUserCount) <
-                parseInt(iboData.pool_info.maxAccount)
+              iboData.pool_info.curUserCount <
+                iboData.pool_info.maxAccount
             ) ||
             iboData.purchasedCurrencyOf > 0 ||
             now > parseInt(iboData.timeClose)
@@ -149,7 +151,7 @@
               parseInt(iboData.pool_info.curUserCount) >=
                 parseInt(iboData.pool_info.maxAccount)
                 ? "IBO.IBO_text34"
-                : "Table.Burn"
+                : iboData.poolType === 3 ? "IBO.IBO_join" : "Table.Burn"
             )
           }}
         </a>
@@ -207,6 +209,16 @@
           <span class="ibo_item_value_title">{{ $t("IBO.IBO_text19") }}</span>
           <span class="value">{{ volume }}</span>
         </p>
+        <template v-if="iboData.poolType === 3">
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_received") }}</span>
+            <span class="value">{{ iboData.settledUnderlyingOf }}</span>
+          </p>
+          <p class="ibo_item_value">
+            <span class="ibo_item_value_title">{{ $t("IBO.IBO_unlockVolume") }}</span>
+            <span class="value">{{ iboData.settleable.unlockVolume }}</span>
+          </p>
+        </template>
         <a
           :class="
             this.activeClaim()
@@ -229,6 +241,13 @@
             >{{ $t("IBO.IBO_text36") }} {{ $t(iboData.claimTimeTipI18n) }}</span
           >
         </p>
+        <template v-if="iboData.claimTimeTipI18nList">
+          <p class="ibo_item_value" v-for="(item, index) in iboData.claimTimeTipI18nList" :key="index">
+            <span class="ibo_item_value_title"
+            >{{ $t("IBO.IBO_text52") }}{{index+1}}: {{ $t(item.timeTxt) }} {{item.rate}}</span
+            >
+          </p>
+        </template>
         <template v-if="iboData.airdrop">
           <p class="ibo_item_value">
             <span class="ibo_item_value_title">{{ $t("IBO.IBO_text48") }}</span>
@@ -520,8 +539,10 @@ export default {
     },
     activeClaim() {
       return (
-        this.iboData.status === 2 &&
-        this.iboData.settleable.volume > 0
+        this.iboData.status === 2 &&(
+            (this.iboData.settleable.volume > 0 && this.iboData.poolType === 0) ||
+            (this.iboData.settleable.unlockVolume > 0 && this.iboData.poolType === 3)
+        )
       );
     },
     onClaim() {

@@ -4,6 +4,7 @@ import Web3 from "web3";
 import ERC20 from "~/web3/abis/ERC20ABI.json";
 import { Contract, Provider, setMulticallAddress } from "ethers-multicall-x";
 import BigNumber from "bignumber.js";
+import {ClientContract, multicallClient} from "../web3/multicall";
 BigNumber.config({ EXPONENTIAL_AT: 100 });
 const CHAIN_ID_LOCALHOST = 31337;
 const BSCChainId = 56;
@@ -76,7 +77,135 @@ export const numToWei = (value, decimals = 18) => {
 
 const multicallProvider = getOnlyMultiCallProvider();
 
+const getStarterLockPoolInfo = (pool) => {
+  const account = window.CURRENTADDRESS;
+  const pool_contract = new ClientContract(pool.abi, pool.address, pool.networkId)
+  const currency_contract = new ClientContract(ERC20.abi, pool.currency.address, pool.networkId)
+  const promise_list = [
+    pool_contract.price(),
+    pool_contract.totalPurchasedCurrency(),
+    pool_contract.purchasedCurrencyOf(account),
+    pool_contract.totalSettleable(),
+    pool_contract.settleable(account),
+    pool_contract.totalSettledUnderlying(),
+    pool_contract.underlying(),
+    pool_contract.settledUnderlyingOf(account), // claimOf
+    pool_contract.time(),
+    pool_contract.timeSettle(),
+    currency_contract.balanceOf(account),
+    currency_contract.allowance(account, pool.address)
+  ]
+  return multicallClient(promise_list)
+    .then((data) => {
+      if (data[0] === null) {
+        return pool
+      }
+      const now = parseInt(Date.now() / 1000);
+      let [
+        price,
+        totalPurchasedCurrency,
+        purchasedCurrencyOf,
+        totalSettleable,
+        settleable,
+        totalSettledUnderlying,
+        underlying,
+        settledUnderlyingOf,
+        time,
+        timeSettle,
+        balanceOf,
+        currency_allowance
+      ] = data
+      const [total_completed_, total_amount, total_volume, total_rate] = totalSettleable
+      const [completed_, amount, volume, rate, unlockVolume, unlockRate] = settleable
+      let status = pool.status || 0;
+      const timeClose = time;
+      if (timeSettle) {
+        time = timeSettle;
+      }
+      if (pool.start_at < now && status < 1) {
+        status = 1;
+      }
+      if (time < now && status < 2) {
+        status = 2;
+      }
+
+      price = new BigNumber(
+        numToWei(1, pool.underlying.decimal)
+      )
+        .multipliedBy(new BigNumber(price))
+        .div(new BigNumber(10).pow(pool.currency.decimal))
+        .div(new BigNumber(Web3.utils.toWei('1', 'ether'))).toString()
+
+      balanceOf = fromWei(balanceOf, pool.currency.decimal).toFixed(4, 1)
+      settledUnderlyingOf = fromWei(settledUnderlyingOf, pool.underlying.decimal).toFixed(4, 1)
+      const totalPurchasedAmount = new BigNumber(pool.amount).multipliedBy(new BigNumber(price))
+      const new_rate = Math.min(totalPurchasedAmount.div(new BigNumber(balanceOf)).toNumber(), 1).toString()
+
+      totalPurchasedCurrency = fromWei(totalPurchasedCurrency, pool.currency.decimal)
+      const totalPurchasedUnderlying =
+        new BigNumber(totalPurchasedCurrency)
+          .dividedBy(new BigNumber(price))
+          .toFixed(0, 1)
+
+      let is_join = false
+      if (purchasedCurrencyOf > 0) {
+        is_join = true
+      }
+      Object.assign(pool.currency, {
+        allowance: currency_allowance,
+      })
+      const rate_ = rate < 10 ? new BigNumber(new_rate).multipliedBy(new BigNumber(10).pow(18)).toString() : rate
+
+      const progress = new BigNumber(totalPurchasedCurrency)
+        .dividedBy(totalPurchasedAmount)
+        .toFixed(10, 1)
+        .toString() * 1
+      const poolInfo = Object.assign({}, pool, {
+        ratio: `1${pool.underlying.symbol} = ${price}${
+          pool.currency.symbol
+        }`,
+        progress,
+        status: status,
+        time: time,
+        timeClose,
+        balanceOf,
+        price,
+        is_join,
+        totalPurchasedCurrency,
+        totalPurchasedAmount: totalPurchasedAmount.toString(),
+        totalPurchasedUnderlying,
+        purchasedCurrencyOf,
+        totalSettleable: {
+          completed_: total_completed_,
+          amount: total_amount,
+          volume: total_volume,
+          rate: total_rate,
+        },
+        totalSettledUnderlying,
+        settledUnderlyingOf,//chaim ed
+        settleable: {
+          completed_,
+          amount,
+          volume,
+          rate: rate_,
+          // rate: rate < 10 ? Web3.utils.toWei(`${new_rate}`, 'ether') : rate,
+          unlockVolume: formatAmount(unlockVolume, pool.underlying.decimal),
+          unlockRate
+        }
+      })
+      console.log('poolInfo', JSON.parse(JSON.stringify(poolInfo)))
+      return poolInfo
+    }).catch(() => {
+      return pool
+    })
+
+
+}
+
 export const getPoolInfo = (pool) => {
+  if (pool.poolType === 3){
+    return getStarterLockPoolInfo(pool)
+  }
   const poolContract = new Contract(pool.address, pool.abi);
   const account = window.CURRENTADDRESS;
   if (!account) {

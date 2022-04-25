@@ -30,6 +30,7 @@ import WARLOGO from "../assets/img/insurancetype/WAR.png";
 import DERILOGO from "../assets/img/insurancetype/DERI.png";
 import SSSLOGO from "../assets/img/insurancetype/SSS.png";
 import SEALOGO from "../assets/img/insurancetype/SEA.png";
+import PEXLOGO from "../assets/img/insurancetype/PEX.png";
 const NowTime = new Date() / 1000;
 const ShowExpiry = "2022-04-29 24:00";
 const ShowExpiryDay = Math.ceil((1651248000 - NowTime) / 86400);
@@ -454,6 +455,18 @@ export const InsuranceTypeList = [
     LastPriceDecimals: 6,
     LastUsdtPriceDecimals: 6,
     Group: "NFT",
+  }, {
+    InsuranceName: "PEX",
+    InsurancePut: "BNB",
+    InsuranceLogo: PEXLOGO,
+    ShowExpiry: ShowExpiry,
+    ShowExpiryDay: ShowExpiryDay,
+    Expiry: Expiry,
+    LastPrice: "--",
+    LastUsdtPrice: "--",
+    LastPriceDecimals: 6,
+    LastUsdtPriceDecimals: 6,
+    Group: "DEFI",
   },
 ];
 export const getCurrentInsurance = ({
@@ -2062,6 +2075,56 @@ export const getCurrentInsurance = ({
       UnderlyingDecimals: 18,
       Type: "Put",
       CallToken: "SEA",
+      PutToken: "BNB",
+    },
+     {
+      InsuranceName: "PEX",
+      InsuranceLogo: PEXLOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "PEX",
+      CollateralAddress: "0x6a0b66710567b6beb81A71F7e9466450a91a384b",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "BNB",
+      UnderlyingAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      UnderlyingDecimals: 18,
+      Type: "Call",
+      CallToken: "PEX",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "PEX",
+      InsuranceLogo: PEXLOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 4,
+      LastUsdtPriceDecimals: 4,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "BNB",
+      CollateralAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "PEX",
+      UnderlyingAddress: "0x6a0b66710567b6beb81A71F7e9466450a91a384b",
+      UnderlyingDecimals: 18,
+      Type: "Put",
+      CallToken: "PEX",
       PutToken: "BNB",
     },
   ];

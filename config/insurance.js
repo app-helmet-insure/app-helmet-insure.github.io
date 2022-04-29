@@ -32,9 +32,9 @@ import SSSLOGO from "../assets/img/insurancetype/SSS.png";
 import SEALOGO from "../assets/img/insurancetype/SEA.png";
 import PEXLOGO from "../assets/img/insurancetype/PEX.png";
 const NowTime = new Date() / 1000;
-const ShowExpiry = "2022-04-29 24:00";
-const ShowExpiryDay = Math.ceil((1651248000 - NowTime) / 86400);
-const Expiry = 1651248000;
+const ShowExpiry = "2022-05-27 24:00";
+const ShowExpiryDay = Math.ceil((1653667200 - NowTime) / 86400);
+const Expiry = 1653667200;
 export const InsuranceTypeList = [
   {
     InsuranceName: "HELMET",

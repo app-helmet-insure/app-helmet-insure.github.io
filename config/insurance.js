@@ -31,6 +31,7 @@ import DERILOGO from "../assets/img/insurancetype/DERI.png";
 import SSSLOGO from "../assets/img/insurancetype/SSS.png";
 import SEALOGO from "../assets/img/insurancetype/SEA.png";
 import PEXLOGO from "../assets/img/insurancetype/PEX.png";
+import BABYDOGELOGO from "../assets/img/insurancetype/BABYDOGE.png";
 const NowTime = new Date() / 1000;
 const ShowExpiry = "2022-05-27 24:00";
 const ShowExpiryDay = Math.ceil((1653667200 - NowTime) / 86400);
@@ -466,6 +467,18 @@ export const InsuranceTypeList = [
     LastUsdtPrice: "--",
     LastPriceDecimals: 6,
     LastUsdtPriceDecimals: 6,
+    Group: "DEFI",
+  }, {
+    InsuranceName: "BABYDOGE",
+    InsurancePut: "BNB",
+    InsuranceLogo: BABYDOGELOGO,
+    ShowExpiry: ShowExpiry,
+    ShowExpiryDay: ShowExpiryDay,
+    Expiry: Expiry,
+    LastPrice: "--",
+    LastUsdtPrice: "--",
+    LastPriceDecimals: 15,
+    LastUsdtPriceDecimals: 10,
     Group: "DEFI",
   },
 ];
@@ -2077,7 +2090,7 @@ export const getCurrentInsurance = ({
       CallToken: "SEA",
       PutToken: "BNB",
     },
-     {
+    {
       InsuranceName: "PEX",
       InsuranceLogo: PEXLOGO,
       SettleTokenSymbol: "HELMET",
@@ -2125,6 +2138,56 @@ export const getCurrentInsurance = ({
       UnderlyingDecimals: 18,
       Type: "Put",
       CallToken: "PEX",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "BABYDOGE",
+      InsuranceLogo: BABYDOGELOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 15,
+      LastUsdtPriceDecimals: 10,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "BABYDOGE",
+      CollateralAddress: "0xc748673057861a797275cd8a068abb95a902e8de",
+      CollateralDecimals: 9,
+      UnderlyingSymbol: "BNB",
+      UnderlyingAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      UnderlyingDecimals: 18,
+      Type: "Call",
+      CallToken: "BABYDOGE",
+      PutToken: "BNB",
+    },
+    {
+      InsuranceName: "BABYDOGE",
+      InsuranceLogo: BABYDOGELOGO,
+      SettleTokenSymbol: "HELMET",
+      SettleTokenAddress: "0x948d2a81086A075b3130BAc19e4c6DEe1D2E3fE8",
+      SettleTokenDecimals: 18,
+      ShowExpiry: ShowExpiry,
+      ShowExpiryDay: ShowExpiryDay,
+      Expiry: Expiry,
+      LastPrice: "--",
+      LastUsdtPrice: "--",
+      LastPriceDecimals: 15,
+      LastUsdtPriceDecimals: 10,
+      StrikePriceDecimals: 18,
+      PolicyPriceDecimals: 18,
+      CollateralSymbol: "BNB",
+      CollateralAddress: "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      CollateralDecimals: 18,
+      UnderlyingSymbol: "BABYDOGE",
+      UnderlyingAddress: "0xc748673057861a797275cd8a068abb95a902e8de",
+      UnderlyingDecimals: 9,
+      Type: "Put",
+      CallToken: "BABYDOGE",
       PutToken: "BNB",
     },
   ];
